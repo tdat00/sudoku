@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 1 passed  (10.34 s)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   10.34 s running tests, 10.52 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/steps-17.json

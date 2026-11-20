@@ -1,0 +1,142 @@
+{
+  "schema": "ms18d-phase-d-quick-coverage-v1",
+  "method": "per app, by (suite, ordinal) with the full name; shared suites run in both apps and are not deduplicated across them; focused-docs.json and any superseded result are excluded",
+  "fingerprints": {
+    "generatorQuick": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+    "playerQuick": "00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799",
+    "generatorWithManual": "a818c0b9e0fdcbc8111ac75c365783859afd894c285bfbd8763cfe25d1cc6e3a",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+  },
+  "apps": {
+    "generator": {
+      "expected": 4807,
+      "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+      "shards": [
+        {
+          "shard": "core-shared",
+          "suites": 18,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-core-shared.json",
+          "resultSha256": "083b812b0950d306b00dca4898ed69fa3dc8fcbf8216ae723d9bf11b39d564cb",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 105858.3,
+          "expected": 2418,
+          "rows": 2418,
+          "passed": 2418,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "steps",
+          "suites": 1,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-steps.json",
+          "resultSha256": "060a02f95b68bf26bd76cf26611883ab46bf65705711b69caf812a3ac631efcf",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 44809.6,
+          "expected": 59,
+          "rows": 59,
+          "passed": 59,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "replay",
+          "suites": 1,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-replay.json",
+          "resultSha256": "4137f51aaf1497f2a29dc972ffb48124553cdd1f602a89378dc38aa61530a685",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 44395.2,
+          "expected": 159,
+          "rows": 159,
+          "passed": 159,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "mega",
+          "suites": 1,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-mega.json",
+          "resultSha256": "492100dd227499bde4498a24cd5605a8c71a869fd190fd3a3fb2f539e5affe00",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 32213.4,
+          "expected": 108,
+          "rows": 108,
+          "passed": 108,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "own-fast",
+          "suites": 31,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-own-fast.json",
+          "resultSha256": "1e8139aace67ce6cb21890d54cb7ab7e0536ec1fb2dcd0fd06b3b700b0d5d6cd",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 232010.9,
+          "expected": 1767,
+          "rows": 1767,
+          "passed": 1767,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "digger-target",
+          "suites": 1,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-digger-target.json",
+          "resultSha256": "42bccd3f636a3c651cedb6a69e3b33901c18e93af17ccdb7b0234ff1a0238e66",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 2500,
+          "expected": 75,
+          "rows": 75,
+          "passed": 75,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "pipeline",
+          "suites": 1,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-pipeline.json",
+          "resultSha256": "7d57f79aa061adfb1f9e52bfbfffc870610fe0a3342ab06852a0ac8750b61481",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 44001.6,
+          "expected": 151,
+          "rows": 151,
+          "passed": 151,
+          "failed": 0,
+          "skipped": 0
+        },
+        {
+          "shard": "player",
+          "suites": 1,
+          "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-player.json",
+          "resultSha256": "895047a2e2386ebd0e9cf6d474b0a0dec80d8b089e200e7e3046b8d8edc8a8f8",
+          "sourceHash": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+          "wallMs": 58845.8,
+          "expected": 70,
+          "rows": 70,
+          "passed": 70,
+          "failed": 0,
+          "skipped": 0
+        }
+      ],
+      "covered": 4807,
+      "passed": 4807,
+      "failed": 0,
+      "skipped": 0
+    },
+    "player": {
+      "expected": 2981,
+      "sourceHash": "00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799",
+      "resultFile": "docs/difficulty-v3/evidence/MS18d/phase-d/quick/player-quick.json",
+      "resultSha256": "d6250f398ef24d0c0aeb35bc788e2c9c19f05242fc50a7c295852e697aac5b69",
+      "wallMs": 121225.4,
+      "covered": 2981,
+      "passed": 2981,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "excluded": [
+    "results/focused-docs.json"
+  ],
+  "problems": []
+}

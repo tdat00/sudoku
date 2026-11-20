@@ -1,0 +1,10 @@
+plan: 7 item(s), projections sum 190.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 gd-classic9-hell1 exit=0 node=9.953s (projected 26 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-hell1.json
+#1 gd-classic9-veryEasy exit=0 node=0.489s (projected 11 s, elapsed before 9.956 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-veryEasy.json
+#2 gd-classic9-easy exit=0 node=21.139s (projected 45 s, elapsed before 10.447 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-easy.json
+#3 gd-classic9-normal exit=1 node=28.248s (projected 53 s, elapsed before 31.587 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-normal.json
+#4 gd-classic9-hard exit=0 node=3.025s (projected 15 s, elapsed before 59.837 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-hard.json
+#5 gd-classic9-expert exit=0 node=3.667s (projected 16 s, elapsed before 62.864 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-expert.json
+#6 gd-classic9-master exit=0 node=9.336s (projected 24 s, elapsed before 66.533 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-master.json
+compound complete: 7 item(s) in 75.87 s; next --from=7
+MS05r6b exit=0 seconds=76.571

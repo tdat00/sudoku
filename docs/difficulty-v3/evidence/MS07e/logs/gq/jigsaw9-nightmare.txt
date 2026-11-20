@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=jigsaw9 --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-nightmare.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+jigsaw9/nightmare: 40/40 hits, p95 429 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| jigsaw9 | nightmare | 40 | 40 | 100 % | 210 ms | 429 ms | 576 ms | 10.0 s | offered |
+
+jigsaw9: ["nightmare"]
+exit=0 seconds=2.874

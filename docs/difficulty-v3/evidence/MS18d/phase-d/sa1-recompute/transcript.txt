@@ -1,0 +1,10 @@
+$ node ..\docs\difficulty-v3\evidence\MS18d\phase-d\sa1-recompute\sa1-gp-recompute.cjs --out=..\docs\difficulty-v3\evidence\MS18d\phase-d\sa1-recompute\recompute.json
+inputs: plan 989799e62fe2b8864da2de1bedc35264fb717f84b004689f6de941e03d747125, report 0d2c8baf1ef8131081935747484923dd8593f78f606dd202a0303d7ec324e349
+ledgers 114 (per epoch: 1 22, 3 89, 4 3); a3: mega16-easy.i0.n50.a3, hyper-hard.i0.n50.a3, butterfly-master.i0.n50.a3
+holds 9: mega16-easy.i0.n50.a1 control-hold@readiness, mega16-easy.i0.n50.a2 control-hold@acquisition, mega16-normal.i0.n50.a1 control-hold@readiness, hyper-hard.i0.n50.a1 control-hold@readiness, hyper-hard.i0.n50.a2 control-hold@readiness, greaterThan-easy.i0.n50.a1 control-hold@readiness, butterfly-master.i0.n50.a1 control-hold@readiness, butterfly-master.i0.n50.a2 control-hold@readiness, wordoku-veryEasy.i0.n50.a1 control-hold@readiness
+cells 79, complete 79, requests 3950, successes 74 (required 72), meets true, extra starts 35, cold-start-sensitive cells 30
+misses 5: mega12/expert p95 4208.3516 >= 3000 | sohei/hell2 p95 35522.675 >= 30000 | butterfly/hell2 p95 15496.112700000001 >= 15000 | wordoku/expert p95 604.1490000000003 >= 600 | wordoku/nightmare p95 2800.4616000000005 >= 1500
+equal to the report: cells 79/79, consumed 114/114, totals true, holds true
+problems 0
+wrote docs/difficulty-v3/evidence/MS18d/phase-d/sa1-recompute/recompute.json sha256 1779f78ba4451e3906492df53cee88bfff0cc35e30e3d8764f835542ec663409
+exit=0 seconds=0.245

@@ -1,0 +1,28 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 317 passed, 2 failed  (8.94 s)
+
+Failures:
+  FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > uniqueRectangle agrees with the brute-force oracle on 9 digits
+       AssertionError: uniqueRectangle found a pattern the oracle does not see on state #1 step 0
+  puzzle: .9..3.2...2....9..6..7...5.7.964.....1...9..7........43.4..5.69.61...........45..
+  finding: {"technique":"uniqueRectangle","cells":[38,42,47,51],"placements":[],"eliminations":[[42,8],[51,8]],"i18nKey":"technique.uniqueRectangle.type4.step","i18nArgs":{"roof1":"R5C7","roof2":"R6C7","digits":[6,8],"digit":8,"unit":"C7"}}
+       at fail (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:52:11)
+       at Q:\git\sudoku\core\tests\suites\tech-wing.test.js:842:11
+       at Array.forEach (<anonymous>)
+       at differential (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:836:11)
+  FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > uniqueRectangle agrees with the brute-force oracle on 6 digits
+       AssertionError: uniqueRectangle found a pattern the oracle does not see on state #20 step 0
+  puzzle: ...5.2....1....1...61.4.14.625..5...
+  finding: {"technique":"uniqueRectangle","cells":[9,11,33,35],"placements":[],"eliminations":[[11,3],[35,3]],"i18nKey":"technique.uniqueRectangle.type4.step","i18nArgs":{"roof1":"R2C6","roof2":"R6C6","digits":[3,4],"digit":3,"unit":"C6"}}
+       at fail (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:52:11)
+       at Q:\git\sudoku\core\tests\suites\tech-wing.test.js:842:11
+       at Array.forEach (<anonymous>)
+       at differential (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:836:11)
+
+Suites: 1
+Tests:  319 total, 317 passed, 2 failed, 0 skipped
+Time:   8.94 s running tests, 9.07 s total
+exit=1 seconds=9.193

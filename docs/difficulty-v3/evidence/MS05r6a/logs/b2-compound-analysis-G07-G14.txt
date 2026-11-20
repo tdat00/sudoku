@@ -1,0 +1,9 @@
+#0 b2-analysis-G07 exit=0 node=1.508s: recorded 1 of 14 keys (G07) in docs/difficulty-v3/evidence/MS05r6a/analysis/G07.json; a ledger is one shard, merge them all with --merge
+#1 b2-analysis-G08 exit=0 node=0.507s: recorded 1 of 14 keys (G08) in docs/difficulty-v3/evidence/MS05r6a/analysis/G08.json; a ledger is one shard, merge them all with --merge
+#2 b2-analysis-G09 exit=0 node=13.844s: recorded 1 of 14 keys (G09) in docs/difficulty-v3/evidence/MS05r6a/analysis/G09.json; a ledger is one shard, merge them all with --merge
+#3 b2-analysis-G10 exit=0 node=25.781s: recorded 1 of 14 keys (G10) in docs/difficulty-v3/evidence/MS05r6a/analysis/G10.json; a ledger is one shard, merge them all with --merge
+#4 b2-analysis-G11 exit=0 node=8.336s: recorded 1 of 14 keys (G11) in docs/difficulty-v3/evidence/MS05r6a/analysis/G11.json; a ledger is one shard, merge them all with --merge
+#5 b2-analysis-G12 exit=0 node=4.187s: recorded 1 of 14 keys (G12) in docs/difficulty-v3/evidence/MS05r6a/analysis/G12.json; a ledger is one shard, merge them all with --merge
+#6 b2-analysis-G14 exit=0 node=1.811s: recorded 1 of 14 keys (G14) in docs/difficulty-v3/evidence/MS05r6a/analysis/G14.json; a ledger is one shard, merge them all with --merge
+compound complete: 7 shard(s) in 56.0 s; next --from=7
+MS05r6a exit=0 seconds=56.082

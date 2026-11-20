@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js --freeze ..\docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c1b-sha256.txt
+checked 2148 files, 0 with problems
+exit=0 seconds=1.246

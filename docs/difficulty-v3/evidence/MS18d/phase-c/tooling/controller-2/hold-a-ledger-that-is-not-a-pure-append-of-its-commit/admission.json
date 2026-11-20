@@ -1,0 +1,14 @@
+{
+  "schema": "ms18d-c-admission-1",
+  "acquisition": "proceed",
+  "binding": false,
+  "payloadChecks": true,
+  "finalLockRecheck": {
+    "stable": true,
+    "sharedPresent": true,
+    "timingPresent": false
+  },
+  "readiness": null,
+  "note": "CPU readiness is C1 work; C0 admits on acquisition, binding and the lock recheck only",
+  "decision": "hold"
+}

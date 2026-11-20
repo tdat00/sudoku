@@ -1,0 +1,17 @@
+plan: 14 item(s), projections sum 960.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 gd-levels exit=0 node=0.415s (projected 30 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/levels.json
+#1 gd-spec9 exit=0 node=0.393s (projected 30 s, elapsed before 0.419 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/spec9.json
+#2 gd-spec-other exit=0 node=0.406s (projected 30 s, elapsed before 0.814 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/spec-other.json
+#3 gd-qualification exit=0 node=3.763s (projected 30 s, elapsed before 1.221 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/qualification.json
+#4 gd-score-table exit=0 node=0.422s (projected 30 s, elapsed before 4.985 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/score-table.json
+#5 gd-score-v2 exit=0 node=0.514s (projected 60 s, elapsed before 5.409 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/score-v2.json
+#6 gd-labelled exit=0 node=1.183s (projected 60 s, elapsed before 5.925 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/labelled.json
+#7 gd-removing exit=0 node=0.627s (projected 60 s, elapsed before 7.109 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/removing.json
+#8 gd-clue-floor exit=0 node=0.416s (projected 60 s, elapsed before 7.738 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/clue-floor.json
+#9 gd-oracle exit=0 node=1.083s (projected 90 s, elapsed before 8.156 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/oracle.json
+#10 gd-guarantees exit=0 node=52.170s (projected 120 s, elapsed before 9.24 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/guarantees.json
+#11 gd-cap exit=0 node=5.419s (projected 120 s, elapsed before 61.411 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/cap.json
+#12 gd-unreachable exit=0 node=0.648s (projected 120 s, elapsed before 66.831 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/unreachable.json
+#13 gd-safety exit=0 node=5.070s (projected 120 s, elapsed before 67.48 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/safety.json
+compound complete: 14 item(s) in 72.551 s; next --from=14
+MS05r6b exit=0 seconds=72.647

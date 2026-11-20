@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy > --list-tests=..\docs\difficulty-v3\evidence\MS18e\preflight\e2-selectors\GD-easy.json
+Inventory: 8 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors/GD-easy.json
+exit=0 seconds=0.334

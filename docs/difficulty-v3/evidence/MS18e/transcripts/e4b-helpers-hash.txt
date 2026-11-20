@@ -1,0 +1,24 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs hashes --out docs/difficulty-v3/evidence/MS18e/helpers-sha256-v3-4.txt generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs generator/tests/artifacts/difficulty-v3/MS18e/run-locked-e.ps1 generator/tests/artifacts/difficulty-v3/MS18e/profile-s-av11.cjs generator/tests/artifacts/difficulty-v3/MS18c/invoke-dv3node.ps1 generator/tests/artifacts/difficulty-v3/MS18c/identities-now.cjs generator/tests/artifacts/difficulty-v3/MS18d/phase-b/freeze-targets.js generator/tests/artifacts/difficulty-v3/MS18d/phase-c/tee-c.js generator/tests/artifacts/difficulty-v3/MS18d/phase-closeout-placeholder
+node:fs:782
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open 'Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-closeout-placeholder'
+    at Object.openSync (node:fs:782:18)
+    at Object.readFileSync (node:fs:628:35)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs:345:43
+    at Array.map (<anonymous>)
+    at hashes (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs:344:102)
+    at Object.<anonymous> (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs:1419:48)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12) {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-closeout-placeholder'
+}
+
+Node.js v26.13.0
+exit=1 seconds=0.099

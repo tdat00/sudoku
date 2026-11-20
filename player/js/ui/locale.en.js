@@ -174,6 +174,12 @@
     'technique.nakedTriple': 'Naked Triple',
     'technique.nakedTriple.desc': 'Three cells of a unit whose candidates are limited to the same three ' +
       'digits must hold them, so those digits can be removed from the other cells of the unit.',
+    'technique.lawOfLeftovers': 'Law of Leftovers',
+    'technique.lawOfLeftovers.desc': 'In a Jigsaw, one or two whole rows (or columns) that share no cell hold ' +
+      'every digit once per row, and so do the same number of whole regions that share no cell. Set aside the ' +
+      'cells that the rows and the regions share: the cells left over in the rows and the cells left over in ' +
+      'the regions (one to four on each side) must hold the same digits, repeats and placed digits counted. ' +
+      'A candidate that no way of filling the two sides alike uses is removed.',
     'technique.hiddenTriple': 'Hidden Triple',
     'technique.hiddenTriple.desc': 'Three digits that can only go in the same three cells of a unit must ' +
       'fill those cells, so every other candidate can be removed from them.',
@@ -187,12 +193,47 @@
     'technique.xWing.desc': 'When a digit has only two possible cells in each of two rows, and they lie ' +
       'in the same two columns, the digit can be removed from the rest of those columns (and the same ' +
       'with rows and columns swapped).',
+    'technique.skyscraper': 'Skyscraper',
+    'technique.skyscraper.desc': 'Two rows (or two columns) in which a digit has only two possible cells ' +
+      'each, and one cell of each lies in the same column (or row). Those two cells see each other, so ' +
+      'they cannot both hold the digit: at least one of the other two does, and the digit is removed from ' +
+      'every cell that sees both of them.',
+    'technique.twoStringKite': 'Two-String Kite',
+    'technique.twoStringKite.desc': 'A row and a column in which a digit has only two possible cells each, ' +
+      'and one cell of the row and one cell of the column lie in the same box (or region). Those two cells ' +
+      'see each other, so they cannot both hold the digit: at least one of the other two does, and the ' +
+      'digit is removed from every cell that sees both of them.',
     'technique.simpleColouring': 'Simple Colouring',
     'technique.simpleColouring.desc': 'Cells linked by "one or the other" for a single digit are painted ' +
       'in two colours. Exactly one colour is true, which exposes cells that cannot hold the digit.',
+    'technique.emptyRectangle': 'Empty Rectangle',
+    'technique.emptyRectangle.desc': 'In a box (or region) a digit can only go in one row and one column of the ' +
+      'box, in two parts that share no cell. A pair of cells outside the box that are the only two cells for ' +
+      'the digit in their unit decides: if the end that sees every digit of one part holds it, that part loses ' +
+      'it and the other part holds it; otherwise the other end holds it. Either way the digit is removed from ' +
+      'every cell that sees the whole other part and the other end.',
+    'technique.finnedXWing': 'Finned X-Wing',
+    'technique.finnedXWing.desc': 'An X-Wing whose base lines hold extra cells for the digit, the fins, all in one ' +
+      'box or region and outside the two cover lines. If no fin holds the digit, the base lines fill the cover ' +
+      'lines as in an X-Wing; if a fin does, it removes the digit from every cell that sees it. Either way the ' +
+      'digit is removed from every cell of a cover line, outside the base lines, that sees all the fins. A base ' +
+      'line with only one cell on the cover lines (a sashimi) works the same way. The same holds with rows and ' +
+      'columns swapped.',
     'technique.swordfish': 'Swordfish',
     'technique.swordfish.desc': 'The three-line version of X-Wing: a digit confined to the same three ' +
       'columns in three rows can be removed from the rest of those columns.',
+    'technique.finnedSwordfish': 'Finned Swordfish',
+    'technique.finnedSwordfish.desc': 'A Swordfish whose base lines hold extra cells for the digit, the fins, all ' +
+      'in one box or region and outside the three cover lines. If no fin holds the digit, the base lines fill ' +
+      'the three cover lines as in a Swordfish; if a fin does, it removes the digit from every cell that sees ' +
+      'it. Either way the digit is removed from every cell of a cover line, outside the base lines, that sees ' +
+      'all the fins. A base line may have fewer than three cells on the cover lines, as long as it has at ' +
+      'least one. The same holds with rows and columns swapped.',
+    'technique.remotePairs': 'Remote Pairs',
+    'technique.remotePairs.desc': 'A chain of cells that all hold the same two candidates, each cell seeing the ' +
+      'next. Neighbours in the chain take different digits, so the two digits alternate along it. When the ' +
+      'chain has an odd number of links, at least three, its two ends hold different digits, so between them ' +
+      'they use both digits, and both are removed from every other cell that sees both ends.',
     'technique.xyWing': 'XY-Wing',
     'technique.xyWing.desc': 'A pivot cell with two candidates sees two pincer cells that each share one ' +
       'of them. Whichever way the pivot goes, one pincer holds the common digit, so it leaves every cell ' +
@@ -200,6 +241,12 @@
     'technique.xyzWing': 'XYZ-Wing',
     'technique.xyzWing.desc': 'Like XY-Wing, but the pivot has three candidates: the common digit is ' +
       'removed from every cell that sees the pivot and both pincers.',
+    'technique.wxyzWing': 'WXYZ-Wing',
+    'technique.wxyzWing.desc': 'Four cells that hold only four digits between them. Three of the digits are ' +
+      'restricted: the cells that hold one of them all see each other, so it can go in only one of the four ' +
+      'cells. The fourth digit is the only one that two of the cells hold without seeing each other. The three ' +
+      'restricted digits fill at most three of the four cells, so the fourth digit must be in one of them, and ' +
+      'it is removed from every other cell that sees all the cells that hold it.',
     'technique.jellyfish': 'Jellyfish',
     'technique.jellyfish.desc': 'The four-line version of X-Wing: a digit confined to the same four ' +
       'columns in four rows can be removed from the rest of those columns.',
@@ -210,12 +257,55 @@
     'technique.uniqueRectangle.desc': 'A puzzle has exactly one solution, so four cells in two rows, two ' +
       'columns and two boxes can never be left with only the same two candidates. This forces a candidate ' +
       'out.',
+    'technique.bugPlusOne': 'BUG+1',
+    'technique.bugPlusOne.desc': 'Every empty cell has two candidates except one, which has three, and every ' +
+      'digit that is still to be placed in a row, a column, a box or any other unit has exactly two cells ' +
+      'for it, once the extra candidate of the cell with three is left out. Such a position has no solution ' +
+      'or at least two solutions. A puzzle has exactly one solution, so the cell with three candidates must ' +
+      'be that extra digit.',
+    'technique.xyChain': 'XY-Chain',
+    'technique.xyChain.desc': 'A chain of cells that each have exactly two candidates. Neighbouring cells of ' +
+      'the chain see each other and share a digit, so if one end of the chain is not that digit, the other ' +
+      'end must be. At least one end holds the digit, and a cell that sees both ends cannot hold it.',
     'technique.forcingChain': 'Forcing Chain',
     'technique.forcingChain.desc': 'A chain of "if this, then that" deductions that proves a candidate ' +
-      'false (or a digit true).',
+      'false (or a digit true). If a proof step represents a group, it lists the cells that can still hold ' +
+      'one digit where a box (or region) meets a row or column. A group is true when at least one of its ' +
+      'cells holds the digit, written (R1C1=5 \u2228 R1C2=5), and false when none of them does, written ' +
+      '(R1C1\u22605 \u2227 R1C2\u22605); a true group never says which of its cells holds the digit. ' +
+      'Any candidate removed by the endpoint rule must conflict with every candidate represented by each ' +
+      'end. Chains are searched up to a limited length, so a hint does not promise to find every chain.',
+    'technique.alsXz': 'ALS-XZ (almost locked sets)',
+    'technique.alsXz.desc': 'An almost locked set is some cells of one unit that have exactly one more ' +
+      'candidate digit between them than they have cells, so they hold all of those digits but one. Take two ' +
+      'such sets that share no cell, and a digit X that both can hold and where every X of one set sees ' +
+      'every X of the other. The two sets cannot both hold X, so one of them lacks X and holds all of its ' +
+      'other digits. A digit Z that both sets can hold is therefore in one of them, and a cell that sees ' +
+      'every Z of both sets cannot hold Z.',
+    'technique.sueDeCoq': 'Sue de Coq (a line crossing a box)',
+    'technique.sueDeCoq.desc': 'Sue de Coq works where a row or column crosses a box or region, on two or ' +
+      'three open cells of the crossing. Together they can hold some digits. Take an almost locked set in ' +
+      'the row or column outside the box and another in the box outside the row or column, with no digit ' +
+      'in common and both inside the digits of the crossing, such that the digits of the crossing number ' +
+      'exactly as many as the cells of the crossing and of the two sets. Then the crossing holds the one ' +
+      'digit that each set lacks and every digit that is in neither set. So every digit of the first set ' +
+      'is used in the row or column, every digit of the second set in the box, and every other digit at ' +
+      'the crossing, which is in both. That removes the first set\'s digits from the rest of the row or ' +
+      'column, the second set\'s digits from the rest of the box, and the other digit from the rest of ' +
+      'both.',
+    'technique.forcingChainLong': 'Long Forcing Chain',
+    'technique.forcingChainLong.desc': 'The same kind of chain as the Forcing Chain, but one that is too ' +
+      'long for it: the shortest chain that works has more links than the plain Forcing Chain allows (up ' +
+      'to 12 links). If a proof step represents a group, its truth and falsehood have the same meaning as ' +
+      'in a Forcing Chain. Any candidate removed by the endpoint rule must conflict with every candidate ' +
+      'represented by each end. A hint does not promise to find every chain.',
     'technique.nishio': 'Nishio (trial and error)',
     'technique.nishio.desc': 'Trial and error with a limit: assume a candidate is true; when simple ' +
       'deductions then lead to a contradiction, the candidate is false.',
+    'technique.nishioDeep': 'Deep Nishio (a guess inside a guess)',
+    'technique.nishioDeep.desc': 'Trial and error on two levels: assume a candidate is true; when simple ' +
+      'deductions, helped by one more trial inside that assumption, lead to a contradiction, the ' +
+      'candidate is false. It is only used when a plain trial is not enough.',
     'technique.cageCombo.desc': 'The digits of a cage are all different and add up to its sum, which ' +
       'often leaves only a few possible combinations.',
     'technique.ruleOf45.desc': 'Every row, column and box adds up to 45, and so do several of them together ' +
@@ -240,6 +330,12 @@
     'technique.nakedTriple.step': 'In the {unitKind} {unit}, the three cells {cells} can only hold the ' +
       'digits {digits} between them. Those digits belong to these cells, so they are removed from the ' +
       'other cells of {unit}.',
+    'technique.lawOfLeftovers.step': 'Law of Leftovers: the lines {lines} and the regions {regions} are ' +
+      'complete and, inside each group, share no cell, so each group holds every digit as many times as it ' +
+      'has units. Set aside the cells that the lines and the regions share. The cells left over, {cells}, ' +
+      'form two sides, one from the lines and one from the regions, that must hold the same digits, ' +
+      'repeats counted. Wherever no way of filling both sides alike puts one of the digits {digits} in a ' +
+      'cell, that digit is removed from the cell.',
     'technique.nakedQuad.step': 'In the {unitKind} {unit}, the four cells {cells} can only hold the ' +
       'digits {digits} between them. Those digits belong to these cells, so they are removed from the ' +
       'other cells of {unit}.',
@@ -255,9 +351,32 @@
     'technique.xWing.step': 'X-Wing on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The two {digit}s of the base lines fill both cover lines, so {digit} is removed from ' +
       'every other cell of {coverUnits}.',
+    'technique.skyscraper.step': 'Skyscraper on {digit}: in {lines}, the digit {digit} can only go in two ' +
+      'cells each, and one cell of each lies on a common line, so those two cannot both be {digit}. At ' +
+      'least one of the other two cells, {ends}, is {digit}, so {digit} is removed from every other cell ' +
+      'that sees both of them.',
+    'technique.twoStringKite.step': 'Two-String Kite on {digit}: in {lines}, the digit {digit} can only go in two ' +
+      'cells each, and the cells {bridge} (the bridge) lie in the same box or region, so they cannot both be ' +
+      '{digit}. At least one of the other two cells, {ends}, is {digit}, so {digit} is removed from every ' +
+      'other cell that sees both of them.',
+    'technique.emptyRectangle.step': 'Empty Rectangle on {digit}: in {box}, the digit {digit} can only go in the ' +
+      'cells of {lines}, in two parts that share no cell. {ends} are the only two cells for {digit} in their ' +
+      'unit, so one of them is {digit}. If the end that sees every {digit} of one part is {digit}, that part ' +
+      'loses it and the other part holds it; if it is not, the other end is {digit}. Either way {digit} is ' +
+      'removed from every other cell that sees the whole other part and the other end.',
+    'technique.finnedXWing.step': 'Finned X-Wing on {digit}: in {bases}, the digit {digit} can only go in ' +
+      '{covers}, apart from the fin cells {fins}, which all lie in one box or region. If none of the fins is ' +
+      '{digit}, the two {digit}s of the base lines fill both cover lines; if one is, it removes {digit} from ' +
+      'every cell it sees. Either way {digit} is removed from every cell of {covers}, outside the base lines ' +
+      '{bases}, that sees all the fins.',
     'technique.swordfish.step': 'Swordfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The three {digit}s of the base lines fill all three cover lines, so {digit} is ' +
       'removed from every other cell of {coverUnits}.',
+    'technique.finnedSwordfish.step': 'Finned Swordfish on {digit}: in {bases}, the digit {digit} can only go ' +
+      'in {covers}, apart from the fin cells {fins}, which all lie in one box or region. If none of the fins ' +
+      'is {digit}, the three {digit}s of the base lines fill all three cover lines; if one is, it removes ' +
+      '{digit} from every cell it sees. Either way {digit} is removed from every cell of {covers}, outside ' +
+      'the base lines {bases}, that sees all the fins.',
     'technique.jellyfish.step': 'Jellyfish on {digit}: in {baseUnits}, the digit {digit} can only go in ' +
       '{coverUnits}. The four {digit}s of the base lines fill all four cover lines, so {digit} is removed ' +
       'from every other cell of {coverUnits}.',
@@ -270,6 +389,10 @@
     'technique.simpleColouring.step.trap': 'Simple Colouring on {digit} (colour trap): colour 1 is ' +
       '{colour1}, colour 2 is {colour2}. One of the two colours holds the digit, and a cell outside the ' +
       'chain sees both colours, so it cannot be {digit}. {digit} is removed from such cells.',
+    'technique.remotePairs.step': 'Remote pair {digits}: a chain of {length} links joins {ends}, and every cell of ' +
+      'the chain holds only {digits}. Cells next to each other in the chain take different digits, so the digits ' +
+      'alternate along it; with an odd number of links the two ends take different digits, so between them ' +
+      'they use both digits ({digits}). Both digits are removed from every other cell that sees both ends ({ends}).',
     'technique.xyWing.step': 'XY-Wing: the pivot {pivot} holds {digitX} or {digitY}; the pincer {pincer1} ' +
       'holds {digitX} or {digit}; the pincer {pincer2} holds {digitY} or {digit}. Whichever digit the ' +
       'pivot takes, one of the pincers must be {digit}, so {digit} is removed from every cell that sees ' +
@@ -277,6 +400,10 @@
     'technique.xyzWing.step': 'XYZ-Wing: the pivot {pivot} holds {digitX}, {digitY} or {digit}; the ' +
       'pincer {pincer1} holds {digitX} or {digit}; the pincer {pincer2} holds {digitY} or {digit}. One of ' +
       'these three cells must be {digit}, so {digit} is removed from every cell that sees all three.',
+    'technique.wxyzWing.step': 'WXYZ-Wing on {digits}: the cells {cells} hold no other digit. Every digit ' +
+      'except {digit} appears only in cells that see each other, so it can be placed in at most one of the ' +
+      'four cells. Three digits fill at most three cells, so one of the cells that hold {digit} must be ' +
+      '{digit}. {digit} is removed from every other cell that sees all the cells of the pattern that hold it.',
     'technique.wWing.step': 'W-Wing: {cell1} and {cell2} both hold only {digitX} or {digit} and do not ' +
       'see each other. A strong link on {digitX} in {unit} ({link1} and {link2}) joins them, so one of ' +
       'the two cells must be {digit}. {digit} is removed from every cell that sees both.',
@@ -286,17 +413,74 @@
     'technique.uniqueRectangle.type2.step': 'Unique Rectangle: two corners hold only {digitX} and ' +
       '{digitY}; the other two, {roof1} and {roof2}, also hold {digit}. To avoid two solutions, one of ' +
       'those two must be {digit}, so {digit} is removed from every cell that sees both.',
-    'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first ' +
-      'candidate is false, the last one is true, so at least one end of the chain is true. Candidates ' +
-      'that see both ends are removed.',
+    'technique.uniqueRectangle.type3.step': 'Unique Rectangle: the two corners other than {roof1} and {roof2} ' +
+      'hold only {digits}. To avoid two solutions, {roof1} or {roof2} must hold a digit that is not in ' +
+      '{digits}, and every such digit is one of {partDigits}. In {unit}, that cell and the cells {cells}, which ' +
+      'can only hold digits of {partDigits}, are as many cells as there are digits in {partDigits}, so they use ' +
+      'up all of them. {partDigits} are removed from the cells of {unit} outside both {roof1} and {roof2} ' +
+      'and the cells {cells}.',
+    'technique.uniqueRectangle.type4.step': 'Unique Rectangle: the two corners other than {roof1} and {roof2} ' +
+      'hold only {digits}. In {unit}, {roof1} and {roof2} are the only cells that can still be the digit of ' +
+      '{digits} that is not {digit}, so one of them is that digit. The other one cannot be {digit} either: all ' +
+      'four corners would then hold only {digits} and the puzzle would have two solutions. So {digit} is ' +
+      'removed from both {roof1} and {roof2}.',
+    'technique.uniqueRectangle.hidden.step': 'Unique Rectangle, hidden form: the corners {cells} all hold {digits}, ' +
+      'and at least one of them holds only {digits}. In the row and in the column of the corner opposite to that one, ' +
+      '{digit} has just two places: the opposite corner itself and one of the other two corners. If the ' +
+      'opposite corner were the digit of {digits} that is not {digit}, both other corners would have to be ' +
+      '{digit}, and the corner that holds only {digits} would be that other digit too. The four corners would ' +
+      'then hold {digits} in two interchangeable ways and the puzzle would have two solutions. So the digit of ' +
+      '{digits} other than {digit} is removed from the opposite corner.',
+    'technique.bugPlusOne.step': 'BUG+1: every empty cell has two candidates except {label}, which has three. ' +
+      'Without {digit} in {label}, every digit that is still to be placed in a row, a column, a box or any ' +
+      'other unit would have exactly two cells for it. Such a position has no solution or at least two ' +
+      'solutions. The puzzle has just one solution, so {label} is {digit}.',
+    'technique.xyChain.step': 'XY-chain on {digit} of {length} links: {chains}. Every cell of the chain has ' +
+      'exactly two candidates, and each link joins two cells that see each other through the same digit. If ' +
+      'the first end is not {digit}, the links force the last end to be {digit}, so at least one end of the ' +
+      'chain is {digit}. A candidate {digit} that sees both ends is removed.',
+    'technique.forcingChain.step.endpoints': 'Forcing chain of {length} links: {chains}. If the first end ' +
+      'is false, the last end is true, so at least one end is true. Candidates that conflict with every ' +
+      'candidate represented by each end are removed.',
     'technique.forcingChain.step.contradiction': 'Forcing chain of {length} links: {chains}. If the first ' +
-      'candidate were true, some candidate would be both true and false, which is impossible. So the ' +
-      'first candidate is false and is removed.',
+      'candidate were true, a statement about a candidate or group would be both true and false, which is ' +
+      'impossible. So the first candidate is false and is removed.',
     'technique.forcingChain.step.forced': 'Forcing chain of {length} links: {chains}. If the first ' +
-      'candidate were false, some candidate would be both true and false, which is impossible. So the ' +
-      'first candidate is true and is placed.',
+      'candidate were false, a statement about a candidate or group would be both true and false, which is ' +
+      'impossible. So the first candidate is true and is placed.',
+    'technique.alsXz.step': 'ALS-XZ on {digitX} and {digitY}: the cells {cells} form two almost locked ' +
+      'sets that share no cell, and both sets can hold {digitX} and {digitY}. Every {digitX} of one set sees ' +
+      'every {digitX} of the other, so at most one of the sets holds {digitX}. The other set then holds all ' +
+      'of its other digits, so one of the two sets holds {digitY}. A candidate {digitY} that sees every ' +
+      '{digitY} of both sets is removed.',
+    'technique.sueDeCoq.step': 'Sue de Coq where {line} meets {box}: the marked cells there can only hold ' +
+      'the digits {digits} and {partDigits}. With the marked cells of {line} outside {box}, which can only ' +
+      'hold {digits}, and the marked cells of {box} outside {line}, which can only hold {partDigits}, they ' +
+      'have exactly as many cells as digits. So every one of {digits} is used among the marked cells of ' +
+      '{line}, and every one of {partDigits} among the marked cells of {box}. The digits {digits} are ' +
+      'removed from the other cells of {line}, and {partDigits} from the other cells of {box}.',
+    'technique.sueDeCoq.step.extra': 'Sue de Coq where {line} meets {box}: the marked cells there can only ' +
+      'hold the digits {digits}, {partDigits} and {forced}. With the marked cells of {line} outside {box}, ' +
+      'which can only hold {digits}, and the marked cells of {box} outside {line}, which can only hold ' +
+      '{partDigits}, they have exactly as many cells as digits. So every one of {digits} is used among the ' +
+      'marked cells of {line}, every one of {partDigits} among the marked cells of {box}, and the digit ' +
+      '{forced} is used at the crossing, which is in both. The digits {digits} are removed from the other ' +
+      'cells of {line}, {partDigits} from the other cells of {box}, and {forced} from the other cells of ' +
+      'both.',
     'technique.nishio.step': 'Trial and error (depth {depth}): if {label} were {digit}, simple deductions ' +
       'would end in a contradiction. So {digit} is removed from {label}.',
+    'technique.forcingChainLong.step.endpoints': 'Long forcing chain of {length} links: {chains}. If the ' +
+      'first end is false, the last end is true, so at least one end is true. Candidates that conflict ' +
+      'with every candidate represented by each end are removed.',
+    'technique.forcingChainLong.step.contradiction': 'Long forcing chain of {length} links: {chains}. If ' +
+      'the first candidate were true, a statement about a candidate or group would be both true and false, ' +
+      'which is impossible. So the first candidate is false and is removed.',
+    'technique.forcingChainLong.step.forced': 'Long forcing chain of {length} links: {chains}. If the ' +
+      'first candidate were false, a statement about a candidate or group would be both true and false, ' +
+      'which is impossible. So the first candidate is true and is placed.',
+    'technique.nishioDeep.step': 'Deep trial and error (depth {depth}): if {label} were {digit}, simple ' +
+      'deductions together with a second trial inside that assumption would end in a contradiction. So ' +
+      '{digit} is removed from {label}.',
     'technique.cageCombo': 'Cage Sum Combination',
     'technique.cageCombo.step': 'A cage with sum {sum} over {size} cells ({cells}) can only be written ' +
       'with the digits {digits}. Every other candidate in it is impossible. A digit that every ' +

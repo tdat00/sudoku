@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "963b733932f3adda3b644a76d806cf61cce557c0c0839e8ebdf61883fa83fe52",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "4cf0cb35e6ca89dcdd474f721b1916690747b202",
+  "dirty": true,
+  "generatedAt": "2026-11-15T19:25:02.230Z",
+  "argv": ["--ids=G06","--record=..\\docs\\difficulty-v3\\evidence\\MS09b\\analysis\\G06.json"],
+  "records": [
+    {"key":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"value":{"id":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"today":{"steps":16,"missing":2},"counts":{"compact":8,"details":33},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,19,"nakedSingle","—","—","—"],[4,27,"G/Choose",53,49,5,"hiddenSingleBox","—","—","N"],[5,28,"G/Choose",55,138,89,"boxLine","—","—","N"],[6,29,"G/Choose",57,2072,1934,"forcingChainLong","Y","R4C6","—"],[7,31,"G+A/Mixed",57,2331,259,"forcingChainLong","—","—","—"],[8,31,"F/Final",57,2331,0,"forcingChainLong","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,44,45,46,47,48,49,138,2072,3002,2331,2331],"alive":null,"folds":[{"step":7,"peak":3002,"end":2331,"removed":2,"restored":2,"signs":0,"opening":false}],"jumps":[{"step":6,"from":138,"to":2072,"before":{"P":50,"W":449.5,"R":41.506058,"V":46.315789,"E":55,"level":"easy"},"after":{"P":1400,"W":3431.5,"R":625.465517,"V":47.010309,"E":57,"level":"nightmare"},"choice":{"chosen":null,"others":4,"nulls":0,"max":630,"at":122,"rated":6,"refused":1},"singles":[{"op":"remove","cell":"R4C6","score":2072},{"op":"remove","cell":"R6C4","score":138}],"cause":"single-culprit","frame":"R4C6","firstUse":{"k":26,"n":74,"technique":"forcingChainLong"},"key":"technique.forcingChainLong.step.contradiction","effects":"remove candidate 5@R7C1"}]},"ms":135,"overrides":[]}
+  ]
+}

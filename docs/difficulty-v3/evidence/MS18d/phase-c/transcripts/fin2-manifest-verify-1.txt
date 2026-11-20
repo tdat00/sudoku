@@ -1,0 +1,6 @@
+$ node -e const fs=require('fs');const plan=require('./tests/artifacts/difficulty-v3/MS18d/phase-c/plan-data.js');const raw=fs.readFileSync('../docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json','utf8');const doc=JSON.parse(raw);const bad=plan.verifyManifest(doc);console.log('problems',JSON.stringify(bad));console.log('counts',JSON.stringify(doc.counts));console.log('sha',doc.manifestSha256,'crlf',/\r\n/.test(raw),'lfonly',/[^\r]\n/.test(raw),'finalnl',/\r\n$/.test(raw));console.log('slots',doc.runSlots.length,'final',JSON.stringify(doc.runSlots.filter(s=>s.kind&&/merge/.test(s.kind)).map(s=>s.dir||s.id)));process.exit(bad.length?1:0)
+problems []
+counts {"cells":79,"commands":114,"requests":3950,"oneChunkCells":62,"multiChunkCells":17,"multiChunkCommands":52,"extraColdStarts":35,"runSlots":229,"reservedSeconds":26762,"maxProjectionSeconds":448}
+sha b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f crlf true lfonly false finalnl true
+slots 229 final []
+exit=0 seconds=0.107

@@ -1,0 +1,2 @@
+ms18d-gp-recorder-start chunk=sohei-veryEasy.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=sohei-veryEasy.i0.n50 bytes=21775 sha256=1ab83b43e74bb937e5f30bfa520e0b4df5bda172b8f90e44419d18161ce6558d

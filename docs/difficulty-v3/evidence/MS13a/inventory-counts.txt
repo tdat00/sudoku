@@ -1,0 +1,9 @@
+MS13a registered quick-set inventories (node tests\node-runner.js --list-tests=..., no test runs; the two JSON inventories were deleted after these lines were read, because the complete results files in quick-final/ list every test):
+
+generator$ node tests\node-runner.js --list-tests=..\docs\difficulty-v3\evidence\MS13a\inventory-generator-quick.json
+Inventory: 4408 tests in 53 suites (0 skipped, 30 benchmarks), registration 0.6 s
+
+player$ node tests\node-runner.js --list-tests=..\docs\difficulty-v3\evidence\MS13a\inventory-player-quick.json
+Inventory: 2647 tests in 30 suites (0 skipped, 21 benchmarks), registration 0.3 s
+
+The complete runs (quick-final/): Generator 2104 + 57 + 154 + 108 + 1690 + 75 + 151 + 69 = 4408 passed of 4408; Player 2647 passed of 2647.

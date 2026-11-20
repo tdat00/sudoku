@@ -1,0 +1,737 @@
+2026-11-15 10:47:11 | DRIVER start plan=plan-gd-pilot.json items=1 from=0 count=1000000 pid=24552
+2026-11-15 10:47:11 | START #0 gd-pilot | projection 150 s | node tests\artifacts\difficulty-v3\MS05r6b\gd-pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\gd\pilot.json --count=8
+2026-11-15 10:48:04 | END   #0 gd-pilot | exit=0 outcome=ok node=52.628 s total=52.73 s lockWait=0 s projected=150 s attempts=1
+2026-11-15 10:48:04 | DRIVER end plan=plan-gd-pilot.json processed=1
+2026-11-15 10:48:28 | DRIVER start plan=plan-gd.json items=22 from=0 count=1000000 pid=3400
+2026-11-15 10:48:28 | PRELIST #0 gd-classic9-nightmare | exit=0 selected=8 expected=8 seconds=0.31
+2026-11-15 10:48:28 | START #0 gd-classic9-nightmare | projection 33 s | node tests\node-runner.js --suite=difficulty --filter=time) > nightmare > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-nightmare.json
+2026-11-15 10:49:01 | END   #0 gd-classic9-nightmare | exit=0 outcome=ok node=17.317 s total=32.416 s lockWait=15 s projected=33 s attempts=1
+2026-11-15 10:49:01 | PRELIST #1 gd-classic9-hell1 | exit=0 selected=8 expected=8 seconds=0.3
+2026-11-15 10:49:16 | START #1 gd-classic9-hell1 | projection 248 s | node tests\node-runner.js --suite=difficulty --filter=time) > hell1 > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-hell1.json
+2026-11-15 10:51:09 | END   #1 gd-classic9-hell1 | exit=1 outcome=expected-exit1 node=113.613 s total=113.626 s lockWait=0 s projected=248 s attempts=1
+2026-11-15 10:51:10 | PRELIST #2 gd-classic9-veryEasy | exit=0 selected=8 expected=8 seconds=0.34
+2026-11-15 10:51:24 | START #2 gd-classic9-veryEasy | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=time) > veryEasy > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-veryEasy.json
+2026-11-15 10:51:25 | END   #2 gd-classic9-veryEasy | exit=0 outcome=ok node=0.734 s total=0.742 s lockWait=0 s projected=11 s attempts=1
+2026-11-15 10:51:26 | PRELIST #3 gd-classic9-easy | exit=0 selected=8 expected=8 seconds=0.31
+2026-11-15 10:51:40 | START #3 gd-classic9-easy | projection 47 s | node tests\node-runner.js --suite=difficulty --filter=time) > easy > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-easy.json
+2026-11-15 10:52:04 | END   #3 gd-classic9-easy | exit=0 outcome=ok node=23.911 s total=23.919 s lockWait=0 s projected=47 s attempts=1
+2026-11-15 10:52:04 | PRELIST #4 gd-classic9-normal | exit=0 selected=8 expected=8 seconds=0.32
+2026-11-15 10:52:19 | START #4 gd-classic9-normal | projection 50 s | node tests\node-runner.js --suite=difficulty --filter=time) > normal > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-normal.json
+2026-11-15 10:52:50 | END   #4 gd-classic9-normal | exit=1 outcome=expected-exit1 node=30.464 s total=30.472 s lockWait=0 s projected=50 s attempts=1
+2026-11-15 10:52:50 | PRELIST #5 gd-classic9-hard | exit=0 selected=8 expected=8 seconds=0.32
+2026-11-15 10:53:05 | START #5 gd-classic9-hard | projection 15 s | node tests\node-runner.js --suite=difficulty --filter=time) > hard > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-hard.json
+2026-11-15 10:53:08 | END   #5 gd-classic9-hard | exit=0 outcome=ok node=3.509 s total=3.516 s lockWait=0 s projected=15 s attempts=1
+2026-11-15 10:53:08 | PRELIST #6 gd-classic9-expert | exit=0 selected=8 expected=8 seconds=0.31
+2026-11-15 10:53:23 | START #6 gd-classic9-expert | projection 14 s | node tests\node-runner.js --suite=difficulty --filter=time) > expert > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-expert.json
+2026-11-15 10:53:27 | END   #6 gd-classic9-expert | exit=0 outcome=ok node=3.514 s total=3.522 s lockWait=0 s projected=14 s attempts=1
+2026-11-15 10:53:27 | PRELIST #7 gd-classic9-master | exit=0 selected=8 expected=8 seconds=0.3
+2026-11-15 10:53:42 | START #7 gd-classic9-master | projection 19 s | node tests\node-runner.js --suite=difficulty --filter=time) > master > --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\classic9-master.json
+2026-11-15 10:53:50 | END   #7 gd-classic9-master | exit=0 outcome=ok node=8.227 s total=8.235 s lockWait=0 s projected=19 s attempts=1
+2026-11-15 10:53:50 | PRELIST #8 gd-levels | exit=0 selected=4 expected=4 seconds=0.32
+2026-11-15 10:54:05 | START #8 gd-levels | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: levels --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\levels.json
+2026-11-15 10:58:56 | END   #8 gd-levels | exit=0 outcome=ok node=0.943 s total=291.282 s lockWait=290 s projected=11 s attempts=1
+2026-11-15 10:58:57 | PRELIST #9 gd-spec9 | exit=0 selected=8 expected=8 seconds=0.31
+2026-11-15 10:59:11 | START #9 gd-spec9 | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: spec(level, model) on a 9x9 board --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\spec9.json
+2026-11-15 11:04:54 | DRIVER start plan=plan-gd items=22 from=9 pid=11848 METHOD CHANGE: IR12 compounds (one locked command per compound, items serial, elapsed + projection <= 450 s) instead of one command per lock: the per-item driver waited 290 s for a 0.9 s command behind pentomino commands of about 590 s and was stopped while waiting for item 9, holding no lock
+2026-11-15 11:04:54 | COMPOUND-START plan-gd-c1-from9 | lock helper called
+2026-11-15 11:09:30 | PRELIST #9 gd-spec9 | exit=1 selected=-1 expected=8
+2026-11-15 11:09:30 | HALT #9 gd-spec9 | the registration-only preflight did not select the expected total
+2026-11-15 11:09:30 | COMPOUND-END plan-gd-c1-from9 | outcome=failed-exit3 exit=3 node= s total=275.554 s lockWait= s items=0
+2026-11-15 11:09:30 | HALT plan-gd-c1-from9 | outcome failed-exit3 needs a look before anything else runs
+2026-11-15 11:11:33 | DRIVER start plan=plan-gd items=22 from=9 pid=24240 restart after the compound halted at a preflight (the old selector file existed: the runner refuses an existing listing path); preflights now run unlocked before the lock is taken, the existing listing is read again
+2026-11-15 11:11:33 | PRELIST #9 gd-spec9 | exit=0 selected=8 expected=8
+2026-11-15 11:11:34 | PRELIST #10 gd-spec-other | exit=0 selected=4 expected=4
+2026-11-15 11:11:34 | PRELIST #11 gd-qualification | exit=0 selected=6 expected=6
+2026-11-15 11:11:34 | PRELIST #12 gd-clue-floor | exit=0 selected=9 expected=9
+2026-11-15 11:11:34 | PRELIST #13 gd-score-v2 | exit=0 selected=15 expected=15
+2026-11-15 11:11:35 | PRELIST #14 gd-score-table | exit=0 selected=4 expected=4
+2026-11-15 11:11:35 | PRELIST #15 gd-labelled | exit=0 selected=7 expected=7
+2026-11-15 11:11:35 | PRELIST #16 gd-removing | exit=0 selected=2 expected=2
+2026-11-15 11:11:36 | PRELIST #17 gd-oracle | exit=0 selected=7 expected=7
+2026-11-15 11:11:36 | PRELIST #18 gd-guarantees | exit=0 selected=10 expected=10
+2026-11-15 11:11:36 | PRELIST #19 gd-cap | exit=0 selected=5 expected=5
+2026-11-15 11:11:36 | PRELIST #20 gd-unreachable | exit=0 selected=5 expected=5
+2026-11-15 11:11:37 | PRELIST #21 gd-safety | exit=0 selected=3 expected=3
+2026-11-15 11:11:37 | COMPOUND-START plan-gd-c1-from9 | lock helper called
+2026-11-15 11:12:31 | DRIVER start plan=plan-rest items=133 from=0 pid=11092 plan-rest = gd groups 9-21, confusion matrix, Greater-Than Nightmare CV6 margin, 104 GG shards, 14 GQ projection pilots; compounds
+2026-11-15 11:12:31 | PRELIST #0 gd-spec9 | exit=0 selected=8 expected=8
+2026-11-15 11:12:31 | PRELIST #1 gd-spec-other | exit=0 selected=4 expected=4
+2026-11-15 11:12:31 | PRELIST #2 gd-qualification | exit=0 selected=6 expected=6
+2026-11-15 11:12:31 | PRELIST #3 gd-clue-floor | exit=0 selected=9 expected=9
+2026-11-15 11:12:31 | PRELIST #4 gd-score-v2 | exit=0 selected=15 expected=15
+2026-11-15 11:12:31 | PRELIST #5 gd-score-table | exit=0 selected=4 expected=4
+2026-11-15 11:12:31 | PRELIST #6 gd-labelled | exit=0 selected=7 expected=7
+2026-11-15 11:12:31 | PRELIST #7 gd-removing | exit=0 selected=2 expected=2
+2026-11-15 11:12:31 | PRELIST #8 gd-oracle | exit=0 selected=7 expected=7
+2026-11-15 11:12:31 | PRELIST #9 gd-guarantees | exit=0 selected=10 expected=10
+2026-11-15 11:12:31 | PRELIST #10 gd-cap | exit=0 selected=5 expected=5
+2026-11-15 11:12:31 | PRELIST #11 gd-unreachable | exit=0 selected=5 expected=5
+2026-11-15 11:12:31 | PRELIST #12 gd-safety | exit=0 selected=3 expected=3
+2026-11-15 11:12:31 | PRELIST #13 gd-confusion-matrix | exit=0 selected=1 expected=1
+2026-11-15 11:12:31 | PRELIST #14 gd-greaterThan-nightmare-cv6 | exit=0 selected=1 expected=1
+2026-11-15 11:12:31 | COMPOUND-START plan-rest-c1-from0 | lock helper called
+2026-11-15 11:14:43 | PRELIST #0 gd-spec9 | exit=0 selected=8 expected=8
+2026-11-15 11:14:43 | START #0 gd-spec9 | elapsed 0.0 s | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: spec(level, model) on a 9x9 board --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\spec9.json
+2026-11-15 11:14:43 | END   #0 gd-spec9 | exit=0 outcome=ok node=0.463 s projected=11 s
+2026-11-15 11:14:43 | PRELIST #1 gd-spec-other | exit=0 selected=4 expected=4
+2026-11-15 11:14:43 | START #1 gd-spec-other | elapsed 0.5 s | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: spec on other boards, and difficultySupport --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\spec-other.json
+2026-11-15 11:14:44 | END   #1 gd-spec-other | exit=0 outcome=ok node=0.486 s projected=11 s
+2026-11-15 11:14:44 | PRELIST #2 gd-qualification | exit=0 selected=6 expected=6
+2026-11-15 11:14:44 | START #2 gd-qualification | elapsed 1.0 s | projection 18 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\qualification.json
+2026-11-15 11:14:48 | END   #2 gd-qualification | exit=0 outcome=ok node=3.782 s projected=18 s
+2026-11-15 11:14:48 | PRELIST #3 gd-clue-floor | exit=0 selected=9 expected=9
+2026-11-15 11:14:48 | START #3 gd-clue-floor | elapsed 4.7 s | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the clue floor of a variant (clueFloor) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\clue-floor.json
+2026-11-15 11:14:48 | END   #3 gd-clue-floor | exit=0 outcome=ok node=0.495 s projected=11 s
+2026-11-15 11:14:48 | PRELIST #4 gd-score-v2 | exit=0 selected=15 expected=15
+2026-11-15 11:14:48 | START #4 gd-score-v2 | elapsed 5.2 s | projection 12 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the score of rating v2 --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\score-v2.json
+2026-11-15 11:14:49 | END   #4 gd-score-v2 | exit=0 outcome=ok node=0.612 s projected=12 s
+2026-11-15 11:14:49 | PRELIST #5 gd-score-table | exit=0 selected=4 expected=4
+2026-11-15 11:14:49 | START #5 gd-score-table | elapsed 5.9 s | projection 11 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the Difficulty Score table (section 5.6) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\score-table.json
+2026-11-15 11:14:49 | END   #5 gd-score-table | exit=0 outcome=ok node=0.493 s projected=11 s
+2026-11-15 11:14:49 | PRELIST #6 gd-labelled | exit=0 selected=7 expected=7
+2026-11-15 11:14:49 | START #6 gd-labelled | elapsed 6.3 s | projection 13 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\labelled.json
+2026-11-15 11:14:51 | END   #6 gd-labelled | exit=0 outcome=ok node=1.381 s projected=13 s
+2026-11-15 11:14:51 | PRELIST #7 gd-removing | exit=0 selected=2 expected=2
+2026-11-15 11:14:51 | START #7 gd-removing | elapsed 7.7 s | projection 12 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\removing.json
+2026-11-15 11:14:51 | END   #7 gd-removing | exit=0 outcome=ok node=0.716 s projected=12 s
+2026-11-15 11:14:51 | PRELIST #8 gd-oracle | exit=0 selected=7 expected=7
+2026-11-15 11:14:51 | START #8 gd-oracle | elapsed 8.5 s | projection 13 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > digger: technique-bounded oracle --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\oracle.json
+2026-11-15 11:14:52 | END   #8 gd-oracle | exit=0 outcome=ok node=0.936 s projected=13 s
+2026-11-15 11:14:52 | PRELIST #9 gd-guarantees | exit=0 selected=10 expected=10
+2026-11-15 11:14:52 | START #9 gd-guarantees | elapsed 9.4 s | projection 115 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: guarantees --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\guarantees.json
+2026-11-15 11:15:34 | END   #9 gd-guarantees | exit=0 outcome=ok node=41.681 s projected=115 s
+2026-11-15 11:15:34 | PRELIST #10 gd-cap | exit=0 selected=5 expected=5
+2026-11-15 11:15:34 | START #10 gd-cap | elapsed 51.1 s | projection 21 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\cap.json
+2026-11-15 11:15:40 | END   #10 gd-cap | exit=0 outcome=ok node=5.688 s projected=21 s
+2026-11-15 11:15:40 | PRELIST #11 gd-unreachable | exit=0 selected=5 expected=5
+2026-11-15 11:15:40 | START #11 gd-unreachable | elapsed 56.8 s | projection 12 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: when the level cannot be reached --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\unreachable.json
+2026-11-15 11:15:40 | END   #11 gd-unreachable | exit=0 outcome=ok node=0.753 s projected=12 s
+2026-11-15 11:15:40 | PRELIST #12 gd-safety | exit=0 selected=3 expected=3
+2026-11-15 11:15:40 | START #12 gd-safety | elapsed 57.5 s | projection 21 s | node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: safety net against a technique bug (risk R3) --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\safety.json
+2026-11-15 11:15:46 | END   #12 gd-safety | exit=0 outcome=ok node=5.213 s projected=21 s
+2026-11-15 11:15:46 | PRELIST #13 gd-confusion-matrix | exit=0 selected=1 expected=1
+2026-11-15 11:15:46 | START #13 gd-confusion-matrix | elapsed 62.7 s | projection 254 s | node tests\node-runner.js --suite=difficulty --filter=is a confusion matrix --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\confusion-matrix.json
+2026-11-15 11:18:57 | END   #13 gd-confusion-matrix | exit=0 outcome=ok node=191.687 s projected=254 s
+2026-11-15 11:18:57 | COMPOUND #14 gd-greaterThan-nightmare-cv6 not admitted: elapsed 254.4 s + max(projection 170 s, floor 383 s) > 450 s; left for the next compound
+2026-11-15 11:18:57 | COMPOUND plan-rest-c1-from0 complete: 14 item(s) ran in 254.4 s; next --from=14
+2026-11-15 11:18:57 | COMPOUND-END plan-rest-c1-from0 | outcome=ok exit=0 node=255.799 s total=386.031 s lockWait=130 s items=14
+2026-11-15 11:19:12 | COMPOUND-START plan-rest-c2-from14 | lock helper called
+2026-11-15 11:24:03 | PRELIST #14 gd-greaterThan-nightmare-cv6 | exit=0 selected=1 expected=1
+2026-11-15 11:24:03 | START #14 gd-greaterThan-nightmare-cv6 | elapsed 0.0 s | projection 170 s | node tests\node-runner.js --suite=greater-than --filter=> nightmare: 10 puzzles > CV6: --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\greaterThan-nightmare-cv6.json
+2026-11-15 11:24:28 | END   #14 gd-greaterThan-nightmare-cv6 | exit=0 outcome=ok node=24.632 s projected=170 s
+2026-11-15 11:24:28 | START #15 gg-classic4-veryEasy-00 | elapsed 24.6 s | projection 7 s | node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic4-veryEasy-00.json
+2026-11-15 11:24:28 | END   #15 gg-classic4-veryEasy-00 | exit=0 outcome=ok node=0.493 s projected=7 s
+2026-11-15 11:24:28 | START #16 gg-classic4-veryEasy-05 | elapsed 25.1 s | projection 7 s | node tests\perf.js --hash-key=classic4/veryEasy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic4-veryEasy-05.json
+2026-11-15 11:24:29 | END   #16 gg-classic4-veryEasy-05 | exit=0 outcome=ok node=0.495 s projected=7 s
+2026-11-15 11:24:29 | START #17 gg-classic4-veryEasy-10 | elapsed 25.6 s | projection 7 s | node tests\perf.js --hash-key=classic4/veryEasy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic4-veryEasy-10.json
+2026-11-15 11:24:29 | END   #17 gg-classic4-veryEasy-10 | exit=0 outcome=ok node=0.488 s projected=7 s
+2026-11-15 11:24:29 | START #18 gg-classic4-veryEasy-15 | elapsed 26.1 s | projection 7 s | node tests\perf.js --hash-key=classic4/veryEasy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic4-veryEasy-15.json
+2026-11-15 11:24:30 | END   #18 gg-classic4-veryEasy-15 | exit=0 outcome=ok node=0.491 s projected=7 s
+2026-11-15 11:24:30 | START #19 gg-classic6-veryEasy-00 | elapsed 26.6 s | projection 7 s | node tests\perf.js --hash-key=classic6/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-veryEasy-00.json
+2026-11-15 11:24:30 | END   #19 gg-classic6-veryEasy-00 | exit=0 outcome=ok node=0.487 s projected=7 s
+2026-11-15 11:24:30 | START #20 gg-classic6-veryEasy-05 | elapsed 27.1 s | projection 7 s | node tests\perf.js --hash-key=classic6/veryEasy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-veryEasy-05.json
+2026-11-15 11:24:30 | END   #20 gg-classic6-veryEasy-05 | exit=0 outcome=ok node=0.498 s projected=7 s
+2026-11-15 11:24:30 | START #21 gg-classic6-veryEasy-10 | elapsed 27.6 s | projection 7 s | node tests\perf.js --hash-key=classic6/veryEasy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-veryEasy-10.json
+2026-11-15 11:24:31 | END   #21 gg-classic6-veryEasy-10 | exit=0 outcome=ok node=0.492 s projected=7 s
+2026-11-15 11:24:31 | START #22 gg-classic6-veryEasy-15 | elapsed 28.1 s | projection 7 s | node tests\perf.js --hash-key=classic6/veryEasy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-veryEasy-15.json
+2026-11-15 11:24:31 | END   #22 gg-classic6-veryEasy-15 | exit=0 outcome=ok node=0.492 s projected=7 s
+2026-11-15 11:24:31 | START #23 gg-classic6-hard-00 | elapsed 28.6 s | projection 7 s | node tests\perf.js --hash-key=classic6/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-hard-00.json
+2026-11-15 11:24:32 | END   #23 gg-classic6-hard-00 | exit=0 outcome=ok node=0.903 s projected=7 s
+2026-11-15 11:24:32 | START #24 gg-classic6-hard-05 | elapsed 29.5 s | projection 7 s | node tests\perf.js --hash-key=classic6/hard --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-hard-05.json
+2026-11-15 11:24:33 | END   #24 gg-classic6-hard-05 | exit=0 outcome=ok node=0.98 s projected=7 s
+2026-11-15 11:24:33 | START #25 gg-classic6-hard-10 | elapsed 30.5 s | projection 8 s | node tests\perf.js --hash-key=classic6/hard --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-hard-10.json
+2026-11-15 11:24:34 | END   #25 gg-classic6-hard-10 | exit=0 outcome=ok node=1.082 s projected=8 s
+2026-11-15 11:24:34 | START #26 gg-classic6-hard-15 | elapsed 31.6 s | projection 8 s | node tests\perf.js --hash-key=classic6/hard --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic6-hard-15.json
+2026-11-15 11:24:36 | END   #26 gg-classic6-hard-15 | exit=0 outcome=ok node=1.264 s projected=8 s
+2026-11-15 11:24:36 | START #27 gg-classic9-veryEasy-00 | elapsed 32.8 s | projection 7 s | node tests\perf.js --hash-key=classic9/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-veryEasy-00.json
+2026-11-15 11:24:36 | END   #27 gg-classic9-veryEasy-00 | exit=0 outcome=ok node=0.484 s projected=7 s
+2026-11-15 11:24:36 | START #28 gg-classic9-veryEasy-05 | elapsed 33.3 s | projection 7 s | node tests\perf.js --hash-key=classic9/veryEasy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-veryEasy-05.json
+2026-11-15 11:24:37 | END   #28 gg-classic9-veryEasy-05 | exit=0 outcome=ok node=0.493 s projected=7 s
+2026-11-15 11:24:37 | START #29 gg-classic9-veryEasy-10 | elapsed 33.8 s | projection 7 s | node tests\perf.js --hash-key=classic9/veryEasy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-veryEasy-10.json
+2026-11-15 11:24:37 | END   #29 gg-classic9-veryEasy-10 | exit=0 outcome=ok node=0.498 s projected=7 s
+2026-11-15 11:24:37 | START #30 gg-classic9-veryEasy-15 | elapsed 34.3 s | projection 7 s | node tests\perf.js --hash-key=classic9/veryEasy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-veryEasy-15.json
+2026-11-15 11:24:38 | END   #30 gg-classic9-veryEasy-15 | exit=0 outcome=ok node=0.489 s projected=7 s
+2026-11-15 11:24:38 | START #31 gg-classic9-easy-00 | elapsed 34.8 s | projection 9 s | node tests\perf.js --hash-key=classic9/easy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-easy-00.json
+2026-11-15 11:24:39 | END   #31 gg-classic9-easy-00 | exit=0 outcome=ok node=1.708 s projected=9 s
+2026-11-15 11:24:39 | START #32 gg-classic9-easy-05 | elapsed 36.5 s | projection 9 s | node tests\perf.js --hash-key=classic9/easy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-easy-05.json
+2026-11-15 11:24:41 | END   #32 gg-classic9-easy-05 | exit=0 outcome=ok node=1.66 s projected=9 s
+2026-11-15 11:24:41 | START #33 gg-classic9-easy-10 | elapsed 38.2 s | projection 9 s | node tests\perf.js --hash-key=classic9/easy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-easy-10.json
+2026-11-15 11:24:43 | END   #33 gg-classic9-easy-10 | exit=0 outcome=ok node=1.693 s projected=9 s
+2026-11-15 11:24:43 | START #34 gg-classic9-easy-15 | elapsed 39.8 s | projection 11 s | node tests\perf.js --hash-key=classic9/easy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-easy-15.json
+2026-11-15 11:24:46 | END   #34 gg-classic9-easy-15 | exit=0 outcome=ok node=2.806 s projected=11 s
+2026-11-15 11:24:46 | START #35 gg-classic9-normal-00 | elapsed 42.7 s | projection 10 s | node tests\perf.js --hash-key=classic9/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-normal-00.json
+2026-11-15 11:24:48 | END   #35 gg-classic9-normal-00 | exit=0 outcome=ok node=2.306 s projected=10 s
+2026-11-15 11:24:48 | START #36 gg-classic9-normal-05 | elapsed 45.0 s | projection 12 s | node tests\perf.js --hash-key=classic9/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-normal-05.json
+2026-11-15 11:24:51 | END   #36 gg-classic9-normal-05 | exit=0 outcome=ok node=3.461 s projected=12 s
+2026-11-15 11:24:51 | START #37 gg-classic9-normal-10 | elapsed 48.4 s | projection 10 s | node tests\perf.js --hash-key=classic9/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-normal-10.json
+2026-11-15 11:24:54 | END   #37 gg-classic9-normal-10 | exit=0 outcome=ok node=2.456 s projected=10 s
+2026-11-15 11:24:54 | START #38 gg-classic9-normal-15 | elapsed 50.9 s | projection 10 s | node tests\perf.js --hash-key=classic9/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-normal-15.json
+2026-11-15 11:24:56 | END   #38 gg-classic9-normal-15 | exit=0 outcome=ok node=2.11 s projected=10 s
+2026-11-15 11:24:56 | START #39 gg-classic9-hard-00 | elapsed 53.0 s | projection 7 s | node tests\perf.js --hash-key=classic9/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-hard-00.json
+2026-11-15 11:24:56 | END   #39 gg-classic9-hard-00 | exit=0 outcome=ok node=0.602 s projected=7 s
+2026-11-15 11:24:56 | START #40 gg-classic9-hard-05 | elapsed 53.6 s | projection 7 s | node tests\perf.js --hash-key=classic9/hard --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-hard-05.json
+2026-11-15 11:24:57 | END   #40 gg-classic9-hard-05 | exit=0 outcome=ok node=0.607 s projected=7 s
+2026-11-15 11:24:57 | START #41 gg-classic9-hard-10 | elapsed 54.2 s | projection 7 s | node tests\perf.js --hash-key=classic9/hard --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-hard-10.json
+2026-11-15 11:24:58 | END   #41 gg-classic9-hard-10 | exit=0 outcome=ok node=0.721 s projected=7 s
+2026-11-15 11:24:58 | START #42 gg-classic9-hard-15 | elapsed 54.9 s | projection 7 s | node tests\perf.js --hash-key=classic9/hard --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-hard-15.json
+2026-11-15 11:24:58 | END   #42 gg-classic9-hard-15 | exit=0 outcome=ok node=0.593 s projected=7 s
+2026-11-15 11:24:58 | START #43 gg-classic9-expert-00 | elapsed 55.5 s | projection 7 s | node tests\perf.js --hash-key=classic9/expert --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-expert-00.json
+2026-11-15 11:24:59 | END   #43 gg-classic9-expert-00 | exit=0 outcome=ok node=0.85 s projected=7 s
+2026-11-15 11:24:59 | START #44 gg-classic9-expert-05 | elapsed 56.4 s | projection 7 s | node tests\perf.js --hash-key=classic9/expert --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-expert-05.json
+2026-11-15 11:25:00 | END   #44 gg-classic9-expert-05 | exit=0 outcome=ok node=0.882 s projected=7 s
+2026-11-15 11:25:00 | START #45 gg-classic9-expert-10 | elapsed 57.3 s | projection 7 s | node tests\perf.js --hash-key=classic9/expert --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-expert-10.json
+2026-11-15 11:25:01 | END   #45 gg-classic9-expert-10 | exit=0 outcome=ok node=0.827 s projected=7 s
+2026-11-15 11:25:01 | START #46 gg-classic9-expert-15 | elapsed 58.1 s | projection 7 s | node tests\perf.js --hash-key=classic9/expert --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-expert-15.json
+2026-11-15 11:25:02 | END   #46 gg-classic9-expert-15 | exit=0 outcome=ok node=0.822 s projected=7 s
+2026-11-15 11:25:02 | START #47 gg-classic9-master-00 | elapsed 58.9 s | projection 9 s | node tests\perf.js --hash-key=classic9/master --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-master-00.json
+2026-11-15 11:25:04 | END   #47 gg-classic9-master-00 | exit=0 outcome=ok node=1.903 s projected=9 s
+2026-11-15 11:25:04 | START #48 gg-classic9-master-05 | elapsed 60.8 s | projection 7 s | node tests\perf.js --hash-key=classic9/master --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-master-05.json
+2026-11-15 11:25:04 | END   #48 gg-classic9-master-05 | exit=0 outcome=ok node=0.778 s projected=7 s
+2026-11-15 11:25:04 | START #49 gg-classic9-master-10 | elapsed 61.6 s | projection 8 s | node tests\perf.js --hash-key=classic9/master --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-master-10.json
+2026-11-15 11:25:06 | END   #49 gg-classic9-master-10 | exit=0 outcome=ok node=1.309 s projected=8 s
+2026-11-15 11:25:06 | START #50 gg-classic9-master-15 | elapsed 62.9 s | projection 7 s | node tests\perf.js --hash-key=classic9/master --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-master-15.json
+2026-11-15 11:25:07 | END   #50 gg-classic9-master-15 | exit=0 outcome=ok node=0.796 s projected=7 s
+2026-11-15 11:25:07 | START #51 gg-classic9-nightmare-00 | elapsed 63.7 s | projection 8 s | node tests\perf.js --hash-key=classic9/nightmare --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-nightmare-00.json
+2026-11-15 11:25:08 | END   #51 gg-classic9-nightmare-00 | exit=0 outcome=ok node=1.225 s projected=8 s
+2026-11-15 11:25:08 | START #52 gg-classic9-nightmare-05 | elapsed 64.9 s | projection 8 s | node tests\perf.js --hash-key=classic9/nightmare --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-nightmare-05.json
+2026-11-15 11:25:09 | END   #52 gg-classic9-nightmare-05 | exit=0 outcome=ok node=1.369 s projected=8 s
+2026-11-15 11:25:09 | START #53 gg-classic9-nightmare-10 | elapsed 66.3 s | projection 8 s | node tests\perf.js --hash-key=classic9/nightmare --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-nightmare-10.json
+2026-11-15 11:25:10 | END   #53 gg-classic9-nightmare-10 | exit=0 outcome=ok node=1.05 s projected=8 s
+2026-11-15 11:25:10 | START #54 gg-classic9-nightmare-15 | elapsed 67.3 s | projection 7 s | node tests\perf.js --hash-key=classic9/nightmare --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\classic9-nightmare-15.json
+2026-11-15 11:25:11 | END   #54 gg-classic9-nightmare-15 | exit=0 outcome=ok node=0.971 s projected=7 s
+2026-11-15 11:25:11 | START #55 gg-mega12-normal-00 | elapsed 68.3 s | projection 7 s | node tests\perf.js --hash-key=mega12/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega12-normal-00.json
+2026-11-15 11:25:12 | END   #55 gg-mega12-normal-00 | exit=0 outcome=ok node=0.602 s projected=7 s
+2026-11-15 11:25:12 | START #56 gg-mega12-normal-05 | elapsed 68.9 s | projection 7 s | node tests\perf.js --hash-key=mega12/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega12-normal-05.json
+2026-11-15 11:25:12 | END   #56 gg-mega12-normal-05 | exit=0 outcome=ok node=0.604 s projected=7 s
+2026-11-15 11:25:12 | START #57 gg-mega12-normal-10 | elapsed 69.5 s | projection 7 s | node tests\perf.js --hash-key=mega12/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega12-normal-10.json
+2026-11-15 11:25:13 | END   #57 gg-mega12-normal-10 | exit=0 outcome=ok node=0.563 s projected=7 s
+2026-11-15 11:25:13 | START #58 gg-mega12-normal-15 | elapsed 70.1 s | projection 7 s | node tests\perf.js --hash-key=mega12/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega12-normal-15.json
+2026-11-15 11:25:14 | END   #58 gg-mega12-normal-15 | exit=0 outcome=ok node=0.551 s projected=7 s
+2026-11-15 11:25:14 | START #59 gg-mega16-easy-00 | elapsed 70.6 s | projection 7 s | node tests\perf.js --hash-key=mega16/easy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega16-easy-00.json
+2026-11-15 11:25:14 | END   #59 gg-mega16-easy-00 | exit=0 outcome=ok node=0.578 s projected=7 s
+2026-11-15 11:25:14 | START #60 gg-mega16-easy-05 | elapsed 71.2 s | projection 7 s | node tests\perf.js --hash-key=mega16/easy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega16-easy-05.json
+2026-11-15 11:25:15 | END   #60 gg-mega16-easy-05 | exit=0 outcome=ok node=0.553 s projected=7 s
+2026-11-15 11:25:15 | START #61 gg-mega16-easy-10 | elapsed 71.8 s | projection 7 s | node tests\perf.js --hash-key=mega16/easy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega16-easy-10.json
+2026-11-15 11:25:15 | END   #61 gg-mega16-easy-10 | exit=0 outcome=ok node=0.585 s projected=7 s
+2026-11-15 11:25:15 | START #62 gg-mega16-easy-15 | elapsed 72.4 s | projection 7 s | node tests\perf.js --hash-key=mega16/easy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\mega16-easy-15.json
+2026-11-15 11:25:16 | END   #62 gg-mega16-easy-15 | exit=0 outcome=ok node=0.577 s projected=7 s
+2026-11-15 11:25:16 | START #63 gg-diagonalX-easy-00 | elapsed 72.9 s | projection 14 s | node tests\perf.js --hash-key=diagonalX/easy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-easy-00.json
+2026-11-15 11:25:20 | END   #63 gg-diagonalX-easy-00 | exit=0 outcome=ok node=4.3 s projected=14 s
+2026-11-15 11:25:20 | START #64 gg-diagonalX-easy-05 | elapsed 77.2 s | projection 13 s | node tests\perf.js --hash-key=diagonalX/easy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-easy-05.json
+2026-11-15 11:25:24 | END   #64 gg-diagonalX-easy-05 | exit=0 outcome=ok node=3.723 s projected=13 s
+2026-11-15 11:25:24 | START #65 gg-diagonalX-easy-10 | elapsed 81.0 s | projection 9 s | node tests\perf.js --hash-key=diagonalX/easy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-easy-10.json
+2026-11-15 11:25:26 | END   #65 gg-diagonalX-easy-10 | exit=0 outcome=ok node=1.685 s projected=9 s
+2026-11-15 11:25:26 | START #66 gg-diagonalX-easy-15 | elapsed 82.6 s | projection 12 s | node tests\perf.js --hash-key=diagonalX/easy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-easy-15.json
+2026-11-15 11:25:29 | END   #66 gg-diagonalX-easy-15 | exit=0 outcome=ok node=3.409 s projected=12 s
+2026-11-15 11:25:29 | START #67 gg-diagonalX-nightmare-00 | elapsed 86.1 s | projection 9 s | node tests\perf.js --hash-key=diagonalX/nightmare --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-nightmare-00.json
+2026-11-15 11:25:31 | END   #67 gg-diagonalX-nightmare-00 | exit=0 outcome=ok node=1.856 s projected=9 s
+2026-11-15 11:25:31 | START #68 gg-diagonalX-nightmare-05 | elapsed 87.9 s | projection 10 s | node tests\perf.js --hash-key=diagonalX/nightmare --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-nightmare-05.json
+2026-11-15 11:25:33 | END   #68 gg-diagonalX-nightmare-05 | exit=0 outcome=ok node=2.329 s projected=10 s
+2026-11-15 11:25:33 | START #69 gg-diagonalX-nightmare-10 | elapsed 90.2 s | projection 11 s | node tests\perf.js --hash-key=diagonalX/nightmare --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-nightmare-10.json
+2026-11-15 11:25:36 | END   #69 gg-diagonalX-nightmare-10 | exit=0 outcome=ok node=2.658 s projected=11 s
+2026-11-15 11:25:36 | START #70 gg-diagonalX-nightmare-15 | elapsed 92.9 s | projection 10 s | node tests\perf.js --hash-key=diagonalX/nightmare --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\diagonalX-nightmare-15.json
+2026-11-15 11:25:38 | END   #70 gg-diagonalX-nightmare-15 | exit=0 outcome=ok node=2.189 s projected=10 s
+2026-11-15 11:25:38 | START #71 gg-hyper-hard-00 | elapsed 95.1 s | projection 7 s | node tests\perf.js --hash-key=hyper/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\hyper-hard-00.json
+2026-11-15 11:25:39 | END   #71 gg-hyper-hard-00 | exit=0 outcome=ok node=0.575 s projected=7 s
+2026-11-15 11:25:39 | START #72 gg-hyper-hard-05 | elapsed 95.7 s | projection 7 s | node tests\perf.js --hash-key=hyper/hard --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\hyper-hard-05.json
+2026-11-15 11:25:39 | END   #72 gg-hyper-hard-05 | exit=0 outcome=ok node=0.563 s projected=7 s
+2026-11-15 11:25:39 | START #73 gg-hyper-hard-10 | elapsed 96.2 s | projection 7 s | node tests\perf.js --hash-key=hyper/hard --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\hyper-hard-10.json
+2026-11-15 11:25:40 | END   #73 gg-hyper-hard-10 | exit=0 outcome=ok node=0.569 s projected=7 s
+2026-11-15 11:25:40 | START #74 gg-hyper-hard-15 | elapsed 96.8 s | projection 7 s | node tests\perf.js --hash-key=hyper/hard --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\hyper-hard-15.json
+2026-11-15 11:25:40 | END   #74 gg-hyper-hard-15 | exit=0 outcome=ok node=0.588 s projected=7 s
+2026-11-15 11:25:40 | START #75 gg-jigsaw9-normal-00 | elapsed 97.4 s | projection 8 s | node tests\perf.js --hash-key=jigsaw9/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-normal-00.json
+2026-11-15 11:25:42 | END   #75 gg-jigsaw9-normal-00 | exit=0 outcome=ok node=1.377 s projected=8 s
+2026-11-15 11:25:42 | START #76 gg-jigsaw9-normal-05 | elapsed 98.8 s | projection 7 s | node tests\perf.js --hash-key=jigsaw9/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-normal-05.json
+2026-11-15 11:25:42 | END   #76 gg-jigsaw9-normal-05 | exit=0 outcome=ok node=0.706 s projected=7 s
+2026-11-15 11:25:42 | START #77 gg-jigsaw9-normal-10 | elapsed 99.5 s | projection 7 s | node tests\perf.js --hash-key=jigsaw9/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-normal-10.json
+2026-11-15 11:25:43 | END   #77 gg-jigsaw9-normal-10 | exit=0 outcome=ok node=0.933 s projected=7 s
+2026-11-15 11:25:43 | START #78 gg-jigsaw9-normal-15 | elapsed 100.4 s | projection 8 s | node tests\perf.js --hash-key=jigsaw9/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-normal-15.json
+2026-11-15 11:25:45 | END   #78 gg-jigsaw9-normal-15 | exit=0 outcome=ok node=1.267 s projected=8 s
+2026-11-15 11:25:45 | START #79 gg-jigsaw9-master-00 | elapsed 101.7 s | projection 7 s | node tests\perf.js --hash-key=jigsaw9/master --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-master-00.json
+2026-11-15 11:25:45 | END   #79 gg-jigsaw9-master-00 | exit=0 outcome=ok node=0.795 s projected=7 s
+2026-11-15 11:25:45 | START #80 gg-jigsaw9-master-05 | elapsed 102.5 s | projection 8 s | node tests\perf.js --hash-key=jigsaw9/master --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-master-05.json
+2026-11-15 11:25:46 | END   #80 gg-jigsaw9-master-05 | exit=0 outcome=ok node=1.008 s projected=8 s
+2026-11-15 11:25:46 | START #81 gg-jigsaw9-master-10 | elapsed 103.5 s | projection 7 s | node tests\perf.js --hash-key=jigsaw9/master --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-master-10.json
+2026-11-15 11:25:47 | END   #81 gg-jigsaw9-master-10 | exit=0 outcome=ok node=0.845 s projected=7 s
+2026-11-15 11:25:47 | START #82 gg-jigsaw9-master-15 | elapsed 104.3 s | projection 7 s | node tests\perf.js --hash-key=jigsaw9/master --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\jigsaw9-master-15.json
+2026-11-15 11:25:48 | END   #82 gg-jigsaw9-master-15 | exit=0 outcome=ok node=0.893 s projected=7 s
+2026-11-15 11:25:48 | START #83 gg-killer-easy-00 | elapsed 105.2 s | projection 7 s | node tests\perf.js --hash-key=killer/easy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-easy-00.json
+2026-11-15 11:25:49 | END   #83 gg-killer-easy-00 | exit=0 outcome=ok node=0.524 s projected=7 s
+2026-11-15 11:25:49 | START #84 gg-killer-easy-05 | elapsed 105.7 s | projection 7 s | node tests\perf.js --hash-key=killer/easy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-easy-05.json
+2026-11-15 11:25:49 | END   #84 gg-killer-easy-05 | exit=0 outcome=ok node=0.546 s projected=7 s
+2026-11-15 11:25:49 | START #85 gg-killer-easy-10 | elapsed 106.3 s | projection 7 s | node tests\perf.js --hash-key=killer/easy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-easy-10.json
+2026-11-15 11:25:50 | END   #85 gg-killer-easy-10 | exit=0 outcome=ok node=0.544 s projected=7 s
+2026-11-15 11:25:50 | START #86 gg-killer-easy-15 | elapsed 106.8 s | projection 7 s | node tests\perf.js --hash-key=killer/easy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-easy-15.json
+2026-11-15 11:25:50 | END   #86 gg-killer-easy-15 | exit=0 outcome=ok node=0.573 s projected=7 s
+2026-11-15 11:25:50 | START #87 gg-killer-hard-00 | elapsed 107.4 s | projection 57 s | node tests\perf.js --hash-key=killer/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-hard-00.json
+2026-11-15 11:26:16 | END   #87 gg-killer-hard-00 | exit=0 outcome=ok node=25.971 s projected=57 s
+2026-11-15 11:26:16 | START #88 gg-killer-hard-05 | elapsed 133.4 s | projection 61 s | node tests\perf.js --hash-key=killer/hard --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-hard-05.json
+2026-11-15 11:26:44 | END   #88 gg-killer-hard-05 | exit=0 outcome=ok node=27.888 s projected=61 s
+2026-11-15 11:26:44 | START #89 gg-killer-hard-10 | elapsed 161.3 s | projection 58 s | node tests\perf.js --hash-key=killer/hard --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-hard-10.json
+2026-11-15 11:27:11 | END   #89 gg-killer-hard-10 | exit=0 outcome=ok node=26.632 s projected=58 s
+2026-11-15 11:27:11 | START #90 gg-killer-hard-15 | elapsed 187.9 s | projection 59 s | node tests\perf.js --hash-key=killer/hard --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\killer-hard-15.json
+2026-11-15 11:27:37 | END   #90 gg-killer-hard-15 | exit=0 outcome=ok node=26.415 s projected=59 s
+2026-11-15 11:27:37 | START #91 gg-greaterThan-normal-00 | elapsed 214.3 s | projection 30 s | node tests\perf.js --hash-key=greaterThan/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-normal-00.json
+2026-11-15 11:27:50 | END   #91 gg-greaterThan-normal-00 | exit=0 outcome=ok node=12.351 s projected=30 s
+2026-11-15 11:27:50 | START #92 gg-greaterThan-normal-05 | elapsed 226.7 s | projection 28 s | node tests\perf.js --hash-key=greaterThan/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-normal-05.json
+2026-11-15 11:28:01 | END   #92 gg-greaterThan-normal-05 | exit=0 outcome=ok node=11.326 s projected=28 s
+2026-11-15 11:28:01 | START #93 gg-greaterThan-normal-10 | elapsed 238.0 s | projection 8 s | node tests\perf.js --hash-key=greaterThan/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-normal-10.json
+2026-11-15 11:28:02 | END   #93 gg-greaterThan-normal-10 | exit=0 outcome=ok node=1.37 s projected=8 s
+2026-11-15 11:28:02 | START #94 gg-greaterThan-normal-15 | elapsed 239.4 s | projection 31 s | node tests\perf.js --hash-key=greaterThan/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-normal-15.json
+2026-11-15 11:28:15 | END   #94 gg-greaterThan-normal-15 | exit=0 outcome=ok node=12.989 s projected=31 s
+2026-11-15 11:28:15 | START #95 gg-greaterThan-hard-00 | elapsed 252.4 s | projection 27 s | node tests\perf.js --hash-key=greaterThan/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-hard-00.json
+2026-11-15 11:28:26 | END   #95 gg-greaterThan-hard-00 | exit=0 outcome=ok node=10.682 s projected=27 s
+2026-11-15 11:28:26 | START #96 gg-greaterThan-hard-05 | elapsed 263.0 s | projection 45 s | node tests\perf.js --hash-key=greaterThan/hard --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-hard-05.json
+2026-11-15 11:28:45 | END   #96 gg-greaterThan-hard-05 | exit=0 outcome=ok node=18.938 s projected=45 s
+2026-11-15 11:28:45 | START #97 gg-greaterThan-hard-10 | elapsed 282.0 s | projection 24 s | node tests\perf.js --hash-key=greaterThan/hard --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-hard-10.json
+2026-11-15 11:28:54 | END   #97 gg-greaterThan-hard-10 | exit=0 outcome=ok node=9.396 s projected=24 s
+2026-11-15 11:28:54 | START #98 gg-greaterThan-hard-15 | elapsed 291.4 s | projection 29 s | node tests\perf.js --hash-key=greaterThan/hard --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\greaterThan-hard-15.json
+2026-11-15 11:29:06 | END   #98 gg-greaterThan-hard-15 | exit=0 outcome=ok node=11.521 s projected=29 s
+2026-11-15 11:29:06 | START #99 gg-samurai-easy-00 | elapsed 302.9 s | projection 11 s | node tests\perf.js --hash-key=samurai/easy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\samurai-easy-00.json
+2026-11-15 11:29:09 | END   #99 gg-samurai-easy-00 | exit=0 outcome=ok node=2.71 s projected=11 s
+2026-11-15 11:29:09 | START #100 gg-samurai-easy-05 | elapsed 305.6 s | projection 12 s | node tests\perf.js --hash-key=samurai/easy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\samurai-easy-05.json
+2026-11-15 11:29:12 | END   #100 gg-samurai-easy-05 | exit=0 outcome=ok node=3.433 s projected=12 s
+2026-11-15 11:29:12 | START #101 gg-samurai-easy-10 | elapsed 309.1 s | projection 12 s | node tests\perf.js --hash-key=samurai/easy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\samurai-easy-10.json
+2026-11-15 11:29:15 | END   #101 gg-samurai-easy-10 | exit=0 outcome=ok node=2.893 s projected=12 s
+2026-11-15 11:29:15 | START #102 gg-samurai-easy-15 | elapsed 311.9 s | projection 10 s | node tests\perf.js --hash-key=samurai/easy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\samurai-easy-15.json
+2026-11-15 11:29:17 | END   #102 gg-samurai-easy-15 | exit=0 outcome=ok node=2.283 s projected=10 s
+2026-11-15 11:29:17 | START #103 gg-sohei-veryEasy-00 | elapsed 314.2 s | projection 7 s | node tests\perf.js --hash-key=sohei/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\sohei-veryEasy-00.json
+2026-11-15 11:29:18 | END   #103 gg-sohei-veryEasy-00 | exit=0 outcome=ok node=0.537 s projected=7 s
+2026-11-15 11:29:18 | START #104 gg-sohei-veryEasy-05 | elapsed 314.8 s | projection 7 s | node tests\perf.js --hash-key=sohei/veryEasy --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\sohei-veryEasy-05.json
+2026-11-15 11:29:18 | END   #104 gg-sohei-veryEasy-05 | exit=0 outcome=ok node=0.538 s projected=7 s
+2026-11-15 11:29:18 | START #105 gg-sohei-veryEasy-10 | elapsed 315.3 s | projection 7 s | node tests\perf.js --hash-key=sohei/veryEasy --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\sohei-veryEasy-10.json
+2026-11-15 11:29:19 | END   #105 gg-sohei-veryEasy-10 | exit=0 outcome=ok node=0.563 s projected=7 s
+2026-11-15 11:29:19 | START #106 gg-sohei-veryEasy-15 | elapsed 315.9 s | projection 7 s | node tests\perf.js --hash-key=sohei/veryEasy --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\sohei-veryEasy-15.json
+2026-11-15 11:29:19 | END   #106 gg-sohei-veryEasy-15 | exit=0 outcome=ok node=0.542 s projected=7 s
+2026-11-15 11:29:19 | START #107 gg-butterfly-normal-00 | elapsed 316.4 s | projection 8 s | node tests\perf.js --hash-key=butterfly/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\butterfly-normal-00.json
+2026-11-15 11:29:21 | END   #107 gg-butterfly-normal-00 | exit=0 outcome=ok node=1.253 s projected=8 s
+2026-11-15 11:29:21 | START #108 gg-butterfly-normal-05 | elapsed 317.7 s | projection 8 s | node tests\perf.js --hash-key=butterfly/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\butterfly-normal-05.json
+2026-11-15 11:29:22 | END   #108 gg-butterfly-normal-05 | exit=0 outcome=ok node=0.946 s projected=8 s
+2026-11-15 11:29:22 | START #109 gg-butterfly-normal-10 | elapsed 318.6 s | projection 9 s | node tests\perf.js --hash-key=butterfly/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\butterfly-normal-10.json
+2026-11-15 11:29:23 | END   #109 gg-butterfly-normal-10 | exit=0 outcome=ok node=1.489 s projected=9 s
+2026-11-15 11:29:23 | START #110 gg-butterfly-normal-15 | elapsed 320.1 s | projection 10 s | node tests\perf.js --hash-key=butterfly/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\butterfly-normal-15.json
+2026-11-15 11:29:25 | END   #110 gg-butterfly-normal-15 | exit=0 outcome=ok node=2.336 s projected=10 s
+2026-11-15 11:29:25 | START #111 gg-flower-normal-00 | elapsed 322.4 s | projection 10 s | node tests\perf.js --hash-key=flower/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\flower-normal-00.json
+2026-11-15 11:29:28 | END   #111 gg-flower-normal-00 | exit=0 outcome=ok node=2.278 s projected=10 s
+2026-11-15 11:29:28 | START #112 gg-flower-normal-05 | elapsed 324.7 s | projection 8 s | node tests\perf.js --hash-key=flower/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\flower-normal-05.json
+2026-11-15 11:29:29 | END   #112 gg-flower-normal-05 | exit=0 outcome=ok node=1.026 s projected=8 s
+2026-11-15 11:29:29 | START #113 gg-flower-normal-10 | elapsed 325.7 s | projection 8 s | node tests\perf.js --hash-key=flower/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\flower-normal-10.json
+2026-11-15 11:29:30 | END   #113 gg-flower-normal-10 | exit=0 outcome=ok node=1.304 s projected=8 s
+2026-11-15 11:29:30 | START #114 gg-flower-normal-15 | elapsed 327.1 s | projection 10 s | node tests\perf.js --hash-key=flower/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\flower-normal-15.json
+2026-11-15 11:29:32 | END   #114 gg-flower-normal-15 | exit=0 outcome=ok node=2.127 s projected=10 s
+2026-11-15 11:29:32 | START #115 gg-wordoku-normal-00 | elapsed 329.2 s | projection 10 s | node tests\perf.js --hash-key=wordoku/normal --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\wordoku-normal-00.json
+2026-11-15 11:29:34 | END   #115 gg-wordoku-normal-00 | exit=0 outcome=ok node=2.053 s projected=10 s
+2026-11-15 11:29:34 | START #116 gg-wordoku-normal-05 | elapsed 331.2 s | projection 8 s | node tests\perf.js --hash-key=wordoku/normal --hash-from=5 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\wordoku-normal-05.json
+2026-11-15 11:29:35 | END   #116 gg-wordoku-normal-05 | exit=0 outcome=ok node=1.199 s projected=8 s
+2026-11-15 11:29:35 | START #117 gg-wordoku-normal-10 | elapsed 332.4 s | projection 10 s | node tests\perf.js --hash-key=wordoku/normal --hash-from=10 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\wordoku-normal-10.json
+2026-11-15 11:29:37 | END   #117 gg-wordoku-normal-10 | exit=0 outcome=ok node=2.015 s projected=10 s
+2026-11-15 11:29:37 | START #118 gg-wordoku-normal-15 | elapsed 334.4 s | projection 11 s | node tests\perf.js --hash-key=wordoku/normal --hash-from=15 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS07e\hashes\wordoku-normal-15.json
+2026-11-15 11:29:40 | END   #118 gg-wordoku-normal-15 | exit=0 outcome=ok node=2.453 s projected=11 s
+2026-11-15 11:29:40 | START #119 pilot-classic6 | elapsed 336.9 s | projection 25 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-classic6.json --cells=classic6/easy:3,classic6/normal:3,classic6/expert:3,classic6/master:3,classic6/nightmare:3,classic6/hell1:3,classic6/hell2:3 --budget-seconds=420
+2026-11-15 11:29:49 | END   #119 pilot-classic6 | exit=0 outcome=ok node=8.822 s projected=25 s
+2026-11-15 11:29:49 | START #120 pilot-classic9 | elapsed 345.7 s | projection 37 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-classic9.json --cells=classic9/hell1:2,classic9/hell2:2 --budget-seconds=420
+2026-11-15 11:30:13 | END   #120 pilot-classic9 | exit=0 outcome=ok node=24.798 s projected=37 s
+2026-11-15 11:30:13 | COMPOUND #121 pilot-mega12 not admitted: elapsed 370.5 s + max(projection 136 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 11:30:13 | COMPOUND plan-rest-c2-from14 complete: 107 item(s) ran in 370.5 s; next --from=121
+2026-11-15 11:30:14 | COMPOUND-END plan-rest-c2-from14 | outcome=ok exit=0 node=370.824 s total=661.149 s lockWait=290 s items=107
+2026-11-15 11:30:28 | COMPOUND-START plan-rest-c3-from121 | lock helper called
+2026-11-15 11:39:49 | START #121 pilot-mega12 | elapsed 0.0 s | projection 136 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-mega12.json --cells=mega12/nightmare:2,mega12/hell1:1,mega12/hell2:3 --budget-seconds=420
+2026-11-15 11:40:37 | END   #121 pilot-mega12 | exit=0 outcome=ok node=47.787 s projected=136 s
+2026-11-15 11:40:37 | START #122 pilot-mega16 | elapsed 47.8 s | projection 345 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-mega16.json --cells=mega16/master:3,mega16/nightmare:1,mega16/hell1:1 --budget-seconds=420
+2026-11-15 11:42:44 | END   #122 pilot-mega16 | exit=0 outcome=ok node=127.111 s projected=345 s
+2026-11-15 11:42:44 | START #123 pilot-diagonalX | elapsed 174.9 s | projection 33 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-diagonalX.json --cells=diagonalX/nightmare:2,diagonalX/hell1:3 --budget-seconds=420
+2026-11-15 11:43:56 | END   #123 pilot-diagonalX | exit=0 outcome=ok node=71.941 s projected=33 s
+2026-11-15 11:43:56 | COMPOUND #124 pilot-hyper not admitted: elapsed 246.8 s + max(projection 19 s, floor 254 s) > 450 s; left for the next compound
+2026-11-15 11:43:56 | COMPOUND plan-rest-c3-from121 complete: 3 item(s) ran in 246.8 s; next --from=124
+2026-11-15 11:43:56 | COMPOUND-END plan-rest-c3-from121 | outcome=ok exit=0 node=247.216 s total=807.705 s lockWait=560 s items=3
+2026-11-15 11:44:11 | COMPOUND-START plan-rest-c4-from124 | lock helper called
+2026-11-15 11:53:32 | START #124 pilot-hyper | elapsed 0.0 s | projection 19 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-hyper.json --cells=hyper/nightmare:3,hyper/hell1:3,hyper/hell2:3 --budget-seconds=420
+2026-11-15 11:54:02 | END   #124 pilot-hyper | exit=0 outcome=ok node=29.324 s projected=19 s
+2026-11-15 11:54:02 | START #125 pilot-jigsaw9 | elapsed 29.3 s | projection 34 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-jigsaw9.json --cells=jigsaw9/expert:2,jigsaw9/nightmare:3,jigsaw9/hell1:3 --budget-seconds=420
+2026-11-15 11:54:42 | END   #125 pilot-jigsaw9 | exit=0 outcome=ok node=40.959 s projected=34 s
+2026-11-15 11:54:42 | START #126 pilot-killer | elapsed 70.3 s | projection 173 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-killer.json --cells=killer/hard:2,killer/expert:2,killer/master:2,killer/nightmare:2,killer/hell1:2,killer/hell2:3 --budget-seconds=420
+2026-11-15 11:56:33 | END   #126 pilot-killer | exit=0 outcome=ok node=110.379 s projected=173 s
+2026-11-15 11:56:33 | START #127 pilot-greaterThan | elapsed 180.7 s | projection 89 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-greaterThan.json --cells=greaterThan/normal:3,greaterThan/hard:3,greaterThan/expert:2,greaterThan/master:3,greaterThan/nightmare:2,greaterThan/hell1:3,greaterThan/hell2:3 --budget-seconds=420
+2026-11-15 11:59:13 | END   #127 pilot-greaterThan | exit=0 outcome=ok node=159.662 s projected=89 s
+2026-11-15 11:59:13 | COMPOUND #128 pilot-samurai not admitted: elapsed 340.3 s + max(projection 147 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 11:59:13 | COMPOUND plan-rest-c4-from124 complete: 4 item(s) ran in 340.3 s; next --from=128
+2026-11-15 11:59:13 | COMPOUND-END plan-rest-c4-from124 | outcome=ok exit=0 node=340.685 s total=901.35 s lockWait=561 s items=4
+2026-11-15 11:59:28 | COMPOUND-START plan-rest-c5-from128 | lock helper called
+2026-11-15 12:08:39 | START #128 pilot-samurai | elapsed 0.0 s | projection 147 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-samurai.json --cells=samurai/normal:3,samurai/nightmare:2,samurai/hell1:2,samurai/hell2:2 --budget-seconds=420
+2026-11-15 12:09:38 | END   #128 pilot-samurai | exit=0 outcome=ok node=59.583 s projected=147 s
+2026-11-15 12:09:38 | START #129 pilot-sohei | elapsed 59.6 s | projection 92 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-sohei.json --cells=sohei/nightmare:2,sohei/hell1:3,sohei/hell2:3 --budget-seconds=420
+2026-11-15 12:10:55 | END   #129 pilot-sohei | exit=0 outcome=ok node=77.107 s projected=92 s
+2026-11-15 12:10:55 | START #130 pilot-butterfly | elapsed 136.7 s | projection 78 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-butterfly.json --cells=butterfly/easy:3,butterfly/nightmare:1,butterfly/hell1:3,butterfly/hell2:3 --budget-seconds=420
+2026-11-15 12:13:03 | END   #130 pilot-butterfly | exit=0 outcome=ok node=127.313 s projected=78 s
+2026-11-15 12:13:03 | START #131 pilot-flower | elapsed 264.0 s | projection 136 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-flower.json --cells=flower/expert:3,flower/master:3,flower/nightmare:2,flower/hell1:2,flower/hell2:2 --budget-seconds=420
+2026-11-15 12:14:12 | END   #131 pilot-flower | exit=0 outcome=ok node=68.968 s projected=136 s
+2026-11-15 12:14:12 | START #132 pilot-wordoku | elapsed 333.0 s | projection 50 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-wordoku.json --cells=wordoku/nightmare:2,wordoku/hell1:3,wordoku/hell2:2 --budget-seconds=420
+2026-11-15 12:14:42 | END   #132 pilot-wordoku | exit=0 outcome=ok node=30.46 s projected=50 s
+2026-11-15 12:14:42 | COMPOUND plan-rest-c5-from128 complete: 5 item(s) ran in 363.4 s; next --from=133
+2026-11-15 12:14:42 | COMPOUND-END plan-rest-c5-from128 | outcome=ok exit=0 node=363.799 s total=914.565 s lockWait=551 s items=5
+2026-11-15 12:14:42 | DRIVER end plan=plan-rest
+2026-11-15 12:16:15 | DRIVER start plan=plan-ext items=10 from=0 pid=23492 pilot extensions: more requests of the cells whose pilot is too thin (zero-hit Hell 1 cells to 4 requests; borderline cells to 4)
+2026-11-15 12:16:15 | COMPOUND-START plan-ext-c1-from0 | lock helper called
+2026-11-15 12:16:40 | START #0 pilotx-mega16 | elapsed 0.0 s | projection 31 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-mega16.json --cells=mega16/nightmare:3@1 --budget-seconds=420
+2026-11-15 12:17:23 | END   #0 pilotx-mega16 | exit=0 outcome=ok node=43.049 s projected=31 s
+2026-11-15 12:17:23 | START #1 pilotx-diagonalX | elapsed 43.0 s | projection 45 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-diagonalX.json --cells=diagonalX/hell1:1@3 --budget-seconds=420
+2026-11-15 12:17:45 | END   #1 pilotx-diagonalX | exit=0 outcome=ok node=21.746 s projected=45 s
+2026-11-15 12:17:45 | START #2 pilotx-hyper | elapsed 64.8 s | projection 24 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-hyper.json --cells=hyper/hell1:1@3 --budget-seconds=420
+2026-11-15 12:17:56 | END   #2 pilotx-hyper | exit=0 outcome=ok node=11.006 s projected=24 s
+2026-11-15 12:17:56 | START #3 pilotx-jigsaw9 | elapsed 75.8 s | projection 30 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-jigsaw9.json --cells=jigsaw9/hell1:1@3 --budget-seconds=420
+2026-11-15 12:18:09 | END   #3 pilotx-jigsaw9 | exit=0 outcome=ok node=12.373 s projected=30 s
+2026-11-15 12:18:09 | START #4 pilotx-killer | elapsed 88.2 s | projection 94 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-killer.json --cells=killer/nightmare:2@2,killer/hell1:2@2 --budget-seconds=420
+2026-11-15 12:19:08 | END   #4 pilotx-killer | exit=0 outcome=ok node=59.513 s projected=94 s
+2026-11-15 12:19:08 | START #5 pilotx-greaterThan | elapsed 147.7 s | projection 23 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-greaterThan.json --cells=greaterThan/nightmare:2@2 --budget-seconds=420
+2026-11-15 12:19:10 | END   #5 pilotx-greaterThan | exit=0 outcome=ok node=2.038 s projected=23 s
+2026-11-15 12:19:10 | START #6 pilotx-samurai | elapsed 149.7 s | projection 90 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-samurai.json --cells=samurai/hell1:2@2,samurai/hell2:2@2 --budget-seconds=420
+2026-11-15 12:20:20 | END   #6 pilotx-samurai | exit=0 outcome=ok node=70.325 s projected=90 s
+2026-11-15 12:20:20 | START #7 pilotx-sohei | elapsed 220.1 s | projection 45 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-sohei.json --cells=sohei/hell1:1@3 --budget-seconds=420
+2026-11-15 12:20:43 | END   #7 pilotx-sohei | exit=0 outcome=ok node=22.642 s projected=45 s
+2026-11-15 12:20:43 | START #8 pilotx-flower | elapsed 242.7 s | projection 84 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-flower.json --cells=flower/hell1:2@2 --budget-seconds=420
+2026-11-15 12:21:29 | END   #8 pilotx-flower | exit=0 outcome=ok node=45.865 s projected=84 s
+2026-11-15 12:21:29 | START #9 pilotx-wordoku | elapsed 288.6 s | projection 20 s | node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-wordoku.json --cells=wordoku/hell1:1@3 --budget-seconds=420
+2026-11-15 12:21:35 | END   #9 pilotx-wordoku | exit=0 outcome=ok node=5.592 s projected=20 s
+2026-11-15 12:21:35 | COMPOUND plan-ext-c1-from0 complete: 10 item(s) ran in 294.2 s; next --from=10
+2026-11-15 12:21:35 | COMPOUND-END plan-ext-c1-from0 | outcome=ok exit=0 node=294.253 s total=319.365 s lockWait=25 s items=10
+2026-11-15 12:21:35 | DRIVER end plan=plan-ext
+2026-11-15 12:21:59 | PAUSED by owner order 2026-11-15 12:21:59 (+07:00). No lock of mine is held (dv3-sudoku.lock absent), no driver, compound or node of mine is running; nothing was in flight or interrupted: the last compound (plan-ext-c1-from0, 10 items) ended normally at 12:21:35 and the driver ended itself.
+2026-11-15 12:21:59 | DONE: GD classic9 154 of 154 tests (8 level batches + 14 groups + confusion matrix: 152 passed, 2 aggregate hit-rate failures Hell 1 and Normal, 0 correctness failures; run-log ids gd-*; reconcile with scripts/reconcile-gd.cjs), GD extra Greater-Than Nightmare CV6 (passed, 24.1 s); GG 104 of 104 hash shards recorded in hashes/ (520 keys), the merge/check not run yet; projection pilots 14 (pilot/pilot-<variant>.json) and 10 extensions (pilot/pilotx-<variant>.json); GQ cells executed: 0 of 135; quick sets and CI check: not started.
+2026-11-15 12:21:59 | PENDING / RESUME POINT (from generator/): 1) node ..\docs\difficulty-v3\evidence\MS07e\scripts\make-plans.cjs gq   (rebuilds plans/plan-gq.json and projections/gq-projections.json|.md from ALL pilot files; plan-gq.json now on disk is a stale preview built before the extensions); 2) review projections/gq-projections.md and append plan.md section 6.3 (pilot findings, rule refinements, extension pilots) BEFORE the first GQ compound; 3) pwsh -NoProfile -File Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\driver.ps1 -Plan Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\plans\plan-gq.json   (items: greaterThan Normal CV6 selector, gg-check = perf.js --hash-merge --check-hashes, then the GQ cells cheapest first; unlaunchable cells are logged UNEXECUTED); 4) then merge attempt (qualify.js --merge), scripts/summarize-gq.cjs, scripts/assemble-checkpoint.cjs 2026-11-15, narrative; 5) make-plans.cjs quick + driver for both quick sets, CI check, format check. Items already on disk are skipped by the compound (outputs exist), never rerun.
+2026-11-15 12:21:59 | NOTE: compounds used the generic floor max(60 s, 2 x slowest child) until plan-rest-c3 and a constant 60 s afterwards (compound.cjs); the two-point rule refinement (heavy-tail-only floor; pilot must not show a high hit rate to exclude expansion) was made after the mega12 Nightmare pilot and before any GQ cell started.
+2026-11-15 12:59:49 | RESUMED by orchestrator order at 2026-11-15 12:59:49 (+07:00): rebuilding plan-gq.json from all 24 pilot files, then plan.md section 6.3, then the GQ driver. IR12 compound switch accepted by the orchestrator (disclosed deviation from the brief's one command per lock).
+2026-11-15 13:00:26 | DRIVER start plan=plan-gq items=137 from=0 pid=18844 GQ: Normal CV6 selector, gg-check, then the 135 cells cheapest first (6 unlaunchable)
+2026-11-15 13:00:26 | PRELIST #1 gd-greaterThan-normal-cv6 | exit=0 selected=1 expected=1
+2026-11-15 13:00:26 | COMPOUND-START plan-gq-c1-from0 | lock helper called
+2026-11-15 13:09:07 | START #0 gg-check | elapsed 0.0 s | projection 30 s | node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS07e\hashes --check-hashes
+2026-11-15 13:09:08 | END   #0 gg-check | exit=0 outcome=ok node=0.669 s projected=30 s
+2026-11-15 13:09:08 | PRELIST #1 gd-greaterThan-normal-cv6 | exit=0 selected=1 expected=1
+2026-11-15 13:09:08 | START #1 gd-greaterThan-normal-cv6 | elapsed 0.7 s | projection 120 s | node tests\node-runner.js --suite=greater-than --filter=> normal: 20 puzzles > CV6: --verbose --results=..\docs\difficulty-v3\evidence\MS07e\gd\greaterThan-normal-cv6.json
+2026-11-15 13:09:49 | END   #1 gd-greaterThan-normal-cv6 | exit=1 outcome=expected-exit1 node=40.604 s projected=120 s
+2026-11-15 13:09:49 | START #2 gq-diagonalX-veryEasy | elapsed 41.3 s | projection 9 s | node tests\qualify.js --variant=diagonalX --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-veryEasy.md
+2026-11-15 13:09:49 | END   #2 gq-diagonalX-veryEasy | exit=0 outcome=ok node=0.804 s projected=9 s
+2026-11-15 13:09:49 | START #3 gq-hyper-veryEasy | elapsed 42.1 s | projection 9 s | node tests\qualify.js --variant=hyper --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-veryEasy.md
+2026-11-15 13:09:50 | END   #3 gq-hyper-veryEasy | exit=0 outcome=ok node=0.779 s projected=9 s
+2026-11-15 13:09:50 | START #4 gq-wordoku-veryEasy | elapsed 42.9 s | projection 9 s | node tests\qualify.js --variant=wordoku --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-veryEasy.md
+2026-11-15 13:09:51 | END   #4 gq-wordoku-veryEasy | exit=0 outcome=ok node=0.8 s projected=9 s
+2026-11-15 13:09:51 | START #5 gq-killer-veryEasy | elapsed 43.7 s | projection 9 s | node tests\qualify.js --variant=killer --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-veryEasy.md
+2026-11-15 13:09:52 | END   #5 gq-killer-veryEasy | exit=0 outcome=ok node=0.801 s projected=9 s
+2026-11-15 13:09:52 | START #6 gq-classic4-veryEasy | elapsed 44.5 s | projection 9 s | node tests\qualify.js --variant=classic4 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-veryEasy.md
+2026-11-15 13:09:53 | END   #6 gq-classic4-veryEasy | exit=0 outcome=ok node=0.742 s projected=9 s
+2026-11-15 13:09:53 | START #7 gq-classic6-veryEasy | elapsed 45.2 s | projection 9 s | node tests\qualify.js --variant=classic6 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-veryEasy.md
+2026-11-15 13:09:53 | END   #7 gq-classic6-veryEasy | exit=0 outcome=ok node=0.776 s projected=9 s
+2026-11-15 13:09:53 | START #8 gq-classic9-veryEasy | elapsed 46.0 s | projection 10 s | node tests\qualify.js --variant=classic9 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-veryEasy.md
+2026-11-15 13:09:54 | END   #8 gq-classic9-veryEasy | exit=0 outcome=ok node=0.815 s projected=10 s
+2026-11-15 13:09:54 | START #9 gq-classic4-normal | elapsed 46.8 s | projection 10 s | node tests\qualify.js --variant=classic4 --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-normal.md
+2026-11-15 13:09:55 | END   #9 gq-classic4-normal | exit=0 outcome=ok node=1.291 s projected=10 s
+2026-11-15 13:09:55 | START #10 gq-classic4-master | elapsed 48.1 s | projection 11 s | node tests\qualify.js --variant=classic4 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-master.md
+2026-11-15 13:09:57 | END   #10 gq-classic4-master | exit=0 outcome=ok node=1.537 s projected=11 s
+2026-11-15 13:09:57 | START #11 gq-classic4-easy | elapsed 49.6 s | projection 11 s | node tests\qualify.js --variant=classic4 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-easy.md
+2026-11-15 13:09:58 | END   #11 gq-classic4-easy | exit=0 outcome=ok node=1.241 s projected=11 s
+2026-11-15 13:09:58 | START #12 gq-classic4-nightmare | elapsed 50.9 s | projection 11 s | node tests\qualify.js --variant=classic4 --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-nightmare.md
+2026-11-15 13:10:00 | END   #12 gq-classic4-nightmare | exit=0 outcome=ok node=1.426 s projected=11 s
+2026-11-15 13:10:00 | START #13 gq-mega12-veryEasy | elapsed 52.3 s | projection 11 s | node tests\qualify.js --variant=mega12 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-veryEasy.md
+2026-11-15 13:10:00 | END   #13 gq-mega12-veryEasy | exit=0 outcome=ok node=0.82 s projected=11 s
+2026-11-15 13:10:00 | START #14 gq-classic4-expert | elapsed 53.1 s | projection 11 s | node tests\qualify.js --variant=classic4 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-expert.md
+2026-11-15 13:10:02 | END   #14 gq-classic4-expert | exit=0 outcome=ok node=1.531 s projected=11 s
+2026-11-15 13:10:02 | START #15 gq-classic4-hard | elapsed 54.7 s | projection 11 s | node tests\qualify.js --variant=classic4 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-hard.md
+2026-11-15 13:10:03 | END   #15 gq-classic4-hard | exit=0 outcome=ok node=1.399 s projected=11 s
+2026-11-15 13:10:03 | START #16 gq-diagonalX-hard | elapsed 56.1 s | projection 11 s | node tests\qualify.js --variant=diagonalX --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hard.md
+2026-11-15 13:10:04 | END   #16 gq-diagonalX-hard | exit=0 outcome=ok node=0.89 s projected=11 s
+2026-11-15 13:10:04 | START #17 gq-butterfly-veryEasy | elapsed 56.9 s | projection 11 s | node tests\qualify.js --variant=butterfly --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-veryEasy.md
+2026-11-15 13:10:05 | END   #17 gq-butterfly-veryEasy | exit=0 outcome=ok node=0.846 s projected=11 s
+2026-11-15 13:10:05 | START #18 gq-jigsaw9-veryEasy | elapsed 57.8 s | projection 12 s | node tests\qualify.js --variant=jigsaw9 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-veryEasy.md
+2026-11-15 13:10:06 | END   #18 gq-jigsaw9-veryEasy | exit=0 outcome=ok node=0.97 s projected=12 s
+2026-11-15 13:10:06 | START #19 gq-hyper-hard | elapsed 58.8 s | projection 12 s | node tests\qualify.js --variant=hyper --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-hard.md
+2026-11-15 13:10:07 | END   #19 gq-hyper-hard | exit=0 outcome=ok node=0.955 s projected=12 s
+2026-11-15 13:10:07 | START #20 gq-mega12-easy | elapsed 59.7 s | projection 12 s | node tests\qualify.js --variant=mega12 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-easy.md
+2026-11-15 13:10:08 | END   #20 gq-mega12-easy | exit=0 outcome=ok node=0.921 s projected=12 s
+2026-11-15 13:10:08 | START #21 gq-classic4-hell2 | elapsed 60.6 s | projection 12 s | node tests\qualify.js --variant=classic4 --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-hell2.md
+2026-11-15 13:10:09 | END   #21 gq-classic4-hell2 | exit=0 outcome=ok node=1.391 s projected=12 s
+2026-11-15 13:10:09 | START #22 gq-classic6-normal | elapsed 62.0 s | projection 12 s | node tests\qualify.js --variant=classic6 --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-normal.md
+2026-11-15 13:10:11 | END   #22 gq-classic6-normal | exit=0 outcome=ok node=1.896 s projected=12 s
+2026-11-15 13:10:11 | START #23 gq-flower-veryEasy | elapsed 63.9 s | projection 12 s | node tests\qualify.js --variant=flower --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-veryEasy.md
+2026-11-15 13:10:12 | END   #23 gq-flower-veryEasy | exit=0 outcome=ok node=0.838 s projected=12 s
+2026-11-15 13:10:12 | START #24 gq-classic6-easy | elapsed 64.8 s | projection 12 s | node tests\qualify.js --variant=classic6 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-easy.md
+2026-11-15 13:10:14 | END   #24 gq-classic6-easy | exit=0 outcome=ok node=1.834 s projected=12 s
+2026-11-15 13:10:14 | START #25 gq-greaterThan-veryEasy | elapsed 66.6 s | projection 13 s | node tests\qualify.js --variant=greaterThan --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-veryEasy.md
+2026-11-15 13:10:15 | END   #25 gq-greaterThan-veryEasy | exit=0 outcome=ok node=1.045 s projected=13 s
+2026-11-15 13:10:15 | START #26 gq-mega16-veryEasy | elapsed 67.7 s | projection 13 s | node tests\qualify.js --variant=mega16 --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-veryEasy.md
+2026-11-15 13:10:16 | END   #26 gq-mega16-veryEasy | exit=0 outcome=ok node=0.875 s projected=13 s
+2026-11-15 13:10:16 | START #27 gq-sohei-veryEasy | elapsed 68.5 s | projection 13 s | node tests\qualify.js --variant=sohei --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-veryEasy.md
+2026-11-15 13:10:17 | END   #27 gq-sohei-veryEasy | exit=0 outcome=ok node=0.897 s projected=13 s
+2026-11-15 13:10:17 | START #28 gq-samurai-veryEasy | elapsed 69.4 s | projection 14 s | node tests\qualify.js --variant=samurai --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-veryEasy.md
+2026-11-15 13:10:18 | END   #28 gq-samurai-veryEasy | exit=0 outcome=ok node=0.933 s projected=14 s
+2026-11-15 13:10:18 | START #29 gq-killer-easy | elapsed 70.4 s | projection 14 s | node tests\qualify.js --variant=killer --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-easy.md
+2026-11-15 13:10:19 | END   #29 gq-killer-easy | exit=0 outcome=ok node=0.892 s projected=14 s
+2026-11-15 13:10:19 | START #30 gq-mega12-normal | elapsed 71.3 s | projection 14 s | node tests\qualify.js --variant=mega12 --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-normal.md
+2026-11-15 13:10:20 | END   #30 gq-mega12-normal | exit=0 outcome=ok node=1.072 s projected=14 s
+2026-11-15 13:10:20 | START #31 gq-greaterThan-easy | elapsed 72.3 s | projection 14 s | node tests\qualify.js --variant=greaterThan --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-easy.md
+2026-11-15 13:10:21 | END   #31 gq-greaterThan-easy | exit=0 outcome=ok node=1.244 s projected=14 s
+2026-11-15 13:10:21 | START #32 gq-jigsaw9-hard | elapsed 73.6 s | projection 15 s | node tests\qualify.js --variant=jigsaw9 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-hard.md
+2026-11-15 13:10:22 | END   #32 gq-jigsaw9-hard | exit=0 outcome=ok node=1.079 s projected=15 s
+2026-11-15 13:10:22 | START #33 gq-mega16-easy | elapsed 74.6 s | projection 15 s | node tests\qualify.js --variant=mega16 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-easy.md
+2026-11-15 13:10:23 | END   #33 gq-mega16-easy | exit=0 outcome=ok node=0.957 s projected=15 s
+2026-11-15 13:10:23 | START #34 gq-wordoku-hard | elapsed 75.6 s | projection 16 s | node tests\qualify.js --variant=wordoku --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hard.md
+2026-11-15 13:10:24 | END   #34 gq-wordoku-hard | exit=0 outcome=ok node=1.45 s projected=16 s
+2026-11-15 13:10:24 | START #35 gq-classic9-hard | elapsed 77.1 s | projection 16 s | node tests\qualify.js --variant=classic9 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hard.md
+2026-11-15 13:10:26 | END   #35 gq-classic9-hard | exit=0 outcome=ok node=1.216 s projected=16 s
+2026-11-15 13:10:26 | START #36 gq-classic6-hell1 | elapsed 78.3 s | projection 17 s | node tests\qualify.js --variant=classic6 --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-hell1.md
+2026-11-15 13:10:29 | END   #36 gq-classic6-hell1 | exit=0 outcome=ok node=3.557 s projected=17 s
+2026-11-15 13:10:29 | START #37 gq-diagonalX-normal | elapsed 81.8 s | projection 17 s | node tests\qualify.js --variant=diagonalX --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-normal.md
+2026-11-15 13:10:30 | END   #37 gq-diagonalX-normal | exit=0 outcome=ok node=1.127 s projected=17 s
+2026-11-15 13:10:30 | START #38 gq-classic6-hell2 | elapsed 83.0 s | projection 17 s | node tests\qualify.js --variant=classic6 --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-hell2.md
+2026-11-15 13:10:34 | END   #38 gq-classic6-hell2 | exit=0 outcome=ok node=3.304 s projected=17 s
+2026-11-15 13:10:34 | START #39 gq-butterfly-normal | elapsed 86.3 s | projection 18 s | node tests\qualify.js --variant=butterfly --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-normal.md
+2026-11-15 13:10:36 | END   #39 gq-butterfly-normal | exit=0 outcome=ok node=2.379 s projected=18 s
+2026-11-15 13:10:36 | START #40 gq-classic4-hell1 | elapsed 88.6 s | projection 18 s | node tests\qualify.js --variant=classic4 --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic4-hell1.md
+2026-11-15 13:10:37 | END   #40 gq-classic4-hell1 | exit=0 outcome=ok node=1.506 s projected=18 s
+2026-11-15 13:10:37 | START #41 gq-mega12-hard | elapsed 90.2 s | projection 19 s | node tests\qualify.js --variant=mega12 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-hard.md
+2026-11-15 13:10:39 | END   #41 gq-mega12-hard | exit=0 outcome=ok node=1.25 s projected=19 s
+2026-11-15 13:10:39 | START #42 gq-wordoku-expert | elapsed 91.4 s | projection 21 s | node tests\qualify.js --variant=wordoku --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-expert.md
+2026-11-15 13:10:40 | END   #42 gq-wordoku-expert | exit=0 outcome=ok node=1.538 s projected=21 s
+2026-11-15 13:10:40 | START #43 gq-hyper-nightmare | elapsed 92.9 s | projection 21 s | node tests\qualify.js --variant=hyper --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-nightmare.md
+2026-11-15 13:10:44 | END   #43 gq-hyper-nightmare | exit=0 outcome=ok node=3.936 s projected=21 s
+2026-11-15 13:10:44 | START #44 gq-jigsaw9-master | elapsed 96.9 s | projection 21 s | node tests\qualify.js --variant=jigsaw9 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-master.md
+2026-11-15 13:10:46 | END   #44 gq-jigsaw9-master | exit=0 outcome=ok node=2.092 s projected=21 s
+2026-11-15 13:10:46 | START #45 gq-samurai-normal | elapsed 99.0 s | projection 22 s | node tests\qualify.js --variant=samurai --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-normal.md
+2026-11-15 13:10:51 | END   #45 gq-samurai-normal | exit=0 outcome=ok node=4.628 s projected=22 s
+2026-11-15 13:10:51 | START #46 gq-mega16-normal | elapsed 103.6 s | projection 23 s | node tests\qualify.js --variant=mega16 --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-normal.md
+2026-11-15 13:10:52 | END   #46 gq-mega16-normal | exit=0 outcome=ok node=1.214 s projected=23 s
+2026-11-15 13:10:52 | START #47 gq-flower-hard | elapsed 104.8 s | projection 25 s | node tests\qualify.js --variant=flower --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-hard.md
+2026-11-15 13:10:55 | END   #47 gq-flower-hard | exit=0 outcome=ok node=3.378 s projected=25 s
+2026-11-15 13:10:55 | START #48 gq-mega12-expert | elapsed 108.2 s | projection 26 s | node tests\qualify.js --variant=mega12 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-expert.md
+2026-11-15 13:10:58 | END   #48 gq-mega12-expert | exit=0 outcome=ok node=2.688 s projected=26 s
+2026-11-15 13:10:58 | START #49 gq-butterfly-hard | elapsed 110.9 s | projection 26 s | node tests\qualify.js --variant=butterfly --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-hard.md
+2026-11-15 13:11:00 | END   #49 gq-butterfly-hard | exit=0 outcome=ok node=1.686 s projected=26 s
+2026-11-15 13:11:00 | START #50 gq-wordoku-nightmare | elapsed 112.6 s | projection 26 s | node tests\qualify.js --variant=wordoku --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-nightmare.md
+2026-11-15 13:11:02 | END   #50 gq-wordoku-nightmare | exit=0 outcome=ok node=2.507 s projected=26 s
+2026-11-15 13:11:02 | START #51 gq-greaterThan-master | elapsed 115.1 s | projection 28 s | node tests\qualify.js --variant=greaterThan --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-master.md
+2026-11-15 13:11:38 | END   #51 gq-greaterThan-master | exit=0 outcome=ok node=35.328 s projected=28 s
+2026-11-15 13:11:38 | START #52 gq-hyper-normal | elapsed 150.4 s | projection 28 s | node tests\qualify.js --variant=hyper --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-normal.md
+2026-11-15 13:11:40 | END   #52 gq-hyper-normal | exit=0 outcome=ok node=2.636 s projected=28 s
+2026-11-15 13:11:40 | START #53 gq-classic9-expert | elapsed 153.0 s | projection 28 s | node tests\qualify.js --variant=classic9 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-expert.md
+2026-11-15 13:11:42 | END   #53 gq-classic9-expert | exit=0 outcome=ok node=1.688 s projected=28 s
+2026-11-15 13:11:42 | START #54 gq-jigsaw9-nightmare | elapsed 154.7 s | projection 30 s | node tests\qualify.js --variant=jigsaw9 --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-nightmare.md
+2026-11-15 13:11:45 | END   #54 gq-jigsaw9-nightmare | exit=0 outcome=ok node=2.958 s projected=30 s
+2026-11-15 13:11:45 | START #55 gq-diagonalX-master | elapsed 157.7 s | projection 31 s | node tests\qualify.js --variant=diagonalX --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-master.md
+2026-11-15 13:11:47 | END   #55 gq-diagonalX-master | exit=0 outcome=ok node=1.944 s projected=31 s
+2026-11-15 13:11:47 | START #56 gq-jigsaw9-normal | elapsed 159.6 s | projection 32 s | node tests\qualify.js --variant=jigsaw9 --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-normal.md
+2026-11-15 13:11:49 | END   #56 gq-jigsaw9-normal | exit=0 outcome=ok node=1.878 s projected=32 s
+2026-11-15 13:11:49 | START #57 gq-classic6-hard | elapsed 161.5 s | projection 32 s | node tests\qualify.js --variant=classic6 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-hard.md
+2026-11-15 13:11:51 | END   #57 gq-classic6-hard | exit=0 outcome=ok node=1.926 s projected=32 s
+2026-11-15 13:11:51 | START #58 gq-sohei-normal | elapsed 163.4 s | projection 33 s | node tests\qualify.js --variant=sohei --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-normal.md
+2026-11-15 13:11:57 | END   #58 gq-sohei-normal | exit=0 outcome=ok node=5.937 s projected=33 s
+2026-11-15 13:11:57 | START #59 gq-classic6-expert | elapsed 169.4 s | projection 34 s | node tests\qualify.js --variant=classic6 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-expert.md
+2026-11-15 13:11:59 | END   #59 gq-classic6-expert | exit=0 outcome=ok node=2.453 s projected=34 s
+2026-11-15 13:11:59 | START #60 gq-wordoku-master | elapsed 171.8 s | projection 36 s | node tests\qualify.js --variant=wordoku --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-master.md
+2026-11-15 13:12:01 | END   #60 gq-wordoku-master | exit=0 outcome=ok node=2.327 s projected=36 s
+2026-11-15 13:12:01 | START #61 gq-mega12-nightmare | elapsed 174.2 s | projection 38 s | node tests\qualify.js --variant=mega12 --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-nightmare.md
+2026-11-15 13:12:06 | END   #61 gq-mega12-nightmare | exit=0 outcome=ok node=4.318 s projected=38 s
+2026-11-15 13:12:06 | START #62 gq-hyper-master | elapsed 178.5 s | projection 40 s | node tests\qualify.js --variant=hyper --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-master.md
+2026-11-15 13:12:08 | END   #62 gq-hyper-master | exit=0 outcome=ok node=2.478 s projected=40 s
+2026-11-15 13:12:08 | START #63 gq-butterfly-nightmare | elapsed 181.0 s | projection 42 s | node tests\qualify.js --variant=butterfly --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-nightmare.md
+2026-11-15 13:12:19 | END   #63 gq-butterfly-nightmare | exit=0 outcome=ok node=10.891 s projected=42 s
+2026-11-15 13:12:19 | START #64 gq-classic9-normal | elapsed 191.9 s | projection 44 s | node tests\qualify.js --variant=classic9 --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-normal.md
+2026-11-15 13:12:24 | END   #64 gq-classic9-normal | exit=0 outcome=ok node=4.708 s projected=44 s
+2026-11-15 13:12:24 | START #65 gq-classic6-master | elapsed 196.6 s | projection 44 s | node tests\qualify.js --variant=classic6 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-master.md
+2026-11-15 13:12:27 | END   #65 gq-classic6-master | exit=0 outcome=ok node=2.862 s projected=44 s
+2026-11-15 13:12:27 | START #66 gq-sohei-expert | elapsed 199.4 s | projection 45 s | node tests\qualify.js --variant=sohei --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-expert.md
+2026-11-15 13:12:32 | END   #66 gq-sohei-expert | exit=0 outcome=ok node=5.066 s projected=45 s
+2026-11-15 13:12:32 | START #67 gq-hyper-hell2 | elapsed 204.5 s | projection 48 s | node tests\qualify.js --variant=hyper --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-hell2.md
+2026-11-15 13:12:41 | END   #67 gq-hyper-hell2 | exit=0 outcome=ok node=9.667 s projected=48 s
+2026-11-15 13:12:41 | START #68 gq-mega16-hard | elapsed 214.2 s | projection 48 s | node tests\qualify.js --variant=mega16 --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-hard.md
+2026-11-15 13:12:44 | END   #68 gq-mega16-hard | exit=0 outcome=ok node=2.593 s projected=48 s
+2026-11-15 13:12:44 | START #69 gq-samurai-easy | elapsed 216.8 s | projection 52 s | node tests\qualify.js --variant=samurai --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-easy.md
+2026-11-15 13:12:48 | END   #69 gq-samurai-easy | exit=0 outcome=ok node=4.41 s projected=52 s
+2026-11-15 13:12:48 | START #70 gq-jigsaw9-easy | elapsed 221.2 s | projection 54 s | node tests\qualify.js --variant=jigsaw9 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-easy.md
+2026-11-15 13:12:51 | END   #70 gq-jigsaw9-easy | exit=0 outcome=ok node=2.592 s projected=54 s
+2026-11-15 13:12:51 | START #71 gq-samurai-hard | elapsed 223.8 s | projection 56 s | node tests\qualify.js --variant=samurai --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-hard.md
+2026-11-15 13:12:54 | END   #71 gq-samurai-hard | exit=0 outcome=ok node=2.548 s projected=56 s
+2026-11-15 13:12:54 | START #72 gq-wordoku-easy | elapsed 226.3 s | projection 57 s | node tests\qualify.js --variant=wordoku --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-easy.md
+2026-11-15 13:12:57 | END   #72 gq-wordoku-easy | exit=0 outcome=ok node=3.558 s projected=57 s
+2026-11-15 13:12:57 | START #73 gq-mega12-master | elapsed 229.9 s | projection 58 s | node tests\qualify.js --variant=mega12 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-master.md
+2026-11-15 13:12:59 | END   #73 gq-mega12-master | exit=0 outcome=ok node=1.856 s projected=58 s
+2026-11-15 13:12:59 | START #74 gq-flower-master | elapsed 231.7 s | projection 61 s | node tests\qualify.js --variant=flower --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-master.md
+2026-11-15 13:13:08 | END   #74 gq-flower-master | exit=0 outcome=ok node=9.354 s projected=61 s
+2026-11-15 13:13:08 | START #75 gq-sohei-hard | elapsed 241.1 s | projection 63 s | node tests\qualify.js --variant=sohei --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-hard.md
+2026-11-15 13:13:11 | END   #75 gq-sohei-hard | exit=0 outcome=ok node=2.415 s projected=63 s
+2026-11-15 13:13:11 | START #76 gq-butterfly-expert | elapsed 243.5 s | projection 64 s | node tests\qualify.js --variant=butterfly --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-expert.md
+2026-11-15 13:13:22 | END   #76 gq-butterfly-expert | exit=0 outcome=ok node=10.934 s projected=64 s
+2026-11-15 13:13:22 | START #77 gq-classic6-nightmare | elapsed 254.4 s | projection 66 s | node tests\qualify.js --variant=classic6 --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-nightmare.md
+2026-11-15 13:13:25 | END   #77 gq-classic6-nightmare | exit=0 outcome=ok node=3.361 s projected=66 s
+2026-11-15 13:13:25 | START #78 gq-classic9-easy | elapsed 257.8 s | projection 67 s | node tests\qualify.js --variant=classic9 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-easy.md
+2026-11-15 13:13:29 | END   #78 gq-classic9-easy | exit=0 outcome=ok node=3.732 s projected=67 s
+2026-11-15 13:13:29 | START #79 gq-classic9-master | elapsed 261.5 s | projection 70 s | node tests\qualify.js --variant=classic9 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-master.md
+2026-11-15 13:13:31 | END   #79 gq-classic9-master | exit=0 outcome=ok node=1.828 s projected=70 s
+2026-11-15 13:13:31 | START #80 gq-diagonalX-nightmare | elapsed 263.4 s | projection 70 s | node tests\qualify.js --variant=diagonalX --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-nightmare.md
+2026-11-15 13:13:37 | END   #80 gq-diagonalX-nightmare | exit=0 outcome=ok node=6.04 s projected=70 s
+2026-11-15 13:13:37 | START #81 gq-wordoku-normal | elapsed 269.4 s | projection 70 s | node tests\qualify.js --variant=wordoku --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-normal.md
+2026-11-15 13:13:44 | END   #81 gq-wordoku-normal | exit=0 outcome=ok node=6.812 s projected=70 s
+2026-11-15 13:13:44 | START #82 gq-mega16-master | elapsed 276.2 s | projection 71 s | node tests\qualify.js --variant=mega16 --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-master.md
+2026-11-15 13:13:50 | END   #82 gq-mega16-master | exit=0 outcome=ok node=6.29 s projected=71 s
+2026-11-15 13:13:50 | START #83 gq-mega16-hell2 | elapsed 282.5 s | projection 72 s | node tests\qualify.js --variant=mega16 --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-hell2.md
+2026-11-15 13:14:06 | END   #83 gq-mega16-hell2 | exit=0 outcome=ok node=16.62 s projected=72 s
+2026-11-15 13:14:06 | START #84 gq-wordoku-hell2 | elapsed 299.1 s | projection 77 s | node tests\qualify.js --variant=wordoku --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hell2.md
+2026-11-15 13:14:30 | END   #84 gq-wordoku-hell2 | exit=0 outcome=ok node=23.328 s projected=77 s
+2026-11-15 13:14:30 | START #85 gq-butterfly-easy | elapsed 322.5 s | projection 84 s | node tests\qualify.js --variant=butterfly --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-easy.md
+2026-11-15 13:14:34 | END   #85 gq-butterfly-easy | exit=0 outcome=ok node=4.446 s projected=84 s
+2026-11-15 13:14:34 | START #86 gq-sohei-master | elapsed 326.9 s | projection 87 s | node tests\qualify.js --variant=sohei --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-master.md
+2026-11-15 13:14:40 | END   #86 gq-sohei-master | exit=0 outcome=ok node=5.902 s projected=87 s
+2026-11-15 13:14:40 | START #87 gq-classic9-hell2 | elapsed 332.8 s | projection 88 s | node tests\qualify.js --variant=classic9 --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hell2.md
+2026-11-15 13:15:00 | END   #87 gq-classic9-hell2 | exit=0 outcome=ok node=20.251 s projected=88 s
+2026-11-15 13:15:00 | START #88 gq-sohei-easy | elapsed 353.1 s | projection 89 s | node tests\qualify.js --variant=sohei --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-easy.md
+2026-11-15 13:15:04 | END   #88 gq-sohei-easy | exit=0 outcome=ok node=3.501 s projected=89 s
+2026-11-15 13:15:04 | COMPOUND #89 gq-killer-hard not admitted: elapsed 356.6 s + max(projection 94 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:15:04 | COMPOUND plan-gq-c1-from0 complete: 89 item(s) ran in 356.6 s; next --from=89
+2026-11-15 13:15:04 | COMPOUND-END plan-gq-c1-from0 | outcome=ok exit=0 node=357.285 s total=877.904 s lockWait=521 s items=89
+2026-11-15 13:15:19 | COMPOUND-START plan-gq-c2-from89 | lock helper called
+2026-11-15 13:15:54 | START #89 gq-killer-hard | elapsed 0.0 s | projection 94 s | node tests\qualify.js --variant=killer --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-hard.md
+2026-11-15 13:16:17 | END   #89 gq-killer-hard | exit=0 outcome=ok node=22.721 s projected=94 s
+2026-11-15 13:16:17 | START #90 gq-mega16-expert | elapsed 22.7 s | projection 100 s | node tests\qualify.js --variant=mega16 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega16-expert.md
+2026-11-15 13:16:41 | END   #90 gq-mega16-expert | exit=0 outcome=ok node=24.692 s projected=100 s
+2026-11-15 13:16:41 | START #91 gq-diagonalX-hell2 | elapsed 47.4 s | projection 102 s | node tests\qualify.js --variant=diagonalX --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hell2.md
+2026-11-15 13:16:46 | END   #91 gq-diagonalX-hell2 | exit=0 outcome=ok node=4.923 s projected=102 s
+2026-11-15 13:16:46 | START #92 gq-wordoku-hell1 | elapsed 52.3 s | projection 104 s | node tests\qualify.js --variant=wordoku --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-hell1.md
+2026-11-15 13:17:09 | END   #92 gq-wordoku-hell1 | exit=0 outcome=ok node=22.28 s projected=104 s
+2026-11-15 13:17:09 | START #93 gq-sohei-nightmare | elapsed 74.6 s | projection 106 s | node tests\qualify.js --variant=sohei --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-nightmare.md
+2026-11-15 13:17:34 | END   #93 gq-sohei-nightmare | exit=0 outcome=ok node=25.368 s projected=106 s
+2026-11-15 13:17:34 | START #94 gq-killer-expert | elapsed 100.0 s | projection 109 s | node tests\qualify.js --variant=killer --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-expert.md
+2026-11-15 13:18:14 | END   #94 gq-killer-expert | exit=0 outcome=ok node=39.656 s projected=109 s
+2026-11-15 13:18:14 | START #95 gq-hyper-easy | elapsed 139.6 s | projection 109 s | node tests\qualify.js --variant=hyper --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-easy.md
+2026-11-15 13:18:21 | END   #95 gq-hyper-easy | exit=0 outcome=ok node=7.73 s projected=109 s
+2026-11-15 13:18:21 | START #96 gq-flower-normal | elapsed 147.4 s | projection 109 s | node tests\qualify.js --variant=flower --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-normal.md
+2026-11-15 13:18:25 | END   #96 gq-flower-normal | exit=0 outcome=ok node=3.504 s projected=109 s
+2026-11-15 13:18:25 | START #97 gq-jigsaw9-hell2 | elapsed 150.9 s | projection 109 s | node tests\qualify.js --variant=jigsaw9 --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-hell2.md
+2026-11-15 13:18:35 | END   #97 gq-jigsaw9-hell2 | exit=0 outcome=ok node=10.248 s projected=109 s
+2026-11-15 13:18:35 | START #98 gq-classic9-hell1 | elapsed 161.1 s | projection 111 s | node tests\qualify.js --variant=classic9 --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-hell1.md
+2026-11-15 13:19:00 | END   #98 gq-classic9-hell1 | exit=0 outcome=ok node=24.382 s projected=111 s
+2026-11-15 13:19:00 | START #99 gq-killer-normal | elapsed 185.5 s | projection 112 s | node tests\qualify.js --variant=killer --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-normal.md
+2026-11-15 13:19:06 | END   #99 gq-killer-normal | exit=0 outcome=ok node=6.796 s projected=112 s
+2026-11-15 13:19:06 | START #100 gq-flower-easy | elapsed 192.3 s | projection 114 s | node tests\qualify.js --variant=flower --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-easy.md
+2026-11-15 13:19:10 | END   #100 gq-flower-easy | exit=0 outcome=ok node=3.37 s projected=114 s
+2026-11-15 13:19:10 | START #101 gq-samurai-expert | elapsed 195.7 s | projection 114 s | node tests\qualify.js --variant=samurai --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-expert.md
+2026-11-15 13:19:15 | END   #101 gq-samurai-expert | exit=0 outcome=ok node=5.298 s projected=114 s
+2026-11-15 13:19:15 | START #102 gq-butterfly-master | elapsed 201.0 s | projection 117 s | node tests\qualify.js --variant=butterfly --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-master.md
+2026-11-15 13:19:20 | END   #102 gq-butterfly-master | exit=0 outcome=ok node=4.528 s projected=117 s
+2026-11-15 13:19:20 | START #103 gq-diagonalX-easy | elapsed 205.5 s | projection 123 s | node tests\qualify.js --variant=diagonalX --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-easy.md
+2026-11-15 13:19:27 | END   #103 gq-diagonalX-easy | exit=0 outcome=ok node=7.343 s projected=123 s
+2026-11-15 13:19:27 | START #104 gq-classic9-nightmare | elapsed 212.9 s | projection 134 s | node tests\qualify.js --variant=classic9 --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic9-nightmare.md
+2026-11-15 13:19:29 | END   #104 gq-classic9-nightmare | exit=0 outcome=ok node=2.232 s projected=134 s
+2026-11-15 13:19:29 | START #105 gq-diagonalX-expert | elapsed 215.1 s | projection 138 s | node tests\qualify.js --variant=diagonalX --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-expert.md
+2026-11-15 13:19:41 | END   #105 gq-diagonalX-expert | exit=0 outcome=ok node=12 s projected=138 s
+2026-11-15 13:19:41 | START #106 gq-samurai-master | elapsed 227.1 s | projection 142 s | node tests\qualify.js --variant=samurai --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-master.md
+2026-11-15 13:19:49 | END   #106 gq-samurai-master | exit=0 outcome=ok node=7.685 s projected=142 s
+2026-11-15 13:19:49 | START #107 gq-hyper-expert | elapsed 234.8 s | projection 150 s | node tests\qualify.js --variant=hyper --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-expert.md
+2026-11-15 13:19:55 | END   #107 gq-hyper-expert | exit=0 outcome=ok node=5.68 s projected=150 s
+2026-11-15 13:19:55 | START #108 gq-hyper-hell1 | elapsed 240.5 s | projection 150 s | node tests\qualify.js --variant=hyper --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-hell1.md
+2026-11-15 13:20:29 | END   #108 gq-hyper-hell1 | exit=0 outcome=ok node=34.936 s projected=150 s
+2026-11-15 13:20:29 | START #109 gq-killer-master | elapsed 275.4 s | projection 162 s | node tests\qualify.js --variant=killer --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-master.md
+2026-11-15 13:21:11 | END   #109 gq-killer-master | exit=0 outcome=ok node=41.925 s projected=162 s
+2026-11-15 13:21:11 | COMPOUND #110 gq-flower-expert not admitted: elapsed 317.3 s + max(projection 166 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:21:11 | COMPOUND plan-gq-c2-from89 complete: 21 item(s) ran in 317.3 s; next --from=110
+2026-11-15 13:21:11 | COMPOUND-END plan-gq-c2-from89 | outcome=ok exit=0 node=317.411 s total=352.454 s lockWait=35 s items=21
+2026-11-15 13:21:26 | COMPOUND-START plan-gq-c3-from110 | lock helper called
+2026-11-15 13:23:22 | START #110 gq-flower-expert | elapsed 0.0 s | projection 166 s | node tests\qualify.js --variant=flower --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-expert.md
+2026-11-15 13:23:37 | END   #110 gq-flower-expert | exit=0 outcome=ok node=14.998 s projected=166 s
+2026-11-15 13:23:37 | START #111 gq-sohei-hell2 | elapsed 15.0 s | projection 182 s | node tests\qualify.js --variant=sohei --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-hell2.md
+2026-11-15 13:23:55 | END   #111 gq-sohei-hell2 | exit=0 outcome=ok node=18.558 s projected=182 s
+2026-11-15 13:23:55 | START #112 gq-jigsaw9-hell1 | elapsed 33.6 s | projection 199 s | node tests\qualify.js --variant=jigsaw9 --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-hell1.md
+2026-11-15 13:24:35 | END   #112 gq-jigsaw9-hell1 | exit=0 outcome=ok node=39.858 s projected=199 s
+2026-11-15 13:24:35 | START #113 gq-greaterThan-hard | elapsed 73.4 s | projection 220 s | node tests\qualify.js --variant=greaterThan --level=hard --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-hard.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-hard.md
+2026-11-15 13:24:51 | END   #113 gq-greaterThan-hard | exit=0 outcome=ok node=15.813 s projected=220 s
+2026-11-15 13:24:51 | START #114 gq-greaterThan-hell2 | elapsed 89.2 s | projection 235 s | node tests\qualify.js --variant=greaterThan --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-hell2.md
+2026-11-15 13:25:05 | END   #114 gq-greaterThan-hell2 | exit=0 outcome=ok node=14.525 s projected=235 s
+2026-11-15 13:25:05 | START #115 gq-greaterThan-normal | elapsed 103.8 s | projection 260 s | node tests\qualify.js --variant=greaterThan --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-normal.md
+2026-11-15 13:25:34 | END   #115 gq-greaterThan-normal | exit=0 outcome=ok node=28.454 s projected=260 s
+2026-11-15 13:25:34 | START #116 gq-greaterThan-nightmare | elapsed 132.2 s | projection 272 s | node tests\qualify.js --variant=greaterThan --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-nightmare.md
+2026-11-15 13:25:54 | END   #116 gq-greaterThan-nightmare | exit=0 outcome=ok node=20.035 s projected=272 s
+2026-11-15 13:25:54 | START #117 gq-samurai-nightmare | elapsed 152.3 s | projection 281 s | node tests\qualify.js --variant=samurai --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-nightmare.md
+2026-11-15 13:26:23 | END   #117 gq-samurai-nightmare | exit=0 outcome=ok node=29.534 s projected=281 s
+2026-11-15 13:26:23 | COMPOUND #118 gq-killer-nightmare not admitted: elapsed 181.8 s + max(projection 290 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:26:23 | COMPOUND plan-gq-c3-from110 complete: 8 item(s) ran in 181.8 s; next --from=118
+2026-11-15 13:26:23 | COMPOUND-END plan-gq-c3-from110 | outcome=ok exit=0 node=181.879 s total=297.035 s lockWait=115 s items=8
+2026-11-15 13:26:38 | COMPOUND-START plan-gq-c4-from118 | lock helper called
+2026-11-15 13:26:44 | START #118 gq-killer-nightmare | elapsed 0.0 s | projection 290 s | node tests\qualify.js --variant=killer --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-nightmare.md
+2026-11-15 13:27:52 | END   #118 gq-killer-nightmare | exit=0 outcome=ok node=68.252 s projected=290 s
+2026-11-15 13:27:52 | START #119 gq-killer-hell2 | elapsed 68.3 s | projection 309 s | node tests\qualify.js --variant=killer --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-hell2.md
+2026-11-15 13:28:25 | END   #119 gq-killer-hell2 | exit=0 outcome=ok node=33.284 s projected=309 s
+2026-11-15 13:28:25 | START #120 gq-jigsaw9-expert | elapsed 101.5 s | projection 326 s | node tests\qualify.js --variant=jigsaw9 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-expert.md
+2026-11-15 13:28:35 | END   #120 gq-jigsaw9-expert | exit=0 outcome=ok node=9.877 s projected=326 s
+2026-11-15 13:28:35 | START #121 gq-flower-hell2 | elapsed 111.4 s | projection 329 s | node tests\qualify.js --variant=flower --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-hell2.md
+2026-11-15 13:28:56 | END   #121 gq-flower-hell2 | exit=0 outcome=ok node=21.451 s projected=329 s
+2026-11-15 13:28:56 | COMPOUND #122 gq-butterfly-hell2 not admitted: elapsed 132.9 s + max(projection 333 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:28:56 | COMPOUND plan-gq-c4-from118 complete: 4 item(s) ran in 132.9 s; next --from=122
+2026-11-15 13:28:56 | COMPOUND-END plan-gq-c4-from118 | outcome=ok exit=0 node=132.964 s total=137.988 s lockWait=5 s items=4
+2026-11-15 13:29:11 | COMPOUND-START plan-gq-c5-from122 | lock helper called
+2026-11-15 13:32:57 | START #122 gq-butterfly-hell2 | elapsed 0.0 s | projection 333 s | node tests\qualify.js --variant=butterfly --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-hell2.md
+2026-11-15 13:33:25 | END   #122 gq-butterfly-hell2 | exit=0 outcome=ok node=28.367 s projected=333 s
+2026-11-15 13:33:25 | START #123 gq-diagonalX-hell1 | elapsed 28.4 s | projection 351 s | node tests\qualify.js --variant=diagonalX --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hell1.md
+2026-11-15 13:34:35 | END   #123 gq-diagonalX-hell1 | exit=0 outcome=ok node=69.466 s projected=351 s
+2026-11-15 13:34:35 | COMPOUND #124 gq-sohei-hell1 not admitted: elapsed 97.8 s + max(projection 353 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:34:35 | COMPOUND plan-gq-c5-from122 complete: 2 item(s) ran in 97.8 s; next --from=124
+2026-11-15 13:34:35 | COMPOUND-END plan-gq-c5-from122 | outcome=ok exit=0 node=97.93 s total=323.186 s lockWait=225 s items=2
+2026-11-15 13:34:50 | COMPOUND-START plan-gq-c6-from124 | lock helper called
+2026-11-15 13:36:35 | START #124 gq-sohei-hell1 | elapsed 0.0 s | projection 353 s | node tests\qualify.js --variant=sohei --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\sohei-hell1.md
+2026-11-15 13:38:16 | END   #124 gq-sohei-hell1 | exit=0 outcome=ok node=101.167 s projected=353 s
+2026-11-15 13:38:16 | COMPOUND #125 gq-mega12-hell2 not admitted: elapsed 101.2 s + max(projection 363 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:38:16 | COMPOUND plan-gq-c6-from124 complete: 1 item(s) ran in 101.2 s; next --from=125
+2026-11-15 13:38:16 | COMPOUND-END plan-gq-c6-from124 | outcome=ok exit=0 node=101.26 s total=206.483 s lockWait=105 s items=1
+2026-11-15 13:38:31 | COMPOUND-START plan-gq-c7-from125 | lock helper called
+2026-11-15 13:43:12 | START #125 gq-mega12-hell2 | elapsed 0.0 s | projection 363 s | node tests\qualify.js --variant=mega12 --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\mega12-hell2.md
+2026-11-15 13:43:38 | END   #125 gq-mega12-hell2 | exit=0 outcome=ok node=26.7 s projected=363 s
+2026-11-15 13:43:38 | START #126 gq-flower-hell1 | elapsed 26.7 s | projection 363 s | node tests\qualify.js --variant=flower --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-hell1.md
+2026-11-15 13:45:15 | END   #126 gq-flower-hell1 | exit=0 outcome=ok node=96.925 s projected=363 s
+2026-11-15 13:45:15 | COMPOUND #127 gq-flower-nightmare not admitted: elapsed 123.6 s + max(projection 378 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:45:15 | COMPOUND plan-gq-c7-from125 complete: 2 item(s) ran in 123.6 s; next --from=127
+2026-11-15 13:45:15 | COMPOUND-END plan-gq-c7-from125 | outcome=ok exit=0 node=123.722 s total=404.229 s lockWait=281 s items=2
+2026-11-15 13:45:30 | COMPOUND-START plan-gq-c8-from127 | lock helper called
+2026-11-15 13:47:26 | START #127 gq-flower-nightmare | elapsed 0.0 s | projection 378 s | node tests\qualify.js --variant=flower --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-nightmare.md
+2026-11-15 13:47:54 | END   #127 gq-flower-nightmare | exit=0 outcome=ok node=28.459 s projected=378 s
+2026-11-15 13:47:54 | START #128 gq-killer-hell1 | elapsed 28.5 s | projection 398 s | node tests\qualify.js --variant=killer --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-hell1.md
+2026-11-15 13:49:13 | END   #128 gq-killer-hell1 | exit=0 outcome=ok node=79.494 s projected=398 s
+2026-11-15 13:49:13 | COMPOUND #129 gq-samurai-hell1 not admitted: elapsed 108.0 s + max(projection 411 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:49:13 | COMPOUND plan-gq-c8-from127 complete: 2 item(s) ran in 108.0 s; next --from=129
+2026-11-15 13:49:14 | COMPOUND-END plan-gq-c8-from127 | outcome=ok exit=0 node=108.051 s total=223.112 s lockWait=115 s items=2
+2026-11-15 13:49:28 | COMPOUND-START plan-gq-c9-from129 | lock helper called
+2026-11-15 13:51:44 | START #129 gq-samurai-hell1 | elapsed 0.0 s | projection 411 s | node tests\qualify.js --variant=samurai --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-hell1.md
+2026-11-15 13:53:32 | END   #129 gq-samurai-hell1 | exit=0 outcome=ok node=108.502 s projected=411 s
+2026-11-15 13:53:32 | COMPOUND #130 gq-samurai-hell2 not admitted: elapsed 108.5 s + max(projection 423 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 13:53:32 | COMPOUND plan-gq-c9-from129 complete: 1 item(s) ran in 108.5 s; next --from=130
+2026-11-15 13:53:32 | COMPOUND-END plan-gq-c9-from129 | outcome=ok exit=0 node=108.597 s total=243.713 s lockWait=135 s items=1
+2026-11-15 13:53:47 | COMPOUND-START plan-gq-c10-from130 | lock helper called
+2026-11-15 13:55:12 | START #130 gq-samurai-hell2 | elapsed 0.0 s | projection 423 s | node tests\qualify.js --variant=samurai --level=hell2 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-hell2.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\samurai-hell2.md
+2026-11-15 13:55:49 | END   #130 gq-samurai-hell2 | exit=0 outcome=ok node=36.828 s projected=423 s
+2026-11-15 13:55:49 | UNEXECUTED #131 gq-mega12-hell1 | projection 557 s | projected 556 s > 450 s (S-AV27 rule: 1.5 x 36.5 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)
+2026-11-15 13:55:49 | UNEXECUTED #132 gq-greaterThan-expert | projection 919 s | projected 919 s > 450 s (S-AV27 rule: 1.5 x 8.67 s x (10 + 60) + 8 s; expansion not excluded: 1 hits of 2 pooled, 95 % upper bound 0.97)
+2026-11-15 13:55:49 | UNEXECUTED #133 gq-mega16-nightmare | projection 1247 s | projected 1246 s > 450 s (S-AV27 rule: 1.5 x 11.8 s x (10 + 60) + 8 s; expansion not excluded: 4 hits of 13 pooled, 95 % upper bound 0.57)
+2026-11-15 13:55:49 | UNEXECUTED #134 gq-mega16-hell1 | projection 1809 s | projected 1808 s > 450 s (S-AV27 rule: 1.5 x 120 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)
+2026-11-15 13:55:49 | UNEXECUTED #135 gq-greaterThan-hell1 | projection 3957 s | projected 3957 s > 450 s (S-AV27 rule: 1.5 x 37.6 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)
+2026-11-15 13:55:49 | UNEXECUTED #136 gq-butterfly-hell1 | projection 4033 s | projected 4032 s > 450 s (S-AV27 rule: 1.5 x 38.3 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)
+2026-11-15 13:55:49 | COMPOUND plan-gq-c10-from130 complete: 1 item(s) ran in 36.8 s; next --from=137
+2026-11-15 13:55:49 | COMPOUND-END plan-gq-c10-from130 | outcome=ok exit=0 node=36.93 s total=121.982 s lockWait=85 s items=1
+2026-11-15 13:55:49 | DRIVER end plan=plan-gq
+2026-11-15 13:59:48 | DRIVER start plan=plan-quick items=5 from=0 pid=26616 closing quick sets on the final tree: Generator groups shared-small, own-suites, pipeline, replay-player, then the Player quick set; compounds
+2026-11-15 13:59:48 | COMPOUND-START plan-quick-c1-from0 | lock helper called
+2026-11-15 13:59:58 | START #0 quick-shared-small | elapsed 0.0 s | projection 98 s | node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS07e\quick
+2026-11-15 14:01:10 | END   #0 quick-shared-small | exit=0 outcome=ok node=71.951 s projected=98 s
+2026-11-15 14:01:10 | START #1 quick-own-suites | elapsed 72.0 s | projection 220 s | node ..\.github\scripts\generator-quick.js run own-suites --results-dir=..\docs\difficulty-v3\evidence\MS07e\quick
+2026-11-15 14:04:02 | END   #1 quick-own-suites | exit=0 outcome=ok node=171.642 s projected=220 s
+2026-11-15 14:04:02 | COMPOUND #2 quick-pipeline not admitted: elapsed 243.6 s + max(projection 397 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 14:04:02 | COMPOUND plan-quick-c1-from0 complete: 2 item(s) ran in 243.6 s; next --from=2
+2026-11-15 14:04:02 | COMPOUND-END plan-quick-c1-from0 | outcome=ok exit=0 node=243.692 s total=253.802 s lockWait=10 s items=2
+2026-11-15 14:04:17 | COMPOUND-START plan-quick-c2-from2 | lock helper called
+2026-11-15 14:04:17 | START #2 quick-pipeline | elapsed 0.0 s | projection 397 s | node ..\.github\scripts\generator-quick.js run pipeline --results-dir=..\docs\difficulty-v3\evidence\MS07e\quick
+2026-11-15 14:09:30 | END   #2 quick-pipeline | exit=0 outcome=ok node=312.709 s projected=397 s
+2026-11-15 14:09:30 | COMPOUND #3 quick-replay-player not admitted: elapsed 312.7 s + max(projection 179 s, floor 60 s) > 450 s; left for the next compound
+2026-11-15 14:09:30 | COMPOUND plan-quick-c2-from2 complete: 1 item(s) ran in 312.7 s; next --from=3
+2026-11-15 14:09:30 | COMPOUND-END plan-quick-c2-from2 | outcome=ok exit=0 node=312.948 s total=312.958 s lockWait=0 s items=1
+2026-11-15 14:09:45 | COMPOUND-START plan-quick-c3-from3 | lock helper called
+2026-11-15 14:09:45 | START #3 quick-replay-player | elapsed 0.0 s | projection 179 s | node ..\.github\scripts\generator-quick.js run replay-player --results-dir=..\docs\difficulty-v3\evidence\MS07e\quick
+2026-11-15 14:12:01 | END   #3 quick-replay-player | exit=0 outcome=ok node=135.762 s projected=179 s
+2026-11-15 14:12:01 | START #4 quick-player | elapsed 135.8 s | projection 52 s | node tests\node-runner.js --results=..\docs\difficulty-v3\evidence\MS07e\quick\player-quick.json
+2026-11-15 14:12:35 | END   #4 quick-player | exit=0 outcome=ok node=33.536 s projected=52 s
+2026-11-15 14:12:35 | COMPOUND plan-quick-c3-from3 complete: 2 item(s) ran in 169.3 s; next --from=5
+2026-11-15 14:12:35 | COMPOUND-END plan-quick-c3-from3 | outcome=ok exit=0 node=169.559 s total=169.568 s lockWait=0 s items=2
+2026-11-15 14:12:35 | DRIVER end plan=plan-quick
+2026-11-15 14:15:54 | FINISHED: GQ 129 of 135 cells executed (6 unexecuted by the S-AV27 projection rule), merge attempt rejected only for 6 missing cells, checkpoint JSON/MD written, quick sets 3,505/3,505 and 1,750/1,750 green, CI check exit 0, format check 0 problems. No lock of mine is held.

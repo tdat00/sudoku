@@ -1,0 +1,21 @@
+$ node ..\.github\scripts\generator-quick.js run pipeline --results-dir=..\docs\difficulty-v3\evidence\MS07c\quick-try1
+==== shard pipeline (154 tests): node tests/node-runner.js --suite=pipeline --results=..\docs\difficulty-v3\evidence\MS07c\quick-try1\generator-pipeline.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL pipeline: 153 passed, 1 failed  (309.73 s)
+
+Failures:
+  FAIL pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: a real complete result inside the band that needs no Nightmare technique is shallow
+       AssertionError: expected 0 to be > 0
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pipeline.test.js:2527:34)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  154 total, 153 passed, 1 failed, 0 skipped
+Time:   309.73 s running tests, 309.93 s total
+Results: docs/difficulty-v3/evidence/MS07c/quick-try1/generator-pipeline.json
+shard pipeline: exit 1, 310.1 s
+FAILED: pipeline
+exit=1 seconds=310.528

@@ -1,0 +1,7 @@
+$ node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS13c\hashes --update-hashes
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED classic9/nightmare: seeds 3, 8, 21, 89, 144, 377, 1597, 4181, 6765
+CHANGED diagonalX/nightmare: seeds 1, 2, 3, 5, 8, 13, 21, 55, 144, 233, 610, 987, 1597, 2584, 4181, 6765, 10946
+26 of 520 hashes differ from the current fixture
+wrote generator/tests/fixtures/regression.js: 26 combinations x 20 seeds (merged ledgers, nothing generated)
+exit=0 seconds=0.618

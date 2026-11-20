@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS10a\explore-solves.js 777 300
+seed 777 puzzles 300 (from 0): solved 300, with a remotePairs step 0, hardest techniques {"nakedPair":12,"nakedSingle":76,"pointing":22,"hiddenSingleBox":40,"forcingChain":12,"wWing":12,"forcingChainLong":54,"hiddenPair":6,"skyscraper":12,"uniqueRectangle":4,"nishio":11,"hiddenSingleLine":18,"xyWing":12,"boxLine":3,"finnedSwordfish":1,"nakedTriple":1,"xyzWing":1,"twoStringKite":3}, 0.6 s
+exit=0 seconds=1.036

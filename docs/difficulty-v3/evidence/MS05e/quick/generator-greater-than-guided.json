@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "569c724f6043e919de90f0c776bc5d40f0e368339b72d89ad5f93fb4325186c4",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["greater-than-guided"],"filter":null,"exact":null,"count":15},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 1063.6,
+  "results": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 887.9,
+    "tests": [
+      {"suite":"greater-than-guided","name":"MS05e-T01: a technique of the tier beats a higher score, then the target, then the score","fullName":"greater-than-guided > greaterThan sign pool: the winner of a step > MS05e-T01: a technique of the tier beats a higher score, then the target, then the score","status":"pass","ms":15.097,"reason":"","error":null,"ordinal":0},
+      {"suite":"greater-than-guided","name":"MS05e-T01: the ordered log shows every pool member, then the winner alone is accepted","fullName":"greater-than-guided > greaterThan sign pool: the winner of a step > MS05e-T01: the ordered log shows every pool member, then the winner alone is accepted","status":"pass","ms":1.962,"reason":"","error":null,"ordinal":1},
+      {"suite":"greater-than-guided","name":"MS05e-T01: the pool draws nothing: the random stream after the dig ignores the outcomes","fullName":"greater-than-guided > greaterThan sign pool: the winner of a step > MS05e-T01: the pool draws nothing: the random stream after the dig ignores the outcomes","status":"pass","ms":5.273,"reason":"","error":null,"ordinal":2},
+      {"suite":"greater-than-guided","name":"MS05e-T01: an ambiguous, a stuck and a top-of-band removal are refused for the rest of the pass","fullName":"greater-than-guided > greaterThan sign pool: refusals, accounting and the inherited budget > MS05e-T01: an ambiguous, a stuck and a top-of-band removal are refused for the rest of the pass","status":"pass","ms":1.911,"reason":"","error":null,"ordinal":3},
+      {"suite":"greater-than-guided","name":"MS05e-T01: the refused signs come back in a later round of the dig, not in the same pass","fullName":"greater-than-guided > greaterThan sign pool: refusals, accounting and the inherited budget > MS05e-T01: the refused signs come back in a later round of the dig, not in the same pass","status":"pass","ms":1.37,"reason":"","error":null,"ordinal":4},
+      {"suite":"greater-than-guided","name":"MS05e-T01: fewer live signs than the pool, all refused, and an allowed loser rated again","fullName":"greater-than-guided > greaterThan sign pool: refusals, accounting and the inherited budget > MS05e-T01: fewer live signs than the pool, all refused, and an allowed loser rated again","status":"pass","ms":2.094,"reason":"","error":null,"ordinal":5},
+      {"suite":"greater-than-guided","name":"MS05e-T01: a step rates at most SIGN_POOL signs, in the shuffled order, then moves on","fullName":"greater-than-guided > greaterThan sign pool: refusals, accounting and the inherited budget > MS05e-T01: a step rates at most SIGN_POOL signs, in the shuffled order, then moves on","status":"pass","ms":3.786,"reason":"","error":null,"ordinal":6},
+      {"suite":"greater-than-guided","name":"MS05e-T01: a seeded random script agrees with an independent re-statement of the rule","fullName":"greater-than-guided > greaterThan sign pool: refusals, accounting and the inherited budget > MS05e-T01: a seeded random script agrees with an independent re-statement of the rule","status":"pass","ms":89.573,"reason":"","error":null,"ordinal":7},
+      {"suite":"greater-than-guided","name":"MS05e-T02: an error of the solver comes out unchanged, with no removal logged for its sign","fullName":"greater-than-guided > greaterThan sign pool: errors, cancellation and events > MS05e-T02: an error of the solver comes out unchanged, with no removal logged for its sign","status":"pass","ms":2.946,"reason":"","error":null,"ordinal":8},
+      {"suite":"greater-than-guided","name":"MS05e-T02: a cancelled budget stops at the next rating with its own error","fullName":"greater-than-guided > greaterThan sign pool: errors, cancellation and events > MS05e-T02: a cancelled budget stops at the next rating with its own error","status":"pass","ms":0.895,"reason":"","error":null,"ordinal":9},
+      {"suite":"greater-than-guided","name":"MS05e-T02: the events stay in the shared vocabulary; a kept sign is dig.keep with its score","fullName":"greater-than-guided > greaterThan sign pool: errors, cancellation and events > MS05e-T02: the events stay in the shared vocabulary; a kept sign is dig.keep with its score","status":"pass","ms":2.087,"reason":"","error":null,"ordinal":10},
+      {"suite":"greater-than-guided","name":"MS05e-T03: easy seed 4: minimal signs, symmetric clues, floor, requiredness","fullName":"greater-than-guided > greaterThan sign pool: the real generator on small fixed seeds > MS05e-T03: easy seed 4: minimal signs, symmetric clues, floor, requiredness","status":"pass","ms":129.934,"reason":"","error":null,"ordinal":11},
+      {"suite":"greater-than-guided","name":"MS05e-T03: normal seed 301: minimal signs, symmetric clues, floor, requiredness","fullName":"greater-than-guided > greaterThan sign pool: the real generator on small fixed seeds > MS05e-T03: normal seed 301: minimal signs, symmetric clues, floor, requiredness","status":"pass","ms":183.219,"reason":"","error":null,"ordinal":12},
+      {"suite":"greater-than-guided","name":"MS05e-T02: sync, cooperative, logged and unlogged digs of one model give the same puzzle","fullName":"greater-than-guided > greaterThan sign pool: the real generator on small fixed seeds > MS05e-T02: sync, cooperative, logged and unlogged digs of one model give the same puzzle","status":"pass","ms":255.386,"reason":"","error":null,"ordinal":13},
+      {"suite":"greater-than-guided","name":"MS05e-T02: the trace level changes nothing: same puzzle and dig log","fullName":"greater-than-guided > greaterThan sign pool: the real generator on small fixed seeds > MS05e-T02: the trace level changes nothing: same puzzle and dig log","status":"pass","ms":191.891,"reason":"","error":null,"ordinal":14}
+    ],
+    "suites": [
+      {"name":"greater-than-guided","total":15,"passed":15,"failed":0,"skipped":0,"ms":887.647}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=greater-than-guided","--results=..\\docs\\difficulty-v3\\evidence\\MS05e\\quick\\generator-greater-than-guided.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

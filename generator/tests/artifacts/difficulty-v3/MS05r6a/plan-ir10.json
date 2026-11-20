@@ -1,0 +1,197 @@
+[
+  {
+    "label": "f2-ir10-classic9-nightmare-8-noallow-default",
+    "projectionSeconds": 19,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (4651 ms, allowance 256, size default, same source) and the MS05b1 ledger time (4257 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=classic9/nightmare",
+      "--seed=8",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\classic9-nightmare-8-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-diagonalX-nightmare-5-noallow-default",
+    "projectionSeconds": 48,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (11942 ms, allowance 256, size default, same source) and the MS05b1 ledger time (1818 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=diagonalX/nightmare",
+      "--seed=5",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\diagonalX-nightmare-5-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-diagonalX-nightmare-1597-noallow-default",
+    "projectionSeconds": 31,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (7741 ms, allowance 256, size default, same source) and the MS05b1 ledger time (4807 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=diagonalX/nightmare",
+      "--seed=1597",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\diagonalX-nightmare-1597-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-8-noallow-default",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (491 ms, allowance 256, size default, same source) and the MS05b1 ledger time (262 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=8",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-8-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-610-noallow-default",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (296 ms, allowance 256, size default, same source) and the MS05b1 ledger time (311 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=610",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-610-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-987-noallow-default",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (429 ms, allowance 256, size default, same source) and the MS05b1 ledger time (353 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=987",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-987-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-2584-noallow-default",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (512 ms, allowance 256, size default, same source) and the MS05b1 ledger time (1062 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=2584",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-2584-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-butterfly-normal-610-noallow-default",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (554 ms, allowance 256, size default, same source) and the MS05b1 ledger time (665 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=butterfly/normal",
+      "--seed=610",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\butterfly-normal-610-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-butterfly-normal-10946-noallow-default",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (775 ms, allowance 256, size default, same source) and the MS05b1 ledger time (583 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=butterfly/normal",
+      "--seed=10946",
+      "--allowance=none",
+      "--attempts=default",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\butterfly-normal-10946-noallow-default.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-8-a256-att8",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (491 ms, allowance 256, size default, same source) and the MS05b1 ledger time (262 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=8",
+      "--allowance=256",
+      "--attempts=8",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-8-a256-att8.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-610-a256-att8",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (296 ms, allowance 256, size default, same source) and the MS05b1 ledger time (311 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=610",
+      "--allowance=256",
+      "--attempts=8",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-610-a256-att8.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-987-a256-att8",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (429 ms, allowance 256, size default, same source) and the MS05b1 ledger time (353 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=987",
+      "--allowance=256",
+      "--attempts=8",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-987-a256-att8.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-samurai-easy-2584-a256-att8",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (512 ms, allowance 256, size default, same source) and the MS05b1 ledger time (1062 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=samurai/easy",
+      "--seed=2584",
+      "--allowance=256",
+      "--attempts=8",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-2584-a256-att8.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-butterfly-normal-610-a256-att8",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (554 ms, allowance 256, size default, same source) and the MS05b1 ledger time (665 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=butterfly/normal",
+      "--seed=610",
+      "--allowance=256",
+      "--attempts=8",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\butterfly-normal-610-a256-att8.json"
+    ]
+  },
+  {
+    "label": "f2-ir10-butterfly-normal-10946-a256-att8",
+    "projectionSeconds": 10,
+    "projectionBasis": "4 x the larger of the E ledger time of the same key (775 ms, allowance 256, size default, same source) and the MS05b1 ledger time (583 ms), at least 10 s",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6a\\ir10-diagnostic.cjs",
+      "--key=butterfly/normal",
+      "--seed=10946",
+      "--allowance=256",
+      "--attempts=8",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\butterfly-normal-10946-a256-att8.json"
+    ]
+  }
+]

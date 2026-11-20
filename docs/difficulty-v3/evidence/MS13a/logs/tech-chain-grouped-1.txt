@@ -1,0 +1,22 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped graph
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 8 passed, 2 failed  (518 ms)
+
+Failures:
+  FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > is referenced by nothing but its own table: the registered finders and the seam keep the singleton graph
+       AssertionError: expected 3 to be 2
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3650:42)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+       AssertionError: expected value not to be -1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3808:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  10 total, 8 passed, 2 failed, 0 skipped
+Time:   518 ms running tests, 629 ms total
+exit=1 seconds=0.729

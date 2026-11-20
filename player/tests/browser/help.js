@@ -13,6 +13,9 @@ function check(name, ok, detail) {
 }
 
 const overflow = '(function(){return document.documentElement.scrollWidth - window.innerWidth;})()';
+// The registered techniques: 34 classic + 1 Jigsaw + 3 Killer + 2 Greater-Than. A fixed number, not read from the
+// page: SG.techniques.list().length, pinned by player/tests/suites/help.test.js:573.
+const TECHNIQUES = 40;
 
 (async function () {
   const server = await serve(8772);
@@ -48,9 +51,9 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     check('the guide has the basics, the hints, the techniques and the keyboard', facts.sections.join(',') === 'help-how,help-hints,help-techniques,help-keys', JSON.stringify(facts.sections));
     check('it is a page, not a dialog: no dialog, no About or Variants', facts.dialogs === 0 && !/About|Variants/.test(await page.eval('document.getElementById("help-root").textContent')));
     check('the basics and the hints are listed, and the keyboard', facts.steps === 10 && facts.levels === 3 && facts.keys > 15, JSON.stringify([facts.steps, facts.levels, facts.keys]));
-    check('26 techniques in 8 groups, a tab for each, the first of each group shown', facts.tabs === 26 && facts.lists === 8 && facts.groups.length === 8 && facts.selected === 8 && facts.shown === 8, JSON.stringify([facts.tabs, facts.lists, facts.selected, facts.shown]));
-    check('only the examples shown are drawn: 8, not 26', facts.boards === 8, String(facts.boards));
-    check('the contents list the 4 sections, the 8 groups and the 26 techniques, and is open on a wide screen', facts.tocSections === 4 && facts.tocGroups.length === 8 && facts.tocTechs === 26 && facts.tocOpen && facts.tocGroups.join('|') === facts.groups.join('|'), JSON.stringify(facts.tocGroups));
+    check(TECHNIQUES + ' techniques in 8 groups, a tab for each, the first of each group shown', facts.tabs === TECHNIQUES && facts.lists === 8 && facts.groups.length === 8 && facts.selected === 8 && facts.shown === 8, JSON.stringify([facts.tabs, facts.lists, facts.selected, facts.shown]));
+    check('only the examples shown are drawn: 8, not ' + TECHNIQUES, facts.boards === 8, String(facts.boards));
+    check('the contents list the 4 sections, the 8 groups and the ' + TECHNIQUES + ' techniques, and is open on a wide screen', facts.tocSections === 4 && facts.tocGroups.length === 8 && facts.tocTechs === TECHNIQUES && facts.tocOpen && facts.tocGroups.join('|') === facts.groups.join('|'), JSON.stringify(facts.tocGroups));
     check('a link goes back to the player', facts.back === 'index.html');
     await page.shot('help-top');
 
@@ -101,7 +104,7 @@ const overflow = '(function(){return document.documentElement.scrollWidth - wind
     await page.eval('Array.from(document.querySelectorAll(".help-tab")).forEach(function (tab) { tab.click(); })');
     await sleep(600);
     const drawn = await page.eval('document.querySelectorAll(".help-example svg").length');
-    check('all 26 techniques draw an example (in ' + (Date.now() - started) + ' ms)', drawn === 26 && await page.eval('document.querySelectorAll(".help-technique__example .field__hint").length') === 0, String(drawn));
+    check('all ' + TECHNIQUES + ' techniques draw an example (in ' + (Date.now() - started) + ' ms)', drawn === TECHNIQUES && await page.eval('document.querySelectorAll(".help-technique__example .field__hint").length') === 0, String(drawn));
     check('and each one has a hint on board: a cell that changes', await page.eval('Array.from(document.querySelectorAll(".help-technique")).every(function(d){return d.querySelectorAll(".is-hint-target").length>=1 && d.querySelectorAll(".is-hint-cell").length>=1;})'));
 
     // the language and the theme are those of the player

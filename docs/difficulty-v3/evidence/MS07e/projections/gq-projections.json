@@ -1,0 +1,5192 @@
+[
+  {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/veryEasy",
+    "m": 0.004,
+    "f": 3,
+    "e": 1,
+    "first": 0.04,
+    "second": 0.24,
+    "projection": 8.84,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.004 s",
+    "prior": {
+      "s": 0.004,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic4",
+    "level": "easy",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/easy",
+    "m": 0.071,
+    "f": 3,
+    "e": 0,
+    "first": 0.71,
+    "second": 0,
+    "projection": 10.129999999999999,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.071 s",
+    "prior": {
+      "s": 0.071,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "normal",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/normal",
+    "m": 0.058,
+    "f": 3,
+    "e": 0,
+    "first": 0.5800000000000001,
+    "second": 0,
+    "projection": 9.74,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.058 s",
+    "prior": {
+      "s": 0.058,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "hard",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/hard",
+    "m": 0.081,
+    "f": 3,
+    "e": 0,
+    "first": 0.81,
+    "second": 0,
+    "projection": 10.43,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.081 s",
+    "prior": {
+      "s": 0.081,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "expert",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/expert",
+    "m": 0.077,
+    "f": 3,
+    "e": 0,
+    "first": 0.77,
+    "second": 0,
+    "projection": 10.31,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.077 s",
+    "prior": {
+      "s": 0.077,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "master",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/master",
+    "m": 0.069,
+    "f": 3,
+    "e": 0,
+    "first": 0.6900000000000001,
+    "second": 0,
+    "projection": 10.07,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.069 s",
+    "prior": {
+      "s": 0.069,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "nightmare",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/nightmare",
+    "m": 0.072,
+    "f": 3,
+    "e": 0,
+    "first": 0.72,
+    "second": 0,
+    "projection": 10.16,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.072 s",
+    "prior": {
+      "s": 0.072,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "hell1",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/hell1",
+    "m": 0.32,
+    "f": 3,
+    "e": 0,
+    "first": 3.2,
+    "second": 0,
+    "projection": 17.6,
+    "basis": "rating-v2 p95 (no MS05b3 request) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s): 0.320 s",
+    "prior": {
+      "s": 0.32,
+      "basis": "rating-v2 p95 (no MS05b3 request) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic4",
+    "level": "hell2",
+    "cellCount": 16,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic4/hell2",
+    "m": 0.115,
+    "f": 3,
+    "e": 0,
+    "first": 1.1500000000000001,
+    "second": 0,
+    "projection": 11.45,
+    "basis": "rating-v2 p95 (no MS05b3 request): 0.115 s",
+    "prior": {
+      "s": 0.115,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": true
+  },
+  {
+    "variant": "classic6",
+    "level": "veryEasy",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic6/veryEasy",
+    "m": 0.004333333333333333,
+    "f": 3,
+    "e": 1,
+    "first": 0.043333333333333335,
+    "second": 0.26,
+    "projection": 8.91,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.004 s",
+    "prior": {
+      "s": 0.004333333333333333,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "easy",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 251.663,
+      "maxMs": 297.9662,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/easy",
+    "m": 0.251663,
+    "f": 1.5,
+    "e": 0,
+    "first": 2.51663,
+    "second": 0,
+    "projection": 11.774945,
+    "basis": "pilot mean 0.252 s (n 3)",
+    "prior": {
+      "s": 0.155,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "normal",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 235.263,
+      "maxMs": 243.5049,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/normal",
+    "m": 0.235263,
+    "f": 1.5,
+    "e": 0,
+    "first": 2.35263,
+    "second": 0,
+    "projection": 11.528945,
+    "basis": "pilot mean 0.235 s (n 3)",
+    "prior": {
+      "s": 0.128,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "hard",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic6/hard",
+    "m": 0.113,
+    "f": 3,
+    "e": 1,
+    "first": 1.1300000000000001,
+    "second": 6.78,
+    "projection": 31.73,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.113 s",
+    "prior": {
+      "s": 0.113,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 39,
+      "n": 40,
+      "ub": 0.9987184894771248
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "expert",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 245.907,
+      "maxMs": 257.5923,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/expert",
+    "m": 0.24590700000000001,
+    "f": 1.5,
+    "e": 1,
+    "first": 2.45907,
+    "second": 14.754420000000001,
+    "projection": 33.820235,
+    "basis": "pilot mean 0.246 s (n 3)",
+    "prior": {
+      "s": 0.179,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 9,
+      "n": 22,
+      "ub": 0.6048442150807262
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "master",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 342.029,
+      "maxMs": 392.9859,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/master",
+    "m": 0.34202899999999997,
+    "f": 1.5,
+    "e": 1,
+    "first": 3.4202899999999996,
+    "second": 20.521739999999998,
+    "projection": 43.913045,
+    "basis": "pilot mean 0.342 s (n 3)",
+    "prior": {
+      "s": 0.275,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 23,
+      "n": 36,
+      "ub": 0.77145197737006
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "nightmare",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 544.999,
+      "maxMs": 617.1661,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/nightmare",
+    "m": 0.544999,
+    "f": 1.5,
+    "e": 1,
+    "first": 5.44999,
+    "second": 32.69994,
+    "projection": 65.224895,
+    "basis": "pilot mean 0.545 s (n 3)",
+    "prior": {
+      "s": 0.433,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 11,
+      "n": 25,
+      "ub": 0.6213784366071133
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "hell1",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 545.851,
+      "maxMs": 572.0595,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/hell1",
+    "m": 0.545851,
+    "f": 1.5,
+    "e": 0,
+    "first": 5.4585099999999995,
+    "second": 0,
+    "projection": 16.187765,
+    "basis": "pilot mean 0.546 s (n 3)",
+    "prior": {
+      "s": 1.696,
+      "basis": "rating-v2 p95 (no MS05b3 request) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic6",
+    "level": "hell2",
+    "cellCount": 36,
+    "budget": 2,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 580.932,
+      "maxMs": 597.974,
+      "file": "pilot-classic6.json"
+    },
+    "key": "classic6/hell2",
+    "m": 0.580932,
+    "f": 1.5,
+    "e": 0,
+    "first": 5.80932,
+    "second": 0,
+    "projection": 16.71398,
+    "basis": "pilot mean 0.581 s (n 3)",
+    "prior": {
+      "s": 0.423,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 0,
+      "n": 14,
+      "ub": 0.1926361756501353
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/veryEasy",
+    "m": 0.005666666666666667,
+    "f": 3,
+    "e": 1,
+    "first": 0.05666666666666667,
+    "second": 0.34,
+    "projection": 9.19,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.006 s",
+    "prior": {
+      "s": 0.005666666666666667,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/easy",
+    "m": 0.2803333333333333,
+    "f": 3,
+    "e": 1,
+    "first": 2.8033333333333332,
+    "second": 16.82,
+    "projection": 66.87,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.280 s",
+    "prior": {
+      "s": 0.2803333333333333,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/normal",
+    "m": 0.16866666666666666,
+    "f": 3,
+    "e": 1,
+    "first": 1.6866666666666665,
+    "second": 10.12,
+    "projection": 43.419999999999995,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.169 s",
+    "prior": {
+      "s": 0.16866666666666666,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/hard",
+    "m": 0.037,
+    "f": 3,
+    "e": 1,
+    "first": 0.37,
+    "second": 2.2199999999999998,
+    "projection": 15.77,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.037 s",
+    "prior": {
+      "s": 0.037,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/expert",
+    "m": 0.09466666666666668,
+    "f": 3,
+    "e": 1,
+    "first": 0.9466666666666668,
+    "second": 5.680000000000001,
+    "projection": 27.880000000000003,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.095 s",
+    "prior": {
+      "s": 0.09466666666666668,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/master",
+    "m": 0.2906666666666667,
+    "f": 3,
+    "e": 1,
+    "first": 2.9066666666666667,
+    "second": 17.44,
+    "projection": 69.04,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.291 s",
+    "prior": {
+      "s": 0.2906666666666667,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "classic9/nightmare",
+    "m": 0.6,
+    "f": 3,
+    "e": 1,
+    "first": 6,
+    "second": 36,
+    "projection": 134,
+    "basis": "MS07b/MS07c measurement (classic9 pilot mean at C = 4; mega deep records at C = 6; classic9 Nightmare window cell at C = 4 plus margin): 0.600 s",
+    "prior": {
+      "s": 0.6,
+      "basis": "MS07b/MS07c measurement (classic9 pilot mean at C = 4; mega deep records at C = 6; classic9 Nightmare window cell at C = 4 plus margin)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 0,
+      "meanMs": 6801.502,
+      "maxMs": 7612.895,
+      "file": "pilot-classic9.json"
+    },
+    "key": "classic9/hell1",
+    "m": 6.801502,
+    "f": 1.5,
+    "e": 0,
+    "first": 68.01502,
+    "second": 0,
+    "projection": 110.02253000000002,
+    "basis": "pilot mean 6.802 s (n 2)",
+    "prior": {
+      "s": 5.565,
+      "basis": "MS07b/MS07c measurement (classic9 pilot mean at C = 4; mega deep records at C = 6; classic9 Nightmare window cell at C = 4 plus margin)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 6,
+      "ub": 0.3930377689970827,
+      "used": [
+        "MS07b/MS07c pilots (C = 6 and C = 4) 0/4",
+        "MS07e pilot 0/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "classic9",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 0,
+      "meanMs": 5312.544,
+      "maxMs": 5443.9071,
+      "file": "pilot-classic9.json"
+    },
+    "key": "classic9/hell2",
+    "m": 5.312544,
+    "f": 1.5,
+    "e": 0,
+    "first": 53.12544,
+    "second": 0,
+    "projection": 87.68816,
+    "basis": "pilot mean 5.313 s (n 2)",
+    "prior": {
+      "s": 3.6,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 2,
+      "ub": 0.7763932022500211,
+      "used": [
+        "MS07e pilot 0/2"
+      ]
+    },
+    "v2": {
+      "h": 1,
+      "n": 15,
+      "ub": 0.27939619361287654
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "veryEasy",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega12/veryEasy",
+    "m": 0.010333333333333333,
+    "f": 3,
+    "e": 1,
+    "first": 0.10333333333333333,
+    "second": 0.62,
+    "projection": 10.17,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.010 s",
+    "prior": {
+      "s": 0.010333333333333333,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "easy",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega12/easy",
+    "m": 0.016,
+    "f": 3,
+    "e": 1,
+    "first": 0.16,
+    "second": 0.96,
+    "projection": 11.36,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.016 s",
+    "prior": {
+      "s": 0.016,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "normal",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega12/normal",
+    "m": 0.025333333333333333,
+    "f": 3,
+    "e": 1,
+    "first": 0.2533333333333333,
+    "second": 1.52,
+    "projection": 13.32,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.025 s",
+    "prior": {
+      "s": 0.025333333333333333,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "hard",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega12/hard",
+    "m": 0.052,
+    "f": 3,
+    "e": 1,
+    "first": 0.52,
+    "second": 3.1199999999999997,
+    "projection": 18.919999999999998,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.052 s",
+    "prior": {
+      "s": 0.052,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "expert",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega12/expert",
+    "m": 0.08266666666666667,
+    "f": 3,
+    "e": 1,
+    "first": 0.8266666666666667,
+    "second": 4.96,
+    "projection": 25.36,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.083 s",
+    "prior": {
+      "s": 0.08266666666666667,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "master",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega12/master",
+    "m": 0.23633333333333334,
+    "f": 3,
+    "e": 1,
+    "first": 2.3633333333333333,
+    "second": 14.18,
+    "projection": 57.629999999999995,
+    "basis": "MS05b3 mean of 3 requests (guard-capped, older source): 0.236 s",
+    "prior": {
+      "s": 0.23633333333333334,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "nightmare",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 276.643,
+      "maxMs": 447.8591,
+      "file": "pilot-mega12.json"
+    },
+    "key": "mega12/nightmare",
+    "m": 0.276643,
+    "f": 1.5,
+    "e": 1,
+    "first": 2.7664299999999997,
+    "second": 16.59858,
+    "projection": 37.047515,
+    "basis": "pilot mean 0.277 s (n 2)",
+    "prior": {
+      "s": 23.122,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 12,
+      "ub": 0.4381054351153114,
+      "used": [
+        "MS05b3 cv3-mega12-nightmare 0/3",
+        "MS05r5m deep records (old source, before the chain split) 0/7",
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "hell1",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": false,
+    "reason": "projected 556 s > 450 s (S-AV27 rule: 1.5 x 36.5 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)",
+    "pilot": {
+      "n": 1,
+      "hits": 0,
+      "meanMs": 36538.378,
+      "maxMs": 36538.3776,
+      "file": "pilot-mega12.json"
+    },
+    "key": "mega12/hell1",
+    "m": 36.538377999999994,
+    "f": 1.5,
+    "e": 0,
+    "first": 365.38377999999994,
+    "second": 0,
+    "projection": 556.07567,
+    "basis": "pilot mean 36.538 s (n 1)",
+    "prior": {
+      "s": 31.5,
+      "basis": "MS07b/MS07c measurement (classic9 pilot mean at C = 4; mega deep records at C = 6; classic9 Nightmare window cell at C = 4 plus margin)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 8,
+      "ub": 0.3123439780663679,
+      "used": [
+        "MS07b deep records (C = 6) 0/7",
+        "MS07e pilot 0/1"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega12",
+    "level": "hell2",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 3374.369,
+      "maxMs": 6493.8211,
+      "file": "pilot-mega12.json"
+    },
+    "key": "mega12/hell2",
+    "m": 3.374369,
+    "f": 1.5,
+    "e": 1,
+    "first": 33.74369,
+    "second": 202.46214,
+    "projection": 362.308745,
+    "basis": "pilot mean 3.374 s (n 3)",
+    "prior": {
+      "s": 2.041,
+      "basis": "MS05b3 mean of 3 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "veryEasy",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega16/veryEasy",
+    "m": 0.0195,
+    "f": 3,
+    "e": 1,
+    "first": 0.195,
+    "second": 1.17,
+    "projection": 12.094999999999999,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.019 s",
+    "prior": {
+      "s": 0.0195,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "easy",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega16/easy",
+    "m": 0.0325,
+    "f": 3,
+    "e": 1,
+    "first": 0.325,
+    "second": 1.9500000000000002,
+    "projection": 14.825000000000001,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.033 s",
+    "prior": {
+      "s": 0.0325,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "normal",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega16/normal",
+    "m": 0.068,
+    "f": 3,
+    "e": 1,
+    "first": 0.68,
+    "second": 4.08,
+    "projection": 22.28,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.068 s",
+    "prior": {
+      "s": 0.068,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "hard",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega16/hard",
+    "m": 0.189,
+    "f": 3,
+    "e": 1,
+    "first": 1.8900000000000001,
+    "second": 11.34,
+    "projection": 47.69,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.189 s",
+    "prior": {
+      "s": 0.189,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "expert",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega16/expert",
+    "m": 0.437,
+    "f": 3,
+    "e": 1,
+    "first": 4.37,
+    "second": 26.22,
+    "projection": 99.77,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.437 s",
+    "prior": {
+      "s": 0.437,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "master",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 593.996,
+      "maxMs": 1156.4216,
+      "file": "pilot-mega16.json"
+    },
+    "key": "mega16/master",
+    "m": 0.593996,
+    "f": 1.5,
+    "e": 1,
+    "first": 5.939959999999999,
+    "second": 35.639759999999995,
+    "projection": 70.36957999999998,
+    "basis": "pilot mean 0.594 s (n 3)",
+    "prior": {
+      "s": 1.085,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "nightmare",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": false,
+    "reason": "projected 1246 s > 450 s (S-AV27 rule: 1.5 x 11.8 s x (10 + 60) + 8 s; expansion not excluded: 4 hits of 13 pooled, 95 % upper bound 0.57)",
+    "pilot": {
+      "n": 4,
+      "hits": 4,
+      "meanMs": 11795.0625,
+      "maxMs": 26456.7263,
+      "file": "pilot-mega16.json+pilotx-mega16.json"
+    },
+    "key": "mega16/nightmare",
+    "m": 11.7950625,
+    "f": 1.5,
+    "e": 1,
+    "first": 117.950625,
+    "second": 707.70375,
+    "projection": 1246.4815625,
+    "basis": "pilot mean 11.795 s (n 4)",
+    "prior": {
+      "s": 110.3455,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 4,
+      "n": 13,
+      "ub": 0.5726193394082125,
+      "used": [
+        "MS05b3 cv3-mega16-nightmare 0/2",
+        "MS05r5m deep records (old source, before the chain split) 0/7",
+        "MS07e pilot 4/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "hell1",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": false,
+    "reason": "projected 1808 s > 450 s (S-AV27 rule: 1.5 x 120 s x (10) + 8 s; expansion excluded: 0 hits of 8 pooled, 95 % upper bound 0.31)",
+    "pilot": {
+      "n": 1,
+      "hits": 0,
+      "meanMs": 120002.253,
+      "maxMs": 120002.2526,
+      "file": "pilot-mega16.json"
+    },
+    "key": "mega16/hell1",
+    "m": 120.002253,
+    "f": 1.5,
+    "e": 0,
+    "first": 1200.02253,
+    "second": 0,
+    "projection": 1808.0337949999998,
+    "basis": "pilot mean 120.002 s (n 1)",
+    "prior": {
+      "s": 110,
+      "basis": "MS07b/MS07c measurement (classic9 pilot mean at C = 4; mega deep records at C = 6; classic9 Nightmare window cell at C = 4 plus margin)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 8,
+      "ub": 0.3123439780663679,
+      "used": [
+        "MS07b deep records (C = 6) 0/7",
+        "MS07e pilot 0/1"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "mega16",
+    "level": "hell2",
+    "cellCount": 256,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "mega16/hell2",
+    "m": 0.303,
+    "f": 3,
+    "e": 1,
+    "first": 3.03,
+    "second": 18.18,
+    "projection": 71.63,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.303 s",
+    "prior": {
+      "s": 0.303,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/veryEasy",
+    "m": 0.0025652173913043477,
+    "f": 3,
+    "e": 1,
+    "first": 0.025652173913043478,
+    "second": 0.15391304347826087,
+    "projection": 8.538695652173914,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.003 s",
+    "prior": {
+      "s": 0.0025652173913043477,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/easy",
+    "m": 0.5461304347826087,
+    "f": 3,
+    "e": 1,
+    "first": 5.461304347826087,
+    "second": 32.767826086956525,
+    "projection": 122.68739130434784,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.546 s",
+    "prior": {
+      "s": 0.5461304347826087,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/normal",
+    "m": 0.041,
+    "f": 3,
+    "e": 1,
+    "first": 0.41000000000000003,
+    "second": 2.46,
+    "projection": 16.61,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.041 s",
+    "prior": {
+      "s": 0.041,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/hard",
+    "m": 0.012434782608695653,
+    "f": 3,
+    "e": 1,
+    "first": 0.12434782608695653,
+    "second": 0.7460869565217392,
+    "projection": 10.611304347826087,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.012 s",
+    "prior": {
+      "s": 0.012434782608695653,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/expert",
+    "m": 0.6184782608695653,
+    "f": 3,
+    "e": 1,
+    "first": 6.184782608695652,
+    "second": 37.108695652173914,
+    "projection": 137.8804347826087,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.618 s",
+    "prior": {
+      "s": 0.6184782608695653,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/master",
+    "m": 0.10569565217391305,
+    "f": 3,
+    "e": 1,
+    "first": 1.0569565217391306,
+    "second": 6.341739130434783,
+    "projection": 30.196086956521743,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.106 s",
+    "prior": {
+      "s": 0.10569565217391305,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 582.738,
+      "maxMs": 1046.0562,
+      "file": "pilot-diagonalX.json"
+    },
+    "key": "diagonalX/nightmare",
+    "m": 0.5827380000000001,
+    "f": 1.5,
+    "e": 1,
+    "first": 5.827380000000001,
+    "second": 34.96428,
+    "projection": 69.18749,
+    "basis": "pilot mean 0.583 s (n 2)",
+    "prior": {
+      "s": 7.122217391304348,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 2,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 22842.8575,
+      "maxMs": 25940.6627,
+      "file": "pilot-diagonalX.json+pilotx-diagonalX.json"
+    },
+    "key": "diagonalX/hell1",
+    "m": 22.842857499999997,
+    "f": 1.5,
+    "e": 0,
+    "first": 228.42857499999997,
+    "second": 0,
+    "projection": 350.6428625,
+    "basis": "pilot mean 22.843 s (n 4) or half the stale prior 0.277 s (heavy tail in the old sample), the larger",
+    "prior": {
+      "s": 0.2768695652173913,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "diagonalX",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "diagonalX/hell2",
+    "m": 0.44709090909090904,
+    "f": 3,
+    "e": 1,
+    "first": 4.470909090909091,
+    "second": 26.82545454545454,
+    "projection": 101.8890909090909,
+    "basis": "MS05b3 mean of 11 requests (guard-capped, older source): 0.447 s",
+    "prior": {
+      "s": 0.44709090909090904,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "hyper/veryEasy",
+    "m": 0.0027826086956521737,
+    "f": 3,
+    "e": 1,
+    "first": 0.027826086956521737,
+    "second": 0.16695652173913042,
+    "projection": 8.584347826086956,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.003 s",
+    "prior": {
+      "s": 0.0027826086956521737,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "hyper/easy",
+    "m": 0.47856521739130436,
+    "f": 3,
+    "e": 1,
+    "first": 4.785652173913044,
+    "second": 28.71391304347826,
+    "projection": 108.49869565217392,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.479 s",
+    "prior": {
+      "s": 0.47856521739130436,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "hyper/normal",
+    "m": 0.09304347826086956,
+    "f": 3,
+    "e": 1,
+    "first": 0.9304347826086956,
+    "second": 5.582608695652174,
+    "projection": 27.539130434782606,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.093 s",
+    "prior": {
+      "s": 0.09304347826086956,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "hyper/hard",
+    "m": 0.014478260869565216,
+    "f": 3,
+    "e": 1,
+    "first": 0.14478260869565215,
+    "second": 0.868695652173913,
+    "projection": 11.040434782608695,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.014 s",
+    "prior": {
+      "s": 0.014478260869565216,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "hyper/expert",
+    "m": 0.6731739130434783,
+    "f": 3,
+    "e": 1,
+    "first": 6.731739130434783,
+    "second": 40.3904347826087,
+    "projection": 149.36652173913046,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.673 s",
+    "prior": {
+      "s": 0.6731739130434783,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "hyper/master",
+    "m": 0.1497391304347826,
+    "f": 3,
+    "e": 1,
+    "first": 1.497391304347826,
+    "second": 8.984347826086957,
+    "projection": 39.44521739130435,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.150 s",
+    "prior": {
+      "s": 0.1497391304347826,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 120.063,
+      "maxMs": 178.5144,
+      "file": "pilot-hyper.json"
+    },
+    "key": "hyper/nightmare",
+    "m": 0.120063,
+    "f": 1.5,
+    "e": 1,
+    "first": 1.20063,
+    "second": 7.20378,
+    "projection": 20.606615,
+    "basis": "pilot mean 0.120 s (n 3)",
+    "prior": {
+      "s": 0.9455652173913044,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 9429.4585,
+      "maxMs": 10437.0038,
+      "file": "pilot-hyper.json+pilotx-hyper.json"
+    },
+    "key": "hyper/hell1",
+    "m": 9.4294585,
+    "f": 1.5,
+    "e": 0,
+    "first": 94.29458500000001,
+    "second": 0,
+    "projection": 149.44187750000003,
+    "basis": "pilot mean 9.429 s (n 4)",
+    "prior": {
+      "s": 0.29530434782608694,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "hyper",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 373.63100000000003,
+      "maxMs": 662.8682,
+      "file": "pilot-hyper.json"
+    },
+    "key": "hyper/hell2",
+    "m": 0.37363100000000005,
+    "f": 1.5,
+    "e": 1,
+    "first": 3.7363100000000005,
+    "second": 22.417860000000005,
+    "projection": 47.231255000000004,
+    "basis": "pilot mean 0.374 s (n 3)",
+    "prior": {
+      "s": 0.8655454545454545,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "jigsaw9/veryEasy",
+    "m": 0.014391304347826088,
+    "f": 3,
+    "e": 1,
+    "first": 0.1439130434782609,
+    "second": 0.8634782608695653,
+    "projection": 11.022173913043478,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.014 s",
+    "prior": {
+      "s": 0.014391304347826088,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "jigsaw9/easy",
+    "m": 0.21808695652173912,
+    "f": 3,
+    "e": 1,
+    "first": 2.180869565217391,
+    "second": 13.085217391304347,
+    "projection": 53.79826086956521,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.218 s",
+    "prior": {
+      "s": 0.21808695652173912,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "jigsaw9/normal",
+    "m": 0.11278260869565217,
+    "f": 3,
+    "e": 1,
+    "first": 1.1278260869565218,
+    "second": 6.76695652173913,
+    "projection": 31.684347826086956,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.113 s",
+    "prior": {
+      "s": 0.11278260869565217,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "jigsaw9/hard",
+    "m": 0.028782608695652176,
+    "f": 3,
+    "e": 1,
+    "first": 0.2878260869565218,
+    "second": 1.7269565217391305,
+    "projection": 14.044347826086957,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.029 s",
+    "prior": {
+      "s": 0.028782608695652176,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 341.88,
+      "maxMs": 560.3738,
+      "file": "pilot-jigsaw9.json"
+    },
+    "key": "jigsaw9/expert",
+    "m": 3.021608695652174,
+    "f": 1.5,
+    "e": 1,
+    "first": 30.216086956521742,
+    "second": 181.29652173913044,
+    "projection": 325.2689130434783,
+    "basis": "pilot mean 0.342 s (n 2) or half the stale prior 6.043 s (heavy tail in the old sample), the larger",
+    "prior": {
+      "s": 6.043217391304348,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 2,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "jigsaw9/master",
+    "m": 0.06017391304347826,
+    "f": 3,
+    "e": 1,
+    "first": 0.6017391304347826,
+    "second": 3.6104347826086953,
+    "projection": 20.636521739130433,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.060 s",
+    "prior": {
+      "s": 0.06017391304347826,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 207.225,
+      "maxMs": 327.0677,
+      "file": "pilot-jigsaw9.json"
+    },
+    "key": "jigsaw9/nightmare",
+    "m": 0.207225,
+    "f": 1.5,
+    "e": 1,
+    "first": 2.07225,
+    "second": 12.433499999999999,
+    "projection": 29.758625,
+    "basis": "pilot mean 0.207 s (n 3)",
+    "prior": {
+      "s": 1.0311739130434783,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 12719.282,
+      "maxMs": 15265.5901,
+      "file": "pilot-jigsaw9.json+pilotx-jigsaw9.json"
+    },
+    "key": "jigsaw9/hell1",
+    "m": 12.719282,
+    "f": 1.5,
+    "e": 0,
+    "first": 127.19282,
+    "second": 0,
+    "projection": 198.78923,
+    "basis": "pilot mean 12.719 s (n 4)",
+    "prior": {
+      "s": 0.20521739130434782,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "jigsaw9",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "jigsaw9/hell2",
+    "m": 0.4807272727272727,
+    "f": 3,
+    "e": 1,
+    "first": 4.807272727272728,
+    "second": 28.843636363636364,
+    "projection": 108.95272727272726,
+    "basis": "MS05b3 mean of 11 requests (guard-capped, older source): 0.481 s",
+    "prior": {
+      "s": 0.4807272727272727,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "killer/veryEasy",
+    "m": 0.003956521739130435,
+    "f": 3,
+    "e": 1,
+    "first": 0.03956521739130435,
+    "second": 0.2373913043478261,
+    "projection": 8.830869565217391,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.004 s",
+    "prior": {
+      "s": 0.003956521739130435,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "killer/easy",
+    "m": 0.02417391304347826,
+    "f": 3,
+    "e": 1,
+    "first": 0.24173913043478262,
+    "second": 1.4504347826086956,
+    "projection": 13.076521739130435,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.024 s",
+    "prior": {
+      "s": 0.02417391304347826,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "killer/normal",
+    "m": 0.4944347826086956,
+    "f": 3,
+    "e": 1,
+    "first": 4.944347826086956,
+    "second": 29.666086956521738,
+    "projection": 111.83130434782608,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.494 s",
+    "prior": {
+      "s": 0.4944347826086956,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 39,
+      "n": 40,
+      "ub": 0.9987184894771248
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 0,
+      "meanMs": 5730.346,
+      "maxMs": 6329.0347,
+      "file": "pilot-killer.json"
+    },
+    "key": "killer/hard",
+    "m": 5.730346,
+    "f": 1.5,
+    "e": 0,
+    "first": 57.30346,
+    "second": 0,
+    "projection": 93.95519,
+    "basis": "pilot mean 5.730 s (n 2)",
+    "prior": {
+      "s": 4.935304347826087,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 37,
+      "ub": 0.07777471100513796,
+      "used": [
+        "MS05b3 i5-killer-hard 0/20",
+        "MS05b3 cv3-killer-hard 0/3",
+        "R5 selection (0/12 at every setting) 0/12",
+        "MS07e pilot 0/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 0,
+      "meanMs": 6670.694,
+      "maxMs": 8458.6594,
+      "file": "pilot-killer.json"
+    },
+    "key": "killer/expert",
+    "m": 6.670694,
+    "f": 1.5,
+    "e": 0,
+    "first": 66.70694,
+    "second": 0,
+    "projection": 108.06041,
+    "basis": "pilot mean 6.671 s (n 2)",
+    "prior": {
+      "s": 9.600636363636363,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 1,
+      "n": 25,
+      "ub": 0.17612071060451803,
+      "used": [
+        "MS05b3 i5-killer-expert 1/8",
+        "MS05b3 cv3-killer-expert 0/3",
+        "R5 selection (0/12 at every setting) 0/12",
+        "MS07e pilot 0/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 1,
+      "meanMs": 10227.871,
+      "maxMs": 12916.8595,
+      "file": "pilot-killer.json"
+    },
+    "key": "killer/master",
+    "m": 10.227870999999999,
+    "f": 1.5,
+    "e": 0,
+    "first": 102.27870999999999,
+    "second": 0,
+    "projection": 161.41806499999998,
+    "basis": "pilot mean 10.228 s (n 2)",
+    "prior": {
+      "s": 13.047181818181818,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 13,
+      "ub": 0.49464973015136565,
+      "used": [
+        "MS05b3 i5-killer-master 2/8",
+        "MS05b3 cv3-killer-master 0/3",
+        "MS07e pilot 1/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 4,
+      "meanMs": 2677.6569999999997,
+      "maxMs": 4975.0826,
+      "file": "pilot-killer.json+pilotx-killer.json"
+    },
+    "key": "killer/nightmare",
+    "m": 2.6776569999999995,
+    "f": 1.5,
+    "e": 1,
+    "first": 26.776569999999996,
+    "second": 160.65941999999998,
+    "projection": 289.153985,
+    "basis": "pilot mean 2.678 s (n 4)",
+    "prior": {
+      "s": 19.921636363636363,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 5,
+      "n": 15,
+      "ub": 0.5774436628428433,
+      "used": [
+        "MS05b3 i5-killer-nightmare 1/8",
+        "MS05b3 cv3-killer-nightmare 0/3",
+        "MS07e pilot 4/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 25968.5965,
+      "maxMs": 31329.4855,
+      "file": "pilot-killer.json+pilotx-killer.json"
+    },
+    "key": "killer/hell1",
+    "m": 25.9685965,
+    "f": 1.5,
+    "e": 0,
+    "first": 259.685965,
+    "second": 0,
+    "projection": 397.5289475,
+    "basis": "pilot mean 25.969 s (n 4)",
+    "prior": {
+      "s": 3.7036363636363636,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "killer",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 2861.396,
+      "maxMs": 5195.9644,
+      "file": "pilot-killer.json"
+    },
+    "key": "killer/hell2",
+    "m": 2.861396,
+    "f": 1.5,
+    "e": 1,
+    "first": 28.61396,
+    "second": 171.68376,
+    "projection": 308.44658,
+    "basis": "pilot mean 2.861 s (n 3)",
+    "prior": {
+      "s": 2.0167272727272727,
+      "basis": "MS05b3 mean of 11 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "greaterThan/veryEasy",
+    "m": 0.01908695652173913,
+    "f": 3,
+    "e": 1,
+    "first": 0.1908695652173913,
+    "second": 1.1452173913043477,
+    "projection": 12.008260869565216,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.019 s",
+    "prior": {
+      "s": 0.01908695652173913,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "greaterThan/easy",
+    "m": 0.02773913043478261,
+    "f": 3,
+    "e": 1,
+    "first": 0.2773913043478261,
+    "second": 1.6643478260869566,
+    "projection": 13.825217391304347,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.028 s",
+    "prior": {
+      "s": 0.02773913043478261,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 2399.262,
+      "maxMs": 7038.2127,
+      "file": "pilot-greaterThan.json"
+    },
+    "key": "greaterThan/normal",
+    "m": 2.3992620000000002,
+    "f": 1.5,
+    "e": 1,
+    "first": 23.992620000000002,
+    "second": 143.95572,
+    "projection": 259.92251000000005,
+    "basis": "pilot mean 2.399 s (n 3)",
+    "prior": {
+      "s": 2.2158695652173916,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 2017.687,
+      "maxMs": 2062.3904,
+      "file": "pilot-greaterThan.json"
+    },
+    "key": "greaterThan/hard",
+    "m": 2.017687,
+    "f": 1.5,
+    "e": 1,
+    "first": 20.17687,
+    "second": 121.06122,
+    "projection": 219.857135,
+    "basis": "pilot mean 2.018 s (n 3) or half the stale prior 1.202 s (heavy tail in the old sample), the larger",
+    "prior": {
+      "s": 1.2024615384615385,
+      "basis": "MS05b3 mean of 13 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": false,
+    "reason": "projected 919 s > 450 s (S-AV27 rule: 1.5 x 8.67 s x (10 + 60) + 8 s; expansion not excluded: 1 hits of 2 pooled, 95 % upper bound 0.97)",
+    "pilot": {
+      "n": 2,
+      "hits": 1,
+      "meanMs": 8673.774,
+      "maxMs": 14976.3809,
+      "file": "pilot-greaterThan.json"
+    },
+    "key": "greaterThan/expert",
+    "m": 8.673774,
+    "f": 1.5,
+    "e": 1,
+    "first": 86.73774,
+    "second": 520.42644,
+    "projection": 918.74627,
+    "basis": "pilot mean 8.674 s (n 2)",
+    "prior": {
+      "s": 4.917461538461538,
+      "basis": "MS05b3 mean of 13 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 1,
+      "n": 2,
+      "ub": 0.9746794344808964,
+      "used": [
+        "MS07e pilot 1/2"
+      ]
+    },
+    "v2": {
+      "h": 38,
+      "n": 40,
+      "ub": 0.9910430544070244
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 185.927,
+      "maxMs": 360.5348,
+      "file": "pilot-greaterThan.json"
+    },
+    "key": "greaterThan/master",
+    "m": 0.18592699999999998,
+    "f": 1.5,
+    "e": 1,
+    "first": 1.8592699999999998,
+    "second": 11.155619999999999,
+    "projection": 27.522334999999998,
+    "basis": "pilot mean 0.186 s (n 3)",
+    "prior": {
+      "s": 2.978,
+      "basis": "MS05b3 mean of 13 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 4,
+      "meanMs": 2508.103,
+      "maxMs": 6835.0011,
+      "file": "pilot-greaterThan.json+pilotx-greaterThan.json"
+    },
+    "key": "greaterThan/nightmare",
+    "m": 2.508103,
+    "f": 1.5,
+    "e": 1,
+    "first": 25.081030000000002,
+    "second": 150.48618000000002,
+    "projection": 271.350815,
+    "basis": "pilot mean 2.508 s (n 4)",
+    "prior": {
+      "s": 8.273846153846154,
+      "basis": "MS05b3 mean of 13 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 4,
+      "n": 4,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 4/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": false,
+    "reason": "projected 3957 s > 450 s (S-AV27 rule: 1.5 x 37.6 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 37608.898,
+      "maxMs": 40046.6068,
+      "file": "pilot-greaterThan.json"
+    },
+    "key": "greaterThan/hell1",
+    "m": 37.608898,
+    "f": 1.5,
+    "e": 1,
+    "first": 376.08898000000005,
+    "second": 2256.5338800000004,
+    "projection": 3956.9342900000006,
+    "basis": "pilot mean 37.609 s (n 3)",
+    "prior": {
+      "s": 1.124,
+      "basis": "MS05b3 mean of 13 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "greaterThan",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 2156.689,
+      "maxMs": 4031.8968,
+      "file": "pilot-greaterThan.json"
+    },
+    "key": "greaterThan/hell2",
+    "m": 2.1566889999999996,
+    "f": 1.5,
+    "e": 1,
+    "first": 21.566889999999997,
+    "second": 129.40133999999998,
+    "projection": 234.45234499999998,
+    "basis": "pilot mean 2.157 s (n 3)",
+    "prior": {
+      "s": 1.227,
+      "basis": "MS05b3 mean of 13 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "veryEasy",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "samurai/veryEasy",
+    "m": 0.024,
+    "f": 3,
+    "e": 1,
+    "first": 0.24,
+    "second": 1.44,
+    "projection": 13.04,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.024 s",
+    "prior": {
+      "s": 0.024,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "easy",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "samurai/easy",
+    "m": 0.208,
+    "f": 3,
+    "e": 1,
+    "first": 2.08,
+    "second": 12.479999999999999,
+    "projection": 51.67999999999999,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.208 s",
+    "prior": {
+      "s": 0.208,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "normal",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 131.433,
+      "maxMs": 256.95,
+      "file": "pilot-samurai.json"
+    },
+    "key": "samurai/normal",
+    "m": 0.131433,
+    "f": 1.5,
+    "e": 1,
+    "first": 1.31433,
+    "second": 7.88598,
+    "projection": 21.800465,
+    "basis": "pilot mean 0.131 s (n 3)",
+    "prior": {
+      "s": 0.8175,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "hard",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "samurai/hard",
+    "m": 0.2265,
+    "f": 3,
+    "e": 1,
+    "first": 2.265,
+    "second": 13.59,
+    "projection": 55.565,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.227 s",
+    "prior": {
+      "s": 0.2265,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "expert",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "samurai/expert",
+    "m": 0.504,
+    "f": 3,
+    "e": 1,
+    "first": 5.04,
+    "second": 30.240000000000002,
+    "projection": 113.84,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.504 s",
+    "prior": {
+      "s": 0.504,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "master",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "samurai/master",
+    "m": 0.638,
+    "f": 3,
+    "e": 1,
+    "first": 6.38,
+    "second": 38.28,
+    "projection": 141.98000000000002,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.638 s",
+    "prior": {
+      "s": 0.638,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "nightmare",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 2598.829,
+      "maxMs": 3000.8617,
+      "file": "pilot-samurai.json"
+    },
+    "key": "samurai/nightmare",
+    "m": 2.5988290000000003,
+    "f": 1.5,
+    "e": 1,
+    "first": 25.988290000000003,
+    "second": 155.92974,
+    "projection": 280.877045,
+    "basis": "pilot mean 2.599 s (n 2)",
+    "prior": {
+      "s": 25.9855,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 4,
+      "ub": 0.9023885371135857,
+      "used": [
+        "MS05b3 cv3-samurai-nightmare 0/2",
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "hell1",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 26842.1385,
+      "maxMs": 37679.4776,
+      "file": "pilot-samurai.json+pilotx-samurai.json"
+    },
+    "key": "samurai/hell1",
+    "m": 26.8421385,
+    "f": 1.5,
+    "e": 0,
+    "first": 268.421385,
+    "second": 0,
+    "projection": 410.6320775,
+    "basis": "pilot mean 26.842 s (n 4)",
+    "prior": {
+      "s": 14.838,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "samurai",
+    "level": "hell2",
+    "cellCount": 369,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 4,
+      "meanMs": 3947.1445000000003,
+      "maxMs": 7412.4774,
+      "file": "pilot-samurai.json+pilotx-samurai.json"
+    },
+    "key": "samurai/hell2",
+    "m": 3.9471445000000003,
+    "f": 1.5,
+    "e": 1,
+    "first": 39.471445,
+    "second": 236.82867000000002,
+    "projection": 422.4501725,
+    "basis": "pilot mean 3.947 s (n 4)",
+    "prior": {
+      "s": 3.742,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 4,
+      "n": 4,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 4/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "veryEasy",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "sohei/veryEasy",
+    "m": 0.0205,
+    "f": 3,
+    "e": 1,
+    "first": 0.20500000000000002,
+    "second": 1.23,
+    "projection": 12.305,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.021 s",
+    "prior": {
+      "s": 0.0205,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "easy",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "sohei/easy",
+    "m": 0.3845,
+    "f": 3,
+    "e": 1,
+    "first": 3.845,
+    "second": 23.07,
+    "projection": 88.745,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.385 s",
+    "prior": {
+      "s": 0.3845,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "normal",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "sohei/normal",
+    "m": 0.115,
+    "f": 3,
+    "e": 1,
+    "first": 1.1500000000000001,
+    "second": 6.9,
+    "projection": 32.150000000000006,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.115 s",
+    "prior": {
+      "s": 0.115,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "hard",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "sohei/hard",
+    "m": 0.2595,
+    "f": 3,
+    "e": 1,
+    "first": 2.595,
+    "second": 15.57,
+    "projection": 62.495,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.260 s",
+    "prior": {
+      "s": 0.2595,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "expert",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "sohei/expert",
+    "m": 0.1715,
+    "f": 3,
+    "e": 1,
+    "first": 1.715,
+    "second": 10.290000000000001,
+    "projection": 44.015,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.172 s",
+    "prior": {
+      "s": 0.1715,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "master",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "sohei/master",
+    "m": 0.374,
+    "f": 3,
+    "e": 1,
+    "first": 3.74,
+    "second": 22.44,
+    "projection": 86.53999999999999,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.374 s",
+    "prior": {
+      "s": 0.374,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "nightmare",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 925.608,
+      "maxMs": 1467.9146,
+      "file": "pilot-sohei.json"
+    },
+    "key": "sohei/nightmare",
+    "m": 0.925608,
+    "f": 1.5,
+    "e": 1,
+    "first": 9.25608,
+    "second": 55.53648,
+    "projection": 105.18884,
+    "basis": "pilot mean 0.926 s (n 2)",
+    "prior": {
+      "s": 23.594,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 4,
+      "ub": 0.9023885371135857,
+      "used": [
+        "MS05b3 cv3-sohei-nightmare 0/2",
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "hell1",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 22954.283000000003,
+      "maxMs": 23914.0858,
+      "file": "pilot-sohei.json+pilotx-sohei.json"
+    },
+    "key": "sohei/hell1",
+    "m": 22.954283000000004,
+    "f": 1.5,
+    "e": 0,
+    "first": 229.54283000000004,
+    "second": 0,
+    "projection": 352.314245,
+    "basis": "pilot mean 22.954 s (n 4)",
+    "prior": {
+      "s": 0.972,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "sohei",
+    "level": "hell2",
+    "cellCount": 288,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 1656.335,
+      "maxMs": 2833.3301,
+      "file": "pilot-sohei.json"
+    },
+    "key": "sohei/hell2",
+    "m": 1.6563350000000001,
+    "f": 1.5,
+    "e": 1,
+    "first": 16.56335,
+    "second": 99.38010000000001,
+    "projection": 181.91517500000003,
+    "basis": "pilot mean 1.656 s (n 3)",
+    "prior": {
+      "s": 1.537,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "veryEasy",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "butterfly/veryEasy",
+    "m": 0.014,
+    "f": 3,
+    "e": 1,
+    "first": 0.14,
+    "second": 0.84,
+    "projection": 10.94,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.014 s",
+    "prior": {
+      "s": 0.014,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "easy",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 1,
+      "meanMs": 718.351,
+      "maxMs": 762.477,
+      "file": "pilot-butterfly.json"
+    },
+    "key": "butterfly/easy",
+    "m": 0.718351,
+    "f": 1.5,
+    "e": 1,
+    "first": 7.18351,
+    "second": 43.10106,
+    "projection": 83.42685499999999,
+    "basis": "pilot mean 0.718 s (n 3)",
+    "prior": {
+      "s": 0.7095,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 1,
+      "n": 5,
+      "ub": 0.6574083180011387,
+      "used": [
+        "MS05b3 cv3-butterfly-easy 0/2",
+        "MS07e pilot 1/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "normal",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "butterfly/normal",
+    "m": 0.044,
+    "f": 3,
+    "e": 1,
+    "first": 0.43999999999999995,
+    "second": 2.6399999999999997,
+    "projection": 17.24,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.044 s",
+    "prior": {
+      "s": 0.044,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "hard",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "butterfly/hard",
+    "m": 0.083,
+    "f": 3,
+    "e": 1,
+    "first": 0.8300000000000001,
+    "second": 4.98,
+    "projection": 25.43,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.083 s",
+    "prior": {
+      "s": 0.083,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "expert",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "butterfly/expert",
+    "m": 0.2665,
+    "f": 3,
+    "e": 1,
+    "first": 2.665,
+    "second": 15.99,
+    "projection": 63.965,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.267 s",
+    "prior": {
+      "s": 0.2665,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "master",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "butterfly/master",
+    "m": 0.5155,
+    "f": 3,
+    "e": 1,
+    "first": 5.154999999999999,
+    "second": 30.929999999999996,
+    "projection": 116.25499999999998,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.515 s",
+    "prior": {
+      "s": 0.5155,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "nightmare",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 1,
+      "hits": 1,
+      "meanMs": 316.288,
+      "maxMs": 316.2879,
+      "file": "pilot-butterfly.json"
+    },
+    "key": "butterfly/nightmare",
+    "m": 0.316288,
+    "f": 1.5,
+    "e": 1,
+    "first": 3.1628800000000004,
+    "second": 18.97728,
+    "projection": 41.21024,
+    "basis": "pilot mean 0.316 s (n 1)",
+    "prior": {
+      "s": 29.549,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 1,
+      "n": 3,
+      "ub": 0.8646496378284163,
+      "used": [
+        "MS05b3 cv3-butterfly-nightmare 0/2",
+        "MS07e pilot 1/1"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "hell1",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": false,
+    "reason": "projected 4032 s > 450 s (S-AV27 rule: 1.5 x 38.3 s x (10 + 60) + 8 s; expansion not excluded: 0 hits of 3 pooled, 95 % upper bound 0.63)",
+    "pilot": {
+      "n": 3,
+      "hits": 0,
+      "meanMs": 38326.516,
+      "maxMs": 39490.7707,
+      "file": "pilot-butterfly.json"
+    },
+    "key": "butterfly/hell1",
+    "m": 38.326516000000005,
+    "f": 1.5,
+    "e": 1,
+    "first": 383.26516000000004,
+    "second": 2299.5909600000005,
+    "projection": 4032.2841800000006,
+    "basis": "pilot mean 38.327 s (n 3)",
+    "prior": {
+      "s": 1.694,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 3,
+      "ub": 0.6315968501359613,
+      "used": [
+        "MS07e pilot 0/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "butterfly",
+    "level": "hell2",
+    "cellCount": 144,
+    "budget": 30,
+    "attempts": 4,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 3089.533,
+      "maxMs": 5319.8341,
+      "file": "pilot-butterfly.json"
+    },
+    "key": "butterfly/hell2",
+    "m": 3.089533,
+    "f": 1.5,
+    "e": 1,
+    "first": 30.895329999999998,
+    "second": 185.37197999999998,
+    "projection": 332.400965,
+    "basis": "pilot mean 3.090 s (n 3)",
+    "prior": {
+      "s": 2.804,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "veryEasy",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "flower/veryEasy",
+    "m": 0.017,
+    "f": 3,
+    "e": 1,
+    "first": 0.17,
+    "second": 1.02,
+    "projection": 11.57,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.017 s",
+    "prior": {
+      "s": 0.017,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "easy",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "flower/easy",
+    "m": 0.5035,
+    "f": 3,
+    "e": 1,
+    "first": 5.034999999999999,
+    "second": 30.209999999999997,
+    "projection": 113.73499999999999,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.503 s",
+    "prior": {
+      "s": 0.5035,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 2,
+      "ub": 0.7763932022500211,
+      "used": [
+        "MS05b3 cv3-flower-easy 0/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "normal",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "flower/normal",
+    "m": 0.4795,
+    "f": 3,
+    "e": 1,
+    "first": 4.795,
+    "second": 28.77,
+    "projection": 108.695,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.479 s",
+    "prior": {
+      "s": 0.4795,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "hard",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "flower/hard",
+    "m": 0.08,
+    "f": 3,
+    "e": 1,
+    "first": 0.8,
+    "second": 4.8,
+    "projection": 24.799999999999997,
+    "basis": "MS05b3 mean of 2 requests (guard-capped, older source): 0.080 s",
+    "prior": {
+      "s": 0.08,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "expert",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 2,
+      "meanMs": 1500.1629999999998,
+      "maxMs": 2364.1696,
+      "file": "pilot-flower.json"
+    },
+    "key": "flower/expert",
+    "m": 1.5001629999999997,
+    "f": 1.5,
+    "e": 1,
+    "first": 15.001629999999997,
+    "second": 90.00977999999998,
+    "projection": 165.51711499999996,
+    "basis": "pilot mean 1.500 s (n 3)",
+    "prior": {
+      "s": 1.28,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 3,
+      "ub": 0.9830475724915586,
+      "used": [
+        "MS07e pilot 2/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "master",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 3,
+      "hits": 3,
+      "meanMs": 495.757,
+      "maxMs": 1156.419,
+      "file": "pilot-flower.json"
+    },
+    "key": "flower/master",
+    "m": 0.495757,
+    "f": 1.5,
+    "e": 1,
+    "first": 4.9575700000000005,
+    "second": 29.74542,
+    "projection": 60.054485,
+    "basis": "pilot mean 0.496 s (n 3)",
+    "prior": {
+      "s": 2.199,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 3,
+      "n": 3,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 3/3"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "nightmare",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 3516.107,
+      "maxMs": 3757.0381,
+      "file": "pilot-flower.json"
+    },
+    "key": "flower/nightmare",
+    "m": 3.516107,
+    "f": 1.5,
+    "e": 1,
+    "first": 35.161069999999995,
+    "second": 210.96642,
+    "projection": 377.191235,
+    "basis": "pilot mean 3.516 s (n 2)",
+    "prior": {
+      "s": 21.736,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 4,
+      "ub": 0.9023885371135857,
+      "used": [
+        "MS05b3 cv3-flower-nightmare 0/2",
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "hell1",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 23641.913999999997,
+      "maxMs": 26172.8279,
+      "file": "pilot-flower.json+pilotx-flower.json"
+    },
+    "key": "flower/hell1",
+    "m": 23.641913999999996,
+    "f": 1.5,
+    "e": 0,
+    "first": 236.41913999999997,
+    "second": 0,
+    "projection": 362.62870999999996,
+    "basis": "pilot mean 23.642 s (n 4)",
+    "prior": {
+      "s": 10.022,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "flower",
+    "level": "hell2",
+    "cellCount": 189,
+    "budget": 30,
+    "attempts": 2,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 3049.607,
+      "maxMs": 4546.9652,
+      "file": "pilot-flower.json"
+    },
+    "key": "flower/hell2",
+    "m": 3.049607,
+    "f": 1.5,
+    "e": 1,
+    "first": 30.49607,
+    "second": 182.97642,
+    "projection": 328.208735,
+    "basis": "pilot mean 3.050 s (n 2)",
+    "prior": {
+      "s": 4.949,
+      "basis": "MS05b3 mean of 2 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 2,
+      "ub": 1,
+      "used": [
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "veryEasy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "wordoku/veryEasy",
+    "m": 0.003260869565217391,
+    "f": 3,
+    "e": 1,
+    "first": 0.03260869565217391,
+    "second": 0.19565217391304346,
+    "projection": 8.684782608695652,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.003 s",
+    "prior": {
+      "s": 0.003260869565217391,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "easy",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "wordoku/easy",
+    "m": 0.22956521739130434,
+    "f": 3,
+    "e": 1,
+    "first": 2.2956521739130435,
+    "second": 13.77391304347826,
+    "projection": 56.208695652173915,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.230 s",
+    "prior": {
+      "s": 0.22956521739130434,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "normal",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "wordoku/normal",
+    "m": 0.294,
+    "f": 3,
+    "e": 1,
+    "first": 2.94,
+    "second": 17.64,
+    "projection": 69.74000000000001,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.294 s",
+    "prior": {
+      "s": 0.294,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 39,
+      "n": 40,
+      "ub": 0.9987184894771248
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "hard",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "wordoku/hard",
+    "m": 0.03482608695652174,
+    "f": 3,
+    "e": 1,
+    "first": 0.3482608695652174,
+    "second": 2.0895652173913044,
+    "projection": 15.313478260869566,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.035 s",
+    "prior": {
+      "s": 0.03482608695652174,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "expert",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "wordoku/expert",
+    "m": 0.05773913043478261,
+    "f": 3,
+    "e": 1,
+    "first": 0.5773913043478262,
+    "second": 3.4643478260869567,
+    "projection": 20.125217391304346,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.058 s",
+    "prior": {
+      "s": 0.05773913043478261,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "master",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": null,
+    "key": "wordoku/master",
+    "m": 0.13286956521739132,
+    "f": 3,
+    "e": 1,
+    "first": 1.3286956521739133,
+    "second": 7.97217391304348,
+    "projection": 35.90260869565218,
+    "basis": "MS05b3 mean of 23 requests (guard-capped, older source): 0.133 s",
+    "prior": {
+      "s": 0.13286956521739132,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 0,
+      "ub": 1,
+      "used": []
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "nightmare",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 2,
+      "meanMs": 169.165,
+      "maxMs": 253.9281,
+      "file": "pilot-wordoku.json"
+    },
+    "key": "wordoku/nightmare",
+    "m": 0.16916499999999998,
+    "f": 1.5,
+    "e": 1,
+    "first": 1.6916499999999999,
+    "second": 10.149899999999999,
+    "projection": 25.762324999999997,
+    "basis": "pilot mean 0.169 s (n 2)",
+    "prior": {
+      "s": 4.459478260869565,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source)"
+    },
+    "pooled": {
+      "h": 2,
+      "n": 5,
+      "ub": 0.8107446225622292,
+      "used": [
+        "MS05b3 cv3-wordoku-nightmare 0/3",
+        "MS07e pilot 2/2"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": false,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "hell1",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 4,
+      "hits": 0,
+      "meanMs": 6368.242,
+      "maxMs": 7833.0131,
+      "file": "pilot-wordoku.json+pilotx-wordoku.json"
+    },
+    "key": "wordoku/hell1",
+    "m": 6.368242,
+    "f": 1.5,
+    "e": 0,
+    "first": 63.68242000000001,
+    "second": 0,
+    "projection": 103.52363000000001,
+    "basis": "pilot mean 6.368 s (n 4)",
+    "prior": {
+      "s": 2.940521739130435,
+      "basis": "MS05b3 mean of 23 requests (guard-capped, older source) x 4 (Hell 1 was vacuous before MS07b; classic9 went 1.38 -> 5.57 s)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 4,
+      "ub": 0.5271291954984121,
+      "used": [
+        "MS07e pilot 0/4"
+      ]
+    },
+    "v2": {
+      "h": 40,
+      "n": 40,
+      "ub": 1
+    },
+    "pilotLow": true,
+    "structural": false
+  },
+  {
+    "variant": "wordoku",
+    "level": "hell2",
+    "cellCount": 81,
+    "budget": 10,
+    "attempts": 8,
+    "launch": true,
+    "reason": "",
+    "pilot": {
+      "n": 2,
+      "hits": 0,
+      "meanMs": 4539.926,
+      "maxMs": 4549.7059,
+      "file": "pilot-wordoku.json"
+    },
+    "key": "wordoku/hell2",
+    "m": 4.539926,
+    "f": 1.5,
+    "e": 0,
+    "first": 45.399260000000005,
+    "second": 0,
+    "projection": 76.09889000000001,
+    "basis": "pilot mean 4.540 s (n 2)",
+    "prior": {
+      "s": 4.4,
+      "basis": "rating-v2 p95 (no MS05b3 request)"
+    },
+    "pooled": {
+      "h": 0,
+      "n": 2,
+      "ub": 0.7763932022500211,
+      "used": [
+        "MS07e pilot 0/2"
+      ]
+    },
+    "v2": {
+      "h": 1,
+      "n": 15,
+      "ub": 0.27939619361287654
+    },
+    "pilotLow": true,
+    "structural": false
+  }
+]

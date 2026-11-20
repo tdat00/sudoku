@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\compare-listings.js
+fail: quick 4807 identical=true, deep 4835 -> 4828, removed 7, added 0
+FAIL: mega deep counts 20 -> 17, expected 12 -> 9
+FAIL: multigrid deep counts 32 -> 28, expected 16 -> 12
+exit=1 seconds=0.158

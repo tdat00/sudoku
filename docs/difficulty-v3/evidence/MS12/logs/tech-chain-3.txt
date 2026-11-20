@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 136 passed, 2 failed  (7.52 s)
+
+Failures:
+  FAIL tech-chain > xyChain: the edges it does not take > takes a weak link through a partial unit (a digit may be missing from it) and no strong link from it
+       AssertionError: expected Int32Array(3)[0, 5, 10] to equal Array(3)[0, 5, 10]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2729:38)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > xyChain: the edges it does not take > leaves every contradiction and forced chain, and the chains through conjugate pairs, to forcingChain
+       AssertionError: expected Array(2)["X-chain of 3 links (two eliminations)", "skyscraper"] to equal Array(2)["X-chain of 3 links (two eliminations)", "forcingChain"]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2763:57
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2747:24)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  138 total, 136 passed, 2 failed, 0 skipped
+Time:   7.52 s running tests, 7.62 s total
+exit=1 seconds=7.726

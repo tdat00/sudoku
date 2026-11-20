@@ -1,0 +1,4 @@
+$ node tests\perf.js --hash-key=classic9/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS18d\hashes\classic9-hard-00.json
+  classic9/hard: seeds 1, 2, 3, 5, 8 (0.3 s)
+recorded 5 of 520 keys (classic9/hard, seed indexes 0-4 (seeds 1, 2, 3, 5, 8)) in docs/difficulty-v3/evidence/MS18d/hashes/classic9-hard-00.json; a ledger is one shard, merge them all with --hash-merge
+exit=0 seconds=0.884

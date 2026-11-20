@@ -1,0 +1,35 @@
+[
+  {
+    "label": "c1-steps",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-steps.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.507 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 30 s (2.6 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-steps.json"
+  },
+  {
+    "label": "c1-replay",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-replay.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.062 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 30 s (2.7 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-replay.json"
+  },
+  {
+    "label": "c1-pipeline",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=pipeline",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-pipeline.json"
+    ],
+    "projectionSeconds": 360,
+    "projectionBasis": "MEASURED 286.453 s by MS05r6b (final run, locked, same code; only documents differ here), stated bound 360 s (1.3 times), from .github/scripts/generator-quick.json",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6c\\quick\\generator-pipeline.json"
+  }
+]

@@ -1,0 +1,7 @@
+{"at":"2026-11-18T22:12:49.537Z","type":"attempt-reserved","ordinal":1,"claimedRecovery":false,"slot":1,"preLog":"Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-nightmare\\pre-ms18c-20261118T221238983-10668.log","runId":"ms18c-20261118T221238983-10668"}
+{"at":"2026-11-18T22:12:49.655Z","type":"environment","removed":["NPM_CONFIG_CACHE","NPM_CONFIG_PREFIX"]}
+{"at":"2026-11-18T22:12:49.774Z","type":"window-started","launcherPid":32716,"tStartNs":634750922920900,"createdAfterSeconds":0.0398567,"created":"2026-11-18T22:12:49.690657Z","resumedAfterSeconds":0.0448827}
+{"at":"2026-11-18T22:12:57.292Z","type":"window-ended","fault":null,"wSeconds":7.6039783,"callbackErrors":0,"leftover":false,"members":[11784,13620,20184,24184,29820,32652,32716,34388],"tExpired":false,"launcherExit":3}
+{"at":"2026-11-18T22:12:57.438Z","type":"post","result":{"ok":true,"outcome":"unstarted-hold","kind":"additional-consumer","eligible":true}}
+{"at":"2026-11-18T22:12:57.451Z","type":"lock-released","problem":null}
+{"at":"2026-11-18T22:12:57.461Z","type":"supervisor-exit","message":"attempt finished: unstarted-hold","code":3}

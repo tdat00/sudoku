@@ -1,0 +1,1703 @@
+[
+ {
+  "dir": "before",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "normal-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 345.2,
+    "p95": 5260.872,
+    "max": 6804.582,
+    "total": 39733.093
+   },
+   "attempts": 41,
+   "samplesDug": 394,
+   "oracleCalls": 46962,
+   "fullRatings": 420,
+   "localSearches": 23,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "normal-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 340.694,
+    "p95": 5280.082,
+    "max": 6701.458,
+    "total": 39471.187000000005
+   },
+   "attempts": 41,
+   "samplesDug": 394,
+   "oracleCalls": 46962,
+   "fullRatings": 420,
+   "localSearches": 23,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "normal-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 2516.1,
+    "p95": 17018.978,
+    "max": 18282.632,
+    "total": 89662.32400000001
+   },
+   "attempts": 51,
+   "samplesDug": 504,
+   "oracleCalls": 209332,
+   "fullRatings": 531,
+   "localSearches": 31,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "normal-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 2566.676,
+    "p95": 17391.116,
+    "max": 18268.671,
+    "total": 92992.00799999999
+   },
+   "attempts": 51,
+   "samplesDug": 504,
+   "oracleCalls": 209332,
+   "fullRatings": 531,
+   "localSearches": 31,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "normal-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 1163.423,
+    "p95": 22994.515,
+    "max": 24611.725,
+    "total": 88087.32
+   },
+   "attempts": 38,
+   "samplesDug": 341,
+   "oracleCalls": 274330,
+   "fullRatings": 353,
+   "localSearches": 19,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "normal-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 1156.242,
+    "p95": 22816.534,
+    "max": 24334.226,
+    "total": 87735.29799999998
+   },
+   "attempts": 38,
+   "samplesDug": 341,
+   "oracleCalls": 274330,
+   "fullRatings": 353,
+   "localSearches": 19,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "normal-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 3477.136,
+    "p95": 15937.442,
+    "max": 26713.693,
+    "total": 121157.742
+   },
+   "attempts": 31,
+   "samplesDug": 287,
+   "oracleCalls": 441466,
+   "fullRatings": 296,
+   "localSearches": 12,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "normal",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "normal-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 3437.028,
+    "p95": 16651.359,
+    "max": 26584.608,
+    "total": 121999.234
+   },
+   "attempts": 31,
+   "samplesDug": 287,
+   "oracleCalls": 441466,
+   "fullRatings": 296,
+   "localSearches": 12,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 1,
+  "files": [
+   "normal-7000-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 39,
+   "elapsedMs": {
+    "p50": 3362.588,
+    "p95": 10612.528,
+    "max": 13468.498,
+    "total": 164539.33800000002
+   },
+   "attempts": 134,
+   "samplesDug": 1399,
+   "oracleCalls": 167029,
+   "fullRatings": 1465,
+   "localSearches": 96,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 2,
+  "files": [
+   "normal-7000-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 39,
+   "elapsedMs": {
+    "p50": 3340.721,
+    "p95": 10584.438,
+    "max": 13491.129,
+    "total": 164229.74899999992
+   },
+   "attempts": 134,
+   "samplesDug": 1399,
+   "oracleCalls": 167029,
+   "fullRatings": 1465,
+   "localSearches": 96,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 1,
+  "files": [
+   "normal-7000-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 40,
+   "elapsedMs": {
+    "p50": 3507.864,
+    "p95": 10706.442,
+    "max": 11292.101,
+    "total": 167113.62600000002
+   },
+   "attempts": 98,
+   "samplesDug": 945,
+   "oracleCalls": 391735,
+   "fullRatings": 989,
+   "localSearches": 58,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 2,
+  "files": [
+   "normal-7000-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 40,
+   "elapsedMs": {
+    "p50": 3539.858,
+    "p95": 10667.314,
+    "max": 11316.293,
+    "total": 167302.11300000004
+   },
+   "attempts": 98,
+   "samplesDug": 945,
+   "oracleCalls": 391735,
+   "fullRatings": 989,
+   "localSearches": 58,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 1,
+  "files": [
+   "normal-7000-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 40,
+   "elapsedMs": {
+    "p50": 4923.433,
+    "p95": 15292.101,
+    "max": 18938.17,
+    "total": 224729.73700000002
+   },
+   "attempts": 89,
+   "samplesDug": 831,
+   "oracleCalls": 667246,
+   "fullRatings": 874,
+   "localSearches": 50,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 2,
+  "files": [
+   "normal-7000-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 40,
+   "elapsedMs": {
+    "p50": 4936.096,
+    "p95": 15366.784,
+    "max": 18764.894,
+    "total": 224481.55899999998
+   },
+   "attempts": 89,
+   "samplesDug": 831,
+   "oracleCalls": 667246,
+   "fullRatings": 874,
+   "localSearches": 50,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 1,
+  "files": [
+   "normal-7000-r1.json",
+   "normal-7020-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 40,
+   "elapsedMs": {
+    "p50": 4420.116,
+    "p95": 20036.978,
+    "max": 30206.95,
+    "total": 295347.825
+   },
+   "attempts": 75,
+   "samplesDug": 678,
+   "oracleCalls": 1041869,
+   "fullRatings": 706,
+   "localSearches": 35,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "normal",
+  "from": 7000,
+  "count": 40,
+  "repeat": 2,
+  "files": [
+   "normal-7000-r2.json",
+   "normal-7020-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 40,
+   "errors": 0,
+   "exactHits": 40,
+   "elapsedMs": {
+    "p50": 4458.4,
+    "p95": 19928.157,
+    "max": 30156.404,
+    "total": 297019.28299999994
+   },
+   "attempts": 75,
+   "samplesDug": 678,
+   "oracleCalls": 1041869,
+   "fullRatings": 706,
+   "localSearches": 35,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "easy-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 22.309,
+    "p95": 41.989,
+    "max": 49.45,
+    "total": 516.33
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 2439,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "easy-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 22.173,
+    "p95": 36.562,
+    "max": 51.17,
+    "total": 514.2
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 2439,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "easy-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 78.731,
+    "p95": 138.548,
+    "max": 148.384,
+    "total": 1776.542
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 9302,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "easy-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 79.731,
+    "p95": 135.48,
+    "max": 144.257,
+    "total": 1760.405
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 9302,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "easy-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 150.039,
+    "p95": 267.3,
+    "max": 282.874,
+    "total": 3343.89
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 18192,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "easy-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 151.448,
+    "p95": 274.36,
+    "max": 275.115,
+    "total": 3372.0730000000003
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 18192,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "easy-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 285.755,
+    "p95": 518.076,
+    "max": 538.62,
+    "total": 6330.4169999999995
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 34960,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "easy",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "easy-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 289.617,
+    "p95": 494.876,
+    "max": 534.232,
+    "total": 6249.825000000002
+   },
+   "attempts": 20,
+   "samplesDug": 22,
+   "oracleCalls": 34960,
+   "fullRatings": 22,
+   "localSearches": 0,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "hard-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 187.693,
+    "p95": 2174.632,
+    "max": 6748.839,
+    "total": 17220.898999999998
+   },
+   "attempts": 27,
+   "samplesDug": 187,
+   "oracleCalls": 23728,
+   "fullRatings": 191,
+   "localSearches": 7,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "hard-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 187.504,
+    "p95": 2056.089,
+    "max": 6664.837,
+    "total": 16923.942
+   },
+   "attempts": 27,
+   "samplesDug": 187,
+   "oracleCalls": 23728,
+   "fullRatings": 191,
+   "localSearches": 7,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "hard-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 562.879,
+    "p95": 6364.762,
+    "max": 6894.866,
+    "total": 27541.525
+   },
+   "attempts": 25,
+   "samplesDug": 166,
+   "oracleCalls": 68684,
+   "fullRatings": 167,
+   "localSearches": 5,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "hard-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 556.956,
+    "p95": 6261.004,
+    "max": 6744.841,
+    "total": 27145.680999999997
+   },
+   "attempts": 25,
+   "samplesDug": 166,
+   "oracleCalls": 68684,
+   "fullRatings": 167,
+   "localSearches": 5,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "hard-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 1459.874,
+    "p95": 5575.345,
+    "max": 6198.748,
+    "total": 37156.622
+   },
+   "attempts": 22,
+   "samplesDug": 150,
+   "oracleCalls": 118553,
+   "fullRatings": 151,
+   "localSearches": 2,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "hard-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 1438.367,
+    "p95": 5490.129,
+    "max": 6017.074,
+    "total": 36723.501
+   },
+   "attempts": 22,
+   "samplesDug": 150,
+   "oracleCalls": 118553,
+   "fullRatings": 151,
+   "localSearches": 2,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "hard-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 1623.954,
+    "p95": 8652.96,
+    "max": 10753.268,
+    "total": 50109.60899999999
+   },
+   "attempts": 22,
+   "samplesDug": 106,
+   "oracleCalls": 159123,
+   "fullRatings": 108,
+   "localSearches": 2,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "hard",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "hard-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 1621.773,
+    "p95": 8733.18,
+    "max": 10807.943,
+    "total": 50333.36600000001
+   },
+   "attempts": 22,
+   "samplesDug": 106,
+   "oracleCalls": 159123,
+   "fullRatings": 108,
+   "localSearches": 2,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "expert-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 19,
+   "elapsedMs": {
+    "p50": 1878.722,
+    "p95": 11721.438,
+    "max": 14604.516,
+    "total": 70615.221
+   },
+   "attempts": 55,
+   "samplesDug": 562,
+   "oracleCalls": 72373,
+   "fullRatings": 632,
+   "localSearches": 36,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "before",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "expert-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": null,
+  "source": {
+   "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+   "sourceFiles": 63,
+   "greaterThanHash": "24dbbe37e4e4d8fd312eb1bb514a6152f6492d692bdfe5fd4816c717988f3d39",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": false,
+   "dirtyFiles": []
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 19,
+   "elapsedMs": {
+    "p50": 1881.233,
+    "p95": 11841.652,
+    "max": 14605.359,
+    "total": 71082.51900000001
+   },
+   "attempts": 55,
+   "samplesDug": 562,
+   "oracleCalls": 72373,
+   "fullRatings": 632,
+   "localSearches": 36,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "expert-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 19,
+   "elapsedMs": {
+    "p50": 2863.369,
+    "p95": 15568.603,
+    "max": 22798.852,
+    "total": 88842.78
+   },
+   "attempts": 46,
+   "samplesDug": 433,
+   "oracleCalls": 179838,
+   "fullRatings": 471,
+   "localSearches": 28,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-4",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "expert-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 4,
+  "source": {
+   "sourceHash": "ba2324b46a26adc2de7100c3cccd47e5380ce2378c721b0c3be390af55d271a8",
+   "sourceFiles": 63,
+   "greaterThanHash": "1bed3434f5b60bd9e8345b8f292fd18ae2e263d17cf7b5c3a05d064c635b94f0",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 19,
+   "elapsedMs": {
+    "p50": 2845.754,
+    "p95": 15490.016,
+    "max": 22704.248,
+    "total": 88429.69900000002
+   },
+   "attempts": 46,
+   "samplesDug": 433,
+   "oracleCalls": 179838,
+   "fullRatings": 471,
+   "localSearches": 28,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "expert-300-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 10317.868,
+    "p95": 30118.479,
+    "max": 30347.11,
+    "total": 244391.78299999997
+   },
+   "attempts": 72,
+   "samplesDug": 734,
+   "oracleCalls": 581092,
+   "fullRatings": 802,
+   "localSearches": 52,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-8",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "expert-300-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 8,
+  "source": {
+   "sourceHash": "78e95b5460d0ea7f799c982579e1405153660bfe3c041544ee1f060eb86d10d3",
+   "sourceFiles": 63,
+   "greaterThanHash": "8c626b50c1237ef840322d3e4a2141274148722b177ffedb495c1a11e3fb0feb",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 10226.284,
+    "p95": 29147.075,
+    "max": 29720.968,
+    "total": 238796.441
+   },
+   "attempts": 72,
+   "samplesDug": 734,
+   "oracleCalls": 581092,
+   "fullRatings": 802,
+   "localSearches": 52,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 1,
+  "files": [
+   "expert-300-r1.json",
+   "expert-310-r1.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 8657.626,
+    "p95": 30156.983,
+    "max": 38119.134,
+    "total": 230852.49400000004
+   },
+   "attempts": 45,
+   "samplesDug": 435,
+   "oracleCalls": 653175,
+   "fullRatings": 472,
+   "localSearches": 25,
+   "checksFailed": 0
+  }
+ },
+ {
+  "dir": "pool-16",
+  "level": "expert",
+  "from": 300,
+  "count": 20,
+  "repeat": 2,
+  "files": [
+   "expert-300-r2.json",
+   "expert-310-r2.json"
+  ],
+  "complete": true,
+  "sameSource": true,
+  "signPool": 16,
+  "source": {
+   "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+   "sourceFiles": 63,
+   "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+   "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+   "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+   "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+   "dirty": true,
+   "dirtyFiles": [
+    " M generator/js/variants/greater-than.js",
+    " M generator/tests/suites/replay.test.js",
+    "?? generator/tests/suites/greater-than-guided.test.js"
+   ]
+  },
+  "summary": {
+   "requests": 20,
+   "errors": 0,
+   "exactHits": 20,
+   "elapsedMs": {
+    "p50": 8658.533,
+    "p95": 30173.367,
+    "max": 38527.965,
+    "total": 232016.998
+   },
+   "attempts": 45,
+   "samplesDug": 435,
+   "oracleCalls": 653175,
+   "fullRatings": 472,
+   "localSearches": 25,
+   "checksFailed": 0
+  }
+ }
+]

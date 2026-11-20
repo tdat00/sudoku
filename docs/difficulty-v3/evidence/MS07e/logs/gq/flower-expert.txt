@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=flower --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-expert.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+flower/expert: 23/35 hits, p95 4.16 s (budget 30.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| flower | expert | 35 | 23 | 66 % | 1.42 s | 4.16 s | 4.55 s | 30.0 s | hidden (stopped: misses) |
+
+flower: []
+exit=0 seconds=14.912

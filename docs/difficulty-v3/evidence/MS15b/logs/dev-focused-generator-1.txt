@@ -1,0 +1,50 @@
+$ node tests\node-runner.js --suite=tech-als,techniques,technique-weights,difficulty-floor,pattern-cost-tools,tech-chain,tech-subset,tech-cage,i18n,digger-target,help,ui-contract
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (30.34 s)
+ok   digger-target: 75 passed  (1.79 s)
+ok   help: 30 passed  (5.39 s)
+ok   i18n: 96 passed  (258 ms)
+ok   pattern-cost-tools: 44 passed  (5.02 s)
+ok   tech-als: 109 passed  (8.05 s)
+ok   tech-cage: 33 passed  (28 ms)
+FAIL tech-chain: 234 passed, 5 failed  (23.33 s)
+ok   tech-subset: 167 passed  (8.05 s)
+ok   technique-weights: 17 passed  (4 ms)
+ok   techniques: 276 passed  (6.51 s)
+ok   ui-contract: 68 passed  (362 ms)
+
+Failures:
+  FAIL tech-chain > chain group: registration > registers the five chain ids with the values of design.md 6.6 (R9, R15)
+       AssertionError: expected Array(6)["xyChain", "forcingChain", "alsXz", "forcingChainLong", "nishio", "nishioDeep"] to equal Array(5)["xyChain", "forcingChain", "forcingChainLong", "nishio", "nishioDeep"]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:684:11)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-chain > chain windows: the four registered ids on their own > owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan
+       AssertionError: expected 17 to be > 20
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2329:41)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+       AssertionError: expected Array(6)["complete", "complete", null, null, "grouped", null] to equal Array(6)["complete", "incomplete", "search-work", null, null, "work"]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5379:78
+       at withCutoff (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:648:14)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5375:11)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a search cap too, under the same window, and certifies only the singleton minimum
+       TypeError: Cannot read properties of null (reading 'i18nArgs')
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5398:22)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > stops at a spent parent budget in the search too, without a fallback even when one is allowed
+       TypeError: Cannot read properties of null (reading 'entered')
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5638:44
+       at withCutoff (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:648:14)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5633:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 12
+Tests:  1202 total, 1197 passed, 5 failed, 0 skipped
+Time:   89.13 s running tests, 89.30 s total
+exit=1 seconds=89.448

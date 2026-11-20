@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS08b\jigsaw-counts.js
+jigsaw9: 120 states, 28 with a kite; assertSound {"states":120,"firings":35,"eliminations":44}; calls 120, largest work 15 of 50000, capped 0
+jigsaw9Turned: 120 states, 31 with a kite; assertSound {"states":120,"firings":38,"eliminations":42}; calls 120, largest work 20 of 50000, capped 0
+exit=0 seconds=0.652

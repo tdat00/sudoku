@@ -1,0 +1,70 @@
+$ node tests\artifacts\difficulty-v3\MS08a\golden-facts.js G01 G04 G06 G11 G12 G14
+== G01 ok=true positions=28 score=925 level=expert digLog=72 empties=51
+givens 907802500062000008108030000000000024500703006720000000000090602800000170006108409
+kinds srrrrrrrrrrrrrrrrrrrrrrgggge
+first guided #23 at=42 span={"rated":16,"refused":5,"chosen":45,"others":10,"nulls":0,"max":45,"rejected":[0,80,6,74,35,45,2,78,11,69],"rejectedSigns":[],"reasons":{"techniques":5},"trail":null}
+later guided: rated 22 refused 6
+random cells removed 43
+stats {"positions":28,"fresh":26,"memo":1,"zero":1,"checks":1279} transitions 34 compact 7 details 29
+compact scores 0,23,44,47,621,925,925 positions 0,7,22,25,26,27,27 roles solution,moves,moves,moves,moves,moves,final
+tiers [null,"first",null,"newPeak","jump","newPeak",null]
+ratings last {"status":"final","score":925,"memo":true}
+golden jumps [{"step":5,"from":47,"to":621,"key":"technique.simpleColouring.step"}]
+jump transitions compact:25>26:47>621 details:25>26:47>621
+== G04 ok=true positions=29 score=2427 level=hell1 digLog=91 empties=54
+givens 000081060085000000100000970900018040300090007060250001027000004000000620090420000
+kinds srrrrrrrrrrrrrrrrrrrrrgggggge
+first guided #22 at=43 span={"rated":19,"refused":4,"chosen":45,"others":14,"nulls":0,"max":44,"rejected":[24,56,4,76,10,70,5,75],"rejectedSigns":[],"reasons":{"ambiguous":4},"trail":null}
+later guided: rated 38 refused 8
+random cells removed 42
+stats {"positions":29,"fresh":27,"memo":1,"zero":1,"checks":2896} transitions 36 compact 8 details 30
+compact scores 0,25,43,45,915,920,2427,2427 positions 0,8,21,22,23,27,28,28 roles solution,moves,moves,moves,moves,moves,moves,final
+tiers [null,"first",null,"newPeak","jump",null,"newPeak",null]
+ratings last {"status":"final","score":2427,"memo":true}
+golden jumps [{"step":5,"from":45,"to":915,"key":"technique.xyWing.step"}]
+jump transitions compact:22>23:45>915 details:22>23:45>915
+== G06 ok=true positions=31 score=2329 level=nightmare digLog=111 empties=59
+givens 000000005050003010000004703900070030007000800080010007605800000070900050300000000
+kinds srrrrrrrrrrrrrrrrrrrrrrgggggggg
+first guided #23 at=43 span={"rated":19,"refused":4,"chosen":45,"others":14,"nulls":0,"max":45,"rejected":[14,66,31,49,34,46,23,57],"rejectedSigns":[],"reasons":{"techniques":4},"trail":null}
+later guided: rated 59 refused 6
+random cells removed 43
+stats {"positions":31,"fresh":29,"memo":1,"zero":1,"checks":3361} transitions 38 compact 8 details 32
+compact scores 0,25,44,48,492,710,2329,2329 positions 0,8,22,26,27,29,30,30 roles solution,moves,moves,moves,moves,moves,moves,final
+tiers [null,"first","newPeak",null,"jump","newPeak","jump",null]
+ratings last {"status":"final","score":2329,"memo":true}
+golden jumps [{"step":5,"from":48,"to":492,"key":"technique.skyscraper.step"},{"step":7,"from":710,"to":2329,"key":"technique.forcingChainLong.step.contradiction"}]
+jump transitions compact:26>27:48>492 compact:29>30:710>2329 details:26>27:48>492 details:29>30:710>2329
+== G11 ok=true positions=112 score=957 level=expert digLog=220 empties=50
+givens 007060000900300706063059000340007109000010000801900067000870930108005004000040200
+kinds scssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssrssrssrrssrsss
+random cells removed 0
+stats {"positions":112,"fresh":110,"memo":1,"zero":1,"checks":35309} transitions 118 compact 6 details 114
+compact scores 0,0,119,119,957,957 positions 0,0,108,109,111,111 roles solution,structure,moves,moves,moves,final
+tiers [null,null,"first",null,"jump",null]
+ratings last {"status":"final","score":957,"memo":true}
+golden jumps [{"step":5,"from":119,"to":957,"key":"technique.xyWing.step"}]
+jump transitions compact:109>111:119>957 details:60>61:140>1043 details:102>103:548>1964 details:105>106:123>976 details:109>110:119>962
+== G12 ok=true positions=104 score=594 level=hard digLog=119 empties=57
+givens 020030001006500002030000000053700010010000060090005230000000020200003100500060070
+kinds scssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+random cells removed 0
+stats {"positions":104,"fresh":102,"memo":1,"zero":1,"checks":13356} transitions 110 compact 6 details 106
+compact scores 0,0,127,130,594,594 positions 0,0,22,92,103,103 roles solution,structure,moves,moves,moves,final
+tiers [null,null,"first",null,"jump",null]
+ratings last {"status":"final","score":594,"memo":true}
+golden jumps [{"step":5,"from":130,"to":594,"key":"technique.skyscraper.step"}]
+jump transitions compact:92>103:130>594 details:92>93:130>605
+== G14 ok=true positions=78 score=6470 level=hell2 digLog=171 empties=154
+givens 00092007015000013061040000801513000150140150016080000100128000600000090500001200000041150609015014120110010074850001018305000216000000000414581601200000016011221560000000003400011014115130002151016014007085040110105813000000140000130140000003000514090000301300601007000142010000011141605000080200167000
+kinds srrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggg
+first guided #69 at=84 span={"rated":10,"refused":3,"chosen":null,"others":6,"nulls":0,"max":66,"rejected":[86,169,4,251,122,133],"rejectedSigns":[],"reasons":{"ambiguous":3},"trail":null}
+later guided: rated 78 refused 44
+random cells removed 136
+stats {"positions":78,"fresh":76,"memo":1,"zero":1,"checks":510883} transitions 85 compact 8 details 79
+compact scores 0,31,65,1646,3674,6420,6470,6470 positions 0,11,68,69,72,76,77,77 roles solution,moves,moves,moves,moves,moves,moves,final
+tiers [null,"first","newPeak","jump","newPeak","newPeak",null,null]
+ratings last {"status":"final","score":6470,"memo":true}
+golden jumps [{"step":4,"from":65,"to":1646,"key":"technique.forcingChain.step.contradiction"}]
+jump transitions compact:68>69:65>1646 details:68>69:65>1646
+exit=0 seconds=8.391

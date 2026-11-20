@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS15b\premise-proof.js
+ladder literal PRE_ALS_BEFORE_LONG: 29 ids, sha256 3249e594b7b301b281fd1c0acf4eb16298824556644ee12271ad05e47d820348
+long #0 C=6 f4dad932137443ff
+long #1 C=6 1b300fc22d7dabc7
+long #2 C=6 2065d33c1acd7b39
+long #3 C=6 334cd1f041cce581
+long #4 C=6 6291777f271f2687
+long #5 C=6 3fa9ac14789aabec
+long #6 C=6 f2041bfed99a7139
+long #7 C=6 8a8f60acf1ac441f
+long #8 C=6 c7e1f826feb814d7
+long #9 C=6 4b2ff168ca226042
+long #10 C=6 f6dc8a729eeb8f0e
+long #11 C=6 63ac29c866c41201
+P530 C=6 19174c3e6e81f181
+P530 C=4 f8f986f4cf56e734
+P24 C=4 d0ffaec4657815fd
+P530 C=6 forcingChainLong null record {"stop":"search-work","graph":"complete","minimum":"incomplete","capHit":"work","work":50000} singleton 7 links
+exit=0 seconds=0.573

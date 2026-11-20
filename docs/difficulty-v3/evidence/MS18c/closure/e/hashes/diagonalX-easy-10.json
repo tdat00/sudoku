@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "1b3980f978427b54318c3c4df1061455a3316381",
+  "dirty": true,
+  "generatedAt": "2026-11-19T02:15:55.590Z",
+  "argv": ["--hash-key=diagonalX/easy","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\e\\hashes\\diagonalX-easy-10.json"],
+  "records": [
+    {"key":"diagonalX/easy#144","variant":"diagonalX","level":"easy","seed":144,"hash":"a4a739ace99ed790","ms":35,"overrides":["diagonalX:easy"]},
+    {"key":"diagonalX/easy#233","variant":"diagonalX","level":"easy","seed":233,"hash":"5864997927d7ac75","ms":1209,"overrides":["diagonalX:easy"]},
+    {"key":"diagonalX/easy#377","variant":"diagonalX","level":"easy","seed":377,"hash":"07436df731180c13","ms":11,"overrides":["diagonalX:easy"]},
+    {"key":"diagonalX/easy#610","variant":"diagonalX","level":"easy","seed":610,"hash":"13f62fa2978df49e","ms":384,"overrides":["diagonalX:easy"]},
+    {"key":"diagonalX/easy#987","variant":"diagonalX","level":"easy","seed":987,"hash":"3cb099b3595569d7","ms":5,"overrides":["diagonalX:easy"]}
+  ]
+}

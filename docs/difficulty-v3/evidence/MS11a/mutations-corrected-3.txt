@@ -1,0 +1,168 @@
+mutation 56 (a target loses the digits that it has outside the subset too): DETECTED - 389 total, 347 passed, 42 failed, 0 skipped - 42 failing, 42 of uniqueRectangle - 9.7 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 57 (the eliminations are not sorted): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.6 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the cells of a unit are tried in ascending order, whatever the order of the list of the unit
+mutation 58 (the eliminations are sorted by cell, the digits highest first): DETECTED - 389 total, 354 passed, 35 failed, 0 skipped - 35 failing, 35 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 59 (the real cells are not in the cells of the Finding): DETECTED - 389 total, 353 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 60 (the labels are not those of the real cells (the first roof repeated)): DETECTED - 389 total, 351 passed, 38 failed, 0 skipped - 38 failing, 38 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 61 (the digits of the pair and of the subset are swapped): DETECTED - 389 total, 353 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 62 (the subset digits leave out the extras (the real cells only)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 20260101) and fires both subtypes
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 777) and fires both subtypes
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 99) and fires both subtypes
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic6 (200 states of seed 20260101) and fires both subtypes
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on 12 digits (boxes of 3 x 4) and 16 digits (4 x 4), no 9 x 9 arithmetic
+    FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > uniqueRectangle agrees with the brute-force oracle on 9 digits
+mutation 63 (the roofs are swapped in the arguments): DETECTED - 389 total, 353 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 64 (the unit is not the unit of the subset): DETECTED - 389 total, 359 passed, 30 failed, 0 skipped - 30 failing, 30 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 65 (a digit with three holders is a link (a third occurrence is not seen)): DETECTED - 389 total, 333 passed, 56 failed, 0 skipped - 56 failing, 55 of uniqueRectangle - 9.2 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits: four boxes or one box is no deadly pattern
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits: four cells in one row are no rectangle
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 6 digits: four boxes or one box is no deadly pattern
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 6 digits: four cells in one row are no rectangle
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 9 digits: four boxes or one box is no deadly pattern
+mutation 66 (the holders are counted up to two only (a third occurrence is not seen)): DETECTED - 389 total, 333 passed, 56 failed, 0 skipped - 56 failing, 55 of uniqueRectangle - 9.2 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits: four boxes or one box is no deadly pattern
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits: four cells in one row are no rectangle
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 6 digits: four boxes or one box is no deadly pattern
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 6 digits: four cells in one row are no rectangle
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 9 digits: four boxes or one box is no deadly pattern
+mutation 67 (the link digit is removed instead of the other digit): DETECTED - 389 total, 361 passed, 28 failed, 0 skipped - 28 failing, 28 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the transposed vector: 1 only in the two roofs of column 2
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs in a box and a row: the link may be in the box (the row has other 1s)
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > type 3 comes before type 4 on the same rectangle, whatever their units
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > rectangle by rectangle: a type 4 on an earlier rectangle comes before a type 3 on a later one
+mutation 68 (only the first roof loses the digit): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the transposed vector: 1 only in the two roofs of column 2
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs in a box and a row: the link may be in the box (the row has other 1s)
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > type 3 comes before type 4 on the same rectangle, whatever their units
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > rectangle by rectangle: a type 4 on an earlier rectangle comes before a type 3 on a later one
+mutation 69 (the roofs lose the digit in the order of the second roof first): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the transposed vector: 1 only in the two roofs of column 2
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs in a box and a row: the link may be in the box (the row has other 1s)
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > type 3 comes before type 4 on the same rectangle, whatever their units
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > rectangle by rectangle: a type 4 on an earlier rectangle comes before a type 3 on a later one
+mutation 70 (the digits are tried highest first): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 71 (a tested digit counts no unit): DETECTED - 389 total, 384 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > an open cell without any candidate is no real cell (a contradictory position proves nothing)
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 72 (a tested digit counts two units): DETECTED - 389 total, 384 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > an open cell without any candidate is no real cell (a contradictory position proves nothing)
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 73 (the pair is replaced by the removed digit alone in the arguments): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the transposed vector: 1 only in the two roofs of column 2
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs in a box and a row: the link may be in the box (the row has other 1s)
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > type 3 comes before type 4 on the same rectangle, whatever their units
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > rectangle by rectangle: a type 4 on an earlier rectangle comes before a type 3 on a later one
+mutation 74 (the cells of a type 4 Finding leave out the floors): DETECTED - 389 total, 364 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the transposed vector: 1 only in the two roofs of column 2
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs in a box and a row: the link may be in the box (the row has other 1s)
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > type 3 comes before type 4 on the same rectangle, whatever their units
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > rectangle by rectangle: a type 4 on an earlier rectangle comes before a type 3 on a later one
+mutation 75 (a tested cell counts no unit): DETECTED - 389 total, 376 passed, 13 failed, 0 skipped - 13 failing, 13 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+mutation 76 (a tested cell counts two units): DETECTED - 389 total, 378 passed, 11 failed, 0 skipped - 11 failing, 11 of uniqueRectangle - 10.6 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+mutation 77 (the entry check of the parent budget of the second pass is gone): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 78 (cancellation and every other error are swallowed): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 79 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 80 (a spent work limit is propagated instead of "nothing found"): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > reports a spent budget of the second pass as nothing found and lets cancellation and other errors through
+mutation 81 (the limit constant is 50001): DETECTED - 389 total, 384 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+mutation 82 (the registered finder ignores the constant): DETECTED - 389 total, 385 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+mutation 83 (the exported constant is another number): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+detected 28 of 28, 283.6 s

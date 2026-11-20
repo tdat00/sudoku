@@ -1,0 +1,199 @@
+mutation 0 (isVersion accepts zero): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+mutation 1 (isVersion accepts a negative integer): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.6 s
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+mutation 2 (isVersion accepts a fraction and Infinity): DETECTED - 29 total, 26 passed, 3 failed, 0 skipped - 3 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 3 (isVersion coerces a string, an array and true): DETECTED - 29 total, 25 passed, 4 failed, 0 skipped - 4 failing - 2.6 s
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 4 (isVersion accepts nothing): DETECTED - 29 total, 15 passed, 14 failed, 0 skipped - 14 failing - 2.7 s
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the rating version of an entry (MS17a) > copies the version the result states: the real producer, an older one and a future one
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+    FAIL history > history: the rating version of an entry (MS17a) > reads a saved envelope with no marker: recipes stay readable, unmarked and selectable
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > is not part of the recipe: id, key, overrides and the generation config ignore it
+mutation 5 (entryOf stamps the current version on every entry): DETECTED - 29 total, 25 passed, 4 failed, 0 skipped - 4 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > copies the version the result states: the real producer, an older one and a future one
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+mutation 6 (entryOf stamps the current version when the result states none): DETECTED - 29 total, 26 passed, 3 failed, 0 skipped - 3 failing - 2.6 s
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+mutation 7 (entryOf never copies the marker): DETECTED - 29 total, 24 passed, 5 failed, 0 skipped - 5 failing - 2.6 s
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the rating version of an entry (MS17a) > copies the version the result states: the real producer, an older one and a future one
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+mutation 8 (entryOf copies any stated value): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+mutation 9 (entryOf reads the marker from the result, not its rating): DETECTED - 29 total, 23 passed, 6 failed, 0 skipped - 6 failing - 2.7 s
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the rating version of an entry (MS17a) > copies the version the result states: the real producer, an older one and a future one
+    FAIL history > history: the rating version of an entry (MS17a) > has no marker for a result that states none or a malformed one, and never makes one up
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+mutation 10 (entryOf copies only the current version): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > copies the version the result states: the real producer, an older one and a future one
+mutation 11 (the marker is not a stored field): DETECTED - 29 total, 16 passed, 13 failed, 0 skipped - 13 failing - 2.7 s
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+    FAIL history > history: the rating version of an entry (MS17a) > reads a saved envelope with no marker: recipes stay readable, unmarked and selectable
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > is not part of the recipe: id, key, overrides and the generation config ignore it
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+mutation 12 (storedEntry keeps a malformed marker): DETECTED - 29 total, 26 passed, 3 failed, 0 skipped - 3 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+    FAIL history > history: the rating version of an entry (MS17a) > still ignores an envelope of another version and keeps markers when the list lives in memory
+mutation 13 (storedEntry keeps only a malformed marker): DETECTED - 29 total, 16 passed, 13 failed, 0 skipped - 13 failing - 2.7 s
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+    FAIL history > history: the rating version of an entry (MS17a) > reads a saved envelope with no marker: recipes stay readable, unmarked and selectable
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > is not part of the recipe: id, key, overrides and the generation config ignore it
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+mutation 14 (the entry without a marker is not valid): DETECTED - 29 total, 12 passed, 17 failed, 0 skipped - 17 failing - 2.7 s
+    FAIL history > history: the persisted list > lists the newest first and keeps the list in the storage
+    FAIL history > history: the persisted list > reads the entries an older version stored with id, at and cells, and drops those at the next write
+    FAIL history > history: the persisted list > moves a puzzle that is generated again to the top, or leaves it in place when it was opened
+    FAIL history > history: the persisted list > keeps at most `limit` entries and removes or clears on request
+    FAIL history > history: the persisted list > ignores what is not a list of entries and never throws
+    FAIL history > history: the persisted list > lives in memory when the storage is missing, blocked or full
+mutation 15 (the entry with a malformed marker is not valid): DETECTED - 29 total, 26 passed, 3 failed, 0 skipped - 3 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+    FAIL history > history: the rating version of an entry (MS17a) > still ignores an envelope of another version and keeps markers when the list lives in memory
+mutation 16 (the read path does not filter the marker): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the persisted list > reads the entries an older version stored with id, at and cells, and drops those at the next write
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+mutation 17 (the write path does not filter entries): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the persisted list > reads the entries an older version stored with id, at and cells, and drops those at the next write
+mutation 18 (add does not filter the marker): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > still ignores an envelope of another version and keeps markers when the list lives in memory
+mutation 19 (the envelope version changes): DETECTED - 29 total, 17 passed, 12 failed, 0 skipped - 12 failing - 2.7 s
+    FAIL history > history: the persisted list > reads the entries an older version stored with id, at and cells, and drops those at the next write
+    FAIL history > history: the persisted list > ignores what is not a list of entries and never throws
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+    FAIL history > history: the rating version of an entry (MS17a) > reads a saved envelope with no marker: recipes stay readable, unmarked and selectable
+    FAIL history > history: the rating version of an entry (MS17a) > keeps the recipe of an entry whose stored marker is malformed and leaves only the marker out
+    FAIL history > history: the rating version of an entry (MS17a) > still ignores an envelope of another version and keeps markers when the list lives in memory
+mutation 20 (the storage key changes): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > writes the marker with the recipe and reads it back, an older and a future one too
+mutation 21 (the id includes the marker): DETECTED - 29 total, 24 passed, 5 failed, 0 skipped - 5 failing - 2.6 s
+    FAIL history > history: the entry of a result > keeps what the list shows and what rebuilds the puzzle
+    FAIL history > history: the persisted list > stores an entry without its id, which is derived again when the list is read
+    FAIL history > history: the rating version of an entry (MS17a) > is not part of the recipe: id, key, overrides and the generation config ignore it
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+mutation 22 (the overrides carry the marker): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > is not part of the recipe: id, key, overrides and the generation config ignore it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+mutation 23 (an opened entry replaced in place inherits the old marker): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+mutation 24 (an entry generated again inherits the old marker): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the rating version of an entry (MS17a) > is not part of the recipe: id, key, overrides and the generation config ignore it
+    FAIL history > history: the rating version of an entry (MS17a) > is replaced by the marker of the new result only: never inherited, never made up
+mutation 25 (a missing marker gets no note): DETECTED - 29 total, 23 passed, 6 failed, 0 skipped - 6 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a legacy entry can be removed like any other
+mutation 26 (only a marker gets the note): DETECTED - 29 total, 23 passed, 6 failed, 0 skipped - 6 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a legacy entry can be removed like any other
+mutation 27 (an equal marker gets the note): DETECTED - 29 total, 23 passed, 6 failed, 0 skipped - 6 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a legacy entry can be removed like any other
+mutation 28 (a future marker gets the note): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 29 (a smaller marker gets no note): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 30 (a known older marker gets no note): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 31 (the current version is not validated): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 32 (the current version is not compared): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 33 (the current version is a literal): DETECTED - 29 total, 24 passed, 5 failed, 0 skipped - 5 failing - 2.6 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a legacy entry can be removed like any other
+mutation 34 (the current version is read without a guard): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+mutation 35 (every entry gets the note): DETECTED - 29 total, 23 passed, 6 failed, 0 skipped - 6 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a legacy entry can be removed like any other
+mutation 36 (no entry gets the note): DETECTED - 29 total, 23 passed, 6 failed, 0 skipped - 6 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the current version is validated: an unusable one gives a marked entry no note, a missing marker still gets it
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a legacy entry can be removed like any other
+mutation 37 (the note uses the explanation): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 38 (the title never explains): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.6 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 39 (the title explains on the wrong entries): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.6 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 40 (the locale event does not render again): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 41 (opening an entry hands on its marker): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+mutation 42 (an opened entry moves to the top): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+mutation 43 (a result without a marker is stamped with the current version): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: opening a legacy recipe regenerates it as before; the new result replaces it in place
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+mutation 44 (an imported result is listed): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.6 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: a new result is listed first with the producer it states; an imported one is not listed
+mutation 45 (the English note says older): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.6 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 46 (the English note promises the same puzzle): DETECTED - 29 total, 27 passed, 2 failed, 0 skipped - 2 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 47 (the English explanation drops the cache): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.6 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: an entry without a version or below the current one shows the note and the explanation; an equal or a future one shows neith
+mutation 48 (the Vietnamese note says newer): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.7 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+mutation 49 (the Vietnamese explanation forbids the cache): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped - 1 failing - 2.8 s
+    FAIL history > history: the panel says which entries were made by an earlier version (MS17a) > MS17a-T02: the note and the explanation follow the language when the app announces a change
+detected 50 of 50, survivors 0, 133.5 s

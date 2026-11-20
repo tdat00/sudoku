@@ -1,0 +1,7 @@
+[
+  { "label": "b1-wire-G09", "args": ["tests\\replay-fixtures.js", "--ids=G09", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\wire\\G09.json"] },
+  { "label": "b1-wire-G10", "args": ["tests\\replay-fixtures.js", "--ids=G10", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\wire\\G10.json"] },
+  { "label": "b1-wire-G11", "args": ["tests\\replay-fixtures.js", "--ids=G11", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\wire\\G11.json"] },
+  { "label": "b1-wire-G12", "args": ["tests\\replay-fixtures.js", "--ids=G12", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\wire\\G12.json"] },
+  { "label": "b1-wire-G13", "args": ["tests\\replay-fixtures.js", "--ids=G13", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\wire\\G13.json"] }
+]

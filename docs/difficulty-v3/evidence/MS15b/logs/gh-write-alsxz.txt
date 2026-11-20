@@ -1,0 +1,8 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=alsXz --sources=tests\artifacts\difficulty-v3\MS15b\sources.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 3 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/3 classic9 Hell 1 644 -> 89 hint(s), solved; wanted found: alsXz
+puzzle 2/3 classic9 Nightmare 75 -> 70 hint(s), solved; wanted found: alsXz
+puzzle 3/3 classic9 Hell 2 escargot -> 112 hint(s), solved; wanted found: alsXz
+wrote player/js/ui/help-examples.js (39 examples; 1 selected: alsXz; the others kept)
+exit=0 seconds=2.199

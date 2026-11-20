@@ -1,0 +1,72 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "plugin-short",
+  "standin": true,
+  "profile": "standin-ledger",
+  "cell": null,
+  "task": "stand-in plugin-short",
+  "startedAtMs": 1795101679247,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "standin-ledger",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "ledger-incomplete"
+    ],
+    "problems": [
+      "the ledger has 2 records, not 3"
+    ],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=0.092",
+      "exit": 0
+    },
+    "records": 2
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 6948,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=0.092",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 27,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 62000,
+      "systemMicros": 31000
+    },
+    "tee": {
+      "userMicros": 31000,
+      "systemMicros": 78000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 65,
+  "finishedAtMs": 1795101680536
+}

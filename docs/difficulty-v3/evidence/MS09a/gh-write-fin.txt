@@ -1,0 +1,11 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=finnedXWing --sources=tests\artifacts\difficulty-v3\MS09a\sources.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 6 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/6 classic9 Nightmare 648 -> 77 hint(s), solved; wanted found: finnedXWing
+puzzle 2/6 classic9 Nightmare 828 -> 80 hint(s), solved; wanted found: finnedXWing
+puzzle 3/6 classic9 Nightmare 1156 -> 74 hint(s), solved; wanted found: finnedXWing
+puzzle 4/6 classic9 Nightmare 11 -> 73 hint(s), solved; wanted found: finnedXWing
+puzzle 5/6 classic9 Nightmare 1427 -> 73 hint(s), solved; wanted found: finnedXWing
+puzzle 6/6 classic9 Hell 1 8 -> 70 hint(s), solved; wanted found: finnedXWing
+wrote player/js/ui/help-examples.js (32 examples; 1 selected: finnedXWing; the others kept)
+exit=0 seconds=0.754

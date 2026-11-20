@@ -1,0 +1,16 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-killer.json --cells=killer/hard:2,killer/expert:2,killer/master:2,killer/nightmare:2,killer/hell1:2,killer/hell2:3 --budget-seconds=420
+killer/hard #0: 6329.0 ms, hit false, achieved hard, exact false, approximate true
+killer/hard #1: 5131.7 ms, hit false, achieved hard, exact false, approximate true
+killer/expert #0: 4882.7 ms, hit false, achieved expert, exact false, approximate true
+killer/expert #1: 8458.7 ms, hit false, achieved expert, exact false, approximate true
+killer/master #0: 7538.9 ms, hit true, achieved master, exact true, approximate false
+killer/master #1: 12916.9 ms, hit false, achieved master, exact false, approximate true
+killer/nightmare #0: 3940.6 ms, hit true, achieved nightmare, exact true, approximate false
+killer/nightmare #1: 4975.1 ms, hit true, achieved nightmare, exact true, approximate false
+killer/hell1 #0: 27388.9 ms, hit false, achieved hell1, exact false, approximate true
+killer/hell1 #1: 19402.5 ms, hit false, achieved hell1, exact false, approximate true
+killer/hell2 #0: 1178.6 ms, hit true, achieved hell2, exact true, approximate false
+killer/hell2 #1: 2209.7 ms, hit true, achieved hell2, exact true, approximate false
+killer/hell2 #2: 5196.0 ms, hit true, achieved hell2, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-killer.json (109.813 s)
+exit=0 seconds=110.299

@@ -1,0 +1,27 @@
+$ node tests\artifacts\difficulty-v3\MS09a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS09a\mutations-1.txt 0 24
+mutation 0 (a base cell may be a target (the base lines are not excluded: a body cell or a fin)): DETECTED - 395 total, 343 passed, 52 failed, 0 skipped - 52 failing, 48 of the finned X-Wing - 11.6 s
+mutation 1 (a selection without a fin is accepted (the ordinary fish is relabelled)): DETECTED - 395 total, 377 passed, 18 failed, 0 skipped - 18 failing, 18 of the finned X-Wing - 13.2 s
+mutation 2 (a base line with no body cell (fins only) is accepted): DETECTED - 395 total, 384 passed, 11 failed, 0 skipped - 11 failing, 11 of the finned X-Wing - 13.9 s
+mutation 3 (a target that sees only the first fin): DETECTED - 395 total, 393 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned X-Wing - 15.0 s
+mutation 4 (a target need not see any fin): DETECTED - 395 total, 347 passed, 48 failed, 0 skipped - 48 failing, 44 of the finned X-Wing - 11.5 s
+mutation 5 (a target must lie in the box of the fins instead of seeing them (a peer of a fin outside the box is lost)): DETECTED - 395 total, 393 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned X-Wing - 15.0 s
+mutation 6 (the target need not be a candidate of the digit): DETECTED - 395 total, 349 passed, 46 failed, 0 skipped - 46 failing, 42 of the finned X-Wing - 11.7 s
+mutation 7 (a target may be a placed cell): NOT DETECTED (exit 0) - 395 total, 395 passed, 0 failed, 0 skipped - 0 failing, 0 of the finned X-Wing - 15.5 s
+mutation 8 (the targets are taken from the base lines instead of the covers (the wrong anchor)): DETECTED - 395 total, 352 passed, 43 failed, 0 skipped - 43 failing, 43 of the finned X-Wing - 12.1 s
+mutation 9 (the ownership of the base line dropped (a candidate in several lines of its kind is accepted)): DETECTED - 395 total, 394 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned X-Wing - 15.3 s
+mutation 10 (the ownership of the cover dropped (a candidate with no single cover line is accepted)): DETECTED - 395 total, 394 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned X-Wing - 15.5 s
+mutation 11 (an overlapped box (two owners) counts as the box of its cells): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 1 of the finned X-Wing - 15.2 s
+mutation 12 (fins in two boxes are accepted (the one-box rule dropped)): DETECTED - 395 total, 393 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned X-Wing - 22.6 s
+mutation 13 (a fin with no single box owner is accepted): DETECTED - 395 total, 393 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned X-Wing - 15.3 s
+mutation 14 (box-only eligibility: a region of a jigsaw board is not a box-like unit): DETECTED - 395 total, 374 passed, 21 failed, 0 skipped - 21 failing, 7 of the finned X-Wing - 14.1 s
+mutation 15 (a board without a box-like unit is still scanned (and costs work)): DETECTED - 395 total, 394 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned X-Wing - 15.3 s
+mutation 16 (an incomplete unit counts as a line, a box or a cover): DETECTED - 395 total, 389 passed, 6 failed, 0 skipped - 6 failing, 1 of the finned X-Wing - 15.2 s
+mutation 17 (a base line in which the digit is placed is still a base line): DETECTED - 395 total, 394 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned X-Wing - 15.2 s
+mutation 18 (a line with one candidate is a base line): DETECTED - 395 total, 364 passed, 31 failed, 0 skipped - 31 failing, 31 of the finned X-Wing - 12.4 s
+mutation 19 (the last digit is not searched): DETECTED - 395 total, 381 passed, 14 failed, 0 skipped - 14 failing, 14 of the finned X-Wing - 13.4 s
+mutation 20 (the parent budget is checked one unit early): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 1 of the finned X-Wing - 15.3 s
+mutation 21 (the parent budget is checked one unit late): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 1 of the finned X-Wing - 15.3 s
+mutation 22 (the position of the last budget check is not updated): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 1 of the finned X-Wing - 55.5 s
+mutation 23 (the budget is not checked at the entry of the call): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 1 of the finned X-Wing - 15.3 s
+detected 23 of 24, 1 not started, 390.6 s
+exit=1 seconds=390.642

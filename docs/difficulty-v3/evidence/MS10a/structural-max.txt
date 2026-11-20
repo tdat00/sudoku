@@ -1,0 +1,22 @@
+$ node tests\artifacts\difficulty-v3\MS10a\structural-max.js
+{"id":"classic4","digits":4,"cells":16,"units":12,"fewestUnitsOfACell":3,"peerSum":112,"kmax":8,"pairs":32,"walk":24,"maximum":168,"limit":50000}
+{"id":"classic6","digits":6,"cells":36,"units":18,"fewestUnitsOfACell":3,"peerSum":432,"kmax":12,"pairs":108,"walk":36,"maximum":576,"limit":50000}
+{"id":"classic9","digits":9,"cells":81,"units":27,"fewestUnitsOfACell":3,"peerSum":1620,"kmax":18,"pairs":364,"walk":54,"maximum":2038,"limit":50000}
+{"id":"mega12","digits":12,"cells":144,"units":36,"fewestUnitsOfACell":3,"peerSum":4032,"kmax":24,"pairs":864,"walk":72,"maximum":4968,"limit":50000}
+{"id":"mega16","digits":16,"cells":256,"units":48,"fewestUnitsOfACell":3,"peerSum":9984,"kmax":32,"pairs":2048,"walk":96,"maximum":12128,"limit":50000}
+{"id":"diagonalX","digits":9,"cells":81,"units":29,"fewestUnitsOfACell":3,"peerSum":1728,"kmax":19,"pairs":384,"walk":58,"maximum":2170,"limit":50000}
+{"id":"hyper","digits":9,"cells":81,"units":31,"fewestUnitsOfACell":3,"peerSum":1748,"kmax":20,"pairs":405,"walk":62,"maximum":2215,"limit":50000}
+{"id":"jigsaw9","digits":9,"cells":81,"units":27,"fewestUnitsOfACell":3,"peerSum":1634,"kmax":18,"pairs":364,"walk":54,"maximum":2052,"limit":50000}
+{"id":"killer","digits":9,"cells":81,"units":27,"fewestUnitsOfACell":3,"peerSum":1620,"kmax":18,"pairs":364,"walk":54,"maximum":2038,"limit":50000}
+{"id":"greaterThan","digits":9,"cells":81,"units":27,"fewestUnitsOfACell":3,"peerSum":1620,"kmax":18,"pairs":364,"walk":54,"maximum":2038,"limit":50000}
+{"id":"samurai","digits":9,"cells":369,"units":135,"fewestUnitsOfACell":3,"peerSum":7812,"kmax":90,"pairs":8302,"walk":270,"maximum":16384,"limit":50000}
+{"id":"sohei","digits":9,"cells":288,"units":108,"fewestUnitsOfACell":3,"peerSum":6192,"kmax":72,"pairs":5184,"walk":216,"maximum":11592,"limit":50000}
+{"id":"butterfly","digits":9,"cells":144,"units":108,"fewestUnitsOfACell":3,"peerSum":3312,"kmax":72,"pairs":2592,"walk":216,"maximum":6120,"limit":50000}
+{"id":"flower","digits":9,"cells":189,"units":135,"fewestUnitsOfACell":3,"peerSum":4428,"kmax":90,"pairs":4252,"walk":270,"maximum":8950,"limit":50000}
+{"id":"wordoku","digits":9,"cells":81,"units":27,"fewestUnitsOfACell":3,"peerSum":1620,"kmax":18,"pairs":364,"walk":54,"maximum":2038,"limit":50000}
+{"id":"boxGrid 12 digits (3 x 4)","digits":12,"cells":144,"units":36,"fewestUnitsOfACell":3,"peerSum":4032,"kmax":24,"pairs":864,"walk":72,"maximum":4968,"limit":50000}
+{"id":"boxGrid 16 digits (4 x 4)","digits":16,"cells":256,"units":48,"fewestUnitsOfACell":3,"peerSum":9984,"kmax":32,"pairs":2048,"walk":96,"maximum":12128,"limit":50000}
+{"id":"classic4","digits":4,"cells":16,"units":12,"fewestUnitsOfACell":3,"peerSum":112,"kmax":8,"pairs":32,"walk":24,"maximum":168,"limit":50000}
+{"id":"classic6","digits":6,"cells":36,"units":18,"fewestUnitsOfACell":3,"peerSum":432,"kmax":12,"pairs":108,"walk":36,"maximum":576,"limit":50000}
+largest structural maximum: samurai 16384 units of a limit of 50000 (32.8 %)
+exit=0 seconds=0.198

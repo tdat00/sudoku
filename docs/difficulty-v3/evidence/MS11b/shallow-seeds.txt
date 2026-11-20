@@ -1,0 +1,17 @@
+$ node tests\artifacts\difficulty-v3\MS11b\q-shallow-seeds.cjs
+seed 1 exact true level nightmare score 2242 warnings  191 ms
+seed 2 exact true level nightmare score 2093 warnings  220 ms
+seed 3 exact true level nightmare score 2246 warnings  394 ms
+seed 4 exact true level nightmare score 2394 warnings  503 ms
+seed 5 exact true level nightmare score 2373 warnings  286 ms
+seed 6 exact false level nightmare score 1816 warnings difficulty.approximate+difficulty.shallow 389 ms  <- shallow fallback
+seed 7 exact true level nightmare score 2274 warnings  250 ms
+seed 8 exact true level nightmare score 2277 warnings  351 ms
+seed 9 exact true level nightmare score 2089 warnings  105 ms
+seed 10 exact true level nightmare score 2285 warnings  187 ms
+seed 11 exact true level nightmare score 2010 warnings  97 ms
+seed 12 exact true level nightmare score 2153 warnings  45 ms
+seed 13 exact false level nightmare score 1872 warnings difficulty.approximate+difficulty.shallow 437 ms  <- shallow fallback
+seed 14 exact false level nightmare score 1522 warnings difficulty.approximate+difficulty.shallow 610 ms  <- shallow fallback
+shallow fallbacks: [6,13,14]
+exit=0 seconds=4.253

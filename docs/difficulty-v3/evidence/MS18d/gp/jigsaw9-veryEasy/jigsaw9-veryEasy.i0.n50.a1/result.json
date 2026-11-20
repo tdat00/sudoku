@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "jigsaw9-veryEasy.i0.n50.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "jigsaw9",
+    "level": "veryEasy",
+    "targetMs": 150
+  },
+  "task": "MS18d GP record jigsaw9-veryEasy.i0.n50 a1",
+  "startedAtMs": 1795107944661,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=0.848",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "jigsaw9-veryEasy.i0.n50",
+      "requests": 50,
+      "sha256": "bbd64b8c354488e04814a12ac2ca48b3cb34f7928af39516bd2a49412775fbb8"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 31280,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=0.848",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 217,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 250000,
+      "systemMicros": 250000
+    },
+    "tee": {
+      "userMicros": 15000,
+      "systemMicros": 109000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795107955306
+}

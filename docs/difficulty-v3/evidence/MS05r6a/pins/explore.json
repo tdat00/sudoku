@@ -1,0 +1,3552 @@
+{
+ "goldens": {
+  "G01": {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "expert",
+    "seed": "3275974478"
+   },
+   "positions": 32,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 7,
+     "kind": "random",
+     "score": 23,
+     "change": 23,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 21,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 23,
+     "kind": "guided",
+     "score": 551,
+     "change": 507,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R1C2 and R9C8 are removed, the generator's solution uses Simple Colouring 2 times; previously, its hardest technique was Naked Single.",
+      "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+      "Removing the clue at R1C2 alone gives 550; removing the clue at R9C8 alone gives 44."
+     ],
+     "describe": "Compare 15 possible removals (5 rejected) and choose the removal preferred by the generator's check: R1C2 and R9C8."
+    },
+    {
+     "i": 4,
+     "position": 26,
+     "kind": "guided",
+     "score": 568,
+     "change": 17,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 31,
+     "kind": "search",
+     "score": 992,
+     "change": 424,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.exchange"
+     ]
+    },
+    {
+     "i": 6,
+     "position": 31,
+     "kind": "final",
+     "score": 992,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 33,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 23,
+     "before": 44,
+     "after": 551,
+     "change": 507,
+     "ratio": 12.5,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "simpleColouring",
+     "cause": "single-culprit",
+     "frame": "R1C2",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 26,
+     "to": 31,
+     "before": 568,
+     "after": 992,
+     "change": 424,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "simpleColouring",
+     "afterHardest": "xyzWing",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 22,
+     "to": 23,
+     "before": 44,
+     "after": 551,
+     "change": 507,
+     "ratio": 12.5,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "simpleColouring",
+     "cause": "single-culprit",
+     "frame": "R1C2",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 30,
+     "to": 31,
+     "before": 568,
+     "after": 992,
+     "change": 424,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "simpleColouring",
+     "afterHardest": "xyzWing",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 23,
+     "compact": [
+      44,
+      551
+     ],
+     "details": [
+      44,
+      551,
+      507,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 1,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G02": {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "veryEasy",
+    "seed": "1"
+   },
+   "positions": 22,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 4,
+     "kind": "random",
+     "score": 15,
+     "change": 15,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 8,
+     "kind": "random",
+     "score": 25,
+     "change": 10,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 21,
+     "kind": "random",
+     "score": 43,
+     "change": 18,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 21,
+     "kind": "final",
+     "score": 43,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 23,
+   "transitions": [],
+   "sameEnd": [],
+   "framed": {
+    "compact": 0,
+    "details": 0,
+    "jumps": {
+     "compact": 0,
+     "details": 0
+    }
+   }
+  },
+  "G03": {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "nightmare",
+    "seed": "42"
+   },
+   "positions": 28,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 8,
+     "kind": "random",
+     "score": 25,
+     "change": 25,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 19,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 23,
+     "kind": "guided",
+     "score": 870,
+     "change": 826,
+     "tier": "jump",
+     "cause": "together",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R2C3 and R8C7 are removed, the generator's solution uses XY-Wing once; previously, its hardest technique was Naked Single.",
+      "The largest technique weight, 650, contributes in full as the P term of the score (P = 650).",
+      "Removing each clue alone gives 45 and 44; removing the whole group gives 870."
+     ],
+     "describe": "Compare 18 possible removals (6 rejected) and choose the removal preferred by the generator's check: R2C3 and R8C7."
+    },
+    {
+     "i": 4,
+     "position": 27,
+     "kind": "guided",
+     "score": 1572,
+     "change": 702,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 27,
+     "kind": "final",
+     "score": 1572,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 29,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 23,
+     "before": 44,
+     "after": 870,
+     "change": 826,
+     "ratio": 19.7,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "xyWing",
+     "cause": "together",
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 23,
+     "to": 27,
+     "before": 870,
+     "after": 1572,
+     "change": 702,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "xyWing",
+     "afterHardest": "forcingChain",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 22,
+     "to": 23,
+     "before": 44,
+     "after": 870,
+     "change": 826,
+     "ratio": 19.7,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "xyWing",
+     "cause": "together",
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 23,
+     "to": 24,
+     "before": 870,
+     "after": 1234,
+     "change": 364,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "xyWing",
+     "afterHardest": "wWing",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 24,
+     "to": 25,
+     "before": 1234,
+     "after": 1570,
+     "change": 336,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "wWing",
+     "afterHardest": "forcingChain",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 23,
+     "compact": [
+      44,
+      870
+     ],
+     "details": [
+      44,
+      870,
+      826,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 0,
+    "details": 0,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G04": {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "hell1",
+    "seed": "2400651925"
+   },
+   "positions": 42,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 9,
+     "kind": "random",
+     "score": 27,
+     "change": 27,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 17,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 25,
+     "kind": "guided",
+     "score": 47,
+     "change": 3,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 26,
+     "kind": "guided",
+     "score": 1206,
+     "change": 1159,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R4C5 and R6C5 are removed, the generator's solution uses W-Wing once; previously, its hardest technique was Hidden Single (box).",
+      "The largest technique weight, 850, contributes in full as the P term of the score (P = 850).",
+      "Removing the clue at R6C5 alone gives 1,205; removing the clue at R4C5 alone gives 47."
+     ],
+     "describe": "Compare 5 possible removals (3 rejected) and choose the removal preferred by the generator's check: R4C5 and R6C5."
+    },
+    {
+     "i": 5,
+     "position": 41,
+     "kind": "search",
+     "score": 2879,
+     "change": 1673,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.exchange",
+      "replay.searchRemove",
+      "replay.exchange",
+      "replay.reveal.search",
+      "replay.exchange"
+     ]
+    },
+    {
+     "i": 6,
+     "position": 41,
+     "kind": "final",
+     "score": 2879,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 43,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 25,
+     "before": 44,
+     "after": 47,
+     "change": 3,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 25,
+     "to": 26,
+     "before": 47,
+     "after": 1206,
+     "change": 1159,
+     "ratio": 25.6,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "wWing",
+     "cause": "single-culprit",
+     "frame": "R6C5",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 26,
+     "to": 41,
+     "before": 1206,
+     "after": 2879,
+     "change": 1673,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "wWing",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 24,
+     "to": 25,
+     "before": 46,
+     "after": 47,
+     "change": 1,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 25,
+     "to": 26,
+     "before": 47,
+     "after": 1206,
+     "change": 1159,
+     "ratio": 25.6,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "wWing",
+     "cause": "single-culprit",
+     "frame": "R6C5",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 28,
+     "to": 29,
+     "before": 1206,
+     "after": 1964,
+     "change": 758,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "wWing",
+     "afterHardest": "forcingChain",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 40,
+     "to": 41,
+     "before": 2346,
+     "after": 2879,
+     "change": 533,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 26,
+     "compact": [
+      47,
+      1206
+     ],
+     "details": [
+      47,
+      1206,
+      1159,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 1,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G05": {
+   "request": {
+    "variantId": "classic9",
+    "difficulty": "hell1",
+    "seed": "2299986211"
+   },
+   "positions": 76,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 9,
+     "kind": "random",
+     "score": 27,
+     "change": 27,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 17,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 28,
+     "kind": "guided",
+     "score": 50,
+     "change": 6,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 29,
+     "kind": "search",
+     "score": 2010,
+     "change": 1960,
+     "tier": "jump",
+     "cause": "together",
+     "parts": [
+      "replay.exchange"
+     ],
+     "callout": [
+      "After the clues at R2C1 and R8C9 are removed and those at R4C6 and R6C4 are restored, the generator's solution uses Forcing Chain 6 times; previously, its hardest technique was Hidden Single (row/column).",
+      "The largest technique weight, 1,100, contributes in full as the P term of the score (P = 1,100).",
+      "The separate changes give 50, 50, 49 and 49; the combined change gives 2,010."
+     ],
+     "describe": "Adjust the clues to look for a higher-scoring puzzle: clear 2 cells and restore 2 clues."
+    },
+    {
+     "i": 5,
+     "position": 75,
+     "kind": "search",
+     "score": 3274,
+     "change": 1264,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.exchange",
+      "replay.reveal.search",
+      "replay.exchange"
+     ]
+    },
+    {
+     "i": 6,
+     "position": 75,
+     "kind": "final",
+     "score": 3274,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 77,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 28,
+     "before": 44,
+     "after": 50,
+     "change": 6,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleLine",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 28,
+     "to": 29,
+     "before": 50,
+     "after": 2010,
+     "change": 1960,
+     "ratio": 40.2,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleLine",
+     "afterHardest": "forcingChain",
+     "cause": "together",
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 29,
+     "to": 75,
+     "before": 2010,
+     "after": 3274,
+     "change": 1264,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 24,
+     "to": 25,
+     "before": 46,
+     "after": 47,
+     "change": 1,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleLine",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 28,
+     "to": 29,
+     "before": 50,
+     "after": 2010,
+     "change": 1960,
+     "ratio": 40.2,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleLine",
+     "afterHardest": "forcingChain",
+     "cause": "together",
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 74,
+     "to": 75,
+     "before": 2377,
+     "after": 3274,
+     "change": 897,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 29,
+     "compact": [
+      50,
+      2010
+     ],
+     "details": [
+      50,
+      2010,
+      1960,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 0,
+    "details": 0,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G06": {
+   "request": {
+    "variantId": "jigsaw9",
+    "difficulty": "nightmare",
+    "seed": "42"
+   },
+   "positions": 29,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 8,
+     "kind": "random",
+     "score": 25,
+     "change": 25,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 19,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 26,
+     "kind": "guided",
+     "score": 106,
+     "change": 62,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 27,
+     "kind": "guided",
+     "score": 1697,
+     "change": 1591,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R2C6 and R8C4 are removed, the generator's solution uses Forcing Chain once; previously, its hardest technique was Pointing Pair/Triple.",
+      "The largest technique weight, 1,100, contributes in full as the P term of the score (P = 1,100).",
+      "Removing the clue at R8C4 alone gives 1,697; removing the clue at R2C6 alone gives 107."
+     ],
+     "describe": "Compare 10 possible removals (0 rejected) and choose the removal preferred by the generator's check: R2C6 and R8C4."
+    },
+    {
+     "i": 5,
+     "position": 28,
+     "kind": "guided",
+     "score": 2348,
+     "change": 651,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided"
+     ]
+    },
+    {
+     "i": 6,
+     "position": 28,
+     "kind": "final",
+     "score": 2348,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 30,
+   "detailsSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "score": 0,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 1,
+     "position": 1,
+     "score": 5,
+     "tier": "first",
+     "folded": false
+    },
+    {
+     "i": 2,
+     "position": 2,
+     "score": 9,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 3,
+     "position": 3,
+     "score": 12,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 4,
+     "position": 4,
+     "score": 15,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 5,
+     "position": 5,
+     "score": 18,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 6,
+     "position": 6,
+     "score": 20,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 7,
+     "position": 7,
+     "score": 23,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 8,
+     "position": 8,
+     "score": 25,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 9,
+     "position": 9,
+     "score": 27,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 10,
+     "position": 10,
+     "score": 29,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 11,
+     "position": 11,
+     "score": 31,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 12,
+     "position": 12,
+     "score": 32,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 13,
+     "position": 13,
+     "score": 34,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 14,
+     "position": 14,
+     "score": 35,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 15,
+     "position": 15,
+     "score": 37,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 16,
+     "position": 16,
+     "score": 38,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 17,
+     "position": 17,
+     "score": 39,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 18,
+     "position": 18,
+     "score": 40,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 19,
+     "position": 19,
+     "score": 41,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 20,
+     "position": 20,
+     "score": 42,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 21,
+     "position": 21,
+     "score": 43,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 22,
+     "position": 22,
+     "score": 44,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 23,
+     "position": 23,
+     "score": 45,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 24,
+     "position": 24,
+     "score": 46,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 25,
+     "position": 25,
+     "score": 47,
+     "tier": "newPeak",
+     "folded": false
+    },
+    {
+     "i": 26,
+     "position": 26,
+     "score": 106,
+     "tier": "newPeak",
+     "folded": false
+    },
+    {
+     "i": 27,
+     "position": 27,
+     "score": 1697,
+     "tier": "jump",
+     "folded": false
+    },
+    {
+     "i": 28,
+     "position": 28,
+     "score": 2348,
+     "tier": "newPeak",
+     "folded": false
+    },
+    {
+     "i": 29,
+     "position": 28,
+     "score": 2348,
+     "tier": null,
+     "folded": false
+    }
+   ],
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 26,
+     "before": 44,
+     "after": 106,
+     "change": 62,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "pointing",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 26,
+     "to": 27,
+     "before": 106,
+     "after": 1697,
+     "change": 1591,
+     "ratio": 16,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "pointing",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R8C4",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 27,
+     "to": 28,
+     "before": 1697,
+     "after": 2348,
+     "change": 651,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 24,
+     "to": 25,
+     "before": 46,
+     "after": 47,
+     "change": 1,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 25,
+     "to": 26,
+     "before": 47,
+     "after": 106,
+     "change": 59,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "pointing",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 26,
+     "to": 27,
+     "before": 106,
+     "after": 1697,
+     "change": 1591,
+     "ratio": 16,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "pointing",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R8C4",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 27,
+     "to": 28,
+     "before": 1697,
+     "after": 2348,
+     "change": 651,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 27,
+     "compact": [
+      106,
+      1697
+     ],
+     "details": [
+      106,
+      1697,
+      1591,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 1,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G07": {
+   "request": {
+    "variantId": "jigsaw9",
+    "difficulty": "nightmare",
+    "seed": "3962167687"
+   },
+   "positions": 32,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 9,
+     "kind": "random",
+     "score": 26,
+     "change": 26,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 18,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 25,
+     "kind": "guided",
+     "score": 47,
+     "change": 3,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 26,
+     "kind": "guided",
+     "score": 511,
+     "change": 464,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R1C6 and R9C4 are removed, the generator's solution uses Simple Colouring once; previously, its hardest technique was Hidden Single (box).",
+      "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+      "Removing the clue at R9C4 alone gives 510; removing the clue at R1C6 alone gives 47."
+     ],
+     "describe": "Compare 11 possible removals (2 rejected) and choose the removal preferred by the generator's check: R1C6 and R9C4."
+    },
+    {
+     "i": 5,
+     "position": 27,
+     "kind": "guided",
+     "score": 1582,
+     "change": 1071,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R4C7 and R6C3 are removed, the generator's solution uses Forcing Chain once; previously, its hardest technique was Simple Colouring.",
+      "The largest technique weight, 1,100, contributes in full as the P term of the score (P = 1,100).",
+      "Removing the clue at R6C3 alone gives 1,582; removing the clue at R4C7 alone gives 512."
+     ],
+     "describe": "Compare 8 possible removals (4 rejected) and choose the removal preferred by the generator's check: R4C7 and R6C3."
+    },
+    {
+     "i": 6,
+     "position": 29,
+     "kind": "guided",
+     "score": 1589,
+     "change": 7,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 7,
+     "position": 31,
+     "kind": "search",
+     "score": 2340,
+     "change": 751,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.exchange"
+     ]
+    },
+    {
+     "i": 8,
+     "position": 31,
+     "kind": "final",
+     "score": 2340,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 33,
+   "detailsSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "score": 0,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 1,
+     "position": 1,
+     "score": 5,
+     "tier": "first",
+     "folded": false
+    },
+    {
+     "i": 2,
+     "position": 2,
+     "score": 9,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 3,
+     "position": 3,
+     "score": 12,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 4,
+     "position": 4,
+     "score": 15,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 5,
+     "position": 5,
+     "score": 18,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 6,
+     "position": 6,
+     "score": 20,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 7,
+     "position": 7,
+     "score": 22,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 8,
+     "position": 8,
+     "score": 24,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 9,
+     "position": 9,
+     "score": 26,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 10,
+     "position": 10,
+     "score": 28,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 11,
+     "position": 11,
+     "score": 30,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 12,
+     "position": 12,
+     "score": 31,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 13,
+     "position": 13,
+     "score": 33,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 14,
+     "position": 14,
+     "score": 34,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 15,
+     "position": 15,
+     "score": 36,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 16,
+     "position": 16,
+     "score": 37,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 17,
+     "position": 17,
+     "score": 38,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 18,
+     "position": 18,
+     "score": 40,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 19,
+     "position": 19,
+     "score": 41,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 20,
+     "position": 20,
+     "score": 42,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 21,
+     "position": 21,
+     "score": 43,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 22,
+     "position": 22,
+     "score": 44,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 23,
+     "position": 23,
+     "score": 45,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 24,
+     "position": 24,
+     "score": 46,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 25,
+     "position": 25,
+     "score": 47,
+     "tier": "newPeak",
+     "folded": false
+    },
+    {
+     "i": 26,
+     "position": 26,
+     "score": 511,
+     "tier": "jump",
+     "folded": false
+    },
+    {
+     "i": 27,
+     "position": 27,
+     "score": 1582,
+     "tier": "jump",
+     "folded": false
+    },
+    {
+     "i": 28,
+     "position": 28,
+     "score": 1583,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 29,
+     "position": 29,
+     "score": 1589,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 30,
+     "position": 30,
+     "score": 1902,
+     "tier": null,
+     "folded": false
+    },
+    {
+     "i": 31,
+     "position": 31,
+     "score": 2340,
+     "tier": "newPeak",
+     "folded": false
+    },
+    {
+     "i": 32,
+     "position": 31,
+     "score": 2340,
+     "tier": null,
+     "folded": false
+    }
+   ],
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 25,
+     "before": 44,
+     "after": 47,
+     "change": 3,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 25,
+     "to": 26,
+     "before": 47,
+     "after": 511,
+     "change": 464,
+     "ratio": 10.8,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "simpleColouring",
+     "cause": "single-culprit",
+     "frame": "R9C4",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 26,
+     "to": 27,
+     "before": 511,
+     "after": 1582,
+     "change": 1071,
+     "ratio": 3,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "simpleColouring",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R6C3",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 29,
+     "to": 31,
+     "before": 1589,
+     "after": 2340,
+     "change": 751,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 24,
+     "to": 25,
+     "before": 46,
+     "after": 47,
+     "change": 1,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 25,
+     "to": 26,
+     "before": 47,
+     "after": 511,
+     "change": 464,
+     "ratio": 10.8,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "simpleColouring",
+     "cause": "single-culprit",
+     "frame": "R9C4",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 26,
+     "to": 27,
+     "before": 511,
+     "after": 1582,
+     "change": 1071,
+     "ratio": 3,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "simpleColouring",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R6C3",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 30,
+     "to": 31,
+     "before": 1902,
+     "after": 2340,
+     "change": 438,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 26,
+     "compact": [
+      47,
+      511
+     ],
+     "details": [
+      47,
+      511,
+      464,
+      "jump"
+     ]
+    },
+    {
+     "position": 27,
+     "compact": [
+      511,
+      1582
+     ],
+     "details": [
+      511,
+      1582,
+      1071,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 2,
+    "details": 2,
+    "jumps": {
+     "compact": 2,
+     "details": 2
+    }
+   }
+  },
+  "G08": {
+   "request": {
+    "variantId": "killer",
+    "difficulty": "veryEasy",
+    "seed": "1"
+   },
+   "positions": 22,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 0,
+     "kind": "cages",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.cages"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 4,
+     "kind": "random",
+     "score": 15,
+     "change": 15,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 8,
+     "kind": "random",
+     "score": 25,
+     "change": 10,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 21,
+     "kind": "random",
+     "score": 43,
+     "change": 18,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 21,
+     "kind": "final",
+     "score": 43,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 24,
+   "transitions": [],
+   "sameEnd": [],
+   "framed": {
+    "compact": 0,
+    "details": 0,
+    "jumps": {
+     "compact": 0,
+     "details": 0
+    }
+   }
+  },
+  "G09": {
+   "request": {
+    "variantId": "killer",
+    "difficulty": "expert",
+    "seed": "3514204290"
+   },
+   "positions": 39,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 0,
+     "kind": "cages",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.cages"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 7,
+     "kind": "random",
+     "score": 23,
+     "change": 23,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 18,
+     "kind": "random",
+     "score": 40,
+     "change": 17,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 19,
+     "kind": "random",
+     "score": 94,
+     "change": 54,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 22,
+     "kind": "random",
+     "score": 98,
+     "change": 4,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 6,
+     "position": 36,
+     "kind": "guided",
+     "score": 165,
+     "change": 67,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 7,
+     "position": 37,
+     "kind": "guided",
+     "score": 562,
+     "change": 397,
+     "tier": "jump",
+     "cause": "mixed",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R3C5 and R7C5 are removed, the generator's solution uses Rule of 45 7 times; previously, its hardest technique was Box/Line Reduction.",
+      "The largest technique weight, 260, contributes in full as the P term of the score (P = 260).",
+      "Removing the clue at R3C5 alone gives 524, versus 562 for the whole symmetric group, which is always displayed as one complete change."
+     ],
+     "describe": "Compare 2 possible removals (0 rejected) and choose the removal preferred by the generator's check: R3C5 and R7C5."
+    },
+    {
+     "i": 8,
+     "position": 38,
+     "kind": "guided",
+     "score": 968,
+     "change": 406,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided"
+     ]
+    },
+    {
+     "i": 9,
+     "position": 38,
+     "kind": "final",
+     "score": 968,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 41,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 18,
+     "to": 19,
+     "before": 40,
+     "after": 94,
+     "change": 54,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "cageCombo",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 36,
+     "before": 98,
+     "after": 165,
+     "change": 67,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "cageCombo",
+     "afterHardest": "boxLine",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 36,
+     "to": 37,
+     "before": 165,
+     "after": 562,
+     "change": 397,
+     "ratio": 3.4,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "boxLine",
+     "afterHardest": "ruleOf45",
+     "cause": "mixed",
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 37,
+     "to": 38,
+     "before": 562,
+     "after": 968,
+     "change": 406,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "ruleOf45",
+     "afterHardest": "cageSplit",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 18,
+     "to": 19,
+     "before": 40,
+     "after": 94,
+     "change": 54,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "cageCombo",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 35,
+     "to": 36,
+     "before": 144,
+     "after": 165,
+     "change": 21,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "cageCombo",
+     "afterHardest": "boxLine",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 36,
+     "to": 37,
+     "before": 165,
+     "after": 562,
+     "change": 397,
+     "ratio": 3.4,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "boxLine",
+     "afterHardest": "ruleOf45",
+     "cause": "mixed",
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 37,
+     "to": 38,
+     "before": 562,
+     "after": 968,
+     "change": 406,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "ruleOf45",
+     "afterHardest": "cageSplit",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 37,
+     "compact": [
+      165,
+      562
+     ],
+     "details": [
+      165,
+      562,
+      397,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 0,
+    "details": 0,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G10": {
+   "request": {
+    "variantId": "killer",
+    "difficulty": "nightmare",
+    "seed": "42"
+   },
+   "positions": 38,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 0,
+     "kind": "cages",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.cages"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 8,
+     "kind": "random",
+     "score": 25,
+     "change": 25,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 22,
+     "kind": "random",
+     "score": 44,
+     "change": 19,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 24,
+     "kind": "guided",
+     "score": 112,
+     "change": 68,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 36,
+     "kind": "guided",
+     "score": 144,
+     "change": 32,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 6,
+     "position": 37,
+     "kind": "guided",
+     "score": 2151,
+     "change": 2007,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R3C8 and R7C2 are removed, the generator's solution uses Forcing Chain 5 times; previously, its hardest technique was Cage Sum Combination.",
+      "The largest technique weight, 1,100, contributes in full as the P term of the score (P = 1,100).",
+      "Removing the clue at R3C8 alone gives 2,093; removing the clue at R7C2 alone gives 146."
+     ],
+     "describe": "Compare 1 possible removal (0 rejected) and choose the removal preferred by the generator's check: R3C8 and R7C2."
+    },
+    {
+     "i": 7,
+     "position": 37,
+     "kind": "final",
+     "score": 2151,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 40,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 22,
+     "to": 24,
+     "before": 44,
+     "after": 112,
+     "change": 68,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "cageCombo",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 36,
+     "to": 37,
+     "before": 144,
+     "after": 2151,
+     "change": 2007,
+     "ratio": 14.9,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "cageCombo",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R3C8",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 22,
+     "to": 23,
+     "before": 44,
+     "after": 103,
+     "change": 59,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "cageCombo",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 36,
+     "to": 37,
+     "before": 144,
+     "after": 2151,
+     "change": 2007,
+     "ratio": 14.9,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "cageCombo",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R3C8",
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 37,
+     "compact": [
+      144,
+      2151
+     ],
+     "details": [
+      144,
+      2151,
+      2007,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 1,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G11": {
+   "request": {
+    "variantId": "greaterThan",
+    "difficulty": "expert",
+    "seed": "42"
+   },
+   "positions": 112,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 0,
+     "kind": "signs",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.signs"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 108,
+     "kind": "mixed",
+     "score": 119,
+     "change": 119,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.clues",
+      "replay.signDig.some",
+      "replay.reveal",
+      "replay.signDig.some",
+      "replay.reveal",
+      "replay.signDig.some",
+      "replay.reveal",
+      "replay.signDig.some",
+      "replay.reveal",
+      "replay.folded.reveal(peak 1967)"
+     ],
+     "describe": "Clear the grid, then show 21 clues. Try to remove 108 signs: 96 signs removed, 12 signs kept because the puzzle still needs them. The puzzle came out too hard for this level, so 2 clues more are shown. Try to remove 12 signs: 2 signs removed, 10 signs kept because the puzzle still needs them. The puzzle came out too hard for this level, so 2 clues more are shown. Try to remove 19 signs: 2 signs removed, 17 signs kept because the puzzle still needs them. The puzzle came out too hard for this level, so 4 clues more are shown. Try to remove 8 signs: 2 signs removed, 6 signs kept because without them the puzzle would have more than one solution. The puzzle came out too hard for this level, so 2 clues more are shown. Within this step, the score reached 1,967, above the chosen level, and 10 clues were restored during refinement."
+    },
+    {
+     "i": 3,
+     "position": 109,
+     "kind": "signDig",
+     "score": 119,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.signDig.all"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 111,
+     "kind": "signDig",
+     "score": 957,
+     "change": 838,
+     "tier": "jump",
+     "cause": "multi-move",
+     "parts": [
+      "replay.signDig.some",
+      "replay.folded.peak(peak 962)"
+     ],
+     "callout": [
+      "After the 2 changes in this step, the generator's solution uses XY-Wing once; previously, its hardest technique was Inequality Chain.",
+      "The largest technique weight, 650, contributes in full as the P term of the score (P = 650).",
+      "Within this step, XY-Wing first appears after complete change 1 of 2 (the sign between R2C4 and R1C4 is removed)."
+     ],
+     "describe": "Try to remove 5 signs: 2 signs removed, 3 signs kept because without them the puzzle would have more than one solution. Within this step, the score reached 962."
+    },
+    {
+     "i": 5,
+     "position": 111,
+     "kind": "final",
+     "score": 957,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final.signs"
+     ]
+    }
+   ],
+   "detailsCount": 114,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 109,
+     "to": 111,
+     "before": 119,
+     "after": 957,
+     "change": 838,
+     "ratio": 8,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "ineqChain",
+     "afterHardest": "xyWing",
+     "cause": "multi-move",
+     "frame": null,
+     "k": 1,
+     "n": 2,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 60,
+     "to": 61,
+     "before": 140,
+     "after": 1043,
+     "change": 903,
+     "ratio": 7.4,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "ineqChain",
+     "afterHardest": "xyWing",
+     "cause": "single-sign",
+     "frame": "s7(R1C6<R1C5)",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 102,
+     "to": 103,
+     "before": 548,
+     "after": 1967,
+     "change": 1419,
+     "ratio": 3.5,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "xWing",
+     "afterHardest": "forcingChain",
+     "cause": "single-sign",
+     "frame": "s43(R4C6<R4C5)",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 103,
+     "to": 104,
+     "before": 1967,
+     "after": 1264,
+     "change": -703,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "wWing",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 105,
+     "to": 106,
+     "before": 123,
+     "after": 976,
+     "change": 853,
+     "ratio": 7.9,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "ineqChain",
+     "afterHardest": "xyWing",
+     "cause": "single-sign",
+     "frame": "s75(R7C2<R8C2)",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 109,
+     "to": 110,
+     "before": 119,
+     "after": 962,
+     "change": 843,
+     "ratio": 8,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "ineqChain",
+     "afterHardest": "xyWing",
+     "cause": "single-sign",
+     "frame": "s6(R2C4<R1C4)",
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 111,
+     "compact": [
+      119,
+      957
+     ],
+     "details": [
+      962,
+      957,
+      -5,
+      null
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 0,
+    "details": 4,
+    "jumps": {
+     "compact": 1,
+     "details": 4
+    }
+   }
+  },
+  "G12": {
+   "request": {
+    "variantId": "greaterThan",
+    "difficulty": "hard",
+    "seed": "3115968914"
+   },
+   "positions": 104,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 0,
+     "kind": "signs",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.signs"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 22,
+     "kind": "mixed",
+     "score": 127,
+     "change": 127,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.clues",
+      "replay.signDig.all",
+      "replay.folded.peak(peak 130)"
+     ],
+     "describe": "Clear the grid, then show 24 clues. Remove 21 signs: the puzzle can still be solved without them. Within this step, the score reached 130."
+    },
+    {
+     "i": 3,
+     "position": 92,
+     "kind": "signDig",
+     "score": 130,
+     "change": 3,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.signDig.some",
+      "replay.folded.peak(peak 135)"
+     ],
+     "describe": "Try to remove 71 signs: 70 signs removed, 1 sign kept because without them the puzzle would have more than one solution. Within this step, the score reached 135."
+    },
+    {
+     "i": 4,
+     "position": 103,
+     "kind": "signDig",
+     "score": 638,
+     "change": 508,
+     "tier": "jump",
+     "cause": "multi-move",
+     "parts": [
+      "replay.signDig.some",
+      "replay.folded.peak(peak 649)"
+     ],
+     "callout": [
+      "After the 11 changes in this step, the generator's solution uses Simple Colouring 2 times; previously, its hardest technique was Inequality Chain.",
+      "The largest technique weight, 360, contributes in full as the P term of the score (P = 360).",
+      "Within this step, Simple Colouring first appears after complete change 1 of 11 (the sign between R3C5 and R3C4 is removed)."
+     ],
+     "describe": "Try to remove 16 signs: 11 signs removed, 5 signs kept because without them the puzzle would have more than one solution. Within this step, the score reached 649."
+    },
+    {
+     "i": 5,
+     "position": 103,
+     "kind": "final",
+     "score": 638,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final.signs"
+     ]
+    }
+   ],
+   "detailsCount": 106,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 92,
+     "to": 103,
+     "before": 130,
+     "after": 638,
+     "change": 508,
+     "ratio": 4.9,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "ineqChain",
+     "afterHardest": "simpleColouring",
+     "cause": "multi-move",
+     "frame": null,
+     "k": 1,
+     "n": 11,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 92,
+     "to": 93,
+     "before": 130,
+     "after": 649,
+     "change": 519,
+     "ratio": 4.9,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "ineqChain",
+     "afterHardest": "simpleColouring",
+     "cause": "single-sign",
+     "frame": "s32(R3C5<R3C4)",
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 103,
+     "compact": [
+      130,
+      638
+     ],
+     "details": [
+      642,
+      638,
+      -4,
+      null
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 0,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G13": {
+   "request": {
+    "variantId": "samurai",
+    "difficulty": "nightmare",
+    "seed": "42"
+   },
+   "positions": 133,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 8,
+     "kind": "random",
+     "score": 25,
+     "change": 25,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 47,
+     "kind": "random",
+     "score": 59,
+     "change": 34,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 98,
+     "kind": "random",
+     "score": 69,
+     "change": 10,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 4,
+     "position": 113,
+     "kind": "guided",
+     "score": 72,
+     "change": 3,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 114,
+     "kind": "guided",
+     "score": 1483,
+     "change": 1411,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at G2-R8C9 and G3-R2C1 are removed, the generator's solution uses Forcing Chain once; previously, its hardest technique was Hidden Single (row/column).",
+      "The largest technique weight, 1,100, contributes in full as the P term of the score (P = 1,100).",
+      "Removing the clue at G2-R8C9 alone gives 1,483; removing the clue at G3-R2C1 alone gives 72."
+     ],
+     "describe": "Compare 7 possible removals (0 rejected) and choose the removal preferred by the generator's check: G2-R8C9 and G3-R2C1."
+    },
+    {
+     "i": 6,
+     "position": 132,
+     "kind": "guided",
+     "score": 1637,
+     "change": 154,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 7,
+     "position": 132,
+     "kind": "final",
+     "score": 1637,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 134,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 98,
+     "to": 113,
+     "before": 69,
+     "after": 72,
+     "change": 3,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleLine",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 113,
+     "to": 114,
+     "before": 72,
+     "after": 1483,
+     "change": 1411,
+     "ratio": 20.5,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleLine",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "G2-R8C9",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 100,
+     "to": 101,
+     "before": 70,
+     "after": 70,
+     "change": 0,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 110,
+     "to": 111,
+     "before": 71,
+     "after": 72,
+     "change": 1,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "hiddenSingleLine",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 113,
+     "to": 114,
+     "before": 72,
+     "after": 1483,
+     "change": 1411,
+     "ratio": 20.5,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleLine",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "G2-R8C9",
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 114,
+     "compact": [
+      72,
+      1483
+     ],
+     "details": [
+      72,
+      1483,
+      1411,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 1,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  },
+  "G14": {
+   "request": {
+    "variantId": "mega16",
+    "difficulty": "hell2",
+    "seed": "12"
+   },
+   "positions": 78,
+   "compactSteps": [
+    {
+     "i": 0,
+     "position": 0,
+     "kind": "solution",
+     "score": 0,
+     "change": null,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.solution"
+     ]
+    },
+    {
+     "i": 1,
+     "position": 10,
+     "kind": "random",
+     "score": 29,
+     "change": 29,
+     "tier": "first",
+     "cause": null,
+     "parts": [
+      "replay.random.all"
+     ]
+    },
+    {
+     "i": 2,
+     "position": 68,
+     "kind": "random",
+     "score": 65,
+     "change": 36,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.random.some"
+     ]
+    },
+    {
+     "i": 3,
+     "position": 69,
+     "kind": "guided",
+     "score": 1646,
+     "change": 1581,
+     "tier": "jump",
+     "cause": "single-culprit",
+     "parts": [
+      "replay.guided"
+     ],
+     "callout": [
+      "After the clues at R8C4 and R9C13 are removed, the generator's solution uses Forcing Chain once; previously, its hardest technique was Hidden Single (box).",
+      "The largest technique weight, 1,100, contributes in full as the P term of the score (P = 1,100).",
+      "Removing the clue at R8C4 alone gives 1,652; removing the clue at R9C13 alone gives 65."
+     ],
+     "describe": "Compare 10 possible removals (3 rejected) and choose the removal preferred by the generator's check: R8C4 and R9C13."
+    },
+    {
+     "i": 4,
+     "position": 77,
+     "kind": "guided",
+     "score": 4476,
+     "change": 2830,
+     "tier": "newPeak",
+     "cause": null,
+     "parts": [
+      "replay.guided.rounds"
+     ]
+    },
+    {
+     "i": 5,
+     "position": 77,
+     "kind": "final",
+     "score": 4476,
+     "change": 0,
+     "tier": null,
+     "cause": null,
+     "parts": [
+      "replay.final"
+     ]
+    }
+   ],
+   "detailsCount": 79,
+   "transitions": [
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 10,
+     "to": 68,
+     "before": 29,
+     "after": 65,
+     "change": 36,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 68,
+     "to": 69,
+     "before": 65,
+     "after": 1646,
+     "change": 1581,
+     "ratio": 25.3,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R8C4",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "compact",
+     "role": "step",
+     "from": 69,
+     "to": 77,
+     "before": 1646,
+     "after": 4476,
+     "change": 2830,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 60,
+     "to": 61,
+     "before": 63,
+     "after": 64,
+     "change": 1,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "nakedSingle",
+     "afterHardest": "hiddenSingleBox",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 68,
+     "to": 69,
+     "before": 65,
+     "after": 1646,
+     "change": 1581,
+     "ratio": 25.3,
+     "tier": "jump",
+     "newHardest": true,
+     "beforeHardest": "hiddenSingleBox",
+     "afterHardest": "forcingChain",
+     "cause": "single-culprit",
+     "frame": "R8C4",
+     "k": null,
+     "n": null,
+     "step": null
+    },
+    {
+     "view": "details",
+     "role": "step",
+     "from": 71,
+     "to": 72,
+     "before": 2111,
+     "after": 3587,
+     "change": 1476,
+     "ratio": null,
+     "tier": "newPeak",
+     "newHardest": true,
+     "beforeHardest": "forcingChain",
+     "afterHardest": "nishio",
+     "cause": null,
+     "frame": null,
+     "k": null,
+     "n": null,
+     "step": null
+    }
+   ],
+   "sameEnd": [
+    {
+     "position": 69,
+     "compact": [
+      65,
+      1646
+     ],
+     "details": [
+      65,
+      1646,
+      1581,
+      "jump"
+     ]
+    }
+   ],
+   "framed": {
+    "compact": 1,
+    "details": 1,
+    "jumps": {
+     "compact": 1,
+     "details": 1
+    }
+   }
+  }
+ },
+ "example": {
+  "compactScores": [
+   0,
+   15,
+   26,
+   44,
+   46,
+   100,
+   100
+  ],
+  "compactKinds": [
+   "solution",
+   "random",
+   "random",
+   "random",
+   "guided",
+   "guided",
+   "final"
+  ],
+  "detailsCount": 26,
+  "lastClues": 34,
+  "compactChanges": [
+   null,
+   15,
+   11,
+   18,
+   2,
+   54,
+   0
+  ]
+ },
+ "timingsMs": {
+  "G01": 148,
+  "G02": 4,
+  "G03": 5662,
+  "G04": 519,
+  "G05": 415,
+  "G06": 1199,
+  "G07": 913,
+  "G08": 6,
+  "G09": 18,
+  "G10": 20,
+  "G11": 65,
+  "G12": 33,
+  "G13": 43,
+  "G14": 1243
+ }
+}

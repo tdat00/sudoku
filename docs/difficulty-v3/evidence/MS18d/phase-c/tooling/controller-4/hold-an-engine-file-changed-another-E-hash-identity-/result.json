@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-an-engine-file-changed-another-E-hash-identity-",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-an-engine-file-changed-another-E-hash-identity-",
+  "startedAtMs": 1795086601504,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "hashIdentity X differs from H"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 15000,
+      "systemMicros": 93000
+    }
+  },
+  "finishedAtMs": 1795086601559
+}

@@ -1,0 +1,8 @@
+$ node tests\pattern-cost.js --ids=xyChain --runs=20 --json=..\docs\difficulty-v3\evidence\MS12\pattern-cost.json
+pattern-cost: 4 of 4 cases x 20 runs (80 finds), complete true, found 2, none 2, outcome not the fixture's 0, capped 0, wall 0.041 s
+  xyChain:positive:1 found, work 1102 of 50000, ms p50 0.123 p95 0.286 max 1.912
+  xyChain:positive:2 found, work 752 of 50000, ms p50 0.037 p95 0.094 max 0.104
+  xyChain:negative:1 none, work 1116 of 50000, ms p50 0.090 p95 0.181 max 0.358
+  xyChain:negative:2 none, work 263 of 50000, ms p50 0.013 p95 0.032 max 0.040
+record: docs/difficulty-v3/evidence/MS12/pattern-cost.json
+exit=0 seconds=0.601

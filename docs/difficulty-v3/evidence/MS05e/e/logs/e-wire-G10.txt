@@ -1,0 +1,2 @@
+G10 killer nightmare 42: 25.3 s
+recorded 1 of 5 keys (G10) in docs/difficulty-v3/evidence/MS05e/wire/G10.json; a ledger is one shard, merge them all with --merge

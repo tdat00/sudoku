@@ -1,0 +1,13 @@
+$ node ..\.github\scripts\generator-quick.js run replay-player --results-dir=..\docs\difficulty-v3\evidence\MS15b\quick-final
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS15b\quick-final\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   player: 69 passed  (55.19 s)
+
+Suites: 1
+Tests:  69 total, 69 passed, 0 failed, 0 skipped
+Time:   55.19 s running tests, 55.40 s total
+Results: docs/difficulty-v3/evidence/MS15b/quick-final/generator-player.json
+shard player: exit 0, 55.6 s
+exit=0 seconds=56.054

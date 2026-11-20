@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=tech-chain,techniques
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   tech-chain: 107 passed  (6.20 s)
+ok   techniques: 187 passed  (1.62 s)
+
+Suites: 2
+Tests:  294 total, 294 passed, 0 failed, 0 skipped
+Time:   7.81 s running tests, 7.92 s total
+exit=0 seconds=8.023

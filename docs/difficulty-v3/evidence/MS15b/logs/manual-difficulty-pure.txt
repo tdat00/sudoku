@@ -1,0 +1,12 @@
+$ node tests\artifacts\difficulty-v3\MS15b\manual-difficulty-pure.js
+weight table of the test: 39 entries, alsXz 1250
+weight table of the test equals SG.difficulty.WEIGHTS: true
+allowed techniques follow the rule at every level of a boxGrid9 board: true
+the first level allows the three singles only: true
+nightmare firsts of the test: ["alsXz","forcingChainLong","nishio"]
+firsts per level hold: true
+hiddenPair is not allowed at easy: true
+xWing is not allowed at normal: true
+hell1 and hell2 allow the same techniques: true
+alsXz is first allowed at: nightmare; weight x 1.25 = 1562.5, nightmare band 1500..2400
+exit=0 seconds=0.184

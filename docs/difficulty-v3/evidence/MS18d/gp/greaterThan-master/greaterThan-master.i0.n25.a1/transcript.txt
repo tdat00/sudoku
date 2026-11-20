@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=greaterThan-master.i0.n25 --out=..\docs\difficulty-v3\evidence\MS18d\gp\greaterThan-master\greaterThan-master.i0.n25.a1\ledger.json
+ms18d-gp-recorder-start chunk=greaterThan-master.i0.n25 i0=0 n=25 seedBase=7000
+ms18d-gp-ledger-complete chunk=greaterThan-master.i0.n25 bytes=19612 sha256=f20e4c894d9d125f55a54dfb2f5cb8ee48e6670207cab1aae30e2c0848fa7b13
+exit=0 seconds=46.488

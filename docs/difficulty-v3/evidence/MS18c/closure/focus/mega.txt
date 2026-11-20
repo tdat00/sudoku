@@ -1,0 +1,19 @@
+$ node tests\node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL mega: 107 passed, 1 failed  (31.08 s)
+
+Failures:
+  FAIL mega > mega puzzles > mega12 hell1: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit
+       GenerationError: difficulty.unsupportedLevel: variant "mega12" does not support the level "hell1"
+       at fail (Q:\git\sudoku\generator\js\engine\difficulty.js:146:17)
+       at Object.spec (Q:\git\sudoku\generator\js\engine\difficulty.js:466:13)
+       at checkInvariants (Q:\git\sudoku\generator\tests\suites\mega.test.js:705:32)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\mega.test.js:848:9)
+
+Suites: 1
+Tests:  108 total, 107 passed, 1 failed, 0 skipped
+Time:   31.08 s running tests, 31.30 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/mega.json
+exit=1 seconds=31.509

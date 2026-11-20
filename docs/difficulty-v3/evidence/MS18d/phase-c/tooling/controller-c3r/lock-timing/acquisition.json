@@ -1,0 +1,66 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795101669047,
+  "startedAtMs": 1795101669120,
+  "lockAcquiredAtMs": 1795101669052,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795101653547,
+    "lastCheckMs": 1795101668847,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 73,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795100770045,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899075,
+  "reasons": [
+    "the-timing-lock-is-present"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": true,
+    "ownerPid": 9536,
+    "task": "stand-in lock-timing",
+    "controllerPid": 24056,
+    "controllerParentPid": 9536,
+    "wrapperPid": 9536
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\lock-timing\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\lock-timing\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\lock-timing\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "kind": "deferred-cv3",
+  "task": "MS05b3",
+  "note": "Cells of manifest.json that were not launched, with their full request population. None is a pass.",
+  "deferred": []
+}

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS13c\group-stats.js jigsaw9 300
+jigsaw9 300 states, seed 77003
+  30 forcingChain endpoints len1 endGroup {"index":4,"elim":[[20,6]],"plc":[],"problems":0}
+exit=0 seconds=0.879

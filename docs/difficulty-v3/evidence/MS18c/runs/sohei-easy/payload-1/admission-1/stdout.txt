@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+sohei/easy: 4/18 hits, p95 899 ms (budget 30.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| sohei | easy | 18 | 4 | 22 % | 708 ms | 899 ms | 899 ms | 30.0 s | hidden (stopped: misses) |
+
+sohei: []

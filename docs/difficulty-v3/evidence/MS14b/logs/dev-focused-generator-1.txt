@@ -1,0 +1,22 @@
+$ node tests\node-runner.js --suite=tech-subset,techniques,technique-weights,difficulty-floor,pattern-cost-tools,i18n
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (30.50 s)
+ok   i18n: 94 passed  (252 ms)
+ok   pattern-cost-tools: 32 passed  (3.42 s)
+FAIL tech-subset: 139 passed, 1 failed  (6.09 s)
+ok   technique-weights: 15 passed  (4 ms)
+ok   techniques: 268 passed  (5.54 s)
+
+Failures:
+  FAIL tech-subset > law of leftovers kernel: inactive and scoped > is not registered, so no solve, rating or hint can reach it
+       AssertionError: expected true to be false
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-subset.test.js:1789:39)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 6
+Tests:  597 total, 596 passed, 1 failed, 0 skipped
+Time:   45.80 s running tests, 45.94 s total
+exit=1 seconds=46.057

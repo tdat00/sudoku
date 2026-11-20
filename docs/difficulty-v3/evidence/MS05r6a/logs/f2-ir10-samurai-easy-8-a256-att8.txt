@@ -1,0 +1,1 @@
+samurai/easy#8 allowance 256, attempts 8: hash f5518321b42ef42d, 3 attempt(s), exact true, 581 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\samurai-easy-8-a256-att8.json

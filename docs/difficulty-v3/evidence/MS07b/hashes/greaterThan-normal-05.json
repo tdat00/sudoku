@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "ed6b9f2e30bcb2463ca1c38ff48f367954f4bec2bcd831d4e8d1301d0c5f6cfe",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+  "dirty": true,
+  "generatedAt": "2026-11-14T21:40:22.976Z",
+  "argv": ["--hash-key=greaterThan/normal","--hash-from=5","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS07b\\hashes\\greaterThan-normal-05.json"],
+  "records": [
+    {"key":"greaterThan/normal#13","variant":"greaterThan","level":"normal","seed":13,"hash":"e630c501243b17fd","ms":5430,"overrides":[]},
+    {"key":"greaterThan/normal#21","variant":"greaterThan","level":"normal","seed":21,"hash":"e78928dd159a09b9","ms":4288,"overrides":[]},
+    {"key":"greaterThan/normal#34","variant":"greaterThan","level":"normal","seed":34,"hash":"1da2078420403d18","ms":320,"overrides":[]},
+    {"key":"greaterThan/normal#55","variant":"greaterThan","level":"normal","seed":55,"hash":"acd99944b1398b68","ms":198,"overrides":[]},
+    {"key":"greaterThan/normal#89","variant":"greaterThan","level":"normal","seed":89,"hash":"9d2dfcc72897d34b","ms":99,"overrides":[]}
+  ]
+}

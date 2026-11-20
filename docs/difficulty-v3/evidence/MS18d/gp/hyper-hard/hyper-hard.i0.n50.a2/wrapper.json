@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record hyper-hard.i0.n50 a2",
+  "runId": "hyper-hard.i0.n50.a2",
+  "cell": "hyper/hard",
+  "payload": "gp-recorder",
+  "chunkId": "hyper-hard.i0.n50",
+  "attempt": 2,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-hard/hyper-hard.i0.n50.a2",
+  "requestedAt": "2026-11-19T23:24:22.138+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795105446640,
+    "lastCheckMs": 1795105461956,
+    "checks": 61,
+    "restartCount": 0,
+    "maxIntervalMs": 292
+  },
+  "startedAtFromChild": "2026-11-19T23:24:22.270+07:00",
+  "finished": "2026-11-19T23:24:30.998+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3481,
+    "cheapCheckMs": 132,
+    "ageMs": 142,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:24:30.999+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 64,
+  "controllerOutcome": "control-hold",
+  "eligibleReAsk": true,
+  "barrierVerdict": "clean",
+  "helperNote": "MS18d GP record hyper-hard.i0.n50 a2 command failed: 64",
+  "outcome": "control-hold",
+  "problems": []
+}

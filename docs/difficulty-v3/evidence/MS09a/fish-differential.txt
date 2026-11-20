@@ -1,0 +1,39 @@
+$ node tests\artifacts\difficulty-v3\MS09a\fish-differential.js
+classic9 seed 777: 400 states, 759 findings of the six
+classic9 seed 99: 400 states, 740 findings of the six
+classic9 seed 20260101: 300 states, 532 findings of the six
+classic6 seed 777: 400 states, 582 findings of the six
+classic4 seed 777: 300 states, 68 findings of the six
+fishTest12 seed 2026: 60 states, 154 findings of the six
+fishTest16 seed 2026: 32 states, 89 findings of the six
+diagonalX seed 4242: 120 states, 143 findings of the six
+hyper seed 4242: 120 states, 169 findings of the six
+jigsaw9 seed 4242: 120 states, 138 findings of the six
+killer seed 4242: 12 states, 23 findings of the six
+greaterThan seed 4242: 12 states, 23 findings of the six
+wordoku seed 4242: 12 states, 17 findings of the six
+samurai seed 4242: 12 states, 22 findings of the six
+sohei seed 4242: 12 states, 28 findings of the six
+butterfly seed 4242: 12 states, 3 findings of the six
+flower seed 4242: 12 states, 12 findings of the six
+OLD 35040 lines b8b65d56f6ecfcb7eac2fb80d2b6fec37b907c73958ff10311ca08da283d7277
+classic9 seed 777: 400 states, 759 findings of the six
+classic9 seed 99: 400 states, 740 findings of the six
+classic9 seed 20260101: 300 states, 532 findings of the six
+classic6 seed 777: 400 states, 582 findings of the six
+classic4 seed 777: 300 states, 68 findings of the six
+fishTest12 seed 2026: 60 states, 154 findings of the six
+fishTest16 seed 2026: 32 states, 89 findings of the six
+diagonalX seed 4242: 120 states, 143 findings of the six
+hyper seed 4242: 120 states, 169 findings of the six
+jigsaw9 seed 4242: 120 states, 138 findings of the six
+killer seed 4242: 12 states, 23 findings of the six
+greaterThan seed 4242: 12 states, 23 findings of the six
+wordoku seed 4242: 12 states, 17 findings of the six
+samurai seed 4242: 12 states, 22 findings of the six
+sohei seed 4242: 12 states, 28 findings of the six
+butterfly seed 4242: 12 states, 3 findings of the six
+flower seed 4242: 12 states, 12 findings of the six
+NEW 35040 lines b8b65d56f6ecfcb7eac2fb80d2b6fec37b907c73958ff10311ca08da283d7277
+IDENTICAL: the six patterns (X-Wing, Swordfish, Jellyfish, Skyscraper, Kite, Empty Rectangle) of the base commit and of the working tree agree on every line
+exit=0 seconds=10.576

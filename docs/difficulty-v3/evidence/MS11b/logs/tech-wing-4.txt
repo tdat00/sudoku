@@ -1,0 +1,27 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 430 passed, 3 failed  (11.38 s)
+
+Failures:
+  FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > all four corners hold exactly the pair: the deadly pattern itself, no deduction
+       AssertionError: expected Array(2)[0, 34] to equal Array(2)[0, 0]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4455:86)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a partial row or column is no conjugate link, the same units complete are
+       AssertionError: expected Array(2)[0, 34] to equal Array(2)[0, 0]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4492:10)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+       AssertionError: expected 34 to be < 25
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4838:61)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  433 total, 430 passed, 3 failed, 0 skipped
+Time:   11.38 s running tests, 11.49 s total
+exit=1 seconds=11.610

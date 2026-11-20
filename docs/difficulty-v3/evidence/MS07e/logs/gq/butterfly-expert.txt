@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=butterfly --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\butterfly-expert.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+butterfly/expert: 39/40 hits, p95 3.10 s (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| butterfly | expert | 40 | 39 | 98 % | 253 ms | 3.10 s | 4.67 s | 30.0 s | offered |
+
+butterfly: ["expert"]
+exit=0 seconds=10.851

@@ -1,0 +1,7 @@
+$ node tests\artifacts\difficulty-v3\MS08b\golden-jumps.js
+G06 rows 8 final [8,30,"F/Final",59,2327,0,"forcingChainLong","—","—","—"]
+  jump step 5 cause single-culprit choice {"chosen":492,"others":7,"nulls":0,"max":49,"at":94,"rated":9,"refused":1} firstUse {"k":31,"n":56,"technique":"skyscraper"} key technique.skyscraper.step
+  jump step 7 cause single-culprit choice {"chosen":2327,"others":1,"nulls":0,"max":735,"at":109,"rated":2,"refused":0} firstUse {"k":25,"n":85,"technique":"forcingChainLong"} key technique.forcingChainLong.step.contradiction
+G07 rows 7 final [7,32,"F/Final",55,2391,0,"forcingChainLong","—","—","—"]
+  jump step 6 cause multi-move choice null firstUse {"k":26,"n":69,"technique":"forcingChainLong"} key technique.forcingChainLong.step.contradiction
+exit=0 seconds=0.172

@@ -1,0 +1,28 @@
+$ node tests\node-runner.js --suite=tech-als
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-als: 55 passed, 3 failed  (73.28 s)
+
+Failures:
+  FAIL tech-als > als enumerator: agreement with the independent enumeration > gives the oracle's records, order and work on 2 seeded positions of 16 digits
+       AssertionError: expected Array(4)["16 digits", 0, false, "work"] to equal Array(4)["16 digits", 0, true, null]
+       at Q:\git\sudoku\core\tests\suites\tech-als.test.js:598:73
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:595:75)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-als > als enumerator: the record limit and its prefix > probes the later sizes for one more set when a size ends exactly at the limit, and stops at the first
+       AssertionError: expected 837 to be 810
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:671:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL tech-als > als enumerator: the parent budget, cancellation and other errors > checks the budget at entry and so that at most 256 units pass between two checks
+       AssertionError: expected length 156 of Array(156)[0, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, ...] to be 196
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:894:19)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  58 total, 55 passed, 3 failed, 0 skipped
+Time:   73.28 s running tests, 73.40 s total
+exit=1 seconds=73.527

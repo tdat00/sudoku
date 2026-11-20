@@ -1,0 +1,1000 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-prefix",
+  "task": "MS05b3",
+  "side": "new",
+  "key": "diagonalX",
+  "suite": "extraRegions",
+  "variantId": "diagonalX",
+  "level": "veryEasy",
+  "node": "v26.13.0",
+  "requests": 20,
+  "stoppedBySentinel": false,
+  "seconds": 0.102,
+  "source": {
+    "file": "extra-regions.test.js",
+    "sha256": "d1f933070e726472253ec69f5f8591172e204f61ff35ef159a7489359b131ff3"
+  },
+  "rows": [
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10000,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10000,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,8,0,0,0,2,0,7,2,5,0,0,3,8,0,0,9,1,0,4,0,0,0,6,0,0,6,1,0,8,0,5,0,9,4,0,3,7,4,0,1,8,6,0,8,4,0,3,0,9,0,2,1,0,0,9,0,0,0,1,0,8,5,0,0,6,1,0,0,7,2,4,0,1,0,0,0,5,0,0],
+      "solution": [3,9,8,1,4,6,2,5,7,2,5,6,7,3,8,4,1,9,1,7,4,5,9,2,6,8,3,6,1,2,8,7,5,3,9,4,9,3,7,4,2,1,8,6,5,8,4,5,3,6,9,7,2,1,7,6,9,2,5,3,1,4,8,5,8,3,6,1,4,9,7,2,4,2,1,9,8,7,5,3,6],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "4464abd0d4958f38073175b4800aa7373f7f59284c67ef07603c02b7ec942882",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "023bc2caa2d634935b3877662912f91de858a4d23944553f791dd0f5a12da05b"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10001,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10001,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [6,9,0,0,0,5,7,0,2,3,0,7,0,2,1,4,0,5,0,0,2,0,0,7,0,0,0,9,2,0,0,1,3,0,7,0,0,3,6,0,0,0,5,4,0,0,4,0,5,6,0,0,2,3,0,0,0,7,0,0,3,0,0,8,0,9,1,3,0,2,0,7,4,0,3,2,0,0,0,6,1],
+      "solution": [6,9,4,3,8,5,7,1,2,3,8,7,6,2,1,4,9,5,5,1,2,9,4,7,8,3,6,9,2,5,4,1,3,6,7,8,1,3,6,8,7,2,5,4,9,7,4,8,5,6,9,1,2,3,2,5,1,7,9,6,3,8,4,8,6,9,1,3,4,2,5,7,4,7,3,2,5,8,9,6,1],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "698bcd2d992ab7c14a8f0b5f471febbc881d78d1defef00da0d29b43d330b66f",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "179344f31d07b446de8c77894778ee12d48e686837b7a3b66b6a306158d9ac90"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10002,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10002,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [9,0,0,0,0,7,5,1,0,1,8,0,2,5,0,7,6,0,5,0,0,1,9,0,0,0,0,0,0,4,0,0,1,2,9,3,8,0,0,9,0,5,0,0,4,6,2,9,7,0,0,1,0,0,0,0,0,0,7,9,0,0,6,0,9,6,0,1,2,0,5,7,0,7,8,5,0,0,0,0,1],
+      "solution": [9,4,2,3,6,7,5,1,8,1,8,3,2,5,4,7,6,9,5,6,7,1,9,8,3,4,2,7,5,4,6,8,1,2,9,3,8,3,1,9,2,5,6,7,4,6,2,9,7,4,3,1,8,5,2,1,5,8,7,9,4,3,6,3,9,6,4,1,2,8,5,7,4,7,8,5,3,6,9,2,1],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "1e7ccb7c093dfbf903ebb663ac26b384bf7f7e9eeb8104d9ec3883fd281acc37",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "f0c4e8deed6af722213a859f17846e5d6079c73f6dacf336cd0ce1c7ceada5d2"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10003,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10003,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,0,0,1,7,0,5,9,0,2,0,0,5,0,1,3,6,0,9,0,0,0,6,7,0,4,9,4,0,0,2,5,3,6,0,0,0,0,1,0,9,0,0,0,0,1,2,4,3,0,0,9,7,7,0,1,5,0,0,0,8,0,3,8,9,0,7,0,0,1,0,2,5,0,8,9,0,0,0,0],
+      "solution": [4,3,6,2,1,7,8,5,9,8,2,7,9,5,4,1,3,6,1,9,5,3,8,6,7,2,4,9,4,8,7,2,5,3,6,1,5,7,3,1,6,9,2,4,8,6,1,2,4,3,8,5,9,7,7,6,1,5,4,3,9,8,2,3,8,9,6,7,2,4,1,5,2,5,4,8,9,1,6,7,3],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "11e47a3144d723d77f399415347f904283c0c76b1e7803b2bd3e71c2da74c13c",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "d87f3aefa9dd39dc65075a9a6b8e5e696137a89f4617728ee3d81455c99df419"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10004,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10004,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [3,1,4,0,0,9,0,7,6,0,0,0,0,4,0,8,0,0,0,0,8,7,0,6,0,3,1,6,0,9,5,3,0,1,4,0,0,0,3,0,0,0,6,0,0,0,2,7,0,6,4,9,0,3,9,6,0,3,0,8,2,0,0,0,0,2,0,9,0,0,0,0,7,4,0,6,0,0,3,8,9],
+      "solution": [3,1,4,2,8,9,5,7,6,5,7,6,1,4,3,8,9,2,2,9,8,7,5,6,4,3,1,6,8,9,5,3,2,1,4,7,4,5,3,9,1,7,6,2,8,1,2,7,8,6,4,9,5,3,9,6,5,3,7,8,2,1,4,8,3,2,4,9,1,7,6,5,7,4,1,6,2,5,3,8,9],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "5e6536faadf44e15b293f6649fd82f60a04505fb662e87f6fe52ca1622b78dce",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "829ff7bef8b38c51290b9cd67b08dca39b1fbf9fb0e1bb8d24205f3fc3d6b5b4"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10005,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10005,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,2,0,0,6,0,4,3,0,6,4,0,7,0,5,0,2,0,0,0,4,0,0,0,7,0,0,8,0,2,1,9,6,0,7,7,0,6,3,0,8,4,0,9,5,0,1,6,4,7,0,2,0,0,3,0,0,0,4,0,0,0,6,0,8,0,9,0,2,3,0,2,1,0,8,0,0,7,0,0],
+      "solution": [1,7,2,5,8,6,9,4,3,3,6,4,9,7,1,5,8,2,8,5,9,4,3,2,1,7,6,4,8,3,2,1,9,6,5,7,7,2,6,3,5,8,4,1,9,5,9,1,6,4,7,3,2,8,9,3,7,1,2,4,8,6,5,6,4,8,7,9,5,2,3,1,2,1,5,8,6,3,7,9,4],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "c3eba4b55feb04d4510eaa8851448350d865668200744f7c35579ac72feafe99",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "b4b9742052f33b0458b4dd1911c12c368728e3cb255195302fad915b890c9078"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10006,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10006,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [7,2,0,8,0,3,0,5,1,0,0,0,0,0,7,9,3,8,8,0,0,0,6,1,0,4,2,0,0,3,0,7,0,0,0,6,6,8,0,0,0,0,0,9,7,5,0,0,0,3,0,8,0,0,3,1,0,7,8,0,0,0,9,9,6,7,3,0,0,0,0,0,2,4,0,6,0,9,0,7,3],
+      "solution": [7,2,4,8,9,3,6,5,1,1,5,6,4,2,7,9,3,8,8,3,9,5,6,1,7,4,2,4,9,3,1,7,8,5,2,6,6,8,1,2,4,5,3,9,7,5,7,2,9,3,6,8,1,4,3,1,5,7,8,4,2,6,9,9,6,7,3,1,2,4,8,5,2,4,8,6,5,9,1,7,3],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "b6b517456ddc69e9f2df202841a1cb48c090683ea198e8f94ac7ccf6c878f4a8",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "b0e6b8a2ac9f75dc320b5bcfda9a8c64f8b4af34aae751244bc885d373d86e22"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10007,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10007,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,5,0,9,0,0,0,0,0,0,0,6,0,0,4,5,0,9,0,4,9,6,0,5,8,0,2,8,0,0,4,6,9,0,0,7,0,9,3,8,0,2,4,6,0,5,0,0,7,3,1,0,0,8,9,0,2,1,0,8,6,7,0,6,0,5,3,0,0,9,0,0,0,0,0,0,0,6,0,2,0],
+      "solution": [2,5,8,9,1,3,7,4,6,1,7,6,2,8,4,5,3,9,3,4,9,6,7,5,8,1,2,8,2,1,4,6,9,3,5,7,7,9,3,8,5,2,4,6,1,5,6,4,7,3,1,2,9,8,9,3,2,1,4,8,6,7,5,6,1,5,3,2,7,9,8,4,4,8,7,5,9,6,1,2,3],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "f1f11807f16508681b371156b020aa788f1c0f21c29f2faf44b6b4d91746e60b",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "1993c70bbb0e2e0f5ad84554bf2b283c059008a6d5324b0ab77043bacdb0e483"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10008,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10008,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,8,0,0,0,0,6,0,0,9,6,1,0,4,7,0,2,0,0,0,4,9,3,6,1,0,0,0,0,3,5,0,4,0,0,7,0,7,9,1,0,3,4,5,0,4,0,0,6,0,2,9,0,0,0,0,5,4,2,1,7,0,0,0,3,0,7,5,0,2,9,4,0,0,2,0,0,0,0,8,0],
+      "solution": [3,8,7,2,1,5,6,4,9,9,6,1,8,4,7,3,2,5,5,2,4,9,3,6,1,7,8,2,1,3,5,9,4,8,6,7,6,7,9,1,8,3,4,5,2,4,5,8,6,7,2,9,1,3,8,9,5,4,2,1,7,3,6,1,3,6,7,5,8,2,9,4,7,4,2,3,6,9,5,8,1],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "b6f5043f24951329a9f4731e71212c26e5336704e4efa5eff97270a6876d4b4a",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "1f00f6d50c119e4cf03614945f672cb32f12f650b155c1e4601bf980cb7077a8"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10009,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10009,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [3,1,0,0,6,0,9,7,0,0,0,8,0,7,9,1,0,5,9,0,5,0,0,0,4,0,6,0,0,9,0,0,0,0,6,7,5,0,6,7,0,3,8,0,1,1,4,0,0,0,0,2,0,0,6,0,3,0,0,0,7,0,4,2,0,4,8,3,0,6,0,0,0,8,1,0,4,0,0,5,2],
+      "solution": [3,1,2,5,6,4,9,7,8,4,6,8,3,7,9,1,2,5,9,7,5,1,8,2,4,3,6,8,3,9,4,2,1,5,6,7,5,2,6,7,9,3,8,4,1,1,4,7,6,5,8,2,9,3,6,9,3,2,1,5,7,8,4,2,5,4,8,3,7,6,1,9,7,8,1,9,4,6,3,5,2],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "d64c4a340482de164adc91f4aa5e7dd9529565140b34be9de0f740b2f05838ee",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "c3dcf675644cf0b00d74d6100cfe0ee321a6cdd3d72d0948b3ac6c73e1138d38"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10010,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10010,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [5,0,0,7,0,1,0,2,4,0,9,7,0,0,4,3,8,0,0,4,0,0,9,0,5,0,0,0,0,2,8,5,3,4,0,0,0,6,4,0,0,0,8,5,0,0,0,5,6,4,2,7,0,0,0,0,9,0,1,0,0,7,0,0,2,8,9,0,0,1,4,0,1,5,0,4,0,7,0,0,3],
+      "solution": [5,8,3,7,6,1,9,2,4,6,9,7,5,2,4,3,8,1,2,4,1,3,9,8,5,6,7,9,7,2,8,5,3,4,1,6,3,6,4,1,7,9,8,5,2,8,1,5,6,4,2,7,3,9,4,3,9,2,1,5,6,7,8,7,2,8,9,3,6,1,4,5,1,5,6,4,8,7,2,9,3],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "158eb5f07c8d9d0740925648cf4ca765913ea8fbfa924547f3ecdfc8e58e06e9",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "0196508c5ab8e27d7b97f3f25be29e18b0299fd8284736175207b0076bf8cd9b"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10011,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10011,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [2,6,0,8,0,0,4,0,0,8,0,1,3,4,7,0,2,6,7,0,0,0,9,6,0,0,8,0,0,0,0,3,0,7,9,5,9,0,0,0,0,0,0,0,3,1,3,5,0,7,0,0,0,0,6,0,0,7,2,0,0,0,1,5,1,0,6,8,9,3,0,4,0,0,8,0,0,5,0,6,9],
+      "solution": [2,6,9,8,5,1,4,3,7,8,5,1,3,4,7,9,2,6,7,4,3,2,9,6,5,1,8,4,2,6,1,3,8,7,9,5,9,8,7,5,6,2,1,4,3,1,3,5,9,7,4,6,8,2,6,9,4,7,2,3,8,5,1,5,1,2,6,8,9,3,7,4,3,7,8,4,1,5,2,6,9],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "bf7ef654c3640ea6aa175743e1d1a1b979313644a34d2e0956e5024524f7452d",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "f36bc967025db65ee8ffbfe2956e515f6a36ed3c5c34588aafdca8a851790314"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10012,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10012,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,3,9,1,0,7,0,2,8,7,0,5,0,6,0,3,0,0,0,0,2,9,3,8,7,0,5,9,0,0,7,0,0,0,0,6,3,0,0,0,0,0,0,0,9,4,0,0,0,0,3,0,0,7,8,0,3,6,4,5,9,0,0,0,0,4,0,7,0,1,0,3,5,9,0,3,0,1,6,8,0],
+      "solution": [6,3,9,1,5,7,4,2,8,7,8,5,4,6,2,3,9,1,1,4,2,9,3,8,7,6,5,9,2,1,7,8,4,5,3,6,3,7,8,5,1,6,2,4,9,4,5,6,2,9,3,8,1,7,8,1,3,6,4,5,9,7,2,2,6,4,8,7,9,1,5,3,5,9,7,3,2,1,6,8,4],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "3fecee6adef613bbbef918a5e64168733fa05bb8a6f2357ce4daf8f36d0ebdef",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "7b759ed90605c5e1ab54b2d1310b268c63259cb9eadbf551de367518d052a969"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10013,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10013,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [8,0,4,0,0,0,0,9,6,0,0,3,0,6,0,0,8,0,0,2,9,0,1,8,3,0,4,0,0,6,0,7,9,2,0,0,0,8,2,6,0,5,7,3,0,0,0,5,1,8,0,4,0,0,4,0,7,8,5,0,6,2,0,0,5,0,0,2,0,9,0,0,2,6,0,0,0,0,8,0,5],
+      "solution": [8,1,4,2,3,7,5,9,6,5,7,3,9,6,4,1,8,2,6,2,9,5,1,8,3,7,4,1,4,6,3,7,9,2,5,8,9,8,2,6,4,5,7,3,1,7,3,5,1,8,2,4,6,9,4,9,7,8,5,1,6,2,3,3,5,8,4,2,6,9,1,7,2,6,1,7,9,3,8,4,5],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "3dc8026fcd651ddd73e18eb75364ce4f90e9a77809326e9e61e4465396e43b1e",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "113c56d5acfeb306ed73d3101eda7fcc1fb0f9f3d8a052f6826716b9f6ec72c8"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10014,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10014,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,3,0,0,9,0,1,4,4,7,2,0,0,0,3,9,0,0,0,1,0,3,2,0,5,6,3,0,0,0,0,0,9,6,0,9,0,5,7,0,6,4,0,3,0,6,8,0,0,0,0,0,1,1,4,0,9,5,0,8,0,0,0,8,9,0,0,0,6,3,5,5,3,0,2,0,0,1,0,0],
+      "solution": [6,5,3,8,7,9,2,1,4,4,7,2,6,1,5,3,9,8,8,9,1,4,3,2,7,5,6,3,2,4,5,8,1,9,6,7,9,1,5,7,2,6,4,8,3,7,6,8,3,9,4,5,2,1,1,4,6,9,5,3,8,7,2,2,8,9,1,4,7,6,3,5,5,3,7,2,6,8,1,4,9],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "48a543247b9cb7054206c4cb8adfd1d9d3b636e59b35648217b4cddcb6309353",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "e29f7e9517d781b7984357cf78faee148f55900ee289b758a4697933cecafed0"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10015,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10015,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,2,0,6,0,7,4,5,0,0,0,3,4,1,2,0,9,0,6,0,0,7,0,1,3,0,0,7,0,1,0,3,5,2,0,0,0,1,0,0,0,3,0,0,0,3,6,4,0,7,0,9,0,0,9,7,0,2,0,0,5,0,6,0,3,5,1,9,0,0,0,8,4,5,0,3,0,9,0,0],
+      "solution": [3,1,2,9,6,8,7,4,5,7,5,8,3,4,1,2,6,9,9,6,4,2,7,5,1,3,8,4,7,9,1,8,3,5,2,6,5,8,1,6,9,2,3,7,4,2,3,6,4,5,7,8,9,1,1,9,7,8,2,4,6,5,3,6,2,3,5,1,9,4,8,7,8,4,5,7,3,6,9,1,2],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "07bd401dba5fb2cc144f0f4a0f5c41d066a3710b30574e48bf23563ef480bdef",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "d44004e9975d21bbf1539aa91170f607d93054144db8abaf120c30473921b589"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10016,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10016,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [2,0,0,6,1,0,5,4,9,1,0,0,0,0,5,0,3,0,0,0,5,2,4,0,1,0,7,6,0,1,0,0,8,0,2,5,0,9,0,0,0,0,0,1,0,7,8,0,5,0,0,3,0,6,9,0,7,0,3,2,8,0,0,0,2,0,4,0,0,0,0,1,4,1,6,0,9,7,0,0,3],
+      "solution": [2,7,8,6,1,3,5,4,9,1,4,9,7,8,5,6,3,2,3,6,5,2,4,9,1,8,7,6,3,1,9,7,8,4,2,5,5,9,2,3,6,4,7,1,8,7,8,4,5,2,1,3,9,6,9,5,7,1,3,2,8,6,4,8,2,3,4,5,6,9,7,1,4,1,6,8,9,7,2,5,3],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "0c4f863c7864ffcb273f44b76008a26504200cebd79dbcb675331a1100c9865f",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "0819441bb2b77def77accefa433939096369f7050d0488b52a11be5137ecb0df"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10017,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10017,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,1,6,0,0,0,0,3,5,0,3,0,2,0,0,7,1,4,9,4,0,3,0,1,0,6,8,0,0,0,0,8,3,0,0,0,0,2,3,7,0,5,8,4,0,0,0,0,6,2,0,0,0,0,1,6,0,9,0,7,0,2,3,3,7,2,0,0,6,0,8,0,4,5,0,0,0,0,1,7,0],
+      "solution": [2,1,6,4,7,8,9,3,5,8,3,5,2,6,9,7,1,4,9,4,7,3,5,1,2,6,8,7,9,4,1,8,3,6,5,2,6,2,3,7,9,5,8,4,1,5,8,1,6,2,4,3,9,7,1,6,8,9,4,7,5,2,3,3,7,2,5,1,6,4,8,9,4,5,9,8,3,2,1,7,6],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "c10f9e7f225c1ec9baa22f4b5e13d470f0d07eb73f11641c90560b14e1839783",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "31b18445dab47fcaa56288b9bf5a0bf62d0ebb63951aab14d2529d837f39da4d"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10018,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10018,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [1,4,0,7,0,5,0,8,9,0,0,5,0,9,0,0,7,4,0,8,7,2,0,3,0,6,0,2,9,8,0,0,1,0,0,0,0,7,0,0,0,0,0,4,0,0,0,0,8,0,0,1,9,7,0,1,0,5,0,6,9,2,0,8,2,0,0,1,0,7,0,0,6,5,0,3,0,7,0,1,8],
+      "solution": [1,4,2,7,6,5,3,8,9,3,6,5,1,9,8,2,7,4,9,8,7,2,4,3,5,6,1,2,9,8,4,7,1,6,3,5,5,7,1,6,3,9,8,4,2,4,3,6,8,5,2,1,9,7,7,1,4,5,8,6,9,2,3,8,2,3,9,1,4,7,5,6,6,5,9,3,2,7,4,1,8],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "74266013aaec3491e497f19bb43da50eed550b5907e89c91de65d73e1a5413ed",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "19bd81c49db8f21bdc464e19a180bb17fa683c7a899ebc8df2de3b0f586f42e3"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 10019,
+        "trace": "summary",
+        "variantId": "diagonalX"
+      },
+      "seed": 10019,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,0,0,9,0,0,5,1,6,5,1,0,8,0,9,7,0,7,0,0,6,0,0,0,0,3,0,0,0,8,3,6,4,2,9,0,0,6,1,0,9,5,0,0,3,9,4,5,2,7,0,0,0,1,0,0,0,0,2,0,0,5,0,3,5,0,6,0,7,1,2,9,7,0,0,5,0,0,0,0],
+      "solution": [2,8,3,7,9,4,6,5,1,6,5,1,2,8,3,9,7,4,7,4,9,6,1,5,2,8,3,5,1,7,8,3,6,4,2,9,8,2,6,1,4,9,5,3,7,3,9,4,5,2,7,1,6,8,1,6,8,4,7,2,3,9,5,4,3,5,9,6,8,7,1,2,9,7,2,3,5,1,8,4,6],
+      "model": {
+        "variantId": "diagonalX",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "4b59bf9893af4da5169f4ab4430075432890edb875aa3dd37d9b7704af52de6d",
+          "cellUnits": "1f26709479b9cbc7e2d3079c0862b670a43a3f8d59521340ca1e22d6e14f1653",
+          "peers": "12315eb2b92ffd92ea61c71e23b0fd3796303a99d73c46e3c6c95296a5a9e794",
+          "unitMeta": "ce658e69e043fe7e004beaf3cb7e28b0fd9bad73ea779aeffa9482770654a890",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1114aefc6a6ac77d75a3312ab49c73f527f073df76dc669a098c9b8ededa73da",
+          "symbols": "e47ab2b9b8310dd5eb367c3f94690f60b1b70f7ebfabf9be3d07b7b763a73e14",
+          "fixedCells": "b121a55792e25d99582ae37232f653591522391c514657aa3c09966dc5b661eb"
+        },
+        "digLog": "6e90c3ce7c1a5746a25c7a7f2f30f2f8ee50c4951efb618e9e4054512de60133",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "cf04297d3001a67bc41e3f10b4a8459fd693aa924e805f970dbee0d9ccfbf298"
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "ms18d-c-admission-1",
+  "acquisition": "proceed",
+  "binding": true,
+  "payloadChecks": true,
+  "finalLockRecheck": {
+    "stable": true,
+    "sharedPresent": true,
+    "timingPresent": false
+  },
+  "readiness": {
+    "schema": "ms18d-c-readiness-1",
+    "required": true,
+    "ran": true,
+    "policy": {
+      "selector": "S-OD15",
+      "choice": "A",
+      "name": "MS18d-GP-host-active"
+    },
+    "complete": true,
+    "ready": true,
+    "admitted": true,
+    "eligibleReAsk": false,
+    "kind": "admitted",
+    "binding": {
+      "bindingId": "host-b1",
+      "host": {
+        "pid": 1968,
+        "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+        "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+        "parentPid": 18780,
+        "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+      },
+      "ref": "Initial binding of the already-approved host tuple (pack 9828457a MS18d-c1-readiness-and-rulings.md \"Host-binding journal\": existing tuple approved by the pack and SA1 review of 56b97b26); fresh matching observation by the orchestrator",
+      "journal": {
+        "path": "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl",
+        "commit": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+        "baseCommit": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+        "entryCount": 1,
+        "sha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705",
+        "baseSha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705"
+      },
+      "evidence": {
+        "file": "tasks/difficulty-v3/MS18d-gp-host-evidence/host-b1.json",
+        "sha256": "8e98bcb569a1243ddc44017bb6c34f1dd31091302dcb80e9d4220061aaf4d15c",
+        "verified": true
+      }
+    },
+    "file": "readiness.json",
+    "sha256": "6612bd1917e14f80b34bb59cc364de3d78250a8604c82e54def480c388eb7499",
+    "reasons": []
+  },
+  "callToSpawnMs": 9080,
+  "callToSpawnLimitMs": 60000,
+  "lateStart": false,
+  "decision": "proceed"
+}

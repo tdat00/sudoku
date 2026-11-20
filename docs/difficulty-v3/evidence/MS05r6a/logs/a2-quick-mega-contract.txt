@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega-contract: 37 passed  (1.60 s)
+
+Suites: 1
+Tests:  37 total, 37 passed, 0 failed, 0 skipped
+Time:   1.60 s running tests, 1.77 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/preflight/quick/mega-contract.json

@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=hyper --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-expert.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+hyper/expert: 39/40 hits, p95 1.30 s (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| hyper | expert | 40 | 39 | 98 % | 387 ms | 1.30 s | 2.10 s | 10.0 s | offered |
+
+hyper: ["expert"]
+exit=0 seconds=5.598

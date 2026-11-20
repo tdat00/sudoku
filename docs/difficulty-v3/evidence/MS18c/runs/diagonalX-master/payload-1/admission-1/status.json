@@ -1,0 +1,314 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "runId": "ms18c-20261118T203224060-19164",
+  "cell": "diagonalX/master",
+  "epoch": "MS18c-GQ-20261118-01",
+  "payloadSlot": 1,
+  "admissionOrdinal": 1,
+  "state": "finished",
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "inputs": {
+    "ratingVersion": 3,
+    "engineSources": "0ca29eaeebc295b6",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77"
+  },
+  "policy": "MS18c-GQ-host-active",
+  "method": "MS18c-GQ-structural-v1",
+  "supervisor": {
+    "pid": 19164,
+    "createdUtcMicros": "2026-11-18T20:32:23.310646Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x800;killOnClose=False;breakawayOk=True;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 20452,
+    "createdUtcMicros": "2026-11-18T20:32:35.290249Z"
+  },
+  "clocks": {
+    "oStart": "2026-11-18T20:32:24.057Z",
+    "oSeconds": 5550.0,
+    "oDeadline": "2026-11-18T22:04:54.0606135Z",
+    "T": 2850.0,
+    "tStart": "2026-11-18T20:32:35.273Z",
+    "tDeadline": "2026-11-18T21:20:05.2865892Z",
+    "rSeconds": null,
+    "wSeconds": 10.2044978,
+    "lockWaitedSeconds": 6.678,
+    "note": "T starts at the creation of the owned launcher after the lock acquisition and excludes that wait",
+    "elapsedSeconds": 0.326
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\status.json",
+    "supervisorLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\supervisor.log",
+    "preLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\pre-ms18c-20261118T203224060-19164.log",
+    "events": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\events.jsonl",
+    "readiness": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\readiness.json",
+    "stdout": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\stdout.txt",
+    "stderr": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\stderr.txt",
+    "qualifierJson": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\qualifier.json",
+    "qualifierMarkdown": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\payload-1\\admission-1\\qualifier.md",
+    "journal": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\journal.jsonl",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\acceptance-receipt.json"
+  },
+  "members": [
+    5752,
+    14088,
+    18308,
+    19676,
+    20452,
+    22032,
+    24676,
+    24752,
+    25248,
+    25912,
+    26768,
+    28576,
+    28636,
+    30004,
+    31104,
+    31272,
+    31996,
+    32860,
+    33636
+  ],
+  "membersSeen": [
+    {
+      "pid": 5752,
+      "createdUtcMicros": "2026-11-18T20:32:42.499865Z"
+    },
+    {
+      "pid": 14088,
+      "createdUtcMicros": "2026-11-18T20:32:43.062004Z"
+    },
+    {
+      "pid": 18308,
+      "createdUtcMicros": "2026-11-18T20:32:41.770435Z"
+    },
+    {
+      "pid": 19676,
+      "createdUtcMicros": "2026-11-18T20:32:42.915681Z"
+    },
+    {
+      "pid": 20452,
+      "createdUtcMicros": "2026-11-18T20:32:35.290249Z"
+    },
+    {
+      "pid": 22032,
+      "createdUtcMicros": "2026-11-18T20:32:35.314688Z"
+    },
+    {
+      "pid": 24676,
+      "createdUtcMicros": "2026-11-18T20:32:36.081686Z"
+    },
+    {
+      "pid": 24752,
+      "createdUtcMicros": "2026-11-18T20:32:42.886508Z"
+    },
+    {
+      "pid": 25248,
+      "createdUtcMicros": "2026-11-18T20:32:43.027120Z"
+    },
+    {
+      "pid": 25912,
+      "createdUtcMicros": "2026-11-18T20:32:36.104508Z"
+    },
+    {
+      "pid": 26768,
+      "createdUtcMicros": "2026-11-18T20:32:35.422977Z"
+    },
+    {
+      "pid": 28576,
+      "createdUtcMicros": "2026-11-18T20:32:42.742452Z"
+    },
+    {
+      "pid": 28636,
+      "createdUtcMicros": "2026-11-18T20:32:43.041149Z"
+    },
+    {
+      "pid": 30004,
+      "createdUtcMicros": "2026-11-18T20:32:41.783139Z"
+    },
+    {
+      "pid": 31104,
+      "createdUtcMicros": "2026-11-18T20:32:42.516678Z"
+    },
+    {
+      "pid": 31272,
+      "createdUtcMicros": "2026-11-18T20:32:43.050828Z"
+    },
+    {
+      "pid": 31996,
+      "createdUtcMicros": "2026-11-18T20:32:35.448290Z"
+    },
+    {
+      "pid": 32860,
+      "createdUtcMicros": "2026-11-18T20:32:42.849204Z"
+    },
+    {
+      "pid": 33636,
+      "createdUtcMicros": "2026-11-18T20:32:42.702344Z"
+    }
+  ],
+  "heartbeatAt": "2026-11-18T20:32:46.051Z",
+  "finalStatus": "record-accepted",
+  "exitCode": 0,
+  "activeProcesses": 4,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 20452,
+    "launcherCreated": "2026-11-18T20:32:35.290249Z",
+    "tStartIso": "2026-11-18T20:32:35.273Z",
+    "tStartTicks": 6287365107429,
+    "tStartNs": 628736510742900,
+    "createdAfterSeconds": 0.0340714,
+    "resumedAfterSeconds": 0.0385665,
+    "launcherExit": 0,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 10.2044978,
+    "launcherExitedAfterSeconds": 10.2011064,
+    "members": [
+      5752,
+      14088,
+      18308,
+      19676,
+      20452,
+      22032,
+      24676,
+      24752,
+      25248,
+      25912,
+      26768,
+      28576,
+      28636,
+      30004,
+      31104,
+      31272,
+      31996,
+      32860,
+      33636
+    ],
+    "membersDetail": [
+      {
+        "pid": 5752,
+        "createdUtcMicros": "2026-11-18T20:32:42.499865Z"
+      },
+      {
+        "pid": 14088,
+        "createdUtcMicros": "2026-11-18T20:32:43.062004Z"
+      },
+      {
+        "pid": 18308,
+        "createdUtcMicros": "2026-11-18T20:32:41.770435Z"
+      },
+      {
+        "pid": 19676,
+        "createdUtcMicros": "2026-11-18T20:32:42.915681Z"
+      },
+      {
+        "pid": 20452,
+        "createdUtcMicros": "2026-11-18T20:32:35.290249Z"
+      },
+      {
+        "pid": 22032,
+        "createdUtcMicros": "2026-11-18T20:32:35.314688Z"
+      },
+      {
+        "pid": 24676,
+        "createdUtcMicros": "2026-11-18T20:32:36.081686Z"
+      },
+      {
+        "pid": 24752,
+        "createdUtcMicros": "2026-11-18T20:32:42.886508Z"
+      },
+      {
+        "pid": 25248,
+        "createdUtcMicros": "2026-11-18T20:32:43.027120Z"
+      },
+      {
+        "pid": 25912,
+        "createdUtcMicros": "2026-11-18T20:32:36.104508Z"
+      },
+      {
+        "pid": 26768,
+        "createdUtcMicros": "2026-11-18T20:32:35.422977Z"
+      },
+      {
+        "pid": 28576,
+        "createdUtcMicros": "2026-11-18T20:32:42.742452Z"
+      },
+      {
+        "pid": 28636,
+        "createdUtcMicros": "2026-11-18T20:32:43.041149Z"
+      },
+      {
+        "pid": 30004,
+        "createdUtcMicros": "2026-11-18T20:32:41.783139Z"
+      },
+      {
+        "pid": 31104,
+        "createdUtcMicros": "2026-11-18T20:32:42.516678Z"
+      },
+      {
+        "pid": 31272,
+        "createdUtcMicros": "2026-11-18T20:32:43.050828Z"
+      },
+      {
+        "pid": 31996,
+        "createdUtcMicros": "2026-11-18T20:32:35.448290Z"
+      },
+      {
+        "pid": 32860,
+        "createdUtcMicros": "2026-11-18T20:32:42.849204Z"
+      },
+      {
+        "pid": 33636,
+        "createdUtcMicros": "2026-11-18T20:32:42.702344Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  },
+  "post": {
+    "ok": true,
+    "outcome": "record-accepted",
+    "verdict": "accepted",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-master\\acceptance-receipt.json",
+    "monitor": {
+      "proceed": true,
+      "invalid": [],
+      "invalidTiming": [],
+      "breaches": [],
+      "metrics": {
+        "rSeconds": 7.2419192,
+        "requests": 40,
+        "maxMs": 914.6799,
+        "stopped": null,
+        "secondRoundRan": false,
+        "slowTotal": 0,
+        "slowFirstRound": 0,
+        "qSeconds": 2.772,
+        "sSeconds": 2.2426054000000004,
+        "sFirstRoundSeconds": 2.2426054000000004,
+        "sSecondRoundSeconds": 0,
+        "qMinusS": 0.5293945999999996,
+        "wSeconds": 10.2044978,
+        "wMinusQ": 7.432497800000001
+      }
+    }
+  },
+  "writeFailures": 0
+}

@@ -1,0 +1,77 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+mega
+  ok   mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback (22 ms)
+  ok   mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default (13 ms)
+  ok   mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far (9 ms)
+ok   mega: 3 passed  (44 ms)
+
+Suites: 1
+Tests:  3 total, 3 passed, 0 failed, 0 skipped
+Time:   44 ms running tests, 216 ms total
+Results: docs/difficulty-v3/evidence/MS05r5m/quick/mega16-size-default-controls.json
+MS05r5m exit=0 seconds=0.412

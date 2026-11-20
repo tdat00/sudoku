@@ -1,0 +1,222 @@
+[
+  {
+    "id": "pilotx-mega16",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) mega16/nightmare:3@1",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-mega16.json",
+      "--cells=mega16/nightmare:3@1",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-mega16.txt",
+    "allowExit1": false,
+    "projectionSeconds": 31,
+    "projectionBasis": "pilot means of the same cells x requests = 14.3 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-mega16.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-mega16.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-diagonalX",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) diagonalX/hell1:1@3",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-diagonalX.json",
+      "--cells=diagonalX/hell1:1@3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-diagonalX.txt",
+    "allowExit1": false,
+    "projectionSeconds": 45,
+    "projectionBasis": "pilot means of the same cells x requests = 23.4 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-diagonalX.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-diagonalX.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-hyper",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) hyper/hell1:1@3",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-hyper.json",
+      "--cells=hyper/hell1:1@3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-hyper.txt",
+    "allowExit1": false,
+    "projectionSeconds": 24,
+    "projectionBasis": "pilot means of the same cells x requests = 9.1 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-hyper.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-hyper.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-jigsaw9",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) jigsaw9/hell1:1@3",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-jigsaw9.json",
+      "--cells=jigsaw9/hell1:1@3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-jigsaw9.txt",
+    "allowExit1": false,
+    "projectionSeconds": 30,
+    "projectionBasis": "pilot means of the same cells x requests = 13.0 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-jigsaw9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-jigsaw9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-killer",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) killer/nightmare:2@2 killer/hell1:2@2",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-killer.json",
+      "--cells=killer/nightmare:2@2,killer/hell1:2@2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-killer.txt",
+    "allowExit1": false,
+    "projectionSeconds": 94,
+    "projectionBasis": "pilot means of the same cells x requests = 55.7 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-killer.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-killer.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-greaterThan",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) greaterThan/nightmare:2@2",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-greaterThan.json",
+      "--cells=greaterThan/nightmare:2@2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-greaterThan.txt",
+    "allowExit1": false,
+    "projectionSeconds": 23,
+    "projectionBasis": "pilot means of the same cells x requests = 8.6 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-greaterThan.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-greaterThan.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-samurai",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) samurai/hell1:2@2 samurai/hell2:2@2",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-samurai.json",
+      "--cells=samurai/hell1:2@2,samurai/hell2:2@2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-samurai.txt",
+    "allowExit1": false,
+    "projectionSeconds": 90,
+    "projectionBasis": "pilot means of the same cells x requests = 53.4 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-samurai.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-samurai.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-sohei",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) sohei/hell1:1@3",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-sohei.json",
+      "--cells=sohei/hell1:1@3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-sohei.txt",
+    "allowExit1": false,
+    "projectionSeconds": 45,
+    "projectionBasis": "pilot means of the same cells x requests = 23.2 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-sohei.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-sohei.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-flower",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) flower/hell1:2@2",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-flower.json",
+      "--cells=flower/hell1:2@2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-flower.txt",
+    "allowExit1": false,
+    "projectionSeconds": 84,
+    "projectionBasis": "pilot means of the same cells x requests = 49.3 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-flower.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-flower.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilotx-wordoku",
+    "phase": "pilot",
+    "label": "pilot extension (one more request so that 4 requests of the cell have no hit) wordoku/hell1:1@3",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-wordoku.json",
+      "--cells=wordoku/hell1:1@3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-wordoku.txt",
+    "allowExit1": false,
+    "projectionSeconds": 20,
+    "projectionBasis": "pilot means of the same cells x requests = 6.8 s, + 3 s, x 1.5 + 5 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-wordoku.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilotx-wordoku.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  }
+]

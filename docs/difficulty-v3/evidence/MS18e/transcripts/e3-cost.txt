@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs cost --quick docs/difficulty-v3/evidence/MS18e/quick --old-ref HEAD --manifest-new .github/scripts/generator-quick.json --out docs/difficulty-v3/evidence/MS18e/ci/quick-cost.json
+cost: ok (core-shared 103.919->170, steps 44.464->70, replay 42.998->70, mega 31.895->50, own-fast 228.118->350, digger-target 2.716->30, pipeline 42.619->80, player 58.829->90, player 118.281->190; shared-small 1260/1800, own-suites 1320/1800, pipeline 420/1800, replay-player 450/1800, Player job 750/900)
+exit=0 seconds=0.241

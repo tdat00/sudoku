@@ -1,0 +1,67 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795101661266,
+  "startedAtMs": 1795101661345,
+  "lockAcquiredAtMs": 1795101661271,
+  "slotBefore": {
+    "shared": false,
+    "timing": true
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795101645766,
+    "lastCheckMs": 1795101661066,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": true,
+  "startDelayMs": 79,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795100762263,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899082,
+  "foreignReleaseProof": [],
+  "reasons": [
+    "slot-busy-and-foreign-release-unproved"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 9536,
+    "task": "stand-in hold-the-timing-lock-busy-at-the-request",
+    "controllerPid": 7760,
+    "controllerParentPid": 9536,
+    "wrapperPid": 9536
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-the-timing-lock-busy-at-the-request\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-the-timing-lock-busy-at-the-request\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-the-timing-lock-busy-at-the-request\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

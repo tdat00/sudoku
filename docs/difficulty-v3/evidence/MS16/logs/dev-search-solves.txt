@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS16\search-sdc.js solves
+puzzles with sueDeCoq in the full solve: 0 of 85, steps 0
+exit=0 seconds=1.808

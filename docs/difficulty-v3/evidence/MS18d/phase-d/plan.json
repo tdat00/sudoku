@@ -1,0 +1,58 @@
+{
+  "schema": "ms18d-phase-d-plan-v1",
+  "label": "Phase D plan as executed: commands, selectors, projection bases, outputs, order and clocks. The per-command times and every clock are the rows of lock-log.jsonl (one row per command, failed and superseded attempts included).",
+  "dispatch": { "file": "tasks/difficulty-v3/MS18d-phase-d-dispatch.md", "head": "b54e67aec1cdaff12c6dcc2b9dd8ba3b4dfe73d0", "supplements": ["6e4d97bc (SA2 dispatch)", "b54e67ae (SA1 B1, M1-M4)"] },
+  "developerStart": "2026-11-20T08:47:26+07:00",
+  "transport": {
+    "caller": "generator/tests/artifacts/difficulty-v3/MS18d/phase-d/run-locked-d.ps1 (thin, task-owned; writes only lock-log.jsonl besides the tee transcript)",
+    "helper": "generator/tests/artifacts/difficulty-v3/MS18c/invoke-dv3node.ps1 (unchanged, dot-sourced; slot lock, 540 s ceiling)",
+    "tee": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/tee-c.js (unchanged)",
+    "argumentStructure": "Invoke-Dv3Node -NodeArgs @(<tee-c.js>, <new transcript>, <child tool>, <its arguments>)",
+    "teePathByCwd": { "generator": "tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\tee-c.js", "player": "..\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\tee-c.js", "root": "generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\tee-c.js" },
+    "environment": { "TEE_QUIET": "1 (set by the caller only so the child's lines are not copied to the console as well; every line is in the transcript)", "unset": ["CI", "SG_TIME_FACTOR", "SG_DEEP", "SG_UPDATE_HASHES", "NODE_OPTIONS"], "otherTeeSettings": "none (no TEE_SPAWN_RECORD, TEE_STREAMS_DIR or TEE_DETACHED)" },
+    "clocks": "teeSeconds (the tee final marker; the m of the CI rule), helperSeconds (the helper's own line), runnerBodySeconds (the harness wall of a results file), callerSeconds and lockWaitDerivedSeconds are distinct; the gap between commands is at least 15 s (minimum measured 15.014 s)",
+    "failureHandling": "a thrown exception, a nonzero exit or an incomplete transcript is recorded and stops the run; a corrective rerun uses a numbered new transcript; exit 1 is never accepted as success (no -AllowExit1)"
+  },
+  "settings": { "node": "v26.13.0", "machine": { "platform": "win32", "arch": "x64", "cpu": "AMD EPYC 7763 64-Core Processor", "cores": 16, "memoryGiB": 64 }, "powershell": "7.6.10", "timeFactor": 2, "deep": false, "manual": false, "all": false, "bail": false, "newSkips": false, "serialJobs": 1 },
+  "steps": [
+    { "order": 1, "id": "identities-before", "cwd": "root", "child": ["generator\\tests\\artifacts\\difficulty-v3\\MS18c\\identities-now.cjs"], "transcript": "transcripts/identities-before.txt", "output": "identities-before.txt (extracted by step 27)", "note": "before any living-file edit; must equal the M2 baseline" },
+    { "order": 2, "id": "targets-recheck-before", "cwd": "generator", "child": ["tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\freeze-targets.js", "--preflight=..\\docs\\difficulty-v3\\evidence\\MS18d\\gp-preflight.json", "--json=..\\docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\targets-recheck-before.json"], "transcript": "transcripts/targets-recheck-before.txt", "output": "targets-recheck-before.json", "label": "Phase D re-check (the unchanged tool's fixed kind/note still says Phase B and 'before any GG shard')" },
+    { "order": 3, "id": "closeout-cells / closeout-audit-3 / closeout-consumers-3", "cwd": "root", "child": ["generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-d\\closeout.js", "cells | audit | consumers"], "outputs": ["gp-cells.csv", "gp-cells-table.md", "provenance-audit.json", "external-consumers.json"], "note": "file-only; closeout-audit, closeout-audit-2, closeout-consumers and closeout-consumers-2 failed on defects of the helper itself (acquisition-hold folders without journals/readiness, an equality field shape, a category count) and are kept with their transcripts" },
+    { "order": 4, "id": "R6 edits", "files": ["docs/difficulty-v3/performance-v3.md (created)", "generator/design.md (section 9.1)", "DEVELOPERGUIDE.md", "DEVELOPERGUIDE.vn.md"], "note": "done after step 2 and before step 5" },
+    { "order": 5, "id": "identities-final", "cwd": "root", "child": ["generator\\tests\\artifacts\\difficulty-v3\\MS18c\\identities-now.cjs"], "transcript": "transcripts/identities-final.txt", "output": "identities-final.txt (extracted)" },
+    { "order": 6, "id": "targets-recheck-final", "cwd": "generator", "child": ["tests\\artifacts\\difficulty-v3\\MS18d\\phase-b\\freeze-targets.js", "--preflight=..\\docs\\difficulty-v3\\evidence\\MS18d\\gp-preflight.json", "--json=..\\docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\targets-recheck-final.json"], "transcript": "transcripts/targets-recheck-final.txt", "output": "targets-recheck-final.json", "label": "Phase D re-check, after the last R6 edit" },
+    { "order": 7, "id": "focused-docs", "cwd": "generator", "child": ["tests\\node-runner.js", "--suite=perf-tooling,smoke,help", "--results=..\\docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\results\\focused-docs.json"], "transcript": "transcripts/focused-docs.txt", "output": "results/focused-docs.json", "note": "diagnostic; excluded from the coverage accounting" },
+    { "order": 8, "id": "ci-before", "cwd": "root", "child": [".github\\scripts\\generator-quick.js", "check", "--keep=docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\ci-before"], "transcript": "transcripts/ci-before.txt", "output": "ci-before/" },
+    { "order": "9-16", "id": "quick-generator-<shard>", "cwd": "generator", "child": ["tests\\node-runner.js", "--suite=<the shard's exact joined suite list>", "--results=..\\docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\quick\\generator-<shard>.json"], "order of shards": ["core-shared", "steps", "replay", "mega", "own-fast", "digger-target", "pipeline", "player"], "transcripts": "transcripts/generator-<shard>.txt", "outputs": "quick/generator-<shard>.json" },
+    { "order": 17, "id": "quick-player", "cwd": "player", "child": ["tests\\node-runner.js", "--results=..\\docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\quick\\player-quick.json"], "transcript": "transcripts/player-quick.txt", "output": "quick/player-quick.json" },
+    { "order": 18, "id": "CI metadata edit", "file": ".github/scripts/generator-quick.json", "note": "measured seconds, own-fast 330 to 350, Player 180 to 190, dated provenance; computed first by closeout-cost-dry" },
+    { "order": 19, "id": "ci-final", "cwd": "root", "child": [".github\\scripts\\generator-quick.js", "check", "--keep=docs\\difficulty-v3\\evidence\\MS18d\\phase-d\\ci-final"], "transcript": "transcripts/ci-final.txt", "output": "ci-final/" },
+    { "order": 20, "id": "identities-after-quick", "cwd": "root", "child": ["generator\\tests\\artifacts\\difficulty-v3\\MS18c\\identities-now.cjs"], "transcript": "transcripts/identities-after-quick.txt", "output": "identities-after-quick.txt (extracted)" },
+    { "order": 21, "id": "gg-check-hashes", "cwd": "generator", "child": ["tests\\perf.js", "--hash-merge=..\\docs\\difficulty-v3\\evidence\\MS18d\\hashes", "--check-hashes"], "transcript": "transcripts/gg-check-hashes.txt", "note": "file-only; 104 ledgers, 520 keys, nothing generated, no update flag" },
+    { "order": "22-27", "id": "closeout extract / bindings / coverage / cost", "outputs": ["identities-before.txt", "identities-final.txt", "identities-after-quick.txt", "bindings.json", "quick-coverage.json", "quick-cost.json"] },
+    { "order": "28-30", "id": "closeout-test / closeout-register / closeout-report", "note": "synthetic tests of the helper and the caller (20), the item register check (30 mandatory items) and the 79-row report check" },
+    { "order": "31+", "id": "closeout-hashes, verification, final identity confirmation", "outputs": ["helpers-sha256.txt", "outputs-sha256.txt"], "note": "see handoff.md" }
+  ],
+  "selectors": {
+    "source": ".github/scripts/generator-quick.json (read directly, not regrouped)",
+    "generatorShards": {
+      "core-shared": ["bits", "board-view", "constraints", "exchange", "harness", "logical-solver", "model", "solver", "symbols", "tech-als", "tech-basic", "tech-cage", "tech-chain", "tech-fish", "tech-subset", "tech-wing", "techniques", "wordbook"],
+      "steps": ["steps"],
+      "replay": ["replay"],
+      "mega": ["mega"],
+      "own-fast": ["a11y", "cache", "controls", "difficulty-diagnostics", "difficulty-floor", "digger", "events", "export", "format", "full-grid", "help", "history", "i18n", "manual-corpus", "mega-contract", "multigrid", "pattern-cost-tools", "perf-tooling", "purity", "qualification-records", "recovery-profile", "replay-recorders", "result-view", "rng", "smoke", "store", "technique-weights", "theme", "ui-contract", "variants-registry", "worker"],
+      "digger-target": ["digger-target"],
+      "pipeline": ["pipeline"],
+      "player": ["player"]
+    },
+    "playerCommand": "node tests/node-runner.js (the complete default quick set, from player/)"
+  },
+  "expectedTests": { "core-shared": 2418, "steps": 59, "replay": 159, "mega": 108, "own-fast": 1767, "digger-target": 75, "pipeline": 151, "player": 70, "generatorTotal": 4807, "playerApp": 2981 },
+  "projectionBases": {
+    "oldProjectionSeconds": { "core-shared": 170, "steps": 70, "replay": 70, "mega": 50, "own-fast": 330, "digger-target": 30, "pipeline": 80, "player": 90, "playerApp": 180 },
+    "provisionalBeforeTheRuns": "MS18c closure quick-dev process seconds (core-shared 102.9, steps 44.4, replay 42.9, mega 31.5, own-fast 219.1, digger-target 2.7, pipeline 42.7, player 58.2, Player 118.7), used only as a labelled prior basis; every final value uses this task's own tee seconds",
+    "rule": "newProjection = max(old, 10 * ceil(1.5 * m / 10)), m = the tee final seconds of the successful complete run; raises only; each projection at most 450 s; groups 180 + 3 * sum at most 1800; the Player job 180 + 3 * playerProjection at most 900"
+  },
+  "dependencies": "steps 1-2 before any edit; the R6 edits before steps 5-6; steps 5-6 before the quick runs; the CI metadata edit after the last run and before ci-final; ci-final before the post-quick identities",
+  "developerEnd": "see handoff.md"
+}

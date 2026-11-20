@@ -1,0 +1,16 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS11a\mutations-corrected-4.txt 84 96
+mutation 84 (the seam ignores its limit): DETECTED - 389 total, 383 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 10.5 s
+mutation 85 (the seam names another technique in its error): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+mutation 86 (the observer record reports one unit too many): DETECTED - 389 total, 376 passed, 13 failed, 0 skipped - 13 failing, 13 of uniqueRectangle - 10.4 s
+mutation 87 (the observer record carries the id of wxyzWing): DETECTED - 389 total, 383 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 10.4 s
+mutation 88 (the observer record reports the default limit whatever the call used): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.5 s
+mutation 89 (the observer record never reports a capped call): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.5 s
+mutation 90 (the observer record retains something): DETECTED - 389 total, 383 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 10.5 s
+mutation 91 (another base cost): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+mutation 92 (another order, ahead of W-Wing (169)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 6 of uniqueRectangle - 10.4 s
+mutation 93 (another order, after the forcing chain (191)): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+mutation 94 (the technique is not flagged as assuming uniqueness): DETECTED - 389 total, 387 passed, 2 failed, 0 skipped - 2 failing, 1 of uniqueRectangle - 10.4 s
+mutation 95 (the weight is below the one of W-Wing (849)): DETECTED - 13 total, 10 passed, 3 failed, 0 skipped - 3 failing, 0 of uniqueRectangle - 0.2 s
+mutation 96 (the weight is above the one of the forcing chain (1101)): DETECTED - 13 total, 11 passed, 2 failed, 0 skipped - 2 failing, 0 of uniqueRectangle - 0.2 s
+detected 13 of 13, 115.5 s
+exit=0 seconds=115.589

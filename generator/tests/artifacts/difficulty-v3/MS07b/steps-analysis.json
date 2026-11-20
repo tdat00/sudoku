@@ -1,0 +1,14 @@
+[
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis-check-before-write.txt",
+    "args": ["tests\\replay-goldens.js", "--merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis", "--check"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis-write.txt",
+    "args": ["tests\\replay-goldens.js", "--merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis", "--write"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis-check.txt",
+    "args": ["tests\\replay-goldens.js", "--merge=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis", "--check"]
+  }
+]

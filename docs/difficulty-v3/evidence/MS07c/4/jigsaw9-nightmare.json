@@ -1,0 +1,1500 @@
+{
+  "schema": 1,
+  "complete": true,
+  "meta": {
+    "acceptance": "canonical-required-tier",
+    "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+    "sourceFiles": 63,
+    "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+    "commit": "1ee14fcf52be7808a1b7ba7a8837553ef85a4969",
+    "dirty": true,
+    "dirtyFiles": [
+      " M generator/tests/fixtures/difficulty-diagnostics.js",
+      " M generator/tests/soak.js",
+      " M generator/tests/suites/difficulty-diagnostics.test.js",
+      " M tasks/difficulty-v3/MS07b-register-chain-windows.md",
+      "?? generator/tests/artifacts/difficulty-v3/MS07c/"
+    ],
+    "startedAt": "2026-11-14T23:39:05.313Z",
+    "node": "v26.13.0",
+    "machine": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "cpuModel": "AMD EPYC 7763 64-Core Processor",
+      "cpus": 16,
+      "memoryGiB": 64
+    },
+    "argv": [
+      "--variant=jigsaw9",
+      "--level=nightmare",
+      "--count=12",
+      "--seed=20260101",
+      "--no-gate",
+      "--chain-window=4",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07c\\4\\jigsaw9-nightmare.json"
+    ],
+    "seedBase": 20260101,
+    "shallowCap": null,
+    "shallowSearchRatings": 256,
+    "chainWindow": 4,
+    "chainShortMax": 4,
+    "manifest": {
+      "requests": 12,
+      "logicalRequests": 12,
+      "shard": null,
+      "cells": [
+        {
+          "variant": "jigsaw9",
+          "level": "nightmare",
+          "requests": 12,
+          "from": 0,
+          "logicalTotal": 12,
+          "referenceIndexes": [
+            0,
+            11
+          ],
+          "route": "pipeline",
+          "unsupported": false
+        }
+      ],
+      "count": 12,
+      "perCombo": 0,
+      "quick": false,
+      "includeUnsupported": false,
+      "weights": null,
+      "bands": null,
+      "gate": false,
+      "ratingVersion": 2,
+      "referenceBudgetMs": 120000
+    }
+  },
+  "rows": [
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 0,
+      "tag": "jigsaw9:nightmare:0",
+      "pipelineSeed": 717788219,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2213,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 32,
+        "hiddenSingleBox": 11,
+        "hiddenSingleLine": 5,
+        "pointing": 5,
+        "nishio": 1
+      },
+      "empties": 48,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": true,
+      "referenceStatus": "ok",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.7922222222222223,
+        "adjusted": 0.6916041979010494,
+        "lower": 1793.6363636363637,
+        "reason": null,
+        "inputs": {
+          "score": 2213,
+          "V": 43.63636363636363,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 206.148,
+      "diagnosticMs": 1.951,
+      "fullRatings": 40,
+      "ratingCalls": 40,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 40,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [
+        1
+      ],
+      "target": 2151.7750717001036,
+      "puzzleHash": "28cb6c17438b981a",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 1,
+      "tag": "jigsaw9:nightmare:1",
+      "pipelineSeed": 701010600,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2381,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 30,
+        "hiddenSingleBox": 12,
+        "hiddenSingleLine": 4,
+        "pointing": 6,
+        "boxLine": 2,
+        "nakedPair": 1,
+        "nakedTriple": 1,
+        "simpleColouring": 2,
+        "wWing": 1,
+        "forcingChain": 1,
+        "forcingChainLong": 3
+      },
+      "empties": 47,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.9788888888888889,
+        "adjusted": 0.9686872513733662,
+        "lower": 1793.2183908045977,
+        "reason": null,
+        "inputs": {
+          "score": 2381,
+          "V": 43.2183908045977,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 177.414,
+      "diagnosticMs": 3.153,
+      "fullRatings": 43,
+      "ratingCalls": 43,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 43,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        3,
+        5,
+        5,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 1714.1262429300696,
+      "puzzleHash": "f0b5a07c37fdaf0d",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 2,
+      "tag": "jigsaw9:nightmare:2",
+      "pipelineSeed": 751343457,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2308,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 45,
+        "hiddenSingleBox": 6,
+        "hiddenSingleLine": 1,
+        "pointing": 4,
+        "boxLine": 7,
+        "nakedPair": 3,
+        "hiddenPair": 1,
+        "xWing": 2,
+        "simpleColouring": 2,
+        "forcingChain": 1,
+        "forcingChainLong": 2
+      },
+      "empties": 52,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.8977777777777778,
+        "adjusted": 0.8478792235801582,
+        "lower": 1795.2173913043478,
+        "reason": null,
+        "inputs": {
+          "score": 2308,
+          "V": 45.21739130434783,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 89.798,
+      "diagnosticMs": 2.226,
+      "fullRatings": 51,
+      "ratingCalls": 51,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 51,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        3,
+        5,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 2307.7708897646517,
+      "puzzleHash": "996264b6a077e754",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 3,
+      "tag": "jigsaw9:nightmare:3",
+      "pipelineSeed": 734565838,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2080,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 42,
+        "hiddenSingleBox": 5,
+        "hiddenSingleLine": 1,
+        "pointing": 7,
+        "boxLine": 1,
+        "simpleColouring": 1,
+        "forcingChainLong": 2
+      },
+      "empties": 48,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.6444444444444445,
+        "adjusted": 0.47226386806596693,
+        "lower": 1793.6363636363637,
+        "reason": null,
+        "inputs": {
+          "score": 2080,
+          "V": 43.63636363636363,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 39.048,
+      "diagnosticMs": 1.358,
+      "fullRatings": 31,
+      "ratingCalls": 31,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 31,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        5,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 1630.0217179348692,
+      "puzzleHash": "664d38fcfc51819c",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 4,
+      "tag": "jigsaw9:nightmare:4",
+      "pipelineSeed": 784898695,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2237,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 41,
+        "hiddenSingleBox": 7,
+        "hiddenSingleLine": 5,
+        "pointing": 1,
+        "boxLine": 4,
+        "simpleColouring": 1,
+        "xyzWing": 1,
+        "forcingChain": 1,
+        "forcingChainLong": 2
+      },
+      "empties": 53,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.8188888888888889,
+        "adjusted": 0.7303148905888632,
+        "lower": 1795.5913978494623,
+        "reason": null,
+        "inputs": {
+          "score": 2237,
+          "V": 45.59139784946237,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 120.056,
+      "diagnosticMs": 1.895,
+      "fullRatings": 38,
+      "ratingCalls": 38,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 38,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        4,
+        5,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 1580.2759239217266,
+      "puzzleHash": "0c17157ea350bdcb",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 5,
+      "tag": "jigsaw9:nightmare:5",
+      "pipelineSeed": 768121076,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2315,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 41,
+        "hiddenSingleBox": 10,
+        "hiddenSingleLine": 4,
+        "pointing": 7,
+        "boxLine": 4,
+        "simpleColouring": 1,
+        "nishio": 1
+      },
+      "empties": 55,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.9055555555555556,
+        "adjusted": 0.8591979075850044,
+        "lower": 1796.3157894736842,
+        "reason": null,
+        "inputs": {
+          "score": 2315,
+          "V": 46.31578947368421,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 168.486,
+      "diagnosticMs": 0.944,
+      "fullRatings": 27,
+      "ratingCalls": 27,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 27,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [
+        1
+      ],
+      "target": 2397.726456960663,
+      "puzzleHash": "cf1b6d9e2ddf2fcb",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 6,
+      "tag": "jigsaw9:nightmare:6",
+      "pipelineSeed": 818453933,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2250,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 41,
+        "hiddenSingleBox": 14,
+        "hiddenSingleLine": 4,
+        "pointing": 6,
+        "boxLine": 2,
+        "xWing": 1,
+        "simpleColouring": 3,
+        "wWing": 1,
+        "forcingChainLong": 2
+      },
+      "empties": 59,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.8333333333333334,
+        "adjusted": 0.7509642797249707,
+        "lower": 1797.6767676767677,
+        "reason": null,
+        "inputs": {
+          "score": 2250,
+          "V": 47.676767676767675,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 258.884,
+      "diagnosticMs": 1.7,
+      "fullRatings": 29,
+      "ratingCalls": 29,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 29,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        5,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 1653.247287031263,
+      "puzzleHash": "368d0466f1145c39",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 7,
+      "tag": "jigsaw9:nightmare:7",
+      "pipelineSeed": 801676314,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2253,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 46,
+        "hiddenSingleBox": 3,
+        "hiddenSingleLine": 2,
+        "pointing": 5,
+        "boxLine": 4,
+        "nakedPair": 4,
+        "xWing": 2,
+        "simpleColouring": 1,
+        "forcingChain": 2,
+        "forcingChainLong": 1
+      },
+      "empties": 51,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.8366666666666667,
+        "adjusted": 0.7570909751225713,
+        "lower": 1794.8351648351647,
+        "reason": null,
+        "inputs": {
+          "score": 2253,
+          "V": 44.83516483516483,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 481.286,
+      "diagnosticMs": 1.842,
+      "fullRatings": 352,
+      "ratingCalls": 352,
+      "proposals": 1630,
+      "localRatings": 256,
+      "shallowRatings": 256,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 320,
+          "proposals": 1630,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1630,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 32,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        4,
+        4,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 1940.5042996862903,
+      "puzzleHash": "cbf895a2984deb09",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 8,
+      "tag": "jigsaw9:nightmare:8",
+      "pipelineSeed": 583567267,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2243,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 39,
+        "hiddenSingleBox": 12,
+        "hiddenSingleLine": 6,
+        "pointing": 11,
+        "boxLine": 5,
+        "simpleColouring": 2,
+        "forcingChain": 1,
+        "forcingChainLong": 2
+      },
+      "empties": 57,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.8255555555555556,
+        "adjusted": 0.7396307061036074,
+        "lower": 1797.0103092783506,
+        "reason": null,
+        "inputs": {
+          "score": 2243,
+          "V": 47.01030927835052,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 142.186,
+      "diagnosticMs": 1.753,
+      "fullRatings": 18,
+      "ratingCalls": 18,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 18,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        4,
+        5,
+        6
+      ],
+      "nishioDepths": [],
+      "target": 1761.3160082604736,
+      "puzzleHash": "1bdff34bbe5cccec",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 9,
+      "tag": "jigsaw9:nightmare:9",
+      "pipelineSeed": 566789648,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2350,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 41,
+        "hiddenSingleBox": 5,
+        "hiddenSingleLine": 2,
+        "pointing": 2,
+        "boxLine": 4,
+        "nakedTriple": 1,
+        "simpleColouring": 2,
+        "forcingChain": 4,
+        "forcingChainLong": 1
+      },
+      "empties": 48,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.9444444444444444,
+        "adjusted": 0.9175412293853074,
+        "lower": 1793.6363636363637,
+        "reason": null,
+        "inputs": {
+          "score": 2350,
+          "V": 43.63636363636363,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 72.588,
+      "diagnosticMs": 2.827,
+      "fullRatings": 35,
+      "ratingCalls": 35,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 35,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        4,
+        4,
+        4,
+        5,
+        4
+      ],
+      "nishioDepths": [],
+      "target": 1619.8589279316366,
+      "puzzleHash": "20e96550a21c6c93",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 10,
+      "tag": "jigsaw9:nightmare:10",
+      "pipelineSeed": 1589560648,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2049,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 35,
+        "hiddenSingleBox": 16,
+        "hiddenSingleLine": 8,
+        "pointing": 11,
+        "boxLine": 1,
+        "hiddenPair": 1,
+        "forcingChain": 1,
+        "forcingChainLong": 1
+      },
+      "empties": 59,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.61,
+        "adjusted": 0.4172564145564313,
+        "lower": 1797.6767676767677,
+        "reason": null,
+        "inputs": {
+          "score": 2049,
+          "V": 47.676767676767675,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 94.802,
+      "diagnosticMs": 1.049,
+      "fullRatings": 32,
+      "ratingCalls": 32,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 32,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        4,
+        5
+      ],
+      "nishioDepths": [],
+      "target": 1670.0030951527879,
+      "puzzleHash": "33d613d206f1b25c",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 11,
+      "tag": "jigsaw9:nightmare:11",
+      "pipelineSeed": 1606338267,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2222,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 41,
+        "hiddenSingleBox": 13,
+        "hiddenSingleLine": 3,
+        "pointing": 9,
+        "boxLine": 7,
+        "nakedPair": 2,
+        "hiddenPair": 1,
+        "simpleColouring": 4,
+        "forcingChain": 1,
+        "forcingChainLong": 1
+      },
+      "empties": 57,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": true,
+      "referenceStatus": "ok",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.8022222222222222,
+        "adjusted": 0.7048042400410326,
+        "lower": 1797.0103092783506,
+        "reason": null,
+        "inputs": {
+          "score": 2222,
+          "V": 47.01030927835052,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1400,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 67.483,
+      "diagnosticMs": 1.917,
+      "fullRatings": 5,
+      "ratingCalls": 5,
+      "proposals": 0,
+      "localRatings": 0,
+      "shallowRatings": 0,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 0
+      },
+      "work": [
+        {
+          "ratings": 5,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        5,
+        3
+      ],
+      "nishioDepths": [],
+      "target": 2107.4347184272483,
+      "puzzleHash": "18739b6b14b4872f",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    }
+  ],
+  "summary": {
+    "all": {
+      "requests": 12,
+      "matrix": {
+        "nightmare": {
+          "nightmare": 12
+        }
+      },
+      "errors": 0,
+      "unrated": 0,
+      "inBand": 12,
+      "oldHits": {
+        "count": 12,
+        "denominator": 12,
+        "share": 1
+      },
+      "qualifiedHits": {
+        "count": 12,
+        "denominator": 12,
+        "share": 1
+      },
+      "exactDisagreements": 0,
+      "shallow": {
+        "count": 0,
+        "denominator": 12,
+        "checked": 12,
+        "share": 0
+      },
+      "references": {
+        "ok": 2,
+        "vacuous": 0,
+        "error": 0,
+        "skipped": 0,
+        "notSelected": 10,
+        "notRun": 0
+      },
+      "pathChecks": {
+        "ok": 12,
+        "mismatch": 0,
+        "error": 0,
+        "notRun": 0
+      },
+      "work": {
+        "checks": {
+          "ok": 12,
+          "mismatch": 0,
+          "unavailable": 0
+        },
+        "capHits": {
+          "shallow": 1,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "fullRatings": {
+          "n": 12,
+          "deciles": [
+            5,
+            18,
+            27,
+            29,
+            31,
+            35,
+            38,
+            40,
+            43,
+            51,
+            352
+          ],
+          "upperMedian": 35
+        }
+      },
+      "peaks": {
+        "nishio": 2,
+        "forcingChainLong": 10
+      },
+      "cohorts": {
+        "exact": {
+          "n": 12,
+          "peaks": {
+            "nishio": 2,
+            "forcingChainLong": 10
+          },
+          "raw": {
+            "n": 12,
+            "deciles": [
+              0.61,
+              0.6444444444444445,
+              0.7922222222222223,
+              0.8022222222222222,
+              0.8188888888888889,
+              0.8333333333333334,
+              0.8366666666666667,
+              0.8977777777777778,
+              0.9055555555555556,
+              0.9444444444444444,
+              0.9788888888888889
+            ],
+            "upperMedian": 0.8333333333333334
+          },
+          "adjusted": {
+            "n": 12,
+            "deciles": [
+              0.4172564145564313,
+              0.47226386806596693,
+              0.6916041979010494,
+              0.7048042400410326,
+              0.7303148905888632,
+              0.7509642797249707,
+              0.7570909751225713,
+              0.8478792235801582,
+              0.8591979075850044,
+              0.9175412293853074,
+              0.9686872513733662
+            ],
+            "upperMedian": 0.7509642797249707
+          },
+          "nullReasons": {}
+        },
+        "inBand": {
+          "n": 12,
+          "peaks": {
+            "nishio": 2,
+            "forcingChainLong": 10
+          },
+          "raw": {
+            "n": 12,
+            "deciles": [
+              0.61,
+              0.6444444444444445,
+              0.7922222222222223,
+              0.8022222222222222,
+              0.8188888888888889,
+              0.8333333333333334,
+              0.8366666666666667,
+              0.8977777777777778,
+              0.9055555555555556,
+              0.9444444444444444,
+              0.9788888888888889
+            ],
+            "upperMedian": 0.8333333333333334
+          },
+          "adjusted": {
+            "n": 12,
+            "deciles": [
+              0.4172564145564313,
+              0.47226386806596693,
+              0.6916041979010494,
+              0.7048042400410326,
+              0.7303148905888632,
+              0.7509642797249707,
+              0.7570909751225713,
+              0.8478792235801582,
+              0.8591979075850044,
+              0.9175412293853074,
+              0.9686872513733662
+            ],
+            "upperMedian": 0.7509642797249707
+          },
+          "nullReasons": {}
+        }
+      },
+      "chains": {
+        "measured": 12,
+        "forcingChain": {
+          "puzzles": 10,
+          "steps": 29,
+          "stepHistogram": {
+            "3": 3,
+            "4": 9,
+            "5": 16,
+            "6": 1
+          },
+          "maxHistogram": {
+            "5": 9,
+            "6": 1
+          }
+        },
+        "nishio": {
+          "puzzles": 2,
+          "steps": 2,
+          "stepHistogram": {
+            "1": 2
+          },
+          "maxHistogram": {
+            "1": 2
+          }
+        }
+      }
+    },
+    "cells": {
+      "jigsaw9/nightmare": {
+        "requests": 12,
+        "matrix": {
+          "nightmare": {
+            "nightmare": 12
+          }
+        },
+        "errors": 0,
+        "unrated": 0,
+        "inBand": 12,
+        "oldHits": {
+          "count": 12,
+          "denominator": 12,
+          "share": 1
+        },
+        "qualifiedHits": {
+          "count": 12,
+          "denominator": 12,
+          "share": 1
+        },
+        "exactDisagreements": 0,
+        "shallow": {
+          "count": 0,
+          "denominator": 12,
+          "checked": 12,
+          "share": 0
+        },
+        "references": {
+          "ok": 2,
+          "vacuous": 0,
+          "error": 0,
+          "skipped": 0,
+          "notSelected": 10,
+          "notRun": 0
+        },
+        "pathChecks": {
+          "ok": 12,
+          "mismatch": 0,
+          "error": 0,
+          "notRun": 0
+        },
+        "work": {
+          "checks": {
+            "ok": 12,
+            "mismatch": 0,
+            "unavailable": 0
+          },
+          "capHits": {
+            "shallow": 1,
+            "ratings": 0,
+            "proposals": 0
+          },
+          "fullRatings": {
+            "n": 12,
+            "deciles": [
+              5,
+              18,
+              27,
+              29,
+              31,
+              35,
+              38,
+              40,
+              43,
+              51,
+              352
+            ],
+            "upperMedian": 35
+          }
+        },
+        "peaks": {
+          "nishio": 2,
+          "forcingChainLong": 10
+        },
+        "cohorts": {
+          "exact": {
+            "n": 12,
+            "peaks": {
+              "nishio": 2,
+              "forcingChainLong": 10
+            },
+            "raw": {
+              "n": 12,
+              "deciles": [
+                0.61,
+                0.6444444444444445,
+                0.7922222222222223,
+                0.8022222222222222,
+                0.8188888888888889,
+                0.8333333333333334,
+                0.8366666666666667,
+                0.8977777777777778,
+                0.9055555555555556,
+                0.9444444444444444,
+                0.9788888888888889
+              ],
+              "upperMedian": 0.8333333333333334
+            },
+            "adjusted": {
+              "n": 12,
+              "deciles": [
+                0.4172564145564313,
+                0.47226386806596693,
+                0.6916041979010494,
+                0.7048042400410326,
+                0.7303148905888632,
+                0.7509642797249707,
+                0.7570909751225713,
+                0.8478792235801582,
+                0.8591979075850044,
+                0.9175412293853074,
+                0.9686872513733662
+              ],
+              "upperMedian": 0.7509642797249707
+            },
+            "nullReasons": {}
+          },
+          "inBand": {
+            "n": 12,
+            "peaks": {
+              "nishio": 2,
+              "forcingChainLong": 10
+            },
+            "raw": {
+              "n": 12,
+              "deciles": [
+                0.61,
+                0.6444444444444445,
+                0.7922222222222223,
+                0.8022222222222222,
+                0.8188888888888889,
+                0.8333333333333334,
+                0.8366666666666667,
+                0.8977777777777778,
+                0.9055555555555556,
+                0.9444444444444444,
+                0.9788888888888889
+              ],
+              "upperMedian": 0.8333333333333334
+            },
+            "adjusted": {
+              "n": 12,
+              "deciles": [
+                0.4172564145564313,
+                0.47226386806596693,
+                0.6916041979010494,
+                0.7048042400410326,
+                0.7303148905888632,
+                0.7509642797249707,
+                0.7570909751225713,
+                0.8478792235801582,
+                0.8591979075850044,
+                0.9175412293853074,
+                0.9686872513733662
+              ],
+              "upperMedian": 0.7509642797249707
+            },
+            "nullReasons": {}
+          }
+        },
+        "chains": {
+          "measured": 12,
+          "forcingChain": {
+            "puzzles": 10,
+            "steps": 29,
+            "stepHistogram": {
+              "3": 3,
+              "4": 9,
+              "5": 16,
+              "6": 1
+            },
+            "maxHistogram": {
+              "5": 9,
+              "6": 1
+            }
+          },
+          "nishio": {
+            "puzzles": 2,
+            "steps": 2,
+            "stepHistogram": {
+              "1": 2
+            },
+            "maxHistogram": {
+              "1": 2
+            }
+          }
+        }
+      }
+    },
+    "checks": {
+      "invariantViolations": {
+        "I1": 0,
+        "I2": 0,
+        "I3": 0,
+        "I4": 0,
+        "I5": 0,
+        "I6": 0,
+        "I7": 0
+      },
+      "requestErrors": 0,
+      "checkErrors": [],
+      "referenceErrors": 0,
+      "pathErrors": 0,
+      "pathMismatches": 0,
+      "workUnavailable": 0,
+      "failed": false,
+      "result": "PASS"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs scan
+scan before: 116 sites in 8 suites; classes {"offered-level":52,"refusal-expected":12,"unregistered-model":17,"temp-registered":13,"hidden-unguarded":4,"manual-widened":1,"guarded":17}; unguarded hidden hits 4; unclassified 0; stale rules 1
+  HIT generator/tests/manual/difficulty.test.js:997 classic9/hell1 | i === 0 ? [] : D.spec(LEVELS[i - 1], model9).allowedTechniques]);
+  HIT generator/tests/manual/difficulty.test.js:1445 classic9/hell1 | var p = SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+  HIT generator/tests/manual/difficulty.test.js:1793 killer/master | r = SG.pipeline.run(config);
+  HIT generator/tests/manual/perf.test.js:91 greaterThan/normal | return SG.pipeline.run({ variantId: variant, difficulty: level, seed: seed, trace: 'off' }, null);
+  STALE difficulty /^return SG\.pipeline\.run\(config\);$/
+exit=1 seconds=0.117

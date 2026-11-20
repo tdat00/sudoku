@@ -1,0 +1,7 @@
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED classic9/nightmare: seeds 8
+CHANGED diagonalX/nightmare: seeds 5, 1597
+CHANGED samurai/easy: seeds 8, 610, 987, 2584
+CHANGED butterfly/normal: seeds 610, 10946
+9 of 520 hashes differ from the current fixture
+wrote generator/tests/fixtures/regression.js: 26 combinations x 20 seeds (merged ledgers, nothing generated)

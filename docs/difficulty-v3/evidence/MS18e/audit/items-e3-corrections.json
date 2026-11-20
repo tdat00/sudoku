@@ -1,0 +1,154 @@
+{
+  "schema": "ms18e-items-patch-v1",
+  "revision": "E3 corrections, 2026-11-20 (SA2 binding findings, SA1 concurring). Revises audit/items-e3-input.json without rewriting it (audit/items.json stays the raw first register): S-AV09, S-AV10, S-AV12 and S-AV13 get their own rows (the range item that carried them is withdrawn); the Hell 1 partial reconcile is classified from the tool source; the killer master guard is recorded as run; the S-OD8 ratio line carries the SA2 wording; the acceptance state is added.",
+  "removeAdded": ["S-AV02..S-AV13 range"],
+  "replaceAdded": [
+    {
+      "id": "MS18c-COMPAT-DIFFICULTY-KILLER-MASTER",
+      "title": "B1 repair: ambiguous-candidate test requested hidden killer/master",
+      "status": "fixed-guard, ran at E2 and passed",
+      "source": "generator/tests/manual/difficulty.test.js:1782-1805",
+      "population": "one pipeline.run request (killer, master, seed 61843, diagonal symmetry, maxAttempts 1, trace off)",
+      "numbers": { "guard": "SG.fixtures.toolRecords.withRequestedLevel('killer', 'master', function () { return SG.pipeline.run(config); }).value", "e2Row": "GD-rest-14, difficulty test 145 (never returns an ambiguous candidate of a search either: the keeper counts before it keeps): pass, 4,969.92 ms; the row passed 3 of 3" },
+      "limitations": "The pre-fix failure was a certain unsupported-level refusal, not evidence of an ambiguous puzzle. This is the one test of the guard, not a Killer suite pass.",
+      "disposition": "Only the per-call guard was added; config, setup and every assertion are unchanged. The guarded test ran at E2 inside GD-rest-14 and passed. Three of the four MS18 guards ran (GD-rest-08, GD-rest-11, GD-rest-14); only the perf serializer guard (greaterThan/normal) did not.",
+      "nextOwner": "none",
+      "evidence": ["manual/difficulty/rest-14.json", "transcripts/GD-rest-14.txt", "audit/manual-hidden-requests-final-v3.json", "preflight/manual-hidden-requests-before.json"]
+    },
+    {
+      "id": "MS18e-DEEP-HELL1-INCOMPLETE",
+      "title": "Final-source deep Hell 1: mega12 7 of 14, shallow fallbacks; not complete",
+      "status": "incomplete (missing-only, expected), numerical finding",
+      "covers": ["S-AV24", "S-AV25", "S-AV26"],
+      "source": "generator/tests/mega-contract.js Hell 1 half (14 requests), E2 rows DEEP-mega12-hell1-* (P230); optional partial reconcile preflight/deep-reconcile-hell1-partial.json",
+      "population": "7 mega12 Hell 1 requests (invariant-1..4, cv5-a, cv5-b, cv5-other), one fresh process each, level override mega12:hell1; the 7 mega16 Hell 1 occurrences are held (MS18e-HELD-RATIOS-AND-DEEP-MEGA16-HELL1)",
+      "numbers": {
+        "records": 7, "requested": 14, "exact": "0 of 7", "warnings": "difficulty.approximate and difficulty.shallow on every record", "attempts": "4 of 4 on every record",
+        "teeSeconds": [92.856, 104.66], "ms07bSeconds": [29.3, 34.4], "correctnessFailures": 0,
+        "reconcileRaw": { "exit": 1, "complete": false, "evidenceSound": false, "correctness": "incomplete", "problems": "exactly 7, each 'missing: no record of this occurrence', the 7 approved mega16 IDs (mega16-hell1-invariant-1..4, cv5-a, cv5-b, cv5-other)", "currentSource": "sourceHash and toolHash match the current ones (true, true)", "present": 7, "correctnessDetail": "7 passed, 0 failed, 0 unevaluated records", "relations": "3 pass / 0 fail / 3 unevaluated" }
+      },
+      "limitations": "The partial reconcile was optional. Its raw values are kept as they are. No MS07b record was used. The lock log labels the row failed-stop only because the caller was told to expect exit 3; that label is a raw record, not a classification.",
+      "disposition": "Classified as expected, missing-only incomplete, not a correctness failure. Our earlier expectation of exit 3 was wrong: mega-contract.js:1030 adds each missing occurrence to problems, :1054 sets evidenceSound = problems.length === 0, and exitCodeOfReconciliation (:1180-1182) returns 1 for an unsound evidence set before the incomplete branch that returns 3. No tool edit. This is no blanket rule that exit 1 is allowed: an exit 1 with any problem other than the approved missing IDs, or with a failed check or relation, would be a stop. Hell 1 is not complete. mega12 Hell 1 is a shallow fallback in all 7 runs (exact 0 of 7, as MS07b's 0 of 14 mega Hell 1 exact records) at 92 to 105 s per run against 29 to 34 s at MS07b, consistent in direction with MS18c-GQ-ENGINE-COST: a numerical finding under S-OD4.",
+      "nextOwner": "owner decision MS18e-Q-GD-DEEP for the 7 held occurrences",
+      "evidence": ["preflight/deep-reconcile-hell1-partial.json", "deep/hell1/", "transcripts/deep-reconcile-hell1-partial.txt", "generator/tests/fixtures/mega-contract.js", "e2-summary.md"]
+    },
+    {
+      "id": "MS18e-HELD-RATIOS-AND-DEEP-MEGA16-HELL1",
+      "title": "Held rows pending MS18e-Q-GD-DEEP",
+      "status": "held-owner-question-pending",
+      "source": "preflight/admission-plan-v2.json (status no-defensible-bound)",
+      "population": "RATIO-off, RATIO-summary, RATIO-full (the three S-OD8 generation-cost ratio tests; illustrative all-attempt estimates 558.2, 464.3 and 519.5 s, not bounds, and a synchronous test the harness timeout does not stop, core/tests/harness.js:415-418) and the 7 DEEP-mega16-hell1-* occurrences (invariant-1..4, cv5-a, cv5-b, cv5-other; no current-source timing; the old records are a different engine)",
+      "numbers": { "rowsHeld": 10, "ratioAllAttemptEstimateSeconds": [558.2, 464.3, 519.5], "ceilingSeconds": 540 },
+      "limitations": "Not run, not a pass, not a failure; no trial run; the estimates are illustrations and not bounds; the 500,000 ms diagnostic budget and the old durations are not launch bounds.",
+      "disposition": "Held without a credible <=450 s whole-command bound. Awaiting the owner's answer to MS18e-Q-GD-DEEP (unanswered). The final report states these rows as unexecuted; MS18e stays open until they are resolved (see MS18e-ACCEPTANCE-STATE).",
+      "nextOwner": "owner (MS18e-Q-GD-DEEP) through the orchestrator",
+      "heldRows": ["RATIO-off", "RATIO-summary", "RATIO-full", "DEEP-mega16-hell1-invariant-1", "DEEP-mega16-hell1-invariant-2", "DEEP-mega16-hell1-invariant-3", "DEEP-mega16-hell1-invariant-4", "DEEP-mega16-hell1-cv5-a", "DEEP-mega16-hell1-cv5-b", "DEEP-mega16-hell1-cv5-other"],
+      "evidence": ["preflight/admission-plan-v2.json", "preflight/questions-v2.md", "preflight/reuse-map-v2.json"]
+    },
+    {
+      "id": "MS18e-OTHER-MANUAL-SUITES-UNEXECUTED",
+      "title": "Manual assertions outside the MS18e assignment (scope exclusions)",
+      "status": "not-applicable (scope exclusion); unexecuted, never reported as passed",
+      "source": "preflight/scope-map-v2.json",
+      "population": "563 tests: extra-regions 117 of 129, greater-than 103 of 108, jigsaw 82 of 88, killer 91 of 94, perf 48 of 51, wordoku 122 of 128 (the I5 selectors ran: 12, 5, 6, 3, 0 and 6; perf's 3 assigned rows are the held ratios); variants 285 reused",
+      "numbers": { "unexecutedTests": 563, "difficulty": "146 of 146 ran" },
+      "limitations": "Not new required work: the dispatch put them outside MS18e. MS18c's per-level registrations follow the published levels; their live validation is not part of this dispatch. Never reported as passed.",
+      "disposition": "Stated plainly in the release report as unexecuted scope exclusions; not a blocker of the MS18e acceptance state and not a pass.",
+      "nextOwner": "none within MS18e",
+      "evidence": ["preflight/scope-map-v2.json"]
+    },
+    {
+      "id": "MS18e-FINAL-PR-CI-GATE",
+      "title": "Final PR-CI gate: all eight jobs on the matching final head",
+      "status": "pending-remote",
+      "source": "dispatch section 7; the eight jobs of pull-request.yml",
+      "population": "Test core, Plan generator tests, Test generator (shared and small suites), (own suites), (pipeline), (replay player), Test player, Test player in a browser",
+      "numbers": { "early": "run 44672736283 on b0a29ffd: 6 of 8 succeeded (browser and own-suites failed)" },
+      "limitations": "No local result covers the browser job; a local check is not a remote pass; MS18e-Q-CI-POLICY is the only waiver route and none exists.",
+      "disposition": "Remote CI pending. The orchestrator supplies run, job and attempt IDs after the owner's push; a changed head or fingerprint invalidates a matching-tree claim. Green CI closes only this remote-CI gate, not MS18e.",
+      "nextOwner": "orchestrator and owner",
+      "evidence": ["audit/remote-ci.json", "audit/workflow-audit.json"]
+    }
+  ],
+  "added": [
+    {
+      "id": "S-AV09",
+      "title": "Killer Master and Killer Nightmare",
+      "status": "closed-by-final-qualification (both hidden on time)",
+      "source": "MS05b3 evidence.md:164 (new at MS05b3); generator-state-2026-11-14.md:715; qualification-checkpoint-2026-11-15.md:154; MS05b3 task handoff (MS05b3-bounded-manual-corpora.md:411)",
+      "population": "I5 killer Master and Nightmare (8 requests each), CV3 killer Master and Nightmare (3 each), MS07e GQ, final MS18c GQ cells killer/master and killer/nightmare (budget 10,000 ms)",
+      "numbers": {
+        "ms05b3": "i5-killer-master 2 of 8 (cell 96.56 s, max 23.4 s), i5-killer-nightmare 1 of 8 (cell 148.66 s, max 30.0 s); cv3-killer-master 0 of 3 (11.174 / 23.682 / 12.110 s), cv3-killer-nightmare 0 of 3 (18.362 / 30.665 / 21.449 s)",
+        "ms07eGq": "Master 5/13, p95 22.8 s; Nightmare 19/24, p95 24.9 s, both hidden on time",
+        "finalGq": "killer/master 11/14 hits, p95 42,674.0885 ms (max 42,674.0885), hidden, stopped on time; killer/nightmare 18/22 hits, p95 32,738.6213 ms (max 64,771.7605), hidden, stopped on time"
+      },
+      "limitations": "Final GQ is one host-active qualification on its own source; the older I5/CV3 numbers are history of older sources.",
+      "disposition": "Both cells are hidden by the final qualification (Killer offers veryEasy, easy and normal only); S-OD7 separately withholds Hard and Expert. No weight, offer or target change at MS18e. The guard for the killer master request of the ambiguity test is MS18c-COMPAT-DIFFICULTY-KILLER-MASTER (ran, passed).",
+      "nextOwner": "none",
+      "evidence": ["docs/difficulty-v3/evidence/MS05b3/evidence.md", "docs/difficulty-v3/generator-state-2026-11-14.md", "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md", "tasks/difficulty-v3/MS05b3-bounded-manual-corpora.md", "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"]
+    },
+    {
+      "id": "S-AV10",
+      "title": "Wordoku Normal and Wordoku Nightmare",
+      "status": "closed-by-final-qualification; Nightmare's GP miss is a separate item",
+      "source": "MS05b3 evidence.md:165; generator-state-2026-11-14.md:716; qualification-checkpoint-2026-11-15.md:155",
+      "population": "I5 wordoku Normal (20 requests) and Nightmare (20), CV3 wordoku Nightmare (3), MS07e GQ, final MS18c GQ cells wordoku/normal and wordoku/nightmare",
+      "numbers": {
+        "ms05b3": "i5-wordoku-normal 15 of 20 (0.75 against 0.9; 7 to 761 ms per request), i5-wordoku-nightmare 4 of 20 (0.2; 0.46 to 5.6 s, cell 87.32 s); cv3-wordoku-nightmare 0 of 3 (5.441 / 4.712 / 5.128 s)",
+        "ms07eGq": "Normal 35/46 hidden (33/40 in the first round); Nightmare 40/40 offered",
+        "finalGq": "wordoku/normal 35/46 hits, p95 904.2948 ms, hidden, stopped on misses; wordoku/nightmare 40/40 hits, p95 1,323.0135 ms, offered",
+        "e2": "I5-wordoku-nightmare: 1 of 1 passed (tee 15.13 s)",
+        "gp": "wordoku/nightmare p95 2,800.4616 ms against 1,500: MISS, tracked as MS18d-GP-MISS-wordoku-nightmare"
+      },
+      "limitations": "The GP miss is a time finding of an offered cell, not an availability or correctness failure.",
+      "disposition": "Normal is hidden (misses); Nightmare is offered and its E2 I5 proof test passed. The Nightmare GP miss stays its own item with its own numbers.",
+      "nextOwner": "none (the GP miss: future explicitly authorized work)",
+      "evidence": ["docs/difficulty-v3/evidence/MS05b3/evidence.md", "docs/difficulty-v3/generator-state-2026-11-14.md", "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md", "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json", "manual/i5/wordoku-nightmare.json"]
+    },
+    {
+      "id": "S-AV12",
+      "title": "Sohei, Butterfly and Flower Nightmare",
+      "status": "closed-by-final-qualification (Sohei and Flower hidden on time; Butterfly offered and met its GP target)",
+      "source": "MS05b3 evidence.md:167; generator-state-2026-11-14.md:718; qualification-checkpoint-2026-11-15.md:157",
+      "population": "CV3 sohei, butterfly and flower Nightmare (2 each), MS07e GQ, final MS18c GQ cells, final GP butterfly/nightmare",
+      "numbers": {
+        "ms05b3": "cv3-sohei-nightmare 0 of 2 (19.702 / 27.486 s), cv3-butterfly-nightmare 0 of 2 (26.275 / 32.823 s), cv3-flower-nightmare 0 of 2 (23.067 / 20.405 s)",
+        "olderCheckpointConclusion": "the 2026-11-15 checkpoint recorded 40/40 each, offered (p95 7.6 s, 2.0 s, 5.9 s); that conclusion is NOT carried over, the final qualification replaces it",
+        "finalGq": "sohei/nightmare 29/30 hits, p95 78,814.875 ms (max 100,181.106), hidden, stopped on time; flower/nightmare 42/50 hits, p95 32,514.7798 ms (max 36,671.3023), hidden, stopped on time; butterfly/nightmare 40/40 hits, p95 16,120.4641 ms, offered (budget 30,000 ms)",
+        "gp": "butterfly/nightmare p95 15,151.7914 ms against 30,000: meets"
+      },
+      "limitations": "Final GQ is one host-active qualification; the older I5/CV3 numbers belong to older sources.",
+      "disposition": "Sohei and Flower Nightmare are hidden on time; Butterfly Nightmare is offered and met its GP target. Nothing changed at MS18e.",
+      "nextOwner": "none",
+      "evidence": ["docs/difficulty-v3/evidence/MS05b3/evidence.md", "docs/difficulty-v3/generator-state-2026-11-14.md", "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md", "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json", "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv"]
+    },
+    {
+      "id": "S-AV13",
+      "title": "Butterfly and Flower Easy",
+      "status": "closed-by-final-qualification (both hidden on misses)",
+      "source": "MS05b3 evidence.md:168; generator-state-2026-11-14.md:719; qualification-checkpoint-2026-11-15.md:158",
+      "population": "CV3 butterfly Easy and flower Easy (2 each), MS07e GQ, final MS18c GQ cells (budget 30,000 ms)",
+      "numbers": {
+        "ms05b3": "cv3-butterfly-easy 0 of 2 (0.767 / 0.652 s), cv3-flower-easy 0 of 2 (0.375 / 0.632 s): a low-level availability finding, not a slow one",
+        "ms07eGq": "butterfly 1/15, flower 0/14, hidden; wider in S-AV28",
+        "finalGq": "butterfly/easy 1/15 hits, p95 1,115.6109 ms, hidden, stopped on misses; flower/easy 0/14 hits, p95 901.8375 ms, hidden, stopped on misses"
+      },
+      "limitations": "Availability (misses), not time; the wider Easy availability picture is S-AV28.",
+      "disposition": "Both Easy cells are hidden by the final qualification; nothing changed at MS18e.",
+      "nextOwner": "none",
+      "evidence": ["docs/difficulty-v3/evidence/MS05b3/evidence.md", "docs/difficulty-v3/generator-state-2026-11-14.md", "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md", "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"]
+    },
+    {
+      "id": "MS18e-ACCEPTANCE-STATE",
+      "title": "MS18e acceptance state: E0-E3 complete, MS18e open",
+      "status": "open",
+      "source": "SA2 binding findings with SA1 concurring, 2026-11-20 14:16 (+07:00)",
+      "population": "the held required rows (RATIO-off, RATIO-summary, RATIO-full, the 7 DEEP-mega16-hell1-*) and SAV11",
+      "numbers": { "stagesCompleted": "E0, E1, E2, E3", "heldRows": 11, "questions": ["MS18e-Q-GD-DEEP", "MS18e-Q-SAV11"] },
+      "limitations": "Green CI closes only the remote-CI gate. The held rows are required rows with a pending owner decision, not scope exclusions.",
+      "disposition": "MS18e stays OPEN until the owner answers the held questions and the outcome is complete. A: one launch of each held row, plus the full 14-record Hell 1 reconcile. B: recorded as held, not as a waiver. The only other route is an explicit, scoped acceptance waiver.",
+      "nextOwner": "owner through the orchestrator",
+      "evidence": ["audit/gates-v2.json", "audit/remote-ci.json", "preflight/questions-v2.md"]
+    }
+  ]
+}

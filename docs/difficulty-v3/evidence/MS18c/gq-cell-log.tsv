@@ -1,0 +1,136 @@
+idx	cell	finalRunId	slot	ordinal	launcherExit	verdict	stopped	requests	slow	secondRound	R	QminusS	W	WminusQ	receipt
+0	classic4/veryEasy	ms18c-20261118T193937942-25368	1	1	0	offered		40	0	false	7.295	0.555	8.07	7.490	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-veryEasy\acceptance-receipt.json
+1	classic4/easy	ms18c-20261118T194732629-23236	1	1	0	hidden	misses	14	0	false	7.268	0.514	8.51	7.460	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-easy\acceptance-receipt.json
+2	classic4/normal	ms18c-20261118T194759523-34460	1	1	0	hidden	misses	14	0	false	7.304	0.507	8.55	7.491	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-normal\acceptance-receipt.json
+3	classic4/hard	ms18c-20261118T194824403-26464	1	1	0	hidden	misses	14	0	false	7.210	0.519	8.63	7.398	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-hard\acceptance-receipt.json
+4	classic4/expert	ms18c-20261118T194850628-31708	1	1	0	hidden	misses	14	0	false	7.278	0.545	8.74	7.473	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-expert\acceptance-receipt.json
+5	classic4/master	ms18c-20261118T194919168-18328	1	1	0	hidden	misses	14	0	false	7.214	0.521	8.79	7.400	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-master\acceptance-receipt.json
+6	classic4/nightmare	ms18c-20261118T194947598-9128	1	1	0	hidden	misses	14	0	false	7.206	0.523	8.77	7.389	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-nightmare\acceptance-receipt.json
+7	classic4/hell1	ms18c-20261118T195015348-22108	1	1	0	hidden	misses	14	0	false	7.207	0.529	8.83	7.388	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-hell1\acceptance-receipt.json
+8	classic4/hell2	ms18c-20261118T195043889-28564	1	1	0	hidden	misses	14	0	false	7.231	0.521	8.94	7.417	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic4-hell2\acceptance-receipt.json
+9	classic6/veryEasy	ms18c-20261118T195112305-28968	1	1	0	offered		40	0	false	7.219	0.539	7.98	7.408	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-veryEasy\acceptance-receipt.json
+10	classic6/easy	ms18c-20261118T195146641-24636	1	1	0	hidden	misses	14	0	false	7.253	0.529	9.20	7.436	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-easy\acceptance-receipt.json
+11	classic6/normal	ms18c-20261118T195209031-21376	1	1	0	hidden	misses	14	0	false	7.216	0.515	9.13	7.403	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-normal\acceptance-receipt.json
+12	classic6/hard	ms18c-20261118T195237918-31732	1	1	0	offered		40	0	false	7.208	0.539	9.02	7.392	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-hard\acceptance-receipt.json
+13	classic6/expert	ms18c-20261118T195306559-23216	1	1	0	hidden	misses	23	0	false	7.255	0.543	9.85	7.442	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-expert\acceptance-receipt.json
+14	classic6/master	ms18c-20261118T195335898-24004	1	1	0	hidden	misses	19	0	false	7.295	0.543	10.41	7.487	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-master\acceptance-receipt.json
+15	classic6/nightmare	ms18c-20261118T195406685-24944	1	1	0	hidden	misses	14	0	false	7.262	0.517	10.99	7.446	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-nightmare\acceptance-receipt.json
+16	classic6/hell1	ms18c-20261118T195436333-26416	1	1	0	hidden	misses	14	0	false	7.209	0.523	11.25	7.400	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-hell1\acceptance-receipt.json
+17	classic6/hell2	ms18c-20261118T195507328-27208	1	1	0	hidden	misses	14	0	false	7.246	0.528	11.20	7.426	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic6-hell2\acceptance-receipt.json
+18	classic9/veryEasy	ms18c-20261118T195538228-29052	1	1	0	offered		40	0	false	7.235	0.520	7.98	7.421	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-veryEasy\acceptance-receipt.json
+19	classic9/easy	ms18c-20261118T195605637-28356	1	1	0	offered		40	0	false	7.251	0.580	11.67	7.449	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-easy\acceptance-receipt.json
+20	classic9/normal	ms18c-20261118T195636493-10804	1	1	0	offered		40	0	false	7.844	0.557	13.13	8.034	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-normal\acceptance-receipt.json
+21	classic9/hard	ms18c-20261118T195716785-15812	1	1	0	offered		40	0	false	7.270	0.539	8.91	7.460	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-hard\acceptance-receipt.json
+22	classic9/expert	ms18c-20261118T195739250-5588	1	1	0	offered		40	0	false	7.201	0.530	9.13	7.388	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-expert\acceptance-receipt.json
+23	classic9/master	ms18c-20261118T195807887-20124	1	1	0	offered		40	0	false	7.249	0.523	9.47	7.432	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-master\acceptance-receipt.json
+24	classic9/nightmare	ms18c-20261118T195837250-11368	1	1	0	offered		40	0	false	7.234	0.548	19.24	7.423	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-nightmare\acceptance-receipt.json
+25	classic9/hell1	ms18c-20261118T195915490-22376	1	1	0	hidden	time	9	9	false	7.243	0.530	44.89	7.428	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-hell1\acceptance-receipt.json
+26	classic9/hell2	ms18c-20261118T200021253-31360	1	1	0	hidden	misses	17	5	false	7.322	0.550	52.53	7.507	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\classic9-hell2\acceptance-receipt.json
+27	mega12/veryEasy	ms18c-20261118T200133196-29772	1	1	0	offered		40	0	false	7.214	0.525	8.01	7.402	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-veryEasy\acceptance-receipt.json
+28	mega12/easy	ms18c-20261118T200159739-5620	1	1	0	offered		40	0	false	7.215	0.531	8.15	7.414	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-easy\acceptance-receipt.json
+29	mega12/normal	ms18c-20261118T200227688-31720	1	1	0	offered		40	0	false	7.254	0.530	8.29	7.443	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-normal\acceptance-receipt.json
+30	mega12/hard	ms18c-20261118T200254860-29444	1	1	0	offered		40	0	false	7.252	0.521	8.93	7.436	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-hard\acceptance-receipt.json
+31	mega12/expert	ms18c-20261118T200329962-13304	1	1	0	offered		40	0	false	7.217	0.522	18.77	7.404	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-expert\acceptance-receipt.json
+32	mega12/master	ms18c-20261118T200402153-25568	1	1	0	offered		40	0	false	7.247	0.513	11.39	7.433	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-master\acceptance-receipt.json
+33	mega12/nightmare	ms18c-20261118T200433328-22688	1	1	0	offered		40	0	false	7.246	0.547	37.24	7.432	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-nightmare\acceptance-receipt.json
+34	mega12/hell1	ms18c-20261118T200529804-21736	1	1	0	hidden	time	9	9	false	7.208	0.569	263.55	7.391	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-hell1\acceptance-receipt.json
+35	mega12/hell2	ms18c-20261118T201112842-28440	1	2	0	offered		40	0	false	7.259	0.583	61.23	7.452	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega12-hell2\acceptance-receipt.json
+36	mega16/veryEasy	ms18c-20261118T201254721-14648	1	1	0	offered		40	0	false	7.252	0.554	8.15	7.441	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-veryEasy\acceptance-receipt.json
+37	mega16/easy	ms18c-20261118T201319918-18132	1	1	0	offered		40	0	false	7.298	0.548	8.31	7.491	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-easy\acceptance-receipt.json
+38	mega16/normal	ms18c-20261118T201347718-20448	1	1	0	offered		40	0	false	7.266	0.554	8.47	7.458	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-normal\acceptance-receipt.json
+39	mega16/hard	ms18c-20261118T201415746-13320	1	1	0	offered		40	0	false	7.329	0.564	13.67	7.519	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-hard\acceptance-receipt.json
+40	mega16/expert	ms18c-20261118T201449146-14668	1	1	0	hidden	time	40	6	false	7.264	0.558	131.30	7.450	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-expert\acceptance-receipt.json
+41	mega16/master	ms18c-20261118T201725908-11008	1	1	0	offered		40	0	false	7.302	0.562	31.00	7.489	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-master\acceptance-receipt.json
+42	mega16/nightmare	ms18c-20261118T201809801-33124	1	1	0	hidden	time	25	9	false	7.407	0.549	179.50	7.594	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-nightmare\acceptance-receipt.json
+43	mega16/hell1	ms18c-20261118T202129072-14268	1	1	0	hidden	time	9	9	false	7.296	0.542	368.03	7.486	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-hell1\acceptance-receipt.json
+44	mega16/hell2	ms18c-20261118T202758750-33468	1	1	0	offered		40	1	false	7.284	0.654	56.08	7.475	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\mega16-hell2\acceptance-receipt.json
+45	diagonalX/veryEasy	ms18c-20261118T202913843-3560	1	1	0	offered		40	0	false	7.391	0.553	8.19	7.591	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-veryEasy\acceptance-receipt.json
+46	diagonalX/easy	ms18c-20261118T202940440-2464	1	1	0	hidden	misses	40	0	false	7.413	0.562	16.76	7.599	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-easy\acceptance-receipt.json
+47	diagonalX/normal	ms18c-20261118T203016950-21568	1	1	0	offered		40	0	false	7.228	0.532	8.54	7.413	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-normal\acceptance-receipt.json
+48	diagonalX/hard	ms18c-20261118T203044881-30844	1	1	0	offered		40	0	false	7.253	0.524	8.25	7.444	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-hard\acceptance-receipt.json
+49	diagonalX/expert	ms18c-20261118T203112788-12440	1	1	0	hidden		40	4	false	7.251	0.538	51.65	7.455	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-expert\acceptance-receipt.json
+50	diagonalX/master	ms18c-20261118T203224060-19164	1	1	0	offered		40	0	false	7.242	0.529	10.20	7.432	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-master\acceptance-receipt.json
+51	diagonalX/nightmare	ms18c-20261118T203259560-30960	1	1	0	offered		40	0	false	7.217	0.514	30.50	7.400	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-nightmare\acceptance-receipt.json
+52	diagonalX/hell1	ms18c-20261118T203344327-20620	1	1	0	hidden	time	9	9	false	7.206	0.548	266.62	7.394	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-hell1\acceptance-receipt.json
+53	diagonalX/hell2	ms18c-20261118T203834401-11204	1	1	0	offered		40	0	false	7.223	0.589	19.63	7.413	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\diagonalX-hell2\acceptance-receipt.json
+54	hyper/veryEasy	ms18c-20261118T203909972-28992	1	1	0	offered		40	0	false	7.227	0.528	7.99	7.415	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-veryEasy\acceptance-receipt.json
+55	hyper/easy	ms18c-20261118T203936906-30676	1	1	0	hidden	misses	40	0	false	7.249	0.541	16.64	7.436	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-easy\acceptance-receipt.json
+56	hyper/normal	ms18c-20261118T204012673-21840	1	1	0	offered		40	0	false	7.231	0.534	10.05	7.419	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-normal\acceptance-receipt.json
+57	hyper/hard	ms18c-20261118T204042120-33460	1	1	0	offered		40	0	false	7.426	0.541	8.52	7.629	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-hard\acceptance-receipt.json
+58	hyper/expert	ms18c-20261118T204110471-9900	1	1	0	hidden	misses	53	0	true	7.302	0.550	61.30	7.494	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-expert\acceptance-receipt.json
+59	hyper/master	ms18c-20261118T204232470-3788	1	1	0	offered		40	0	false	7.208	0.522	10.43	7.393	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-master\acceptance-receipt.json
+60	hyper/nightmare	ms18c-20261118T204300931-30692	1	1	0	offered		40	1	false	7.223	0.529	42.84	7.410	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-nightmare\acceptance-receipt.json
+61	hyper/hell1	ms18c-20261118T204409224-29508	1	1	0	hidden	time	9	9	false	7.228	0.522	128.54	7.424	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-hell1\acceptance-receipt.json
+62	hyper/hell2	ms18c-20261118T204631946-8636	1	1	0	offered		40	0	false	7.216	0.552	28.13	7.404	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\hyper-hell2\acceptance-receipt.json
+63	jigsaw9/veryEasy	ms18c-20261118T204720263-12592	1	1	0	offered		40	0	false	7.254	0.526	8.21	7.441	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-veryEasy\acceptance-receipt.json
+64	jigsaw9/easy	ms18c-20261118T204747476-32600	1	1	0	offered		40	0	false	7.199	0.530	10.18	7.384	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-easy\acceptance-receipt.json
+65	jigsaw9/normal	ms18c-20261118T204817168-33796	1	1	0	offered		40	0	false	7.201	0.523	8.74	7.386	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-normal\acceptance-receipt.json
+66	jigsaw9/hard	ms18c-20261118T204845256-24232	1	1	0	offered		40	0	false	7.261	0.519	8.84	7.441	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-hard\acceptance-receipt.json
+67	jigsaw9/expert	ms18c-20261118T204914137-22400	1	1	0	hidden	time	34	7	false	7.272	0.510	53.83	7.458	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-expert\acceptance-receipt.json
+68	jigsaw9/master	ms18c-20261118T205027133-392	1	1	0	offered		40	0	false	7.235	0.521	16.20	7.420	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-master\acceptance-receipt.json
+69	jigsaw9/nightmare	ms18c-20261118T205103537-33476	1	1	0	hidden	time	27	8	false	7.229	0.564	64.07	7.420	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-nightmare\acceptance-receipt.json
+70	jigsaw9/hell1	ms18c-20261118T205237683-25020	1	1	0	hidden	time	9	9	false	7.218	0.547	170.03	7.398	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-hell1\acceptance-receipt.json
+71	jigsaw9/hell2	ms18c-20261118T205541049-27948	1	1	0	offered		40	0	false	7.288	0.555	41.81	7.470	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\jigsaw9-hell2\acceptance-receipt.json
+72	killer/veryEasy	ms18c-20261118T205642972-20316	1	1	0	offered		40	0	false	7.214	0.572	8.04	7.409	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-veryEasy\acceptance-receipt.json
+73	killer/easy	ms18c-20261118T205710000-17068	1	1	0	offered		40	0	false	7.304	0.546	8.25	7.501	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-easy\acceptance-receipt.json
+74	killer/normal	ms18c-20261118T205738846-3328	1	1	0	offered		40	0	false	7.203	0.538	13.84	7.391	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-normal\acceptance-receipt.json
+75	killer/hard	ms18c-20261118T205811446-3704	1	1	0	hidden	misses	14	0	false	7.232	0.534	31.30	7.422	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-hard\acceptance-receipt.json
+76	killer/expert	ms18c-20261118T205902781-25608	1	1	0	hidden	time	12	9	false	7.242	0.592	55.91	7.434	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-expert\acceptance-receipt.json
+77	killer/master	ms18c-20261118T210017755-24868	1	1	0	hidden	time	14	9	false	7.212	0.548	78.23	7.398	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-master\acceptance-receipt.json
+78	killer/nightmare	ms18c-20261118T210155421-21868	1	1	0	hidden	time	22	8	false	7.238	0.525	88.78	7.423	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-nightmare\acceptance-receipt.json
+79	killer/hell1	ms18c-20261118T210344562-8660	1	1	0	hidden	time	9	9	false	7.306	0.637	150.68	7.491	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-hell1\acceptance-receipt.json
+80	killer/hell2	ms18c-20261118T210724539-23800	1	2	0	hidden	time	40	9	false	7.263	1.073	74.56	7.450	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\killer-hell2\acceptance-receipt.json
+81	greaterThan/veryEasy	ms18c-20261118T210923774-28936	1	1	0	offered		40	0	false	7.217	0.566	8.27	7.414	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-veryEasy\acceptance-receipt.json
+82	greaterThan/easy	ms18c-20261118T210950219-19680	1	1	0	offered		40	0	false	7.224	0.566	8.48	7.409	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-easy\acceptance-receipt.json
+83	greaterThan/normal	ms18c-20261118T211017895-32856	1	1	0	hidden		40	3	false	7.214	0.565	36.99	7.397	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-normal\acceptance-receipt.json
+84	greaterThan/hard	ms18c-20261118T211115570-24004	1	1	0	offered		40	0	false	7.278	0.554	15.85	7.466	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-hard\acceptance-receipt.json
+85	greaterThan/expert	ms18c-20261118T211150104-29080	1	1	0	hidden	time	40	7	false	7.215	0.584	63.98	7.411	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-expert\acceptance-receipt.json
+86	greaterThan/master	ms18c-20261118T211315012-30324	1	1	0	offered		40	0	false	7.227	0.569	29.99	7.417	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-master\acceptance-receipt.json
+87	greaterThan/nightmare	ms18c-20261118T211404105-4128	1	1	0	hidden	time	13	9	false	7.208	0.529	88.54	7.396	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-nightmare\acceptance-receipt.json
+88	greaterThan/hell1	ms18c-20261118T211552458-12116	1	1	0	hidden	time	9	9	false	7.218	0.544	327.25	7.404	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-hell1\acceptance-receipt.json
+89	greaterThan/hell2	ms18c-20261118T212143204-26388	1	1	0	offered		40	1	false	7.305	0.572	54.78	7.503	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\greaterThan-hell2\acceptance-receipt.json
+90	samurai/veryEasy	ms18c-20261118T212300242-10896	1	1	0	offered		40	0	false	7.340	0.562	8.31	7.533	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-veryEasy\acceptance-receipt.json
+91	samurai/easy	ms18c-20261118T212321787-26428	1	1	0	hidden	misses	22	0	false	7.282	0.540	12.08	7.472	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-easy\acceptance-receipt.json
+92	samurai/normal	ms18c-20261118T212353828-3520	1	1	0	offered		40	0	false	7.324	0.577	12.43	7.533	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-normal\acceptance-receipt.json
+93	samurai/hard	ms18c-20261118T212425874-11244	1	1	0	offered		40	0	false	7.346	0.571	10.92	7.543	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-hard\acceptance-receipt.json
+94	samurai/expert	ms18c-20261118T212456153-32920	1	1	0	offered		40	0	false	7.296	0.552	24.94	7.492	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-expert\acceptance-receipt.json
+95	samurai/master	ms18c-20261118T212540916-30168	1	1	0	offered		40	1	false	7.322	0.592	87.51	7.517	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-master\acceptance-receipt.json
+96	samurai/nightmare	ms18c-20261118T212728765-456	1	1	0	hidden	time	17	9	false	7.278	0.578	209.57	7.464	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-nightmare\acceptance-receipt.json
+97	samurai/hell1	ms18c-20261118T213117729-18244	1	1	0	hidden	time	9	9	false	7.340	0.538	368.09	7.536	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-hell1\acceptance-receipt.json
+98	samurai/hell2	ms18c-20261118T213748100-27568	1	1	0	hidden	time	40	8	false	7.310	0.604	200.12	7.506	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\samurai-hell2\acceptance-receipt.json
+99	sohei/veryEasy	ms18c-20261118T214125901-33612	1	1	0	offered		40	0	false	7.319	0.551	8.23	7.513	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-veryEasy\acceptance-receipt.json
+100	sohei/easy	ms18c-20261118T214159272-33036	1	1	0	hidden	misses	18	0	false	7.339	0.582	11.27	7.540	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-easy\acceptance-receipt.json
+101	sohei/normal	ms18c-20261118T214223814-25504	1	1	0	offered		40	0	false	7.342	0.562	19.54	7.544	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-normal\acceptance-receipt.json
+102	sohei/hard	ms18c-20261118T214303682-12664	1	1	0	offered		40	0	false	7.341	0.570	10.40	7.547	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-hard\acceptance-receipt.json
+103	sohei/expert	ms18c-20261118T214333603-22960	1	1	0	offered		40	0	false	7.353	0.575	22.53	7.551	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-expert\acceptance-receipt.json
+104	sohei/master	ms18c-20261118T214416153-6912	1	1	0	offered		40	0	false	7.285	0.557	25.40	7.477	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-master\acceptance-receipt.json
+105	sohei/nightmare	ms18c-20261118T214500946-29184	1	1	0	hidden	time	30	8	false	7.459	0.571	217.64	7.652	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-nightmare\acceptance-receipt.json
+106	sohei/hell1	ms18c-20261118T214858589-23600	1	1	0	hidden	time	9	9	false	7.281	0.575	345.52	7.470	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-hell1\acceptance-receipt.json
+107	sohei/hell2	ms18c-20261118T215503546-21924	1	1	0	offered		40	2	false	7.307	0.609	113.12	7.503	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\sohei-hell2\acceptance-receipt.json
+108	butterfly/veryEasy	ms18c-20261118T215813375-27136	1	2	0	offered		40	0	false	7.306	0.556	8.16	7.501	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-veryEasy\acceptance-receipt.json
+109	butterfly/easy	ms18c-20261118T215859318-30748	1	1	0	hidden	misses	15	0	false	7.336	0.552	12.09	7.535	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-easy\acceptance-receipt.json
+110	butterfly/normal	ms18c-20261118T215936352-27252	1	1	0	offered		40	0	false	7.287	0.564	10.03	7.484	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-normal\acceptance-receipt.json
+111	butterfly/hard	ms18c-20261118T220001258-8204	1	1	0	offered		40	0	false	7.363	0.551	9.16	7.553	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-hard\acceptance-receipt.json
+112	butterfly/expert	ms18c-20261118T220030018-30572	1	1	0	offered		40	0	false	7.308	0.572	22.76	7.497	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-expert\acceptance-receipt.json
+113	butterfly/master	ms18c-20261118T220111892-19524	1	1	0	offered		40	0	false	7.284	0.561	11.31	7.475	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-master\acceptance-receipt.json
+114	butterfly/nightmare	ms18c-20261118T220142782-32760	1	1	0	offered		40	0	false	7.319	0.575	71.59	7.513	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-nightmare\acceptance-receipt.json
+115	butterfly/hell1	ms18c-20261118T220314245-9716	1	1	0	hidden	time	9	9	false	7.300	0.531	258.22	7.503	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-hell1\acceptance-receipt.json
+116	butterfly/hell2	ms18c-20261118T220759278-23800	1	1	0	offered		40	0	false	7.373	0.546	57.97	7.565	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\butterfly-hell2\acceptance-receipt.json
+117	flower/veryEasy	ms18c-20261118T220910893-23844	1	1	0	offered		40	0	false	7.307	0.567	8.22	7.528	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-veryEasy\acceptance-receipt.json
+118	flower/easy	ms18c-20261118T220938191-3984	1	1	0	hidden	misses	14	0	false	7.302	0.567	11.07	7.497	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-easy\acceptance-receipt.json
+119	flower/normal	ms18c-20261118T221008924-19076	1	1	0	offered		40	0	false	7.316	0.577	11.68	7.512	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-normal\acceptance-receipt.json
+120	flower/hard	ms18c-20261118T221046557-30424	1	1	0	offered		40	0	false	7.348	0.569	12.23	7.549	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-hard\acceptance-receipt.json
+121	flower/expert	ms18c-20261118T221112576-34216	1	1	0	hidden	misses	35	0	false	7.353	0.536	32.32	7.559	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-expert\acceptance-receipt.json
+122	flower/master	ms18c-20261118T221205738-31992	1	1	0	offered		40	0	false	7.326	0.551	14.06	7.528	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-master\acceptance-receipt.json
+123	flower/nightmare	ms18c-20261118T221423141-32512	1	2	0	hidden	time	50	6	true	7.342	0.568	287.54	7.542	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-nightmare\acceptance-receipt.json
+124	flower/hell1	ms18c-20261118T221929160-7672	1	1	0	hidden	time	9	9	false	7.303	0.556	166.88	7.498	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-hell1\acceptance-receipt.json
+125	flower/hell2	ms18c-20261118T222236475-24820	1	1	0	offered		40	0	false	7.274	0.552	42.69	7.467	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\flower-hell2\acceptance-receipt.json
+126	wordoku/veryEasy	ms18c-20261118T222334314-28364	1	1	0	offered		40	0	false	7.278	0.542	8.08	7.481	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-veryEasy\acceptance-receipt.json
+127	wordoku/easy	ms18c-20261118T222401257-27476	1	1	0	offered		40	0	false	7.314	0.548	11.63	7.517	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-easy\acceptance-receipt.json
+128	wordoku/normal	ms18c-20261118T222433047-2632	1	1	0	hidden	misses	46	0	true	7.337	0.562	15.15	7.530	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-normal\acceptance-receipt.json
+129	wordoku/hard	ms18c-20261118T222642846-23848	1	2	0	offered		40	0	false	7.333	0.564	9.22	7.534	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-hard\acceptance-receipt.json
+130	wordoku/expert	ms18c-20261118T222712357-20728	1	1	0	offered		40	0	false	7.285	0.558	9.70	7.477	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-expert\acceptance-receipt.json
+131	wordoku/master	ms18c-20261118T222737267-33148	1	1	0	offered		40	0	false	7.301	0.547	9.72	7.495	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-master\acceptance-receipt.json
+132	wordoku/nightmare	ms18c-20261118T222805089-23176	1	1	0	offered		40	0	false	7.369	0.535	15.25	7.562	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-nightmare\acceptance-receipt.json
+133	wordoku/hell1	ms18c-20261118T222839989-25960	1	1	0	hidden	time	9	9	false	7.320	0.575	41.00	7.512	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-hell1\acceptance-receipt.json
+134	wordoku/hell2	ms18c-20261118T222940862-13048	1	1	0	hidden	time	14	8	false	7.341	0.576	50.65	7.533	Q:\git\sudoku\docs\difficulty-v3\evidence\MS18c\runs\wordoku-hell2\acceptance-receipt.json

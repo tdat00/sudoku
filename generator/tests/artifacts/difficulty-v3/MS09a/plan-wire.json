@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\wire\\G09.json"
+    ],
+    "projectionSeconds": 35,
+    "projectionBasis": "MS08c final E g-wire-G09 14.583 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\wire\\G10.json"
+    ],
+    "projectionSeconds": 36,
+    "projectionBasis": "MS08c final E g-wire-G10 15.055 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\wire\\G11.json"
+    ],
+    "projectionSeconds": 26,
+    "projectionBasis": "MS08c final E g-wire-G11 10.224 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\wire\\G12.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS08c final E g-wire-G12 1.016 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\wire\\G13.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-wire-G13 0.694 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  }
+]

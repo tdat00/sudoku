@@ -1,0 +1,6 @@
+{"at":"2026-11-18T20:13:58.125Z","t":0.1420621,"type":"launcher-start","who":"launcher","pid":25428,"node":"v26.13.0","cell":"mega16/normal","runId":"ms18c-20261118T201347718-20448","slot":1,"ordinal":1,"startSeconds":0.1414746}
+{"at":"2026-11-18T20:13:58.127Z","t":0.1443442,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8556796}
+{"at":"2026-11-18T20:14:05.224Z","t":7.241164,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.241,"ready":false}
+{"at":"2026-11-18T20:14:05.230Z","t":7.2467171,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=mega16","--level=normal","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\mega16-normal\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\mega16-normal\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T20:14:05.251Z","t":7.267444,"type":"qualifier-created","who":"launcher","pid":6252,"rSeconds":7.265563}
+{"at":"2026-11-18T20:14:06.439Z","t":8.4561535,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":1.1905577,"eventFailures":0}

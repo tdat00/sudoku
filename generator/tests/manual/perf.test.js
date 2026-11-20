@@ -1,4 +1,5 @@
-// Performance (warn only) and regression hashes of generated puzzles (design.md 9.1 and 9.2).
+// Performance (warn only), regression hashes of generated puzzles (design.md 9.1 and 9.2) and the cost ratios
+// of the events.
 //
 //  - "perf": a few cells of the table of design.md section 9.1 with few runs each. It never fails the build:
 //    a cell over its p95 target is reported as a skipped test with the numbers as the reason (the full
@@ -8,6 +9,11 @@
 //    it is how an optimisation proves that it did not change any puzzle. After a change that is meant to
 //    alter puzzles, record the new hashes with `node tests/perf.js --update-hashes` (or run this suite with
 //    SG_UPDATE_HASHES=1).
+//  - "instrumented generators: what the events cost": the three generation-cost ratios of the events
+//    ('off', 'summary' and 'full' against no emitter), moved here unchanged from the pipeline suite
+//    (MS07f, S-OD8). They are timing assertions that DO fail, and a manual run is the only run of them: no
+//    pull request runs them. The structural event tests and the short digging and full-grid cost tests
+//    stay in the quick suite.
 (function () {
   'use strict';
 
@@ -17,10 +23,15 @@
 
   var SLOW = 120000;
   var PERF_RUNS = 5;
-  /** The cells that the suite times: cheap enough for about 20 s, and one of every kind of variant. */
+  /**
+   * The cells that the suite times: cheap enough for about 20 s, and one of every kind of variant. MS18c: the
+   * final qualification hides greaterThan/normal and wordoku/normal, so the declared public smoke selection takes
+   * their nearest offered levels (easier on a tie), greaterThan/easy and wordoku/easy; a fixed diagnostic request
+   * is not touched by this.
+   */
   var PERF_CELLS = ['classic4/veryEasy', 'classic9/veryEasy', 'classic9/normal', 'classic9/hard',
     'classic9/master', 'classic9/nightmare', 'diagonalX/normal', 'hyper/normal', 'jigsaw9/normal',
-    'wordoku/normal', 'killer/veryEasy', 'killer/normal', 'greaterThan/normal', 'mega12/normal',
+    'wordoku/easy', 'killer/veryEasy', 'killer/normal', 'greaterThan/easy', 'mega12/normal',
     'mega16/veryEasy', 'butterfly/veryEasy', 'samurai/veryEasy', 'flower/veryEasy', 'sohei/veryEasy'];
 
   function envFlag(name) {
@@ -111,7 +122,9 @@
             });
           })).toBe(true);
 
-          var gt = result('greaterThan', 'normal', 1);
+          var gt = SG.fixtures.toolRecords.withRequestedLevel('greaterThan', 'normal', function () {
+            return result('greaterThan', 'normal', 1);
+          }).value;
           expect(gt.model.inequalities.length).toBeGreaterThan(0);
           expect(changed(gt, function (c) {
             c.model.inequalities = gt.model.inequalities.slice(1);
@@ -173,4 +186,71 @@
         }, SLOW);
       });
     });
+
+  describe('instrumented generators: what the events cost', function () {
+    var E = SG.events;
+    var model9 = SG.variants.get('classic9').build({}, null);
+
+    function now() {
+      return typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
+    }
+
+    /** The workload of one measurement: `work(emit)` runs it, `emit` is undefined, or an emitter. */
+    function emitFor(mode, log) {
+      if (mode === 'none') return undefined;
+      return E.createEmitter(mode, function (e) { log.push(e); });
+    }
+
+    /** Best time of `work` per mode over interleaved rounds (the minimum is the least noisy statistic). */
+    function bestTimes(work, modes, rounds) {
+      var best = {};
+      var log = [];
+      modes.forEach(function (m) { best[m] = Infinity; });
+      work(undefined);
+      for (var r = 0; r < rounds; r++) {
+        for (var k = 0; k < modes.length; k++) {
+          var mode = modes[(k + r) % modes.length];
+          log.length = 0;
+          var emit = emitFor(mode, log);
+          var t0 = now();
+          work(emit);
+          var dt = now() - t0;
+          if (dt < best[mode]) best[mode] = dt;
+        }
+      }
+      return best;
+    }
+
+    /**
+     * The cost of `mode` relative to no emitter, as the smallest ratio seen over up to `attempts`
+     * measurements, stopping at the first one under `limit`. Timing on a busy machine is noisy by a few
+     * percent in either direction; a real overhead above the limit shows in every attempt, noise does not.
+     */
+    function costRatio(work, mode, limit, attempts) {
+      var smallest = Infinity;
+      for (var a = 0; a < attempts && smallest >= limit; a++) {
+        var t = bestTimes(work, ['none', mode], 6);
+        smallest = Math.min(smallest, t[mode] / t.none);
+      }
+      return smallest;
+    }
+
+    function generateWork(emit) {
+      var opts = emit === undefined ? {} : { emit: emit };
+      for (var s = 1; s <= 24; s++) SG.digger.generate(model9, 'easy', SG.rng.create(s), opts);
+      for (var m = 1; m <= 2; m++) SG.digger.generate(model9, 'normal', SG.rng.create(m), opts);
+    }
+
+    it("generating puzzles: verbosity 'off' costs less than 2%", function () {
+      expect(costRatio(generateWork, 'off', 1.02, 5)).toBeLessThan(1.02);
+    }, 120000);
+
+    it("generating puzzles: verbosity 'summary' costs less than 10%", function () {
+      expect(costRatio(generateWork, 'summary', 1.10, 4)).toBeLessThan(1.10);
+    }, 120000);
+
+    it("generating puzzles: verbosity 'full' costs less than 35%", function () {
+      expect(costRatio(generateWork, 'full', 1.35, 4)).toBeLessThan(1.35);
+    }, 120000);
+  });
 })();

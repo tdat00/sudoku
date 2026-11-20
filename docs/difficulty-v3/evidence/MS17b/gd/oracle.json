@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger: technique-bounded oracle >","exact":null,"count":7},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 1907.9,
+  "results": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 1636.4,
+    "tests": [
+      {"suite":"difficulty","name":"keeps the puzzle solvable with the allowed techniques only, which also makes it unique","fullName":"difficulty > digger: technique-bounded oracle > keeps the puzzle solvable with the allowed techniques only, which also makes it unique","status":"pass","ms":47.204,"reason":"","error":null,"ordinal":59},
+      {"suite":"difficulty","name":"stops at the upper edge of a band: no accepted removal takes the score to maxScore","fullName":"difficulty > digger: technique-bounded oracle > stops at the upper edge of a band: no accepted removal takes the score to maxScore","status":"pass","ms":54.487,"reason":"","error":null,"ordinal":60},
+      {"suite":"difficulty","name":"digs less deep with fewer techniques: singles only never beats more techniques","fullName":"difficulty > digger: technique-bounded oracle > digs less deep with fewer techniques: singles only never beats more techniques","status":"pass","ms":994.555,"reason":"","error":null,"ordinal":61},
+      {"suite":"difficulty","name":"never uses a technique that assumes uniqueness: it is listed, but the oracle skips it","fullName":"difficulty > digger: technique-bounded oracle > never uses a technique that assumes uniqueness: it is listed, but the oracle skips it","status":"pass","ms":533.6,"reason":"","error":null,"ordinal":62},
+      {"suite":"difficulty","name":"reports the groups it removed, in order, and they account for every removed clue","fullName":"difficulty > digger: technique-bounded oracle > reports the groups it removed, in order, and they account for every removed clue","status":"pass","ms":1.16,"reason":"","error":null,"ordinal":63},
+      {"suite":"difficulty","name":"continues a dug puzzle from startGivens without touching the clues that were kept","fullName":"difficulty > digger: technique-bounded oracle > continues a dug puzzle from startGivens without touching the clues that were kept","status":"pass","ms":4.177,"reason":"","error":null,"ordinal":64},
+      {"suite":"difficulty","name":"rejects options it cannot use","fullName":"difficulty > digger: technique-bounded oracle > rejects options it cannot use","status":"pass","ms":0.602,"reason":"","error":null,"ordinal":65}
+    ],
+    "suites": [
+      {"name":"difficulty","total":7,"passed":7,"failed":0,"skipped":0,"ms":1636.211}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger: technique-bounded oracle >","--results=..\\docs\\difficulty-v3\\evidence\\MS17b\\gd\\oracle.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

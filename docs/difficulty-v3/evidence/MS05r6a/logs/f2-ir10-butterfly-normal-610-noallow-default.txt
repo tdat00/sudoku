@@ -1,0 +1,1 @@
+butterfly/normal#610 allowance none, attempts default: hash 35c5769f3f9f59eb, 1 attempt(s), exact true, 714 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\butterfly-normal-610-noallow-default.json

@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS07b\explore-trace.js nightmare 21 28
+{"level":"nightmare","seed":21,"total":18510,"nonMicro":1581,"capped":2184,"attempts":8,"exact":false,"score":1725,"ms":3098}
+{"level":"nightmare","seed":22,"total":18624,"nonMicro":1542,"capped":2173,"attempts":8,"exact":false,"score":1884,"ms":2864}
+{"level":"nightmare","seed":23,"total":18613,"nonMicro":1541,"capped":2169,"attempts":8,"exact":false,"score":2015,"ms":2973}
+{"level":"nightmare","seed":24,"total":18619,"nonMicro":1590,"capped":2202,"attempts":8,"exact":false,"score":1855,"ms":2888}
+{"level":"nightmare","seed":25,"total":18783,"nonMicro":1590,"capped":2201,"attempts":8,"exact":false,"score":1989,"ms":2860}
+{"level":"nightmare","seed":26,"total":8348,"nonMicro":670,"capped":1999,"attempts":4,"exact":true,"score":2247,"ms":1355}
+{"level":"nightmare","seed":27,"total":18690,"nonMicro":1550,"capped":2170,"attempts":8,"exact":false,"score":1875,"ms":3124}
+{"level":"nightmare","seed":28,"total":18492,"nonMicro":1543,"capped":2151,"attempts":8,"exact":false,"score":1957,"ms":3300}
+exit=0 seconds=22.644

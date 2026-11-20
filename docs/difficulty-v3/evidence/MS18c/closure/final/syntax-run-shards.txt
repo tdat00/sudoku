@@ -1,0 +1,2 @@
+$ node --check tests\artifacts\difficulty-v3\MS18c\run-shards.cjs
+exit=0 seconds=0.089

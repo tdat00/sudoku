@@ -1,0 +1,65 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS09a\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: 572 fields differ from replay-wire.js
+  givens[3]: saved 0, fresh 9
+  givens[4]: saved 0, fresh 3
+  givens[5]: saved 7, fresh 0
+  givens[10]: saved 0, fresh 4
+  givens[15]: saved 0, fresh 6
+  givens[22]: saved 0, fresh 2
+  givens[24]: saved 8, fresh 0
+  givens[35]: saved 6, fresh 0
+  givens[45]: saved 4, fresh 0
+  givens[56]: saved 2, fresh 0
+  givens[58]: saved 0, fresh 4
+  givens[65]: saved 0, fresh 4
+  givens[70]: saved 0, fresh 3
+  givens[75]: saved 7, fresh 0
+  givens[76]: saved 0, fresh 9
+  givens[77]: saved 0, fresh 1
+  rating.score: saved 968, fresh 809
+  rating.rawScore: saved 968, fresh 809
+  rating.confidence: saved 0.21333333333333335, fresh 0.7266666666666667
+  rating.hardestTechnique: saved "cageSplit", fresh "finnedXWing"
+  rating.hardestGroup: saved "cage", fresh "fish"
+  rating.empties: saved 75, fresh 71
+  rating.techniqueCounts.nakedSingle: saved 49, fresh 46
+  rating.techniqueCounts.hiddenSingleBox: saved 16, fresh 12
+  rating.techniqueCounts.hiddenSingleLine: saved 3, fresh 4
+  ... and 547 more
+G10: 4 fields differ from replay-wire.js
+  work[1].ratings: saved 199, fresh 257
+  work[1].localSearches[0].ratings: saved 82, fresh 41
+  work[1].localSearches[0].proposals: saved 32458, fresh 32115
+  work[1].localSearches[0].shallowRatings: saved 82, fresh 41
+G11: 687 fields differ from replay-wire.js
+  model.inequalities.length: saved 4, fresh 9
+  model.inequalities[0].a: saved 10, fresh 4
+  model.inequalities[0].b: saved 1, fresh 13
+  model.inequalities[3].a: saved 44, fresh 37
+  model.inequalities[3].b: saved 43, fresh 36
+  givens[0]: saved 0, fresh 8
+  givens[1]: saved 0, fresh 2
+  givens[4]: saved 5, fresh 0
+  givens[5]: saved 8, fresh 0
+  givens[7]: saved 0, fresh 3
+  givens[8]: saved 3, fresh 6
+  givens[9]: saved 7, fresh 0
+  givens[11]: saved 2, fresh 0
+  givens[14]: saved 3, fresh 0
+  givens[16]: saved 0, fresh 5
+  givens[21]: saved 2, fresh 0
+  givens[22]: saved 0, fresh 4
+  givens[23]: saved 1, fresh 0
+  givens[24]: saved 6, fresh 0
+  givens[27]: saved 4, fresh 0
+  givens[28]: saved 0, fresh 8
+  givens[31]: saved 0, fresh 3
+  givens[32]: saved 5, fresh 2
+  givens[33]: saved 2, fresh 0
+  givens[35]: saved 0, fresh 5
+  ... and 662 more
+G12: matches replay-wire.js
+G13: matches replay-wire.js
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.421

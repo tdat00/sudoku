@@ -1,0 +1,14 @@
+[
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\mega12-hell1-smoke-1.txt",
+    "args": ["tests\\node-runner.js", "--suite=mega", "--filter=mega12 hell1: one attempt", "--verbose"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\mega12-hell1-smoke-2.txt",
+    "args": ["tests\\node-runner.js", "--suite=mega", "--filter=mega12 hell1: one attempt", "--verbose"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\mega12-hell1-smoke-3.txt",
+    "args": ["tests\\node-runner.js", "--suite=mega", "--filter=mega12 hell1: one attempt", "--verbose"]
+  }
+]

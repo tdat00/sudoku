@@ -1,0 +1,5 @@
+$ node tests\mega-contract.js --request=mega16-hell1-cv5-other --record=..\docs\difficulty-v3\evidence\MS07b\mega-hell1\records\mega16-hell1-cv5-other.json
+mega16-hell1-cv5-other: outcome ok, correctness pass, exact false, attempts 2 of 2, warnings difficulty.approximate,difficulty.shallow
+  generation 99.354 s, checks 0.059 s, guard margin 400.586 s of 500.000 s, allowance 256
+record: docs/difficulty-v3/evidence/MS07b/mega-hell1/records/mega16-hell1-cv5-other.json
+exit=0 seconds=99.894

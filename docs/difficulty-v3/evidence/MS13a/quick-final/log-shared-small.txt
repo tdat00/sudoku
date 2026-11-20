@@ -1,0 +1,61 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS13a\quick-final
+==== shard core-shared (2104 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS13a\quick-final\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (74 ms)
+ok   board-view: 37 passed  (59 ms)
+ok   constraints: 43 passed  (81 ms)
+ok   exchange: 20 passed  (227 ms)
+ok   harness: 25 passed  (2.22 s)
+ok   logical-solver: 100 passed  (325 ms)
+ok   model: 49 passed  (36 ms)
+ok   solver: 50 passed  (2.66 s)
+ok   symbols: 12 passed  (3 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+ok   tech-chain: 216 passed  (15.98 s)
+ok   tech-fish: 483 passed  (24.06 s)
+ok   tech-subset: 100 passed  (900 ms)
+ok   tech-wing: 496 passed  (11.38 s)
+ok   techniques: 267 passed  (3.45 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Suites: 16
+Tests:  2104 total, 2104 passed, 0 failed, 0 skipped
+Time:   63.30 s running tests, 63.65 s total
+Results: docs/difficulty-v3/evidence/MS13a/quick-final/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS13a\quick-final\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (25.62 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   25.62 s running tests, 25.82 s total
+Results: docs/difficulty-v3/evidence/MS13a/quick-final/generator-steps.json
+==== shard replay (154 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS13a\quick-final\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 154 passed  (24.89 s)
+
+Suites: 1
+Tests:  154 total, 154 passed, 0 failed, 0 skipped
+Time:   24.89 s running tests, 25.11 s total
+Results: docs/difficulty-v3/evidence/MS13a/quick-final/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS13a\quick-final\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (22.09 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   22.09 s running tests, 22.29 s total
+Results: docs/difficulty-v3/evidence/MS13a/quick-final/generator-mega.json
+shard core-shared: exit 0, 63.9 s
+shard steps: exit 0, 26.0 s
+shard replay: exit 0, 25.3 s
+shard mega: exit 0, 22.5 s
+exit=0 seconds=139.311

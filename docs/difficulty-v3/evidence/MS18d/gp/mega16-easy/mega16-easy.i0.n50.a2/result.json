@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "mega16-easy.i0.n50.a2",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "mega16",
+    "level": "easy",
+    "targetMs": 4000
+  },
+  "task": "MS18d GP record mega16-easy.i0.n50 a2",
+  "startedAtMs": 1795096213489,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "release-history-unproved"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 0,
+      "systemMicros": 93000
+    }
+  },
+  "finishedAtMs": 1795096213520
+}

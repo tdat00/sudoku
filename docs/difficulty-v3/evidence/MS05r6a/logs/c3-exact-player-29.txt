@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   player: 1 passed  (552 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   552 ms running tests, 731 ms total
+Results: docs/difficulty-v3/evidence/MS05r6a/pins/exact/player-29.json

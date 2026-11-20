@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "sohei-master.i0.n25.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "sohei",
+    "level": "master",
+    "targetMs": 20000
+  },
+  "task": "MS18d GP record sohei-master.i0.n25 a1",
+  "startedAtMs": 1795116340387,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=41.229",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "sohei-master.i0.n25",
+      "requests": 25,
+      "sha256": "5e9f066e17cd3cb699ed6e18039fba2aed54e3cdb43b903e89e0b6ed06e96633"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 25212,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=41.229",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 209,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 203000,
+      "systemMicros": 312000
+    },
+    "tee": {
+      "userMicros": 15000,
+      "systemMicros": 62000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795116391434
+}

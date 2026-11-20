@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js cells --csv=docs\difficulty-v3\evidence\MS18d\phase-d\gp-cells.csv --rows-md=docs\difficulty-v3\evidence\MS18d\phase-d\gp-cells-table.md
+ms18d-closeout cells: ok (79 rows, 74 meet)
+exit=0 seconds=0.229

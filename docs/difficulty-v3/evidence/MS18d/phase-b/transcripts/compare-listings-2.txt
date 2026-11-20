@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\compare-listings.js
+pass: quick 4807 identical=true, deep 4835 -> 4828, removed 7, added 0
+exit=0 seconds=0.161

@@ -1,0 +1,33 @@
+{
+  "schema": "ms18d-c-cleanup-1",
+  "verdict": "hold-unknown",
+  "startedAtMs": 1795101677462,
+  "finishedAtMs": 1795101677627,
+  "selfPid": 2284,
+  "includeController": false,
+  "simulated": true,
+  "snapshotOk": true,
+  "snapshotError": null,
+  "processCount": 1,
+  "roots": [
+    {
+      "Role": "tee",
+      "Pid": 28988,
+      "State": "absent"
+    },
+    {
+      "Role": "command",
+      "Pid": 31384,
+      "State": "pid-reused"
+    }
+  ],
+  "survivors": [],
+  "ignored": [],
+  "stops": [],
+  "confirmedGone": true,
+  "stillAlive": [],
+  "ambiguous": true,
+  "problems": [
+    "pid 31384 (command) is held by a process created at another time and nothing proves the recorded one ended"
+  ]
+}

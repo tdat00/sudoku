@@ -1,0 +1,27 @@
+MS18e identities after the second E1 round (the joint ruling of 2026-11-20), captured 2026-11-20 12:29:34-12:31:51 (+07:00).
+Source: transcripts\final-identities-v2.txt (unchanged MS18c\identities-now.cjs, locked, exit 0, SG_TIME_FACTOR=2, CI unset) and
+audit\targets-recheck-final-v2.json (unchanged MS18d\phase-b\freeze-targets.js, locked, exit 0).
+HEAD b0a29ffd7e7bd45b962c4d3221e3ee1acb3b5859; the tree is dirty with the E1 edits of both rounds (preflight\plan.json and plan-v2.json).
+
+                          baseline (baseline-identities.txt)   after round 1 (final-identities.txt)   after round 2 (this file)
+Generator quick:          10ed919c848f1466...                  8863c705d5a0d4c3...                     46b3d0e22307b7900114cf619ef3fd376336a73c0c73878cc6d894b43c19205f
+Player quick:             00db9a687404f50e...                  c4c6caec956bd8e7...                     45dc04735d65dd353a547e851904c9bca41367cc6c37da04969a0f435044c8a7
+Generator with manual:    a818c0b9e0fdcbc8...                  79f53764565993cf...                     d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3
+Replay:                   1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc (unchanged in all three)
+Hashes:                   344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1 (unchanged in all three)
+Producer sources:         75b0955e3e356bd1 (unchanged)
+Targets (table SHA-256):  3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a (unchanged)
+
+The E2 source identity for the with-manual runs is the round 2 value d8d48983...; the round 1 value 79f53764... is superseded
+(difficulty.test.js changed again, and so did the guides and designs).
+
+Why the fingerprints moved since round 1 (fingerprint inputs changed, from the two inventories' file lists):
+  Generator quick and with manual: DEVELOPERGUIDE.md and DEVELOPERGUIDE.vn.md (the weights bullet).
+  With manual only: generator/tests/manual/difficulty.test.js (the two hidden-level guards of the ruling).
+  Player quick: DEVELOPERGUIDE.md, DEVELOPERGUIDE.vn.md and player/design.md (directory block, techniques row).
+Not inputs, so no effect: run-locked-e.ps1, profile-s-av11.cjs, audit.cjs, .gitattributes, player/tests/browser/help.js, .github/scripts/*.
+
+The targets re-check after the last edit is byte-identical to the one before any edit (JSON SHA-256 starts 9EC4AC6E576C81C0):
+135 positions, 79 active, 56 absent, 62 retained, 17 updated, no problems.
+inventory-all-v2.json and inventory-variants-v2.json record timeFactor 2 (explicit SG_TIME_FACTOR=2): 5,836 tests in 63 suites and
+285 variants tests, complete, no registration error, same (suite, ordinal, full name) list as the baseline.

@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record greaterThan-master.i0.n25 a1",
+  "runId": "greaterThan-master.i0.n25.a1",
+  "cell": "greaterThan/master",
+  "payload": "gp-recorder",
+  "chunkId": "greaterThan-master.i0.n25",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-master/greaterThan-master.i0.n25.a1",
+  "requestedAt": "2026-11-20T01:03:47.413+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795111411605,
+    "lastCheckMs": 1795111427127,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T01:03:47.544+07:00",
+  "finished": "2026-11-20T01:04:44.088+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2927,
+    "cheapCheckMs": 228,
+    "ageMs": 247,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T01:04:44.089+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

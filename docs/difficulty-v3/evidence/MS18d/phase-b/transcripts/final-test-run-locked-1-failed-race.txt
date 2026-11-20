@@ -1,0 +1,44 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-locked.js
+line one
+line two
+ok exit=0 seconds=0.301
+LOCKED ok: exit=0 elapsed=0.358s gap=s complete=True
+ok   success: exit 0, complete transcript, one log record, the isolated lock is released
+before the failure
+an error line
+fail exit=3 seconds=0.255
+LOCKED fail: exit=3 elapsed=0.279s gap=0.161s complete=True ERROR fail command failed: 3
+ok   a nonzero exit throws after it is logged: the caller does not continue, nothing is retried
+before the failure
+an error line
+fail1 exit=1 seconds=0.235
+LOCKED fail1: exit=1 elapsed=0.24s gap=0.047s complete=True
+line one
+line two
+ok-not-expected exit=0 seconds=0.292
+LOCKED ok-not-expected: exit=0 elapsed=0.298s gap=0.009s complete=True ERROR exit code 0, expected 1
+ok   -Expect lists the accepted exit codes, and a success that is not expected also throws
+nospawn exit=127 seconds=0.098
+LOCKED nospawn: exit=127 elapsed=0.104s gap=0.036s complete=False ERROR nospawn command failed: 127
+ok   a command that cannot start: spawn-error, exit 127, incomplete, the call throws
+line before the hang, grandchild started
+FAIL the 4 s limit (the 540 s path): partial output kept, no completion line, tree gone, lock freed: assertion failed: record
+line one
+line two
+gap exit=0 seconds=0.289
+LOCKED gap: exit=0 elapsed=0.294s gap=15.31s complete=True
+ok   the 15 s gap is measured from the latest release of EITHER lock log, and the gap is logged
+ok   an existing transcript stops the call before the lock and the run
+ok   a stale-looking shared lock is reported and NOT deleted; a live one is reported alive
+line one
+line two
+notee exit=0 seconds=0.193
+LOCKED notee: exit=0 elapsed=0.196s gap=15.091s complete=
+before the failure
+an error line
+notee-fail exit=4 seconds=0.151
+LOCKED notee-fail: exit=4 elapsed=0.156s gap=0.005s complete= ERROR notee-fail command failed: 4
+ok   without a tee (-NoTee) the exit code is still checked and logged
+8 passed, 1 failed
+FAILED: the 4 s limit (the 540 s path): partial output kept, no completion line, tree gone, lock freed
+exit=1 seconds=17.818

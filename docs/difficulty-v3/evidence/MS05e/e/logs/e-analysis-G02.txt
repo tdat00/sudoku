@@ -1,0 +1,2 @@
+G02 classic9 veryEasy 1: 0.0 s
+recorded 1 of 14 keys (G02) in docs/difficulty-v3/evidence/MS05e/analysis/G02.json; a ledger is one shard, merge them all with --merge

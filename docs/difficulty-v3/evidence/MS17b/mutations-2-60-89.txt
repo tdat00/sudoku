@@ -1,0 +1,58 @@
+mutation 60 (the hardest technique text check is dropped): NOT DETECTED, EQUIVALENT (the registry is a Map keyed by strings, so has() of a non-string is false and registered() refuses it) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.3 s
+mutation 61 (the hardest group is not checked): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 62 (the hardest group check is inverted): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 63 (solved may be truthy): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 64 (solved is not checked): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 65 (the model size is not checked): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 66 (the model size need not be an integer): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 67 (the model size may be zero): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 68 (empties need not be an integer): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 69 (negative empties are accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 70 (empties may equal the board size and more): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 71 (empties of the whole board are refused): DETECTED - 26 total, 25 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the bounds of a rating are inclusive, extra fields are ignored, any level may be a fallback
+mutation 72 (empties are not bounded): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 73 (the counts are not checked): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 74 (the count map record check is dropped): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 75 (the count map prototype check is dropped): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 76 (a null-prototype count map is refused): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 77 (every count map prototype is refused): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 78 (an unknown technique id is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 79 (the count type check is dropped): NOT DETECTED, EQUIVALENT (Number.isSafeInteger is false for every non-number, so the next test refuses the same values) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.4 s
+mutation 80 (the safe-integer check is dropped): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 81 (a finite count is enough): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 82 (a negative count is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 83 (a zero count is refused): DETECTED - 26 total, 25 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the bounds of a rating are inclusive, extra fields are ignored, any level may be a fallback
+mutation 84 (zero counts are kept): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 85 (counts of one are dropped): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 86 (the counts are not sorted): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 87 (the count sort never orders): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 88 (the counts are sorted downwards): NOT DETECTED, EQUIVALENT (equality of two maps needs one canonical order of unique ids, and any total order of the ids, descending included, is one) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.4 s
+mutation 89 (a missing registry is not guarded): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+detected 27 of 30, survivors 3, 316.7 s

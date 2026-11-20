@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "exit1-table",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in exit1-table",
+  "startedAtMs": 1795102763239,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "heldAt": "request",
+  "reasons": [
+    "the wrapper and the payload type disagree on whether exit 1 is defined"
+  ],
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 31000
+    }
+  },
+  "finishedAtMs": 1795102763261
+}

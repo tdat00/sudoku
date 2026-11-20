@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-killer.json",
+    "--cells=killer/hard:2,killer/expert:2,killer/master:2,killer/nightmare:2,killer/hell1:2,killer/hell2:3",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T04:54:43.483Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "killer/hard": {
+      "variant": "killer",
+      "level": "hard",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3048840830,
+          "hit": false,
+          "ms": 6329.0347,
+          "achieved": "hard",
+          "score": 629,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3065618449,
+          "hit": false,
+          "ms": 5131.658,
+          "achieved": "hard",
+          "score": 578,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 5730.346,
+      "maxMs": 6329.0347
+    },
+    "killer/expert": {
+      "variant": "killer",
+      "level": "expert",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1314205603,
+          "hit": false,
+          "ms": 4882.7294,
+          "achieved": "expert",
+          "score": 718,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1297427984,
+          "hit": false,
+          "ms": 8458.6594,
+          "achieved": "expert",
+          "score": 877,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 6670.694,
+      "maxMs": 8458.6594
+    },
+    "killer/master": {
+      "variant": "killer",
+      "level": "master",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1241628333,
+          "hit": true,
+          "ms": 7538.8819,
+          "achieved": "master",
+          "score": 1365,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1224850714,
+          "hit": false,
+          "ms": 12916.8595,
+          "achieved": "master",
+          "score": 1106,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 1,
+      "meanMs": 10227.871,
+      "maxMs": 12916.8595
+    },
+    "killer/nightmare": {
+      "variant": "killer",
+      "level": "nightmare",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3691353210,
+          "hit": true,
+          "ms": 3940.5651,
+          "achieved": "nightmare",
+          "score": 2180,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3708130829,
+          "hit": true,
+          "ms": 4975.0826,
+          "achieved": "nightmare",
+          "score": 2399,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 2,
+      "meanMs": 4457.824,
+      "maxMs": 4975.0826
+    },
+    "killer/hell1": {
+      "variant": "killer",
+      "level": "hell1",
+      "asked": 2,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1406177033,
+          "hit": false,
+          "ms": 27388.9379,
+          "achieved": "hell1",
+          "score": 2764,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1389399414,
+          "hit": false,
+          "ms": 19402.548,
+          "achieved": "hell1",
+          "score": 3265,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 23395.743,
+      "maxMs": 27388.9379
+    },
+    "killer/hell2": {
+      "variant": "killer",
+      "level": "hell2",
+      "asked": 3,
+      "start": 0,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 4177050164,
+          "hit": true,
+          "ms": 1178.5676,
+          "achieved": "hell2",
+          "score": 5651,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 4193827783,
+          "hit": true,
+          "ms": 2209.6566,
+          "achieved": "hell2",
+          "score": 4183,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 4210605402,
+          "hit": true,
+          "ms": 5195.9644,
+          "achieved": "hell2",
+          "score": 3602,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 3,
+      "meanMs": 2861.396,
+      "maxMs": 5195.9644
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T04:56:33.296Z",
+  "seconds": 109.813
+}

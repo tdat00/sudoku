@@ -1,0 +1,316 @@
+{
+  "keys": 520,
+  "interimChangedVsBase": 149,
+  "interimFixtureEqualsB1Ledgers": true,
+  "total": {
+    "unchanged": 371,
+    "improved-kept": 140,
+    "improved-lost": 5,
+    "other-puzzle": 4,
+    "new-change": 0
+  },
+  "boardsUpTo81Cells": {
+    "combinations": 20,
+    "unchanged": 294,
+    "improved-kept": 103,
+    "improved-lost": 2,
+    "other-puzzle": 1,
+    "new-change": 0
+  },
+  "boardsAbove81Cells": {
+    "combinations": 6,
+    "unchanged": 77,
+    "improved-kept": 37,
+    "improved-lost": 3,
+    "other-puzzle": 3,
+    "new-change": 0
+  },
+  "rows": [
+    {
+      "combination": "classic4/veryEasy",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic6/veryEasy",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic6/hard",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/veryEasy",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/easy",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 1,
+        "improved-kept": 19,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/normal",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 7,
+        "improved-kept": 13,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/hard",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/expert",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/master",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 13,
+        "improved-kept": 7,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "classic9/nightmare",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 14,
+        "improved-kept": 5,
+        "improved-lost": 1,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "mega12/normal",
+      "largeBoard": true,
+      "counts": {
+        "unchanged": 15,
+        "improved-kept": 5,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "mega16/easy",
+      "largeBoard": true,
+      "counts": {
+        "unchanged": 19,
+        "improved-kept": 1,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "diagonalX/easy",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 6,
+        "improved-kept": 14,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "diagonalX/nightmare",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 9,
+        "improved-kept": 9,
+        "improved-lost": 1,
+        "other-puzzle": 1,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "hyper/hard",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "jigsaw9/normal",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 10,
+        "improved-kept": 10,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "jigsaw9/master",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 12,
+        "improved-kept": 8,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "killer/easy",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "killer/hard",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "greaterThan/normal",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 10,
+        "improved-kept": 10,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "greaterThan/hard",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 18,
+        "improved-kept": 2,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "samurai/easy",
+      "largeBoard": true,
+      "counts": {
+        "unchanged": 1,
+        "improved-kept": 15,
+        "improved-lost": 3,
+        "other-puzzle": 1,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "sohei/veryEasy",
+      "largeBoard": true,
+      "counts": {
+        "unchanged": 20,
+        "improved-kept": 0,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "butterfly/normal",
+      "largeBoard": true,
+      "counts": {
+        "unchanged": 10,
+        "improved-kept": 8,
+        "improved-lost": 0,
+        "other-puzzle": 2,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "flower/normal",
+      "largeBoard": true,
+      "counts": {
+        "unchanged": 12,
+        "improved-kept": 8,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    },
+    {
+      "combination": "wordoku/normal",
+      "largeBoard": false,
+      "counts": {
+        "unchanged": 14,
+        "improved-kept": 6,
+        "improved-lost": 0,
+        "other-puzzle": 0,
+        "new-change": 0
+      }
+    }
+  ]
+}

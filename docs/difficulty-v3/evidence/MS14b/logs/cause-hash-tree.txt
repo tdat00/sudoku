@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS14b\cause.js --kind=hash --ledgers=..\docs\difficulty-v3\evidence\MS14b\hashes --only=jigsaw9/normal,jigsaw9/master --json=..\docs\difficulty-v3\evidence\MS14b\cause-hash-tree.json
+jigsaw9/normal: 0 of 20 differ in the ledger (seeds ); equal to the saved 20, to the ledger 20 (1.1 s)
+jigsaw9/master: 0 of 20 differ in the ledger (seeds ); equal to the saved 20, to the ledger 20 (11.8 s)
+hashes examined 40 (engine tree, 12.9 s); equal to the saved output 40, equal to the ledger 40, ledger differs from the saved 0
+exit=0 seconds=13.158

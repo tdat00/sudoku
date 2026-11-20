@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --suite=greater-than --filter=> easy: 20 puzzles > I5: --list-tests=..\docs\difficulty-v3\evidence\MS18e\preflight\e2-selectors\I5-greater-than-easy.json
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors/I5-greater-than-easy.json
+exit=0 seconds=0.334

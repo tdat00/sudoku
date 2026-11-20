@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS09a\structural-max-fin.js
+{"id":"classic4","digits":4,"cells":16,"rows":4,"cols":4,"lineLength":4,"boxLikeUnits":4,"units2":48,"trialsPerUnit2":6,"units3":32,"trialsPerUnit3":4}
+{"id":"classic6","digits":6,"cells":36,"rows":6,"cols":6,"lineLength":6,"boxLikeUnits":6,"units2":180,"trialsPerUnit2":15,"units3":240,"trialsPerUnit3":20}
+{"id":"classic9","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+{"id":"mega12","digits":12,"cells":144,"rows":12,"cols":12,"lineLength":12,"boxLikeUnits":12,"units2":1584,"trialsPerUnit2":66,"units3":5280,"trialsPerUnit3":220}
+{"id":"mega16","digits":16,"cells":256,"rows":16,"cols":16,"lineLength":16,"boxLikeUnits":16,"units2":3840,"trialsPerUnit2":120,"units3":17920,"trialsPerUnit3":560}
+{"id":"diagonalX","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+{"id":"hyper","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+{"id":"jigsaw9","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+{"id":"killer","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+{"id":"greaterThan","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+{"id":"samurai","digits":9,"cells":369,"rows":45,"cols":45,"lineLength":9,"boxLikeUnits":45,"units2":17820,"trialsPerUnit2":153,"units3":255420,"trialsPerUnit3":2925}
+{"id":"sohei","digits":9,"cells":288,"rows":36,"cols":36,"lineLength":9,"boxLikeUnits":36,"units2":11340,"trialsPerUnit2":153,"units3":128520,"trialsPerUnit3":2925}
+{"id":"butterfly","digits":9,"cells":144,"rows":36,"cols":36,"lineLength":9,"boxLikeUnits":36,"units2":11340,"trialsPerUnit2":153,"units3":128520,"trialsPerUnit3":2925}
+{"id":"flower","digits":9,"cells":189,"rows":45,"cols":45,"lineLength":9,"boxLikeUnits":45,"units2":17820,"trialsPerUnit2":153,"units3":255420,"trialsPerUnit3":2925}
+{"id":"wordoku","digits":9,"cells":81,"rows":9,"cols":9,"lineLength":9,"boxLikeUnits":9,"units2":648,"trialsPerUnit2":36,"units3":1512,"trialsPerUnit3":84}
+largest maximum at n = 2: samurai 17820 of a limit of 50000
+largest maximum at n = 3: samurai 255420 (for MS09b)
+exit=0 seconds=0.215

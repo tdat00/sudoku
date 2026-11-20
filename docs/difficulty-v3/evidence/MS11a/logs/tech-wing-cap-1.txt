@@ -1,0 +1,33 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 385 passed, 4 failed  (10.22 s)
+
+Failures:
+  FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+       AssertionError: expected 35 to be 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4440:54)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+       AssertionError: expected {technique: "uniqueRectangle", cells: Array(9)[0, 8, 16, 24, 1, 2, 3, 4, 5], placements: Array(0)[], eliminations: Array(2)[Array(2)[6, 7], Array(2)[6, 8]], i18nKey: "technique.uniqueRectangle.type3.step", i18nArgs: {roof1: "R1C1", roof2: "R1C9", digits: Array(2)[1, 2], partDigits: Array(6)[3, 4, 5, 6, 7, 8], cells: Array(5)["R1C2", "R1C3", "R1C4", "R1C5", "R1C6"], unit: "R1"}} to be null
+       at Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4486:29
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4484:36)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+       AssertionError: expected value not to be null
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4516:78)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > checks the parent budget at the entry of the second pass and so that at most 256 units pass between two checks
+       AssertionError: expected Array(2)[0, 256] to equal Array(3)[0, 256, 512]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:4572:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  389 total, 385 passed, 4 failed, 0 skipped
+Time:   10.22 s running tests, 10.34 s total
+exit=1 seconds=10.449

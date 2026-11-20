@@ -1,0 +1,13 @@
+$ node tests\artifacts\difficulty-v3\MS11b\pins-replay.js
+stuck board: status stuck, reasons ["stuck","ambiguous"], empties 53, counts {"nakedSingle":3,"hiddenSingleBox":16,"pointing":6,"boxLine":1,"nakedPair":2,"hiddenPair":2,"finnedXWing":1,"wxyzWing":1,"wWing":2,"uniqueRectangle":2,"forcingChain":2}
+G14 moves 80
+move 70: at 95, rated 10, refused 5, others 0, nulls 4, chosen null
+move 71: at 106, rated 10, refused 2, others 0, nulls 7, chosen null
+move 72: at 117, rated 10, refused 4, others 0, nulls 5, chosen null
+move 73: at 128, rated 10, refused 3, others 0, nulls 6, chosen null
+move 74: at 139, rated 10, refused 3, others 0, nulls 6, chosen null
+move 75: at 150, rated 10, refused 8, others 0, nulls 1, chosen null
+move 77: at 172, rated 10, refused 7, others 0, nulls 2, chosen null
+move 78: at 176, rated 3, refused 1, others 0, nulls 1, chosen null
+move 76: at 161 span {"rated":10,"refused":9,"chosen":null,"others":0,"nulls":0,"max":null,"rejected":[9,246,17,238,0,255,91,164,69,186,3,252,81,174,74,181,75,180],"rejectedSigns":[],"reasons":{"ambiguous":9},"trail":null}
+exit=0 seconds=6.474

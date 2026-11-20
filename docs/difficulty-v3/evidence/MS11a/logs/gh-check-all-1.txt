@@ -1,0 +1,70 @@
+$ node tests\tools\make-technique-examples.js --check --max-puzzles=64 --max-hints=400
+selected 35 technique ID(s); mode check
+replaying 27 puzzle(s) for 35 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/27 classic9 - - -> 47 hint(s), solved; wanted found: nakedSingle
+puzzle 2/27 classic9 - - -> 76 hint(s), solved; wanted found: hiddenSingleBox
+puzzle 3/27 classic9 - - -> 77 hint(s), solved; wanted found: hiddenSingleLine, forcingChainLong
+puzzle 4/27 classic9 - - -> 59 hint(s), solved; wanted found: pointing
+puzzle 5/27 killer - - -> 51 hint(s), solved; wanted found: cageCombo
+puzzle 6/27 greaterThan - - -> 67 hint(s), solved; wanted found: ineqChain
+puzzle 7/27 classic9 - - -> 62 hint(s), solved; wanted found: boxLine, skyscraper
+puzzle 8/27 classic9 - - -> 67 hint(s), solved; wanted found: nakedPair, nakedTriple
+puzzle 9/27 classic9 - - -> 58 hint(s), solved; wanted found: hiddenPair
+puzzle 10/27 greaterThan - - -> 58 hint(s), solved; wanted found: minMaxForcing
+puzzle 11/27 classic9 - - -> 61 hint(s), solved; wanted found: hiddenTriple
+puzzle 12/27 killer - - -> 148 hint(s), solved; wanted found: ruleOf45
+puzzle 13/27 classic9 - - -> 60 hint(s), solved; wanted found: nakedQuad
+puzzle 14/27 hyper - - -> 93 hint(s), solved; wanted found: hiddenQuad
+puzzle 15/27 classic9 - - -> 81 hint(s), solved; wanted found: xWing
+puzzle 16/27 classic9 - - -> 69 hint(s), solved; wanted found: twoStringKite, emptyRectangle
+puzzle 17/27 classic9 - - -> 66 hint(s), solved; wanted found: -
+puzzle 18/27 classic9 - - -> 81 hint(s), solved; wanted found: simpleColouring, finnedXWing, forcingChain
+puzzle 19/27 classic9 - - -> 58 hint(s), solved; wanted found: swordfish
+puzzle 20/27 classic9 - - -> 60 hint(s), solved; wanted found: finnedSwordfish
+puzzle 21/27 killer - - -> 157 hint(s), solved; wanted found: cageSplit
+puzzle 22/27 classic9 - - -> 78 hint(s), solved; wanted found: jellyfish
+puzzle 23/27 classic9 - - -> 73 hint(s), solved; wanted found: xyWing, wxyzWing
+puzzle 24/27 classic9 - - -> 72 hint(s), solved; wanted found: xyzWing, uniqueRectangle
+puzzle 25/27 classic9 - - -> 67 hint(s), solved; wanted found: wWing
+puzzle 26/27 classic9 - - -> 70 hint(s), solved; wanted found: nishio
+puzzle 27/27 classic9 - - -> 111 hint(s), solved; wanted found: nishioDeep
+remotePairs: no example found in 1 puzzle(s) within 400 hint(s)
+nakedSingle: matches help-examples.js
+hiddenSingleBox: matches help-examples.js
+hiddenSingleLine: matches help-examples.js
+pointing: matches help-examples.js
+cageCombo: matches help-examples.js
+ineqChain: matches help-examples.js
+boxLine: matches help-examples.js
+nakedPair: matches help-examples.js
+hiddenPair: matches help-examples.js
+nakedTriple: matches help-examples.js
+minMaxForcing: matches help-examples.js
+hiddenTriple: matches help-examples.js
+ruleOf45: matches help-examples.js
+nakedQuad: matches help-examples.js
+hiddenQuad: matches help-examples.js
+xWing: matches help-examples.js
+skyscraper: matches help-examples.js
+twoStringKite: matches help-examples.js
+simpleColouring: matches help-examples.js
+emptyRectangle: matches help-examples.js
+finnedXWing: matches help-examples.js
+swordfish: matches help-examples.js
+finnedSwordfish: matches help-examples.js
+cageSplit: matches help-examples.js
+jellyfish: matches help-examples.js
+xyWing: matches help-examples.js
+xyzWing: matches help-examples.js
+wxyzWing: matches help-examples.js
+wWing: matches help-examples.js
+uniqueRectangle: matches help-examples.js
+forcingChain: matches help-examples.js
+forcingChainLong: 3 field(s) differ from help-examples.js
+  notes.67: saved 14, fresh 6
+  notes.69: saved 7, fresh 6
+  source.step: saved 27, fresh 29
+nishio: matches help-examples.js
+nishioDeep: matches help-examples.js
+help-examples.js differs or lacks an example for 2 of the 35 selected ID(s)
+exit=1 seconds=2.658

@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-wing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-wing: 248 passed, 1 failed  (5.89 s)
+
+Failures:
+  FAIL tech-wing > remotePairs (R13): an assembled caged Killer model (a cage-only peer edge) > the cage is the only link of that chain: the same cells on the uncaged board find nothing
+       AssertionError: expected 4 to be 0
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:1343:53)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  249 total, 248 passed, 1 failed, 0 skipped
+Time:   5.89 s running tests, 5.99 s total
+exit=1 seconds=6.092

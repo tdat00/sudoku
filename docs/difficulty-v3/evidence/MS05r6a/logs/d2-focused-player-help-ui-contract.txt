@@ -1,0 +1,11 @@
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   help: 27 passed  (956 ms)
+ok   ui-contract: 62 passed  (155 ms)
+
+Suites: 2
+Tests:  89 total, 89 passed, 0 failed, 0 skipped
+Time:   1.11 s running tests, 1.23 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/focused/player-help-ui-contract.json
+MS05r6a exit=0 seconds=1.414

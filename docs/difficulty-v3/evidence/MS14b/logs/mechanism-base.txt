@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS14b\mechanism.js --out=..\docs\difficulty-v3\evidence\MS14b\mechanism-base.json
+engine git:7eddb15: 40 puzzles
+exit=0 seconds=23.738

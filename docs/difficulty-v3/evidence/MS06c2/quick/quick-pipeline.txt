@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   pipeline: 154 passed  (322.37 s)
+
+Suites: 1
+Tests:  154 total, 154 passed, 0 failed, 0 skipped
+Time:   322.37 s running tests, 322.56 s total
+Results: generator/tests/artifacts/difficulty-v3/MS06c2/results-pipeline.json

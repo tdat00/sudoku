@@ -1,0 +1,29 @@
+$ node tests\artifacts\difficulty-v3\MS09a\run-mutations.cjs Q:\git\sudoku\docs\difficulty-v3\evidence\MS09a\mutations-2.txt 24 49
+mutation 24 (cancellation (every error but the work cap) is swallowed like a spent budget): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 1 of the finned X-Wing - 15.6 s
+mutation 25 (a spent budget propagates instead of "nothing found"): DETECTED - 395 total, 387 passed, 8 failed, 0 skipped - 8 failing, 2 of the finned X-Wing - 15.3 s
+mutation 26 (a spent work limit propagates instead of "nothing found"): DETECTED - 395 total, 380 passed, 15 failed, 0 skipped - 15 failing, 5 of the finned X-Wing - 15.3 s
+mutation 27 (the observer never sees the work cap): DETECTED - 395 total, 390 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned X-Wing - 15.3 s
+mutation 28 (the observer sees one unit too much): DETECTED - 395 total, 371 passed, 24 failed, 0 skipped - 24 failing, 7 of the finned X-Wing - 16.6 s
+mutation 29 (the work limit allows one unit more): DETECTED - 395 total, 385 passed, 10 failed, 0 skipped - 10 failing, 3 of the finned X-Wing - 15.3 s
+mutation 30 (the work limit constant is 50001): DETECTED - 395 total, 393 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned X-Wing - 15.5 s
+mutation 31 (the unit is not counted (no work is spent on a combination of base lines)): DETECTED - 395 total, 387 passed, 8 failed, 0 skipped - 8 failing, 8 of the finned X-Wing - 15.1 s
+mutation 32 (the cells are not sorted): DETECTED - 395 total, 381 passed, 14 failed, 0 skipped - 14 failing, 14 of the finned X-Wing - 12.5 s
+mutation 33 (the eliminations are not sorted): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 4 of the finned X-Wing - 14.9 s
+mutation 34 (the fins are listed in line order, not in cell order): DETECTED - 395 total, 388 passed, 7 failed, 0 skipped - 7 failing, 7 of the finned X-Wing - 14.0 s
+mutation 35 (the covers are listed in reverse unit order): DETECTED - 395 total, 365 passed, 30 failed, 0 skipped - 30 failing, 30 of the finned X-Wing - 12.4 s
+mutation 36 (the base lines are listed in reverse unit order): DETECTED - 395 total, 365 passed, 30 failed, 0 skipped - 30 failing, 30 of the finned X-Wing - 12.7 s
+mutation 37 (the technique id of the Finding is always finnedXWing): DETECTED - 395 total, 391 passed, 4 failed, 0 skipped - 4 failing, 4 of the finned X-Wing - 14.6 s
+mutation 38 (the i18n key of the Finding is always the finned X-Wing key): DETECTED - 395 total, 394 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned X-Wing - 15.4 s
+mutation 39 (only the first combination of covers is tried): DETECTED - 395 total, 373 passed, 22 failed, 0 skipped - 22 failing, 22 of the finned X-Wing - 11.5 s
+mutation 40 (only the first combination of base lines is tried): DETECTED - 395 total, 370 passed, 25 failed, 0 skipped - 25 failing, 25 of the finned X-Wing - 11.5 s
+mutation 41 (only columns are tried as base lines): DETECTED - 395 total, 359 passed, 36 failed, 0 skipped - 36 failing, 36 of the finned X-Wing - 11.8 s
+mutation 42 (only rows are tried as base lines): DETECTED - 395 total, 369 passed, 26 failed, 0 skipped - 26 failing, 26 of the finned X-Wing - 12.0 s
+mutation 43 (the marks of the chosen base lines are not cleared): DETECTED - 395 total, 354 passed, 41 failed, 0 skipped - 41 failing, 41 of the finned X-Wing - 12.3 s
+mutation 44 (the marks of the chosen covers are not cleared): DETECTED - 395 total, 329 passed, 66 failed, 0 skipped - 66 failing, 64 of the finned X-Wing - 11.5 s
+mutation 45 (the marks of the targets are not cleared): DETECTED - 395 total, 344 passed, 51 failed, 0 skipped - 51 failing, 41 of the finned X-Wing - 11.6 s
+mutation 46 (the marks of the cover pool are not cleared): DETECTED - 395 total, 352 passed, 43 failed, 0 skipped - 43 failing, 43 of the finned X-Wing - 11.2 s
+mutation 47 (the cover pool is not in unit order (the insertion sort is dropped)): DETECTED - 395 total, 380 passed, 15 failed, 0 skipped - 15 failing, 15 of the finned X-Wing - 12.8 s
+mutation 48 (the size option of the shared enumeration is not validated): DETECTED - 395 total, 394 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned X-Wing - 15.6 s
+mutation 49 (the shared enumeration takes size 2 for the finned Swordfish and the other way round): DETECTED - 395 total, 389 passed, 6 failed, 0 skipped - 6 failing, 6 of the finned X-Wing - 14.5 s
+detected 26 of 26, 356.8 s
+exit=0 seconds=356.902

@@ -1,0 +1,212 @@
+# MS03a — Bounded wire and analysis golden recorders
+
+| Header | Value |
+|---|---|
+| ID | MS03a (first subtask of MS03, formerly the tooling task MS04) |
+| Depends on | MS02 accepted and committed |
+| Size / time | Medium; 45-60 active minutes plus bounded GR checks |
+| Owner | Generator tooling |
+| Milestone | M3a: intentional output changes can refresh all replay evidence safely |
+| Traceability | R21; AUTH-S2, PROC-S1 |
+| Status | Not started |
+
+## Goal & business context
+
+The quick replay tests pin fourteen analyses, but the existing recorder writes only four saved
+PuzzleResults. Supply a real analysis recorder/checker and bounded recording/merge for both corpora
+before the first order change. This task changes no generator/solver/replay behavior.
+
+## Scope
+
+In: analysis projection/recording, wire recorder selectors, complete record merge, quick tooling tests,
+documentation. Out: any engine change, order/counter fixes, changing existing expected values, new
+techniques or browser gates. Generated files may be written only to alternate artifacts in this task;
+the canonical fixtures must remain unchanged.
+
+## Repository rules
+
+Follow `AGENTS.md`/checklist. No Git writes and no pack/log edits. Classic helper/fixture scripts on SG;
+Node CLI entrypoints may use CommonJS. No dependencies or system-temp paths. Announce real recorder
+checks as GR preparation before using the shared-machine slot.
+
+## Inputs & context
+
+### Accepted R21 contract (verbatim)
+
+Build a bounded recorder/checker for the 14 analysis requests in
+`generator/tests/fixtures/replay-goldens.js`, using the actual analysis outputs asserted at
+`generator/tests/suites/replay.test.js:611-635`. The existing `generator/tests/replay-fixtures.js`
+records only four wire snapshots in `generator/tests/fixtures/replay-wire.js`; it is not an analysis recorder.
+Keep intentional step-score assertions at `generator/tests/suites/steps.test.js:879-889` in the same
+review. Check-mode compares without writing and explains changed fields.
+
+### Corpus and projection
+
+- Read the fourteen `{id,request}` objects from `SG.fixtures.replayGoldens`; do not retype or derive seeds
+  from level names. IDs are G01-G14. The wire manifest is exactly G09-G12.
+- Generate through the same `SG.store.toConfig` / `SG.pipeline.run` route as the wire recorder,
+  with the existing 120,000 ms caller budget and required trace. No new generation defaults.
+- Preserve these fixed diagnostic requests after qualification hides a level: temporarily add a
+  missing requested level to that variant's support array around both `toConfig` and `pipeline.run`,
+  then restore the exact original array in `finally`. Record the override; never change a production
+  offer. MS18c applies the equivalent guard to the quick replay fixture loader when offers change.
+- Wire records use `SG.replay.toPlainWire(result)` and set `timings={}`, as today.
+- Analysis records use `SG.replay.analyse(result)` on the freshly generated result, not a stale wire
+  fixture after a production change. Preserve the existing golden schema:
+
+  ```text
+  {id, request, today, counts, board, rows, details, alive, folds, jumps}
+  rows = [step, movePosition, phaseCode, empties, score, delta, hardest, jump, culprit, line]
+  ```
+
+- Project counts, board facts, compact rows, details scores, alive-sign counts, folds and jump/choice/
+  first-use expectations from the analysis. Use the existing test comparisons as the field specification,
+  including the synthetic-vector conventions; `SG.replay.phaseCode` supplies phase codes. Use `—` for
+  absent display fields; first/zero delta is 0; F/N come from first/newPeak transitions.
+- P/W/R/V terms follow the existing six-decimal fixture precision, not a new scoring rounding.
+  Exclude timings and diagnostic `checks` from equality, as the replay tests' `stable` helper does.
+- Preserve `id`, `request` and historical `today` annotations. Do not copy stale asserted output fields
+  from the old fixture. Unused researcher prose is historical, not freshly verified output; mark that
+  distinction in the fixture renderer header. No assertion is removed to simplify recording.
+
+Baseline spot vector G01 (must not change here): compact scores
+`[0,23,44,551,568,992,992]`, compact count 7, details count 33; compact move positions
+`[0,7,22,23,26,31,31]`. All fourteen complete existing expectation projections must agree, not only G01.
+
+### CLI contracts of this pack
+
+Add `generator/tests/replay-goldens.js`. Extend the existing wire recorder with the same bounded modes:
+
+| Option | Behavior |
+|---|---|
+| `--check` | Compare selected freshly generated records; no writes; exit nonzero with ID/field differences |
+| `--write` | Write the complete canonical fixture; reject a partial selection |
+| `--ids=G01,G02` | Explicit subset of the script's manifest; reject unknown/duplicate IDs |
+| `--record=<file.json>` | Generate selected records into a ledger only; never modify a canonical fixture |
+| `--merge=<directory>` | Read ledgers, require the complete manifest, then --check or --write without generating |
+| `--out=<file.js>` | Alternate fixture output for --write; project-relative, useful for baseline parity checks |
+| `--list` / `--help` | No generation; show manifest/usage |
+
+The wire tool's existing no-option write and `--check` behavior stay compatible. The new analysis tool
+defaults to check, never an accidental write. Reject conflicting modes before generating.
+
+Ledger:
+
+```text
+{schema:1, kind:'replay-wire'|'replay-goldens', sourceHash, manifestHash,
+ node, commit, dirty, records:[{key:'Gnn', request, value}]}
+```
+
+`sourceHash`: SHA-256 over ordered relevant SOURCE_FILES bytes plus recorder/helper code.
+`manifestHash`: canonical `{id,request}` recipe list, not the old expected numbers.
+Keep timestamps/timings outside `value`; neither affects fixture equality.
+Merge rejects missing, duplicate, unknown, malformed or source/manifest/kind-mismatched records.
+Use manifest order, not file-system order. An interrupted shard is not a full-corpus pass.
+No canonical write until the complete merge has validated; preserve the old file on failure.
+
+Add a pure classic `SG.fixtures.toolRecords` helper for deterministic key/manifest validation and merge,
+reused later by MS03d. A helper fixture needs an HTML `FIXTURE_FILES` entry; Node discovers it automatically.
+
+### Anchors at `2c665bb`
+
+| File:line / quoted anchor | Use |
+|---|---|
+| `generator/tests/replay-fixtures.js:23-28`, `const REQUESTS = [` | Exact four wire requests |
+| `generator/tests/replay-fixtures.js:61-89`, `function loadSources` / `function build` | Source loading, budget, wire rendering |
+| `generator/tests/replay-fixtures.js:92-127`, `function check` / `function main` | Existing no-write checker and CLI behavior |
+| `generator/tests/fixtures/replay-goldens.js:1-7`, `SG.fixtures.replayGoldens` | Existing fourteen-request schema |
+| `generator/tests/suites/replay.test.js:611-635`, `replay: golden details` | Board/count/score expectations; also inspect the same file's compact/jump comparisons |
+| `generator/tests/suites/steps.test.js:879-889` | Intentional step-score pins, read-only here |
+| `generator/tests/node-runner.js:228`, `SG.test.node = Object.freeze` | fs/path/vm/root for Node-only quick tests |
+
+## Files to create/modify
+
+- `generator/tests/replay-fixtures.js`; new `generator/tests/replay-goldens.js`.
+- New `generator/tests/fixtures/tool-records.js` and, if projection separation is needed,
+  `generator/tests/fixtures/replay-recording.js`.
+- New `generator/tests/suites/replay-recorders.test.js`; `generator/tests.html` fixture/suite lists.
+- Owned artifacts under `generator/tests/artifacts/difficulty-v3/MS03a/` and an evidence note under
+  `docs/difficulty-v3/evidence/MS03a/`.
+- Docs: `generator/design.md` 15.2 and replay-test tooling; both developer guides' recorder commands.
+
+Read-only: `replay-goldens.js`/`replay-wire.js` under fixtures, existing replay/steps assertions,
+all application code. A projection mismatch is investigated/reported, never fixed by rewriting a golden.
+
+## Implementation steps
+
+1. Implement pure projection/ledger validation and tests, following existing golden comparisons.
+2. Add bounded modes to the wire tool and the new analysis CLI; retain old defaults where specified.
+3. Ensure check mode does not write, and write mode is complete and deterministic CRLF without BOM.
+4. Run selected real records, then complete per-ID checks, at most one announced bounded command at a time.
+5. Compare complete merged projections to existing fixtures; record any diagnostic-only ignored fields.
+6. Document exact commands/options for later output owners. Delete only this task's disposable alternate files.
+
+## Acceptance criteria — Business
+
+| ID | Criterion |
+|---|---|
+| MS03a-B01 | Later changes can explain and deliberately refresh every pinned replay expectation |
+| MS03a-B02 | A partial or stale corpus can never replace a complete fixture |
+| MS03a-B03 | Existing puzzles and canonical fixtures remain unchanged in this preparation task |
+
+## Acceptance criteria — Technical
+
+| ID | Criterion |
+|---|---|
+| MS03a-T01 | Four wire and fourteen analysis identities retained, with exact recipe/config identity |
+| MS03a-T02 | Complete current projections match baseline; diagnostic timing/check counts excluded explicitly |
+| MS03a-T03 | Unknown/duplicate/missing/mixed-source rows and conflicting options fail without canonical writes |
+| MS03a-T04 | Renderer/merge order deterministic; CRLF, no BOM; no temp-system paths |
+| MS03a-T05 | Both quick sets and complete baseline checks pass, or a genuine baseline mismatch is reported as blocked |
+
+## Test plan
+
+Quick tests: projection of G01-shaped synthetic data; rated/zero/final and null-score/unverified states; deterministic
+record order; duplicate/unknown/missing keys; source/kind/manifest mismatch; check-mode no writes;
+partial-write refusal. Node-only CLI tests skip in browsers; pure helper tests run in both.
+
+From `generator/`: `node tests\node-runner.js --suite=replay-recorders,replay,steps,help,ui-contract`,
+then `node tests\node-runner.js`; from `player/`: `node tests\node-runner.js`.
+Check every `$LASTEXITCODE`.
+
+Announced GR preparation, from `generator/`, one request per command:
+
+Jobs: 1; neither recorder accepts --jobs. Allow about 1-120 seconds per request and 5-35 minutes
+for the complete preparation corpus, subject to the ten-minute command ceiling. **Announce to the
+orchestrator before starting (pentomino runs in parallel on the same machine).**
+
+```powershell
+node tests\replay-fixtures.js --ids=G09 --record=tests\artifacts\difficulty-v3\MS03a\wire\G09.json
+node tests\replay-goldens.js --ids=G01 --record=tests\artifacts\difficulty-v3\MS03a\analysis\G01.json
+```
+
+Repeat the wire command for G10-G12 and the analysis command for G02-G14, then:
+
+```powershell
+node tests\replay-fixtures.js --merge=tests\artifacts\difficulty-v3\MS03a\wire --check
+node tests\replay-goldens.js --merge=tests\artifacts\difficulty-v3\MS03a\analysis --check
+```
+
+Use alternate `--out` paths to test writing, never the canonical files here. A command reaching ten
+minutes is stopped and reported; do not silently omit its ID or accept mixed-source evidence.
+
+## Definition of done & handoff
+
+Report the CLI modes, projection schema, ledger helper API, complete baseline comparison and actual
+durations. Hand the helper to MS03d and the GR route to MS04 onward. No commit/log editing.
+
+## Execution log
+
+| Field | Value |
+|---|---|
+| Status | Accepted and committed (`difficulty-v3 MS03a: Bounded wire/analysis golden recorders`) |
+| Start | 2026-11-12 13:39 (+07:00) |
+| End | 2026-11-12 14:20 developer; 14:27 orchestrator review and commit |
+| Duration | 41 min developer (2,438 s), recorder corpus under 1 min of it; about 7 min review |
+| Model | claude-sonnet-5.5 (developer); orchestrator review claude-opus-5.5 |
+| Token usage | 177 model calls; 41,992,736 input tokens (41,499,971 cache reads); 240,419 output tokens |
+| AI credits | about 779 (developer) |
+| Verification | Developer: `--suite=replay-recorders,replay,steps,help,ui-contract` 344 passed (14.4 s); generator quick 46 suites, 2,933 passed (114.5 s); player quick 1,609 passed (24.8 s); 18 recorder requests one per command (wire G09-G12 2.8-8.6 s, analysis G01-G14 0.5-9.0 s); wire `--merge --check` 4/4 and analysis `--merge --check` 14/14 match; alternate `--merge --write --out` byte-identical (wire) and data-equal (analysis) to the canonical fixtures, then deleted; a real stale-source refusal observed ("14 problems; nothing was written"). Orchestrator re-run: both `--merge --check` exit 0 (4 and 14 IDs up to date), generator quick 2,933/2,933 (111.1 s), player quick 1,609/1,609 (24.3 s); no absolute path in the code, evidence or ledgers; ledgers 86 KB |
+| Acceptance | MS03a-B01..B03 and MS03a-T01..T05 met. Canonical `replay-wire.js` and `replay-goldens.js` unchanged (empty diff). Diff reviewed: shared `SG.fixtures.toolRecords` (ledger, merge, diff, level guard) and `SG.fixtures.replayRecording` (projection, canonical renderer, CLI engine); merges refuse partial, stale, duplicate, unknown, wrong-kind, wrong-source and wrong-manifest sets before any write; writes go through `.partial` then rename; the new analysis tool defaults to check, never write |
+| Issues & resolutions | (1) A first recording set was discarded after a trailing-blank-line edit changed the source hash; in that set wire G10 and G11 had overlapped in one tool call. All 18 were re-recorded sequentially; the committed ledgers come from the second set only. (2) The developer used PowerShell `WriteAllText` for the evidence table edits (format verified clean). (3) About 56 lines of the new test file exceed 110 columns; AGENTS.md limits engine lines only, as in the existing `replay.test.js`. (4) Decisions accepted: the old `REQUESTS` literal is replaced by `SG.fixtures.replayGoldens` ids G09-G12; the wire tool still defaults to write; fold fields `removed`, `restored`, `signs` projected but not asserted (stated in the renderer header); the level override is recorded in `overrides` (empty today, all 14 requests offered); generator quick suite counts updated to 46 in `design.md` and both guides |
+| Handoff | From `generator/`: `node tests\replay-fixtures.js --ids=G09 --record=tests\artifacts\difficulty-v3\<task>\wire\G09.json`; `node tests\replay-goldens.js --ids=G01 --record=tests\artifacts\difficulty-v3\<task>\analysis\G01.json`; `--merge=<dir> --check` (default of `--merge`), `--merge=<dir> --write` only after the deliberate comparison; `--list`, `--help`; no `--jobs`. Manifests: wire 4 keys (`4ecb6f12...1c40a`), analysis 14 keys (`46c7ebd9...2204`); source hash `47b2f0e1...de813` covers the 63 source files plus the four recorder files (editing any of them invalidates every ledger). Ledger schema 1 `{schema, kind, sourceHash, manifestHash, node, commit, dirty, generatedAt, argv, records:[{key, request, value, ms, overrides}]}`. `SG.fixtures.toolRecords`: `canonicalJson`, `manifestText`, `keysOf`, `selectKeys`, `ledgerOf`, `ledgerText`, `checkLedger`, `merge`, `diffValues`, `diffLine`, `withRequestedLevel`, `SCHEMA`. The first analysis refresh will re-wrap about 13 long `details`/`alive` lists and use the new header (data unchanged) |

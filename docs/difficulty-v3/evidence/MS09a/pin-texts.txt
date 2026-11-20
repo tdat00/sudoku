@@ -1,0 +1,24 @@
+$ node tests\artifacts\difficulty-v3\MS09a\facts-texts.js
+G09 compact 35 sentences ["After the clues at R2C5 and R8C5 are removed, the generator's solution uses Rule of 45 3 times; previously, its hardest technique was Cage Sum Combination.","The largest technique weight, 260, contributes in full as the P term of the score (P = 260).","Removing the clue at R8C5 alone gives 510; removing the clue at R2C5 alone gives 139."]
+G09 compact 35 why ["P, peak technique weight: 40 → 260 (+220)","W, weighted sum of technique uses: 1,378.75 → 1,925","R = 0.25 × P × log₂(1 + W ÷ P): 51.48 → 199.62 (+148.13)","E, number of empty cells: 67 → 69","V = 80 × E ÷ (E + 40): 50.09 → 50.64 (+0.55)","Score = V + P + R, rounded: 142 → 510 (+368)","Level: Easy → Hard","The log records 5 candidates before this accepted removal, with 0 rejected; the other 4 candidates with completed scores reached at most 508 by the generator's limited check.","In a separate check, this solver stopped before completing the board using only techniques with weights below 260.","First use in the generator's solution: logical deduction 15 of 90.","Rule of 45 on R9: every unit holds the digits 1 to 9 once, so after subtracting the cages that lie entirely inside, the cells R9C1, R9C7 must add up to 10. Candidates that cannot reach that sum are removed.","In that deduction, candidate 7 is removed from R9C1.","These numbers describe the generator's solution, not every way to solve the puzzle."]
+G11 details 70 sentences ["After the sign between R8C7 and R9C7 is removed, the generator's solution uses X-Wing once; previously, its hardest technique was Inequality Chain.","The largest technique weight, 320, contributes in full as the P term of the score (P = 320).","This step removes one sign; there is no smaller sign-removal move to show."]
+G12 details 103 {"total":"2,686 (−356)","badge":null,"line":"The generator's solution now uses Long Forcing Chain (weight 1,400) as its hardest technique, instead of Nishio (trial and error) (weight 1,700).","rowLabel":{"technique":"forcingChainLong","text":"New hardest technique"},"totalHighlight":false,"before":3042,"after":2686}
+G05 compact 29 sentences ["After the clues at R2C1 and R8C9 are removed, the generator's solution uses Long Forcing Chain 4 times; previously, its hardest technique was Hidden Single (row/column).","The largest technique weight, 1,400, contributes in full as the P term of the score (P = 1,400).","Removing each clue alone gives 50 and 50; removing the whole group gives 2,501."]
+G06 details 29 {"before":138,"after":2072,"class":"single-culprit","culprit":{"cell":32,"action":"remove","score":2072,"otherScore":138},"frame":{"kind":"cell","cell":32,"action":"remove"}}
+G07 compact jump {"to":31,"cause":{"class":"multi-move","n":2,"k":1,"kMove":30},"choice":"combined"}
+G10 compact jump {"to":48,"cause":{"class":"multi-move","n":13,"k":1,"kMove":36},"choice":"combined"}
+G12 compact jump {"to":107,"cause":{"class":"multi-move","n":8,"k":2,"kMove":101},"choice":"combined"}
+fold G06 compact 6 pos 31 replay.folded.reveal {"peak":3002,"revealed":2}
+fold G07 compact 5 pos 31 replay.folded.reveal {"peak":3183,"revealed":2}
+fold G10 compact 6 pos 48 replay.folded.reveal {"peak":2668,"revealed":18}
+fold G11 compact 3 pos 69 replay.folded.peak {"peak":137}
+fold G11 compact 5 pos 100 replay.folded.peak {"peak":758}
+fold G12 compact 2 pos 22 replay.folded.peak {"peak":133}
+fold G12 compact 3 pos 99 replay.folded.peak {"peak":138}
+fold G12 compact 4 pos 107 replay.folded.reveal {"peak":3173,"revealed":6}
+G12 compact 2 last part {"key":"replay.folded.peak","args":{"peak":133}}
+stuck counts {"nakedSingle":2,"hiddenSingleBox":15,"pointing":6,"boxLine":1,"nakedPair":2,"hiddenPair":2,"finnedXWing":1,"wWing":2,"uniqueRectangle":1,"forcingChain":3} status stuck reasons ["stuck","ambiguous"]
+G06 rated 2331
+G11 details signs.cause at #71 [98] pos 70
+G09 groups 41
+exit=0 seconds=16.662

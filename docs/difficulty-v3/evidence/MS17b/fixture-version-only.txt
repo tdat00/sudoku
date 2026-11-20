@@ -1,0 +1,4 @@
+HEAD file: "ratingVersion":2 x 5, "ratingVersion":3 x 0
+working file: "ratingVersion":2 x 0, "ratingVersion":3 x 5
+HEAD file with each "ratingVersion":2 replaced by 3 equals the working file byte for byte: true
+lines 22 -> 22, length 91675 -> 91675

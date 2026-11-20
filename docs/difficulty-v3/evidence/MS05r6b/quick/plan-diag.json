@@ -1,0 +1,26 @@
+[
+  {
+    "label": "d-i18n-alone",
+    "args": ["tests\\node-runner.js", "--suite=i18n", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\diag\\i18n-alone.json"],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for one quick suite of 83 string tests (the i18n suite; no puzzle generation; store + controls + history + cache together measured 11.1 s at 00345dc1)",
+    "expectedExits": [0, 1],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\diag\\i18n-alone.json"
+  },
+  {
+    "label": "d-history-i18n",
+    "args": ["tests\\node-runner.js", "--suite=history,i18n", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\diag\\history-i18n.json"],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for two quick suites (history 15 tests, i18n 83 tests; store + controls + history + cache together measured 11.1 s at 00345dc1)",
+    "expectedExits": [0, 1],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\diag\\history-i18n.json"
+  },
+  {
+    "label": "d-cache-i18n",
+    "args": ["tests\\node-runner.js", "--suite=cache,i18n", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\diag\\cache-i18n.json"],
+    "projectionSeconds": 30,
+    "projectionBasis": "stated conservative bound for two quick suites (cache 105 tests, i18n 83 tests; store + controls + history + cache together measured 11.1 s at 00345dc1)",
+    "expectedExits": [0, 1],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\diag\\cache-i18n.json"
+  }
+]

@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS08a\sweep-firings.js
+xWing {"states":300,"firings":115,"placements":0,"eliminations":282,"byKind":{"initial":38,"pruned":53,"propagated":24}}
+skyscraper {"states":300,"firings":65,"placements":0,"eliminations":106,"byKind":{"initial":14,"propagated":14,"pruned":37}}
+simpleColouring {"states":300,"firings":433,"placements":0,"eliminations":886,"byKind":{"initial":195,"propagated":129,"pruned":109}}
+swordfish {"states":300,"firings":86,"placements":0,"eliminations":204,"byKind":{"propagated":8,"pruned":41,"initial":37}}
+exit=0 seconds=0.320

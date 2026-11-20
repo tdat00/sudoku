@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "task": "MS07e",
+  "commands": 289,
+  "lockedInvocations": 30,
+  "singleItemInvocations": 10,
+  "compounds": 20,
+  "timeouts": 0,
+  "unexecuted": 6,
+  "nodeSeconds": 4414.306,
+  "lockWaitSeconds": 4054,
+  "longestLockWaitSeconds": 561,
+  "waitsOver20Minutes": 0,
+  "byPhase": {
+    "gd": {
+      "commands": 26,
+      "nodeSeconds": 574.482,
+      "timeouts": 0,
+      "expectedExit1": 3,
+      "failed": 0
+    },
+    "gg": {
+      "commands": 105,
+      "nodeSeconds": 312.82799999999986,
+      "timeouts": 0,
+      "expectedExit1": 0,
+      "failed": 0
+    },
+    "pilot": {
+      "commands": 24,
+      "nodeSeconds": 1278.3630000000003,
+      "timeouts": 0,
+      "expectedExit1": 0,
+      "failed": 0
+    },
+    "gq": {
+      "commands": 129,
+      "nodeSeconds": 1523.0329999999992,
+      "timeouts": 0,
+      "expectedExit1": 0,
+      "failed": 0
+    },
+    "quick": {
+      "commands": 5,
+      "nodeSeconds": 725.6000000000001,
+      "timeouts": 0,
+      "expectedExit1": 0,
+      "failed": 0
+    }
+  },
+  "compoundList": [
+    {
+      "compound": "plan-gd-c1-from9",
+      "started": "2026-11-15T11:04:54.6554975+07:00",
+      "outcome": "failed-exit3",
+      "nodeSeconds": null,
+      "totalSeconds": 275.554,
+      "lockWaitSeconds": null
+    },
+    {
+      "compound": "plan-rest-c1-from0",
+      "started": "2026-11-15T11:12:31.7664077+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 255.799,
+      "totalSeconds": 386.031,
+      "lockWaitSeconds": 130
+    },
+    {
+      "compound": "plan-rest-c2-from14",
+      "started": "2026-11-15T11:19:12.8117863+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 370.824,
+      "totalSeconds": 661.149,
+      "lockWaitSeconds": 290
+    },
+    {
+      "compound": "plan-rest-c3-from121",
+      "started": "2026-11-15T11:30:28.9691399+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 247.216,
+      "totalSeconds": 807.705,
+      "lockWaitSeconds": 560
+    },
+    {
+      "compound": "plan-rest-c4-from124",
+      "started": "2026-11-15T11:44:11.6949942+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 340.685,
+      "totalSeconds": 901.35,
+      "lockWaitSeconds": 561
+    },
+    {
+      "compound": "plan-rest-c5-from128",
+      "started": "2026-11-15T11:59:28.0519334+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 363.799,
+      "totalSeconds": 914.565,
+      "lockWaitSeconds": 551
+    },
+    {
+      "compound": "plan-ext-c1-from0",
+      "started": "2026-11-15T12:16:15.7041701+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 294.253,
+      "totalSeconds": 319.365,
+      "lockWaitSeconds": 25
+    },
+    {
+      "compound": "plan-gq-c1-from0",
+      "started": "2026-11-15T13:00:26.5144246+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 357.285,
+      "totalSeconds": 877.904,
+      "lockWaitSeconds": 521
+    },
+    {
+      "compound": "plan-gq-c2-from89",
+      "started": "2026-11-15T13:15:19.4368266+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 317.411,
+      "totalSeconds": 352.454,
+      "lockWaitSeconds": 35
+    },
+    {
+      "compound": "plan-gq-c3-from110",
+      "started": "2026-11-15T13:21:26.8911283+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 181.879,
+      "totalSeconds": 297.035,
+      "lockWaitSeconds": 115
+    },
+    {
+      "compound": "plan-gq-c4-from118",
+      "started": "2026-11-15T13:26:38.9373694+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 132.964,
+      "totalSeconds": 137.988,
+      "lockWaitSeconds": 5
+    },
+    {
+      "compound": "plan-gq-c5-from122",
+      "started": "2026-11-15T13:29:11.9480047+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 97.93,
+      "totalSeconds": 323.186,
+      "lockWaitSeconds": 225
+    },
+    {
+      "compound": "plan-gq-c6-from124",
+      "started": "2026-11-15T13:34:50.1428243+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 101.26,
+      "totalSeconds": 206.483,
+      "lockWaitSeconds": 105
+    },
+    {
+      "compound": "plan-gq-c7-from125",
+      "started": "2026-11-15T13:38:31.6356340+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 123.722,
+      "totalSeconds": 404.229,
+      "lockWaitSeconds": 281
+    },
+    {
+      "compound": "plan-gq-c8-from127",
+      "started": "2026-11-15T13:45:30.8820174+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 108.051,
+      "totalSeconds": 223.112,
+      "lockWaitSeconds": 115
+    },
+    {
+      "compound": "plan-gq-c9-from129",
+      "started": "2026-11-15T13:49:28.9968724+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 108.597,
+      "totalSeconds": 243.713,
+      "lockWaitSeconds": 135
+    },
+    {
+      "compound": "plan-gq-c10-from130",
+      "started": "2026-11-15T13:53:47.7196609+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 36.93,
+      "totalSeconds": 121.982,
+      "lockWaitSeconds": 85
+    },
+    {
+      "compound": "plan-quick-c1-from0",
+      "started": "2026-11-15T13:59:48.8093043+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 243.692,
+      "totalSeconds": 253.802,
+      "lockWaitSeconds": 10
+    },
+    {
+      "compound": "plan-quick-c2-from2",
+      "started": "2026-11-15T14:04:17.6280341+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 312.948,
+      "totalSeconds": 312.958,
+      "lockWaitSeconds": 0
+    },
+    {
+      "compound": "plan-quick-c3-from3",
+      "started": "2026-11-15T14:09:45.5917938+07:00",
+      "outcome": "ok",
+      "nodeSeconds": 169.559,
+      "totalSeconds": 169.568,
+      "lockWaitSeconds": 0
+    }
+  ]
+}

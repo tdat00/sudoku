@@ -1,0 +1,22 @@
+MS13b source bytes frozen before E (2026-11-17T02:50:31+07:00), SHA-256 (generator\tests\artifacts\difficulty-v3\MS13b\freeze-hashes.cjs):
+501481B415F1AD9B49D3BE355767C8922C5475FF2D93200A41DA1338705B9AEE  core\js\engine\tech-chain.js
+F29C05059E4721A2F904584AB10490933B75728FF08E889A6325989EFC8081F8  generator\js\engine\difficulty.js
+F4DF4B9C24DDE5E2983D9C075F910C233004C6DA9E11473DAD2C33BA483C6D5B  generator\js\ui\i18n.js
+8FB903EA3AF496DFED97B3E6D2479EECBF096DD5EE5BBCC3076427EE8A861487  generator\js\ui\locale.en.js
+AFCDFB725FC21572733343B21F02E473C7203089C39A61169111B5CDCDFC1144  generator\js\ui\locale.vi.js
+2A6504F7761C3433A760D9FDE056741B8D06C39AC867066D28C37641913A3631  player\js\ui\i18n.js
+5A09039FC1D2EB69C77D283891C62AA5458FB4128B2C79EEFDE1E12BB94D47E8  player\js\ui\play.js
+F7C1A1D2F5B849F7CA6C32E059A1FAAF5491885CF307CBF71114A61F570A0EBB  player\js\ui\locale.en.js
+3B1EF1738D1EA0212CDF62CDC0A653156065EFBC1B6BBE720971D62921B20017  player\js\ui\locale.vi.js
+CDC3CDF9F7CA30F10B4281C06938AC7D92A9FA1683ED35C69B9475AB20240BE2  generator\tests\fixtures\perf-helper.js
+EEC5E268287F0543FB3E1677B293B64C75618D68F50E7F176573DBB1729367C6  generator\tests\fixtures\tool-records.js
+7395472B46BCFE7F93F805EFC1FC4747003DA43E2FA53645EC0AE6A25E8F9A60  generator\tests\perf.js
+2D63205F0D27D1C96A7D19BF791DBFBF56435CE7363CB8F54A19627D2E8887EF  generator\tests\replay-fixtures.js
+5918B212E63E58D0FA3A6ECFF0DF04B5CC1C25AA094E59DA48A3E206B9FD9D9E  generator\tests\replay-goldens.js
+CAC19B64D3547311056486061E846D22DAC63535AE3E9AD5EA2CF83A868AA88E  generator\tests\fixtures\replay-recording.js
+
+tree hashes (SHA-256 of the sorted "relative path : file hash" lines):
+FA86482B4554E4E6BEB179EDEEBAEED55D9B5C9ABA370CFD4F4225011D744235  core\js (23 files)
+3780A7E15F79324D5266EF44298E67783F9AEB07C55D303E2FFFD8D471D77834  generator\js (37 files)
+
+Against MS13a's frozen record (docs/difficulty-v3/evidence/MS13a/engine-frozen.txt): tech-chain.js, difficulty.js, perf-helper.js, tool-records.js, perf.js, replay-fixtures.js and replay-goldens.js are byte-identical, and the core\js tree hash FA86482B... is the same. What changed is generator\js\ui\i18n.js, locale.en.js and locale.vi.js (hence the generator\js tree hash, 5C43DCE2... before, 3780A7E1... now), in the replay identity and not in the hash identity (perf.js engineFiles skip js/ui and js/worker). player\js\ui\* is in neither identity.

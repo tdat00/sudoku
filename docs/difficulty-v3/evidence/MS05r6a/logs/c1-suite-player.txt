@@ -1,0 +1,27 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 66 passed, 3 failed  (138.40 s)
+
+Failures:
+  FAIL player > player: texts of the steps > the example of the guides: Classic 9x9 easy, seed 3, replays in 7 steps (26 with every move shown)
+       AssertionError: expected Array(7)[0, 15, 26, 44, 46, 100, 100] to equal Array(7)[0, 14, 24, 34, 44, 46, 46]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:683:81)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected "replay.guided" to be "replay.folded.reveal"
+       at Q:\git\sudoku\generator\tests\suites\player.test.js:697:30
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:694:46)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)
+       AssertionError: expected 29 to be 27
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1001:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  69 total, 66 passed, 3 failed, 0 skipped
+Time:   138.40 s running tests, 138.58 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/pins/player-run1.json

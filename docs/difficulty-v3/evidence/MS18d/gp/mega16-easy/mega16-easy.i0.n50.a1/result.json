@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "mega16-easy.i0.n50.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "mega16",
+    "level": "easy",
+    "targetMs": 4000
+  },
+  "task": "MS18d GP record mega16-easy.i0.n50 a1",
+  "startedAtMs": 1795088863176,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "additional-consumer: process 3640 (svchost.exe) gained 0.924 CPU-s per elapsed second"
+  ],
+  "heldAt": "readiness",
+  "eligibleReAsk": true,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 265000,
+      "systemMicros": 218000
+    }
+  },
+  "finishedAtMs": 1795088871805
+}

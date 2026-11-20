@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS16\check-format.cjs
+checked 57 files, 0 with problems
+E-hashed sources 68 of 68; of them modified or new: core/js/engine/tech-als.js, generator/js/engine/difficulty.js, generator/js/ui/locale.en.js, generator/js/ui/locale.vi.js
+exit=0 seconds=2.204

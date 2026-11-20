@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "kind": "g13-closure",
+  "task": "MS05r4",
+  "complete": true,
+  "request": {
+    "variantId": "samurai",
+    "difficulty": "nightmare",
+    "seed": "42"
+  },
+  "config": {
+    "variantId": "samurai",
+    "difficulty": "nightmare",
+    "symbolMode": "digits",
+    "symmetry": "rotational180",
+    "digOrder": "random",
+    "maxAttempts": 8,
+    "variantOptions": {},
+    "seed": 42
+  },
+  "guardMs": 120000,
+  "identity": {
+    "sourceHash": "9a833d9376381c6f9e2df4c5a79aba981bbd8a3dafce9e572ff2641bd61759ce",
+    "loaderHash": "4b35fb73335a4dad5e38e872a2f00b4dc2c35e0602036f382b878681e2cb82af",
+    "scriptHash": "eedeff26d9578ba3c1e3ed2d1d85683e52f498507829791221c8698358b538c4",
+    "script": "tests/artifacts/difficulty-v3/MS05r4/g13-closure.cjs",
+    "loaderFiles": [
+      "tests/replay-fixtures.js",
+      "tests/fixtures/replay-goldens.js"
+    ],
+    "commit": "f788e02616e7968143030700205d9a8ab843904c",
+    "dirty": true,
+    "node": "v26.13.0"
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "selectedDefault": {
+    "text": "256",
+    "shallowSearchRatings": 256
+  },
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r4\\preflight\\G13.json"
+  ],
+  "startedAt": "2026-11-13T06:13:19.756Z",
+  "outcome": "ok",
+  "wallMs": 104711.508,
+  "error": null,
+  "result": {
+    "attempts": 8,
+    "exact": false,
+    "required": false,
+    "score": 1637,
+    "achieved": "nightmare",
+    "hardestTechnique": "forcingChain",
+    "solved": true,
+    "warnings": [
+      "difficulty.approximate",
+      "difficulty.shallow"
+    ],
+    "clues": 106,
+    "puzzleHash": "3c72d4b8d9622a3b67f08fde8a4b0e19baddeaea8fd22bfa27e9cb84c0292a04"
+  },
+  "work": [
+    {
+      "ratings": 275,
+      "proposals": 1885,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1885,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 290,
+      "proposals": 1522,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1522,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 274,
+      "proposals": 1920,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1920,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 292,
+      "proposals": 1867,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1867,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 281,
+      "proposals": 1227,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1227,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 275,
+      "proposals": 1168,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1168,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 272,
+      "proposals": 1652,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1652,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 272,
+      "proposals": 1511,
+      "maxRatings": 1024,
+      "maxProposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "proposals": 1511,
+          "firstShallowAt": 0,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    }
+  ],
+  "workUnavailableReason": null
+}

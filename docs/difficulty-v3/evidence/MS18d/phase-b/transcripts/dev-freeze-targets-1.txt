@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\freeze-targets.js --preflight=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json --json=..\docs\difficulty-v3\evidence\MS18d\phase-b\targets-frozen.json
+INVALID: --json must be inside the repo
+exit=2 seconds=0.096

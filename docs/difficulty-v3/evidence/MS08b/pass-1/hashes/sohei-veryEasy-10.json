@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "030e5bb83b341e283e8dae826c575015759d26409f714a033e4e939ad0e79b16",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "75b99e69b792c9fba4c8ea69506cb3907809cf45",
+  "dirty": true,
+  "generatedAt": "2026-11-15T11:13:14.781Z",
+  "argv": ["--hash-key=sohei/veryEasy","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS08b\\hashes\\sohei-veryEasy-10.json"],
+  "records": [
+    {"key":"sohei/veryEasy#144","variant":"sohei","level":"veryEasy","seed":144,"hash":"19434e6df9b68c69","ms":27,"overrides":[]},
+    {"key":"sohei/veryEasy#233","variant":"sohei","level":"veryEasy","seed":233,"hash":"c62bda95e241daf1","ms":13,"overrides":[]},
+    {"key":"sohei/veryEasy#377","variant":"sohei","level":"veryEasy","seed":377,"hash":"07550a1e621f5682","ms":9,"overrides":[]},
+    {"key":"sohei/veryEasy#610","variant":"sohei","level":"veryEasy","seed":610,"hash":"df82d5a102579495","ms":9,"overrides":[]},
+    {"key":"sohei/veryEasy#987","variant":"sohei","level":"veryEasy","seed":987,"hash":"8f489f862f61874a","ms":7,"overrides":[]}
+  ]
+}

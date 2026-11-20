@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS18e\quick\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   player: 70 passed  (58.35 s)
+
+Suites: 1
+Tests:  70 total, 70 passed, 0 failed, 0 skipped
+Time:   58.35 s running tests, 58.58 s total
+Results: docs/difficulty-v3/evidence/MS18e/quick/generator-player.json
+exit=0 seconds=58.829

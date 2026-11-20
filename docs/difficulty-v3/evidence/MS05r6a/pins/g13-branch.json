@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e2c5ac13da302247b985595faf8f3ad1661ef6b86e50486874294c37d655474d",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["player","replay","steps"],"filter":"reads G13 from the saved wire","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 200.9,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 18.1,
+    "tests": [
+      {"suite":"player","name":"reads G13 from the saved wire and never regenerates it (a spy on the pipeline)","fullName":"player > player: the replay steps of a result > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)","status":"pass","ms":8.092,"reason":"","error":null,"ordinal":0},
+      {"suite":"replay","name":"reads G13 from the saved wire and never regenerates it (a spy on the pipeline)","fullName":"replay > replay: golden details > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)","status":"pass","ms":4.556,"reason":"","error":null,"ordinal":25},
+      {"suite":"steps","name":"reads G13 from the saved wire and never regenerates it (a spy on the pipeline)","fullName":"steps > stepView: the description of the step on show > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)","status":"pass","ms":4.344,"reason":"","error":null,"ordinal":0}
+    ],
+    "suites": [
+      {"name":"player","total":1,"passed":1,"failed":0,"skipped":0,"ms":8.366},
+      {"name":"replay","total":1,"passed":1,"failed":0,"skipped":0,"ms":5.024},
+      {"name":"steps","total":1,"passed":1,"failed":0,"skipped":0,"ms":4.504}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=steps,replay,player","--filter=reads G13 from the saved wire","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\g13-branch.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

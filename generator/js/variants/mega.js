@@ -56,20 +56,14 @@
    *           The first is the default; `make(D)` returns the labels of the values 1..D.
    */
 
-  /**
-   * Levels are measured (`node tests/qualify.js`): both boards hit every level, hell2 included, within the
-   * 30 s budget of larger boards; the top tiers come from the fast proposal dig refined into the band.
-   */
-  const LEVELS = Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
-    'hell1', 'hell2']);
-
   /** @type {Object<string, MegaSpec>} */
   const SPECS = Object.freeze({
     mega12: Object.freeze({
       id: 'mega12',
       boxRows: 3,
       boxCols: 4,
-      difficultySupport: LEVELS,
+      difficultySupport: Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare',
+        'hell2']),
       restartThreshold: 300,
       symbolSets: Object.freeze([
         Object.freeze({ value: 'letters', make: digitsThenLetters }),
@@ -80,7 +74,7 @@
       id: 'mega16',
       boxRows: 4,
       boxCols: 4,
-      difficultySupport: LEVELS,
+      difficultySupport: Object.freeze(['veryEasy', 'easy', 'normal', 'hard', 'master', 'hell2']),
       restartThreshold: 400,
       symbolSets: Object.freeze([
         Object.freeze({ value: 'hex', make: hexadecimal }),

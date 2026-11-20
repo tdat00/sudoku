@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-analysis-G01 0.637 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G02-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-analysis-G02 0.496 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G03-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 13,
+    "projectionBasis": "MS06c1 g-analysis-G03 6.214 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G04-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-analysis-G04 1.106 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G05-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS06c1 g-analysis-G05 1.017 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G06-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-analysis-G06 1.831 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G07-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-analysis-G07 1.523 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G08-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS06c1 g-analysis-G08 0.518 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G09-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 25,
+    "projectionBasis": "MS06c1 g-analysis-G09 14.014 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G10-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 43,
+    "projectionBasis": "MS06c1 g-analysis-G10 26.019 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G11-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MS06c1 g-analysis-G11 8.531 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G12-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS06c1 g-analysis-G12 4.247 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G13-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 37,
+    "projectionBasis": "MS06c1 g-analysis-G13 22.044 s before the activation; 1.5 x + 3 s"
+  },
+  {
+    "label": "g-analysis-G14-r2",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS06c1 g-analysis-G14 1.834 s before the activation; 1.5 x + 3 s"
+  }
+]

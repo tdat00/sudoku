@@ -1,0 +1,81 @@
+== BATCH retry-1 : 1 cells at 2026-11-14T06:10:52.0010920+07:00
+== CELL i5-jigsaw-master requests=20 projection=63s (revised: it is 3 x the 19.9 s of i5-jigsaw-nightmare (the level after it, the same 20 requests) + 3 s; the first projection of 1028 s was 3 x the 17.09 s mean per request of jigsaw expert, which one request of 325.3 s makes (the median there is 0.9 s); no guard bounds an I5 request, so a timeout stays possible and would be recorded as such (was 1028.352 s: 3 x observed 17.0892 s per request of i5-jigsaw-expert x 20 + 3 s (above the budget projection of the manifest)))
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/i5-jigsaw-master.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+jigsaw
+corpus master: 20 requests, ms [130,38,65,54,21,107,49,89,156,20,65,47,27,77,36,17,41,40,45,39]
+  ok   jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens (1.18 s)
+ok   jigsaw: 1 passed  (1.18 s)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1.18 s running tests, 1.36 s total
+Results: docs/difficulty-v3/evidence/MS05b3/i5/i5-jigsaw-master.json
+== END i5-jigsaw-master class=pass exit=0 process=2.799s wall=98.099s slot=locked status=pass
+== BATCH retry-1 finished at 2026-11-14T06:12:30.7831441+07:00

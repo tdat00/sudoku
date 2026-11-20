@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=tech-als --filter=als-xz
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   tech-als: 13 passed  (147 ms)
+
+Suites: 1
+Tests:  13 total, 13 passed, 0 failed, 0 skipped
+Time:   147 ms running tests, 267 ms total
+exit=0 seconds=0.368

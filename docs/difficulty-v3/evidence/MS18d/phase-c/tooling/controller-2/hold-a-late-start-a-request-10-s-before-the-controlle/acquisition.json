@@ -1,0 +1,67 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795077714636,
+  "startedAtMs": 1795077724714,
+  "lockAcquiredAtMs": 1795077714641,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795077699136,
+    "lastCheckMs": 1795077714436,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 10078,
+  "late": true,
+  "latestRelease": {
+    "atMs": 1795076825634,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899080,
+  "foreignReleaseProof": [],
+  "reasons": [
+    "late-start-and-foreign-release-unproved"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 29016,
+    "task": "stand-in hold-a-late-start-a-request-10-s-before-the-controlle",
+    "controllerPid": 25036,
+    "controllerParentPid": 29016,
+    "wrapperPid": 29016
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-a-late-start-a-request-10-s-before-the-controlle\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-a-late-start-a-request-10-s-before-the-controlle\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-a-late-start-a-request-10-s-before-the-controlle\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

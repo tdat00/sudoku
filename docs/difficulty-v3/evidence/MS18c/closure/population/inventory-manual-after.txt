@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --manual --list-tests=..\docs\difficulty-v3\evidence\MS18c\closure\population\inventory-manual-after.json
+Inventory: 1029 tests in 8 suites (0 skipped, 1 benchmarks), registration 0.3 s
+Written: docs/difficulty-v3/evidence/MS18c/closure/population/inventory-manual-after.json
+exit=0 seconds=0.368

@@ -1,0 +1,189 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-recorder-merge.js
+ok   recorder: one planned chunk: two stdout lines, a new ledger of the raw times, ONE call
+ok   recorder: a one-chunk cell uses the same schema (k = 1)
+ok   recorder: the ledger is created exclusively: never overwritten, nothing measured again
+ok   recorder: refuses before the measured call (exit 2): NODE_OPTIONS set (never silently cleared)
+ok   recorder: refuses before the measured call (exit 2): a Node flag (process.execArgv not empty)
+ok   recorder: refuses before the measured call (exit 2): a stand-in request without the stand-in root
+ok   recorder: refuses before the measured call (exit 2): an unknown argument
+ok   recorder: refuses before the measured call (exit 2): a request that is not a recorder request
+ok   recorder: refuses before the measured call (exit 2): a request naming another plan digest
+ok   recorder: refuses before the measured call (exit 2): a chunk that differs from the plan entry
+ok   recorder: refuses before the measured call (exit 2): an attempt that does not match the slot
+ok   recorder: refuses before the measured call (exit 2): a binding that is not ok
+ok   recorder: a source or tool changed since the plan is refused (E, loaded-file list)
+ok   recorder: CRLF re-saving a source keeps E but the executed-digest list catches it
+ok   recorder: an executed target unlike the plan, or a chunk outside its slot, is refused
+ok   recorder: another Node or machine than the plan, or a changed helper, is refused
+ok   recorder: the measured call throws: exit 3, no ledger, no completion marker
+ok   recorder: too few times are returned: exit 3, no ledger, no completion marker
+ok   recorder: a NaN time is returned: exit 3, no ledger, no completion marker
+ok   recorder: a negative time is returned: exit 3, no ledger, no completion marker
+ok   recorder: a ledger that cannot be created is exit 4, no marker, the other file intact
+ok   recorder: an unexpected error (the plan path is a directory) is exit 5, never 0 or 1
+ok   recorder: killed mid-call: no ledger, no marker, no success
+ok   merge R1: a complete pass: exit 0, the last line is the result line, stderr empty
+ok   merge R1: a complete gate failure is exit 1 with the result line, meets=false
+ok   merge: a selected cell (declared optional slot): pass exit 0, MISS exit 1 with p95
+ok   merge: no selected-cell merge without a declared slot (the real plan declares none)
+ok   merge: the final merge needs no selected-cell merge report (optional, no prerequisite)
+ok   merge: raw sorted[24]/[47]/[49], never chunk percentiles; strict p95 < target
+ok   merge: p95 just below the target (unrounded) meets; decisions never use rounded values
+ok   merge: cold-start disclosure: first requests >= sorted[47] (ties), extra-start flag
+ok   merge: the final gate is an integer count: 72 of 79 -> exit 0
+ok   merge: the final gate is an integer count: 71 of 79 -> exit 1
+ok   merge: the final gate is an integer count: 79 of 79 -> exit 0
+ok   merge: the final gate is an integer count: 0 of 79 -> exit 1
+ok   merge refuses (exit 2, no result line, no stderr): a missing result.json
+ok   merge refuses (exit 2, no result line, no stderr): a missing wrapper.json
+ok   merge refuses (exit 2, no result line, no stderr): a missing cleanup.json
+ok   merge refuses (exit 2, no result line, no stderr): a missing admission.json
+ok   merge refuses (exit 2, no result line, no stderr): a missing ledger
+ok   merge refuses (exit 2, no result line, no stderr): a missing stdout.txt
+ok   merge refuses (exit 2, no result line, no stderr): a missing pids.jsonl (no exit receipt)
+ok   merge refuses (exit 2, no result line, no stderr): a stdout marker with another digest
+ok   merge refuses (exit 2, no result line, no stderr): no completion marker (a killed recorder)
+ok   merge refuses (exit 2, no result line, no stderr): a stderr byte
+ok   merge refuses (exit 2, no result line, no stderr): a nonzero command exit
+ok   merge refuses (exit 2, no result line, no stderr): a command that ended on a signal
+ok   merge refuses (exit 2, no result line, no stderr): stderr bytes counted by the tee
+ok   merge refuses (exit 2, no result line, no stderr): a controller result that is a stop
+ok   merge refuses (exit 2, no result line, no stderr): a classification that is not complete
+ok   merge refuses (exit 2, no result line, no stderr): a barrier that is not clean
+ok   merge refuses (exit 2, no result line, no stderr): a cleanup record that is not clean
+ok   merge refuses (exit 2, no result line, no stderr): a tee marker with a nonzero exit
+ok   merge refuses (exit 2, no result line, no stderr): a wrapper outcome that is a stop
+ok   merge refuses (exit 2, no result line, no stderr): wrapper problems
+ok   merge refuses (exit 2, no result line, no stderr): a request that is not a real recorder request
+ok   merge refuses (exit 2, no result line, no stderr): a request for another attempt slot
+ok   merge refuses (exit 2, no result line, no stderr): a request naming another campaign base
+ok   merge refuses (exit 2, no result line, no stderr): a binding that is not ok
+ok   merge refuses (exit 2, no result line, no stderr): stand-in provenance (everywhere, though every hash matches)
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with a wrong seed
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with another target
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with a wrong chunk range
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with an overlapping index
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with a missing request
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with a NaN (null) time
+ok   merge refuses (exit 2, no result line, no stderr): a ledger with a negative time
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of another source (E hash)
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of another plan
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of other helpers
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of another Node
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of another machine
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of another policy
+ok   merge refuses (exit 2, no result line, no stderr): a ledger of another campaign base
+ok   merge refuses (exit 2, no result line, no stderr): a ledger recorded with an execArgv flag
+ok   merge refuses (exit 2, no result line, no stderr): a ledger recorded with NODE_OPTIONS
+ok   merge refuses (exit 2, no result line, no stderr): a ledger whose transport reference is wrong
+ok   merge refuses (exit 2, no result line, no stderr): a ledger HEAD that is not the bound HEAD
+ok   merge refuses (exit 2, no result line, no stderr): a corrupted ledger (truncated JSON)
+ok   merge refuses: a missing chunk leaves the cell incomplete (nothing is filled in)
+ok   merge refuses: a duplicate (two complete runs) and a replacement of a started chunk
+ok   merge: lawful continuation: an unstarted hold, then a complete run on attempt 2
+ok   merge R2: an undeclared or declared-looking directory, a loose file, a non-flat folder
+ok   merge R2: the merge itself must run in its declared slot (a guessed folder is invalid)
+ok   merge R5: execArgv or NODE_OPTIONS is invalid input; the named plan must be the one
+ok   merge R1: an unexpected exception is caught at the top level: exit 3, never 1
+ok   merge R3: HEADs differ from the base only under ancestry and an allowed diff
+ok   merge R3: helper identity drift between ledgers is refused (one common identity)
+ok   merge: the frozen command line of a real recorder run is checked (a real merge only)
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: stdout.txt x
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: stderr.txt x
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: transcript.txt x
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: ledger.json {}
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: pids.jsonl {"role":"tee","pid":1}
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: pids.jsonl {"role":"command","pid
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: pids.jsonl {"event":"command-exit
+ok   F5: a control-hold with a payload sign is not a hold but a failed run: pids.jsonl {"event":"tee-exit","s
+ok   F5: a control-hold with only the controller's own pid record is a hold
+ok   F5: a wrapper.json saying only foreign-lock-watch is a hold; with a file beside it, no
+ok   F5: a real run whose request has command.exec is rejected (the tee executable)
+ok   F6: the merger rejects no readiness record in admission.json
+ok   F6: the merger rejects a readiness record that did not run
+ok   F6: the merger rejects a readiness record that is not complete
+ok   F6: the merger rejects a readiness record that is an eligible hold
+ok   F6: the merger rejects a cited readiness.json that is another file
+ok   F6: the merger rejects a missing readiness.json
+ok   F6: the merger rejects a missing first snapshot
+ok   F6: the merger rejects a missing second snapshot
+ok   F6: the merger rejects a decision that is not the one the data give
+ok   F6: the merger rejects a second snapshot changed after the decision
+ok   F6: the merger rejects an additional consumer in the retained data (honestly recorded)
+ok   F6: the merger rejects a short full-core burst of a new process (honestly recorded, R1)
+ok   F6: the merger rejects a replaced host (honestly recorded)
+ok   F6: the merger rejects a host tuple that is not the one the journal approved
+ok   F6: the merger rejects a host binding id that is not in the committed journal (unapproved)
+ok   F6: the merger rejects a binding that was not the one in force at admission
+ok   F6: the merger rejects a journal digest that is no prefix of the committed journal
+ok   F6: the merger rejects a binding whose evidence is not recorded as verified
+ok   F6: the merger rejects a recorded host that differs from the journal entry
+ok   F6: the merger rejects a readiness record that names no binding at all
+ok   F6: the merger rejects another logical processor count
+ok   F6: the merger rejects an excluded wrapper that is not the run's
+ok   F6: the merger rejects an excluded controller that is not the run's
+ok   F6: the merger rejects an excluded process of another role
+ok   F6: the merger rejects an excluded probe that is no snapshot's
+ok   F6: the merger rejects more than 60 s between the call and the payload
+ok   F6: the merger rejects a late start recorded
+ok   F6: the merger rejects a readiness over the 45 s budget
+ok   F6: policy A admits a busy host (ready false) and the merge passes: ready is no verdict
+ok   F6/R1: a young new process (0.3 s, 0.3 CPU-s) passes; its data made a burst is refused
+ok   F6: an approved rebinding is judged for ITS admissions; earlier ledgers stay valid
+ok   F6: an empty, invalid or missing host-binding journal makes the merge invalid (exit 2)
+ok   F6: a REAL merge reads the journal at HEAD: base prefix and evidence digests checked
+ok   G3 recorder: only exit 0 with the exact ledger and a clean transport is a success
+ok   G3 recorder: STOP (exit 65): exit 1 (no verdict exists for a recorder)
+ok   G3 recorder: STOP (exit 65): a signal
+ok   G3 recorder: STOP (exit 65): a stderr byte
+ok   G3 recorder: STOP (exit 65): an unrecorded stderr count
+ok   G3 recorder: STOP (exit 65): an unclean barrier
+ok   G3 recorder: STOP (exit 65): a binding that is not ok
+ok   G3 recorder: STOP (exit 65): an acquisition that did not proceed
+ok   G3 recorder: STOP (exit 65): a tee exit that differs from the command
+ok   G3 recorder: STOP (exit 65): no ledger
+ok   G3 recorder: STOP (exit 65): a ledger that is not the one the marker names
+ok   G3 recorder: STOP (exit 65): stdout that has an extra line
+ok   G3 recorder: STOP (exit 65): stdout that has no marker
+ok   G3 recorder: STOP (exit 65): another chunk in the request
+ok   G3 recorder: STOP (exit 65): another plan in the request
+ok   G3 recorder: STOP (exit 65): another campaign base
+ok   G3 recorder: STOP (exit 65): stand-in provenance in a real request
+ok   G3 recorder: STOP (exit 65): a HEAD that is not the bound HEAD
+ok   G3 merge: exit 0 with meets=true and exit 1 with meets=false are defined; a cell too
+ok   G3 merge: STOP (never a MISS): exit 1 without a result line
+ok   G3 merge: STOP (never a MISS): exit 1 with a line that is not machine readable
+ok   G3 merge: STOP (never a MISS): exit 1 with a stderr byte
+ok   G3 merge: STOP (never a MISS): exit 1 with meets=true
+ok   G3 merge: STOP (never a MISS): exit 0 with meets=false
+ok   G3 merge: STOP (never a MISS): exit 2 (incomplete input) with a result line
+ok   G3 merge: STOP (never a MISS): exit 3 (unexpected exception)
+ok   G3 merge: STOP (never a MISS): another scope than requested
+ok   G3 merge: STOP (never a MISS): a gate that is not the manifest gate
+ok   G3 merge: STOP (never a MISS): meets that disagrees with the integer success count
+ok   G3 merge: STOP (never a MISS): a report that disagrees with the line
+ok   G3 merge: STOP (never a MISS): a report with another success count
+ok   G3 merge: STOP (never a MISS): no report
+ok   G3 merge: STOP (never a MISS): a signal
+ok   G3 merge: STOP (never a MISS): an unclean barrier
+ok   G3: the payload types are registered with their exit semantics (a miss exit: merge)
+ok   payload request checks: a real recorder or merge takes only the frozen command line
+ok   epoch: two valid pairs merge; an epoch-1 hold then an epoch-2 attempt 2 is accepted
+ok   epoch: each ledger is judged against its OWN pair: no third pair, no swapped pair
+ok   epoch: no base-2 record, or one that is damaged, edited or not the pair of the request
+ok   epoch: the helper manifests may differ only in the three production files and tests
+ok   epoch: the committed B1 -> B2 diff holds only the allowed paths and the ancestry holds
+ok   epoch: the transition proof is the committed, cited bytes and the recomputed facts
+ok   epoch: the epoch-1 ledgers are exactly the retained successes; none retagged, replaced
+ok   epoch: a missing remaining record is incomplete, never a fabricated success
+ok   epoch tooling: --data emits the exact change list; a disallowed difference is exit 2
+ok   epoch: a request at the base of epoch 1 needs no record; real merges use the constants
+ok   epoch 3: three chained pairs merge: B1 successes, a B2-era hold, a B3 attempt 2
+ok   epoch 3: a merge at B2 reads only the base-2 record; a third pair needs its own record
+ok   epoch 3: B2 contributes no success; a ledger of (B2, H2) or any other pair is refused
+ok   epoch 3: the base-3 record must be valid against the base-2 epoch
+ok   epoch 3: the manifests of B2 and B3 differ only in the four production files and tests
+ok   epoch 3: the committed B2 -> B3 diff holds only the allowed paths
+ok   epoch 3: no retagging, no discarded hold, no replacement of a started payload
+186 passed, 0 failed
+exit=0 seconds=51.432

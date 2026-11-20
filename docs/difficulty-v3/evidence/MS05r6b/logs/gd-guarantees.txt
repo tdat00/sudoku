@@ -1,0 +1,83 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+difficulty
+  ok   difficulty > digger.generate: guarantees > I4: the same seed gives the same puzzle, another seed another one (15.17 s)
+  ok   difficulty > digger.generate: guarantees > is independent of the emit callback (12 ms)
+  ok   difficulty > digger.generate: guarantees > returns the documented fields (20 ms)
+  ok   difficulty > digger.generate: guarantees > honours minClues and the unit floor of the spec on every level (17.00 s)
+  ok   difficulty > digger.generate: guarantees > works with other symmetries and with none (327 ms)
+  ok   difficulty > digger.generate: guarantees > keeps the configured symmetry on the top tiers too (proposals and their refinement) (17.17 s)
+  ok   difficulty > digger.generate: guarantees > digLevel makes one attempt from a given solution and says whether it hit the level (6 ms)
+  ok   difficulty > digger.generate: guarantees > works on the smaller boards for the levels they support (2.05 s)
+  ok   difficulty > digger.generate: guarantees > rejects a level the variant does not support and options that make no sense (1 ms)
+  ok   difficulty > digger.generate: guarantees > propagates a budget that runs out instead of swallowing it (1 ms)
+ok   difficulty: 10 passed  (51.76 s)
+
+Suites: 1
+Tests:  10 total, 10 passed, 0 failed, 0 skipped
+Time:   51.76 s running tests, 51.95 s total
+Results: docs/difficulty-v3/evidence/MS05r6b/gd/guarantees.json

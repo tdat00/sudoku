@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS15b\mechanism.js --kind=wire --only=G10,G13 --out=..\docs\difficulty-v3\evidence\MS15b\mechanism-wire-base-cross.json --cross=..\docs\difficulty-v3\evidence\MS15b\mechanism-wire-tree.json
+G10 killer nightmare 42: engine git:b958a58 clues 24, own rating nightmare/2199; the puzzle of tree (clues 9, same regions true, same puzzle false) rated here hell1/2703
+G13 samurai nightmare 42: engine git:b958a58 clues 138, own rating nightmare/2363; the puzzle of tree (clues 120, same regions true, same puzzle false) rated here hell1/2455
+exit=0 seconds=112.800

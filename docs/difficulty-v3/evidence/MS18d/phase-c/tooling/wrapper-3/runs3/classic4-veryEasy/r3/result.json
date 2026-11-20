@@ -1,0 +1,100 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "r3",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in r3",
+  "startedAtMs": 1795078107970,
+  "outcome": "miss",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-cell",
+    "outcome": "miss",
+    "complete": true,
+    "controllerExit": 1,
+    "kinds": [],
+    "problems": [],
+    "header": {
+      "node": "v26.13.0",
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "runs": 50,
+      "warmup": 0,
+      "seed": 7000
+    },
+    "row": {
+      "variant": "classic4",
+      "level": "veryEasy",
+      "target": "31 ms",
+      "p50": "7.75",
+      "p95": "46.5",
+      "max": "62.0",
+      "mean": "10.3",
+      "mark": "MISS"
+    },
+    "summary": {
+      "met": 0,
+      "cells": 1,
+      "percent": "0"
+    },
+    "miss": {
+      "key": "classic4/veryEasy",
+      "p95": "46.5",
+      "target": "31 ms",
+      "ratio": "1.50",
+      "max": "62.0"
+    },
+    "cli": {
+      "exit": 1,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=1 seconds=0.125",
+      "exit": 1
+    }
+  },
+  "cli": {
+    "exit": 1,
+    "signal": null
+  },
+  "tee": {
+    "pid": 32144,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=1 seconds=0.125",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 500,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 31000,
+      "systemMicros": 78000
+    },
+    "tee": {
+      "userMicros": 0,
+      "systemMicros": 93000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 1,
+  "finishedAtMs": 1795078109331
+}

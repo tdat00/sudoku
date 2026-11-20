@@ -1,0 +1,2 @@
+G12 greaterThan hard 3115968914: 3.7 s
+recorded 1 of 14 keys (G12) in docs/difficulty-v3/evidence/MS05r6a/analysis/G12.json; a ledger is one shard, merge them all with --merge

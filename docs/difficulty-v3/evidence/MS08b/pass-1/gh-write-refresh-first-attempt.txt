@@ -1,0 +1,8 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=hiddenTriple,xWing --max-puzzles=8 --max-hints=400 --write
+selected 2 technique ID(s); mode write
+replaying 2 puzzle(s) for 2 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/2 classic9 - - -> 64 hint(s), solved; wanted found: hiddenTriple
+puzzle 2/2 classic9 - - -> 80 hint(s), solved; wanted found: xWing
+the resulting catalogue is not complete and valid; player/js/ui/help-examples.js is untouched:
+  twoStringKite: not selected and not in the saved catalogue
+exit=1 seconds=0.327

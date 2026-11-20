@@ -515,7 +515,7 @@
       i18nKey: 'variant.wordoku',
       group: 'wordoku',
       digits: SIZE,
-      difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1'],
+      difficultySupport: ['veryEasy', 'easy', 'hard', 'expert', 'master', 'nightmare'],
       defaultSymbolMode: 'word',
       symbolModes: ['word', 'digits'],
       options: OPTIONS,

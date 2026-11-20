@@ -1,0 +1,101 @@
+{
+  "schema": "ms18d-c-request-1",
+  "runId": "k1",
+  "task": "stand-in k1",
+  "standin": true,
+  "profile": "gp-cell",
+  "allowExit1": true,
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "runDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\wrapper-5\\runs16\\classic4-veryEasy\\k1",
+  "repo": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\repo",
+  "command": {
+    "args": [
+      "tests\\perf.js",
+      "--variant=classic4",
+      "--level=veryEasy",
+      "--runs=50",
+      "--warmup=0",
+      "--seed=7000",
+      "--gate",
+      "--ascii"
+    ]
+  },
+  "requestedAt": "2026-11-19T18:13:24.035+07:00",
+  "wrapperPid": 27504,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "startedAtMs": 1795086788629,
+    "firstCheckMs": 1795086788629,
+    "lastCheckMs": 1795086804019,
+    "requiredWindowMs": 15300,
+    "maxIntervalAllowedMs": 1000,
+    "intervalMs": 250,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restartCount": 0,
+    "restarts": [],
+    "giveUpSeconds": 1199.9986357,
+    "gaveUp": false,
+    "notBeforeMs": 1795085019292,
+    "stub": true
+  },
+  "releaseSources": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs16\\a.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs16\\b.jsonl",
+      "kind": "log",
+      "required": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs16\\c.jsonl",
+      "kind": "log",
+      "required": false
+    }
+  ],
+  "cLedger": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs16\\c.jsonl",
+  "expected": {
+    "base": null,
+    "identities": {
+      "hashIdentity": "H",
+      "replayIdentity": "R",
+      "sources": "S"
+    },
+    "tableSha256": "TABLE",
+    "node": "v26.13.0",
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "manifestFile": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\helpers-manifest.txt",
+    "manifestSha256": null,
+    "required": [
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+    ],
+    "repoRoot": "Q:\\git\\sudoku"
+  },
+  "powershell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  "ownedProcesses": "Q:\\git\\sudoku\\generator\\tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\owned-processes.ps1",
+  "bindingFixture": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\fixture.json",
+  "teeDetached": true
+}

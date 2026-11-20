@@ -1,0 +1,36 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record mega12-expert.i25.n25 a1",
+  "runId": "mega12-expert.i25.n25.a1",
+  "cell": "mega12/expert",
+  "payload": "gp-recorder",
+  "chunkId": "mega12-expert.i25.n25",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1",
+  "requestedAt": "2026-11-19T18:37:20.486+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795088224376,
+    "lastCheckMs": 1795088239913,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-19T18:37:20.614+07:00",
+  "finished": "2026-11-19T18:37:49.190+07:00",
+  "releaseObservedAt": "2026-11-19T18:37:49.190+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

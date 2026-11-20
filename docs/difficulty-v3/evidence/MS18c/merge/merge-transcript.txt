@@ -1,0 +1,156 @@
+qualify: merged 135 cells from 135 shards, 4313 requests, 79 offered, 56 hidden (54 stopped early), jobs 4, Node v26.13.0, engine ed2fe50c sources 0ca29eaeebc295b6, rating version 3, shards 5759 s, wall span 10252 s
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| classic4 | veryEasy | 40 | 40 | 100 % | 1 ms | 10 ms | 13 ms | 2.00 s | offered |
+| classic4 | easy | 14 | 0 | 0 % | 126 ms | 184 ms | 184 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | normal | 14 | 0 | 0 % | 131 ms | 185 ms | 185 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | hard | 14 | 0 | 0 % | 182 ms | 265 ms | 265 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | expert | 14 | 0 | 0 % | 161 ms | 277 ms | 277 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | master | 14 | 0 | 0 % | 195 ms | 321 ms | 321 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | nightmare | 14 | 0 | 0 % | 209 ms | 303 ms | 303 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | hell1 | 14 | 0 | 0 % | 217 ms | 370 ms | 370 ms | 2.00 s | hidden (stopped: misses) |
+| classic4 | hell2 | 14 | 0 | 0 % | 234 ms | 420 ms | 420 ms | 2.00 s | hidden (stopped: misses) |
+| classic6 | veryEasy | 40 | 40 | 100 % | 2 ms | 13 ms | 14 ms | 2.00 s | offered |
+| classic6 | easy | 14 | 0 | 0 % | 346 ms | 387 ms | 387 ms | 2.00 s | hidden (stopped: misses) |
+| classic6 | normal | 14 | 0 | 0 % | 288 ms | 390 ms | 390 ms | 2.00 s | hidden (stopped: misses) |
+| classic6 | hard | 40 | 39 | 98 % | 65 ms | 321 ms | 399 ms | 2.00 s | offered |
+| classic6 | expert | 23 | 11 | 48 % | 317 ms | 581 ms | 582 ms | 2.00 s | hidden (stopped: misses) |
+| classic6 | master | 19 | 5 | 26 % | 501 ms | 789 ms | 789 ms | 2.00 s | hidden (stopped: misses) |
+| classic6 | nightmare | 14 | 0 | 0 % | 660 ms | 1.21 s | 1.21 s | 2.00 s | hidden (stopped: misses) |
+| classic6 | hell1 | 14 | 0 | 0 % | 800 ms | 1.15 s | 1.15 s | 2.00 s | hidden (stopped: misses) |
+| classic6 | hell2 | 14 | 0 | 0 % | 770 ms | 1.20 s | 1.20 s | 2.00 s | hidden (stopped: misses) |
+| classic9 | veryEasy | 40 | 40 | 100 % | 3 ms | 18 ms | 20 ms | 10.0 s | offered |
+| classic9 | easy | 40 | 40 | 100 % | 218 ms | 780 ms | 1.32 s | 10.0 s | offered |
+| classic9 | normal | 40 | 36 | 90 % | 398 ms | 876 ms | 953 ms | 10.0 s | offered |
+| classic9 | hard | 40 | 40 | 100 % | 34 ms | 256 ms | 493 ms | 10.0 s | offered |
+| classic9 | expert | 40 | 40 | 100 % | 39 ms | 441 ms | 545 ms | 10.0 s | offered |
+| classic9 | master | 40 | 40 | 100 % | 114 ms | 352 ms | 469 ms | 10.0 s | offered |
+| classic9 | nightmare | 40 | 40 | 100 % | 942 ms | 2.79 s | 3.23 s | 10.0 s | offered |
+| classic9 | hell1 | 9 | 0 | 0 % | 12.6 s | 16.0 s | 16.0 s | 10.0 s | hidden (stopped: time) |
+| classic9 | hell2 | 17 | 3 | 18 % | 9.54 s | 10.9 s | 10.9 s | 10.0 s | hidden (stopped: misses) |
+| mega12 | veryEasy | 40 | 40 | 100 % | 6 ms | 25 ms | 27 ms | 30.0 s | offered |
+| mega12 | easy | 40 | 40 | 100 % | 12 ms | 49 ms | 54 ms | 30.0 s | offered |
+| mega12 | normal | 40 | 40 | 100 % | 22 ms | 70 ms | 128 ms | 30.0 s | offered |
+| mega12 | hard | 40 | 40 | 100 % | 54 ms | 220 ms | 372 ms | 30.0 s | offered |
+| mega12 | expert | 40 | 40 | 100 % | 247 ms | 2.59 s | 7.95 s | 30.0 s | offered |
+| mega12 | master | 40 | 40 | 100 % | 211 ms | 842 ms | 1.11 s | 30.0 s | offered |
+| mega12 | nightmare | 40 | 40 | 100 % | 2.36 s | 6.28 s | 8.74 s | 30.0 s | offered |
+| mega12 | hell1 | 9 | 0 | 0 % | 96.1 s | 105.8 s | 105.8 s | 30.0 s | hidden (stopped: time) |
+| mega12 | hell2 | 40 | 40 | 100 % | 5.29 s | 9.46 s | 11.5 s | 30.0 s | offered |
+| mega16 | veryEasy | 40 | 40 | 100 % | 13 ms | 37 ms | 40 ms | 30.0 s | offered |
+| mega16 | easy | 40 | 40 | 100 % | 20 ms | 56 ms | 61 ms | 30.0 s | offered |
+| mega16 | normal | 40 | 40 | 100 % | 39 ms | 90 ms | 135 ms | 30.0 s | offered |
+| mega16 | hard | 40 | 40 | 100 % | 361 ms | 1.72 s | 2.02 s | 30.0 s | offered |
+| mega16 | expert | 40 | 35 | 88 % | 2.42 s | 40.1 s | 56.3 s | 30.0 s | hidden (stopped: time) |
+| mega16 | master | 40 | 40 | 100 % | 1.82 s | 5.53 s | 6.38 s | 30.0 s | offered |
+| mega16 | nightmare | 25 | 25 | 100 % | 15.1 s | 60.8 s | 65.9 s | 30.0 s | hidden (stopped: time) |
+| mega16 | hell1 | 9 | 0 | 0 % | 120.0 s | 120.0 s | 120.0 s | 30.0 s | hidden (stopped: time) |
+| mega16 | hell2 | 40 | 40 | 100 % | 1.59 s | 25.2 s | 43.0 s | 30.0 s | offered |
+| diagonalX | veryEasy | 40 | 40 | 100 % | 3 ms | 18 ms | 20 ms | 10.0 s | offered |
+| diagonalX | easy | 40 | 28 | 70 % | 575 ms | 1.54 s | 1.55 s | 10.0 s | hidden (stopped: misses) |
+| diagonalX | normal | 40 | 40 | 100 % | 22 ms | 190 ms | 400 ms | 10.0 s | offered |
+| diagonalX | hard | 40 | 40 | 100 % | 23 ms | 77 ms | 98 ms | 10.0 s | offered |
+| diagonalX | expert | 40 | 37 | 93 % | 2.22 s | 11.8 s | 16.2 s | 10.0 s | hidden |
+| diagonalX | master | 40 | 40 | 100 % | 94 ms | 663 ms | 915 ms | 10.0 s | offered |
+| diagonalX | nightmare | 40 | 40 | 100 % | 1.72 s | 5.37 s | 7.41 s | 10.0 s | offered |
+| diagonalX | hell1 | 9 | 0 | 0 % | 89.2 s | 101.0 s | 101.0 s | 10.0 s | hidden (stopped: time) |
+| diagonalX | hell2 | 40 | 40 | 100 % | 343 ms | 2.89 s | 3.37 s | 10.0 s | offered |
+| hyper | veryEasy | 40 | 40 | 100 % | 3 ms | 18 ms | 19 ms | 10.0 s | offered |
+| hyper | easy | 40 | 29 | 73 % | 769 ms | 1.48 s | 1.57 s | 10.0 s | hidden (stopped: misses) |
+| hyper | normal | 40 | 40 | 100 % | 128 ms | 524 ms | 806 ms | 10.0 s | offered |
+| hyper | hard | 40 | 40 | 100 % | 23 ms | 80 ms | 139 ms | 10.0 s | offered |
+| hyper | expert | 53 | 42 | 79 % | 1.47 s | 4.98 s | 5.93 s | 10.0 s | hidden (stopped: misses) |
+| hyper | master | 40 | 40 | 100 % | 196 ms | 507 ms | 1.55 s | 10.0 s | offered |
+| hyper | nightmare | 40 | 40 | 100 % | 1.83 s | 8.50 s | 11.3 s | 10.0 s | offered |
+| hyper | hell1 | 9 | 0 | 0 % | 41.8 s | 49.4 s | 49.4 s | 10.0 s | hidden (stopped: time) |
+| hyper | hell2 | 40 | 40 | 100 % | 1.48 s | 4.84 s | 6.73 s | 10.0 s | offered |
+| jigsaw9 | veryEasy | 40 | 40 | 100 % | 15 ms | 54 ms | 74 ms | 10.0 s | offered |
+| jigsaw9 | easy | 40 | 40 | 100 % | 70 ms | 635 ms | 769 ms | 10.0 s | offered |
+| jigsaw9 | normal | 40 | 40 | 100 % | 47 ms | 225 ms | 414 ms | 10.0 s | offered |
+| jigsaw9 | hard | 40 | 40 | 100 % | 69 ms | 145 ms | 161 ms | 10.0 s | offered |
+| jigsaw9 | expert | 34 | 30 | 88 % | 4.63 s | 13.7 s | 14.7 s | 10.0 s | hidden (stopped: time) |
+| jigsaw9 | master | 40 | 40 | 100 % | 502 ms | 1.74 s | 2.72 s | 10.0 s | offered |
+| jigsaw9 | nightmare | 27 | 27 | 100 % | 4.86 s | 18.1 s | 20.4 s | 10.0 s | hidden (stopped: time) |
+| jigsaw9 | hell1 | 9 | 0 | 0 % | 65.6 s | 80.5 s | 80.5 s | 10.0 s | hidden (stopped: time) |
+| jigsaw9 | hell2 | 40 | 40 | 100 % | 2.98 s | 6.10 s | 9.90 s | 10.0 s | offered |
+| killer | veryEasy | 40 | 40 | 100 % | 3 ms | 22 ms | 26 ms | 10.0 s | offered |
+| killer | easy | 40 | 40 | 100 % | 13 ms | 39 ms | 65 ms | 10.0 s | offered |
+| killer | normal | 40 | 38 | 95 % | 369 ms | 1.81 s | 2.25 s | 10.0 s | offered |
+| killer | hard | 14 | 0 | 0 % | 5.82 s | 6.89 s | 6.89 s | 10.0 s | hidden (stopped: misses) |
+| killer | expert | 12 | 2 | 17 % | 13.5 s | 34.4 s | 34.4 s | 10.0 s | hidden (stopped: time) |
+| killer | master | 14 | 11 | 79 % | 17.3 s | 42.7 s | 42.7 s | 10.0 s | hidden (stopped: time) |
+| killer | nightmare | 22 | 18 | 82 % | 5.74 s | 32.7 s | 64.8 s | 10.0 s | hidden (stopped: time) |
+| killer | hell1 | 9 | 0 | 0 % | 40.8 s | 100.5 s | 100.5 s | 10.0 s | hidden (stopped: time) |
+| killer | hell2 | 40 | 40 | 100 % | 2.95 s | 21.2 s | 40.5 s | 10.0 s | hidden (stopped: time) |
+| greaterThan | veryEasy | 40 | 40 | 100 % | 24 ms | 54 ms | 55 ms | 10.0 s | offered |
+| greaterThan | easy | 40 | 40 | 100 % | 36 ms | 92 ms | 113 ms | 10.0 s | offered |
+| greaterThan | normal | 40 | 40 | 100 % | 2.00 s | 10.2 s | 10.6 s | 10.0 s | hidden |
+| greaterThan | hard | 40 | 40 | 100 % | 163 ms | 2.83 s | 3.21 s | 10.0 s | offered |
+| greaterThan | expert | 40 | 38 | 95 % | 4.35 s | 14.3 s | 19.9 s | 10.0 s | hidden (stopped: time) |
+| greaterThan | master | 40 | 40 | 100 % | 979 ms | 5.95 s | 7.83 s | 10.0 s | offered |
+| greaterThan | nightmare | 13 | 13 | 100 % | 12.9 s | 46.1 s | 46.1 s | 10.0 s | hidden (stopped: time) |
+| greaterThan | hell1 | 9 | 0 | 0 % | 110.6 s | 120.0 s | 120.0 s | 10.0 s | hidden (stopped: time) |
+| greaterThan | hell2 | 40 | 40 | 100 % | 3.83 s | 8.83 s | 19.4 s | 10.0 s | offered |
+| samurai | veryEasy | 40 | 40 | 100 % | 17 ms | 47 ms | 50 ms | 30.0 s | offered |
+| samurai | easy | 22 | 10 | 45 % | 864 ms | 1.13 s | 1.17 s | 30.0 s | hidden (stopped: misses) |
+| samurai | normal | 40 | 40 | 100 % | 231 ms | 837 ms | 2.72 s | 30.0 s | offered |
+| samurai | hard | 40 | 40 | 100 % | 166 ms | 887 ms | 1.14 s | 30.0 s | offered |
+| samurai | expert | 40 | 40 | 100 % | 513 ms | 4.03 s | 9.05 s | 30.0 s | offered |
+| samurai | master | 40 | 40 | 100 % | 1.65 s | 6.69 s | 66.8 s | 30.0 s | offered |
+| samurai | nightmare | 17 | 14 | 82 % | 32.3 s | 120.0 s | 120.0 s | 30.0 s | hidden (stopped: time) |
+| samurai | hell1 | 9 | 0 | 0 % | 120.0 s | 120.1 s | 120.1 s | 30.0 s | hidden (stopped: time) |
+| samurai | hell2 | 40 | 40 | 100 % | 16.2 s | 43.6 s | 47.8 s | 30.0 s | hidden (stopped: time) |
+| sohei | veryEasy | 40 | 40 | 100 % | 14 ms | 41 ms | 44 ms | 30.0 s | offered |
+| sohei | easy | 18 | 4 | 22 % | 708 ms | 899 ms | 899 ms | 30.0 s | hidden (stopped: misses) |
+| sohei | normal | 40 | 39 | 98 % | 213 ms | 3.73 s | 9.02 s | 30.0 s | offered |
+| sohei | hard | 40 | 40 | 100 % | 135 ms | 516 ms | 606 ms | 30.0 s | offered |
+| sohei | expert | 40 | 39 | 98 % | 308 ms | 7.01 s | 13.9 s | 30.0 s | offered |
+| sohei | master | 40 | 40 | 100 % | 952 ms | 4.70 s | 8.09 s | 30.0 s | offered |
+| sohei | nightmare | 30 | 29 | 97 % | 17.2 s | 78.8 s | 100.2 s | 30.0 s | hidden (stopped: time) |
+| sohei | hell1 | 9 | 0 | 0 % | 120.0 s | 120.0 s | 120.0 s | 30.0 s | hidden (stopped: time) |
+| sohei | hell2 | 40 | 40 | 100 % | 6.29 s | 27.2 s | 41.7 s | 30.0 s | offered |
+| butterfly | veryEasy | 40 | 40 | 100 % | 7 ms | 29 ms | 34 ms | 30.0 s | offered |
+| butterfly | easy | 15 | 1 | 7 % | 972 ms | 1.12 s | 1.12 s | 30.0 s | hidden (stopped: misses) |
+| butterfly | normal | 40 | 40 | 100 % | 98 ms | 1.04 s | 1.49 s | 30.0 s | offered |
+| butterfly | hard | 40 | 40 | 100 % | 83 ms | 211 ms | 309 ms | 30.0 s | offered |
+| butterfly | expert | 40 | 39 | 98 % | 330 ms | 4.44 s | 4.97 s | 30.0 s | offered |
+| butterfly | master | 40 | 40 | 100 % | 272 ms | 728 ms | 948 ms | 30.0 s | offered |
+| butterfly | nightmare | 40 | 40 | 100 % | 3.94 s | 16.1 s | 21.2 s | 30.0 s | offered |
+| butterfly | hell1 | 9 | 0 | 0 % | 84.6 s | 89.7 s | 89.7 s | 30.0 s | hidden (stopped: time) |
+| butterfly | hell2 | 40 | 40 | 100 % | 3.41 s | 11.0 s | 14.3 s | 30.0 s | offered |
+| flower | veryEasy | 40 | 40 | 100 % | 9 ms | 34 ms | 35 ms | 30.0 s | offered |
+| flower | easy | 14 | 0 | 0 % | 714 ms | 902 ms | 902 ms | 30.0 s | hidden (stopped: misses) |
+| flower | normal | 40 | 40 | 100 % | 135 ms | 767 ms | 2.03 s | 30.0 s | offered |
+| flower | hard | 40 | 40 | 100 % | 160 ms | 516 ms | 3.52 s | 30.0 s | offered |
+| flower | expert | 35 | 23 | 66 % | 2.20 s | 7.72 s | 8.47 s | 30.0 s | hidden (stopped: misses) |
+| flower | master | 40 | 40 | 100 % | 429 ms | 1.07 s | 2.36 s | 30.0 s | offered |
+| flower | nightmare | 50 | 42 | 84 % | 11.0 s | 32.5 s | 36.7 s | 30.0 s | hidden (stopped: time) |
+| flower | hell1 | 9 | 0 | 0 % | 62.1 s | 74.2 s | 74.2 s | 30.0 s | hidden (stopped: time) |
+| flower | hell2 | 40 | 40 | 100 % | 1.18 s | 9.08 s | 13.9 s | 30.0 s | offered |
+| wordoku | veryEasy | 40 | 40 | 100 % | 4 ms | 18 ms | 21 ms | 10.0 s | offered |
+| wordoku | easy | 40 | 40 | 100 % | 211 ms | 974 ms | 1.34 s | 10.0 s | offered |
+| wordoku | normal | 46 | 35 | 76 % | 377 ms | 904 ms | 1.33 s | 10.0 s | hidden (stopped: misses) |
+| wordoku | hard | 40 | 40 | 100 % | 40 ms | 283 ms | 710 ms | 10.0 s | offered |
+| wordoku | expert | 40 | 40 | 100 % | 85 ms | 393 ms | 599 ms | 10.0 s | offered |
+| wordoku | master | 40 | 40 | 100 % | 142 ms | 345 ms | 437 ms | 10.0 s | offered |
+| wordoku | nightmare | 40 | 40 | 100 % | 550 ms | 1.32 s | 4.22 s | 10.0 s | offered |
+| wordoku | hell1 | 9 | 0 | 0 % | 12.7 s | 15.8 s | 15.8 s | 10.0 s | hidden (stopped: time) |
+| wordoku | hell2 | 14 | 1 | 7 % | 10.3 s | 14.1 s | 14.1 s | 10.0 s | hidden (stopped: time) |
+
+classic4: ["veryEasy"]
+classic6: ["veryEasy","hard"]
+classic9: ["veryEasy","easy","normal","hard","expert","master","nightmare"]
+mega12: ["veryEasy","easy","normal","hard","expert","master","nightmare","hell2"]
+mega16: ["veryEasy","easy","normal","hard","master","hell2"]
+diagonalX: ["veryEasy","normal","hard","master","nightmare","hell2"]
+hyper: ["veryEasy","normal","hard","master","nightmare","hell2"]
+jigsaw9: ["veryEasy","easy","normal","hard","master","hell2"]
+killer: ["veryEasy","easy","normal"]
+greaterThan: ["veryEasy","easy","hard","master","hell2"]
+samurai: ["veryEasy","normal","hard","expert","master"]
+sohei: ["veryEasy","normal","hard","expert","master","hell2"]
+butterfly: ["veryEasy","normal","hard","expert","master","nightmare","hell2"]
+flower: ["veryEasy","normal","hard","master","hell2"]
+wordoku: ["veryEasy","easy","hard","expert","master","nightmare"]
+MS18c-merge exit=0 seconds=0.292

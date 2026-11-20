@@ -1,0 +1,195 @@
+{
+  "schema": "ms18d-deep-registration-comparison-1",
+  "result": "pass",
+  "failures": [],
+  "listingHashes": {
+    "before-quick.json": "aee8ca14c952345649bfe82c85f08a3aa43e6e13b2737e12cc4c036a869dcde3",
+    "after-quick.json": "e7e6f6105049da1f7ec30db3e77522bb65ed2d3c6e7168f49e35fabc30c0da98",
+    "before-deep.json": "c921fc0ac4c979b9d5a0e010289d4f18601d561fbba5e6c2b3f41578df9efbf5",
+    "after-deep.json": "8b565a99561fbfe197389eba98ad88f1edcc5ef2c5845f09cffc02b9c40e03cb"
+  },
+  "qualificationSha256": "b8e546fc0ba5bd1f79f408984bf3bf8f82559305ea6bd63cbe6dc53beff0df04",
+  "sourceHashes": {
+    "beforeQuick": "29888ecbe7cf029187eb97de792b6b73e82fd2fc3309374c403f60863fc70cd0",
+    "afterQuick": "49089814be577a8cf821c85a22c843bbd9060014555790a933abcaecd95bb1f8",
+    "beforeDeep": "29888ecbe7cf029187eb97de792b6b73e82fd2fc3309374c403f60863fc70cd0",
+    "afterDeep": "49089814be577a8cf821c85a22c843bbd9060014555790a933abcaecd95bb1f8"
+  },
+  "totals": {
+    "quick": 4807,
+    "deepBefore": 4835,
+    "deepAfter": 4828
+  },
+  "quickInventoryIdentical": true,
+  "deepAdditions": 0,
+  "deepRemovals": 7,
+  "counts": {
+    "megaDeepBefore": 12,
+    "megaDeepAfter": 9,
+    "multigridDeepBefore": 16,
+    "multigridDeepAfter": 12
+  },
+  "removedRegistrations": [
+    {
+      "suite": "mega",
+      "variant": "mega12",
+      "level": "hell1",
+      "fullName": "mega > mega deep run: 20 puzzles per level (SG_DEEP=1) > mega12 hell1: 20 seeds, hit rate and p95 time against section 9.1",
+      "ordinalBefore": 113,
+      "localLevelIndex": 5,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 9,
+        "hits": 0,
+        "verdict": "hidden",
+        "stopped": "time",
+        "p95": 105764.751
+      }
+    },
+    {
+      "suite": "mega",
+      "variant": "mega16",
+      "level": "nightmare",
+      "fullName": "mega > mega deep run: 20 puzzles per level (SG_DEEP=1) > mega16 nightmare: 20 seeds, hit rate and p95 time against section 9.1",
+      "ordinalBefore": 118,
+      "localLevelIndex": 4,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 25,
+        "hits": 25,
+        "verdict": "hidden",
+        "stopped": "time",
+        "p95": 60754.8719
+      }
+    },
+    {
+      "suite": "mega",
+      "variant": "mega16",
+      "level": "hell1",
+      "fullName": "mega > mega deep run: 20 puzzles per level (SG_DEEP=1) > mega16 hell1: 20 seeds, hit rate and p95 time against section 9.1",
+      "ordinalBefore": 119,
+      "localLevelIndex": 5,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 9,
+        "hits": 0,
+        "verdict": "hidden",
+        "stopped": "time",
+        "p95": 120015.1966
+      }
+    },
+    {
+      "suite": "multigrid",
+      "variant": "samurai",
+      "level": "easy",
+      "fullName": "multigrid > multigrid deep run: 20 puzzles per level (SG_DEEP=1) > samurai easy: 20 seeds, hit rate and p95 time against §9.1",
+      "ordinalBefore": 185,
+      "localLevelIndex": 1,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 22,
+        "hits": 10,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "p95": 1129.1194
+      }
+    },
+    {
+      "suite": "multigrid",
+      "variant": "sohei",
+      "level": "easy",
+      "fullName": "multigrid > multigrid deep run: 20 puzzles per level (SG_DEEP=1) > sohei easy: 20 seeds, hit rate and p95 time against §9.1",
+      "ordinalBefore": 189,
+      "localLevelIndex": 1,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 18,
+        "hits": 4,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "p95": 899.3724
+      }
+    },
+    {
+      "suite": "multigrid",
+      "variant": "butterfly",
+      "level": "easy",
+      "fullName": "multigrid > multigrid deep run: 20 puzzles per level (SG_DEEP=1) > butterfly easy: 20 seeds, hit rate and p95 time against §9.1",
+      "ordinalBefore": 193,
+      "localLevelIndex": 1,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 15,
+        "hits": 1,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "p95": 1115.6109
+      }
+    },
+    {
+      "suite": "multigrid",
+      "variant": "flower",
+      "level": "easy",
+      "fullName": "multigrid > multigrid deep run: 20 puzzles per level (SG_DEEP=1) > flower easy: 20 seeds, hit rate and p95 time against §9.1",
+      "ordinalBefore": 197,
+      "localLevelIndex": 1,
+      "requested": {
+        "seeds": "1..20",
+        "count": 20,
+        "requestBudgetMs": 120000,
+        "trace": "off"
+      },
+      "gq": {
+        "source": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "budgetMs": 30000,
+        "n": 14,
+        "hits": 0,
+        "verdict": "hidden",
+        "stopped": "misses",
+        "p95": 901.8375
+      }
+    }
+  ]
+}

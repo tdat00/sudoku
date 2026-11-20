@@ -1,0 +1,90 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "r4",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in r4",
+  "startedAtMs": 1795094453574,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-cell",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "stderr-output",
+      "partial-output",
+      "crash"
+    ],
+    "problems": [
+      "stderr is not empty (464 characters)",
+      "464 raw byte(s) arrived on stderr",
+      "stdout ends before the column header",
+      "exit 1 with a stack on stderr and no complete result: a crash, not a MISS"
+    ],
+    "header": {
+      "node": "v26.13.0",
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "runs": 50,
+      "warmup": 0,
+      "seed": 7000
+    },
+    "row": null,
+    "summary": null,
+    "miss": null,
+    "cli": {
+      "exit": 1,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=1 seconds=0.134",
+      "exit": 1
+    }
+  },
+  "cli": {
+    "exit": 1,
+    "signal": null
+  },
+  "tee": {
+    "pid": 27808,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=1 seconds=0.134",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 203,
+    "stderr": 464
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 78000,
+      "systemMicros": 93000
+    },
+    "tee": {
+      "userMicros": 46000,
+      "systemMicros": 46000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 65,
+  "finishedAtMs": 1795094454954
+}

@@ -1,0 +1,1 @@
+samurai/easy#8 allowance none, attempts default: hash 41ccc16c132728f8, 1 attempt(s), exact true, 311 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\samurai-easy-8-noallow-default.json

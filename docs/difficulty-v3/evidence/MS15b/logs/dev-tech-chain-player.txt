@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Player tests  (node v26.13.0)
+Sources: 40 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-chain: 239 passed  (22.89 s)
+
+Suites: 1
+Tests:  239 total, 239 passed, 0 failed, 0 skipped
+Time:   22.89 s running tests, 22.98 s total
+exit=0 seconds=23.096

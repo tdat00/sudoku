@@ -1,0 +1,44 @@
+$ node tests\artifacts\difficulty-v3\MS12\xy-dug.js 4242 30000
+xy-dug: seed 4242, puzzles 30000 from 0, mode below, model classic9, cutoff = order of xyChain = 186, prefix of 27 techniques (nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite remotePairs simpleColouring emptyRectangle finnedXWing swordfish finnedSwordfish jellyfish xyWing xyzWing wxyzWing wWing uniqueRectangle bugPlusOne), print limit 40
+#24 .785....2...3...7.3...6.......1.4.5.........1...279.....4....986.....2..2..9..73. open 45 digit 8 length 9 cells R3C7,R5C4,R7C1,R7C4,R7C7 removes R5C7<>8 work 1102
+#78 4.38..5...5.....4.......2.938..17.....65.3....1....9.7.....6......94..5.....2.7.6 open 48 digit 5 length 9 cells R3C5,R3C6,R6C1,R6C6,R7C5 removes R7C1<>5 work 1470
+#114 7.39...4....4..8....9.87...5...2......4.79..1.6.....5.62....7.......512..9....... open 41 digit 3 length 9 cells R2C6,R3C4,R4C4,R4C8,R9C8 removes R9C6<>3 work 1010
+#139 .....675.3...42.9.89...5.4....25....6.......4..8...9..249.3..17.....7.82...5.1... open 32 digit 6 length 9 cells R3C5,R3C9,R5C5,R5C7,R8C7 removes R2C7<>6 work 1097
+#142 ..7.......9..3....3.87.9....4..6..58.......6.1....74.9..6...17.4.......3..25...9. open 41 digit 6 length 9 cells R1C1,R1C9,R3C7,R8C6,R8C7 removes R1C6<>6 work 1132
+#148 2.....7..1......656..1.74...7.3...4...9.....8..6...3.1..38....791..5.....8...1.2. open 43 digit 9 length 11 cells R1C9,R3C3,R3C8,R7C1,R7C8,R9C3 removes R9C9<>9 work 629
+#186 .82....15...4..93.....5.....9...5........6.87.2.8416...17.....9..8..4....4.2..1.. open 31 digit 8 length 11 cells R1C6,R7C6,R9C1,R9C6,R9C8,R9C9 removes R7C7<>8,R9C5<>8 work 752
+#242 9.2.....34....7.1..5.4.......6......5..6...9.8.9.14...3..7.152...8.5..........3.8 open 49 digit 7 length 9 cells R1C2,R2C2,R7C2,R7C9,R9C8 removes R1C8<>7,R9C2<>7 work 443
+#274 ...84...78...5..6..79....1.2.5.7.3....6............741....8.....9.4..57..5...6... open 47 digit 9 length 9 cells R1C3,R1C6,R2C2,R7C2,R7C8 removes R7C6<>9 work 1342
+#282 9...1....8.1....7....8.7.5...49..5.2...27...4..8..3...31...........6.2..6.....849 open 38 digit 6 length 9 cells R3C9,R4C2,R4C8,R8C8,R8C9 removes R3C2<>6 work 1014
+#286 3..6..7..2.15.8.6......4...6.........9....4....4.....3......1....6..587.72.8..34. open 41 digit 5 length 11 cells R3C7,R4C5,R4C7,R5C1,R6C2,R6C5 removes R3C1<>5 work 956
+#296 ...1.8..7...64...3..3..58.......6.1......7458.12...............43..5....895...... open 42 digit 6 length 9 cells R1C3,R3C1,R3C2,R3C4,R3C5 removes R1C1<>6 work 1826
+#310 ....9..1......4.3..12...8..6...27.....3...12.5.....4.......8....9.5.....34....6.8 open 46 digit 7 length 9 cells R3C4,R3C6,R5C6,R9C5,R9C6 removes R3C5<>7,R7C4<>7 work 1252
+#352 6..7.5..2.9....1.....2....8..4.2.8...5..6..49.7.1..6..9.8.31...5....2..........9. open 42 digit 3 length 9 cells R1C5,R1C7,R6C5,R6C9,R8C7 removes R5C7<>3,R8C9<>3,R9C9<>3 work 1077
+#363 3..8.2.9...4.63..52..............5..61..2.8.....3.9.7......1.684..25.7....6..4.5. open 33 digit 9 length 9 cells R3C3,R3C8,R5C8,R5C9,R8C3 removes R5C3<>9 work 4026
+#380 ........2.5..9......1...8...4.37.2..8...5.7.1..9....45...43...........7..132.6... open 41 digit 5 length 11 cells R1C7,R5C4,R5C8,R8C4,R9C7,R9C8 removes R1C4<>5 work 1574
+#412 .9.5...261.5..2..8....8...9....74.5....2.6....8........6.79.8.3.49......8.1...... open 29 digit 6 length 11 cells R1C5,R1C7,R3C8,R8C8,R9C5,R9C7 removes R8C7<>6 work 2405
+#456 .36.81..72....4..14...2.3..............63.....18....5.....9.........54.856.....7. open 38 digit 9 length 11 cells R2C5,R2C7,R3C4,R5C6,R5C7,R7C7 removes R3C6<>9,R6C4<>9 work 1650
+#466 .5....48..8..392..7......692..45....9.....3.2.3.9.2.468....17........6....78.5... open 43 digit 4 length 9 cells R1C1,R1C6,R5C3,R6C1,R8C6 removes R8C3<>4 work 1655
+#488 .6..7943..41..2...57..4..........5.81..72...6.5....3........7....94.........31.8. open 36 digit 1 length 11 cells R1C4,R1C9,R3C4,R3C6,R7C2,R7C6 removes R7C9<>1 work 1208
+#518 ...4.5............31...96.4..4.6...3..2.37.89......7..5.7....1.6..1.257.......... open 42 digit 8 length 9 cells R3C4,R3C8,R4C6,R4C7,R4C8 removes R4C4<>8,R6C4<>8 work 1271
+#540 ........48.....5.......27.1.27.6.3....3.9.......2...67.9.5.1....7.6...35..1.7.... open 34 digit 8 length 9 cells R6C2,R7C3,R7C5,R7C7,R9C2 removes R6C7<>8 work 904
+#546 ....9....964....28....6..53.9..8.....7...4...3.5..2.9.2.6..13....8.....1.......7. open 40 digit 8 length 9 cells R4C1,R5C1,R7C2,R7C8,R9C1 removes R5C8<>8 work 735
+#554 .7...1...2....35.9.93.....8..28..65...4...7...3.47..........8......45......2....3 open 31 digit 4 length 9 cells R1C8,R2C2,R3C7,R8C2,R8C7 removes R1C1<>4,R2C8<>4 work 1369
+#558 ...8...3.1.8....4..3...4.....129...5.....3.7..79...8.4.....5..7....6..8..6.97.... open 24 digit 7 length 9 cells R2C2,R2C4,R3C3,R5C2,R5C3 removes R3C4<>7 work 1144
+#608 41.36.......8.9..7....4..5.39....7....2.5...3.7....6.9.......62..94......6..8.... open 34 digit 1 length 9 cells R2C1,R2C5,R4C5,R6C4,R9C1 removes R6C1<>1,R9C4<>1 work 667
+#611 .6....7.21.75.4...3....1.5........2....2159.3..9.8......3....8.....3..7.98....4.1 open 32 digit 5 length 11 cells R4C5,R4C9,R7C5,R9C3,R9C5,R9C6 removes R4C3<>5 work 1175
+#637 ...6.........2.7.8..8.57..9.17...4...........4....38...4.9..17..25.3....8..5.69.. open 40 digit 4 length 11 cells R1C5,R1C7,R1C8,R1C9,R2C6,R3C7 removes R2C8<>4 work 818
+#659 .94........5..4.71...1.9.4.5..3.879.7....5..3..2.6.1.89...5...........8.6.....527 open 33 digit 4 length 9 cells R4C5,R4C9,R7C9,R8C1,R8C7 removes R8C5<>4 work 3041
+#712 .8..5....17.4.2........13......4....32...9....6..2..1...7....3.2..87...5..13.52.. open 33 digit 4 length 9 cells R2C3,R3C1,R3C2,R8C3,R8C8 removes R3C8<>4 work 1048
+#728 .4..3..98......4........71...1.4.5....5..9.879..2.7..1.36..4...71..........7.1.6. open 29 digit 2 length 9 cells R1C1,R2C3,R4C1,R6C3,R9C1 removes R3C1<>2,R8C3<>2 work 963
+#742 62.9....49.1.64..3.....7.....6.......8..51...1...865.....8.......2..53..84.....92 open 38 digit 7 length 11 cells R1C3,R1C5,R2C2,R3C2,R4C2,R9C5 removes R4C5<>7 work 783
+#760 346....79..2.7.5..7....2.3..8..5.4.........6...5...89.8..6.5.....7..9..6...81.... open 30 digit 9 length 9 cells R4C3,R4C8,R7C8,R8C7,R9C7 removes R9C3<>9 work 863
+#764 437.9.........2..3..96....48....172...4..........5.1.9...83..5.2...........9.48.. open 34 digit 6 length 9 cells R2C1,R2C2,R8C2,R8C7,R9C8 removes R9C1<>6 work 1760
+#776 6.9.....557...26.1.2...1.......4.19.1..7...5..5.....3...4..3...78..9...........8. open 30 digit 6 length 9 cells R4C6,R4C9,R7C2,R7C9,R8C6 removes R7C5<>6 work 914
+#792 6...3.84......1.....42.5....3..279.1......28...7......9......5.4......2...1...3.8 open 43 digit 8 length 11 cells R2C8,R3C5,R3C7,R4C1,R9C1,R9C8 removes R3C1<>8 work 1161
+#816 .....1....2.4.57.9...8..3243.52.....1...4..8..4.....5.6.......22...378........... open 29 digit 1 length 9 cells R3C2,R5C2,R5C9,R8C2,R8C9 removes R9C2<>1 work 1848
+#834 .2..3.8...8..25........6......9..4..3...71..8..5.....66.........1...4.2.2..7..5.9 open 35 digit 7 length 9 cells R4C2,R4C5,R7C5,R7C7,R8C9 removes R4C9<>7 work 2039
+#838 6...89..3.....3.94..8....1..9.2....53..........58..1...4..2..6....4....75.19..... open 31 digit 4 length 9 cells R5C3,R5C7,R6C2,R6C8,R9C8 removes R4C8<>4,R5C8<>4,R9C7<>4 work 2972
+#880 24...9..5......6.8.51...4........8..1........7..324.....5.....7..9.35.6...2.8.3.. open 43 digit 6 length 9 cells R1C3,R3C1,R6C9,R9C1,R9C9 removes R6C3<>6 work 1568
+seed 4242 puzzles 30000 (from 0): attempted 30000, fully solved by the prefix 25356, Findings 1413 by length {"7":77,"9":952,"11":384}, most work 4861, capped calls 0, 38.8 s
+exit=0 seconds=39.118

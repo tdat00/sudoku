@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS13c\cause.js --kind=hash --ledgers=..\docs\difficulty-v3\evidence\MS13c\hashes --only=classic9/nightmare,diagonalX/nightmare --json=..\docs\difficulty-v3\evidence\MS13c\hash-cause-base.json
+classic9/nightmare: 9 of 20 differ in the ledger (seeds 3, 8, 21, 89, 144, 377, 1597, 4181, 6765); equal to the saved 20, to the ledger 11 (11.0 s)
+diagonalX/nightmare: 17 of 20 differ in the ledger (seeds 1, 2, 3, 5, 8, 13, 21, 55, 144, 233, 610, 987, 1597, 2584, 4181, 6765, 10946); equal to the saved 20, to the ledger 3 (30.2 s)
+hashes examined 40 (engine git:4aa3d11, 41.2 s); equal to the saved output 40, equal to the ledger 14, ledger differs from the saved 26
+exit=0 seconds=41.580

@@ -1,0 +1,100 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre
+==== shard core-shared (2418 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-als,tech-basic,tech-cage,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (69 ms)
+ok   board-view: 37 passed  (63 ms)
+ok   constraints: 43 passed  (89 ms)
+ok   exchange: 20 passed  (250 ms)
+ok   harness: 25 passed  (2.29 s)
+ok   logical-solver: 100 passed  (311 ms)
+ok   model: 49 passed  (37 ms)
+ok   solver: 50 passed  (2.66 s)
+ok   symbols: 12 passed  (3 ms)
+ok   tech-als: 174 passed  (15.98 s)
+ok   tech-basic: 167 passed  (1.83 s)
+ok   tech-cage: 33 passed  (31 ms)
+ok   tech-chain: 239 passed  (26.40 s)
+ok   tech-fish: 483 passed  (24.15 s)
+ok   tech-subset: 167 passed  (9.12 s)
+ok   tech-wing: 496 passed  (11.38 s)
+ok   techniques: 284 passed  (7.49 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Suites: 18
+Tests:  2418 total, 2418 passed, 0 failed, 0 skipped
+Time:   102.18 s running tests, 102.59 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/quick-pre/generator-core-shared.json
+==== shard steps (59 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 59 passed  (43.37 s)
+
+Suites: 1
+Tests:  59 total, 59 passed, 0 failed, 0 skipped
+Time:   43.37 s running tests, 43.58 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/quick-pre/generator-steps.json
+==== shard replay (159 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 159 passed  (42.16 s)
+
+Suites: 1
+Tests:  159 total, 159 passed, 0 failed, 0 skipped
+Time:   42.17 s running tests, 42.40 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/quick-pre/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS18c\closure\quick-pre\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL mega: 102 passed, 6 failed  (7.37 s)
+
+Failures:
+  FAIL mega > mega definitions > mega12: offers every level of the nine (measured by tests/qualify.js)
+       AssertionError: expected Array(8)["veryEasy", "easy", "normal", "hard", "expert", "master", "nightmare", "hell2"] to equal Array(9)["veryEasy", "easy", "normal", "hard", "expert", "master", "nightmare", "hell1", "hell2"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\mega.test.js:155:39)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL mega > mega definitions > mega16: offers every level of the nine (measured by tests/qualify.js)
+       AssertionError: expected Array(6)["veryEasy", "easy", "normal", "hard", "master", "hell2"] to equal Array(9)["veryEasy", "easy", "normal", "hard", "expert", "master", "nightmare", "hell1", "hell2"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\mega.test.js:155:39)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL mega > mega puzzles > mega12 hell1: one attempt (seed 3) is a valid, unique and truthful puzzle inside the smoke limit
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far
+       AssertionError: expected "difficulty.unsupportedLevel" to be "budget.cancelled"
+       at expectCode (Q:\git\sudoku\generator\tests\suites\mega.test.js:101:25)
+       at Q:\git\sudoku\generator\tests\suites\mega.test.js:960:29
+       at withControl (Q:\git\sudoku\generator\tests\suites\mega.test.js:898:18)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\mega.test.js:952:11)
+
+Suites: 1
+Tests:  108 total, 102 passed, 6 failed, 0 skipped
+Time:   7.37 s running tests, 7.58 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/quick-pre/generator-mega.json
+shard core-shared: exit 0, 102.9 s
+shard steps: exit 0, 44.5 s
+shard replay: exit 0, 42.6 s
+shard mega: exit 1, 7.8 s
+FAILED: mega
+exit=1 seconds=199.432

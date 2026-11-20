@@ -1,0 +1,15 @@
+MS18c Stage 1 planner: 135 rows, method MS18c-GQ-structural-v1, binding "awaiting Stage 2"
+HEAD 42e0d239bc8b9b8bd66a2d868ccc8601d8b0d5e4 (rating-v3), declarations loaded in 52 ms
+dispatch base 3d166c79cb8fcb07822624415ab90bbb1605a28d, HEAD parent 3d166c79cb8fcb07822624415ab90bbb1605a28d, changed since the base: docs/difficulty-v3/clarifications-resolved.md, tasks/difficulty-v3/MS18c-qualify-and-publish-offers.md, tasks/difficulty-v3/check-list.md
+brief blob at the base 81aa1dee13de26fa392323a45c096a92aca8050b, at HEAD ee2ac273ca969869e733504e5b386d26ef06b5c6
+source 0ca29eaeebc295b6 (46 files)
+tool c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77
+attempt policy b9a2c2e0ada24933e6b54bc5588839d84d6cbd5c4b2aab05f89090c0c0daf8c8
+Node v26.13.0, machine 67d100ebc61bd4ebef3f46ea13a25198e24dd1df47bd3fb7b23a10e83d1b569c
+class 2 s: 18 cells, P 1751 A 1770 T 2220 O 4920
+class 10 s: 63 cells, P 2271 A 2280 T 2850 O 5550
+class 30 s: 54 cells, P 3571 A 3600 T 4500 O 7200
+structural sums over 135 cells: P 367425 A 369900 T 462510 O 827010
+manifest at HEAD: absent; hash-object == HEAD blob on both qualifier files: true
+checks: all passed
+check: the written outputs equal a fresh computation

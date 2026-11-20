@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS12\corpus-materialize.js --count=20000 --out=..\player\tests\artifacts\difficulty-v3\MS12\corpus-4242-0-19999.json --check-against=..\player\tests\artifacts\difficulty-v3
+constructed 80000 states (20000 puzzles, seed 4242) in 14.5 s
+compared 0 earlier testkit-4242 sources entries with the cache: all identical
+wrote ..\player\tests\artifacts\difficulty-v3\MS12\corpus-4242-0-19999.json (1680094 bytes), SHA-256 64a93903988073eecbb50cf9ac5c467b65f1bec803dcd3ae5f3bcb19c2b906e2
+exit=0 seconds=14.845

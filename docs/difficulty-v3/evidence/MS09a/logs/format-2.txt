@@ -1,0 +1,5 @@
+$ node generator\tests\artifacts\difficulty-v3\MS09a\check-format.cjs
+FAIL core/js/engine/tech-fish.js: line 101 is 113, line 139 is 112, line 248 is 111
+FAIL generator/tests/artifacts/difficulty-v3/MS09a/.last-release: no final newline
+checked 73 files, 2 with problems
+exit=1 seconds=0.290

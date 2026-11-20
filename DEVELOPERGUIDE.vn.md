@@ -201,23 +201,89 @@ một bộ giải và một bộ máy sinh đề phục vụ cả 15 biến th�
 
 `SG.pipeline.run(config, emit, budget)` chạy đồng bộ và luôn đi qua bảy bước:
 `configure → buildModel → fullGrid → extraStructure → dig → rate → tune`. Nó trả về một `PuzzleResult`
-(`model, givens, solution, rating, seed, config, timings, attempts, warnings, digLog`) và báo mọi việc qua
+(`model, givens, solution, rating, exact, seed, config, timings, attempts, warnings, digLog`) và báo mọi việc qua
 `emit` dưới dạng `GenerationEvent`: `{ type, stepId, phase, t, seq, i18nKey?, i18nArgs?, patch?, metrics? }`.
 Một `patch` là *phần thay đổi* của tối đa tám ô, không bao giờ là ảnh chụp cả bàn cờ. `SG.events.VOCABULARY` là
 hợp đồng cho mọi khóa sự kiện.
 
-Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* (dig sample): khi đề vừa đào chưa đúng mức yêu
-cầu (`tune.miss`), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
+Ba bước `dig`, `rate` và `tune` lặp lại theo từng *lần đào thử* (dig sample): khi đề vừa đào chưa được tính là
+đạt (`tune.miss`, hoặc `tune.shallow` khi điểm nằm trong dải đã chọn nhưng đề không cần kỹ thuật nào thuộc tầng của
+mức đó), lần đào kế tiếp được thực hiện trên cùng lưới (tối đa 12 lần mỗi lưới); khi không lần nào
 đạt, một bước tìm kiếm cục bộ bắt đầu từ đề gần mức nhất (thêm, bỏ hoặc đổi chỗ các nhóm số cho sẵn đối xứng),
-và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định 8). Các mức cao nhất
+và chỉ khi đó `retry.difficulty` mới bắt đầu một lưới mới (tối đa `attempts` lần, mặc định theo cỡ bàn cờ: xem bên
+dưới). Các mức cao nhất
 (ác mộng và địa ngục) còn đào nhanh những đề đề xuất chỉ dựa trên tính duy nhất, rồi trả lại số cho sẵn khi đề
 đề xuất còn quá khó. Mỗi lưới có giới hạn công việc cố định (số lần chấm điểm đầy đủ và số bước đề xuất, được
-đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề gần nhất được trả
+đếm chứ không đo giờ), nên một seed cho cùng một đề trên mọi máy. Nếu dùng hết mọi lần thử, đề tốt nhất được trả
 về kèm thông báo thay vì báo lỗi (chỉ đề có lời giải logic trọn vẹn mới được trả về). `SG.pipeline.runSteps` là
 cùng thuật toán đó dưới dạng generator, nhường quyền ở những ranh giới tự nhiên (là cái worker và chế độ luồng
-chính chạy), còn `SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. Độ khó của một đề là
+chính chạy), còn `SG.pipeline.toWire` / `fromWire` chuyển kết quả qua `postMessage`. `result.exact` là một giá trị
+boolean, kết luận của bộ đào cho đề được trả về và cũng là `exact` của sự kiện `done`: đề có lời giải logic trọn
+vẹn, mức độ đúng bằng mức yêu cầu **và** cần một kỹ thuật thuộc tầng của mức đó (`SG.difficulty.requiredOf`; mức
+rất dễ không đòi gì). Nó đi qua wire như một cờ
+chặt chẽ (phiên bản wire vẫn là 1; wire không có cờ này, chẳng hạn một mục cũ trong cache, được đọc là `false`)
+và không bao giờ được dựng lại từ việc hai tên mức độ trùng nhau, nên bảng kết quả hiển thị đúng điều cờ nói. Ba
+kết luận về dải điểm của bước `tune` (`tune.hit`, `tune.miss` và `tune.shallow`) mang `required` (`true` cho một
+lần đạt, `false` cho một đề nông, `null` cho mọi lần trượt khác, kể cả đề đã giải xong nhưng nằm ngoài dải) và có
+thể mang `target` (một số hữu hạn, kể cả 0; bỏ qua khi là `null`: mọi lần đào thử trong dải hữu hạn đều rút một mục
+tiêu, nên kết luận của yêu cầu thông thường có nó). Đề có lời giải trọn vẹn nằm trong
+dải nhưng không cần kỹ thuật nào của tầng là đề *nông* (shallow): nó được giữ làm phương án dự phòng, không bao
+giờ là đúng mức, và việc tìm kiếm vẫn tiếp tục; nếu cuối cùng nó là đáp án thì kèm `difficulty.shallow` cạnh
+`difficulty.approximate`, một cảnh báo cùng loại, có nút “Thử lại”. Công cụ soak, qualify và các suite thủ công chỉ
+tính một lần đạt theo chính cờ này, không bao giờ so sánh tên mức độ (thiếu cờ nghĩa là trượt).
+Độ khó của một đề là
 `SG.difficulty.rate(...)`, tính từ trọng số kỹ thuật `SG.difficulty.WEIGHTS`; hãy dùng `rating.score`, không
 dùng điểm thô của bộ giải.
+
+**Số lần thử mặc định theo cỡ bàn cờ.** `SG.digger.defaultMaxAttempts(cellCount)` là quy tắc duy nhất: 8 với bàn từ
+81 ô trở xuống, 4 với bàn từ 82 đến 144 ô (mega12, butterfly) và 2 với bàn lớn hơn (flower, mega16, sohei, samurai).
+Đó là một con số đếm chứ không bao giờ là thời gian, chỉ áp dụng khi không có `maxAttempts` (một số nguyên tường
+minh từ 1 luôn được dùng đúng như vậy), và không đụng tới hạn mức tìm kiếm nông, giới hạn công việc của một lưới
+hay các bàn từ 81 ô trở xuống. `SG.digger.generate` đọc `model.cellCount`; `SG.pipeline.normalizeConfig` đọc
+`SG.variants.cellCountOf(def)`, cỡ bàn lấy từ định nghĩa mà không dựng mô hình và không rút số ngẫu nhiên (bình
+phương số chữ số, trừ khi định nghĩa khai báo `cellCount`, như bốn biến thể nhiều lưới); kho trạng thái dùng cùng
+hàm đó (`SG.store.defaultAttempts`). `SG.pipeline.DEFAULT_MAX_ATTEMPTS` (8) chỉ là mốc của các bàn nhỏ, không bao
+giờ là mặc định của bàn khác. Soak và qualify không truyền `maxAttempts`, nên chúng đo đúng các mặc định này; kết quả
+dự phòng sau đó là một lần trượt, và chỉ lần kiểm định cuối cùng quyết định mức nào được cung cấp. Trong kho trạng
+thái, trạng thái giữ con số và `attemptsExplicit`: `false` khi con số là của bàn cờ (đổi biến thể thì nó đổi theo),
+`true` khi con số được gõ vào hoặc đến từ tham số `attempts` của liên kết (khi đó nó được giữ qua các biến thể và các
+lần tải lại, kể cả khi bằng mặc định); xóa trống ô thì quay về `false`. `sg.lastConfig.v1` lưu cả hai. Cấu hình gần
+nhất được lưu trước khi có mặc định theo cỡ bàn, chứa số 8 nhưng không có dấu ghi nhận lựa chọn, được hiểu là dùng
+mặc định vì không thể phân biệt với số 8 do người dùng chủ động chọn; nhập lại 8 sẽ giữ số đó như một lựa chọn
+tường minh (số khác đã lưu vẫn là số đã chọn). Một công thức được tạo lại — mục lịch sử được mở, mục cache đã lỗi
+thời (`app.generate(overrides)` ghi vào kho với `{ source: 'app' }`), phần xuất (`toConfig` trên `defaults()` cộng mục
+đó) — chạy với đúng số mà nó đã ghi; tạo lại không bao giờ biến số đã chọn thành mặc định, và số đã ghi mà không
+phải mặc định của bàn thì trở thành số đã chọn
+([design.md](generator/design.md) §6.8, §14.2, §14.3). Dấu này không bao giờ ra tới `GenerateConfig`, lịch sử, cache
+hay đề được xuất.
+
+**Chính sách mục tiêu (nội bộ, đang hoạt động).** `SG.digger.targetPolicy` chứa các hàm thuần của chính sách mục
+tiêu thuộc difficulty v3; việc sinh đề gọi chúng, nên một seed cho đề khác với trước khi kích hoạt (520 mã băm hồi
+quy đã được làm mới cùng lúc). Chúng không chấm điểm gì và không giữ trạng thái. `targetFor(spec, rng)` là `null` khi
+dải không có cận trên (`spec.max` là `Infinity`), còn lại là một điểm trong dải thô,
+`spec.min + rng.fork('target').next() × (spec.max − spec.min)`: chỉ luồng con đó được rút số, nên không luồng nào khác
+bị dịch chuyển. `preferObjective(candidate, incumbent, target)` và `applyBounded(current, winner, target)` xếp hạng và
+áp dụng các ứng viên của một nhóm có hướng dẫn (kết quả đánh giá một ứng viên là `{ kind: 'bounded', score, tierUsed }`,
+`{ kind: 'proposal', priority }` hoặc `{ kind: 'refused', reason }`): tầng kỹ thuật được xét trước khoảng cách tới mục
+tiêu hữu hạn (không có mục tiêu thì lấy điểm cao hơn), đề xuất tối đa hóa độ ưu tiên và không bao giờ bị so với một
+điểm số, một lần từ chối không bao giờ thắng, và giá trị bằng nhau thì giữ ứng viên đầu tiên.
+`preferRated(candidateQuality, candidateScore, currentQuality, currentScore, target)` so sánh các ứng viên đã chấm điểm
+của tìm kiếm cục bộ (chất lượng thấp hơn trước, rồi điểm gần mục tiêu hơn, hoặc điểm cao hơn khi không có mục tiêu; bằng
+nhau là sai), còn `acceptReveal(current, next, spec, target, currentIsExact, nextIsExact)` quyết định từng lần trả lại
+số cho sẵn của bước tinh chỉnh đi xuống; bên gọi cho biết trên mô hình của từng ứng viên rằng điểm chấm có đúng mức hay
+không. Mỗi lần đào thử được vào của `SG.digger.generate` rút mục tiêu riêng của mình, một lần, từ luồng con của chính
+nó (`null` khi dải mở), và nó thay thế `options.target` của bên gọi ngoài cùng, vốn không lần đào thử nào dùng; còn
+`SG.digger.digLevel` ở mức thấp giữ nguyên thuộc tính `target` tường minh (một số, 0 hoặc `null`) và chỉ khởi tạo một
+mục tiêu còn thiếu, đúng một lần. Mục tiêu dẫn hướng nhóm có hướng dẫn của chiến lược `cells`, bước tinh chỉnh đi xuống
+và tìm kiếm cục bộ; chiến lược `signs` đã đăng ký của biến thể So sánh nhận nó mà không đọc (các ứng viên của nó mang
+nó theo, và nó chỉ có tác dụng ở tìm kiếm cục bộ và phần nối tiếp). Các kết quả đánh giá của nhóm có hướng dẫn có kiểu
+(`refused`, `bounded` kèm `tierUsed`, `proposal`), và mỗi lần đào thử cũng như mỗi lần tìm kiếm đưa các ứng viên của
+mình cho bộ giữ chung qua một khung nhìn (`SG.digger.keeperView`) gán cho từng ứng viên mục tiêu của chính ngữ cảnh đó.
+Ứng viên được giữ, `SG.digger.generate`, `PuzzleResult.target`, `toWire` / `fromWire` (dữ liệu truyền hoặc mục cache cũ
+cho `null`), các sự kiện `tune` (chỉ khi mục tiêu hữu hạn) và dòng của soak mang mục tiêu của lần đào thử, lần tìm kiếm
+hay ứng viên được giữ mà kết quả bắt nguồn từ đó, là một số hữu hạn hoặc `null` (dải mở, hoặc kết quả của bước tìm cấu
+trúc của một biến thể, vốn không có). `targetPolicy`, `removalObjective`, `createKeeper`, `keeperView` và `keptPuzzle`
+là các điểm nối nội bộ cho kiểm thử, không phải API ([design.md](generator/design.md) §6.8).
 
 Giao diện không bao giờ làm thuật toán chậm đi để tạo hoạt ảnh, và phần phát lại cũng không đọc các sự kiện.
 Song song với các sự kiện, bộ đào ghi một **nhật ký đào** (dig log) gọn nhẹ cho lần đào thử đã trở thành đề
@@ -276,11 +342,11 @@ Phần việc kỹ thuật (cấu hình, mô hình bàn cờ, các lần đào t
    `signs.cause`; `board.setSignMarks` nhận thêm danh sách `cause`).
 
 Các con số của ví dụ là những con số của các bài kiểm thử. Sudoku Cổ điển 9×9 mức *chuyên gia* với seed 3275974478
-có 32 vị trí và 33 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 551, 568, 992 và
-992, và bước 44 → 551 (×12,5) là một bước tăng vọt do số cho sẵn ở R1C2 gây ra (bỏ riêng nó cho 550 điểm; lần bỏ còn
-lại của nước đi, R9C8, bỏ riêng cho 44), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
-trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, bốn bước xóa ngẫu nhiên (điểm 14, 24, 34 và 44), một
-bước đào có định hướng (46) và đề hoàn chỉnh với 34 số cho sẵn.
+có 28 vị trí và 29 bước khi hiện từng thay đổi; chế độ xem gọn của nó có 7 bước với điểm 0, 23, 44, 47, 593, 925 và
+925, và bước 47 → 593 (×12,6) là một bước tăng vọt do số cho sẵn ở R2C4 gây ra (bỏ riêng nó cho 593 điểm; lần bỏ còn
+lại của nước đi, R8C6, bỏ riêng cho 47), được đánh khung. Một đề Sudoku Cổ điển 9×9 mức *dễ* với seed 3 phát lại
+trong 7 bước (26 bước khi hiện từng thay đổi): lời giải đầy đủ, ba bước xóa ngẫu nhiên (điểm 15, 26 và 44), hai
+bước đào có định hướng (46 và 100) và đề hoàn chỉnh với 34 số cho sẵn.
 
 **Chuẩn bị.** Trang yêu cầu bản phân tích sau khi đề đã hiện trên màn hình, qua `SG.player.createPreparation()` (một
 bộ điều khiển không có DOM: `start(result)`, `press()`, `unavailable(result)`, `cancel()`, `state()`; các trạng thái
@@ -336,21 +402,40 @@ một hai đề với cùng tùy chọn trong một worker, để nút "Tạo đ
 ngay. Nó không bao giờ chạy khi đang có một lần tạo, tạm dừng khi tab bị ẩn, bỏ qua các cấu hình chậm, và
 không tồn tại ở chế độ luồng chính. Một công tắc trong Cài đặt tắt việc tạo sẵn (lựa chọn này không được nhớ).
 
-Rating v2 đã đổi cách tính điểm và cách tạo đề: bộ nhớ đệm bỏ các đề do phiên bản cũ lưu, một lần; điểm đã lưu
-trong lịch sử không được tính lại; và tài liệu xuất ra vẫn giữ định dạng `sudoku-generator/v1`, có thêm
-`difficulty.ratingVersion: 2`.
+Rating v3 (MS17b) lại đổi ý nghĩa của một mức, nên `SG.difficulty.RATING_VERSION` và phiên bản lược đồ của bộ nhớ
+đệm đều là 3: danh sách lược đồ 2 bị bỏ (không chuyển đổi, không đóng dấu thành bản hiện tại), và bộ nhớ đệm chỉ
+nhận một kết quả chuẩn hiện tại, tức là có thuộc tính riêng `exact` kiểu boolean và một rating đầy đủ của phiên bản
+hiện tại, được kiểm tra trong `serialize` trước khi `SG.pipeline.toWire` kịp biến một cờ thiếu thành giá trị false
+hợp lệ, và trên wire đã giải mã trước khi `SG.pipeline.fromWire` làm vậy (hàm đó vẫn đọc cờ vắng mặt là false cho
+wire của worker, vẫn là phiên bản 1; một kết quả dự phòng nông, `exact: false`, là mục hợp lệ; một kết quả chuẩn
+chưa được chấm điểm bị từ chối). Đề tạo lại chỉ được coi là cùng một đề khi đề, lời giải, tính chính xác (`exact`),
+toàn bộ rating đã chuẩn hóa (cả phiên bản lẫn số lần dùng kỹ thuật) và mô hình ngữ nghĩa đều bằng nhau; thời gian,
+bộ đếm công việc, mục tiêu, trace và cách hiển thị ký hiệu bị bỏ qua. Điểm đã lưu trong lịch sử không được tính
+lại (kho lịch sử vẫn là phiên bản 1), và tài liệu xuất ra vẫn giữ định dạng `sudoku-generator/v1`, mang
+`difficulty.ratingVersion: 3` (là 2 trong tài liệu của rating v2, vẫn chỉ là một tuyên bố).
 
 ### Lịch sử các đề
 
 `SG.history` (`js/ui/history.js`) thêm mọi đề trang tạo ra vào một danh sách lưu trong `localStorage`
 (`sg.history.v1`, mới nhất ở trên, tối đa 100 mục; không có storage thì danh sách chỉ nằm trong bộ nhớ). Mỗi mục
-nhỏ gọn: biến thể, mức đã chọn và mức đạt được, seed, số ô cho sẵn, điểm và cấu hình để dựng lại đề
-(`SG.history.entryOf(result)`; khóa của mục, `SG.history.keyOf`, được suy ra từ các trường đó khi đọc danh
-sách chứ không được lưu); đề nhập vào không được liệt kê vì không có seed nào dựng lại được. Danh sách là
+nhỏ gọn: biến thể, mức đã chọn và mức đạt được, seed, số ô cho sẵn, điểm và cấu hình để dựng lại đề, cùng
+`ratingVersion` khi kết quả có nêu
+(`SG.history.entryOf(result)`; khóa của mục, `SG.history.keyOf`, được suy ra từ công thức khi đọc danh
+sách chứ không được lưu); đề nhập vào không được liệt kê vì không có seed nào dựng lại được. `ratingVersion` là
+`rating.ratingVersion` của kết quả đã tạo ra mục, một số nguyên dương được chép đúng như kết quả nêu: không bao giờ
+điền phiên bản hiện tại cho một kết quả hay một mục cũ không có nó, không ép kiểu từ chuỗi hay phân số, và giá trị
+thiếu hoặc sai dạng bị bỏ đi (công thức vẫn được giữ); số nguyên dương lớn hơn phiên bản hiện tại vẫn được giữ.
+Đó là dữ liệu để hiển thị, không thuộc khóa, không thuộc `SG.history.overridesOf` (trạng thái store để tạo lại mục
+đó), không thuộc bộ nhớ đệm hay đề xuất ra, và phong bì vẫn là `{ version: 1, entries }` dưới cùng khóa. Danh sách là
 panel bên trái của trang (`#history-root`; nằm dưới phần kết quả trên màn hình hẹp). Đề được tạo lại sẽ lên đầu
-danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo đề (cùng seed cho cùng đề trong cùng một
-phiên bản trình sinh đề, và bộ nhớ đệm trả về ngay nếu còn) mà không đổi vị trí của mục; một mục có từ trước rating
-v2 có thể tạo lại thành một đề khác, và mức cùng điểm đã lưu của nó không được tính lại. Mỗi mục có thể xóa, và
+danh sách; bấm một mục sẽ ghi cấu hình của nó vào biểu mẫu rồi tạo lại đề bằng mô hình tính điểm hiện tại (bộ nhớ
+đệm trả về ngay một kết quả phù hợp nếu có) mà không đổi vị trí của mục, và dấu của kết quả mới thay dấu cũ, hoặc để
+mục không có dấu khi kết quả không nêu. Chỉ công thức được lưu, không lưu đề, nên một mục do phiên bản cũ hơn tạo có
+thể cho ra một đề khác, và mức cùng điểm đã lưu của nó không được tính lại. Mục không có `ratingVersion`, hoặc có số
+nhỏ hơn `SG.difficulty.RATING_VERSION` hiện tại, hiện thêm một dòng "Do phiên bản cũ hơn tạo; chọn mục này sẽ tạo lại
+đề bằng mô hình tính điểm hiện tại." và phần giải thích làm tiêu đề (title) của nút; phiên bản bằng hoặc lớn hơn
+(không bao giờ gọi là cũ hơn), hay phiên bản hiện tại không phải số nguyên dương, thì không hiện gì, và mục không có
+dấu không bị khẳng định là của phiên bản nào. Mỗi mục có thể xóa, và
 nút **Xóa hết** làm trống danh sách.
 
 ### Thanh địa chỉ và cài đặt
@@ -427,7 +512,7 @@ các hàm gọi lúc chạy), và giữ phần logic trong các hàm thuần, ki
 
 Xem [cây thư mục ở bản tiếng Anh](DEVELOPERGUIDE.md#directory-tree): `generator/` gồm `index.html`, `tests.html`, `css/`, `js/engine/`
 (bộ máy sinh đề, không DOM; `js/engine/replay.js` là phần phân tích việc phát lại ở thẻ Các bước tạo đề: nước đi, điểm số và các chế độ xem), `js/variants/`, `js/worker/`, `js/ui/`, `assets/wordlists/` và `tests/` (`tests/suites/`: bộ kiểm
-thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/replay-fixtures.js`: tạo lại dữ liệu của suite `replay`); phần dùng chung với trình chơi nằm
+thử nhanh, chạy mặc định cùng `../core/tests/suites`; `tests/manual/`: 8 suite nặng; `tests/fixtures/manual-corpus.js`: các kho đề theo từng mức của các suite nặng; `tests/replay-fixtures.js` và `tests/replay-goldens.js`: tạo lại và kiểm tra dữ liệu của suite `replay`; `tests/difficulty-recovery.js`: công cụ chẩn đoán đo một yêu cầu cố định của đợt phục hồi độ khó v3; `tests/mega-contract.js`: tầng kiểm tra sâu cho các yêu cầu Nightmare của mega12 và mega16; `tests/pattern-cost.js`: công cụ đo chi phí của các bộ tìm kỹ thuật trên các mẫu thật của chúng, không sinh đề; `tests/fixtures/qualification-records.js`: các hàm thuần của quy trình kiểm định và của phép gộp đủ 135 ô trong `tests/qualify.js --merge`); phần dùng chung với trình chơi nằm
 ở `core/` (bộ máy giải, `exchange`, `wordbook`, `symbols`, `board-view`, css nền và từ điển), tài liệu ở `docs/`.
 
 ## Định dạng trao đổi
@@ -520,7 +605,346 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
 1. **Quy tắc của `find`**: chỉ đọc `state`, không bao giờ ghi vào (bộ giải tự áp dụng kết quả, nhờ đó điểm số
    luôn trung thực); trả về `null` khi không áp dụng được, nếu không thì trả về đúng một phép suy luận thật sự
    làm đổi trạng thái; không dùng ngẫu nhiên; làm việc với mọi hình dạng nhóm qua `model.units` (không giả định
-   hàng và khối); gọi `ctx.check()` trong các vòng lặp dài.
+   hàng và khối); gọi `ctx.check()` trong các vòng lặp dài. Một phép tìm kiếm có giới hạn báo công việc của nó qua bộ
+   quan sát tùy chọn `ctx.options.onPatternWork(record)` (`{ id, work, limit, capHit, retained }`, mỗi lần gọi một bản
+   ghi mới và nó không bao giờ chọn kết quả). Các phép tìm chuỗi được viết một lần thành các lõi
+   `SG.chainSearch.forcing(model, state, ctx, { id, minLength, maxLength, workLimit, edges })` và
+   `SG.chainSearch.nishio(model, state, ctx, { id, minDepth, maxDepth, workLimit })` (`core/js/engine/tech-chain.js`):
+   khoảng đóng áp dụng cho chứng minh **ngắn nhất** của toàn bộ phép tìm (cực tiểu nhỏ hơn `min` cho `null`, nên một
+   kỹ thuật dài hơn không bao giờ gắn lại nhãn cho chứng minh ngắn hơn), `length` đếm số cạnh (chuỗi dài hơn của một
+   chứng minh hai chuỗi, không phải tổng), `workLimit` là 50.000 khi vắng mặt và `null` (hoặc `Infinity`) nghĩa là
+   không giới hạn, và khi hết giới hạn thì trả `null`, không bao giờ trả chứng minh tốt nhất đã có. `edges` (chỉ của
+   forcing, MS12) là chế độ cạnh tường minh của bộ dựng đồ thị dùng chung: `'general'` (mặc định; đồ thị và ba loại
+   chứng minh ở trên, không đổi) hoặc `'restricted'` (đồ thị XY-chain và chứng minh duy nhất của nó, bên dưới); giá trị
+   khác là `solver.invalidOption`, và không bộ tìm tổng quát nào đã đăng ký đọc nó. Một lần gọi có
+   giới hạn không bao giờ để quá 256 đơn vị công việc trôi qua giữa hai lần kiểm tra ngân sách cha (nó chia một lần mở
+   rộng lớn hơn thành các đoạn tối đa 256 cạnh; lần gọi không giới hạn giữ nhịp cũ). Năm kỹ thuật chuỗi đã đăng ký là
+   các lớp bao truyền id, cả hai cận và giới hạn công việc của mình một cách tường minh, nên mỗi chứng minh thuộc đúng
+   một id: `xyChain` từ 1 đến 12 cạnh hạn chế (50.000), `forcingChain` từ 1 đến C cạnh và `nishio` độ sâu 1 (cả hai không giới hạn), `forcingChainLong` từ C + 1 đến
+   12 cạnh và `nishioDeep` độ sâu 2 (tối đa 3; cả hai ở mức 50.000). C là `SG.chainSearch.SHORT_MAX` (4, do nhiệm vụ MS07c
+   chọn từ số lần đạt chính xác của 72 yêu cầu Nightmare mới, 36 so với 24 của 6:
+   [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)), đọc ở
+   mỗi lần gọi. Tùy chọn `maxChainLength` và `maxNishioDepth` của người gọi chỉ có thể thu hẹp một khoảng, không bao
+   giờ mở rộng, và lớp bao lấy giao của khoảng của nó với tùy chọn đó. Skyscraper, two-string kite, empty rectangle,
+   finned X-Wing và finned Swordfish
+   (`core/js/engine/tech-fish.js`, nhiệm vụ MS08a đến MS09b) là các bộ tìm có giới hạn còn lại: một đơn vị công việc là
+   một cặp đường gốc được thử (skyscraper), một cặp gồm một hàng và một cột được thử (kite), một cặp gồm một khối
+   và một đơn vị cặp liên hợp của một chữ số được thử (empty rectangle, thực hiện tối đa tám lần thử trong đơn vị đó:
+   hai hình chữ nhật, hai cách chọn nhánh A, hai cách chọn đầu p) hoặc một tổ hợp hai hoặc ba đường gốc được thử (finned
+   X-Wing và finned Swordfish, thực hiện tối đa một lần thử cho mỗi tổ hợp đường phủ trong đơn vị đó: 36 và 84 trên bàn
+   9×9, 153 và 2.925 trên bàn nhiều lưới; bộ đếm không đếm từng lần thử đường phủ hay từng ô đích), 50.000 mỗi lần
+   gọi (mỗi kỹ thuật trong năm kỹ thuật có một hằng số riêng: hai finned fish dùng chung phép liệt kê, không dùng chung
+   giới hạn), ngân sách của nơi gọi được kiểm tra khi vào và trước đơn vị làm công việc kể từ lần kiểm tra trước vượt 256
+   đơn vị, và khi hết giới hạn thì trả `null`, tức là mất một phép suy luận chứ không bao giờ bịa ra một phép suy luận
+   (với các finned fish đó là một phép cắt xác định: `null` kèm `capHit: 'work'` sau một tiền tố của các tổ hợp đường
+   gốc, không bao giờ chứng minh rằng không có mẫu nào).
+   `SG.fishSearch.skyscraper`, `SG.fishSearch.twoStringKite`, `SG.fishSearch.emptyRectangle`,
+   `SG.fishSearch.finnedXWing` và `SG.fishSearch.finnedSwordfish` (cả hai dạng `(model, state, ctx,
+   { workLimit })`) là các cổng không
+   đăng ký của các bài kiểm thử để đặt một giới hạn tường minh. Cầu nối của một kite nằm trong một đơn vị giống khối,
+   tức một khối hoặc một vùng của bàn Ghép hình (loại `box` hoặc `region`, đầy đủ và là đơn vị duy nhất chứa ô đó),
+   nên kite cũng chạy trên bàn Ghép hình; một khối chồng của bàn nhiều lưới có hai chủ nên không nối được gì, đường
+   chéo hay cửa sổ không phải là khối, và chỉ những đường nguyên vẹn mà không đường nào khác cùng loại chạm vào mới
+   được tính. Khối của một empty rectangle cũng là một đơn vị giống khối theo nghĩa đó, và mỗi ứng viên của nó cần
+   khối ấy là đơn vị giống khối duy nhất chứa nó cùng đúng một hàng và một cột đầy đủ (nên một khối dùng chung của
+   bàn nhiều lưới không cho hình chữ nhật nào); cặp liên hợp của nó là một đơn vị đầy đủ bất kỳ (hàng, cột, khối,
+   vùng, đường chéo, cửa sổ) trong đó chữ số có đúng hai ứng viên, cả hai nằm ngoài khối. Các ô vây (fin) của một
+   finned X-Wing là các ứng viên của đường gốc không nằm trên đường phủ nào: chúng nằm trong một đơn vị giống
+   khối theo nghĩa đó, mỗi đường gốc cần một ô thân (ứng viên nằm trên một đường phủ), ô đích là một ô của đường phủ
+   nằm ngoài các đường gốc và nhìn thấy mọi ô vây (đồng đẳng thật, không phải thuộc về khối của ô vây), và mỗi ứng
+   viên của đường gốc giữ quyền sở hữu của `findFish`. Sashimi là cùng mẫu đó với một ô thân trong một đường gốc:
+   không phải một kỹ thuật, cờ hay mã riêng. Finned Swordfish là cùng phép chứng minh với ba đường gốc và ba đường phủ
+   (ở n = 3 các ô thân thưa cũng được cho phép bởi cùng phép chứng minh đó, và một đường gốc không được gọi là sashimi
+   chỉ vì số ô thân của nó). `SG.fishSearch.finnedFish(model, state, ctx, { size })` đến được phép liệt kê dùng chung ở
+   cỡ 2 hoặc 3, mỗi cỡ với giới hạn mặc định của kỹ thuật của nó.
+   Remote pairs (`core/js/engine/tech-wing.js`, nhiệm vụ MS10a) là một bộ tìm có giới hạn riêng. Nó nối các ô trống có
+   cùng hai ứng viên bằng các đồng đẳng thật (`model.peers`: các đơn vị lồng cũng được tính, và không có gì ngoài
+   `model.peers`), tô hai màu từng thành phần (thành phần có chu trình lẻ bị bỏ qua nguyên vẹn, không bao giờ một
+   phần) và loại cả hai chữ số khỏi mọi ô nhìn thấy hai đầu khác màu cách nhau ít nhất ba cạnh (một đường đi 3, 5, 7,
+   ... cạnh; `cells` của Finding là một đường ngắn nhất giữa hai đầu đã chọn, đã sắp xếp, và `length` đếm số cạnh của
+   nó; một cặp kề nhau một mình không đủ điều kiện, và một cặp kề nhau khác cũng biện minh cho một ô đích không làm
+   vô hiệu một chứng cứ từ xa thật sự). Một đơn vị công việc là một lần mở rộng cạnh (một đồng đẳng trống cùng cặp
+   được tìm thấy khi một ô được mở rộng, trong phép tô màu và trong lần duyệt đường chứng cứ) hoặc một cặp đầu được
+   thử, 50.000 mỗi lần gọi (`SG.wingSearch.REMOTE_PAIRS_WORK_LIMIT`, một cận an toàn: cận cấu trúc của một bàn không
+   có lồng là 16.384 trên Samurai và một bàn Killer có lồng nhỏ hơn 7.505), ngân sách của nơi gọi được kiểm tra khi vào
+   và tối đa mỗi 256 đơn vị, khi hết giới hạn thì trả `null` kèm `capHit: 'work'`, và
+   `SG.wingSearch.remotePairs(model, state, ctx, { workLimit })` là cổng không đăng ký của nó. Nó được đăng ký ở
+   order 116 với trọng số 350, trước Simple Colouring. Sau khi các cặp trần (naked pair) đã được làm xong, mọi phép suy
+   luận Remote Pairs trên một bàn tiêu chuẩn cũng là một phép suy luận Simple Colouring, và bậc thang nêu tên mẫu đơn
+   giản hơn trước; vì vậy một vị trí sau Simple Colouring chưa bao giờ được gợi ý chạm tới (0 trên 20.000 lần giải);
+   lý lẽ, tỷ lệ của các lần quét ở order 116 và mục được đặt tên S-AV32 nằm trong `generator/design.md`, "Remote pairs".
+   WXYZ-Wing (cùng tệp, nhiệm vụ MS10b) là phép chứng minh sức chứa bốn ô, cũng là một bộ tìm có giới hạn. Nó lấy bốn
+   ô trống khác nhau, mỗi ô có từ một đến bốn ứng viên và hợp các ứng viên đúng bốn chữ số; một chữ số là *bị hạn chế*
+   khi mọi cặp vị trí của nó trong bốn ô nhìn thấy nhau (`model.peers`, kể cả lồng), và phải có đúng một chữ số *z*
+   không bị hạn chế. Ba chữ số kia điền được tối đa ba trong bốn ô, mà mỗi ô mang một trong bốn chữ số, nên một trong
+   các ô chứa *z* phải là *z*, và *z* bị loại khỏi mọi ô trống ngoài bộ bốn nhìn thấy mọi ô của bộ bốn chứa *z*. Các bộ
+   bốn được duyệt theo thứ tự ô tăng dần, bộ đầu tiên có ô đích được trả về cùng mọi ô đích của nó (`cells` là bốn ô tăng
+   dần, `i18nArgs { digits (bốn chữ số tăng dần, gồm cả z), digit (z), cells (nhãn) }`). Một đơn vị công việc là một ô
+   trống có tối đa bốn ứng viên được thử làm thành viên kế tiếp của một bộ bốn dở dang, 50.000 mỗi lần gọi
+   (`SG.wingSearch.WXYZ_WORK_LIMIT`, và `SG.wingSearch.wxyzWing(model, state, ctx, { workLimit })` là cổng không đăng ký
+   của nó), ngân sách của nơi gọi được kiểm tra khi vào và tối đa mỗi 256 đơn vị, khi hết giới hạn thì trả `null` kèm
+   `capHit: 'work'` (không chứng minh được rằng không có mẫu). Nó được đăng ký ở order 155 với trọng số 800 (tầng
+   Master: 1,25 × 800 không nhỏ hơn cận trên 1000 của mức expert); số liệu chi phí và các lần chạm giới hạn là mục được
+   đặt tên S-AV33 trong `generator/design.md`, "WXYZ-Wing".
+   Unique Rectangle (cùng tệp, nhiệm vụ MS11a) giữ nguyên id, order 180, trọng số 900 và `assumesUniqueness: true`, nay
+   gọi tên bốn loại con (`technique.uniqueRectangle.type1.step` đến `.type4.step`). Sau khi lượt thứ nhất (loại 1 và 2)
+   không tìm được gì trên mọi hình chữ nhật, một lượt thứ hai có giới hạn tìm, theo từng hình chữ nhật, **loại 3** (hai
+   góc đáy chứa đúng cặp {X, Y} và hai góc mái chứa nhiều hơn: một mái phải chứa một chữ số thừa của chúng, nếu không
+   việc hoán đổi sẽ cho lời giải thứ hai, nên các chữ số thừa là một thành viên ảo của một tập trần trong một đơn vị
+   chứa cả hai mái; với *k* ô khác của đơn vị đó (không có cận trên cho *k*: từ max(1, |chữ số thừa| − 1) đến số ô đủ
+   điều kiện, nhiều nhất là số chữ số − 1) mà ứng viên cùng với các chữ số thừa đúng *k* + 1 chữ số, các chữ
+   số ấy bị loại khỏi những ô còn lại của đơn vị, trừ cả hai mái và *k* ô đó; `i18nArgs { roof1, roof2, digits,
+   partDigits, cells, unit }`) rồi
+   **loại 4** (một đơn vị đầy đủ chứa cả hai mái, trong đó một chữ số của cặp chỉ là ứng viên của hai ô ấy: chữ số kia bị
+   loại khỏi cả hai mái; `i18nArgs { roof1, roof2, digits, digit, unit }`). Hình học và điều kiện duy nhất lời giải là
+   của bản cũ, một đơn vị không đầy đủ không phải liên kết liên hợp, và các loại cũ giữ quyền ưu tiên trước mọi loại con
+   mới. Một đơn vị công việc là một lần thử mở rộng một tập hoặc một chữ số được thử làm liên kết, 50.000 mỗi lần gọi
+   (`SG.wingSearch.UNIQUE_RECTANGLE_WORK_LIMIT`, và `SG.wingSearch.uniqueRectangle(model, state, ctx, { workLimit })` là
+   cổng không đăng ký của nó), ngân sách của nơi gọi được kiểm tra khi vào lượt thứ hai và tối đa mỗi 256 đơn vị, bộ
+   quan sát báo mọi lần gọi chạy lượt này, và khi hết giới hạn thì trả `null` kèm `capHit: 'work'` (không chứng minh
+   được rằng không có mẫu); khi ngân sách của nơi gọi cạn thì trả `null` kèm `capHit: null`. Phép chứng minh, thứ tự,
+   việc không có cận trên cho số ô thật, chi phí và tỷ lệ chạm tới nằm trong
+   `generator/design.md`, "Unique Rectangle types 3 and 4".
+   **Dạng ẩn** của Unique Rectangle (cùng tệp, nhiệm vụ MS11b; cùng id, order và trọng số, khóa câu giải thích
+   `technique.uniqueRectangle.hidden.step`) là lượt thứ ba có giới hạn: khi lượt thứ nhất và lượt thứ hai không tìm được
+   gì (lượt thứ hai chạm giới hạn công việc thì không chứng minh được rằng không có mẫu và không chặn lượt này; ngân sách
+   của nơi gọi cạn thì có chặn), nó xét, theo từng hình chữ nhật theo cùng thứ tự, từng góc T làm *đích* (theo thứ tự của
+   hình chữ nhật) mà góc đối diện chứa đúng cặp {X, Y} (bốn góc có đúng cặp đó làm phần chung và không phải cả bốn góc
+   đều chỉ là cặp trần), và từng chữ số X của cặp, chữ số nhỏ trước. Nếu X là ứng viên của đúng hai ô trong đơn vị hàng
+   và của đúng hai ô trong đơn vị cột nối T với hai góc kề của nó (hàng và cột thật sự, đầy đủ; một ô đã điền cũng tính
+   là một chỗ chứa), thì T không thể là chữ số kia Y: hai góc kề sẽ cùng là X, góc đối diện sẽ là Y và bốn góc sẽ tạo
+   thành hình chữ nhật hoán đổi được mà một đề có lời giải duy nhất không thể có (bản thân T có thể chỉ chứa {X, Y}). Y
+   bị loại khỏi T. `i18nArgs { digit, digits, cells }`: `digit` là chữ số X của các liên kết (chỉ với khóa này; phần
+   đầu của `tech-wing.js` nói rõ), `digits` là cặp theo thứ tự tăng, `cells` là nhãn của bốn góc theo thứ tự của hình
+   chữ nhật. Một đơn vị công việc là một lần thử (đích, chữ số), 50.000 mỗi lần gọi với bộ đếm, phép kiểm tra khi vào
+   và nhịp kiểm tra riêng (`SG.wingSearch.UNIQUE_RECTANGLE_HIDDEN_WORK_LIMIT`; cổng
+   `SG.wingSearch.uniqueRectangle(model, state, ctx, { workLimit, hiddenWorkLimit })`); mỗi hình chữ nhật có tối đa tám
+   đơn vị, nên giới hạn này không thể bị chạm trên các hình học đã đăng ký. Bộ quan sát nhận một bản ghi cho mỗi lượt có
+   giới hạn đã chạy, lượt thứ hai trước, **chỉ khi lần gọi trả về bình thường**: hủy hoặc một lỗi bất ngờ ở bất kỳ lượt
+   nào thì không để lại bản ghi nào, và một kết quả của loại cũ cho một bản ghi hoặc không có. Phép chứng minh, thứ tự,
+   chi phí, tỷ lệ chạm tới và ảnh hưởng đến các đề tham chiếu, mã băm và bản ghi vàng nằm trong `generator/design.md`,
+   "Unique Rectangle, the hidden form".
+   **BUG+1** (cùng tệp, nhiệm vụ MS11c; id `bugPlusOne`, nhóm `wing`, order 182, chi phí cơ sở 72, trọng số 920, không
+   giới hạn biến thể, `assumesUniqueness: true`, nằm giữa Unique Rectangle và Forcing Chain) điền ô T duy nhất còn ba
+   ứng viên khi mọi ô trống khác có đúng hai ứng viên. Nó cần một mô hình không có lồng và không có dấu so sánh, chỉ gồm
+   các đơn vị đầy đủ (`ctx.completeUnits`; một đơn vị thiếu là cả mô hình bị từ chối), và `ctx.assumeUniqueness: false`
+   cho `null`. Với từng ứng viên X của T, số nhỏ trước, khi bỏ X khỏi T thì **mọi đơn vị của mô hình** (không chỉ các
+   đơn vị của T) phải chứa mỗi chữ số đã điền chỉ ở ô đã điền của nó và mỗi chữ số khác ở đúng hai ô; X đầu tiên thỏa
+   mãn được điền (nhiều nhất một X thỏa mãn), và một X đã được điền trong một đơn vị của T là ứng viên cũ, không bao
+   giờ đủ điều kiện (một chốt chặn về tính đúng đắn, không phải một hạn chế). Vị trí khi bỏ X khỏi T có thể đảo nghiệm,
+   nên nó không có lời giải hoặc có ít nhất hai, và một đề có lời giải duy nhất vì thế có T = X. Kết quả có `cells [T]`,
+   `placements [[T, X]]`, không loại bỏ nào và khóa `technique.bugPlusOne.step` với `i18nArgs { cell, label, digit }`.
+   Một đơn vị công việc là một ô được đếm dưới một chữ số đang xét (kể cả ô đã điền), 50.000 mỗi lần gọi
+   (`SG.wingSearch.BUG_PLUS_ONE_WORK_LIMIT`; cổng `SG.wingSearch.bugPlusOne(model, state, ctx, { workLimit })`); cận cấu
+   trúc bằng ba lần tổng kích thước các đơn vị (729 trên classic9, 3.645 trên Samurai và Flower) cho thấy giới hạn đếm
+   không thể bị chạm trên các hình học đã đăng ký, chứ không phải cả lần gọi bị chặn về thời gian. Bộ quan sát nhận một
+   bản ghi khi lần gọi trả về bình thường (cả khi chốt chặn từ chối mà không tốn công) và không có bản ghi nào khi hủy,
+   khi có lỗi hoặc khi `assumeUniqueness: false`. Phép chứng minh, chi phí, tỷ lệ chạm tới và ảnh hưởng đến các đề tham
+   chiếu, mã băm và bản ghi vàng nằm trong `generator/design.md`, "BUG+1".
+   **XY-chain** (`core/js/engine/tech-chain.js`, nhiệm vụ MS12; id `xyChain`, nhóm `chain`, order 186, chi phí cơ sở 82,
+   trọng số 1000, không giới hạn biến thể, `assumesUniqueness: false`, nằm giữa BUG+1 và Forcing Chain) là dạng hạn chế
+   của phép tìm chuỗi, được chọn bằng `edges: 'restricted'` của bộ dựng dùng chung. Liên kết mạnh chỉ là hai ứng viên
+   của một ô hai ứng viên, và liên kết yếu chỉ là cùng một chữ số ở hai ô nhìn thấy nhau (`model.peers`); đồ thị hạn chế
+   không xem nội dung của `ctx.completeUnits` và không dùng liên kết mạnh liên hợp của đơn vị. Một chứng minh đi từ
+   "s sai" đến "t đúng", cùng một chữ số ở hai ô khác nhau, ô sau có số thứ tự cao hơn, nên có 3, 5 đến 11 cạnh (khoảng
+   là 1 đến 12) và chỉ xác lập rằng ít nhất một trong hai ô chứa chữ số đó; mọi ứng viên của chữ số đó nhìn thấy cả hai
+   ô bị loại và không điền gì. Đường đi có thể ghé một ô hai lần. Chứng minh ngắn nhất của cả lượt quét được giữ (hòa:
+   điểm bắt đầu thấp nhất, rồi thứ tự của phép tìm theo chiều rộng) và nó có thể hành động trước một chứng minh chuỗi
+   tổng quát của Forcing Chain, ở order 190. Kết quả có `cells` (các ô khác nhau của chuỗi, tăng dần), `placements []`,
+   các loại bỏ tăng dần, khóa `technique.xyChain.step` (không có hậu tố loại) và `i18nArgs { digit, kind: 'endpoints',
+   length, chains }` với một chuỗi các bộ ba `[cell, digit, truth]` theo thứ tự đi qua. Một đơn vị công việc là một
+   cạnh được thăm (kể cả cạnh thăm lại và cạnh tới ứng viên cuối không có hai ứng viên), 50.000 mỗi lần gọi, không bao
+   giờ trả cực tiểu dở dang khi hết giới hạn; bộ quan sát nhận một bản ghi cho mỗi lần gọi trả về bình thường và không
+   có bản ghi nào khi hủy hoặc có lỗi. Các cờ của đồ thị mô tả đồ thị **nguyên tử**: đồ thị gộp cho các chuỗi ép (MS13)
+   cần cách biểu diễn nút và bộ giải mã riêng, việc gộp không áp dụng cho XY-chain, và không cấu hình nào của cổng chung
+   mở rộng được 12 cạnh và 50.000 đơn vị của bộ tìm đã đăng ký. Phép chứng minh, biến thể tương đương, chi phí, tỷ lệ
+   chạm tới và ảnh hưởng nằm trong `generator/design.md`, "The XY-chain".
+   **Đồ thị chuỗi gộp** (`core/js/engine/tech-chain.js`, nhiệm vụ MS13a; **chưa kích hoạt ở MS13a** (lịch sử): không bộ tìm
+   đã đăng ký, không lời gọi cổng chung và không phép chấm điểm nào đọc nó, nên mọi Finding, bản ghi bộ quan sát, mã băm
+   và bản ghi replay đều không đổi; từ MS13c `forcingChain` và `forcingChainLong` đọc nó, xem "Kích hoạt" bên dưới).
+   `SG.chainGraph.build(model, state, ctx[, { groupLimit, workLimit }])` trả về
+   `{ nodes, weak, strong, complete, work, capHit }`; `SG.chainGraph.LIMITS` (đã đóng băng) là
+   `{ groups: 4096, work: 50000 }`. Một nút là `{ cells, digit }`: `cells` tăng dần và khác nhau, mỗi ô là một ô trống
+   còn giữ chữ số `digit` (tính từ 1); nút đúng khi có ít nhất một ô trong danh sách chứa chữ số đó, nên một nhóm đúng
+   không bao giờ cho phép điền một thành viên tùy ý (nút nhóm có cách biểu diễn riêng, không dùng cách giải mã số học
+   `cell * digits + digit` của đồ thị nguyên tử). `nodes` liệt kê các nút đơn (mỗi ứng viên còn mở một nút, tăng dần
+   theo ô rồi chữ số), sau đó là các nhóm, sắp theo khóa số `[digit, ...cells]`, tiền tố ngắn hơn đứng trước. Một nhóm
+   là tập các ô trống chứa một chữ số trong giao của một đơn vị `box` hoặc `region` đầy đủ với một đơn vị `row` hoặc
+   `col` đầy đủ, khi có ít nhất hai ô (các nhóm giống hệt nhau chỉ giữ một); cửa sổ, đường chéo và mọi đơn vị khác không
+   tự sinh nhóm nhưng vẫn cho liên kết mạnh và, qua `model.peers`, liên kết yếu. Hai nút cùng chữ số liên kết yếu khi
+   rời nhau và mọi cặp ô chéo của chúng nhìn thấy nhau, và liên kết mạnh khi rời nhau và hợp lại đúng bằng các vị trí còn
+   mở của chữ số đó trong một đơn vị đầy đủ chưa điền chữ số ấy; chữ số khác nhau chỉ liên kết như các nút đơn của cùng
+   một ô (yếu luôn luôn, mạnh khi ô có hai ứng viên). Một đơn vị công việc là một tổ hợp được thử: mỗi nhóm ứng viên
+   (trước khi loại trùng), mỗi cặp ứng viên của một ô và **mọi** cặp nút của một chữ số, kể cả cặp bị bộ lọc ô đầu tiên
+   loại. Giới hạn mặc định là 50.000 đơn vị (bàn 9×9 trống cần 84.807 nên mặc định trả về chưa hoàn tất, và bài kiểm tra
+   dựng nó với `workLimit` hữu hạn) và 4.096 nhóm khác nhau (hạn ngạch được áp dụng ngay khi thu thập nhóm: nhóm trùng
+   tốn công nhưng không tốn chỗ; đúng bằng giới hạn vẫn được phép). Các tùy chọn thay một trong hai giới hạn bằng một
+   số hữu hạn không nhỏ hơn 0 (làm tròn xuống; giá trị khác là `solver.invalidOption`); không có chế độ không giới hạn.
+   Đồ thị không thể hoàn tất có `complete: false` với các mảng **rỗng** và `capHit` là `'work'`, `'nodes'` (hạn ngạch)
+   hoặc `null` (ngân sách của bên gọi đã hết); mảng rỗng không bao giờ nghĩa là không có chứng minh, chỉ là chưa dựng
+   được đồ thị dùng được. Việc hủy và lỗi được truyền đi, và bộ dựng không phát bản ghi nào cho bộ quan sát. Bộ kiểm
+   tra độc lập là `SG.chainProofs` (`core/tests/fixtures/chain-proofs.js`), tính lại các nút, cạnh, công việc và chứng
+   minh từ mô hình và trạng thái. **Kích hoạt (MS13c, quyết định của chủ sở hữu GC-01 phương án A / S-OD11).**
+   `forcingChain` (1 đến C liên kết) và `forcingChainLong` (C + 1 đến 12) nay tìm trên đồ thị này và công bố chứng minh
+   ngắn nhất **của nó**, không bao giờ cho XY-chain, từ một lần thử có giới hạn: 4.096 nút bổ sung và **một** giới hạn
+   công việc 50.000 đơn vị dùng chung cho dựng đồ thị và tìm kiếm, bắt đầu từ số đơn vị phần dựng đã dùng và không bao
+   giờ đặt lại (R10 cho phép một điều chỉnh đo được; số liệu cho thấy không cần). Chỉ `forcingChain`, sau một giới hạn
+   **cục bộ** của lần thử (`construction-work`, `construction-nodes` hoặc `search-work`) và khi ngân sách của bên gọi
+   còn, rơi về phép tìm kiếm đầy đủ trên đồ thị ứng viên đơn, **không có giới hạn công việc cục bộ** (cùng ngân sách của
+   bên gọi, cùng cửa sổ); không có đường dự phòng sau khi ngân sách bên gọi hết, khi bị hủy, khi có lỗi, khi kết quả âm
+   đã hoàn tất hoặc cửa sổ rỗng, và `forcingChainLong` không có (đạt giới hạn là null). Kết quả của đường dự phòng chỉ
+   bảo đảm cực tiểu trên đồ thị ứng viên đơn; một lần tìm nhóm hoàn tất bảo đảm cực tiểu của đồ thị nhóm. Chứng minh mâu
+   thuẫn hoặc buộc điền bắt đầu từ một nút đơn (nhóm đúng không cho phép điền một thành viên), nhóm chỉ bắt đầu như đầu
+   "sai" của chứng minh đầu mút, và các loại trừ phải xung đột với mọi thành viên của nhóm ở đầu mút; chứng minh không có
+   nhóm giống từng byte Finding cũ, chứng minh có nhóm là phiên bản 2 với `cells` là hợp đã sắp xếp đầy đủ. Cổng chung là
+   `SG.chainSearch.groupedForcing(model, state, ctx, { id, minLength, maxLength, groupLimit, workLimit, fallback })`; bản
+   ghi bộ quan sát giữ năm trường (`work` nay là mọi giai đoạn) và thêm `domain`, `grouped { construction, search,
+   additional, graph, minimum, stop }` và `fallback`, chỉ phát khi trả về bình thường. Phạm vi là **có giới hạn**, không
+   phải tìm kiếm Medusa, chuỗi suy luận xen kẽ hay X-cycle đầy đủ. Ngân sách của bên gọi và việc hủy vẫn được giữ nguyên.
+   (Ở MS13a đồ thị chưa kích hoạt và GC-01 còn mở; các câu đó là lịch sử.)
+   **Đọc và hiển thị chứng minh nhóm phiên bản 2** (nhiệm vụ MS13b: phía tiêu thụ; từ MS13c bộ tìm chuỗi nhóm phát ra chúng).
+   `i18nArgs` của một Finding chuỗi có thể là `{ proofVersion: 2, kind, length, chains }` với các bước
+   `{ cells, digit, truth }` (`truth` 1 đúng, 0 sai) bên cạnh bộ ba cũ `[cell, digit, truth]`; Finding chỉ gồm nút đơn vẫn
+   giữ bộ ba và một đường có thể trộn cả hai dạng. `formatChains` của `generator/js/ui/i18n.js` và `player/js/ui/i18n.js`
+   giữ `⇒` và `|`, viết bộ ba hoặc nút một ô là `R1C2=1` hay `R1C2≠1`, và nút nhiều ô trong ngoặc với mọi thành viên đều
+   có nhãn: **nhóm đúng là phép tuyển**, `(R1C1=5 ∨ R1C2=5)`, **nhóm sai là mọi thành viên đều sai**,
+   `(R1C1≠5 ∧ R1C2≠5)` (không bao giờ thu gọn thành một thành viên đoán). Ô có thể là số thứ tự hoặc nhãn đã viết và chữ
+   số là giá trị thô hoặc ký hiệu đã viết. Trong trình chơi hàm `localizeArgs` của `player/js/ui/play.js` trả về một bản sao và không bao giờ
+   ghi vào đối số của Finding: ô của mọi nút thành nhãn và chữ số thành ký hiệu mà bàn cờ vẽ (số 1 hệ mười sáu là `0`,
+   giá trị Wordoku là chữ cái của nó), ở nút cũng như ở bộ ba. Phần tô sáng vẫn là `cells` của Finding (bên sinh phải phát
+   ra hợp đầy đủ đã sắp xếp, do `SG.chainProofs` kiểm tra); giao diện không suy ra tập thứ hai từ `chains`. Các văn bản
+   của hai ID chuỗi ép đã đổi ở cả hai ngôn ngữ và cả hai ứng dụng (hai phần mô tả, theo dạng điều kiện "Nếu một bước chứng
+   minh biểu diễn một nhóm ...", và ba lời giải thích bước, nói về đầu chuỗi và về một mệnh đề về ứng viên hoặc nhóm nên
+   vẫn đúng khi đầu chuỗi là nhóm; 32 mục, kèm văn bản cũ và mới trong
+   `docs/difficulty-v3/evidence/MS13b/locale-delta.md`); khóa, tiền tố và chỗ giữ chỗ không đổi.
+   **Law of Leftovers** (`core/js/engine/tech-subset.js`; nhân là của nhiệm vụ MS14a, còn MS14b đăng ký nó thành kỹ
+   thuật `lawOfLeftovers`: nhóm `locked`, thứ tự 87, chi phí gốc 20, trọng số 200, phạm vi `['jigsaw9']`, không giả định
+   nghiệm duy nhất; mọi Finding, bản ghi bộ quan sát, mã băm, bản ghi replay, dữ liệu chuẩn và ví dụ trợ giúp của các bàn
+   khác đều không đổi, còn những thay đổi ở bàn Jigsaw được liệt kê trong `generator/design.md` §6.6; ở MS14a nó
+   **chưa kích hoạt**: chưa đăng ký, chưa có trọng số, văn bản ngôn ngữ hay ví dụ trợ giúp).
+   `SG.leftoverPatterns.find(model, state, ctx[, { workLimit }])` trả về Finding đầu
+   tiên của `lawOfLeftovers` hoặc null trên bàn Jigsaw 9 (mô hình khác: null với công việc 0), và
+   `SG.leftoverPatterns.LIMITS` (đã đóng băng) là `{ units: 2, cells: 4, work: 50000 }`. *n* hàng (hoặc cột) đầy đủ và
+   *n* vùng đầy đủ không chung ô nào (*n* = 1 hoặc 2) đều chứa mỗi chữ số đúng *n* lần, nên các ô còn lại của mỗi bên
+   sau khi bỏ các ô chung (1 đến 4 ô mỗi bên, hai bên bằng số) chứa **cùng một đa tập** chữ số. Với mỗi lựa chọn, cả hai
+   bên được liệt kê đầy đủ (ô đã điền lấy giá trị của nó, ô trống lấy một ứng viên, các ô nhìn thấy nhau thì khác nhau)
+   và được tóm tắt bằng chữ ký, tức số lần của từng chữ số; chỉ khi **cả hai** phép liệt kê đều hoàn tất mới lấy giao
+   các chữ ký, và một ứng viên của ô trống mà không phép gán nào có chữ ký chung dùng đến thì bị loại (và không gì khác).
+   Các lựa chọn được thử với *n* = 1 rồi 2, hàng rồi cột, đơn vị theo chỉ số; lựa chọn đầu tiên loại được gì thì cho
+   Finding. Tập chữ ký chung **rỗng** (cả hai phép liệt kê hoàn tất) chứng minh *trạng thái ứng viên được cung cấp* mâu
+   thuẫn, chưa chắc là đề gốc: cả lần gọi trả về null tại lựa chọn đầu tiên được xét ấy và không bao giờ coi đó là
+   "không ứng viên nào có hỗ trợ"; một phép liệt kê bị cắt giữa chừng không chứng minh gì. Một đơn vị công việc là một
+   lần thử mở rộng một đơn vị hoặc một lần thử một chữ số; giới hạn 50.000 tính cho cả lần gọi, ngân sách của bên gọi được
+   kiểm tra khi vào và sau mỗi 256 đơn vị, giới hạn đã hết trả về null với `capHit: 'work'` (trạng thái trống của các bố
+   cục kiểm thử `staggered`, 98.530 đơn vị, và `wavy`, 81.664, vượt giới hạn nên mặc định không được nâng), ngân sách đã
+   hết trả về null, còn việc hủy và lỗi được truyền đi; `ctx.options.onPatternWork` nhận
+   `{ id, work, limit, capHit, retained: null }` của mọi lần gọi có trả về. `workLimit` thay giới hạn bằng một số hữu hạn
+   không nhỏ hơn 0 (làm tròn xuống; giá trị khác là `solver.invalidOption`; không có chế độ không giới hạn). Finding có
+   `cells` (các ô còn lại khác nhau của cả hai bên, tăng dần, kể cả ô đã điền, không kể các ô chung đã bỏ), các phép loại
+   theo ô rồi chữ số, không có phép điền, và `i18nArgs` `{ lines, regions, cells, digits }`: nhãn theo chỉ số đơn vị
+   (không bao giờ theo chữ của nhãn) và **các chữ số bị loại khác nhau**, không phải chữ ký và không phải chữ số bị loại
+   khỏi mọi ô trong danh sách. 40 bài kiểm thử của nhân (suite `tech-subset`, `law of leftovers kernel`) dùng bộ dữ liệu
+   `SG.fixtures.jigsawModels` (`core/tests/fixtures/jigsaw-models.js`) và một phép liệt kê độc lập; từ MS14b suite này còn
+   kiểm thử việc đăng ký và có các thế cờ Jigsaw thật trong `SG.fixtures.jigsawTechniques`
+   (`core/tests/fixtures/jigsaw-techniques.js`: bốn ca dương, tức hai thế cờ thật và bản chuyển vị của chúng, và ba ca
+   âm, mỗi ca có bản đồ vùng riêng; công cụ chi phí `generator/tests/pattern-cost.js` cũng đọc chúng qua bộ nối có phạm
+   vi, và cả hai trang `tests.html` đều liệt kê tệp này); ví dụ trợ giúp của một kỹ thuật có phạm vi là một ảnh chụp
+   Jigsaw kèm `cellRegion` riêng. Phép chứng minh, biến thể tương đương và bằng chứng nằm trong `generator/design.md` §6.6.
+   **Hai tương tác của lồng Killer** (`core/js/engine/tech-cage.js`; nhiệm vụ MS14c chỉ thêm kiểm thử: không thêm kỹ
+   thuật, ID, trọng số hay sửa bộ máy). Chữ số bắt buộc bị khóa vào một đơn vị và cặp Killer hai ô vốn đã là bước chỉ
+   hướng của `cageCombo` (`pointOutOfCage`), nên **không có kỹ thuật `cageLocked`** (R17). Với một lồng, `cageCombo` giữ
+   các tập chữ số của bảng tổ hợp còn vừa với các ô trống: cỡ và tổng còn lại sau các ô đã điền, không có chữ số đã
+   điền, nằm trong các ứng viên của các ô trống, mỗi ô trống có một chữ số của tập (các tổ hợp còn sống sót; không
+   ghép cặp theo phép gán). Chữ số mà mọi tập còn sống sót đều chứa và từ hai ô trống trở lên còn có thể chứa bị loại
+   khỏi các ô chưa giải khác còn chứa được nó trong **mọi** đơn vị chứa tất cả các ô ấy (hàng, cột và hộp có thể cùng áp
+   dụng); lồng hai ô chỉ còn một cặp là cùng quy tắc với cả hai chữ số. Tập thiếu chữ số, một vị trí nằm ngoài các đơn
+   vị của những vị trí kia hay một ô đích ngoài các đơn vị chung thì không cho phép loại nào. Suite lõi
+   `tech-cage.test.js` (33 bài kiểm thử, cả hai ứng dụng cùng chạy) dựng bàn bằng `SG.model.create` từ các đơn vị hàng,
+   cột, hộp và một lồng tường minh (bật lan truyền lồng cho một mã biến thể riêng), không bao giờ dùng biến thể của
+   Generator, và kiểm tra 12 thế cờ và 4 ca suýt đúng, mỗi ca theo hướng gốc và chuyển vị, đối chiếu với các phép loại
+   viết tay, một bộ oracle vét cạn và bộ giải chính xác. Cả hai trang `tests.html` đều liệt kê nó, và đợt `core-shared`
+   của `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS14c/evidence.md`.
+
+   **Bộ liệt kê tập gần-khóa có chặn** (`core/js/engine/tech-als.js`, `SG.alsPatterns`; nhiệm vụ MS15a, rating v3, R18;
+   **chưa kích hoạt khi viết**: chưa có kỹ thuật, trọng số, gợi ý, ví dụ trợ giúp hay xếp hạng nào đọc nó, nên không đầu ra nào
+   đổi; MS15b đăng ký `alsXz` trên nó, ngay dưới). Tập gần-khóa (ALS) là *k* ô trống (1 đến 4) của cùng một đơn vị đôi một
+   khác nhau mà các ứng viên gộp lại đúng *k* + 1 chữ số; đơn vị có thể là đơn vị một phần (lồng Killer), đường chéo,
+   cửa sổ hoặc vùng. `SG.alsPatterns.enumerate(model, state, ctx, work[, limits])` trả về `{ records, complete, capHit }`:
+   các bản ghi dữ liệu thuần `{ cells, digits, occurrences }` (ô và chữ số tăng dần, các ô chứa từng chữ số), mỗi tập ô
+   một bản, xếp theo số ô rồi theo các ô, và luôn là một tiền tố của thứ tự ấy (tối đa 4.096). `complete` đúng khi mọi
+   ALS có tối đa `LIMITS.cells` ô (giới hạn số ô hiệu lực, mặc định 4) đã được liệt kê: ALS lớn hơn có thể tồn tại và
+   không bao giờ bị khẳng định là vắng, và nó không bao trùm các phép tìm cặp hay đích về sau của bộ tìm kiếm; nếu không
+   thì `capHit` là `'records'` (đã giữ 4.096 và còn một tập nữa), `'work'` (thanh chắn từ chối một đơn vị công việc; chỉ
+   giữ các cỡ đã xong trước điểm cắt) hoặc `null` (ngân sách cha đã hết), và **không trường hợp nào khẳng định rằng
+   không còn ALS khác**. Thanh chắn công việc của mỗi lần gọi
+   `work = { limit, used, checkedAt, capped }` đến từ `SG.alsPatterns.createWork([limit])` (50.000 đơn vị) và được chia
+   sẻ với phép quét cặp về sau qua `SG.alsPatterns.spend(work, ctx)`: không gì đặt lại nó khi đổi giai đoạn, một đơn vị
+   là một lần thử mở rộng một tổ hợp, và ngân sách cha được kiểm tra lúc vào và sao cho giữa hai lần kiểm tra qua tối
+   đa 256 đơn vị. Bộ liệt kê không phát bản ghi `onPatternWork` (bộ tìm kiếm bao ngoài làm việc đó), không lưu đệm gì và
+   chỉ đọc đầu vào. Suite lõi `tech-als.test.js` (58 bài kiểm thử, cả hai ứng dụng cùng chạy) đối chiếu các bản ghi với
+   một phép liệt kê độc lập (mọi tập con, không cắt tỉa) và số đơn vị công việc với một phép đếm lại cài đặt lại đường
+   duyệt của bộ liệt kê, trên 84 thế cờ gieo hạt của mọi dạng đơn vị; ngoài ra kiểm thử giới hạn số bản ghi, thanh chắn,
+   ngân sách và việc hủy, và quyền sở hữu; cả hai trang `tests.html` đều liệt kê nó, và đợt `core-shared` của
+   `.github/scripts/generator-quick.json` sở hữu nó. Bằng chứng nằm trong `docs/difficulty-v3/evidence/MS15a/evidence.md`.
+
+   **ALS-XZ** (`alsXz`, nhiệm vụ MS15b, rating v3, R18; **đã kích hoạt**: người đọc đầu tiên của bộ liệt kê; Sue de Coq
+   là người đọc thứ hai, MS16 bên dưới). Kỹ thuật được đăng ký trong `core/js/engine/tech-als.js`: nhóm `chain`, `order` 194 (sau `forcingChain` 190,
+   trước `forcingChainLong` 198), chi phí gốc 106, trọng số 1.250 (kỹ thuật thuộc bậc Nightmare), không giới hạn biến
+   thể, không giả định đề có nghiệm duy nhất; `find` không nhận tùy chọn. Lấy hai ALS A và B trong các bản ghi được giữ,
+   không chung ô nào, và một chữ số x mà cả hai cùng chứa và là *chung bị hạn chế* (mọi ô của A chứa x đều thấy mọi ô
+   của B chứa x): một trong hai tập không chứa x, nên tập *k* ô có *k* + 1 chữ số mà không chứa x chứa mỗi chữ số còn
+   lại đúng một lần, và với mọi chữ số z chung khác, ứng viên z của mọi ô trống khác thấy **mọi** ô của A và B chứa z
+   bị loại. Chứng cứ đầu tiên theo thứ tự chuẩn thắng (bản ghi A trước B; x tăng dần trong các chữ số chung bị hạn chế,
+   rồi z tăng dần; trục là ô z đầu tiên của A, các ô đồng cấp của nó được duyệt tăng dần); Finding là
+   `technique: 'alsXz'`, khóa `technique.alsXz.step`, các ô của A và B tăng dần, các loại bỏ `[đích, z]` tăng dần,
+   `i18nArgs { digitX, digitY, cells }`. **Công việc và các điểm cắt:** một thanh chắn cho mỗi lần gọi, của phép liệt
+   kê, không bao giờ đặt lại; một đơn vị trước mỗi cặp bản ghi, trước mỗi phép quét (x, z) được mở và trước **mọi** ô
+   đồng cấp của trục được ghé thăm (cả ô bị loại). Đơn vị bị thanh chắn từ chối, hoặc ngân sách cha dừng, không cho
+   Finding, và sau một điểm cắt vì công việc thì bên dùng đọc ra một điểm cắt, không bao giờ đọc ra "không tìm thấy".
+   Mỗi lần gọi có trả về phát một bản ghi `onPatternWork` `{ id: 'alsXz', work, limit, capHit, retained }` (`capHit` là
+   `'work'`, hoặc `'records'` khi hạn ngạch bản ghi đã cắt phép liệt kê, hoặc `null`; chỉ ngân sách cha dừng thì là
+   `null`). `SG.alsPatterns.findXz(model, state, ctx, { workLimit, limits })` là khe kiểm thử; bản chạy thật không truyền
+   tùy chọn và dùng `LIMITS` (4 ô, 4.096 bản ghi, 50.000 đơn vị), mà MS15b **giữ nguyên** sau khi đo cả lần gọi (không
+   mất suy luận nào tại điểm cắt đã đo; ba điểm cắt công việc, đều trong một lần giải của một ví dụ trợ giúp thật, và
+   không có Finding ngay cả khi nới giới hạn; S-AV39). Danh mục trợ giúp nay có **39** ví dụ (ví dụ ALS-XZ là một đề
+   Cổ điển 9x9 Hell 1 thật). Suite lõi `tech-als.test.js` nay có 111 bài kiểm thử (58 của MS15a và 53 mới: chứng minh
+   viết tay, một oracle độc lập và bộ giải chính xác trên các thế cờ gieo hạt của mọi bố cục, thanh chắn, các điểm cắt,
+   ngân sách và bản ghi quan sát, quyền sở hữu); đã chạy 73 đột biến của bộ tìm kiếm (72 bị phát hiện, 1 tương đương)
+   và chạy lại 131 đột biến của MS15a (130 bị phát hiện, 1 tương đương). Việc kích hoạt làm đổi 2 wire, 7 golden phân
+   tích và 24 hash hồi quy, mỗi thay đổi đều được giải thích (bằng chứng). Bằng chứng nằm trong
+   `docs/difficulty-v3/evidence/MS15b/evidence.md`.
+
+   **Sue de Coq** (`sueDeCoq`, nhiệm vụ MS16, rating v3, R19; **đã kích hoạt**: người đọc thứ hai của bộ liệt kê). Kỹ
+   thuật được đăng ký trong `core/js/engine/tech-als.js` ngay sau ALS-XZ: nhóm `chain`, `order` 196 (sau `alsXz` 194,
+   trước `forcingChainLong` 198), chi phí gốc 112, trọng số 1.300 (kỹ thuật thuộc bậc Nightmare), không giới hạn biến
+   thể, không giả định đề có nghiệm duy nhất; `find` không nhận tùy chọn. *Đường thẳng* là đơn vị có `unitMeta.kind` là
+   `row` hoặc `col`, *khối* là đơn vị có kind `box` hoặc `region` (không phải đường chéo, cửa sổ hay lồng). Với một
+   đường thẳng U và một khối V chung ít nhất hai ô trống, I là mọi tập con 2 ô và 3 ô của các ô đó, C là hợp các ứng viên
+   của chúng, A là một ALS gồm *p* ô trong U ngoài V và B là một ALS gồm *q* ô trong V ngoài U, các chữ số của A và B
+   rời nhau, nằm trong C, và |C| = |I| + *p* + *q*. Khi đó các ô của I chứa đúng chữ số mà A thiếu, chữ số mà B thiếu và
+   Z (các chữ số của C mà cả hai đều không chứa: một chữ số với I có 3 ô, không có với I có 2 ô); vì vậy các chữ số của A
+   bị loại khỏi các ô còn lại của U, các chữ số của B khỏi các ô còn lại của V, và Z khỏi cả hai, còn I, A, B và ô đã giải
+   không bao giờ bị loại gì. Chứng cứ đầu tiên theo thứ tự chuẩn thắng (cặp theo chỉ số đường thẳng rồi chỉ số khối; I
+   có 2 ô trước 3 ô, các bộ theo thứ tự từ điển tăng dần; rồi A, rồi B, theo thứ tự bản ghi); Finding là
+   `technique: 'sueDeCoq'`, các ô của I, A và B tăng dần, các loại bỏ tăng dần,
+   `i18nArgs { digits, partDigits, forced, line, box }`, khóa `technique.sueDeCoq.step` (hoặc `.step.extra` khi Z khác
+   rỗng). **Công việc và các điểm cắt:** một thanh chắn riêng cho mỗi lần gọi, `SDC_WORK_LIMIT` = 50.000 (không phải
+   `LIMITS.work` mà bộ liệt kê và ALS-XZ vẫn dùng), với chín điểm tính phí (một ô của khối trong phần hình học, các đơn
+   vị của phép liệt kê, một bản ghi được phân loại, một cặp được mở, một bản ghi nhà được thử, một I được mở, một bản
+   ghi bên được thử, một (A, B) được thử, một ô của U và V trong phép quét đích); đơn vị bị thanh chắn từ chối, hoặc ngân
+   sách cha dừng, không cho Finding; mỗi lần gọi có trả về phát một bản ghi `onPatternWork`
+   `{ id: 'sueDeCoq', work, limit, capHit, retained }`. `SG.alsPatterns.findSueDeCoq(model, state, ctx, { workLimit, limits })`
+   là khe kiểm thử; khe dùng chung nay cũng từ chối một mảng (`solver.invalidOption`), cả với ALS-XZ. MS16 **giữ
+   nguyên** 50.000 sau khi đo cả lần gọi (thế cờ thật: không Finding và không điểm cắt trong 301 lần gọi; hai điểm cắt
+   công việc trên các thế cờ gieo hạt thưa 12 và 16 chữ số, một trong hai đã che mất một Finding; S-AV39 vẫn mở cho các
+   thế cờ do bộ sinh tạo ra). Danh mục trợ giúp nay có **40** ví dụ (ví dụ Sue de Coq là một đề Cổ điển 9x9 Nightmare
+   thật, seed 377, đề duy nhất mà việc sinh đề đã thay đổi). Suite lõi `tech-als.test.js` nay có 174 bài kiểm thử (63 bài
+   mới cho Sue de Coq: chứng minh viết tay, một oracle độc lập và bộ giải chính xác trên các thế cờ gieo hạt và thật,
+   thanh chắn cùng chín điểm tính phí, ngân sách và bản ghi quan sát, quyền sở hữu); đã chạy 139 đột biến của bộ tìm kiếm
+   (131 bị phát hiện ở lần chạy đầu, 6 tương đương, 2 bị diệt bởi các bài kiểm thử thêm sau), chạy lại 71 đột biến của
+   MS15b và 131 của MS15a trên các byte cuối. Việc kích hoạt không làm đổi wire hay golden phân tích nào và làm đổi **một
+   hash hồi quy** trong 520 (`classic9/nightmare` seed 377), được giải thích (bằng chứng). Bằng chứng nằm trong
+   `docs/difficulty-v3/evidence/MS16/evidence.md`.
 2. **Nạp tệp** bằng cách thêm nó cạnh các tệp `tech-*.js` khác trong bốn danh sách script ở
    [Cách hoạt động](#cách-hoạt-động) — và trong các danh sách script của trình chơi (`index.html`, `help.html`,
    `tests.html`, `tests/node-runner.js`), vì kỹ thuật nằm trong bộ máy dùng chung (`core/js/engine/`) và gợi ý
@@ -535,38 +959,103 @@ của `../core/js/engine/techniques.js`; ví dụ hoàn chỉnh *Full House* (m�
    `W` là tổng trọng số × số lần dùng; chỉ trọng số quyết định kỹ thuật được phép từ mức nào: oracle của một mức
    cho phép mọi kỹ thuật có 1.25 × trọng số nhỏ hơn cận trên khoảng điểm của mức đó, nên trọng số 400 cho kỹ
    thuật có từ mức *khó* (500 nhỏ hơn cận trên 700 của mức khó, nhưng không nhỏ hơn 400 của mức trung bình).
-   `group` chỉ là tên họ kỹ thuật (`cage` và `ineq` thuộc về Sát thủ và So sánh). Sau đó chạy lại bước kiểm
-   định `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
+   `group` chỉ là tên họ kỹ thuật (`cage` và `ineq` thuộc về Sát thủ và So sánh). Cùng quy tắc đó cho mỗi mức một
+   **nền** (floor: các kỹ thuật của mức đứng ngay trước, tính trên mọi mức kể cả khi biến thể không cung cấp mức đó)
+   và một **tầng** (tier: những gì mức đó cho phép thêm ngoài nền): `SG.difficulty.floorTechniques(level, model)`,
+   `SG.difficulty.tierTechniques(level, model)` và hai trường tương ứng của `spec`. Kỹ thuật mới vào tầng của mức
+   mà trọng số của nó xếp vào, và `tests/suites/difficulty-floor.test.js` tự suy các tập này từ bộ đăng ký và các
+   trọng số. Để kiểm tra một đề có thật sự cần tầng của mức mình hay không,
+   `SG.difficulty.certifyFloor(model, givens, level, budget)` chỉ giải bằng các kỹ thuật của nền: nó tin người gọi
+   rằng các số cho sẵn có đúng một lời giải với bàn cờ này (nó không đếm lời giải), không có giới hạn nào ngoài
+   `budget` được truyền vào, trả về `{ required, vacuous, floorLevel, unsolvedCount }` (đúng hiển nhiên, không cần
+   giải, với `veryEasy` và với mức có tầng rỗng) và ném lỗi khi có mâu thuẫn, khi đầu vào sai hay khi ngân sách bị
+   hỏng thay vì trả lời. `SG.difficulty.requiredOf(rating, level, model)` cho cùng kết luận đó từ số lần dùng từng kỹ
+   thuật của một xếp hạng chuẩn đầy đủ (`SG.difficulty.rate`), không cần giải lần nữa; người gọi bảo đảm tính duy nhất
+   và rằng xếp hạng được làm cho đúng bàn cờ và các số cho sẵn đó, và câu trả lời chỉ đúng khi `order` của bộ đăng
+   ký đi theo các trọng số, nên hãy cho kỹ thuật mới một `order` giữ các trọng số không giảm dọc theo bộ đăng ký
+   (`tests/suites/technique-weights.test.js` báo lỗi nếu không). Sau đó chạy lại bước kiểm định
+   `node tests/qualify.js` và kiểm tra tỷ lệ đạt mức bằng `node tests/soak.js --quick`.
 5. **Kiểm thử**: thêm một mục cho kỹ thuật vào `../core/tests/fixtures/techniques.js` (hai thế cờ mà nó tìm ra
    một phép suy luận, một thế cờ mà nó không tìm ra gì; `../core/tests/suites/techniques.test.js` báo lỗi cho
-   đến khi có đủ) và thêm các mẫu đúng, mẫu sai vào `../core/tests/suites/tech-<nhóm>.test.js` tương ứng (công
+   đến khi có đủ; đặt mục đó vào `CURRENT`, vì `historyV2` giữ nguyên các thế cờ của rating v2, và ghi kỹ thuật
+   cổ điển mới vào `registryOrder`, thứ tự hiện hành mà bài kiểm tra bộ đăng ký so với bộ đăng ký thật) và thêm các
+   mẫu đúng, mẫu sai vào `../core/tests/suites/tech-<nhóm>.test.js` tương ứng (công
    cụ trong `../core/tests/fixtures/techniques-helper.js`). Phép kiểm tra tính chắc chắn — một kỹ thuật không bao
    giờ được loại một giá trị thuộc về lời giải thật — không cần bạn viết gì: `techniques.test.js` tự chạy nó cho
-   mọi kỹ thuật đã đăng ký.
+   mọi kỹ thuật đã đăng ký. Một mẫu hiếm mà các thế cờ ngẫu nhiên có hạt giống hiếm khi chạm tới thì có các thế cờ
+   thật, tất định trong `SUPPLEMENTS` của tệp mẫu đó (`{ name, puzzle, after, propagate }` với mảng `after` tường
+   minh, đề có đúng một lời giải): lượt quét luôn chạy trọn quần thể ngẫu nhiên của chỗ gọi nó trước, không bao giờ ít
+   thế cờ hơn và không bao giờ hạ mức tối thiểu số lần kích hoạt, rồi mới đến các thế cờ bổ sung. Chi phí của một bộ
+   tìm trên các mẫu của nó được đo bằng `tests/pattern-cost.js` (xem “Chi phí của kỹ thuật” bên dưới); một bộ tìm báo
+   công việc qua `ctx.options.onPatternWork` (`SG.chainSearch` trong `core/js/engine/tech-chain.js` là hình mẫu).
+6. **Ví dụ thật cho trang Trợ giúp**: trang hướng dẫn của trình chơi (`player/help.html`) cho mỗi kỹ thuật một ví dụ
+   thật, và `player/tests/suites/help.test.js` báo lỗi cho đến khi danh mục có đúng các kỹ thuật đã đăng ký. Hãy ghi
+   các nguồn đề thật cho kỹ thuật mới rồi ghi danh mục bằng công cụ ví dụ trợ giúp có giới hạn của trình chơi, không bao
+   giờ sửa tay và không bao giờ dùng ví dụ tổng hợp: xem [các ví dụ của trang Trợ giúp](#help-examples).
 
 ## Chạy kiểm thử
 
 Mọi thứ chạy trong Node 18+ mà không cần cài đặt gì (không dùng gói npm nào):
 
 ```bash
-node tests/node-runner.js                          # bộ nhanh (43 suite, khoảng 2.820 bài), khoảng một phút
-node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite, khoảng tám phút)
-node tests/node-runner.js --all                    # nhanh + thủ công (51 suite, khoảng 3.840 bài), khoảng chín phút
+node tests/node-runner.js                          # bộ nhanh (55 suite, 4.807 bài), chạy nguyên bộ hoặc theo các đợt rời nhau
+node tests/node-runner.js --manual                 # chỉ các suite nặng ở tests/manual (8 suite)
+node tests/node-runner.js --all                    # nhanh + thủ công (63 suite)
 node tests/node-runner.js --suite=killer,variants  # chỉ các suite này, nhanh hay thủ công (tên tệp bỏ .test.js)
 node tests/node-runner.js --filter=xWing --verbose # chỉ các bài có tên chứa đoạn chữ này
+node tests/node-runner.js --suite=help --exact="<tên đầy đủ>"   # chỉ các bài có đúng tên đầy đủ này
+node tests/node-runner.js --suite=help --list-tests=<tệp.json> # bản kiểm kê của phần đã chọn; không chạy bài nào
+node tests/node-runner.js --suite=help --results=<tệp.json>    # chạy, và ghi kết quả của từng bài
 node tests/node-runner.js --bail                   # dừng ở lỗi đầu tiên
 ```
 
-**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 43 suite, khoảng 2.820 bài,
-khoảng một phút — 27 suite ở `tests/suites/` và 16 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
+**Hai nhóm suite, để việc phát triển luôn nhanh.** **Bộ nhanh** là thứ chạy mặc định: 55 suite, 4.807 bài —
+37 suite ở `tests/suites/` và 18 suite ở `../core/tests/suites/` mà trình chơi cũng chạy (bộ máy giải,
 bậc thang kỹ thuật, định dạng trao đổi, hiển thị bàn cờ, bản thân harness). Trong đó có `smoke.test.js`: tạo một đề cho mỗi biến thể, kiểm tra
 tính duy nhất, mức độ, tính tất định và một mẫu các mã băm hồi quy. `tests/manual/` chứa 8 suite **nặng** —
-`variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw`, tổng cộng khoảng
-tám phút — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc `--all` (nhanh và thủ công,
-khoảng chín phút), hay theo tên bằng `--suite=killer` (dùng được cho mọi suite). Khi đang phát triển, hãy chạy bộ
+`variants`, `killer`, `greater-than`, `perf`, `difficulty`, `extra-regions`, `wordoku` và `jigsaw` — không thuộc lần chạy mặc định: chạy bằng `--manual` (chỉ các suite này) hoặc
+`--all` (nhanh và thủ công), hay theo tên bằng `--suite=killer` (dùng được cho mọi suite). Khi đang phát triển, hãy chạy bộ
 nhanh, và chạy theo tên một suite nặng khi bạn đụng đến vùng của nó; chạy `--all` trước khi phát hành và mỗi khi
-đụng đến việc sinh đề, tính điểm hay một biến thể. Workflow CI chạy `node tests/node-runner.js --all` trước mỗi
-lần triển khai, và `.github/workflows/pull-request.yml` chạy nó (theo các nhóm song song) cho mọi pull request vào `main`, cùng với các suite của player và các script trình duyệt.
+đụng đến việc sinh đề, tính điểm hay một biến thể. CI không chạy `--all`: nó chỉ chạy tầng nhanh (xem “Tích hợp liên tục” bên dưới).
+
+**Phủ bộ nhanh theo từng đợt có giới hạn.** Một bộ nhanh đầy đủ có thể chạy lâu hơn thời gian một lệnh có giới hạn được
+phép: một lệnh thu thập bằng chứng bị dừng ở 540 giây. Khi một lệnh trọn bộ không vừa, hãy phủ bộ này bằng **các đợt rời
+nhau**: `node tests/node-runner.js --suite=<tên> --results=<tệp.json>`, và với một suite dài thì thêm bộ chọn theo khối mô
+tả hoặc tên đầy đủ (`--filter` hay `--exact`), mỗi lần chọn đều kiểm tra trước bằng `--list-tests`, để mọi bài trong
+bản kiểm kê chỉ-đăng-ký chạy đúng một lần. Không đợt nào dùng `--bail`, bỏ một bài chậm hay thêm bài bỏ qua, và một đợt
+đã cũ vì mã nguồn đổi thì chạy lại. Chi phí của một bộ nhanh đầy đủ là tổng của các đợt; giới hạn 540 giây áp dụng cho
+từng lệnh và không phải chi phí đó. Bộ nhanh đầy đủ của từng ứng dụng đo được bao lâu, trên một mã nguồn và một máy có
+tên (một báo cáo, không phải lời hứa), nằm trong
+[docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md).
+
+**Tích hợp liên tục.** Workflow của pull request (`.github/workflows/pull-request.yml`) và workflow triển khai
+(`.github/workflows/pages.yml`) chạy bộ nhanh đầy đủ của từng ứng dụng và không chạy gì nặng hơn: bộ nhanh của trình
+chơi trong một job (`node tests/node-runner.js`, gồm cả các suite dùng chung) và bộ nhanh của trình sinh đề trong các
+job song song, mỗi job một nhóm của `.github/scripts/generator-quick.json`. Một nhóm là danh sách các đợt gồm nguyên
+suite (chính các đợt rời nhau của phần phủ có giới hạn ở trên); các workflow lấy ma trận job từ tệp đó, và mỗi job chạy
+một nhóm bằng `.github/scripts/generator-suites.sh run <nhóm>`, từng đợt một, thất bại nếu có đợt nào thất bại. Một job
+đầu tiên chạy `generator-suites.sh check`: nó đăng ký các bộ nhanh bằng `--list-tests` (không chạy bài nào) và thất
+bại trừ khi mọi suite nhanh và mọi bài nằm trong đúng một đợt, không đợt nào gọi tên một suite thủ công hay suite
+không tồn tại hoặc không chọn bài nào, mọi suite của `tests/manual/` được khai báo là ngoài CI, và thời gian dự kiến
+của mỗi job (cận của các đợt nhân với hệ số CI của tệp, cộng chi phí cố định của job) nằm trong giới hạn 30 phút. Vì
+vậy một suite thêm sau này làm `check` thất bại cho đến khi tác giả cho nó một đợt kèm cận đã đo; nó không bao giờ bị
+nhặt vào một cách âm thầm, và không bao giờ từ `tests/manual/`. `selftest` chạy phép kiểm tra trên các kế hoạch giả
+(thiếu, trùng, suite lạ hay suite thủ công, đợt rỗng, lỗi đăng ký) và `run <nhóm> --dry-run` in các lệnh mà không
+chạy bài nào. Hệ số thời gian (3 trên CI, từ biến `CI`) và giới hạn của job không được nâng: hãy chia nhỏ nhóm. CI
+không chạy các suite thủ công, `--all`, tầng sâu (`tests/mega-contract.js`), `tests/pattern-cost.js`, `soak.js`, `perf.js` hay
+`qualify.js`; thứ thay thế chúng là bằng chứng ngoại tuyến, lưu trong `docs/difficulty-v3/evidence/` bởi các nhiệm
+vụ sở hữu chúng (14 yêu cầu mega Nightmare sâu và các quan hệ của chúng bằng các bản ghi của MS05r5m do MS05r6b đối
+chiếu, các kết quả CV3 chạy thật bằng MS05b3, các kho đề thủ công, GD, E, kiểm định và hiệu năng bằng MS05r6a, MS05r6b và
+các nhiệm vụ cổng sau này), và được liệt kê trong
+[docs/difficulty-v3/evidence/MS05r6c/evidence.md](docs/difficulty-v3/evidence/MS05r6c/evidence.md). Ba bài chậm và hai
+yêu cầu của một bài thứ tư đã chuyển từ bộ nhanh sang các suite thủ công ở MS07f (quyết định S-OD8 của chủ dự án), và
+**không pull request nào còn chạy chúng**: ba tỉ lệ chi phí sinh đề của các sự kiện (`generating puzzles: verbosity
+'off'`, `'summary'` và `'full'`) nằm trong suite `perf`, còn hai yêu cầu mega16 thật của bài phát lại trong suite
+`player` của trình sinh đề (Nightmare seed 478576959 và Hell 1 seed 2422420669) nay là bài `(mega16)` của suite
+`variants`. Chúng không đổi và vẫn là lỗi cứng; hãy chạy chúng theo tên (`--suite=perf`, hay `--suite=variants` kèm tên
+đầy đủ của bài trong `--filter`) khi bạn đụng đến phần đo sự kiện hay phần phát lại của một bàn lớn. Các bài kiểm tra
+cấu trúc của sự kiện, các bài chi phí ngắn của việc đào số và của lưới đầy đủ, bài phát lại classic9 Hell 1 và các bản
+phát lại vàng G01-G14 vẫn nhanh. Các script trình duyệt của trình chơi vẫn nằm trong workflow của pull request.
 
 Bộ chạy nạp `SOURCE_FILES` bằng `vm.runInThisContext`, tự tìm `../core/tests/fixtures/*.js`, `tests/fixtures/*.js`,
 `../core/tests/suites/*.test.js` và `tests/suites/*.test.js` (cùng `tests/manual/*.test.js` khi có `--manual` hoặc
@@ -576,24 +1065,108 @@ giải, pipeline cùng các sự kiện của nó, worker và client của nó, 
 (chạy không cần DOM). `tests/suites/help.test.js` còn đối chiếu các hướng dẫn với mã nguồn: bảng biến thể và tham
 số URL của hướng dẫn sử dụng; tên các script, lệnh và cờ, các tên `SG.…` và hai ví dụ chạy được của bản tiếng Anh
 của hướng dẫn này; và liên kết của cả bốn hướng dẫn. Ở đầu nhánh hiện tại của kho
-mã này, bộ chạy đếm khoảng 3.840 bài trong 51 suite (khoảng 2.820 bài trong 43 suite nhanh), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
+mã này, bộ chạy đếm 63 suite, trong đó 55 suite nhanh (4.807 bài), tất cả đều xanh; số liệu của dự án gộp ở lần rà soát cuối (trước
 khi tách) nằm trong [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
+**Chọn chính xác, bản kiểm kê và kết quả.** `--filter` giữ nguyên nghĩa (một đoạn của tên đầy đủ
+"suite > describe > bài", không phân biệt hoa thường). `--exact="<tên đầy đủ>"` chọn các bài có tên đầy đủ đúng bằng
+đó, phân biệt hoa thường và lấy mọi bài trùng tên, và loại trừ `--filter`. `--list-tests=<tệp.json>` đăng ký các
+suite đã chọn như khi chạy (nên phần chuẩn bị lúc nạp của chúng vẫn xảy ra) và ghi **bản kiểm kê** thay vì chạy gì
+cả: với mỗi bài đã chọn gồm suite, số thứ tự `ordinal` tính từ 0 trong tệp của nó và đếm trước mọi bộ lọc (nó phân
+biệt các tên trùng nhau và không đổi khi phần chọn đổi), tên đầy đủ, là bài kiểm tra hay benchmark, có bị bỏ qua
+không (kể cả qua `describe.skip`; việc bỏ qua quyết định lúc chạy thì không thể biết trước) và giới hạn thời gian,
+cùng `sourceHash` của mọi tệp mà các bài nhanh nạp, đọc hay khởi chạy (liệt kê trong tệp), phần chọn, thời gian đăng
+ký và mọi khối describe đã ném lỗi hay tệp nạp lỗi (khi đó `complete` là false). `--results=<tệp.json>` chạy như
+thường, giữ nguyên mã thoát, và ghi thêm kết quả của từng bài đã chọn với cùng `ordinal`; `complete` chỉ true khi mọi
+bài đã chọn đều chạy, không có `--bail` và mã nguồn không đổi. Một bài được liệt kê hay được ghi chưa phải là bài đã
+đạt: hãy đọc từng dòng. Cả hai tùy chọn nhận một đường dẫn `.json` mới, tương đối theo dự án, nằm trong kho mã
+(không bao giờ ghi đè, không bao giờ nằm trong các mã nguồn được lấy dấu, ví dụ thư mục bằng chứng của một nhiệm vụ),
+và loại trừ lẫn nhau. Mã nằm ở `core/tests/node-evidence.js` (chỉ dành cho Node, không ứng dụng nào biết đến) và
+`SG.test.list(options)` của harness, duyệt sổ đăng ký đúng như `SG.test.run` và không thực thi gì.
+
+**Các suite nặng, từng mức một.** Kho đề của `killer`, `jigsaw`, `greater-than`, `extra-regions` và `wordoku`, cùng kho
+đề của đợt quét `variants`, được dựng theo từng mức, ở lần đọc đầu tiên của mức đó
+(`SG.test.lazyCorpus`, `tests/fixtures/manual-corpus.js`): một bài chỉ đọc một mức thì chỉ sinh đúng mức đó, với seed,
+số lượng và tùy chọn của cả kho, còn các bài cần mọi mức (`corpus()`, `allPuzzles()`, các kiểm tra tổng hợp của đợt
+quét) vẫn dựng tất cả. Kho đề của năm suite này là kho chẩn đoán cố định: nó giữ nguyên dải mức ban đầu (chín mức,
+tám mức với `wordoku`) và các seed gốc theo chỉ số mức gốc, bất kể biến thể hiện cung cấp những mức nào, và chỉ dựng
+một mức mà bước kiểm định đã ẩn bên trong lớp bảo vệ theo từng lệnh gọi `SG.fixtures.toolRecords.withRequestedLevel`
+(mảng mức hỗ trợ đúng như cũ được trả lại trong `finally`; không menu nào cung cấp mức đó). Chỉ các đăng ký theo từng mức
+(`> <mức>: … > I5:`, `CV6:`) mới chỉ tồn tại cho các mức được cung cấp, nên một mức bị ẩn không có bộ chọn; đợt quét giữ kho
+riêng gồm các mức được cung cấp. Bộ lọc chỉ là một đoạn chuỗi của tên đầy đủ đã chuyển sang chữ thường, nên một bộ chọn bắt đầu
+ở ranh giới của một describe bằng `> ` và được đặt trong dấu nháy: `easy: 20 puzzles > I5:` cũng khớp với Very Easy,
+còn `> easy: 20 puzzles > I5:` thì không. Các bộ chọn:
+`> <mức>: <số lượng> puzzles > I5:` (và `… > CV6:`) cho `killer`, `jigsaw`, `greater-than` và `wordoku` (`killer` chỉ
+có bài I5 theo từng mức), `> <biến thể> <mức>: <số lượng> puzzles > I5:` cho `extra-regions`, và
+`> variants: <id> > CV3 <mức>:` cùng `> variants: <id> > CV3 unsupported:` cho đợt quét. Mỗi bộ chọn chọn đúng một bài,
+điều mà suite `manual-corpus` kiểm tra trên các đăng ký thật; hãy đọc tổng số đã chọn ở dòng tóm tắt, và liệt kê phần
+chọn trước (`--list-tests`) khi việc sinh đề lâu. Một bộ lọc cho cả biến thể, như `--filter=I5:`, không phải là một lệnh
+có giới hạn. Với biến môi trường `SG_CORPUS_TIMES=1`, một mức vừa được dựng sẽ in số mili giây của từng yêu cầu của nó
+trước kết quả của bài.
+
 ```text
-node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (bốn đề chuẩn chạy chậm, ~23 giây)
+node tests/node-runner.js --suite=killer --filter="> normal: 20 puzzles > I5:" --list-tests=<tệp.json>
+node tests/node-runner.js --suite=killer --filter="> normal: 20 puzzles > I5:" --verbose --results=<tệp.json>
+node tests/node-runner.js --suite=extra-regions --filter="> diagonalX normal: 20 puzzles > I5:" --verbose
+node tests/node-runner.js --suite=variants --filter="> variants: classic9 > CV3 normal:" --verbose
+node tests/node-runner.js --suite=variants --filter="> variants: classic9 > CV3 unsupported:" --verbose
+```
+
+Hai script Node giữ dữ liệu của suite `replay`:
+
+```text
+node tests/replay-fixtures.js            # tạo lại tests/fixtures/replay-wire.js (năm đề chuẩn chạy chậm, mỗi đề từ 20 giây)
 node tests/replay-fixtures.js --check    # tạo lại trong bộ nhớ rồi so sánh; thoát với mã 1 nếu khác
+node tests/replay-goldens.js             # kiểm tra dữ liệu chuẩn của 14 yêu cầu (như --check; không bao giờ tự ghi)
+node tests/replay-goldens.js --write     # tạo lại tests/fixtures/replay-goldens.js từ các bản phân tích mới (đủ 14 yêu cầu)
+node tests/replay-goldens.js --ids=G01 --record=<file.json>   # một mảnh có giới hạn vào một sổ ghi, không đụng đến fixture
+node tests/replay-goldens.js --merge=<directory> --check      # trọn bộ các sổ ghi, không tạo gì cả
 ```
 
 Suite `replay` kiểm thử bản phân tích (các nước đi, các lần chấm điểm và trạng thái của chúng, các chế độ xem, các bước
 tăng vọt được giải thích) theo các con số chuẩn của 14 yêu cầu (`tests/fixtures/replay-goldens.js`). Nó tạo ngay các đề
-chạy nhanh và đọc bốn đề chạy chậm từ các kết quả đã lưu (`tests/fixtures/replay-wire.js`), vì việc tạo chúng mất khoảng
-23 giây; chỉ tạo lại khi đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo).
+chạy nhanh và đọc năm đề chạy chậm (G09 đến G13) từ các kết quả đã lưu (`tests/fixtures/replay-wire.js`), vì việc tạo
+mỗi đề mất từ 20 giây (G13, Samurai Nightmare với seed 42, cũng được lưu để ba suite không phải tạo lại nó; yêu cầu của
+nó và ngân sách 120.000 ms của công cụ ghi không đổi, và nó dùng số lần thử mặc định của bảng, tức 2); chỉ tạo lại khi
+đầu ra của trình sinh đề thay đổi có chủ ý (khi đó các mã băm hồi quy cũng đổi theo). Cả hai
+công cụ ghi có cùng các chế độ có giới hạn, để một thay đổi đầu ra làm mới được toàn bộ bằng chứng này một cách an
+toàn: `--check` so sánh mà không ghi và nêu yêu cầu cùng các trường khác nhau (chỉ kiểm các yêu cầu được chọn và nói rõ
+điều đó); `--write` ghi trọn fixture và từ chối một lựa chọn `--ids` chưa đủ; `--ids=G01,G02` chọn một phần của danh
+mục (ID lạ hoặc trùng là lỗi); `--record=<file.json>` tạo các yêu cầu đã chọn vào một **sổ ghi** và không bao giờ đụng
+đến fixture; `--merge=<directory>` đọc các sổ ghi của một thư mục, đòi mỗi yêu cầu của danh mục đúng một lần, từ mã
+nguồn hiện tại, rồi kiểm tra (mặc định) hoặc ghi mà không tạo lại; `--out=<file.js>` ghi ra một tệp khác thay cho
+fixture; `--list` cho xem danh mục và dấu nhận diện của mã nguồn; các tùy chọn mâu thuẫn bị từ chối trước khi tạo bất cứ
+thứ gì. Cả hai không có `--jobs`: một yêu cầu mất từ khoảng một giây đến khoảng hai phút, và một lệnh chạy đến mười phút
+là chuyện phải điều tra, nên hãy ghi từng yêu cầu bằng một lệnh riêng. Một sổ ghi là `{ schema: 1, kind, sourceHash,
+manifestHash, node, commit, dirty, records: [{ key, request, value }] }`, thông tin của lần chạy (`generatedAt`, `argv`,
+`ms`, `overrides`) nằm bên cạnh các giá trị chứ không ở trong chúng; `sourceHash` của nó bao gồm mã nguồn bộ máy và mã
+của các công cụ ghi, `manifestHash` bao gồm danh sách yêu cầu, và việc gộp từ chối một bản ghi thiếu, trùng, lạ, sai
+dạng hoặc đến từ mã nguồn khác, nên một bộ thiếu hay cũ không bao giờ thay được fixture. Các hàm trợ giúp là
+`SG.fixtures.toolRecords` (sổ ghi, gộp, sai khác, ràng buộc mức độ) và `SG.fixtures.replayRecording` (phép chiếu một
+bản phân tích thành bản ghi chuẩn và văn bản chuẩn của `replay-goldens.js`; suite `replay-recorders` kiểm thử chúng).
+Mọi trường của dữ liệu chuẩn đều được chiếu từ bản phân tích của một kết quả mới tạo, trừ `today`, chú thích lịch sử
+của các nhà nghiên cứu được giữ nguyên, còn thời gian và số lần kiểm tra `checks` không thuộc về nó. Một yêu cầu mà
+biến thể không còn cung cấp mức độ của nó được tạo với mức đó được mở riêng cho yêu cầu ấy (ghi trong sổ ghi); không
+có mức nào được cung cấp thay đổi. `tests/suites/steps.test.js` ghim tay vài điểm của các bước: hãy rà chúng cùng các
+dữ liệu chuẩn.
 
-Các suite so thời gian tạo đề của mọi biến thể với ngân sách ở [design.md](generator/design.md) §9.1 kèm một hệ số dung
-sai, để một máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có
-biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số trong `SG_TIME_FACTOR` (`SG_TIME_FACTOR=1` kiểm
-đúng ngân sách). Bản thân các ngân sách do `node tests/qualify.js` bảo đảm trên máy tham chiếu và do
-`node tests/perf.js` đo.
+Các suite so thời gian tạo đề của các biến thể với ngân sách mà mỗi suite giữ lại, kèm một hệ số dung sai, để một
+máy đang bận hoặc chậm hơn không làm chúng thất bại: gấp đôi ngân sách theo mặc định, gấp ba khi có biến môi trường
+`CI` (như trên GitHub Actions), hoặc theo hệ số trong `SG_TIME_FACTOR` (`SG_TIME_FACTOR=1` kiểm đúng ngân sách). Các
+ngân sách giữ lại này (`BUDGET_MS` trong từng suite thủ công, và bảng của lần chạy sâu trong `mega.test.js`) là giá
+trị theo bản xếp hạng v2 của bảng ở [design.md](generator/design.md) §9.1; `node tests/perf.js` so với bảng hiện tại,
+`PERF_TARGETS` trong `tests/fixtures/perf-helper.js`, theo đúng `p95 < mục tiêu` và không nhân hệ số. Việc MS18d hiệu
+chỉnh lại 17 mục tiêu đó không đổi ngân sách giữ lại, thống kê, hệ số hay tiêu đề nào, nên tiêu đề CV6 "design.md 9.1
+budget of N" nghĩa là giá trị N giữ lại. Mười một giá trị gốc giữ lại (ms, trước khi nhân hệ số) hiện khác mục tiêu
+§9.1 của một mức được cung cấp. Các suite thủ công, p95 (CV6): Killer Normal 700 → 5.425; Jigsaw 9 Easy 350 → 1.905 và
+Hell 2 5.000 → 10.000; Wordoku Easy 250 → 2.921; `extra-regions`, một bảng chung cho hai bàn (lấy giá trị lớn hơn của
+hàng Diagonal X và Hyper), Normal 200 → 1.573 và Nightmare 3.000 → 10.000. Suite thủ công, trung vị (không phải
+p95): `difficulty.test.js` classic9 Easy 150 → 2.342, Normal 150 → 2.627, Expert 600 → 1.323 và
+Nightmare 2.500 → 8.377. Chỉ ở lần chạy sâu, không phải suite thủ công: p95 của 20 seed của mega12 Nightmare trong
+nhánh `SG_DEEP` của `mega.test.js`, 3.000 → 18.842 (bộ kiểm thử nhanh và CI không chạy nó). Greater-Than không có
+hàng nào khác. Một kiểm tra thất bại là một kết quả số thất bại phải báo cáo (một mục S-OD4), không phải lý do để
+chỉnh một giá trị giữ lại, bỏ qua hay đổi tên bài kiểm tra, hay coi là đã đạt. Bản thân các ngân sách do
+`node tests/qualify.js` bảo đảm trên máy tham chiếu và do `node tests/perf.js` đo.
 
 - **Trong trình duyệt:** mở `tests.html` (chạy được từ `file://`). Trang nạp các suite nhanh; `?all=1` nạp thêm
   các suite thủ công, `?manual=1` chỉ chạy các suite thủ công và `?suite=<tên>` dùng được cho cả hai. Các tham số
@@ -603,20 +1176,232 @@ biến môi trường `CI` (như trên GitHub Actions), hoặc theo hệ số tr
   `node tests/soak.js --quick` (khoảng 700 đề), `node tests/soak.js --full` (mức chạy cuối cùng để kiểm định:
   25 đề cho mỗi tổ hợp được cung cấp và 100 đề cho mỗi mức của classic9, khoảng 3.550 đề),
   `node tests/soak.js --variant=jigsaw9 --count=180`, `node tests/soak.js --level=hard` (`--help` liệt kê phần
-  còn lại); `--weights` và `--bands` thử trọng số kỹ thuật hoặc khoảng điểm khác mà không phải sửa mã.
+  còn lại); `--weights` và `--bands` thử trọng số kỹ thuật hoặc khoảng điểm khác mà không phải sửa mã. Một lần đạt
+  chính là cờ `exact` của bộ sinh đề, xét chặt chẽ (`p.exact` khi soak gọi bộ đào, `r.exact` khi chạy pipeline), nên
+  một đề nằm trong dải nhưng không cần bậc của mức đó không phải một lần đạt. Trước khi sinh bất cứ thứ gì, và cả khi
+  có `--no-gate`, soak kiểm tra rằng các bảng đã vá vẫn giữ, với mọi biến thể và mọi mức, sàn và sàn cùng bậc là các
+  tiền tố có thứ tự của chuỗi kỹ thuật (việc có cần bậc hay không của một điểm chuẩn phụ thuộc vào đó); nếu không, nó
+  in biến thể, mức và cả hai danh sách kỹ thuật rồi thoát với mã 2. `--weights={"nishio":1}` là một trường hợp như
+  vậy (hãy truyền đối số như một chuỗi duy nhất để shell giữ nguyên các dấu nháy); JSON sai cú pháp là một lỗi dùng
+  sai khác. `--json=<tệp>` (một đường dẫn nằm trong kho mã) thêm các chẩn đoán đường cơ sở của độ khó v3 mà không đổi
+  những đề được sinh ra: một sổ ghi từng yêu cầu (schema 1: đề hoặc lỗi của nó, các lần đạt, vị trí thô và vị trí khả
+  dĩ của điểm, các bộ đếm của lần sinh) và một bản tóm tắt chẩn đoán sau phần chữ. Các lần giải mới của nó — sàn tham
+  chiếu `SG.difficulty.certifyFloor` của mức yêu cầu, chỉ chạy sau khi I1 đã chứng minh tính duy nhất, và đường giải cuối
+  được đánh giá lại có ghi các bước (độ dài chuỗi cưỡng bức, độ sâu Nishio) — chỉ chạy sau khi mọi lần sinh và mọi
+  kiểm tra I1–I7 của lần gọi đã xong, vì bộ tìm tập con giữ một bộ đếm khoảng cách kiểm tra qua các lần giải. Một
+  yêu cầu thất bại vẫn nằm trong các mẫu số dưới dạng một dòng lỗi, và lỗi cùng vi phạm bất biến làm hỏng phần chẩn
+  đoán ngay cả khi có `--no-gate`. Các hàm trợ giúp là `SG.fixtures.difficultyDiagnostics`
+  (`tests/fixtures/difficulty-diagnostics.js`); đường cơ sở đo bằng chúng được ghi ở
+  [docs/difficulty-v3/baseline.md](docs/difficulty-v3/baseline.md). Từ nhiệm vụ phục hồi MS05r3, các dòng lấy
+  `required`, `qualifiedHit` và `shallow` từ chứng nhận suy ra từ điểm chuẩn đã trả về (`generationExact` là cờ chặt
+  chẽ của bộ sinh đề và hai thứ phải khớp nhau: lệch nhau là một vi phạm I5), phép tham chiếu độc lập chỉ chạy cho yêu
+  cầu đầu và yêu cầu cuối của một ô (các dòng còn lại ghi `not-selected`, việc này không đổi kết luận nào), và mỗi
+  dòng mang công việc của lần sinh đề của nó (`fullRatings`, `proposals`, `shallowRatings`, `capHits`, `work`,
+  `workCheck`): một lần đánh giá thực hiện ngoài đầu vào có đếm làm hỏng lần chạy, còn công việc bị thiếu là
+  `unavailable`, không bao giờ là số không. `--shallow-cap=64|128|256|none` chạy soak với hạn mức tìm kiếm nông đó
+  (`SG.digger.SHALLOW_SEARCH_RATINGS`; `none` là `Infinity`; mặc định của mã nguồn là 256, do phép so sánh R5 của
+  nhiệm vụ MS05r4 chọn, xem [docs/difficulty-v3/shallow-cap-2026-11-13.md](docs/difficulty-v3/shallow-cap-2026-11-13.md)),
+  `--chain-window=4|6` chạy soak với ngưỡng chuỗi ngắn C đó (`SG.chainSearch.SHORT_MAX`: `forcingChain` có từ 1 đến C
+  cạnh, `forcingChainLong` từ C + 1 đến 12; một công cụ chẩn đoán, không phải thiết lập của sản phẩm hay của người
+  dùng; mặc định của mã nguồn là 4, do nhiệm vụ MS07c chọn, xem
+  [docs/difficulty-v3/chain-window-2026-11-15.md](docs/difficulty-v3/chain-window-2026-11-15.md)): giá trị được đặt một
+  lần, trước kiểm tra tiền tố có thứ tự, các phép tham chiếu mẫu và mọi yêu cầu, và được trả lại khi lần chạy kết thúc;
+  mọi giá trị khác là lỗi dùng sai (mã thoát 2, trước khi sinh bất cứ thứ gì, kể cả khi có `--no-gate`), và sổ ghi cho
+  biết ngưỡng nào đã có hiệu lực (`meta.chainShortMax`) và có được yêu cầu hay không (`meta.chainWindow`, `null` khi
+  không),
+  và `--from=<k> --count=<n> --total-count=<N>` chạy các yêu cầu từ k đến k+n−1 của một ô logic gồm N yêu cầu (một biến
+  thể và một mức; không dùng chung với `--quick`, `--full` hay `--per-combo`) với đúng thẻ và seed của cả ô, nên một ô
+  dài có thể chia thành các lệnh có giới hạn; `mergeShards` của bộ trợ giúp từ chối các sổ có chỗ hở, chỗ trùng hoặc
+  khác mã nguồn, công cụ, seed, ngưỡng hay thiết lập (các phần của C = 4 và C = 6 không bao giờ được ghép). Thống kê
+  chuỗi của một sổ đếm chứng minh của cả hai khoảng, `forcingChain` và `forcingChainLong`, `nishio` và `nishioDeep`.
+- **Hồ sơ phục hồi (độ khó v3)** — chẩn đoán một yêu cầu cố định, không phải một thiết lập của sản phẩm và không phải
+  một cổng hiệu năng đã đạt: `node tests/difficulty-recovery.js` sinh yêu cầu đó đúng một lần và ghi lại thời gian đã
+  đi đâu, vào các mẫu đào thường hay vào phần tìm cục bộ kế tiếp (phần mà một hạn mức của tìm kiếm nông có thể giới
+  hạn). Ba trường hợp là yêu cầu G13 thật của bộ đề chuẩn (`SG.fixtures.replayGoldens`, qua `SG.store.toConfig`) và các
+  yêu cầu Nightmare seed 3 của mega12 và mega16; hồ sơ chỉ đổi `maxAttempts` (thành 1) và giữ nguyên mọi giới hạn, sàn
+  và chốt chặn. Chạy từng lệnh một, qua khóa thời gian dùng chung khi người khác đang dùng máy, vì một hồ sơ có thể
+  mất vài phút:
+
+  ```text
+  node tests/difficulty-recovery.js --mode=profile --case=G13 --json=<file.json>
+  node tests/difficulty-recovery.js --mode=profile --case=mega12-nightmare --json=<file.json>
+  node tests/difficulty-recovery.js --mode=profile --case=mega16-nightmare --json=<file.json>
+  ```
+
+  `--json` là một đường dẫn `.json` mới nằm trong kho mã (tệp đã có không bao giờ bị ghi đè).
+  `--mode=diagnostic --shallow-cap=64|128|256|none` giữ số lần thử mặc định của bàn cờ (2, 4 và 2 cho ba trường hợp)
+  và áp dụng một hạn mức: lệnh đặt
+  `SG.digger.SHALLOW_SEARCH_RATINGS` cho lần chạy (`none` là `Infinity`) rồi trả lại giá trị cũ; mã nguồn không có thiết
+  lập này bị từ chối trước khi sinh bất cứ thứ gì. Một
+  tiến trình chạy đúng một trường hợp, và bộ máy cùng các kiểm tra của đề trả về (số đã cho so với lời giải, một lần
+  đếm tính duy nhất độc lập, điểm chuẩn đầy đủ và việc có cần bậc hay không) dùng chung một ngân sách 500.000 ms. Bản
+  ghi cho biết đã xảy ra `ok`, `generation-error`, `validation-error` hay `instrumentation-error`, công việc của từng
+  lượt, cùng thời gian và số lần chấm điểm đầy đủ của từng giai đoạn, chia thành mẫu đào thường, phần tìm cục bộ và
+  phần còn lại. Mã thoát 0 nghĩa là đã ghi được một bản ghi (đọc trường `outcome`: một lần sinh thất bại cũng là một
+  bản ghi), 1 là không thể lập được bản ghi đáng tin và đầy đủ, 2 là dùng sai. Các hàm trợ giúp là
+  `SG.fixtures.recoveryProfile` (`tests/fixtures/recovery-profile.js`), do suite `recovery-profile` kiểm thử; các hồ
+  sơ đầu tiên được báo cáo ở [docs/difficulty-v3/recovery-profile.md](docs/difficulty-v3/recovery-profile.md).
+- **Tầng kiểm tra sâu cho Nightmare và Hell 1 của mega (độ khó v3)** — một yêu cầu Nightmare đủ số lần thử của mega12
+  (mặc định 4 lần) hoặc mega16 (2 lần) tốn từ vài giây đến vài phút và thường kết thúc bằng kết quả dự phòng nông nhưng
+  trung thực, nên nó không phải một bài kiểm tra nhanh, và suite `mega` nhanh không đòi một yêu cầu như vậy; từ MS07b,
+  khi `nishioDeep` làm cho bậc Hell 1 trở nên thật, điều đó cũng đúng với các yêu cầu Hell 1 của cả hai bàn (mỗi yêu
+  cầu mega12 khoảng 30 s; xem dưới). Suite nhanh giữ
+  một yêu cầu mega12 thật với đúng một lần thử cho mỗi mức (seed 3, mọi bất biến cùng các kiểm tra về việc có cần bậc
+  và về cảnh báo ở dưới, trong một giới hạn kiểm tra nhanh có chặn là 15 s (Nightmare, đo được 5,2 s) hoặc 18 s
+  (Hell 1, đo được 7,7 s) trước khi nhân hệ số thời gian, so với
+  ngân sách 60.000 ms không đổi của yêu cầu) và một kịch bản kiểm soát cho mega16 về việc dừng theo cỡ bàn, kết quả dự phòng nông
+  có đủ hai cảnh báo, một số lần thử nêu rõ và một lỗi hủy hay hết ngân sách được truyền đi. Mười bốn yêu cầu của các bài
+  cũ (mỗi bàn các seed 1 đến 4 và ba lần gọi CV5 độc lập với seed 3, 3 và 4) thuộc về một công cụ, không bao giờ thuộc
+  một suite được tự tìm thấy, CI hay `SG_DEEP`, mỗi mức một lần. Chạy từng lệnh một, qua khóa thời gian dùng chung khi
+  người khác đang dùng máy, vì một yêu cầu có thể mất vài phút:
+
+  ```text
+  node tests/mega-contract.js --list [--level=hell1]                              # 14 yêu cầu của một mức và các quan hệ của chúng
+  node tests/mega-contract.js --request=mega12-invariant-1 --record=<id.json>     # một yêu cầu, đúng một lần, và các kiểm tra
+  node tests/mega-contract.js --reconcile=<records directory> --json=<file.json> [--level=hell1]   # không sinh gì cả
+  ```
+
+  Các mã Nightmare là `<bàn>-invariant-<seed>`, `<bàn>-cv5-a`, `<bàn>-cv5-b` và `<bàn>-cv5-other`; các mã Hell 1 mang
+  tên mức (`mega12-hell1-invariant-1`, `mega16-hell1-cv5-b`, ...) và tập đó có bản kê, loại bản ghi và phép đối chiếu
+  riêng, chọn bằng `--level` (mặc định là Nightmare, không đổi); một phép đối chiếu là mười bốn yêu cầu của một mức,
+  không bao giờ cả hai mức cùng lúc. Hai lần gọi CV5 seed 3 là hai
+  lần sinh đề, không phải hai lần đọc một bản ghi. Một yêu cầu mang mức của nó, không theo dõi và không có `maxAttempts`,
+  cùng các kiểm tra của nó dùng chung một ngân sách 500.000 ms, dưới giới hạn 540 giây của một lệnh có chặn. `--record`
+  là một tệp `<id>.json` mới nằm trong kho mã (tệp đã có, đường dẫn tuyệt đối hay nằm ngoài kho, một tùy chọn nêu hai
+  lần hay xung đột đều bị từ chối). Bản ghi gồm yêu cầu, cấu hình đã chuẩn hóa, số lần thử thực tế, hạn mức, định danh
+  của mã nguồn và công cụ, thời gian sinh và thời gian kiểm tra tách riêng, kết cục (một lỗi như `budget.exceeded` giữ
+  nguyên mã của nó và không bịa ra đề nào), từng kiểm tra là `true`, `false` hay `null` (chưa đánh giá), cùng mã băm và
+  dạng wire thuần của đề. Các kiểm tra là các bất biến của bài cũ (lời giải hợp lệ, đúng một lời giải, các số đã cho nằm
+  trong lời giải, sàn số gợi ý, dải và nhóm của điểm chuẩn, mọi phép điền và loại trừ logic đối chiếu với lời giải) và
+  hợp đồng về việc có cần bậc: `exact` đúng khi và chỉ khi một điểm chuẩn đầy đủ độc lập nằm đúng mức yêu cầu và cần một
+  kỹ thuật của bậc đó, `difficulty.approximate` có mặt khi và chỉ khi đề không exact, và `difficulty.shallow` khi và chỉ
+  khi đề không exact và điểm chuẩn nằm trong mức yêu cầu. Một kết quả dự phòng có thể hợp lệ, nhưng không bao giờ là
+  exact và không bao giờ miễn một kiểm tra nào. Một mức mà việc kiểm định đã ẩn chỉ được cung cấp cho lần chạy đó và
+  được ghi lại. `--reconcile` không sinh gì cả: mỗi trong 14 trường hợp phải có mặt đúng một lần, với một định danh duy
+  nhất về mã nguồn, công cụ, Node và cấu hình, một wire cùng các mã băm khớp với bản ghi, và các cờ được suy lại từ điểm
+  chuẩn của nó; các quan hệ của bài cũ (hai lần gọi seed 3: cùng số đã cho, lời giải và điểm; seed 4 so với seed 3: lời
+  giải khác) được đánh giá, hoặc để `unevaluated` khi một yêu cầu kết thúc bằng lỗi. Tài liệu kết quả giữ riêng các kết
+  luận về việc sinh, về tính đúng và về thời gian, và báo cho từng bàn một chốt chặn chỉ tính từ tập yêu cầu cố định đã
+  hoàn tất (1,5 lần thời gian sinh cộng kiểm tra lớn nhất, làm tròn lên theo bước 5 s, không bao giờ vượt ngân sách) kèm
+  biên độ của nó. Mã thoát của `--request`: 0 mọi kiểm tra đều đạt, 3 một lỗi hay các kiểm tra không thể xong (một kết
+  cục về khả năng cung cấp), 1 một kiểm tra thất bại, 2 dùng sai; của `--reconcile`: 0 cả mười bốn khớp nhau và đều đạt, 3
+  đáng tin nhưng chưa đủ, 1 một vấn đề về bằng chứng hay một kiểm tra hoặc quan hệ thất bại. Các hàm trợ giúp là
+  `SG.fixtures.megaContract` (`tests/fixtures/mega-contract.js`), do suite `mega-contract` kiểm thử trên các bản ghi tổng
+  hợp. Các kho đề CV3 của các tập kiểm thử thủ công không đọc các bản ghi này (một suite do bộ chạy nạp không tính được
+  các mã băm mà `SG.fixtures.megaContract.reuse(records, { variantId, level, seed }, { sourceHash, toolHash }, { sha256 })`
+  so sánh): hai ô Nightmare của mega trong CV3 được sinh trực tiếp, mỗi lệnh một mức (xem "Các suite nặng, từng mức
+  một"). Giao diện đó vẫn còn, như một bên đọc chỉ-đọc của một yêu cầu invariant (hoặc `reuse(directory, query)` của
+  công cụ): bản ghi phải khớp với mã nguồn bộ máy, công cụ, cấu hình đã chuẩn hóa, số lần thử mặc định và hạn mức hiện
+  tại, và các mã băm của nó phải đúng; bên gọi tự áp dụng các kiểm tra của riêng mình lên bản sao đã giải mã.
+- **Chi phí của kỹ thuật (độ khó v3)** — một bộ tìm kỹ thuật tốn bao nhiêu trên các mẫu thật của nó là bằng chứng cho
+  nhiệm vụ sở hữu bộ tìm đó (GP-cost của nó), không bao giờ là một khẳng định về thời gian trong bài kiểm thử nhanh.
+  `tests/pattern-cost.js` đo các bộ tìm đã đăng ký trên các mẫu đúng và mẫu sai của bản đồ đang dùng trong
+  `../core/tests/fixtures/techniques.js` (không bao giờ là `historyV2` đã đóng băng), không sinh đề và không chạy suite
+  nào. Nó nạp đúng những gì `tests/node-runner.js` nạp, theo cùng thứ tự (harness, `SOURCE_FILES`, rồi `FIXTURES_DIRS`,
+  đọc từ chính tệp đó). Hãy chạy qua khóa đo thời gian dùng chung khi máy còn người khác dùng:
+
+  ```text
+  node tests/pattern-cost.js --ids=forcingChain,nishio --runs=20 --json=<new.json>   # một bản ghi: 20 lần tìm giống hệt cho mỗi ca
+  node tests/pattern-cost.js --ids=nishio --list --case=negative                      # các ca, không chạy
+  ```
+
+  Một ca là `<id>:<positive|negative>:<n>`; `--case=<text>` giữ các ca có khóa hoặc tên mẫu chứa đoạn chữ đó. `--ids`
+  nhận các id kỹ thuật đã đăng ký và không có phạm vi (kỹ thuật có phạm vi chưa có mẫu trong công cụ trước bộ chuyển
+  đổi của MS14b); id lạ, id không có mẫu và lựa chọn rỗng bị từ chối trước khi chạy (mã thoát 2). `--json` là một
+  tệp `.json` mới, đường dẫn tương đối trong dự án (không bao giờ ghi đè, không nằm trong các nguồn được lấy dấu vân
+  tay, ví dụ thư mục bằng chứng của một nhiệm vụ) và `--runs` từ 1 đến 200 (mặc định 20). Mỗi lần chạy của một ca là
+  cùng một lần tìm chỉ-đọc với một ngữ cảnh mới có `ctx.options.onPatternWork` thu các bản ghi công việc của bộ tìm
+  (`{ id, work, limit, capHit, retained }`; bộ tìm không báo thì không có bản ghi, không bao giờ là số không) và trạng
+  thái được so sánh sau mỗi lần chạy. Bản ghi chứa SHA-256 của các nguồn bộ máy, của các mẫu đã nạp và của hai tệp công
+  cụ, Node, máy, cấu hình và, cho từng ca, Finding cùng mã băm của nó, các bản ghi công việc, lần chạm giới hạn và
+  min / p50 / p95 / max / trung bình của thời gian tính bằng mili giây; mọi thứ trừ số đo đồng hồ đều tất định, và một
+  Finding hay bản ghi công việc đổi giữa các lần chạy làm bản ghi không đầy đủ (mã thoát 1). Một mẫu không khớp cũng
+  vậy: một ca có Finding không phải cái mà mẫu của nó ghi, hoặc một mẫu sai mà lại tìm ra điều gì đó, vẫn nằm trong bản
+  ghi cùng các số đo nhưng làm bản ghi không đầy đủ (`complete` là false, một vấn đề gắn với ca đó) và công cụ thoát với
+  mã 1, kể cả khi mọi lần chạy đều giống nhau và kể cả khi bản ghi tự khẳng định `complete: true`; bản ghi khớp vẫn
+  đạt và ca mà mẫu không ghi kỳ vọng vẫn là chưa biết. Một ngân sách của người
+  gọi là 480.000 ms, dưới giới hạn 540 giây của một lệnh có giới hạn, dùng chung cho mọi lần tìm và được kiểm tra lại
+  sau từng lần, vì một bộ tìm có thể biến ngân sách đã cạn thành “không tìm thấy gì”: ngân sách cạn kết thúc đợt chạy
+  với các ca đã đo và một vấn đề, không bao giờ với một mẫu ngắn. Các hàm trợ giúp là `SG.fixtures.patternCost`
+  (`tests/fixtures/pattern-cost.js`), do suite `pattern-cost-tools` kiểm thử trên các quan sát giả, đồng hồ giả, các
+  mẫu thật của các kỹ thuật chuỗi và chính công cụ; đầu ra thử nghiệm của nó nằm trong một thư mục riêng cho mỗi lần
+  gọi (`.scratch-pattern-cost-tools/<pid-thời-gian-ngẫu-nhiên>/` ở gốc kho mã, bị git bỏ qua) và chỉ thư mục đó bị xóa.
+  Các mẫu đang dùng bao gồm `skyscraper`, `twoStringKite`, `remotePairs`, `emptyRectangle`, `finnedXWing`, `finnedSwordfish`, `wxyzWing`, `xyChain`, `forcingChain`, `forcingChainLong`, `nishio` và
+  `nishioDeep` bằng các thế cờ thật (bộ chuyển đổi có phạm vi `lawOfLeftovers` thuộc MS14b).
 - **Kiểm định các mức** — `node tests/qualify.js` chạy quy trình quyết định mỗi biến thể có những mức nào (40
   seed cố định cho mỗi biến thể và mức qua pipeline thật, thêm 60 seed cho mức ở ranh giới, ngân sách thời gian
   cho phân vị 95) rồi in bảng và danh sách mức; `--variant`, `--level`, `--jobs`, `--json` và `--markdown` thu
-  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Lần chạy gần nhất nằm trong [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
+  hẹp phạm vi hoặc lưu kết quả; `--probe=N` xem nhanh (N seed mỗi mức, không kết luận). Một yêu cầu chỉ là một lần
+  đạt khi đề hợp lệ và duy nhất, có lời giải trọn vẹn đúng mức yêu cầu, không có cảnh báo approximate **và** cờ `exact`
+  của kết quả đúng là `true`, nên một kết quả nằm trong dải nhưng nông là một lần trượt. Một yêu cầu không bao giờ
+  nêu `maxAttempts`: mỗi bàn dùng số lần thử mặc định theo cỡ của nó (8, 4 hoặc 2), nên một bàn lớn không tìm được
+  đề đúng mức trong các lần đó sẽ kết thúc bằng kết quả dự phòng, tức là một lần trượt.
+  Mỗi đợt kết quả (`--json`) còn ghi công cụ và các mặc định đã dùng: `qualifierHash` (các byte của `qualify.js` và của
+  `tests/fixtures/qualification-records.js`), `acceptance` (`canonical-required-tier`), `ratingVersion` (của chính bộ
+  máy: phiên bản phát triển 2 cho đến khi đánh phiên bản cho cách chấm, nên một mốc kiểm tra không bao giờ là kết quả
+  v3 đã phát hành), `probe`, `earlyStop`, `guardMs`, `attemptPolicy` (quy tắc và mã băm các tệp quyết định nó) và, với
+  mỗi mức, `attempts`, số lần thử tối đa đã cấu hình cho bàn của nó (không phải số lần một yêu cầu đã dùng). `node tests/qualify.js --merge=<thư mục> --jobs=4 --json=<tệp> --markdown=<tệp>`
+  không sinh gì: nó đọc mọi đợt `*.json` trong thư mục và chỉ khi tất cả hợp lệ mới ghi một bản ghi duy nhất cho 15
+  biến thể × 9 mức = 135 ô; nếu không, nó in các vấn đề, thoát với mã 1 và để mọi tệp nguyên như cũ (hai tệp đầu ra được ghi cả hai hoặc không tệp nào, kể cả khi một tệp không đặt được vào chỗ). Nó từ chối một ô
+  thiếu, trùng hay không thuộc ma trận, một lần xem nhanh (probe), jobs khác 4, các đợt của nguồn, công cụ, phiên bản
+  chấm, chính sách số lần thử, máy hay Node khác nhau (commit được ghi riêng cho từng đợt, không bao giờ đem so sánh),
+  các lần chạy chồng nhau về thời gian, một yêu cầu có khóa, chỉ số, seed suy ra, thời gian hay kết quả sai, một bản
+  tóm tắt mà các yêu cầu không cho ra, một kết luận trên
+  ít hơn 40 hoặc 100 kết quả, và một lần dừng sớm mà chứng cứ không biện minh (hơn 10 lần trượt, hoặc hơn 5 yêu cầu
+  vượt ngân sách). Bản ghi giữ siêu dữ liệu của từng đợt, tổng thời gian của các đợt (`shardSeconds`) tách khỏi khoảng
+  thời gian thực của cả đợt thu thập (`wallSpanSeconds`), các số tổng (một đề không hợp lệ được báo, không bao giờ bị
+  giấu) và các danh sách mức suy ra từ kết luận; bảng chính thức không bao giờ là đầu ra. Các hàm thuần là
+  `SG.fixtures.qualificationRecords` (`tests/fixtures/qualification-records.js`), do suite `qualification-records`
+  kiểm thử trên các bản ghi giả, trên bộ lập lịch với các worker giả và trên năm tiến trình thật trong một thư mục riêng
+  (`.scratch-qualification-records/`, git bỏ qua); chi tiết ở [generator/design.md](generator/design.md) §15.4.
+  Lần chạy gần nhất nằm trong
+  [docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md).
 - **Hiệu năng** so với ngân sách ở [design.md](generator/design.md) §9.1: `node tests/perf.js --quick`,
   `node tests/perf.js --variant=classic9 --runs=20`. *Mã băm hồi quy* trong `tests/fixtures/regression.js` bảo
   đảm một lần tối ưu không làm đổi đề (suite nhanh `smoke` kiểm tra một mẫu của chúng, suite thủ công `perf` kiểm
   tra tất cả): `--check-hashes` so sánh, còn `--update-hashes` ghi mã băm mới sau một thay
   đổi chủ ý làm đổi đề (hiệu chỉnh, quy tắc đào mới). `--alloc` dò các vòng lặp nóng xem có cấp phát bộ nhớ
-  không.
+  không. Cả hai chế độ mã băm xử lý đủ 520 bản ghi (26 tổ hợp × 20 seed), và `--variant` cùng `--level` không chia
+  nhỏ chúng; để làm mới có giới hạn, các chế độ mã băm có bộ chọn riêng. Hãy ghi một tổ hợp và tối đa năm chỉ số
+  seed cho mỗi lệnh, mỗi lần một lệnh:
+
+  ```text
+  node tests/perf.js --hash-list --hash-key=classic9/hard                       # các khóa và seed, không tạo gì cả
+  node tests/perf.js --check-hashes --hash-key=classic9/hard --hash-from=0 --hash-count=5   # một lần kiểm chưa đủ
+  node tests/perf.js --hash-key=classic9/hard --hash-from=0 --hash-count=5 --hash-record=<file.json>   # một mảnh
+  node tests/perf.js --hash-merge=<directory> --check-hashes     # đủ 520 bản ghi của các sổ ghi, không tạo gì cả
+  node tests/perf.js --hash-merge=<directory> --update-hashes    # ghi trọn fixture từ chúng
+  ```
+
+  `--hash-key` là đúng một khóa của `SG.fixtures.perfTools.COMBOS`, `--hash-from` là chỉ số tính từ 0 trong 20 seed
+  (0–19, mặc định 0) và `--hash-count` là số chỉ số seed liên tiếp. Lần kiểm có bộ chọn nói rõ nó đã kiểm bao nhiêu
+  trong 520 bản ghi và không phải là một lần đạt của toàn bộ tập; `--hash-record` chỉ ghi một **sổ ghi**, không bao
+  giờ ghi fixture; `--hash-merge` đòi đủ 520 bản ghi, mỗi bản đúng một lần, từ mã nguồn hiện tại, rồi kiểm tra (mặc
+  định) hoặc, với `--update-hashes`, ghi `regression.js` theo CRLF (`--hash-out=<file.js>` ghi ra một tệp khác). Một
+  lần cập nhật chính thức cần toàn bộ tập (mọi bản ghi được tạo hoặc một lần gộp đầy đủ): một lựa chọn chưa đủ, các
+  tùy chọn xung đột và một khoảng ngoài 0–19 bị từ chối trước khi tạo bất cứ thứ gì, còn một bản ghi thiếu, trùng,
+  sai dạng hoặc từ mã nguồn khác làm lần gộp bị từ chối; trong mọi trường hợp không có gì được ghi và fixture giữ
+  nguyên. Một sổ ghi là `{ schema: 1, kind: 'regression-hashes', sourceHash, manifestHash, node, commit, dirty,
+  records: [{ key: 'variant/level#seed', variant, level, seed, hash, ms, overrides }] }`; `sourceHash` của nó bao gồm
+  các tệp bộ máy mà script nạp cùng `perf-helper.js`, `tool-records.js` và `perf.js` (nên sửa bất kỳ tệp nào trong
+  đó làm các sổ ghi cũ đi), còn `manifestHash` bao gồm các tổ hợp và các seed, không bao giờ gồm các mã băm kỳ vọng.
+  Một tổ hợp mà việc kiểm định đã ẩn mức của nó vẫn nằm trong tập: phần trợ giúp cung cấp mức đó cho đúng một lần
+  sinh (ghi trong `overrides`) và trả lại đúng mảng hỗ trợ ban đầu; nó không bao giờ đổi những gì người chơi được
+  cung cấp. Các hàm thuần nằm ở `SG.fixtures.perfTools` và `SG.fixtures.toolRecords`, và suite `perf-tooling` kiểm
+  thử chúng.
+
+  **GP cuối của xếp hạng v3 (MS18d).** GP cuối của xếp hạng v3 (MS18d) dùng bộ ghi R24 riêng của nhiệm vụ, gọi
+  `SG.fixtures.perfTools.measure` không đổi và gộp kiểm tra các thời gian thô; không lấy số liệu từ stdout đã làm
+  tròn của `perf.js`. Đủ 79/79 ô, mỗi ô 50 yêu cầu; 74/79 đạt `p95 < mục tiêu` (cần 72), còn năm ô trượt được giữ
+  nguyên. Đây là số đo Node theo chính sách shared-slot, CLI-host-active, với 35 lần khởi động tiến trình lạnh bổ
+  sung, không phải số đo Chrome trên máy tham chiếu. Báo cáo đầy đủ với mọi hàng, các ô trượt và bằng chứng nằm ở
+  [docs/difficulty-v3/performance-v3.md](docs/difficulty-v3/performance-v3.md); các ví dụ `perf.js` có sẵn ở trên vẫn
+  là lệnh hợp lệ, nhưng stdout của chúng không phải nguồn của chiến dịch đó.
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
   trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; trong PowerShell dùng
-  `$env:SG_DEEP = 1`).
+  `$env:SG_DEEP = 1`). Các bài kiểm thử sâu theo từng mức của suite mega và multigrid chỉ được đăng ký cho những mức
+  mà bàn cờ cung cấp (MS18d); mức mà việc kiểm định đã ẩn vẫn giữ các yêu cầu chẩn đoán cố định của nó, không có bài
+  đo thời gian sâu công khai. `--list-tests` cùng `SG_DEEP=1` liệt kê chúng mà không chạy bài nào.
 - **Báo cáo kiểm định cuối cùng:** [docs/qa/final-review-v1.md](docs/qa/final-review-v1.md).
 
 ## Quy ước
@@ -656,9 +1441,10 @@ Các hạn chế mà người dùng nhận thấy được liệt kê trong hư�
   giờ là điều mọi người giải đều cần, và số đếm công việc `checks` của một lần chấm điểm chỉ để chẩn đoán: nó có thể
   lệch vài đơn vị giữa hai lần chạy (các kỹ thuật tập con cách quãng các lần kiểm tra ngân sách bằng một bộ đếm sống
   qua nhiều lần giải), nên các bài kiểm thử bỏ qua nó.
-- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 26 kỹ thuật
-  và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
-  ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); trọng số Sát thủ của `ruleOf45` và
+- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: 40 trọng số kỹ thuật
+  (`SG.difficulty.WEIGHTS`) là các trọng số của rating v2, được chọn cùng chín khoảng điểm từ các phép đo trên đề do máy
+  tạo ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)), cộng với các giá trị
+  ước lượng kỹ thuật cho những kỹ thuật mà rating v3 thêm vào; trọng số Sát thủ của `ruleOf45` và
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật.
 - **Thời gian tạo đề**: các thời gian trong hướng dẫn sử dụng được đo trong Node (`node tests/qualify.js`);
   `node tests/perf.js` đo mọi tổ hợp so với ngân sách ở [design.md](generator/design.md) §9.1 trên máy của bạn.
@@ -687,8 +1473,10 @@ Trình sinh đề Sudoku tạo ra và cho bạn chơi. Ứng dụng làm gì và
 
 - Tài liệu đề mang sẵn mô hình đã dựng, nên trình chơi không có mã biến thể hay mã tạo đề nào (xem
   [Định dạng trao đổi](#định-dạng-trao-đổi)).
-- Tài liệu dùng cách chấm điểm v2 vẫn có định dạng `sudoku-generator/v1`; trình chơi giữ
-  `difficulty.ratingVersion` và không tính lại điểm. Tài liệu và văn bản cũ vẫn mở được, nhưng các mã mức cũ không
+- Tài liệu dùng cách chấm điểm v2 hay v3 vẫn có định dạng `sudoku-generator/v1`; trình chơi giữ
+  `difficulty.ratingVersion` (mọi số nguyên dương, hiện là 2 hoặc 3) như một tuyên bố của tài liệu, không tính lại
+  điểm và không bao giờ coi nó là chứng nhận rằng một mức là bắt buộc. Tài liệu và văn bản cũ vẫn mở được, nhưng
+  các mã mức cũ không
   được ánh xạ sang mã mới. Đổi thông tin chấm điểm không làm thay đổi định danh đề dùng để lưu tiến độ.
 - Mã (token) của một liên kết đề đã nén và an toàn cho URL: văn bản các đề của nút Chơi ở trình sinh đề (`t.…`),
   hoặc tài liệu của một đề (`z.…`).
@@ -706,16 +1494,68 @@ chủ tĩnh nào, ví dụ `python -m http.server` hay `npx serve`, rồi mở `
 ## Kiểm thử trình chơi
 
 ```
-node tests/node-runner.js          # mọi bộ kiểm thử (29 bộ, khoảng 15 giây); không cần gói nào (đã chạy trên Node 24)
+node tests/node-runner.js          # mọi bộ kiểm thử (32 bộ, 2.981 bài); không cần gói nào (đã chạy trên Node 24)
 node tests/node-runner.js --suite=play,importer
 ```
 
+Bộ chạy có cùng các tùy chọn `--exact`, `--list-tests` và `--results` như của trình sinh đề (xem "Chọn chính xác,
+bản kiểm kê và kết quả" ở phần kiểm thử của Trình sinh đề Sudoku phía trên). Khi một lệnh trọn bộ nhanh của trình chơi
+không vừa một lệnh có giới hạn, hãy phủ nó như bộ nhanh của trình sinh đề (xem "Phủ bộ nhanh theo từng đợt có giới hạn"
+ở trên); chi phí đo được của từng ứng dụng nằm trong
+[docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md).
+
 Các kiểm thử Node này chạy nhanh và là bộ mặc định: lập trình viên và các tác tử lập trình chạy
-`node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 13
-bộ ở `tests/suites/` và 16 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
+`node tests/node-runner.js` (hoặc vài bộ với `--suite=`) trong lúc phát triển, còn workflow triển khai chạy tất cả. Đó là 14
+bộ ở `tests/suites/` và 18 bộ ở `../core/tests/suites/` mà trình sinh đề cũng chạy (bộ máy giải, bậc thang kỹ thuật, định
 dạng trao đổi, hiển thị bàn cờ). `tests.html` chạy cùng các bộ kiểm thử trong trình duyệt (những bộ đọc tệp mẫu cần
 `http://`). Các tệp mẫu trong `tests/fixtures/puzzles/` là tài liệu thật do Trình sinh đề Sudoku tạo ra
 ([tệp mẫu](docs/puzzle-exchange/fixtures.md)).
+
+<a id="help-examples"></a>
+**Các ví dụ của trang Trợ giúp.** `player/js/ui/help-examples.js` giữ một ví dụ thật cho mọi kỹ thuật của trang hướng
+dẫn (`help.html`): ảnh chụp một đề đang giải dở, do chính các gợi ý của trình chơi tạo ra, nên trang vẽ ngay mà không
+chạy gì. Tệp này do `tests/tools/make-technique-examples.js` sinh ra (chạy từ `player/`; không bao giờ sửa tay) và được
+`tests/suites/help.test.js` kiểm tra; phần thuần của công cụ là tệp `tests/fixtures/help-example-tools.js`
+(`SG.fixtures.helpExampleTools`), do suite `help-example-tools` kiểm thử. Công cụ có giới hạn và không bao giờ sinh đề
+trừ khi bạn yêu cầu: không chọn chế độ nào thì nó chỉ **kiểm tra** (không ghi gì) các ID đã chọn so với danh mục đã lưu,
+bằng cách chơi lại đề đã lưu của từng ID với các gợi ý của trình chơi.
+
+```
+node tests/tools/make-technique-examples.js ../generator --ids=nakedSingle,cageCombo --max-puzzles=2 --max-hints=400 --check
+```
+
+`--ids` nhận đúng các ID kỹ thuật (mặc định: tất cả), `--max-puzzles` là số đề tối đa được chơi lại (mặc định 64;
+`--puzzles` là cùng một giới hạn), `--max-hints` là số gợi ý tối đa chơi trong một đề (400) và `--out=<tệp.js>` là danh
+mục để so sánh hoặc ghi (mặc định `js/ui/help-examples.js`); mọi đường dẫn đều tính từ thư mục hiện tại và nằm trong kho
+mã. Kỹ thuật mới chưa có đề đã lưu: hãy đưa cho nó các đề thật trong một tệp nguồn,
+`{"schema":1,"sources":{"<id>":[{"variantId":"classic9","level":null,"seed":null,"text":"<khối đề như trình sinh đề hiển
+thị>"}]}}`, bằng `--sources=<tệp.json>`, hoặc tìm chúng bằng một lần khám phá có giới hạn và nêu rõ: `--discover` cùng
+`--variants`, `--levels` và một `--max-puzzles` nhỏ (tối đa chừng ấy yêu cầu được thực hiện, lần lượt từng cái, kể cả yêu
+cầu lỗi, và lần chạy dừng ở hạn chót tám phút). Lần khám phá phải kết thúc bằng `--record-sources=<tệp.json>` (lưu nguồn
+thật của từng ID đã chọn; không ghi danh mục) hoặc `--write` (gộp các ví dụ đã chọn vào danh mục đầy đủ: mọi ID đã chọn
+phải có ví dụ và cả danh mục phải hợp lệ, nếu không tệp cũ được giữ nguyên). Với mỗi ID, ví dụ dễ đọc nhất thắng (ví dụ
+đứng trước khi hòa), và một kỹ thuật không có được ví dụ thật trong giới hạn thì công việc dừng lại: không có gì tổng hợp
+được thay vào. Các tệp trung gian nằm ở `--work-dir` (mặc định `tests/artifacts/difficulty-v3/help`), không bao giờ ở thư
+mục tạm của hệ thống. Mã thoát là 0 khi xong hoặc đã khớp, 1 khi có khác biệt, thiếu ví dụ hoặc sai lệnh, và 2 khi lần
+chạy chưa hoàn tất. Một việc thêm hai kỹ thuật ghi nguồn của từng kỹ thuật riêng, gộp hai tệp nguồn (không đổi chữ nào của
+đề; một ID có trong cả hai bị từ chối) rồi ghi chúng cùng lúc:
+
+```
+node tests/tools/make-technique-examples.js ../generator --ids=<id> --discover --variants=classic9 --levels=hard --max-puzzles=12 --max-hints=400 --record-sources=tests/artifacts/<task>/<id>.json
+node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --sources=tests/artifacts/<task>/sources.json --max-puzzles=16 --write
+node tests/tools/make-technique-examples.js ../generator --ids=<id>,<other> --sources=tests/artifacts/<task>/sources.json --max-puzzles=16 --check
+```
+
+Một ảnh chụp gọi tên bàn cờ bằng biến thể, mà biến thể không quy định các vùng của đề **Ghép hình**. Vì vậy ảnh chụp
+Ghép hình (`variant: "jigsaw9"`) còn giữ `cellRegion`, một mảng thuần của riêng nó gồm đúng 81 số hiệu vùng, sao chép từ
+`model.layout.cellRegion` của đề được chơi lại (biến thể khác không có trường này, và một vùng không bao giờ bị đoán từ
+các số cho sẵn). `SG.help.buildExample` dựng lại bàn cờ từ bản đồ đó bằng bộ dựng Ghép hình của trình nhập
+(`SG.textBoards.jigsawSpec`) và kiểm tra nó như kiểm tra một bàn cờ được nhập; bản đồ thiếu hoặc sai (độ dài sai, một vùng
+không có đủ chín ô) cho ra không có bàn cờ, nên trang hướng dẫn báo ví dụ không có sẵn, và không bao giờ là các ô 3×3
+thông thường. Các kiểm thử nhanh chơi lại một đề Ghép hình thật, được giữ nguyên trong
+`tests/fixtures/jigsaw-help-source.js`, bằng mã gợi ý hiện hành, nên chúng không ghim bước gợi ý nào. Ví dụ Ghép hình cho
+một kỹ thuật được tìm như mọi ví dụ khác, bằng `--discover --variants=jigsaw9 --levels=hard` (kế hoạch có hard, expert và
+master cho Ghép hình).
 
 Phần chạy chậm là các **script trình duyệt** trong `tests/browser/` (`node tests/browser/run-all.js`: Edge không giao
 diện qua giao thức DevTools, vài phút). Khi phát triển chúng chạy **thủ công** và chỉ cần chạy khi thay
@@ -726,8 +1566,9 @@ diện qua giao thức DevTools, vài phút). Khi phát triển chúng chạy **
 ## Đưa lên GitHub Pages
 
 Chọn **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-[Workflow triển khai](.github/workflows/pages.yml) của kho mã chạy các kiểm thử Node 24 của cả hai ứng dụng (`node tests/node-runner.js`,
-không gồm các script trình duyệt) và xuất bản trình chơi, trình sinh đề và phần mã dùng chung sau mỗi
+[Workflow triển khai](.github/workflows/pages.yml) của kho mã chạy các kiểm thử nhanh Node 24 của cả hai ứng dụng (của trình sinh đề chạy
+theo các nhóm đã được kiểm tra của `.github/scripts/generator-quick.json`; không gồm các suite nặng và các script trình
+duyệt) và xuất bản trình chơi, trình sinh đề và phần mã dùng chung sau mỗi
 lần đẩy lên `main`; bạn cũng có thể chạy thủ công từ thẻ **Actions**. Chỉ các tệp ứng dụng và giấy phép được
 xuất bản, không gồm kiểm thử hay ghi chú làm việc. Ứng dụng trực tuyến tại
 **[tdat00.github.io/sudoku/player](https://tdat00.github.io/sudoku/player/)**. Nút “Chơi” của Trình

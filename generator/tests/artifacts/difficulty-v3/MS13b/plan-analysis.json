@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS13a final E g-analysis-G01 0.961 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS13a final E g-analysis-G02 0.562 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MS13a final E g-analysis-G03 2.709 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS13a final E g-analysis-G04 8.444 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS13a final E g-analysis-G05 8.894 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS13a final E g-analysis-G06 0.679 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS13a final E g-analysis-G07 0.82 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS13a final E g-analysis-G08 0.546 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 48,
+    "projectionBasis": "MS13a final E g-analysis-G09 21.016 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 58,
+    "projectionBasis": "MS13a final E g-analysis-G10 26.196 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 39,
+    "projectionBasis": "MS13a final E g-analysis-G11 16.864 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS13a final E g-analysis-G12 1.225 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 29,
+    "projectionBasis": "MS13a final E g-analysis-G13 11.953 s (same shard, the previous task's source); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS13b\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 18,
+    "projectionBasis": "MS13a final E g-analysis-G14 6.403 s (same shard, the previous task's source); 2 x + 5 s"
+  }
+]

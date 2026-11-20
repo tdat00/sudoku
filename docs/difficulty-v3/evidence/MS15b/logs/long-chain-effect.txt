@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS15b\long-chain-effect.js
+#0 alsXz steps on the way 1 status with/without stuck/stuck stuck positions equal false open 43/43 longChain 7/7
+#1 alsXz steps on the way 2 status with/without stuck/stuck stuck positions equal false open 56/56 longChain null/8
+#2 alsXz steps on the way 1 status with/without solved/stuck stuck positions equal false open 0/51 longChain null/7
+#3 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 43/43 longChain 7/7
+#4 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 49/49 longChain 8/8
+#5 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 49/49 longChain 7/7
+#6 alsXz steps on the way 1 status with/without stuck/stuck stuck positions equal false open 50/50 longChain null/7
+#7 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 49/49 longChain 7/7
+#8 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 51/51 longChain 7/7
+#9 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 49/49 longChain 8/8
+#10 alsXz steps on the way 0 status with/without stuck/stuck stuck positions equal true open 52/52 longChain 7/7
+#11 alsXz steps on the way 1 status with/without solved/stuck stuck positions equal false open 0/37 longChain null/7
+exit=0 seconds=1.174

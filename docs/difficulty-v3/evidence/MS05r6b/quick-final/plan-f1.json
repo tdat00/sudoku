@@ -1,0 +1,38 @@
+[
+  {
+    "label": "q2-gen-steps",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=steps",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick-final\\generator-steps.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.717 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 30 s (2.6 times)",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick-final\\generator-steps.json"
+  },
+  {
+    "label": "q2-gen-replay",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=replay",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick-final\\generator-replay.json"
+    ],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.025 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 30 s (2.7 times)",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick-final\\generator-replay.json"
+  },
+  {
+    "label": "q2-gen-pipeline",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=pipeline",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick-final\\generator-pipeline.json"
+    ],
+    "projectionSeconds": 360,
+    "projectionBasis": "MEASURED 296.200 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 360 s (1.2 times)",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick-final\\generator-pipeline.json"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-another-Node",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-another-Node",
+  "startedAtMs": 1795101664156,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "node v24.0.0 differs from v26.13.0"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 62000,
+      "systemMicros": 78000
+    }
+  },
+  "finishedAtMs": 1795101664209
+}

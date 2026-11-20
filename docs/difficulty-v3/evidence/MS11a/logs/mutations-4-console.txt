@@ -1,0 +1,23 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS11a\mutations-4.txt 69 88
+mutation 69 (the entry check of the parent budget of the second pass is gone): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.1 s
+mutation 70 (cancellation and every other error are swallowed): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+mutation 71 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.2 s
+mutation 72 (a spent work limit is propagated instead of "nothing found"): DETECTED - 387 total, 381 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 10.1 s
+mutation 73 (the limit constant is 50001): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.1 s
+mutation 74 (the registered finder ignores the constant): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.1 s
+mutation 75 (the exported constant is another number): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+mutation 76 (the seam ignores its limit): DETECTED - 387 total, 382 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.1 s
+mutation 77 (the seam names another technique in its error): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.1 s
+mutation 78 (the observer record reports one unit too many): DETECTED - 387 total, 378 passed, 9 failed, 0 skipped - 9 failing, 9 of uniqueRectangle - 10.2 s
+mutation 79 (the observer record carries the id of wxyzWing): DETECTED - 387 total, 383 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.5 s
+mutation 80 (the observer record reports the default limit whatever the call used): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.1 s
+mutation 81 (the observer record never reports a capped call): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.0 s
+mutation 82 (the observer record retains something): DETECTED - 387 total, 383 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 10.1 s
+mutation 83 (another base cost): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.1 s
+mutation 84 (another order, ahead of W-Wing (169)): DETECTED - 387 total, 380 passed, 7 failed, 0 skipped - 7 failing, 6 of uniqueRectangle - 10.1 s
+mutation 85 (another order, after the forcing chain (191)): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+mutation 86 (the technique is not flagged as assuming uniqueness): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 1 of uniqueRectangle - 10.3 s
+mutation 87 (the weight is below the one of W-Wing (849)): DETECTED - 13 total, 10 passed, 3 failed, 0 skipped - 3 failing, 0 of uniqueRectangle - 0.2 s
+mutation 88 (the weight is above the one of the forcing chain (1101)): DETECTED - 13 total, 11 passed, 2 failed, 0 skipped - 2 failing, 0 of uniqueRectangle - 0.2 s
+detected 20 of 20, 183.2 s
+exit=0 seconds=183.263

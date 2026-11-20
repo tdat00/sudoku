@@ -1,0 +1,91 @@
+$ node tests\node-runner.js --suite=tech-fish --filter=jigsaw --verbose
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  js/engine/text-boards.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/importer.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  js/ui/store.js
+  loaded  js/ui/theme.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/progress.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/play.js
+  loaded  js/ui/help-examples.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+tech-fish
+  ok   tech-fish > skyscraper (R11): agreement with an independent enumeration > agrees on jigsaw9 (extra regions or irregular regions are real peers) (266 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > has no box on the jigsaw board: its nine regions are the box-like units (1 ms)
+  FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > bridges through a region: the vector on the jigsaw board (J4 holds R3C5 and R4C7)
+       AssertionError: expected 0 to be 1
+       at api.<computed> [as toBe] (Q:\git\sudoku\core\tests\harness.js:286:17)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2493:31)
+       at invoke (Q:\git\sudoku\core\tests\harness.js:416:18)
+       at runTest (Q:\git\sudoku\core\tests\harness.js:457:18)
+       at Object.run (Q:\git\sudoku\core\tests\harness.js:621:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > finds the transposed vector on the transposed jigsaw board (J4 holds R5C3 and R7C4)
+       AssertionError: expected 0 to be 1
+       at api.<computed> [as toBe] (Q:\git\sudoku\core\tests\harness.js:286:17)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2510:31)
+       at invoke (Q:\git\sudoku\core\tests\harness.js:416:18)
+       at runTest (Q:\git\sudoku\core\tests\harness.js:457:18)
+       at Object.run (Q:\git\sudoku\core\tests\harness.js:621:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: the bridge cells lie in different regions (R3C4 is in J2, R4C7 in J4) (as listed) (1 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: the bridge cells lie in different regions (R3C4 is in J2, R4C7 in J4) (transposed) (2 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: the bridge cells lie in one 3 x 3 block but in different regions (R2C3 is in J2, R3C2 in J5) (as listed) (1 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: the bridge cells lie in one 3 x 3 block but in different regions (R2C3 is in J2, R3C2 in J5) (transposed) (1 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: a third candidate in the row (R3 is no conjugate pair) (as listed) (1 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: a third candidate in the row (R3 is no conjugate pair) (transposed) (1 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: a target that sees only the end R3C9 (as listed) (1 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > does not authorize an elimination on the jigsaw board: a target that sees only the end R3C9 (transposed) (2 ms)
+  ok   tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > has a region as the only box-like unit of a board of rows, columns and regions (the jigsaw layout) (1 ms)
+  FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on jigsaw9 and on its transpose, where the irregular regions are the bridges
+       AssertionError: expected Array(2)["jigsaw9Turned", false] to equal Array(2)["jigsaw9Turned", true]
+       at api.<computed> [as toEqual] (Q:\git\sudoku\core\tests\harness.js:286:17)
+       at Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2720:54
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2715:35)
+       at invoke (Q:\git\sudoku\core\tests\harness.js:416:18)
+       at runTest (Q:\git\sudoku\core\tests\harness.js:457:18)
+       at Object.run (Q:\git\sudoku\core\tests\harness.js:621:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  ok   tech-fish > twoStringKite (R11): agreement with an independent enumeration > stays sound on the irregular jigsaw boards: every kite removes only candidates that are not the solution (5 ms)
+FAIL tech-fish: 12 passed, 3 failed  (263.77 s)
+
+Suites: 1
+Tests:  15 total, 12 passed, 3 failed, 0 skipped
+Time:   263.77 s running tests, 263.83 s total
+exit=1 seconds=263.923

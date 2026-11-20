@@ -11,6 +11,13 @@
   var def = SG.variants.get('jigsaw9');
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
+  /** The levels of the final qualification (docs/difficulty-rating/qualification.md): what the variant offers. */
+  var PUBLISHED = ['veryEasy', 'easy', 'normal', 'hard', 'master', 'hell2'];
+  /**
+   * The levels with a public per-level registration below: the offered ones. The fixed diagnostic corpus
+   * (`puzzleRun`) keeps every level of LEVELS, the hidden ones included (MS18c), with the original seeds.
+   */
+  var OFFERED = LEVELS.filter(function (level) { return def.difficultySupport.indexOf(level) !== -1; });
   /** design.md 9.1, jigsaw9 row, p95 in ms. */
   var BUDGET_MS = {
     veryEasy: 150, easy: 350, normal: 350, hard: 900, expert: 900, master: 2000, nightmare: 5000, hell1: 5000,
@@ -209,7 +216,13 @@
       expect(def.i18nKey).toBe('variant.jigsaw9');
       expect(def.digits).toBe(9);
       expect(def.group).not.toBe('classic');
-      expect(def.difficultySupport).toEqual(LEVELS);
+      expect(def.difficultySupport).toEqual(PUBLISHED);
+      SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })
+        .forEach(function (level) {
+          expectCode(function () {
+            SG.pipeline.run({ variantId: 'jigsaw9', difficulty: level, seed: 1, trace: 'off' }, null);
+          }, 'difficulty.unsupportedLevel');
+        });
       expect(def.symbolModes).toContain(def.defaultSymbolMode);
       expect(def.defaultSymbolMode).toBe('digits');
       expect(typeof def.build).toBe('function');
@@ -784,22 +797,28 @@
       });
   });
 
+  /**
+   * A puzzle of the fixed diagnostic corpus or of a fixed request. A level that qualification hides is offered
+   * by the variant for the length of this call only, and the exact support array is put back in `finally`.
+   */
   function generatePuzzle(level, seed, extra) {
     var config = Object.assign({ variantId: 'jigsaw9', difficulty: level, seed: seed, trace: 'off' }, extra);
     var started = now();
-    var result = SG.pipeline.run(config, null);
+    var result = SG.fixtures.toolRecords.withRequestedLevel('jigsaw9', level, function () {
+      return SG.pipeline.run(config, null);
+    }).value;
     result.elapsedMs = now() - started;
     return result;
   }
 
   function puzzleRun() {
     if (!cache.puzzles) {
-      cache.puzzles = {};
-      LEVELS.forEach(function (level, li) {
-        cache.puzzles[level] = [];
+      cache.puzzles = SG.test.lazyCorpus(LEVELS, function (level, li) {
+        var puzzles = [];
         for (var i = 0; i < countOf(level); i++) {
-          cache.puzzles[level].push(generatePuzzle(level, 700 + li * 100 + i));
+          puzzles.push(generatePuzzle(level, 700 + li * 100 + i));
         }
+        return puzzles;
       });
     }
     return cache.puzzles;
@@ -812,7 +831,8 @@
   }
 
   describe('jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
-    LEVELS.forEach(function (level) {
+    // Public per-level registrations: the published levels only (MS18c). The corpus behind them is the fixed one.
+    OFFERED.forEach(function (level) {
       describe(level + ': ' + countOf(level) + ' puzzles', function () {
         it('I1: exactly one solution; I2: givens are part of the solution; I3: the solution is valid',
           function () {
@@ -840,13 +860,19 @@
             if (clueCount(p.givens) < spec.minClues) throw new Error('puzzle ' + i + ': too few clues');
             expect(p.config.difficulty).toBe(level);
             expect(p.rating.solved).toBe(true);
-            if (p.rating.level === level) {
+            var again = SG.difficulty.rate(p.model, p.givens);
+            if (p.exact === true) {
               exact++;
+              expect(p.rating.level).toBe(level);
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
+              expect(SG.difficulty.requiredOf(again, level, p.model).required).toBe(true);
               expect(p.warnings).toEqual([]);
+            } else {
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.rating.level === level);
             }
-            expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
+            expect(again.level).toBe(p.rating.level);
           });
           // The 90% hit rate that tests/soak.js asks of classic9 holds for jigsaw9 as well.
           expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);

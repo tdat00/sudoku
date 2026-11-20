@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=steps
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (15.63 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   15.63 s running tests, 15.72 s total
+exit=0 seconds=15.826

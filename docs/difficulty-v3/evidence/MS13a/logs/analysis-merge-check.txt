@@ -1,0 +1,17 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS12\analysis --check
+  G01.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G02.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G03.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G04.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G05.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G06.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G07.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G08.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G09.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G10.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G11.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G12.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G13.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+  G14.json: sourceHash 767b39fe958a... is not the current f7230c71f728... (recorded from other sources)
+merge refused: 14 problems; nothing was written
+exit=1 seconds=0.438

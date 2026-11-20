@@ -1,0 +1,13 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=forcingChain,forcingChainLong,nishio,nishioDeep --sources=tests\artifacts\difficulty-v3\MS07b\sources.json --max-puzzles=16 --max-hints=400 --check
+selected 4 technique ID(s); mode check
+replaying 4 puzzle(s) for 4 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/4 classic9 Nightmare 648 -> 76 hint(s), solved; wanted found: forcingChain
+puzzle 2/4 classic9 nightmare 3 -> 61 hint(s), solved; wanted found: forcingChainLong
+puzzle 3/4 classic9 Hell 1 8 -> 69 hint(s), solved; wanted found: nishio
+puzzle 4/4 classic9 Hell 2 escargot -> 113 hint(s), solved; wanted found: nishioDeep
+forcingChain: matches help-examples.js
+forcingChainLong: matches help-examples.js
+nishio: matches help-examples.js
+nishioDeep: matches help-examples.js
+help-examples.js is up to date for the 4 selected ID(s)
+exit=0 seconds=0.545

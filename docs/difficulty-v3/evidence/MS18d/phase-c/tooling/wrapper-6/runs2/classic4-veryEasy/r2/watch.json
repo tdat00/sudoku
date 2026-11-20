@@ -1,0 +1,37 @@
+{
+  "schema": "ms18d-c-watch-1",
+  "startedAtMs": 1795092474769,
+  "firstCheckMs": 1795092476307,
+  "lastCheckMs": 1795092491797,
+  "requiredWindowMs": 15300,
+  "maxIntervalAllowedMs": 1000,
+  "intervalMs": 250,
+  "checks": 68,
+  "windowChecks": 62,
+  "maxIntervalMs": 255,
+  "windowSightings": 0,
+  "restartCount": 3,
+  "restarts": [
+    {
+      "atMs": 1795092475543,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795092475798,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    },
+    {
+      "atMs": 1795092476053,
+      "reason": "lock-present",
+      "shared": false,
+      "timing": true
+    }
+  ],
+  "giveUpSeconds": 1199.9963203,
+  "gaveUp": false,
+  "notBeforeMs": 1795090689990
+}

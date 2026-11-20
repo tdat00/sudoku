@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS15b\explore-shapes.js
+jigsaw keys: SIZE,parse,problems,build,transpose,solve,LAYOUTS
+samurai keep 0.5,0.8 placed<=0.63: n 89/208 work 6772/8820 firing 2/2
+samurai keep 0.6,0.9 placed<=0.63: n 58/111 work 5739/6956 firing 2/2
+samurai keep 0.7,0.95 placed<=0.63: n 53/87 work 5232/6269 firing 2/2
+16 keep 0.5,0.8 placed<=0.83: n 584/901/1300/6 work 8140/4092/14419/3661 firing 3/4
+16 keep 0.4,0.7 placed<=0.83: n 954/997/1842/42 work 11501/4165/17457/4974 firing 4/4
+16 keep 0.6,0.9 placed<=0.83: n 421/936/875/4 work 7342/4007/10827/3044 firing 3/4
+exit=0 seconds=0.281

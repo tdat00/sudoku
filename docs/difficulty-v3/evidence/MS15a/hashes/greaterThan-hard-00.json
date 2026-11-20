@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "e91fff8a3cb4960847acb19367869588a353790fad049cdba55ff3431919f8ba",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "8bd2487b63d412c7a5185cf7464b271f4f0c60ac",
+  "dirty": true,
+  "generatedAt": "2026-11-17T13:34:11.542Z",
+  "argv": ["--hash-key=greaterThan/hard","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS15a\\hashes\\greaterThan-hard-00.json"],
+  "records": [
+    {"key":"greaterThan/hard#1","variant":"greaterThan","level":"hard","seed":1,"hash":"57723d97f39afc43","ms":4888,"overrides":[]},
+    {"key":"greaterThan/hard#2","variant":"greaterThan","level":"hard","seed":2,"hash":"bd35f3a2985656c6","ms":2321,"overrides":[]},
+    {"key":"greaterThan/hard#3","variant":"greaterThan","level":"hard","seed":3,"hash":"ee05692893689fb4","ms":75,"overrides":[]},
+    {"key":"greaterThan/hard#5","variant":"greaterThan","level":"hard","seed":5,"hash":"c91392dadbe50c26","ms":2095,"overrides":[]},
+    {"key":"greaterThan/hard#8","variant":"greaterThan","level":"hard","seed":8,"hash":"fbca2786f61942ea","ms":2190,"overrides":[]}
+  ]
+}

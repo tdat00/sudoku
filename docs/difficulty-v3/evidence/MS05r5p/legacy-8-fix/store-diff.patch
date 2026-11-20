@@ -1,0 +1,19 @@
+--- a/generator/js/ui/store.js
++++ b/generator/js/ui/store.js
+@@ -39,2 +39,2 @@
+-  // The one default every board had before the size policy: a stored 8 without the intent marker is read
+-  // once (see `storedAttempts`).
++  // The one default every board had before the size policy: a stored 8 without the intent marker is read as
++  // the default on every board (see `storedAttempts`).
+@@ -499,3 +499,5 @@
+-   * marker is taken as it says. A record written before the size defaults has none: its 8 on a board whose
+-   * default is not 8 is the old universal default and is read as "default", once (the next save writes the
+-   * marker, so a later explicit 8 stays); any other number is the user's and is kept as a chosen one.
++   * marker is taken as it says. A record written before the size defaults has none, and its 8 is the old
++   * universal default: it is read as "default" on every board, because it cannot be told from a chosen 8
++   * (a chosen 8 is lost to the default; entering 8 again makes it a chosen number). Any other valid number
++   * is the user's and is kept as a chosen one. The decision reads the record only, so loading it again
++   * gives the same state until the next save writes the intent marker.
+@@ -508 +510 @@
+-    else if (number === LEGACY_MAX_ATTEMPTS && defaultAttempts(id) !== LEGACY_MAX_ATTEMPTS) explicit = false;
++    else if (number === LEGACY_MAX_ATTEMPTS) explicit = false;

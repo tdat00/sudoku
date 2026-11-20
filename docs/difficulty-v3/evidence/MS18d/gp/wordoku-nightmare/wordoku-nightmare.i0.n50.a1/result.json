@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "wordoku-nightmare.i0.n50.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "wordoku",
+    "level": "nightmare",
+    "targetMs": 1500
+  },
+  "task": "MS18d GP record wordoku-nightmare.i0.n50 a1",
+  "startedAtMs": 1795125387717,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=48.613",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "wordoku-nightmare.i0.n50",
+      "requests": 50,
+      "sha256": "b9df404eaf43193f156944c007820c51a8555224d49a644272e3698b268dae3f"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 21984,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=48.613",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 219,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 296000,
+      "systemMicros": 281000
+    },
+    "tee": {
+      "userMicros": 62000,
+      "systemMicros": 31000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795125446128
+}

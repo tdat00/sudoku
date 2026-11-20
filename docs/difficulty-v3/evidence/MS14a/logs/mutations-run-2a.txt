@@ -1,0 +1,49 @@
+$ node generator\tests\artifacts\difficulty-v3\MS14a\run-mutations.cjs docs\difficulty-v3\evidence\MS14a\mutations-2a.txt 0 45
+mutation 0 (G01 incomplete units accepted): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 1 (G02 a unit of another kind taken as a row): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 2 (G03 every other kind taken as a region): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+mutation 3 (G04 a box taken as a region): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 4 (G05 columns never taken): DETECTED - 40 total, 19 passed, 21 failed, 0 skipped - 21 failing - 2.5 s
+mutation 5 (G06 rows never taken): DETECTED - 40 total, 7 passed, 33 failed, 0 skipped - 33 failing - 1.6 s
+mutation 6 (G07 one unit per side at most): DETECTED - 40 total, 16 passed, 24 failed, 0 skipped - 24 failing - 3.0 s
+mutation 7 (G08 three units per side): DETECTED - 40 total, 31 passed, 9 failed, 0 skipped - 9 failing - 2.6 s
+mutation 8 (G09 five cells left over allowed): DETECTED - 40 total, 18 passed, 22 failed, 0 skipped - 22 failing - 1.6 s
+mutation 9 (G10 three cells left over at most): DETECTED - 40 total, 30 passed, 10 failed, 0 skipped - 10 failing - 2.0 s
+mutation 10 (G12 no limit of cells): DETECTED - 40 total, 15 passed, 25 failed, 0 skipped - 25 failing - 19.8 s
+mutation 11 (G13 a choice with no open cell is examined): DETECTED - 40 total, 37 passed, 3 failed, 0 skipped - 3 failing - 4.7 s
+mutation 12 (G14 overlapping units accepted on a side): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+mutation 13 (G15 marks of a unit kept after its subtree): DETECTED - 40 total, 12 passed, 28 failed, 0 skipped - 28 failing - 2.4 s
+mutation 14 (G16 units that cannot complete the side are tried): DETECTED - 40 total, 27 passed, 13 failed, 0 skipped - 13 failing - 3.2 s
+mutation 15 (G17 the line side leaves the shared cells (condition reversed)): DETECTED - 40 total, 7 passed, 33 failed, 0 skipped - 33 failing - 2.1 s
+mutation 16 (G18 the region side keeps the shared cells): DETECTED - 40 total, 8 passed, 32 failed, 0 skipped - 32 failing - 2.5 s
+mutation 17 (G19 only the first unit of each side counts): DETECTED - 40 total, 18 passed, 22 failed, 0 skipped - 22 failing - 3.0 s
+mutation 18 (G20 the cells of a side are not sorted): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 4.1 s
+mutation 19 (G21 no scope guard): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+mutation 20 (G22 another scope id): DETECTED - 40 total, 4 passed, 36 failed, 0 skipped - 36 failing - 1.4 s
+mutation 21 (G23 columns before rows): DETECTED - 40 total, 23 passed, 17 failed, 0 skipped - 17 failing - 2.0 s
+mutation 22 (G24 two units before one): DETECTED - 40 total, 23 passed, 17 failed, 0 skipped - 17 failing - 2.0 s
+mutation 23 (S01 signature is the set of digits (bitset)): DETECTED - 40 total, 25 passed, 15 failed, 0 skipped - 15 failing - 4.0 s
+mutation 24 (S02 signature weight 2^d): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.2 s
+mutation 25 (S03 signature is the sum of the digits): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 2.2 s
+mutation 26 (S04 radix of the cells limit, not one more): NOT DETECTED, EQUIVALENT (a side holds a digit at most once per unit, so at most n <= 2 times; radix 4 keeps every count below it) - 40 total, 40 passed, 0 failed, 0 skipped - 0 failing - 5.4 s
+mutation 27 (S05 radix 2): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.0 s
+mutation 28 (F01 a fixed cell takes its candidate mask): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 29 (F02 fixed and open cells swapped): DETECTED - 40 total, 8 passed, 32 failed, 0 skipped - 32 failing - 1.4 s
+mutation 30 (F03 no peers inside a side): DETECTED - 40 total, 20 passed, 20 failed, 0 skipped - 20 failing - 2.1 s
+mutation 31 (F04 only the first cell of a side is a peer): DETECTED - 40 total, 28 passed, 12 failed, 0 skipped - 12 failing - 3.0 s
+mutation 32 (F05 every cell of a side counts as a peer): DETECTED - 40 total, 21 passed, 19 failed, 0 skipped - 19 failing - 3.1 s
+mutation 33 (F06 a clash is not skipped): DETECTED - 40 total, 20 passed, 20 failed, 0 skipped - 20 failing - 2.2 s
+mutation 34 (I01 the line side keeps the support of unmatched signatures): DETECTED - 40 total, 34 passed, 6 failed, 0 skipped - 6 failing - 2.0 s
+mutation 35 (I02 the region side keeps the support of unmatched signatures): DETECTED - 40 total, 23 passed, 17 failed, 0 skipped - 17 failing - 1.9 s
+mutation 36 (I03 only the first shared signature supports): DETECTED - 40 total, 27 passed, 13 failed, 0 skipped - 13 failing - 1.2 s
+mutation 37 (I04 an empty intersection skips the choice): DETECTED - 40 total, 36 passed, 4 failed, 0 skipped - 4 failing - 5.3 s
+mutation 38 (I05 an empty intersection removes every candidate): DETECTED - 40 total, 35 passed, 5 failed, 0 skipped - 5 failing - 5.3 s
+mutation 39 (I06 the supported candidates are removed): DETECTED - 40 total, 17 passed, 23 failed, 0 skipped - 23 failing - 1.2 s
+mutation 40 (I07 solved cells are listed in the eliminations): DETECTED - 40 total, 39 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 41 (I08 digit off by one): DETECTED - 40 total, 24 passed, 16 failed, 0 skipped - 16 failing - 2.4 s
+mutation 42 (I09 a Finding without eliminations is returned): DETECTED - 40 total, 27 passed, 13 failed, 0 skipped - 13 failing - 1.3 s
+mutation 43 (I10 the support of a signature is not kept per cell (all cells share the first)): DETECTED - 40 total, 26 passed, 14 failed, 0 skipped - 14 failing - 1.5 s
+mutation 44 (O01 eliminations by digit, then cell): DETECTED - 40 total, 31 passed, 9 failed, 0 skipped - 9 failing - 2.4 s
+mutation 45 (O02 eliminations unsorted): DETECTED - 40 total, 38 passed, 2 failed, 0 skipped - 2 failing - 2.6 s
+detected 45 of 46, survivors 1, 163.8 s
+exit=0 seconds=163.846

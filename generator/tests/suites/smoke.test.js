@@ -23,6 +23,14 @@
       SG.budget.create({ ms: 100000 }));
   }
 
+  // A fixed request may name a level that qualification hides (MS18c): the variant offers it for the length of
+  // the call only. The refusal test below uses `generate`, which keeps refusing a hidden level.
+  function generateAs(id, level, seed) {
+    return SG.fixtures.toolRecords.withRequestedLevel(id, level, function () {
+      return generate(id, level, seed);
+    }).value;
+  }
+
   describe('smoke: every variant makes a valid puzzle', function () {
     it('registers the 15 variants of the project', function () {
       var ids = SG.variants.list().map(function (def) { return def.id; });
@@ -61,7 +69,7 @@
         var parts = key.split('/');
         var recorded = regression.hashes[key];
         expect(recorded).toBeDefined();
-        var result = generate(parts[0], parts[1], regression.seeds[0]);
+        var result = generateAs(parts[0], parts[1], regression.seeds[0]);
         expect(tools.hash64(tools.serialize(result))).toBe(recorded[0]);
       }, SLOW);
     });
@@ -75,10 +83,10 @@
     }, SLOW);
 
     it('killer and greaterThan reach the normal level with their cages / signs', function () {
-      var k = generate('killer', 'normal', 3);
+      var k = generateAs('killer', 'normal', 3);
       expect(k.rating.level).toBe('normal');
       expect(k.model.cages.length).toBeGreaterThan(0);
-      var g = generate('greaterThan', 'normal', 3);
+      var g = generateAs('greaterThan', 'normal', 3);
       expect(g.rating.level).toBe('normal');
       expect(g.model.inequalities.length).toBeGreaterThan(0);
     }, SLOW);

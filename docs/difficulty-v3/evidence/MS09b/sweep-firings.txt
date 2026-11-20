@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS09b\sweep-firings.js
+finnedXWing firings 259 of 300 states
+swordfish firings 86 of 300 states
+finnedSwordfish firings 281 of 300 states
+exit=0 seconds=0.501

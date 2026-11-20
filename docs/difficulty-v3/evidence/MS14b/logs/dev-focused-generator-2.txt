@@ -1,0 +1,27 @@
+$ node tests\node-runner.js --suite=tech-subset,techniques,technique-weights,pattern-cost-tools,i18n
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   i18n: 95 passed  (334 ms)
+FAIL pattern-cost-tools: 42 passed, 2 failed  (4.60 s)
+ok   tech-subset: 166 passed  (7.92 s)
+ok   technique-weights: 16 passed  (13 ms)
+ok   techniques: 268 passed  (5.61 s)
+
+Failures:
+  FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > selects scoped cases by text like the others
+       AssertionError: expected Array(3)["lawOfLeftovers:positive:2", "lawOfLeftovers:positive:4", "lawOfLeftovers:negative:2"] to equal Array(1)["lawOfLeftovers:negative:2"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pattern-cost-tools.test.js:590:101)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > rebuilds every scoped case on the board of its own region map, never on the classic9 board
+       AssertionError: expected Array(81)[0, 0, 0, 1, 1, 1, 2, 2, 2, 0, 0, 0, ...] not to equal Array(81)[0, 0, 0, 1, 1, 1, 2, 2, 2, 0, 0, 0, ...]
+       at Q:\git\sudoku\generator\tests\suites\pattern-cost-tools.test.js:628:63
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\pattern-cost-tools.test.js:624:26)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 5
+Tests:  589 total, 587 passed, 2 failed, 0 skipped
+Time:   18.47 s running tests, 18.60 s total
+exit=1 seconds=18.719

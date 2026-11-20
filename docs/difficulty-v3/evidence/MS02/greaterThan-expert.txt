@@ -1,0 +1,56 @@
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 92.4 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, simpleColouring 360, swordfish 420, jellyfish 520, xyWing 650, xyzWing 750, wWing 850, uniqueRectangle 900, forcingChain 1100, nishio 1700, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+
+== greaterThan (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+expert               .          .          .          .         10          2          .          .          .   12    83%      3.5    4209   15620   1562010000 SLOW
+exact: 10 of 12 (83.3%)
+
+group of the hardest technique per requested level (share of puzzles):
+  expert     fish 17%  wing 83%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .         10          .          .          .          .     10 ##############################
+1000-1500             .          .          .          .          2          .          .          .          .      2 ######
+1500-2400             .          .          .          .          .          .          .          .          .      0
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+other variants: lowest hit rate 83% (greaterThan/expert), required at least 80%
+RESULT: PASS
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS02/greaterThan-expert.json): 12 of 12 requests recorded; the diagnostic solves took 0.0 s after the generation and the checks
+
+== greaterThan/expert: 12 requests, 0 errors, 0 unrated, 10 solved in band ==
+  old hits 10/12 (83%), qualified hits 8/12 (67%), shallow 2/10 (20%; 10 with a reference verdict)
+  reference: ok 12, vacuous 0, error 0, skipped 0, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  cohort exact (old hits): 10 puzzles, peak xyWing 8, swordfish 1, simpleColouring 1
+    raw position (n=10): min 0.003, p10 0.087, p50 0.927, p90 0.987, max 0.987, upper median 0.927
+    adjusted position (n=10): min -1.148, p10 -0.96, p50 0.844, p90 0.972, max 0.972, upper median 0.844
+    adjusted undefined: -
+  cohort all in band: 10 puzzles, peak xyWing 8, swordfish 1, simpleColouring 1
+    raw position (n=10): min 0.003, p10 0.087, p50 0.927, p90 0.987, max 0.987, upper median 0.927
+    adjusted position (n=10): min -1.148, p10 -0.96, p50 0.844, p90 0.972, max 0.972, upper median 0.844
+    adjusted undefined: -
+  forcing-chain steps (0 of 12 rated paths): length -; per-puzzle maximum -
+  nishio steps (0 of 12 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0)

@@ -63,9 +63,11 @@ that an updated rating still finds the same saved game.
 The frozen `rated.js` puzzles keep their historical labels and technique certificates for solver tests.
 The Help examples (`player/js/ui/help-examples.js`) are puzzles made by the previous generator version: only the level
 labels in their `source.puzzle` were re-labelled by hand to the rating-v2 levels; the puzzles and hints are
-unchanged (they demonstrate hints, not a difficulty ladder). Regenerating them needs the current generator
-(`node tests/tools/make-technique-examples.js [path-to-generator]` in `player/`); the tool searches supported v2 levels,
-including the highest offered hell tier, and skips levels the selected generator does not offer.
+unchanged (they demonstrate hints, not a difficulty ladder). The tool that maintains them
+(`node tests/tools/make-technique-examples.js [path-to-generator]` in `player/`) is bounded: by default it only
+checks the selected examples against their recorded sources (`--check`, nothing generated or written); `--write`
+replaces selected examples from given `--sources`, and only `--discover` generates new candidate puzzles, at most
+`--max-puzzles` of them, on the offered levels of the selected generator.
 
 ## How the tests use them
 `player/tests/fixtures/puzzle-documents.js` extends the `SG.testkit` of `core/tests/fixtures/testkit.js`:

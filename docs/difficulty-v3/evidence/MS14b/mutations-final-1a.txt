@@ -1,0 +1,35 @@
+mutation 0 (R01 group subset instead of locked): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 1 (R02 order 88): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 2 (R03 order 86): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 3 (R04 order 91 (after hiddenTriple)): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 4 (R05 order 85 (the order of minMaxForcing)): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 5 (R06 base cost 21): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 6 (R07 base cost 19): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 7 (R08 name key of the step): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 8 (R09 assumes uniqueness): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once, as R17 fixes it: group locked, order 87, base cost 20, scope jigsaw9, no uniqueness assumption
+mutation 9 (R10 not registered twice: the guard dropped): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 42 total, 41 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once even when the file is loaded again: the registry keeps its first definition
+mutation 10 (R11 the registered id lawOfLeftover): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.9 s
+    FAIL tech-subset > law of leftovers kernel: scoped > is in the registry now (MS14a pinned the opposite while the kernel was inactive)
+mutation 11 (R12 find passes the options through): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 65 total, 64 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.3 s
+    FAIL tech-subset > law of leftovers registered: the default limit and the caller's budget > runs with the default limit of 50000 through the registry, and no option reaches it
+mutation 12 (R13 find with a limit of 49999): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 46 total, 45 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > does nothing on any other board, called through the registry, with a record of no work: the finder checks the scope itself
+mutation 13 (R14 find with a limit of 50001): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 46 total, 45 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > does nothing on any other board, called through the registry, with a record of no work: the finder checks the scope itself
+mutation 14 (R15 find never finds anything): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 48 total, 47 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.7 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is the kernel at the default limit: the registry call and the seam give the same Finding and record
+mutation 15 (R16 find reads another context): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 46 total, 45 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > does nothing on any other board, called through the registry, with a record of no work: the finder checks the scope itself
+mutation 16 (R17 registered with the limits object shared and mutable): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-subset > law of leftovers kernel: scoped > has R10's starting limits: 2 units and 4 cells per side, 50000 work units
+detected 17 of 17, survivors 0, 84.3 s

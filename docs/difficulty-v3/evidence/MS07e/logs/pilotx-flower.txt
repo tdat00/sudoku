@@ -1,0 +1,5 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-flower.json --cells=flower/hell1:2@2 --budget-seconds=420
+flower/hell1 #2: 20901.1 ms, hit false, achieved hell1, exact false, approximate true
+flower/hell1 #3: 24405.5 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-flower.json (45.311 s)
+exit=0 seconds=45.785

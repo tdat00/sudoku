@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=techniques,technique-weights,difficulty-floor,i18n,digger-target,tech-subset
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (30.67 s)
+ok   digger-target: 75 passed  (1.76 s)
+ok   i18n: 94 passed  (196 ms)
+ok   tech-subset: 140 passed  (5.92 s)
+ok   technique-weights: 15 passed  (3 ms)
+FAIL techniques: 266 passed, 1 failed  (4.43 s)
+
+Failures:
+  FAIL techniques > techniques: fixtures (fixtures/techniques.js) > forcingChainLong > finds exactly the recorded deduction: forcingChainLong contradiction of 6 links on a dug puzzle
+       AssertionError: technique "forcingChainLong" found nothing, but a Finding was expected
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:426:7)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\techniques.test.js:158:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 6
+Tests:  639 total, 638 passed, 1 failed, 0 skipped
+Time:   42.98 s running tests, 43.11 s total
+exit=1 seconds=43.228

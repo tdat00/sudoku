@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\smoke.js 300 jigsaw9
+jigsaw9 {"states":300,"bothNull":402,"equal":168,"groupFinding":30,"groupShorter":0,"groupedOnly":0,"pureDiffers":0,"legacyOnly":0,"fallback":0,"fallbackFound":0,"capped":0,"bad":0}
+exit=0 seconds=1.029

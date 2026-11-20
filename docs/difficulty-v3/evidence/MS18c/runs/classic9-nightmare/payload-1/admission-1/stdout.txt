@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+classic9/nightmare: 40/40 hits, p95 2.79 s (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| classic9 | nightmare | 40 | 40 | 100 % | 942 ms | 2.79 s | 3.23 s | 10.0 s | offered |
+
+classic9: ["nightmare"]

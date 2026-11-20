@@ -1,0 +1,2 @@
+Inventory: 1527 tests in 28 suites (0 skipped, 4 benchmarks), registration 0.4 s
+Written: docs/difficulty-v3/evidence/MS05r5m/preflight/generator-own-fast.json

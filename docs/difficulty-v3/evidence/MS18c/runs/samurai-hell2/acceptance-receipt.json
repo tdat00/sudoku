@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "samurai/hell2",
+  "runId": "ms18c-20261118T213748100-27568",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell2\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "68806178a53de0062ccbd9f35ef8d3fd6f028571aa141a009e5e5ed5ebd5728d"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell2\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "33f08ae12a0d505a781e4fd56f344afe7257e8791589da16a9f2c17d5d598846"
+    }
+  },
+  "wSeconds": 200.1225474,
+  "rSeconds": 7.3098459,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3098459,
+      "requests": 40,
+      "maxMs": 47840.0687,
+      "stopped": "time",
+      "secondRoundRan": false,
+      "slowTotal": 8,
+      "slowFirstRound": 8,
+      "qSeconds": 192.617,
+      "sSeconds": 192.01337939999996,
+      "sFirstRoundSeconds": 192.01337939999996,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.6036206000000238,
+      "wSeconds": 200.1225474,
+      "wMinusQ": 7.50554740000001
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 16248.1443,
+    "p95": 43626.5168,
+    "max": 47840.0687,
+    "verdict": "hidden",
+    "stopped": "time",
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\samurai-hell2.json",
+      "sha256": "68806178a53de0062ccbd9f35ef8d3fd6f028571aa141a009e5e5ed5ebd5728d"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\samurai-hell2.md",
+      "sha256": "33f08ae12a0d505a781e4fd56f344afe7257e8791589da16a9f2c17d5d598846"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

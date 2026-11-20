@@ -1,0 +1,960 @@
+{
+  "schema": 1,
+  "kind": "standing-quick-cost",
+  "task": "MS05r6b",
+  "note": "Final standing cost on the post-fix fingerprint (Generator 7d3102d3, Player 1d0724c3 retained from the first run). The Generator shards ran once each on the final fingerprint; the 661.725 s of the first run is historical.",
+  "apps": {
+    "generator": {
+      "sourceHash": "7d3102d3dd327f13c7d72800c2b1d157bf8c18fb20fa821cd77514bb880fdb93",
+      "node": "v26.13.0",
+      "machine": {
+        "platform": "win32",
+        "arch": "x64",
+        "cpu": "AMD EPYC 7763 64-Core Processor",
+        "cores": 16,
+        "memoryGiB": 64
+      },
+      "timeFactor": 2,
+      "default": "allowance 256 (SG.digger.SHALLOW_SEARCH_DEFAULT); default attempts 8 up to 81 cells, 4 for 82-144, 2 above; no override",
+      "manifestPath": "docs/difficulty-v3/evidence/MS05r6b/quick-final/quick-manifest.json",
+      "reconciliation": "docs/difficulty-v3/evidence/MS05r6b/quick-final/reconciled.json",
+      "verdict": "complete-green",
+      "suiteCount": 50,
+      "testCounts": {
+        "total": 3262,
+        "passed": 3262,
+        "failed": 0,
+        "skipped": 0
+      },
+      "shardCount": 7,
+      "helperCommands": 2,
+      "compoundCount": 2,
+      "sumWallMs": 646681,
+      "maxShardWallMs": 286453,
+      "registrationIncluded": true,
+      "measurement": "sum of the accepted disjoint shard executions",
+      "measurementDetail": "sumWallMs is the sum of the process seconds the lock helper reported per helper command (a compound once); maxShardWallMs is the largest single shard process; the runner wallMs and results.ms of each shard are in perShard and are not substituted",
+      "childProcessSumMs": 646464,
+      "driverOverheadMs": 217,
+      "runnerWallSumMs": 644841,
+      "harnessSumMs": 643266,
+      "excludedWork": {
+        "supersededAttempts": "the first complete Generator run of this task (fingerprint bee132a8, 7 shards, 661.725 s of helper process time, 1 failed test: generator/i18n/9) is superseded by this one after the R6B-F01 fix and stays as history in standing-quick-cost.json and quick/; the Player result of the first run is retained because its fingerprint is unchanged",
+        "replacedRuns": "none",
+        "inventoryAndTooling": "registration-only inventories, preflights, the manifest, the reconciler, the migration check and the self-tests: each well under 10 s of node time, not part of the standing cost",
+        "diagnostics": "c4-diag-i18n-order (3 diagnostic suites, 12.323 s, not accepted coverage)",
+        "lockWait": "reported apart: f1-quick-steps-replay-pipeline 0.134 s, f2-quick-player-core-mega-own-fast 0.107 s"
+      },
+      "orchestratorAcknowledgement": "pending normal acceptance",
+      "helpers": [
+        {
+          "label": "f1-quick-steps-replay-pipeline",
+          "exit": 0,
+          "helperProcessSeconds": 309.125,
+          "derived": false,
+          "derivedNote": null,
+          "wallSeconds": 309.259,
+          "lockWaitSeconds": 0.134,
+          "startedAt": "2026-11-14T04:06:03.7926189Z"
+        },
+        {
+          "label": "f2-quick-player-core-mega-own-fast",
+          "exit": 0,
+          "helperProcessSeconds": 337.556,
+          "derived": false,
+          "derivedNote": null,
+          "wallSeconds": 337.663,
+          "lockWaitSeconds": 0.107,
+          "startedAt": "2026-11-14T04:11:34.7924408Z"
+        }
+      ],
+      "perShard": [
+        {
+          "id": "core-shared",
+          "tests": 1143,
+          "passed": 1143,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 24.61,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 24382.6,
+          "harnessMs": 24093.6,
+          "projectionSeconds": 60,
+          "withinProjection": true
+        },
+        {
+          "id": "own-fast",
+          "tests": 1579,
+          "passed": 1579,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 162.033,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 161756.5,
+          "harnessMs": 161394,
+          "projectionSeconds": 220,
+          "withinProjection": true
+        },
+        {
+          "id": "pipeline",
+          "tests": 150,
+          "passed": 150,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 286.453,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 286216,
+          "harnessMs": 286022.7,
+          "projectionSeconds": 360,
+          "withinProjection": true
+        },
+        {
+          "id": "mega",
+          "tests": 111,
+          "passed": 111,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 11.4,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 11176.9,
+          "harnessMs": 10996.9,
+          "projectionSeconds": 30,
+          "withinProjection": true
+        },
+        {
+          "id": "steps",
+          "tests": 57,
+          "passed": 57,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 11.507,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 11291.8,
+          "harnessMs": 11110.9,
+          "projectionSeconds": 30,
+          "withinProjection": true
+        },
+        {
+          "id": "replay",
+          "tests": 153,
+          "passed": 153,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 11.062,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 10842.8,
+          "harnessMs": 10668.7,
+          "projectionSeconds": 30,
+          "withinProjection": true
+        },
+        {
+          "id": "player",
+          "tests": 69,
+          "passed": 69,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 139.399,
+          "processSecondsSource": "compound driver child (node process start to exit)",
+          "runnerWallMs": 139174.4,
+          "harnessMs": 138979,
+          "projectionSeconds": 180,
+          "withinProjection": true
+        }
+      ],
+      "perSuite": [
+        {
+          "shard": "pipeline",
+          "name": "pipeline",
+          "tests": 150,
+          "passed": 150,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 286022.595
+        },
+        {
+          "shard": "player",
+          "name": "player",
+          "tests": 69,
+          "passed": 69,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 138978.877
+        },
+        {
+          "shard": "own-fast",
+          "name": "worker",
+          "tests": 143,
+          "passed": 143,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 48692.632
+        },
+        {
+          "shard": "own-fast",
+          "name": "difficulty-floor",
+          "tests": 48,
+          "passed": 48,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 24914.976
+        },
+        {
+          "shard": "own-fast",
+          "name": "multigrid",
+          "tests": 184,
+          "passed": 184,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 15497.276
+        },
+        {
+          "shard": "own-fast",
+          "name": "perf-tooling",
+          "tests": 31,
+          "passed": 31,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 11280.946
+        },
+        {
+          "shard": "steps",
+          "name": "steps",
+          "tests": 57,
+          "passed": 57,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 11110.772
+        },
+        {
+          "shard": "own-fast",
+          "name": "difficulty-diagnostics",
+          "tests": 82,
+          "passed": 82,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 11087.41
+        },
+        {
+          "shard": "mega",
+          "name": "mega",
+          "tests": 111,
+          "passed": 111,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 10996.845
+        },
+        {
+          "shard": "replay",
+          "name": "replay",
+          "tests": 153,
+          "passed": 153,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 10668.615
+        },
+        {
+          "shard": "own-fast",
+          "name": "cache",
+          "tests": 105,
+          "passed": 105,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 8871.015
+        },
+        {
+          "shard": "own-fast",
+          "name": "result-view",
+          "tests": 22,
+          "passed": 22,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 8013.821
+        },
+        {
+          "shard": "own-fast",
+          "name": "replay-recorders",
+          "tests": 39,
+          "passed": 39,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 7564.207
+        },
+        {
+          "shard": "core-shared",
+          "name": "tech-chain",
+          "tests": 62,
+          "passed": 62,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 6419.002
+        },
+        {
+          "shard": "core-shared",
+          "name": "tech-fish",
+          "tests": 106,
+          "passed": 106,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 6319.147
+        },
+        {
+          "shard": "own-fast",
+          "name": "export",
+          "tests": 78,
+          "passed": 78,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 5417.623
+        },
+        {
+          "shard": "own-fast",
+          "name": "smoke",
+          "tests": 44,
+          "passed": 44,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 4644.447
+        },
+        {
+          "shard": "own-fast",
+          "name": "help",
+          "tests": 30,
+          "passed": 30,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 3822.145
+        },
+        {
+          "shard": "core-shared",
+          "name": "solver",
+          "tests": 50,
+          "passed": 50,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2661.013
+        },
+        {
+          "shard": "own-fast",
+          "name": "full-grid",
+          "tests": 42,
+          "passed": 42,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2462.814
+        },
+        {
+          "shard": "own-fast",
+          "name": "manual-corpus",
+          "tests": 46,
+          "passed": 46,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2246.197
+        },
+        {
+          "shard": "core-shared",
+          "name": "harness",
+          "tests": 25,
+          "passed": 25,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2092.643
+        },
+        {
+          "shard": "core-shared",
+          "name": "tech-basic",
+          "tests": 167,
+          "passed": 167,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1827.635
+        },
+        {
+          "shard": "own-fast",
+          "name": "mega-contract",
+          "tests": 37,
+          "passed": 37,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1712.274
+        },
+        {
+          "shard": "core-shared",
+          "name": "tech-wing",
+          "tests": 168,
+          "passed": 168,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1618.048
+        },
+        {
+          "shard": "core-shared",
+          "name": "techniques",
+          "tests": 165,
+          "passed": 165,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1499.539
+        },
+        {
+          "shard": "own-fast",
+          "name": "history",
+          "tests": 15,
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1355.69
+        },
+        {
+          "shard": "own-fast",
+          "name": "digger",
+          "tests": 64,
+          "passed": 64,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 946.7
+        },
+        {
+          "shard": "own-fast",
+          "name": "i18n",
+          "tests": 83,
+          "passed": 83,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 894.686
+        },
+        {
+          "shard": "core-shared",
+          "name": "tech-subset",
+          "tests": 100,
+          "passed": 100,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 888.018
+        },
+        {
+          "shard": "own-fast",
+          "name": "events",
+          "tests": 68,
+          "passed": 68,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 559.562
+        },
+        {
+          "shard": "own-fast",
+          "name": "recovery-profile",
+          "tests": 27,
+          "passed": 27,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 520.276
+        },
+        {
+          "shard": "own-fast",
+          "name": "ui-contract",
+          "tests": 67,
+          "passed": 67,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 334.337
+        },
+        {
+          "shard": "core-shared",
+          "name": "logical-solver",
+          "tests": 100,
+          "passed": 100,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 283.66
+        },
+        {
+          "shard": "core-shared",
+          "name": "exchange",
+          "tests": 20,
+          "passed": 20,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 221.251
+        },
+        {
+          "shard": "own-fast",
+          "name": "format",
+          "tests": 18,
+          "passed": 18,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 192.668
+        },
+        {
+          "shard": "own-fast",
+          "name": "store",
+          "tests": 85,
+          "passed": 85,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 103.405
+        },
+        {
+          "shard": "own-fast",
+          "name": "controls",
+          "tests": 46,
+          "passed": 46,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 84.567
+        },
+        {
+          "shard": "core-shared",
+          "name": "constraints",
+          "tests": 43,
+          "passed": 43,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 76.573
+        },
+        {
+          "shard": "core-shared",
+          "name": "board-view",
+          "tests": 37,
+          "passed": 37,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 76.292
+        },
+        {
+          "shard": "own-fast",
+          "name": "a11y",
+          "tests": 31,
+          "passed": 31,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 75.387
+        },
+        {
+          "shard": "core-shared",
+          "name": "bits",
+          "tests": 32,
+          "passed": 32,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 61.715
+        },
+        {
+          "shard": "core-shared",
+          "name": "model",
+          "tests": 49,
+          "passed": 49,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 37.515
+        },
+        {
+          "shard": "own-fast",
+          "name": "theme",
+          "tests": 57,
+          "passed": 57,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 33.117
+        },
+        {
+          "shard": "own-fast",
+          "name": "rng",
+          "tests": 28,
+          "passed": 28,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 27.785
+        },
+        {
+          "shard": "own-fast",
+          "name": "purity",
+          "tests": 41,
+          "passed": 41,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 24.674
+        },
+        {
+          "shard": "own-fast",
+          "name": "variants-registry",
+          "tests": 12,
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 10.032
+        },
+        {
+          "shard": "core-shared",
+          "name": "wordbook",
+          "tests": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 8.268
+        },
+        {
+          "shard": "core-shared",
+          "name": "symbols",
+          "tests": 12,
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2.759
+        },
+        {
+          "shard": "own-fast",
+          "name": "technique-weights",
+          "tests": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2.23
+        }
+      ]
+    },
+    "player": {
+      "sourceHash": "1d0724c34f669fddf4b6d5f5739bb42cd2c9f41332202b60335fe890f02d1dfa",
+      "node": "v26.13.0",
+      "machine": {
+        "platform": "win32",
+        "arch": "x64",
+        "cpu": "AMD EPYC 7763 64-Core Processor",
+        "cores": 16,
+        "memoryGiB": 64
+      },
+      "timeFactor": 2,
+      "default": "allowance 256 (SG.digger.SHALLOW_SEARCH_DEFAULT); default attempts 8 up to 81 cells, 4 for 82-144, 2 above; no override",
+      "manifestPath": "docs/difficulty-v3/evidence/MS05r6b/quick-final/quick-manifest.json",
+      "reconciliation": "docs/difficulty-v3/evidence/MS05r6b/quick-final/reconciled.json",
+      "verdict": "complete-green",
+      "suiteCount": 30,
+      "testCounts": {
+        "total": 1683,
+        "passed": 1683,
+        "failed": 0,
+        "skipped": 0
+      },
+      "shardCount": 1,
+      "helperCommands": 1,
+      "compoundCount": 0,
+      "sumWallMs": 31828,
+      "maxShardWallMs": 31828,
+      "registrationIncluded": true,
+      "measurement": "sum of the accepted disjoint shard executions",
+      "measurementDetail": "sumWallMs is the sum of the process seconds the lock helper reported per helper command (a compound once); maxShardWallMs is the largest single shard process; the runner wallMs and results.ms of each shard are in perShard and are not substituted",
+      "childProcessSumMs": null,
+      "driverOverheadMs": null,
+      "runnerWallSumMs": 31618,
+      "harnessSumMs": 31362,
+      "excludedWork": {
+        "supersededAttempts": "the first complete Generator run of this task (fingerprint bee132a8, 7 shards, 661.725 s of helper process time, 1 failed test: generator/i18n/9) is superseded by this one after the R6B-F01 fix and stays as history in standing-quick-cost.json and quick/; the Player result of the first run is retained because its fingerprint is unchanged",
+        "replacedRuns": "none",
+        "inventoryAndTooling": "registration-only inventories, preflights, the manifest, the reconciler, the migration check and the self-tests: each well under 10 s of node time, not part of the standing cost",
+        "diagnostics": "none",
+        "lockWait": "reported apart: q-player-all 0.101 s"
+      },
+      "orchestratorAcknowledgement": "pending normal acceptance",
+      "helpers": [
+        {
+          "label": "q-player-all",
+          "exit": 0,
+          "helperProcessSeconds": 31.828,
+          "derived": false,
+          "derivedNote": null,
+          "wallSeconds": 31.929,
+          "lockWaitSeconds": 0.101,
+          "startedAt": "2026-11-14T03:25:39.6170368Z"
+        }
+      ],
+      "perShard": [
+        {
+          "id": "all",
+          "tests": 1683,
+          "passed": 1683,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 31.828,
+          "processSecondsSource": "lock helper (one command)",
+          "runnerWallMs": 31618.1,
+          "harnessMs": 31362.3,
+          "projectionSeconds": 60,
+          "withinProjection": null
+        }
+      ],
+      "perSuite": [
+        {
+          "shard": "all",
+          "name": "tech-chain",
+          "tests": 62,
+          "passed": 62,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 6479.651
+        },
+        {
+          "shard": "all",
+          "name": "tech-fish",
+          "tests": 106,
+          "passed": 106,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 6415.853
+        },
+        {
+          "shard": "all",
+          "name": "help-example-tools",
+          "tests": 51,
+          "passed": 51,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 4747.558
+        },
+        {
+          "shard": "all",
+          "name": "solver",
+          "tests": 50,
+          "passed": 50,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2717.445
+        },
+        {
+          "shard": "all",
+          "name": "techniques",
+          "tests": 165,
+          "passed": 165,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2079.76
+        },
+        {
+          "shard": "all",
+          "name": "tech-basic",
+          "tests": 167,
+          "passed": 167,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1853.109
+        },
+        {
+          "shard": "all",
+          "name": "harness",
+          "tests": 25,
+          "passed": 25,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1847.297
+        },
+        {
+          "shard": "all",
+          "name": "tech-wing",
+          "tests": 168,
+          "passed": 168,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 1692.733
+        },
+        {
+          "shard": "all",
+          "name": "help",
+          "tests": 27,
+          "passed": 27,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 965.514
+        },
+        {
+          "shard": "all",
+          "name": "tech-subset",
+          "tests": 100,
+          "passed": 100,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 890.831
+        },
+        {
+          "shard": "all",
+          "name": "importer",
+          "tests": 88,
+          "passed": 88,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 357.955
+        },
+        {
+          "shard": "all",
+          "name": "logical-solver",
+          "tests": 100,
+          "passed": 100,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 276.302
+        },
+        {
+          "shard": "all",
+          "name": "exchange",
+          "tests": 20,
+          "passed": 20,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 227.63
+        },
+        {
+          "shard": "all",
+          "name": "play",
+          "tests": 68,
+          "passed": 68,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 168.965
+        },
+        {
+          "shard": "all",
+          "name": "ui-contract",
+          "tests": 62,
+          "passed": 62,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 138.669
+        },
+        {
+          "shard": "all",
+          "name": "board-view",
+          "tests": 37,
+          "passed": 37,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 83.49
+        },
+        {
+          "shard": "all",
+          "name": "constraints",
+          "tests": 43,
+          "passed": 43,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 78.024
+        },
+        {
+          "shard": "all",
+          "name": "i18n",
+          "tests": 66,
+          "passed": 66,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 71.733
+        },
+        {
+          "shard": "all",
+          "name": "bits",
+          "tests": 32,
+          "passed": 32,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 63.669
+        },
+        {
+          "shard": "all",
+          "name": "progress",
+          "tests": 26,
+          "passed": 26,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 49.584
+        },
+        {
+          "shard": "all",
+          "name": "model",
+          "tests": 49,
+          "passed": 49,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 40.182
+        },
+        {
+          "shard": "all",
+          "name": "theme",
+          "tests": 54,
+          "passed": 54,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 36.77
+        },
+        {
+          "shard": "all",
+          "name": "a11y",
+          "tests": 24,
+          "passed": 24,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 20.035
+        },
+        {
+          "shard": "all",
+          "name": "text-boards",
+          "tests": 14,
+          "passed": 14,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 14.13
+        },
+        {
+          "shard": "all",
+          "name": "fixtures",
+          "tests": 21,
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 14.036
+        },
+        {
+          "shard": "all",
+          "name": "app",
+          "tests": 15,
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 12.787
+        },
+        {
+          "shard": "all",
+          "name": "wordbook",
+          "tests": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 9.396
+        },
+        {
+          "shard": "all",
+          "name": "store",
+          "tests": 17,
+          "passed": 17,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 3.174
+        },
+        {
+          "shard": "all",
+          "name": "symbols",
+          "tests": 12,
+          "passed": 12,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2.761
+        },
+        {
+          "shard": "all",
+          "name": "model-aids",
+          "tests": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "ms": 2.453
+        }
+      ]
+    }
+  }
+}

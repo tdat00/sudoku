@@ -1,0 +1,168 @@
+mutation 28 (the roofs may be real cells (only the first two corners are left out)): DETECTED - 389 total, 367 passed, 22 failed, 0 skipped - 22 failing, 21 of uniqueRectangle - 9.7 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > an open cell without any candidate is no real cell (a contradictory position proves nothing)
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs are never real cells: with them R2C7 {1,2} would make a false quad of the digits 1 to 4
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3
+mutation 29 (a cell with one digit too many may be a real cell (the filter loosened)): DETECTED - 389 total, 379 passed, 10 failed, 0 skipped - 10 failing, 10 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > an open cell without any candidate is no real cell (a contradictory position proves nothing)
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports every call that runs the second pass
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+mutation 30 (a cell with the union at widest + 1 digits is no real cell (the filter tightened)): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 31 (the pool is not sorted): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the cells of a unit are tried in ascending order, whatever the order of the list of the unit
+mutation 32 (the pool is sorted highest first): DETECTED - 389 total, 369 passed, 20 failed, 0 skipped - 20 failing, 20 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the cells of a unit are tried in ascending order, whatever the order of the list of the unit
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > smaller subsets come first, then the lowest cells: a pair before a triple, the lower of two pairs
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds the exact Finding of real position 1 (type3), sound against an independent completion and with the premise of the pattern shown absurd
+mutation 33 (the sizes start at two real cells): DETECTED - 389 total, 350 passed, 39 failed, 0 skipped - 39 failing, 39 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+mutation 34 (the sizes always start at one real cell (the work of the impossible sizes is spent)): DETECTED - 389 total, 386 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+mutation 35 (the sizes start at the number of extras (one too many)): DETECTED - 389 total, 344 passed, 45 failed, 0 skipped - 45 failing, 45 of uniqueRectangle - 10.2 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 36 (the sizes stop at two real cells): DETECTED - 389 total, 373 passed, 16 failed, 0 skipped - 16 failing, 16 of uniqueRectangle - 13.1 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): real positions > the three supplements of the soundness sweep are real unique positions that hold a type 3 or a type 4
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+mutation 37 (the sizes stop one short of the widest): DETECTED - 389 total, 385 passed, 4 failed, 0 skipped - 4 failing, 4 of uniqueRectangle - 11.4 s
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 38 (the sizes are tried largest first): DETECTED - 389 total, 377 passed, 12 failed, 0 skipped - 12 failing, 12 of uniqueRectangle - 11.2 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > smaller subsets come first, then the lowest cells: a pair before a triple, the lower of two pairs
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 39 (the union may pass k + 1 digits by one while the subset is built (the bound loosened)): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 40 (a subset of k cells may hold k digits at most (the bound tightened)): DETECTED - 389 total, 340 passed, 49 failed, 0 skipped - 49 failing, 49 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 41 (the union is not bounded while the subset is built): DETECTED - 389 total, 382 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 10.7 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > counts one unit per cell tested as the next real cell and per digit tested as a link, from a fresh counter
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): work limit, budget and cancellation > is complete or empty: a witness three units deep is found at 3 and lost (capped prefix) at 2, 1 and 0
+mutation 42 (a complete subset with fewer than k + 1 digits is accepted): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.6 s
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3
+mutation 43 (a complete subset with more than k + 1 digits is accepted): NOT DETECTED (exit 0) - 389 total, 389 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.6 s
+mutation 44 (the subset is complete one cell too early): DETECTED - 389 total, 349 passed, 40 failed, 0 skipped - 40 failing, 39 of uniqueRectangle - 9.6 s
+    FAIL tech-wing > uniqueRectangle: relies on a unique solution > the logical solver leaves it out with assumeUniqueness:false and uses it otherwise
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+mutation 45 (the last candidate cell of every level is missed (the bound off by one)): DETECTED - 389 total, 342 passed, 47 failed, 0 skipped - 47 failing, 47 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 46 (cells that cannot complete the subset are still tested (the bound off by one the other way)): DETECTED - 389 total, 363 passed, 26 failed, 0 skipped - 26 failing, 26 of uniqueRectangle - 9.7 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs in a box and a row: the link may be in the box (the row has other 1s)
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > a 4x4 jigsaw rectangle: type 3 and type 4 inside a region, after the column in unit order
+    FAIL tech-wing > uniqueRectangle (R14): other unit shapes, the uniqueness assumption and structures > the exact union is required: a real cell inside the extras holds one digit for two cells, no type 3
+mutation 47 (a cell may be chosen twice (the next cell is not above the last)): DETECTED - 389 total, 345 passed, 44 failed, 0 skipped - 44 failing, 43 of uniqueRectangle - 9.7 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle: relies on a unique solution > the logical solver leaves it out with assumeUniqueness:false and uses it otherwise
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+mutation 48 (the union of the partial subset is not carried to the next level): DETECTED - 389 total, 368 passed, 21 failed, 0 skipped - 21 failing, 21 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds the exact Finding of real position 1 (type3), sound against an independent completion and with the premise of the pattern shown absurd
+    FAIL tech-wing > uniqueRectangle (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds nothing at the negative positions: nothing left after it, and a W-Wing
+mutation 49 (the chosen cell is not recorded): DETECTED - 389 total, 338 passed, 51 failed, 0 skipped - 51 failing, 51 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 50 (the second roof is a target): DETECTED - 389 total, 340 passed, 49 failed, 0 skipped - 49 failing, 49 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 51 (a roof is a target when it is the first one): DETECTED - 389 total, 339 passed, 50 failed, 0 skipped - 50 failing, 50 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 52 (a solved cell may be a target): DETECTED - 389 total, 388 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.7 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a solved cell of the unit is left out, and a solved cell is no real cell
+mutation 53 (the real cells are targets too): DETECTED - 389 total, 339 passed, 50 failed, 0 skipped - 50 failing, 50 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the vector: R2C7 {3,4} with the roofs' extras 3 and 4 removes 3 and 4 from the rest of row 2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the transposed vector: floors R1C1 and R4C1, roofs R1C2 and R4C2, the real cell R7C2, the unit C2
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > the roofs may be in a box and a row at once: the row comes first and the box is the next unit
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+mutation 54 (only the first real cell is spared as a target): DETECTED - 389 total, 351 passed, 38 failed, 0 skipped - 38 failing, 38 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a pair, a triple and a quad of cells (k = 1, 2, 3 real cells): the union with the extras has k + 1 digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a subset of four real cells is searched: {3,5} {5,6} {6,7} {7,4} with the extras {3,4} are five digits
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > subsets of five and six real cells on twelve digits: the proof has no cap, its prefix is cut by the work limit
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the vector: 1 only in the two roofs of row 2 removes 2 from both roofs
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the link may be either digit of the pair: 2 only in the roofs removes 1
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > the transposed vector: 1 only in the two roofs of column 2
+mutation 55 (a target loses every digit of the subset, also those it does not have): DETECTED - 389 total, 370 passed, 19 failed, 0 skipped - 19 failing, 19 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): type 3, the roofs' extras as one virtual subset member > a target loses only the digits of the subset that it still has
+    FAIL tech-wing > uniqueRectangle (R14): order, priority and the first Finding > smaller subsets come first, then the lowest cells: a pair before a triple, the lower of two pairs
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds the exact Finding of real position 1 (type3), sound against an independent completion and with the premise of the pattern shown absurd
+    FAIL tech-wing > uniqueRectangle (R14): real positions > is a step of the logical solver from the real positions, and never without the uniqueness assumption
+    FAIL tech-wing > uniqueRectangle (R14): real positions > finds nothing at the negative positions: nothing left after it, and a W-Wing
+    FAIL tech-wing > uniqueRectangle (R14): real positions > the three supplements of the soundness sweep are real unique positions that hold a type 3 or a type 4
+detected 27 of 28, 288.5 s

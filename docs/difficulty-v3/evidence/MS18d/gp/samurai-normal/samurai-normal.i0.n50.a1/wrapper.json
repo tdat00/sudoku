@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record samurai-normal.i0.n50 a1",
+  "runId": "samurai-normal.i0.n50.a1",
+  "cell": "samurai/normal",
+  "payload": "gp-recorder",
+  "chunkId": "samurai-normal.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-normal/samurai-normal.i0.n50.a1",
+  "requestedAt": "2026-11-20T01:25:21.489+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795112705803,
+    "lastCheckMs": 1795112721317,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T01:25:21.618+07:00",
+  "finished": "2026-11-20T01:25:53.802+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2983,
+    "cheapCheckMs": 122,
+    "ageMs": 132,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T01:25:53.803+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

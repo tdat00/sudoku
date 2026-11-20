@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795101663648,
+  "startedAtMs": 1795101663722,
+  "lockAcquiredAtMs": 1795101663653,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795101648148,
+    "lastCheckMs": 1795101663448,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 74,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795100764646,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899076,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 9536,
+    "task": "stand-in hold-a-ledger-that-is-not-a-pure-append-of-its-commit",
+    "controllerPid": 26144,
+    "controllerParentPid": 9536,
+    "wrapperPid": 9536
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-a-ledger-that-is-not-a-pure-append-of-its-commit\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-a-ledger-that-is-not-a-pure-append-of-its-commit\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-a-ledger-that-is-not-a-pure-append-of-its-commit\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

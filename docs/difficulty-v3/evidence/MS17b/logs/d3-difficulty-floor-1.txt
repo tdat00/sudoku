@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=difficulty-floor
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (32.09 s)
+
+Suites: 1
+Tests:  48 total, 48 passed, 0 failed, 0 skipped
+Time:   32.09 s running tests, 32.22 s total
+exit=0 seconds=32.393

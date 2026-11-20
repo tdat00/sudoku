@@ -1,0 +1,67 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "generic-ok",
+  "standin": true,
+  "profile": "generic",
+  "cell": null,
+  "task": "stand-in generic-ok",
+  "startedAtMs": 1795086622162,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "generic",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=1.291",
+      "exit": 0
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 31492,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=1.291",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 18,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 31000,
+      "systemMicros": 78000
+    },
+    "tee": {
+      "userMicros": 62000,
+      "systemMicros": 31000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795086624627
+}

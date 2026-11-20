@@ -1,0 +1,37 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL store: 15 passed, 5 failed  (21 ms)
+
+Failures:
+  FAIL store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a record from before the size defaults moves a stored 8 of a larger board to the default, once
+       AssertionError: expected Array(3)["classic9", 8, true] to equal Array(3)["classic9", 8, false]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\store.test.js:1096:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: an unmarked legacy 8 on a small board is the default and follows every later switch
+       AssertionError: expected Array(3)["classic9", 8, true] to equal Array(3)["classic9", 8, false]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\store.test.js:1126:30)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: the migrated state is saved with the default marker, before and after a large-board switch
+       AssertionError: expected Array(2)[8, true] to equal Array(2)[8, false]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\store.test.js:1153:79)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: entering 8 after the migration is a chosen number that survives a reload
+       AssertionError: expected Array(3)["classic9", 8, true] to equal Array(3)["classic9", 8, false]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\store.test.js:1192:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: a legacy 8 with a missing or unknown variant loads as the default of the fallback variant
+       AssertionError: expected Array(2)["{}", Array(3)["classic9", 8, true]] to equal Array(2)["{}", Array(3)["classic9", 8, false]]
+       at Q:\git\sudoku\generator\tests\suites\store.test.js:1219:43
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\store.test.js:1215:12)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  20 total, 15 passed, 5 failed, 0 skipped
+Time:   21 ms running tests, 110 ms total
+MS05r5p exit=1 seconds=0.213

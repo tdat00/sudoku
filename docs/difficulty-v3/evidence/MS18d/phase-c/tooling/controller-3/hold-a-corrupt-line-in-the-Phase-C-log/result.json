@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-a-corrupt-line-in-the-Phase-C-log",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-a-corrupt-line-in-the-Phase-C-log",
+  "startedAtMs": 1795084665014,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "release-history-unproved"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 46000
+    }
+  },
+  "finishedAtMs": 1795084665042
+}

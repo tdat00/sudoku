@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\census-run.js ..\docs\difficulty-v3\evidence\MS13c\census\tree ..\docs\difficulty-v3\evidence\MS13c\census\positions mega16
+== mega16 22.7 s: base-ladder 321, activation-ladder 299
+exit=0 seconds=22.938

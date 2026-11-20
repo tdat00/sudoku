@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "585c82a73a30b0c917e365f25dea1839cb31c8e8",
+  "dirty": true,
+  "generatedAt": "2026-11-17T18:33:02.414Z",
+  "argv": ["--ids=G12","--record=..\\docs\\difficulty-v3\\evidence\\MS15b\\analysis\\G12.json"],
+  "records": [
+    {"key":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"value":{"id":"G12","request":{"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"},"today":{"steps":12,"missing":11},"counts":{"compact":7,"details":111},"board":{"cells":81,"cages":0,"signsFrom":108,"signsTo":4,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,22,"C+I/Mixed",59,132,132,"ineqChain","—","—","F"],[4,99,"I/Signs",59,133,1,"ineqChain","—","—","—"],[5,107,"IM+A/Mixed",53,513,380,"xWing","Y","—","—"],[6,108,"I/Signs",53,647,134,"emptyRectangle","—","—","N"],[7,108,"F/Final",53,647,0,"emptyRectangle","—","—","—"]],"details":[0,0,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,132,132,132,132,132,132,132,132,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,133,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,134,133,133,133,133,134,134,134,134,134,138,138,138,137,137,137,137,137,137,137,137,137,136,136,136,136,136,136,136,136,135,134,134,134,133,133,3221,3035,3035,2169,2777,2776,2367,513,647,647],"alive":[108,108,87,10,5,4,4],"folds":[{"step":3,"peak":133,"end":132,"removed":null,"restored":null,"signs":21,"opening":true},{"step":4,"peak":138,"end":133,"removed":0,"restored":0,"signs":77,"opening":false},{"step":5,"peak":3221,"end":513,"removed":0,"restored":6,"signs":5,"opening":false}],"jumps":[{"step":5,"from":133,"to":513,"before":{"P":40,"W":903.5,"R":45.599506,"V":47.676768,"E":59,"level":"easy"},"after":{"P":320,"W":826.75,"R":147.312568,"V":45.591398,"E":53,"level":"hard"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":39,"n":63,"technique":"xWing"},"key":"technique.xWing.step","effects":"remove candidate 8@R5C7, 8@R6C1"}]},"ms":850,"overrides":[]}
+  ]
+}

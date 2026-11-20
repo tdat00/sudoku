@@ -1,0 +1,9 @@
+$ node tests\perf.js --variant=mega16 --level=easy --runs=50 --warmup=0 --seed=7000 --gate
+Sudoku Generator performance  (node v26.13.0, AMD EPYC 7763 64-Core Processor, 50 runs per cell, trace summary, seed 7000)
+p95 target = design.md section 9.1; cells = variant x level the variant offers
+
+variant     level        target      p50      p95      max     mean   result
+mega16      easy            4 s     14.6     31.2     46.1     15.6   ✓
+
+1 of 1 cells meet their p95 target (100 %, acceptance: at least 90 %)
+exit=0 seconds=0.942

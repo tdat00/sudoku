@@ -1,0 +1,62 @@
+{
+  "schema": "ms18e-plan-2",
+  "stage": "E1 second round (the joint ruling of 2026-11-20); no E2 run, no E3, no browser run",
+  "supersedes": "preflight/plan.json for the items below; plan.json is kept as it was",
+  "head": "b0a29ffd7e7bd45b962c4d3221e3ee1acb3b5859",
+  "e1EditsAddedOrChanged": [
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "change": "two more per-call guards, nothing else: lines 997-999 D.spec(LEVELS[i - 1], model9).allowedTechniques inside SG.fixtures.toolRecords.withRequestedLevel('classic9', LEVELS[i - 1], ...).value and lines 1447-1449 SG.digger.generate(model9, level, SG.rng.create(8550 + i), {}) inside withRequestedLevel('classic9', level, ...).value",
+      "items": ["MS18e-COMPAT-CLASSIC-HELL1-FLOOR", "MS18e-COMPAT-CLASSIC-HELL1-SYMMETRY"],
+      "tests": [
+        "difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: the level is required (or vacuous) as expected, derived and by the current floor",
+        "digger.generate: guarantees > keeps the configured symmetry on the top tiers too (proposals and their refinement)"
+      ],
+      "cause": "classic9 hides Hell 1 and Hell 2 (generator/js/variants/classic.js:53-58); both groups passed at MS17b (guarantees 10 of 10, labelled 7 of 7) when classic9 still offered them",
+      "guard": "generator/tests/fixtures/tool-records.js:304-319 (the exact support array is put back in finally)",
+      "validationStatus": "static scan only; neither test has run"
+    },
+    {
+      "file": "generator/tests/artifacts/difficulty-v3/MS18e/run-locked-e.ps1",
+      "change": "SG_TIME_FACTOR=2 set explicitly; refuses to start when CI is set; -ExpectedExit for a designed nonzero answer (the S-AV11 driver answers 2); the lock-log row records the environment and the expected exit",
+      "citation": "core/tests/harness.js:36-41 (2 by default, 3 with CI); core/tests/node-evidence.js:292 and :308 (timeFactor in the metadata)"
+    },
+    {
+      "file": "generator/tests/artifacts/difficulty-v3/MS18e/profile-s-av11.cjs",
+      "change": "new, prepared and not run for real: exactly jigsaw9 / Expert / seed 1111 / trace off / default attempts through toolRecords.withRequestedLevel around SG.pipeline.run(config, null), no budget; records the seven pipeline.timings fields, three clocks, request, effective defaults, identities and outcome into a new file under evidence/MS18e/profile/s-av11/; refuses to call the pipeline without --owner-decision=<Discord message id> (prints the plan, exit 2)",
+      "run": "only without the flag: transcripts/sav11-noflag-2.txt, exit 2, no engine loaded, no profile folder created"
+    },
+    {
+      "file": "player/design.md",
+      "change": "the directory block of section 2 (old lines 58-72) rewritten to the real layout, including the stale docs paths; the section 2.2 techniques row says the 40 registered (34 classic, 1 Jigsaw, 3 cage, 2 inequality)",
+      "codeCitations": [
+        "player/tests/node-runner.js SOURCE_FILES (own js/engine/text-boards.js, js/ui/*; shared ../core/js/engine, ../core/js/ui, ../core/assets/wordbook)",
+        "disk: player/css (components, help, layout, play), core/css (base, board, tokens, tokens-board), core/tests (harness.js, node-evidence.js, fixtures, suites), player/tests (artifacts, browser, fixtures, suites, tools, node-runner.js)",
+        "docs/puzzle-exchange/fixtures.md and docs/qa/browser-run.md exist",
+        "player/tests/suites/help.test.js:95 and :573 (40)"
+      ]
+    },
+    {
+      "file": "DEVELOPERGUIDE.md and DEVELOPERGUIDE.vn.md",
+      "change": "the weights bullet of the known limitations: the 40 technique weights (the v2 weights measured, the v3 ones engineering priors), no longer 'the 30 techniques'",
+      "codeCitations": [
+        "generator/js/engine/difficulty.js:81 (WEIGHTS, 40 keys)",
+        "generator/design.md section 18, 'Weights of rating v3 (the v2 weights and the engineering priors of the v3 techniques)'"
+      ]
+    }
+  ],
+  "guideAudit": "USERGUIDE.md, USERGUIDE.vn.md, DEVELOPERGUIDE.md, DEVELOPERGUIDE.vn.md searched for technique counts, suite and test counts, CI scope (browser scripts, jobs), inactive/active chain wording, exactness, shallow, approximate and Retry, defaults and versions; only the items above (and USERGUIDE line 115 of round 1) were stale",
+  "refreshedEvidence": {
+    "identities": "audit/final-identities-v2.txt",
+    "inventories": ["preflight/inventory-all-v2.json", "preflight/inventory-variants-v2.json"],
+    "variantsCompatibility": "preflight/variants-compatibility-v2.json",
+    "hiddenLevelScan": "audit/manual-hidden-requests-final-v2.json",
+    "targetsRecheck": "audit/targets-recheck-final-v2.json",
+    "admissionPlan": ["preflight/admission-plan-v2.json", "preflight/scope-map-v2.json", "preflight/reuse-map-v2.json"],
+    "questions": "preflight/questions-v2.md"
+  },
+  "deferred": [
+    "workflow comments (dispatch section 4 item 5) and the report data outside the fingerprints follow the measured results",
+    "the final recheck of the variants reuse at E3"
+  ]
+}

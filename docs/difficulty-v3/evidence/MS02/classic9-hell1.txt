@@ -1,0 +1,56 @@
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 10.6 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, simpleColouring 360, swordfish 420, jellyfish 520, xyWing 650, xyzWing 750, wWing 850, uniqueRectangle 900, forcingChain 1100, nishio 1700, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+
+== classic9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+hell1                .          .          .          .          .          .          .         12          .   12   100%     18.9     511    1467    1467 2500 ok
+exact: 12 of 12 (100.0%)
+
+group of the hardest technique per requested level (share of puzzles):
+  hell1      chain 100%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          .          .          .          .          .      0
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          .          .          .      0
+2400-3600             .          .          .          .          .          .          .         12          .     12 ##############################
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+classic9 hit rate per level: hell1 100%
+RESULT: PASS
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS02/classic9-hell1.json): 12 of 12 requests recorded; the diagnostic solves took 0.1 s after the generation and the checks
+
+== classic9/hell1: 12 requests, 0 errors, 0 unrated, 12 solved in band ==
+  old hits 12/12 (100%), qualified hits 12/12 (100%), shallow 0/12 (0%; 12 with a reference verdict)
+  reference: ok 0, vacuous 12, error 0, skipped 0, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  cohort exact (old hits): 12 puzzles, peak nishio 12
+    raw position (n=12): min 0.469, p10 0.514, p50 0.666, p90 0.938, max 0.986, upper median 0.666
+    adjusted position: no value
+    adjusted undefined: empty-tier 12
+  cohort all in band: 12 puzzles, peak nishio 12
+    raw position (n=12): min 0.469, p10 0.514, p50 0.666, p90 0.938, max 0.986, upper median 0.666
+    adjusted position: no value
+    adjusted undefined: empty-tier 12
+  forcing-chain steps (12 of 12 rated paths): length 3 11, 4 55, 5 55, 6 7, 7 5, 8 3; per-puzzle maximum 5 7, 6 2, 7 1, 8 2
+  nishio steps (12 of 12 rated paths): depth 1 19; per-puzzle maximum 1 12
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0)

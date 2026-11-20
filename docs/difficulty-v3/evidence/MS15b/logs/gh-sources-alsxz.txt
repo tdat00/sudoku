@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS15b\make-sources.cjs --ids=alsXz --from=xWing,hiddenSingleLine,nakedTriple --out=tests\artifacts\difficulty-v3\MS15b\sources.json
+wrote tests\artifacts\difficulty-v3\MS15b\sources.json: 1 id(s), 3 distinct saved source(s)
+exit=0 seconds=0.093

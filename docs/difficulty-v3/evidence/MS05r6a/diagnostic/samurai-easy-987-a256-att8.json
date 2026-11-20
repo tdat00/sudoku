@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "kind": "ir10-diagnostic",
+  "task": "MS05r6a",
+  "request": {
+    "variant": "samurai",
+    "level": "easy",
+    "seed": 987
+  },
+  "config": {
+    "allowance": 256,
+    "allowanceText": "256",
+    "maxAttempts": 8,
+    "attempts": "8",
+    "cellCount": 369,
+    "sizeDefaultAttempts": 2,
+    "sourceAllowance": 256
+  },
+  "argv": [
+    "--key=samurai/easy",
+    "--seed=987",
+    "--allowance=256",
+    "--attempts=8",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\samurai-easy-987-a256-att8.json"
+  ],
+  "node": "v26.13.0",
+  "startedAt": "2026-11-14T02:48:35.580Z",
+  "hash": "46d7c3483273dc1c",
+  "overrides": [],
+  "wallMs": 1097.596,
+  "result": {
+    "attempts": 5,
+    "exact": true,
+    "required": true,
+    "score": 138,
+    "warnings": [],
+    "clues": 154,
+    "puzzleDigest": "5349dbe95b2667123bb757266cbb5a8b5cf2b767859583d83cd55fb410c55283"
+  },
+  "work": [
+    {
+      "ratings": 268,
+      "proposals": 1187,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 268,
+      "proposals": 1107,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 268,
+      "proposals": 1424,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 268,
+      "proposals": 1079,
+      "localSearches": [
+        {
+          "ratings": 256,
+          "shallowRatings": 256,
+          "shallowLimit": 256,
+          "capHit": "shallow"
+        }
+      ]
+    },
+    {
+      "ratings": 145,
+      "proposals": 514,
+      "localSearches": [
+        {
+          "ratings": 133,
+          "shallowRatings": 133,
+          "shallowLimit": 256,
+          "capHit": null
+        }
+      ]
+    }
+  ]
+}

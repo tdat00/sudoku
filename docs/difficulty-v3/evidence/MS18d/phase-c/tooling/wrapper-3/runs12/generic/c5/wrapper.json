@@ -1,0 +1,37 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in c5",
+  "runId": "c5",
+  "cell": "",
+  "payload": "generic",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-3/runs12/generic/c5",
+  "requestedAt": "2026-11-19T15:48:42.437+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795078107034,
+    "lastCheckMs": 1795078122424,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": null,
+  "finished": "2026-11-19T15:48:42.532+07:00",
+  "releaseObservedAt": "2026-11-19T15:48:42.533+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 1,
+  "controllerOutcome": "miss",
+  "barrierVerdict": "clean",
+  "helperNote": "stand-in c5 command failed: 1",
+  "outcome": "stop",
+  "problems": [
+    "the controller outcome 'miss' with exit 1 is a stop"
+  ]
+}

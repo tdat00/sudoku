@@ -1,0 +1,37 @@
+$ node generator\tests\artifacts\difficulty-v3\MS13b\show-vectors.js
+### endpoints on classic9 (a false group start), the checker's vector
+checker problems: none
+cells [0,1,4,9,13], placements [], eliminations [[18,5],[19,5],[20,5]]
+args {"proofVersion":2,"kind":"endpoints","length":3,"chains":[[{"cells":[0,1],"digit":5,"truth":0},{"cells":[4],"digit":5,"truth":1},{"cells":[13],"digit":5,"truth":0},{"cells":[9],"digit":5,"truth":1}]]}
+en: Forcing chain of 3 links: (R1C1≠5 ∧ R1C2≠5) ⇒ R1C5=5 ⇒ R2C5≠5 ⇒ R2C1=5. If the first end is false, the last end is true, so at least one end is true. Candidates that conflict with every candidate represented by each end are removed.
+vi: Chuỗi suy luận dài 3 liên kết: (R1C1≠5 ∧ R1C2≠5) ⇒ R1C5=5 ⇒ R2C5≠5 ⇒ R2C1=5. Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.
+
+### forced, two paths mixing singletons and a group (SA2's MS13a vector)
+checker problems: none
+cells [0,1,2,3,5], placements [[0,1]], eliminations []
+args {"proofVersion":2,"kind":"forced","length":5,"chains":[[{"cells":[0],"digit":1,"truth":0},{"cells":[0],"digit":2,"truth":1},{"cells":[5],"digit":2,"truth":0},{"cells":[5],"digit":1,"truth":1},{"cells":[2],"digit":1,"truth":0},{"cells":[0,1],"digit":1,"truth":1}],[{"cells":[0],"digit":1,"truth":0},{"cells":[3],"digit":1,"truth":1},{"cells":[0,1],"digit":1,"truth":0}]]}
+en: Forcing chain of 5 links: R1C1≠1 ⇒ R1C1=2 ⇒ R3C1≠2 ⇒ R3C1=1 ⇒ R2C1≠1 ⇒ (R1C1=1 ∨ R1C2=1) | R1C1≠1 ⇒ R2C3=1 ⇒ (R1C1≠1 ∧ R1C2≠1). If the first candidate were false, a statement about a candidate or group would be both true and false, which is impossible. So the first candidate is true and is placed.
+vi: Chuỗi suy luận dài 5 liên kết: R1C1≠1 ⇒ R1C1=2 ⇒ R3C1≠2 ⇒ R3C1=1 ⇒ R2C1≠1 ⇒ (R1C1=1 ∨ R1C2=1) | R1C1≠1 ⇒ R2C3=1 ⇒ (R1C1≠1 ∧ R1C2≠1). Nếu ứng viên đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu tiên đúng và được điền vào.
+
+### contradiction, two paths mixing singletons and a group (found by a search of the canonical graph)
+checker problems: none
+cells [0,1,2,3], placements [], eliminations [[1,1]]
+args {"proofVersion":2,"kind":"contradiction","length":3,"chains":[[{"cells":[1],"digit":1,"truth":1},{"cells":[2],"digit":1,"truth":0},{"cells":[0,1],"digit":1,"truth":1}],[{"cells":[1],"digit":1,"truth":1},{"cells":[0],"digit":1,"truth":0},{"cells":[3],"digit":1,"truth":1},{"cells":[0,1],"digit":1,"truth":0}]]}
+en: Forcing chain of 3 links: R1C2=1 ⇒ R2C1≠1 ⇒ (R1C1=1 ∨ R1C2=1) | R1C2=1 ⇒ R1C1≠1 ⇒ R2C3=1 ⇒ (R1C1≠1 ∧ R1C2≠1). If the first candidate were true, a statement about a candidate or group would be both true and false, which is impossible. So the first candidate is false and is removed.
+vi: Chuỗi suy luận dài 3 liên kết: R1C2=1 ⇒ R2C1≠1 ⇒ (R1C1=1 ∨ R1C2=1) | R1C2=1 ⇒ R1C1≠1 ⇒ R2C3=1 ⇒ (R1C1≠1 ∧ R1C2≠1). Nếu ứng viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu tiên sai và bị loại.
+
+### endpoints on 16 digits, the value 1 written 0
+checker problems: none
+cells [0,1,4,16,20], placements [], eliminations [[32,1],[33,1],[34,1],[35,1],[48,1],[49,1],[50,1],[51,1]]
+args {"proofVersion":2,"kind":"endpoints","length":3,"chains":[[{"cells":[0,1],"digit":1,"truth":0},{"cells":[4],"digit":1,"truth":1},{"cells":[20],"digit":1,"truth":0},{"cells":[16],"digit":1,"truth":1}]]}
+en: Forcing chain of 3 links: (R1C1≠0 ∧ R1C2≠0) ⇒ R1C5=0 ⇒ R2C5≠0 ⇒ R2C1=0. If the first end is false, the last end is true, so at least one end is true. Candidates that conflict with every candidate represented by each end are removed.
+vi: Chuỗi suy luận dài 3 liên kết: (R1C1≠0 ∧ R1C2≠0) ⇒ R1C5=0 ⇒ R2C5≠0 ⇒ R2C1=0. Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.
+
+### endpoints on a Wordoku in letter mode, the value 5 written as its letter
+checker problems: none
+cells [0,1,4,9,13], placements [], eliminations [[18,5],[19,5],[20,5]]
+args {"proofVersion":2,"kind":"endpoints","length":3,"chains":[[{"cells":[0,1],"digit":5,"truth":0},{"cells":[4],"digit":5,"truth":1},{"cells":[13],"digit":5,"truth":0},{"cells":[9],"digit":5,"truth":1}]]}
+en: Forcing chain of 3 links: (R1C1≠L ∧ R1C2≠L) ⇒ R1C5=L ⇒ R2C5≠L ⇒ R2C1=L. If the first end is false, the last end is true, so at least one end is true. Candidates that conflict with every candidate represented by each end are removed.
+vi: Chuỗi suy luận dài 3 liên kết: (R1C1≠L ∧ R1C2≠L) ⇒ R1C5=L ⇒ R2C5≠L ⇒ R2C1=L. Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.
+
+exit=0 seconds=0.169

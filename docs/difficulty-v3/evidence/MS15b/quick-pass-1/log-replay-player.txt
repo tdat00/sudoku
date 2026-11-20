@@ -1,0 +1,26 @@
+$ node ..\.github\scripts\generator-quick.js run replay-player --results-dir=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 67 passed, 2 failed  (55.26 s)
+
+Failures:
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected 3221 to be 3226
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:708:65)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)
+       AssertionError: expected 30 to be 24
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1005:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  69 total, 67 passed, 2 failed, 0 skipped
+Time:   55.26 s running tests, 55.48 s total
+Results: docs/difficulty-v3/evidence/MS15b/quick-pass-1/generator-player.json
+shard player: exit 1, 55.7 s
+FAILED: player
+exit=1 seconds=56.131

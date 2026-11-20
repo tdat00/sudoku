@@ -14,11 +14,18 @@
 
   var cache = {};
 
+  // A fixed diagnostic request whose level qualification may have hidden: the variant offers the level for the
+  // length of the call only, and the exact array is put back in `finally` (MS18c).
+  function requested(request, run) {
+    return SG.fixtures.toolRecords.withRequestedLevel(request.variantId, request.difficulty, run).value;
+  }
+
   function result(variantId, difficulty, seed) {
     var key = variantId + '/' + difficulty + '/' + seed;
     if (!cache[key]) {
-      cache[key] = SG.pipeline.run(
-        { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      cache[key] = requested({ variantId: variantId, difficulty: difficulty }, function () {
+        return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      });
     }
     return cache[key];
   }
@@ -41,8 +48,9 @@
   function golden(id) {
     if (!goldens[id]) {
       var g = GOLDENS.filter(function (x) { return x.id === id; })[0];
-      goldens[id] = WIRE[id] ? SG.replay.fromPlainWire(WIRE[id])
-        : SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      goldens[id] = WIRE[id] ? SG.replay.fromPlainWire(WIRE[id]) : requested(g.request, function () {
+        return SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      });
     }
     return goldens[id];
   }
@@ -265,6 +273,26 @@
   }
 
   describe('stepView: the description of the step on show', function () {
+    it('reads G13 from the saved wire and never regenerates it (a spy on the pipeline)', function () {
+      var saved = goldens.G13;
+      var run = SG.pipeline.run;
+      var calls = 0;
+      delete goldens.G13;
+      SG.pipeline.run = function () {
+        calls++;
+        throw new Error('G13 comes from SG.fixtures.replayWire, not from the pipeline');
+      };
+      try {
+        var res = golden('G13');
+        expect(calls).toBe(0);
+        expect(Object.keys(WIRE)).toContain('G13');
+        expect(SG.replay.toPlainWire(res)).toEqual(WIRE.G13);
+      } finally {
+        SG.pipeline.run = run;
+        if (saved) goldens.G13 = saved;
+      }
+    });
+
     it('shows nothing without steps, and a hint to use the replay controls at position 0', function () {
       var fx = panelFixture();
       inLocale('en', function () {
@@ -573,17 +601,23 @@
             return /step-table__total/.test(el.getAttribute('class') || '');
           })[0];
           expect(fx.doc.findAll(total4, function (el) { return el.getAttribute('data-role') === 'score'; })[0]
-            .textContent).toBe('551 (+507)');
+            .textContent).toBe('47 (+3)');
+          fx.view.setPosition(6);
+          var total6 = fx.doc.findAll(fx.detail, function (el) {
+            return /step-table__total/.test(el.getAttribute('class') || '');
+          })[0];
+          expect(fx.doc.findAll(total6, function (el) { return el.getAttribute('data-role') === 'score'; })[0]
+            .textContent).toBe('925 (+332)');
           fx.view.setPosition(7);
           var total7 = fx.doc.findAll(fx.detail, function (el) {
             return /step-table__total/.test(el.getAttribute('class') || '');
           })[0];
           expect(fx.doc.findAll(total7, function (el) { return el.getAttribute('data-role') === 'score'; })[0]
-            .textContent).toBe('992 (unchanged)');
+            .textContent).toBe('925 (unchanged)');
           expect(part(fx, 'step-detail__techniques').getAttribute('data-state')).toBe('final');
         });
         inLocale('vi', function () {
-          expect(fx.detail.textContent).toContain('992 (không đổi)');
+          expect(fx.detail.textContent).toContain('925 (không đổi)');
         });
         fx.view.destroy();
         player.destroy();
@@ -594,7 +628,7 @@
       var player = loadedPlayer(res);
       player.setView('details');
       var steps = player.getSteps();
-      expect(steps.length).toBe(33);
+      expect(steps.length).toBe(29);
       var fx = panelFixture({ table: tableOf(player) });
       fx.view.setSteps(steps);
       inLocale('en', function () {
@@ -791,7 +825,7 @@
       });
     });
 
-    it('marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view',
+    it('marks 15 compact and 15 details jumps over the 14 goldens, and one first rated puzzle per view',
       function () {
         var jumps = { compact: 0, details: 0 };
         inLocale('en', function () {
@@ -826,7 +860,7 @@
             });
           });
         });
-        expect(jumps).toEqual({ compact: 13, details: 16 });
+        expect(jumps).toEqual({ compact: 15, details: 15 });
       }, 120000);
 
     it('the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total',
@@ -842,33 +876,50 @@
             expect(two.line).toBe('First rated puzzle: score 23. The generator\'s solution uses Naked Single as ' +
               'its hardest technique.');
             expect(two.callout).toBeNull();
-            var six = textOfStep(steps[5]);
-            expect(six.badge).toBeNull();
-            expect(six.line).toBe('The generator\'s solution now uses XYZ-Wing (weight 750) as its hardest ' +
-              'technique, instead of Simple Colouring (weight 360).');
-            expect(six.rowLabel).toEqual({ technique: 'xyzWing', text: 'New hardest technique' });
+            var three = textOfStep(steps[2]);
+            expect(three.badge).toBeNull();
+            expect(three.line).toBeNull();
+            expect(three.rowLabel).toBeNull();
+            // the new hardest technique is the one of the fourth step (47): Hidden Single (box) replaces Naked Single
+            var four = textOfStep(steps[3]);
+            expect(four.badge).toBeNull();
+            expect(four.line).toBe('The generator\'s solution now uses Hidden Single (box) (weight 1.25) as its ' +
+              'hardest technique, instead of Naked Single (weight 1).');
+            expect(four.rowLabel).toEqual({ technique: 'hiddenSingleBox', text: 'New hardest technique' });
             var seven = textOfStep(steps[6]);
             expect([seven.total, seven.badge, seven.line, seven.rowLabel]).toEqual(
-              ['992 (unchanged)', null, null, null]);
+              ['925 (unchanged)', null, null, null]);
           });
           inLocale('vi', function () {
             var two = textOfStep(steps[1]);
             expect(two.badge.text).toBe('Đề đầu tiên được chấm điểm');
             expect(two.line).toBe('Đề đầu tiên được chấm điểm: 23 điểm. Trong lời giải mà trình sinh đề tìm ' +
               'được, kỹ thuật khó nhất là Ô một ứng viên (Naked Single).');
-            expect(textOfStep(steps[5]).line).toBe('Trong lời giải mới của trình sinh đề, kỹ thuật khó nhất là ' +
-              'XYZ-Wing (trọng số 750), thay cho Tô màu đơn giản (Simple Colouring) (trọng số 360).');
-            expect(textOfStep(steps[5]).rowLabel.text).toBe('Kỹ thuật khó nhất mới');
-            expect(textOfStep(steps[6]).total).toBe('992 (không đổi)');
+            expect(textOfStep(steps[3]).line).toBe('Trong lời giải mới của trình sinh đề, kỹ thuật khó nhất là ' +
+              'Số đơn ẩn trong khối (Hidden Single) (trọng số 1,25), thay cho Ô một ứng viên (Naked Single) ' +
+              '(trọng số 1).');
+            expect(textOfStep(steps[3]).rowLabel.text).toBe('Kỹ thuật khó nhất mới');
+            expect(textOfStep(steps[6]).total).toBe('925 (không đổi)');
           });
         });
       }, 60000);
 
+    // G13 (Samurai) has no flat position with a new hardest technique since the WXYZ-Wing (MS10b changed its dig
+    // path: its position 101 is 70 to 70 with Naked Single on both sides), and no golden has a falling one since the
+    // grouped chains (MS13c): G12's position 103 is 3,035 to 2,169 (2,977 before ALS-XZ, MS15b) but Forcing Chain
+    // was already used before it. Both
+    // cases are read from these real steps with the transition of a new hardest technique set on them.
     it('also tells a new hardest technique when the score is flat or falls (details view)', function () {
       var flat = viewsOf(golden('G13')).details.steps;
-      var fall = viewsOf(golden('G10')).details.steps;
+      var fall = viewsOf(golden('G12')).details.steps;
       inLocale('en', function () {
-        var a = stepAt(flat, 101);
+        var real = stepAt(flat, 101);
+        expect(real.table.transition.tier).toBeNull();
+        expect(real.table.transition.newHardest).toBe(false);
+        expect(textOfStep(real).line).toBeNull();
+        var transition = Object.assign({}, real.table.transition, { tier: 'newPeak', newHardest: true,
+          after: Object.assign({}, real.table.transition.after, { hardest: 'hiddenSingleBox' }) });
+        var a = Object.assign({}, real, { table: Object.assign({}, real.table, { transition: transition }) });
         var text = textOfStep(a);
         expect(a.table.transition.before.total).toBe(70);
         expect(a.table.transition.after.total).toBe(70);
@@ -877,13 +928,18 @@
         expect(text.total).toBe('70 (unchanged)');
         expect(text.line).toMatch(/^The generator's solution now uses .* \(weight [\d.,]+\) as its hardest technique, instead of /);
         expect(text.rowLabel.technique).toBe(a.table.transition.after.hardest);
-        var b = stepAt(fall, 42);
+        var real12 = stepAt(fall, 103);
+        expect(real12.table.transition.tier).toBeNull();
+        expect(real12.table.transition.newHardest).toBe(false);
+        expect(textOfStep(real12).line).toBeNull();
+        var falling = Object.assign({}, real12.table.transition, { tier: 'newPeak', newHardest: true });
+        var b = Object.assign({}, real12, { table: Object.assign({}, real12.table, { transition: falling }) });
         var drop = textOfStep(b);
-        expect(b.table.transition.before.total).toBe(2788);
-        expect(b.table.transition.after.total).toBe(1940);
+        expect(b.table.transition.before.total).toBe(3035);
+        expect(b.table.transition.after.total).toBe(2169);
         expect(drop.badge).toBeNull();
-        expect(drop.total).toBe(SG.i18n.formatNumber(1940) + ' (\u2212848)');
-        expect(drop.total).toBe('1,940 (\u2212848)');
+        expect(drop.total).toBe(SG.i18n.formatNumber(2169) + ' (\u2212' + SG.i18n.formatNumber(866) + ')');
+        expect(drop.total).toBe('2,169 (\u2212866)');
         expect(drop.line).toContain('now uses Forcing Chain (weight 1,100)');
         expect(drop.rowLabel.technique).toBe('forcingChain');
         expect(drop.totalHighlight).toBe(false);
@@ -893,21 +949,21 @@
     it('a jump whose hardest technique was already used has no row label and highlights its Total', function () {
       var res = golden('G01');
       var player = loadedPlayer(res);
-      var real = player.tableAt(4);
+      var real = player.tableAt(5);
       var plain = Object.assign({}, real, { transition: Object.assign({}, real.transition, { newHardest: false }) });
       var steps = player.getSteps();
       inLocale('en', function () {
-        var text = V.explain(plain, steps[3]);
+        var text = V.explain(plain, steps[4]);
         expect(text.rowLabel).toBeNull();
         expect(text.totalHighlight).toBe(true);
         expect(text.badge.kind).toBe('jump');
-        expect(V.explain(real, steps[3]).totalHighlight).toBe(false);
-        var fx = panelFixture({ table: function (p) { return p === 4 ? plain : player.tableAt(p); } });
+        expect(V.explain(real, steps[4]).totalHighlight).toBe(false);
+        var fx = panelFixture({ table: function (p) { return p === 5 ? plain : player.tableAt(p); } });
         fx.view.setSteps(steps);
-        fx.view.setPosition(4);
+        fx.view.setPosition(5);
         expect(allParts(fx, 'step-table__label').length).toBe(0);
         expect(allParts(fx, 'step-table__total--jump').length).toBe(1);
-        fx.view.setPosition(5);
+        fx.view.setPosition(7);
         expect(allParts(fx, 'step-table__total--jump').length).toBe(0);
         fx.view.destroy();
       });
@@ -918,64 +974,64 @@
   describe('stepView: the callout of a score jump', function () {
     var EXAMPLE = {
       en: {
-        badge: 'Score jump \u00d712.5',
-        heading: 'Score jump: 44 \u2192 551 (+507)',
+        badge: 'Score jump \u00d712.6',
+        heading: 'Score jump: 47 \u2192 593 (+546)',
         sentences: [
-          'After the clues at R1C2 and R9C8 are removed, the generator\'s solution uses Simple Colouring 2 ' +
-            'times; previously, its hardest technique was Naked Single.',
-          'The largest technique weight, 360, contributes in full as the P term of the score (P = 360).',
-          'Removing the clue at R1C2 alone gives 550; removing the clue at R9C8 alone gives 44.'
+          'After the clues at R2C4 and R8C6 are removed, the generator\'s solution uses Two-String Kite once; ' +
+            'previously, its hardest technique was Hidden Single (box).',
+          'The largest technique weight, 340, contributes in full as the P term of the score (P = 340).',
+          'Removing the clue at R2C4 alone gives 593; removing the clue at R8C6 alone gives 47.'
         ],
         why: [
-          'P, peak technique weight: 1 \u2192 360 (+359)',
-          'W, weighted sum of technique uses: 43 \u2192 768.25',
-          'R = 0.25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1.36 \u2192 148.32 (+146.96)',
-          'E, number of empty cells: 43 \u2192 45',
-          'V = 80 \u00d7 E \u00f7 (E + 40): 41.45 \u2192 42.35 (+0.91)',
-          'Score = V + P + R, rounded: 44 \u2192 551 (+507)',
-          'Level: Very easy \u2192 Hard',
-          'The log records 15 candidates before this accepted removal, with 5 rejected; the other 9 ' +
-            'candidates with completed scores reached at most 45 by the generator\'s limited check.',
+          'P, peak technique weight: 1.25 \u2192 340 (+338.75)',
+          'W, weighted sum of technique uses: 50.5 \u2192 1,518.75',
+          'R = 0.25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1.68 \u2192 208.31 (+206.63)',
+          'E, number of empty cells: 49 \u2192 51',
+          'V = 80 \u00d7 E \u00f7 (E + 40): 44.04 \u2192 44.84 (+0.79)',
+          'Score = V + P + R, rounded: 47 \u2192 593 (+546)',
+          'Level: Easy \u2192 Hard',
+          'The log records 5 candidates before this accepted removal, with 3 rejected; the other candidate with a ' +
+            'completed score reached 48 by the generator\'s limited check.',
           'In a separate check, this solver stopped before completing the board using only techniques with ' +
-            'weights below 360.',
-          'First use in the generator\'s solution: logical deduction 32 of 47.',
+            'weights below 340.',
+          'First use in the generator\'s solution: logical deduction 26 of 61.',
           null,
-          'In that deduction, candidate 3 is removed from R5C2 and R8C3.',
+          'In that deduction, candidate 3 is removed from R1C9.',
           'These numbers describe the generator\'s solution, not every way to solve the puzzle.'
         ]
       },
       vi: {
-        badge: 'Điểm tăng vọt \u00d712,5',
-        heading: 'Điểm tăng vọt: 44 \u2192 551 (+507)',
+        badge: 'Điểm tăng vọt \u00d712,6',
+        heading: 'Điểm tăng vọt: 47 \u2192 593 (+546)',
         sentences: [
-          'Sau khi bỏ số cho sẵn ở R1C2 và R9C8, lời giải mà trình sinh đề tìm được dùng Tô màu đơn giản ' +
-            '(Simple Colouring) 2 lần; trước đó, kỹ thuật khó nhất là Ô một ứng viên (Naked Single).',
-          'Trọng số cao nhất 360 được tính toàn bộ vào điểm ở thành phần P (P = 360).',
-          'Chỉ bỏ số ở R1C2 cho 550 điểm; chỉ bỏ số ở R9C8 cho 44 điểm.'
+          'Sau khi bỏ số cho sẵn ở R2C4 và R8C6, lời giải mà trình sinh đề tìm được dùng Two-String Kite ' +
+            '(diều hai dây) 1 lần; trước đó, kỹ thuật khó nhất là Số đơn ẩn trong khối (Hidden Single).',
+          'Trọng số cao nhất 340 được tính toàn bộ vào điểm ở thành phần P (P = 340).',
+          'Chỉ bỏ số ở R2C4 cho 593 điểm; chỉ bỏ số ở R8C6 cho 47 điểm.'
         ],
         why: [
-          'P, trọng số cao nhất: 1 \u2192 360 (+359)',
-          'W, tổng trọng số các lần áp dụng kỹ thuật: 43 \u2192 768,25',
-          'R = 0,25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1,36 \u2192 148,32 (+146,96)',
-          'E, số ô trống: 43 \u2192 45',
-          'V (điểm của ô trống) = 80 \u00d7 E \u00f7 (E + 40): 41,45 \u2192 42,35 (+0,91)',
-          'Điểm = V + P + R, làm tròn: 44 \u2192 551 (+507)',
-          'Mức độ: Rất dễ \u2192 Khó',
-          'Bản ghi có 15 phương án trước lần bỏ số được chọn này, trong đó 5 bị loại; 9 phương án khác có ' +
-            'điểm sau phép kiểm tra giới hạn của trình sinh đề đạt cao nhất 45 điểm.',
-          'Trong một lần kiểm tra riêng, bộ giải này chỉ dùng các kỹ thuật có trọng số dưới 360 và đã dừng ' +
+          'P, trọng số cao nhất: 1,25 \u2192 340 (+338,75)',
+          'W, tổng trọng số các lần áp dụng kỹ thuật: 50,5 \u2192 1.518,75',
+          'R = 0,25 \u00d7 P \u00d7 log\u2082(1 + W \u00f7 P): 1,68 \u2192 208,31 (+206,63)',
+          'E, số ô trống: 49 \u2192 51',
+          'V (điểm của ô trống) = 80 \u00d7 E \u00f7 (E + 40): 44,04 \u2192 44,84 (+0,79)',
+          'Điểm = V + P + R, làm tròn: 47 \u2192 593 (+546)',
+          'Mức độ: Dễ \u2192 Khó',
+          'Bản ghi có 5 phương án trước lần bỏ số được chọn này, trong đó 3 bị loại; 1 phương án khác có điểm ' +
+            'sau phép kiểm tra giới hạn của trình sinh đề đạt cao nhất 48 điểm.',
+          'Trong một lần kiểm tra riêng, bộ giải này chỉ dùng các kỹ thuật có trọng số dưới 340 và đã dừng ' +
             'khi chưa giải xong đề.',
-          'Lần dùng đầu tiên trong lời giải của trình sinh đề: bước suy luận 32/47.',
+          'Lần dùng đầu tiên trong lời giải của trình sinh đề: bước suy luận 26/61.',
           null,
-          'Ở bước suy luận đó, loại ứng viên 3 khỏi R5C2 và R8C3.',
+          'Ở bước suy luận đó, loại ứng viên 3 khỏi R1C9.',
           'Các con số này mô tả cách giải mà trình sinh đề tìm được, không đại diện cho mọi cách giải đề.'
         ]
       }
     };
 
-    it('the example (Classic 9x9 expert, step 4) reads as specified, in English and Vietnamese', function () {
+    it('the example (Classic 9x9 expert, step 5) reads as specified, in English and Vietnamese', function () {
       var res = golden('G01');
-      var step = viewsOf(res).compact.steps[3];
+      var step = viewsOf(res).compact.steps[4];
       var proof = step.table.proof;
       expect(step.table.transition.tier).toBe('jump');
       withLabels(res, function () {
@@ -983,7 +1039,7 @@
           inLocale(code, function () {
             var text = textOfStep(step);
             var want = EXAMPLE[code];
-            expect(text.total).toBe('551 (+507)');
+            expect(text.total).toBe('593 (+546)');
             expect(text.badge).toEqual({ kind: 'jump', text: want.badge });
             expect(text.line).toBeNull();
             expect(text.callout.heading).toBe(want.heading);
@@ -994,9 +1050,10 @@
             });
             // The solver's own paragraph of the first use, as it wrote it.
             expect(text.callout.why[10]).toBe(SG.i18n.t(proof.firstUse.i18nKey, proof.firstUse.i18nArgs));
-            expect(text.callout.why[10]).toContain(code === 'en' ? 'colour 1 is R2C4, R6C6, R8C5, R9C2'
-              : 'màu 1 là R2C4, R6C6, R8C5, R9C2');
-            expect(text.rowLabel.technique).toBe('simpleColouring');
+            expect(text.callout.why[10]).toContain(code === 'en'
+              ? 'the cells R8C3, R9C2 (the bridge) lie in the same box or region'
+              : 'các ô R8C3, R9C2 (cầu nối) nằm trong cùng một khối (hoặc vùng)');
+            expect(text.rowLabel.technique).toBe('twoStringKite');
             expect(text.rowLabel.text).toBe(code === 'en' ? 'New hardest technique' : 'Kỹ thuật khó nhất mới');
             expect(text.totalHighlight).toBe(false);
           });
@@ -1016,7 +1073,7 @@
 
     it('names the cause of a move per class, on the goldens', function () {
       var results = {};
-      ['G03', 'G05', 'G07', 'G11', 'G13'].forEach(function (id) { results[id] = golden(id); });
+      ['G04', 'G05', 'G09', 'G11', 'G13'].forEach(function (id) { results[id] = golden(id); });
       function third(id, position, view) {
         var res = results[id];
         var step = stepAt(viewsOf(res)[view || 'compact'].steps, position);
@@ -1027,17 +1084,25 @@
           });
         });
       }
-      expect(third('G03', 23).sentences[2])
-        .toBe('Removing each clue alone gives 45 and 44; removing the whole group gives 870.');
-      expect(third('G05', 29).sentences[2])
-        .toBe('The separate changes give 50, 50, 49 and 49; the combined change gives 2,010.');
-      expect(third('G07', 24).sentences[2]).toBe('Removing the clue at R1C4 alone gives 136, versus 252 for the ' +
-        'whole symmetric group, which is always displayed as one complete change.');
-      var sign = third('G11', 110);
-      expect(sign.sentences[0]).toContain('After the sign between R2C4 and R1C4 is removed, ');
+      expect(third('G04', 23).sentences[2])
+        .toBe('Removing each clue alone gives 45 and 46; removing the whole group gives 915.');
+      expect(third('G05', 23).sentences[2])
+        .toBe('Removing each clue alone gives 44 and 45; removing the whole group gives 550.');
+      // G09's jump was the "mixed" class (one clue against its whole symmetric group); its jump is now a single
+      // culprit, and the "mixed" wording of a real golden is G13's (below) and the synthetic test of every class
+      expect(third('G09', 35).sentences[2]).toBe('Removing the clue at R8C5 alone gives 510; removing the clue at ' +
+        'R2C5 alone gives 139.');
+      var sign = third('G11', 70, 'details');
+      expect(sign.sentences[0]).toContain('After the sign between R8C7 and R9C7 is removed, ');
       expect(sign.sentences[2]).toBe('This step removes one sign; there is no smaller sign-removal move to show.');
-      expect(third('G13', 114).sentences[2])
-        .toBe('Removing the clue at G2-R8C9 alone gives 1,483; removing the clue at G3-R2C1 alone gives 72.');
+      // G13's jump was a single culprit (G2-R3C2, 1,011 against 73) until ALS-XZ (MS15b) changed its dig path; it
+      // is now the "mixed" class (the largest single clue, G4-R3C1 with 153, against 296 for the whole group), and
+      // the cause has no unique frame
+      var thirteen = third('G13', 127);
+      expect(thirteen.sentences[2]).toBe('Removing the clue at G4-R3C1 alone gives 153, versus 296 for the whole ' +
+        'symmetric group, which is always displayed as one complete change.');
+      expect(thirteen.step.table.transition.cause.class).toBe('mixed');
+      expect(thirteen.step.table.transition.cause.frame).toBeNull();
     }, 120000);
 
     function fragmentEn(move) {
@@ -1055,7 +1120,7 @@
     }
 
     it('a jump over several moves says in which complete change the new technique first appears', function () {
-      [['G06', 31, 'compact'], ['G10', 42, 'compact'], ['G12', 103, 'compact']].forEach(function (c) {
+      [['G06', 31, 'compact'], ['G12', 107, 'compact'], ['G13', 143, 'compact']].forEach(function (c) {
         var res = golden(c[0]);
         var analysis = analysisOf(res);
         var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
@@ -1102,6 +1167,10 @@
           .toBe('Removing each clue alone gives 150 and 160; removing the whole group gives 800.');
         expect(sentenceOf(causeOf({ class: 'together', changes: exchange, singles: singles }))[2])
           .toBe('The separate changes give 150 and 160; the combined change gives 800.');
+        var four = [{ cell: 10, action: 'remove', score: 50 }, { cell: 20, action: 'remove', score: 50 },
+          { cell: 30, action: 'restore', score: 49 }, { cell: 40, action: 'restore', score: 49 }];
+        expect(sentenceOf(causeOf({ class: 'together', changes: four, singles: four }))[2])
+          .toBe('The separate changes give 50, 50, 49 and 49; the combined change gives 800.');
         var largest = { cell: 20, action: 'remove', score: 400 };
         expect(sentenceOf(causeOf({ class: 'mixed', changes: removeTwo, singles: singles, largest: largest }))[2])
           .toBe('Removing the clue at #21 alone gives 400, versus 800 for the whole symmetric group, which is ' +
@@ -1230,12 +1299,21 @@
       });
     });
 
+    // G13 (Samurai) had the second witness until the WXYZ-Wing (MS10b) changed its dig path, and has one again in its
+    // details step 129 since ALS-XZ (MS15b). G10 (Killer) had one in its details step 36; its jump no longer is one:
+    // its witnesses (moves 37 to 39, pinned in replay.test.js) are not at a jump, so they have no choice and no callout
+    // (SA2's ruling Q7 keeps G13 / details / 129 and G14 / compact / 69).
     it('the goldens whose chosen removal the limited check could not finish say so (Samurai, Mega 16x16)',
       function () {
-        [['G13', 114], ['G14', 69]].forEach(function (c) {
+        [['G13', 129, 'details'], ['G14', 69, 'compact']].forEach(function (c) {
           var res = golden(c[0]);
-          var step = stepAt(viewsOf(res).compact.steps, c[1]);
-          expect(step.table.transition.choice.chosen).toBeNull();
+          var step = stepAt(viewsOf(res)[c[2]].steps, c[1]);
+          var transition = step.table.transition;
+          // a jump, with a guided choice that exists and whose chosen removal could not be finished
+          expect(transition.tier).toBe('jump');
+          expect(transition.choice).not.toBeNull();
+          expect(transition.choice.kind).toBe('guided');
+          expect(transition.choice.chosen).toBeNull();
           withLabels(res, function () {
             inLocale('en', function () {
               var why = textOfStep(step).callout.why;
@@ -1302,23 +1380,79 @@
       }
     });
 
-    it('the first deductions of the goldens: Killer candidates 2 and 5 in one cell, 1, 6, 7 and 9 in another',
+    it('the first deductions of the goldens: Killer candidate 7 in a cell, candidate 1 in two cells, ' +
+      'candidates 8 and 9 in a cell',
       function () {
         var nine = golden('G09');
         var ten = golden('G10');
+        var thirteen = golden('G13');
         withLabels(nine, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(nine).compact.steps, 37)).callout.why;
-            expect(why).toContain('In that deduction, candidates 2 and 5 are removed from R7C5.');
+            var why = textOfStep(stepAt(viewsOf(nine).compact.steps, 35)).callout.why;
+            expect(why).toContain('In that deduction, candidate 7 is removed from R9C1.');
           });
         });
+        // the first use of the G10 jump (Rule of 45) removes one candidate from two cells and places no digit; the
+        // forced chain that placed a digit here until ALS-XZ (MS15b) is gone, so the wording of a placement has its
+        // controlled case below (MS15b-Q6)
         withLabels(ten, function () {
           inLocale('en', function () {
-            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 36)).callout.why;
-            expect(why).toContain('In that deduction, candidates 1, 6, 7 and 9 are removed from R7C1.');
+            var why = textOfStep(stepAt(viewsOf(ten).compact.steps, 32)).callout.why;
+            expect(why).toContain('In that deduction, candidate 1 is removed from R1C8 and R1C9.');
+            expect(why.filter(function (line) { return /is placed in/.test(line); })).toEqual([]);
+          });
+        });
+        withLabels(thirteen, function () {
+          inLocale('en', function () {
+            var why = textOfStep(stepAt(viewsOf(thirteen).compact.steps, 127)).callout.why;
+            expect(why).toContain('In that deduction, candidates 8 and 9 are removed from G3-R1C3.');
           });
         });
       }, 120000);
+
+    // No first use of the 15 jumps of the 14 goldens places a digit any more (MS15b-Q6): the placement-only wording is
+    // read from a controlled use, made by SG.replay.firstUse from a rating whose second deduction places two digits
+    // and removes no candidate (the rating is replaced for that one call and restored in `finally`).
+    it('tells a first use that only places digits: placements, no removal (a controlled case, MS15b-Q6)', function () {
+      var model = SG.variants.get('classic4').build({}, null);
+      var rate = SG.difficulty.rate;
+      var asked = [];
+      var use;
+      SG.difficulty.rate = function (m, values, options) {
+        asked.push(options.collectSteps);
+        return { solved: true, steps: [
+          { technique: 'nakedSingle', i18nKey: 'technique.nakedSingle.desc', i18nArgs: {},
+            eliminations: [[2, 5]], placements: [] },
+          { technique: 'simpleColouring', i18nKey: 'technique.simpleColouring.desc', i18nArgs: {},
+            eliminations: [], placements: [[8, 6], [9, 2]] }] };
+      };
+      try {
+        use = SG.replay.firstUse(model, [], 'simpleColouring');
+      } finally {
+        SG.difficulty.rate = rate;
+      }
+      expect(SG.difficulty.rate).toBe(rate);
+      expect(asked).toEqual([true]);
+      expect([use.k, use.n, use.technique]).toEqual([2, 2, 'simpleColouring']);
+      expect(use.placements).toEqual([[8, 6], [9, 2]]);
+      expect(use.eliminations).toEqual([]);
+      SG.i18n.setCellLabeler(function (c) { return 'c' + c; });
+      try {
+        inLocale('en', function () {
+          var lines = whyOf(jumpModel(100, 800, { proof: { firstUse: use, restricted: 'complete' } }));
+          var at = lines.indexOf('First use in the generator\'s solution: logical deduction 2 of 2.');
+          expect(at).toBeGreaterThan(6);
+          expect(lines[at + 1]).toBe(SG.i18n.t('technique.simpleColouring.desc'));
+          expect(lines.slice(at + 2, -1)).toEqual([
+            'In that deduction, 6 is placed in c8.',
+            'In that deduction, 2 is placed in c9.'
+          ]);
+          expect(lines.some(function (line) { return /is removed|are removed/.test(line); })).toBe(false);
+        });
+      } finally {
+        SG.i18n.setCellLabeler(null);
+      }
+    });
   });
 
   describe('stepView: no overclaim and no placeholder in the texts of the goldens', function () {
@@ -1370,7 +1504,7 @@
         fx.view.setSteps(steps);
         withLabels(res, function () {
           inLocale('en', function () {
-            fx.view.setPosition(4);
+            fx.view.setPosition(5);
             expect(fx.detail.children.map(function (el) { return el.getAttribute('class'); })).toEqual(
               ['step-detail__meta', 'step-detail__text', 'step-detail__techniques', 'step-callout']);
             var callout = fx.detail.children[3];
@@ -1379,7 +1513,7 @@
             expect(callout.children.map(function (el) { return el.getAttribute('class'); })).toEqual(
               ['step-callout__heading', 'step-callout__text', 'step-callout__text', 'step-callout__text',
                 'step-why']);
-            expect(callout.children[0].textContent).toBe('Score jump: 44 \u2192 551 (+507)');
+            expect(callout.children[0].textContent).toBe('Score jump: 47 \u2192 593 (+546)');
             var why = callout.children[4];
             expect(why.tagName).toBe('DETAILS');
             expect(why.getAttribute('open')).toBeNull();
@@ -1395,8 +1529,8 @@
             expect(badge.length).toBe(1);
             expect(badge[0].tagName).toBe('SPAN');
             expect(badge[0].classes()).toContain('step-badge--jump');
-            expect(badge[0].textContent).toBe('Score jump \u00d712.5');
-            expect(heading.textContent).toBe('Step 4 \u2013 ' + SG.player.stepTitle(steps[3]) + ' Score jump \u00d712.5');
+            expect(badge[0].textContent).toBe('Score jump \u00d712.6');
+            expect(heading.textContent).toBe('Step 5 \u2013 ' + SG.player.stepTitle(steps[4]) + ' Score jump \u00d712.6');
 
             fx.view.setPosition(2);
             expect(part(fx, 'step-callout')).toBeNull();
@@ -1411,25 +1545,25 @@
             expect(heading.textContent).toBe('Step 3 \u2013 ' + SG.player.stepTitle(steps[2]));
             expect(part(fx, 'step-tier')).toBeNull();
 
-            fx.view.setPosition(6);
-            expect(part(fx, 'step-tier').textContent).toContain('now uses XYZ-Wing (weight 750)');
+            fx.view.setPosition(4);
+            expect(part(fx, 'step-tier').textContent).toContain('now uses Hidden Single (box) (weight 1.25)');
             var labels = allParts(fx, 'step-table__label');
             expect(labels.length).toBe(1);
             expect(labels[0].getAttribute('data-role')).toBe('new-hardest');
             expect(labels[0].textContent).toBe('New hardest technique');
             var row = labels[0].parentNode.parentNode.parentNode;
-            expect(row.getAttribute('data-technique')).toBe('xyzWing');
+            expect(row.getAttribute('data-technique')).toBe('hiddenSingleBox');
             expect(allParts(fx, 'step-table__total--jump').length).toBe(0);
           });
           // A change of language re-draws the heading, the badge and the callout.
-          fx.view.setPosition(4);
+          fx.view.setPosition(5);
           inLocale('vi', function () {
             var heading = fx.root.querySelector('#steps-heading');
-            expect(heading.textContent).toContain('Điểm tăng vọt \u00d712,5');
-            expect(part(fx, 'step-callout__heading').textContent).toBe('Điểm tăng vọt: 44 \u2192 551 (+507)');
+            expect(heading.textContent).toContain('Điểm tăng vọt \u00d712,6');
+            expect(part(fx, 'step-callout__heading').textContent).toBe('Điểm tăng vọt: 47 \u2192 593 (+546)');
             expect(fx.detail.textContent).toContain('Vì sao?');
           });
-          expect(part(fx, 'step-callout__heading').textContent).toBe('Score jump: 44 \u2192 551 (+507)');
+          expect(part(fx, 'step-callout__heading').textContent).toBe('Score jump: 47 \u2192 593 (+546)');
         });
         fx.view.destroy();
         player.destroy();
@@ -1454,13 +1588,19 @@
       fx.view.destroy();
       player.destroy();
 
-      var gt = golden('G11');
+      var gt = golden('G12');
       var gtPlayer = loadedPlayer(gt);
       var gtFx = panelFixture({ table: tableOf(gtPlayer) });
       var gtLegend = gtFx.detail.nextSibling;
       inLocale('en', function () {
+        function legendMarks() {
+          return gtLegend.children.map(function (li) { return li.getAttribute('data-mark'); });
+        }
         gtFx.view.setSteps(gtPlayer.getSteps());
-        var marks = gtLegend.children.map(function (li) { return li.getAttribute('data-mark'); });
+        expect(legendMarks()).not.toContain('signCause');
+        gtPlayer.setView('details');
+        gtFx.view.setSteps(gtPlayer.getSteps());
+        var marks = legendMarks();
         expect(marks).toContain('signCause');
         expect(marks).not.toContain('cause');
         expect(gtLegend.textContent).toContain('Removing this sign causes the score jump');
@@ -1479,37 +1619,56 @@
     }, 120000);
 
     it('a restored culprit gets the restore legend and the restore sentence, never the removal legend', function () {
-      var res = golden('G05');
+      // No real jump shows a clue again. The exchange of G04 (two clues removed, two shown again) is the specimen:
+      // its transition is made a jump whose culprit is one of the clues it shows again, and the frames of the
+      // real jumps are taken away so that this is the only one.
+      var res = golden('G04');
       var analysis = analysisOf(res);
-      var base = viewsOf(res).compact.steps[4];
-      expect(base.table.transition.tier).toBe('jump');
+      var base = viewsOf(res).details.steps.filter(function (s) {
+        return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange';
+      })[0];
+      var index = base.index - 1;
+      expect([base.marks.revealed.length, base.marks.dug.length]).toEqual([2, 2]);
       var cell = base.marks.revealed[0];
+      var changes = base.marks.dug.map(function (c) { return { cell: c, action: 'remove' }; }).concat(
+        base.marks.revealed.map(function (c) { return { cell: c, action: 'restore' }; }));
       var transitions = analysis.transitions.map(function (t) {
-        if (t !== base.table.transition) return t;
-        return Object.assign({}, t, { cause: Object.assign({}, t.cause, {
-          class: 'single-culprit', culprit: { cell: cell, action: 'restore', score: 49, otherScore: 50 },
-          frame: { kind: 'cell', cell: cell, action: 'restore' } }) });
+        if (t === base.table.transition) {
+          return Object.assign({}, t, { tier: 'jump', ratio: SG.replay.badgeRatio(t.before.total, t.after.total),
+            cause: { class: 'single-culprit', changes: changes, singles: [], largest: null, sign: null, k: null,
+              n: null, kMove: null, verifiedOnly: false,
+              culprit: { cell: cell, action: 'restore', score: 49, otherScore: 50 },
+              frame: { kind: 'cell', cell: cell, action: 'restore' } } });
+        }
+        if (t.tier !== 'jump') return t;
+        return Object.assign({}, t, { cause: Object.assign({}, t.cause, { frame: null }) });
       });
-      var changed = Object.assign({}, analysis, { transitions: transitions });
       var player = SG.player.create({});
       player.load(res);
-      player.setAnalysis(changed);
-      var step = player.getSteps()[4];
+      player.setAnalysis(Object.assign({}, analysis, { transitions: transitions }));
+      player.setView('details');
+      var steps = player.getSteps();
+      var step = steps[index];
       expect(step.marks.causeRestore).toEqual([cell]);
       expect(step.marks.cause).toEqual([]);
-      expect(step.marks.revealed).not.toContain(cell);
+      expect(base.marks.revealed).toContain(cell);
+      expect(step.marks.revealed).toEqual(base.marks.revealed.filter(function (c) { return c !== cell; }));
+      expect(step.marks.revealed.length).toBe(base.marks.revealed.length - 1);
+      expect(step.marks.dug).toEqual(base.marks.dug);
+      expect(step.marks.dug).not.toContain(cell);
       var fx = panelFixture({ table: tableOf(player) });
       var legend = fx.detail.nextSibling;
       withLabels(res, function () {
         inLocale('en', function () {
-          fx.view.setSteps(player.getSteps());
+          fx.view.setSteps(steps);
           var marks = legend.children.map(function (li) { return li.getAttribute('data-mark'); });
           expect(marks).toContain('causeRestore');
           expect(marks).not.toContain('cause');
           expect(legend.textContent).toContain('Restoring this clue causes the score jump');
           expect(legend.textContent).not.toContain('Removing this clue causes the score jump');
-          fx.view.setPosition(5);
-          expect(allParts(fx, 'step-callout__text')[2].textContent).toBe('Restoring the clue at ' +
+          fx.view.setPosition(index + 1);
+          var texts = allParts(fx, 'step-callout__text');
+          expect(texts[texts.length - 1].textContent).toBe('Restoring the clue at ' +
             SG.model.cellLabel(res.model, cell) + ' alone gives 49; the rest of this change without it gives 50.');
         });
       });
@@ -1788,6 +1947,28 @@
       expect(typeof X.create).toBe('function');
       expect(function () { V.create(null); }).toThrow();
       expect(function () { X.create(null); }).toThrow();
+    });
+  });
+
+  // MS18c: the fixed requests of this suite are diagnostics; a level that qualification hides stays reachable.
+  describe('steps: a fixed request whose level is hidden (MS18c)', function () {
+    it('MS18c-T03: a real result and a golden are generated although their level is not offered, and the ' +
+      'offers come back', function () {
+      var def = SG.variants.get('classic9');
+      var original = def.difficultySupport;
+      var offered = original.filter(function (level) { return level !== 'easy' && level !== 'veryEasy'; });
+      def.difficultySupport = offered;
+      try {
+        var real = result('classic9', 'easy', 424242);
+        expect([real.config.variantId, real.config.difficulty]).toEqual(['classic9', 'easy']);
+        expect(def.difficultySupport).toBe(offered);
+        var g = golden('G02');
+        expect(g.config.difficulty).toBe('veryEasy');
+        expect(def.difficultySupport).toBe(offered);
+      } finally {
+        def.difficultySupport = original;
+      }
+      expect(def.difficultySupport).toBe(original);
     });
   });
 })();

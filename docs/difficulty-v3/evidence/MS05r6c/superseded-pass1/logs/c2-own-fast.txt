@@ -1,0 +1,39 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (72 ms)
+ok   cache: 105 passed  (8.85 s)
+ok   controls: 46 passed  (92 ms)
+ok   difficulty-diagnostics: 82 passed  (11.59 s)
+ok   difficulty-floor: 48 passed  (25.30 s)
+ok   digger: 64 passed  (932 ms)
+ok   events: 68 passed  (553 ms)
+ok   export: 78 passed  (5.40 s)
+ok   format: 18 passed  (189 ms)
+ok   full-grid: 42 passed  (2.44 s)
+ok   help: 30 passed  (3.74 s)
+ok   history: 15 passed  (1.39 s)
+ok   i18n: 83 passed  (882 ms)
+ok   manual-corpus: 46 passed  (2.19 s)
+ok   mega-contract: 37 passed  (1.69 s)
+ok   multigrid: 184 passed  (16.08 s)
+ok   perf-tooling: 31 passed  (12.04 s)
+ok   purity: 41 passed  (22 ms)
+ok   recovery-profile: 27 passed  (516 ms)
+ok   replay-recorders: 39 passed  (7.61 s)
+ok   result-view: 22 passed  (8.00 s)
+ok   rng: 28 passed  (28 ms)
+ok   smoke: 44 passed  (4.68 s)
+ok   store: 85 passed  (108 ms)
+ok   technique-weights: 6 passed  (1 ms)
+ok   theme: 57 passed  (32 ms)
+ok   ui-contract: 67 passed  (340 ms)
+ok   variants-registry: 12 passed  (18 ms)
+ok   worker: 143 passed  (48.99 s)
+
+Suites: 29
+Tests:  1579 total, 1579 passed, 0 failed, 0 skipped
+Time:   163.78 s running tests, 164.14 s total
+Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-own-fast.json
+(node:5628) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)

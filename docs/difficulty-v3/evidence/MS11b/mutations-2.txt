@@ -1,0 +1,177 @@
+mutation 25 (the floor is the row neighbour of the target, not the opposite corner): DETECTED - 435 total, 387 passed, 48 failed, 0 skipped - 48 failing, 47 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+mutation 26 (the floor is the column neighbour of the target, not the opposite corner): DETECTED - 435 total, 387 passed, 48 failed, 0 skipped - 48 failing, 47 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+mutation 27 (the row link is taken to the column neighbour): DETECTED - 435 total, 389 passed, 46 failed, 0 skipped - 46 failing, 46 of uniqueRectangle - 9.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 28 (a unit of any kind is a link (the kind is not asked, the first shared unit counts)): DETECTED - 435 total, 434 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 11.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > the links are the row and the column even when another unit of two corners is listed first
+mutation 29 (a partial row or column is a link (the completeness test dropped)): DETECTED - 435 total, 433 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a partial row or column is no conjugate link, the same units complete are
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+mutation 30 (a partial column is a link (only the row is tested for completeness)): DETECTED - 435 total, 434 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a partial row or column is no conjugate link, the same units complete are
+mutation 31 (a partial row is a link (only the column is tested for completeness)): DETECTED - 435 total, 433 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 11.4 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a partial row or column is no conjugate link, the same units complete are
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+mutation 32 (one link is enough (the row or the column)): DETECTED - 435 total, 409 passed, 26 failed, 0 skipped - 26 failing, 25 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle: relies on a unique solution > the logical solver leaves it out with assumeUniqueness:false and uses it otherwise
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs on opposite corners share no unit
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > a link needs two bivalue floors and roofs with extras: one floor of three digits finds nothing
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a third occurrence of the digit in row 2, or in column 4, breaks that link
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > one link is not enough: only the row, or only the column, is conjugate
+mutation 33 (the row link only): DETECTED - 435 total, 411 passed, 24 failed, 0 skipped - 24 failing, 23 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > roofs on opposite corners share no unit
+    FAIL tech-wing > uniqueRectangle (R14): type 4, a conjugate link between the roofs > a link needs two bivalue floors and roofs with extras: one floor of three digits finds nothing
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a third occurrence of the digit in row 2, or in column 4, breaks that link
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > one link is not enough: only the row, or only the column, is conjugate
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a solved 1 in the row or in the column is a third occurrence of the digit: the link is gone
+mutation 34 (the column link only): DETECTED - 435 total, 413 passed, 22 failed, 0 skipped - 22 failing, 21 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle: relies on a unique solution > the logical solver leaves it out with assumeUniqueness:false and uses it otherwise
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a third occurrence of the digit in row 2, or in column 4, breaks that link
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > one link is not enough: only the row, or only the column, is conjugate
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a solved 1 in the row or in the column is a third occurrence of the digit: the link is gone
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > the links must be around the target whose opposite corner holds the pair: links around R1C4 find nothing
+mutation 35 (a digit held three times in the unit is a link (at least two holders)): DETECTED - 435 total, 330 passed, 105 failed, 0 skipped - 105 failing, 104 of uniqueRectangle - 9.4 s
+    FAIL tech-wing > uniqueRectangle: published examples > finds nothing on published positions that have no rectangle yet
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits, rows in one band, columns in two stacks: roofs on opposite corners are no type 2
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits, columns in one stack, rows in two bands: roofs on opposite corners are no type 2
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits: four boxes or one box is no deadly pattern
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 4 digits: four cells in one row are no rectangle
+    FAIL tech-wing > uniqueRectangle: any digit count (types 1 and 2) > on 6 digits, rows in one band, columns in two stacks: roofs on opposite corners are no type 2
+mutation 36 (a digit held once is a link (at most two holders)): NOT DETECTED (exit 0) - 435 total, 435 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 11.7 s
+mutation 37 (a solved holder is not counted): DETECTED - 435 total, 434 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 11.9 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, near misses > a solved 1 in the row or in the column is a third occurrence of the digit: the link is gone
+mutation 38 (the higher digit of the pair is the digit of the links first): DETECTED - 435 total, 397 passed, 38 failed, 0 skipped - 38 failing, 38 of uniqueRectangle - 10.3 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > determinism and purity: the same Finding again, a mutated copy changes nothing, the state is never written
+mutation 39 (only the lower digit is the digit of the links): DETECTED - 435 total, 409 passed, 26 failed, 0 skipped - 26 failing, 26 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 4 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 6 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 9 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 12 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 16 digits for every corner as the target, as the enumeration does
+mutation 40 (the targets are tried from the last corner of the rectangle): DETECTED - 435 total, 429 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 11.4 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, order and the passes before it > in one rectangle the targets come in the order of its corners, and the lower digit of the pair first
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 20260101) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic9 (300 states of seed 777) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on classic4 (300 states of seed 20260101) and fires every subtype
+    FAIL tech-wing > uniqueRectangle (R14): agreement with an independent enumeration > agrees on 12 digits (boxes of 3 x 4) and 16 digits (4 x 4), no 9 x 9 arithmetic
+    FAIL tech-wing > wing techniques: every Finding is a complete real pattern and none is missed > uniqueRectangle agrees with the brute-force oracle on 9 digits
+mutation 41 (the rectangles are tried from the last one): DETECTED - 435 total, 419 passed, 16 failed, 0 skipped - 16 failing, 16 of uniqueRectangle - 11.2 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, order and the passes before it > the rectangles in the order of the first pass: the hidden form on the first one wins, then the second one
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 42 (a tested (target, digit) is not charged): DETECTED - 435 total, 425 passed, 10 failed, 0 skipped - 10 failing, 10 of uniqueRectangle - 11.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has a counter of its own: a second pass that spends its limit does not stop the third, and the limits are apart
+mutation 43 (a tested (target, digit) is charged twice): DETECTED - 435 total, 428 passed, 7 failed, 0 skipped - 7 failing, 7 of uniqueRectangle - 11.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > checks the parent budget at the entry of the pass and so that at most 256 units pass between two checks
+mutation 44 (a tested (target, digit) is charged only when it is a pattern): DETECTED - 435 total, 426 passed, 9 failed, 0 skipped - 9 failing, 9 of uniqueRectangle - 11.8 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > has R10's limit of 50000 of its own, and every bounded pass that runs reports a record, the second one first
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is counted as the rule says on real states: every call of 120 states agrees with the recount
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > ends the pass whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > is complete or empty: the vector (25 units) is found at 25 and lost (capped prefix) at 24, 1 and 0
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 45 (a target whose lines are partial is charged too (the charge before the completeness test)): DETECTED - 435 total, 434 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 11.6 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, work limit, budget and cancellation > counts one unit per tested (target, digit) from a fresh counter, as the rule says
+mutation 46 (the link digit is removed instead of the other digit): DETECTED - 435 total, 399 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 47 (the digit is removed from the floor, not from the target): DETECTED - 435 total, 399 passed, 36 failed, 0 skipped - 36 failing, 36 of uniqueRectangle - 10.0 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 48 (the digit is removed from the row neighbour, not from the target): DETECTED - 435 total, 400 passed, 35 failed, 0 skipped - 35 failing, 35 of uniqueRectangle - 10.1 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 49 (the digit argument is the removed digit): DETECTED - 435 total, 402 passed, 33 failed, 0 skipped - 33 failing, 33 of uniqueRectangle - 10.4 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 50 (the digits argument is [digit of the links, removed digit], not ascending): DETECTED - 435 total, 418 passed, 17 failed, 0 skipped - 17 failing, 17 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 4 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 6 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 9 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 12 digits for every corner as the target, as the enumeration does
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form on other unit shapes and sizes > finds the constructed vector on 16 digits for every corner as the target, as the enumeration does
+mutation 51 (the cells of the Finding are in reverse order): DETECTED - 435 total, 402 passed, 33 failed, 0 skipped - 33 failing, 33 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 52 (the labels argument is in reverse order): DETECTED - 435 total, 402 passed, 33 failed, 0 skipped - 33 failing, 33 of uniqueRectangle - 10.3 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 53 (the labels argument lists the target only): DETECTED - 435 total, 402 passed, 33 failed, 0 skipped - 33 failing, 33 of uniqueRectangle - 10.5 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+mutation 54 (the state is written (the candidate is removed in place)): DETECTED - 435 total, 390 passed, 45 failed, 0 skipped - 45 failing, 45 of uniqueRectangle - 9.9 s
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the vector: the 1 only at R2C1 and R2C4 in row 2 and at R1C4 and R2C4 in column 4 removes 2 from R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > swapped digit roles: with the 2 as the digit of the links the 1 leaves R2C4
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > both digits are links: the lower digit of the pair is the digit of the links, the higher one is removed
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the transposed vector: the links in row 4 and column 2, the rectangle with its upper corners in one box
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > every corner can be the target, the floor is always the corner opposite to it
+    FAIL tech-wing > uniqueRectangle (R14): the hidden form, a conjugate link on each side of the target > the target already holds only the pair when the floor opposite to it does: the 2 leaves it
+detected 29 of 30, 322.6 s

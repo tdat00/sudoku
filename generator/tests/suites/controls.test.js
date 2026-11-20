@@ -88,9 +88,10 @@
       ready();
       expect(values(field(model('?v=classic4'), 'difficulty'))).toEqual(['veryEasy']);
       expect(values(field(model('?v=classic6'), 'difficulty'))).toEqual(['veryEasy', 'hard']);
-      expect(values(field(model('?v=classic9'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 8));
-      expect(values(field(model('?v=killer'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
-      expect(values(field(model('?v=samurai'), 'difficulty'))).toEqual(SG.difficulty.LEVELS);
+      expect(values(field(model('?v=classic9'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 7));
+      expect(values(field(model('?v=killer'), 'difficulty'))).toEqual(SG.difficulty.LEVELS.slice(0, 3));
+      expect(values(field(model('?v=samurai'), 'difficulty')))
+        .toEqual(['veryEasy', 'normal', 'hard', 'expert', 'master']);
       variantIds().forEach(function (id) {
         var f = field(model('?v=' + id), 'difficulty');
         expect(values(f).indexOf(f.value)).not.toBe(-1);
@@ -836,7 +837,7 @@
       withEnglish(function () {
         var fx = mountFixture();
         pick(fx.byId('ctl-variant'), 'killer');
-        pick(fx.byId('ctl-difficulty'), 'master');
+        pick(fx.byId('ctl-difficulty'), 'easy');
         fx.byId('ctl-advanced').open = true;
         fx.byId('ctl-seed').value = '77';
         fx.byId('ctl-seed').fire('input');
@@ -845,7 +846,7 @@
         var label = fx.doc.find(fx.form, function (el) { return el.getAttribute('for') === 'ctl-variant'; });
         expect(label.textContent).toBe('Biến thể');
         expect(fx.byId('ctl-difficulty').children[0].textContent).toBe('Rất dễ');
-        expect(fx.byId('ctl-difficulty').value).toBe('master');
+        expect(fx.byId('ctl-difficulty').value).toBe('easy');
         expect(fx.byId('ctl-variant').value).toBe('killer');
         expect(fx.byId('ctl-seed').value).toBe('77');
         expect(fx.byId('ctl-advanced').open).toBe(true);
@@ -903,6 +904,386 @@
       ready();
       expect(function () { C.mount(null, memoryStore()); }).toThrow();
       expect(function () { C.mount(createFakeDom().createElement('form'), null); }).toThrow();
+    });
+  });
+
+  // The attempts field shows the default of the selected board and follows it until a number is typed
+  // (MS05r5p, CV6-03 (c2)); clearing the field gives the number back to the board.
+  describe('controls: the attempts field and the size default (MS05r5p)', function () {
+    function persistentStore() {
+      var data = {};
+      var urls = [];
+      var env = {
+        data: data,
+        urls: urls,
+        storage: {
+          getItem: function (k) { return hasOwn(data, k) ? data[k] : null; },
+          setItem: function (k, v) { data[k] = String(v); },
+          removeItem: function (k) { delete data[k]; }
+        },
+        history: { state: null, replaceState: function (state, title, url) { urls.push(url); } },
+        again: function (search) {
+          var store = S.create({ storage: env.storage, history: env.history, navigator: { languages: [] },
+            location: { search: search || '', pathname: '/index.html', hash: '' } });
+          store.load();
+          return store;
+        }
+      };
+      env.options = { storage: env.storage, history: env.history,
+        location: { search: '', pathname: '/index.html', hash: '' } };
+      return env;
+    }
+
+    function shown(store) {
+      var s = store.get();
+      return [s.variantId, s.maxAttempts, s.attemptsExplicit];
+    }
+
+    function type(input, text) {
+      input.value = text;
+      input.fire('input');
+    }
+
+    function clear(input) {
+      input.value = '';
+      input.fire('input');
+      input.fire('change');
+    }
+
+    it('MS05r5p-T04: the form model shows the board default, and a chosen number next to it', function () {
+      ready();
+      var plain = field(model('?v=mega16'), 'maxAttempts');
+      expect([plain.value, plain.defaultValue, plain.min, plain.max]).toEqual([2, 2, 1, 20]);
+      var chosen = field(model('?v=mega16&attempts=8'), 'maxAttempts');
+      expect([chosen.value, chosen.defaultValue]).toEqual([8, 2]);
+      var equal = field(model('?v=mega16&attempts=2'), 'maxAttempts');
+      expect([equal.value, equal.defaultValue]).toEqual([2, 2]);
+      [['classic9', 8], ['mega12', 4], ['butterfly', 4], ['flower', 2], ['sohei', 2], ['samurai', 2],
+        ['killer', 8]].forEach(function (pair) {
+        var f = field(model('?v=' + pair[0]), 'maxAttempts');
+        expect([pair[0], f.value, f.defaultValue]).toEqual([pair[0], pair[1], pair[1]]);
+      });
+      // An older mega16 recipe replayed with 8 is shown as a chosen 8 beside the default 2.
+      var store = memoryStore();
+      store.set({ variantId: 'mega16', maxAttempts: 8 }, { source: 'app' });
+      var replayed = field(C.describe(store.get()), 'maxAttempts');
+      expect([replayed.value, replayed.defaultValue]).toEqual([8, 2]);
+      expect(store.get().attemptsExplicit).toBe(true);
+    });
+
+    it('MS05r5p-T04: the field follows the board in default mode and keeps a typed number', function () {
+      ready();
+      var fx = mountFixture();
+      var input = fx.byId('ctl-maxAttempts');
+      expect(input.value).toBe('8');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      expect([input.value, fx.store.get().maxAttempts, fx.store.get().attemptsExplicit]).toEqual(['2', 2, false]);
+      pick(fx.byId('ctl-variant'), 'mega12');
+      expect(input.value).toBe('4');
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(input.value).toBe('8');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      type(input, '2');
+      expect([fx.store.get().maxAttempts, fx.store.get().attemptsExplicit]).toEqual([2, true]);
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(input.value).toBe('2');
+      expect([fx.store.get().maxAttempts, fx.store.get().attemptsExplicit]).toEqual([2, true]);
+      pick(fx.byId('ctl-variant'), 'samurai');
+      expect(input.value).toBe('2');
+    });
+
+    it('MS05r5p-T04: clearing the field returns to default mode; it follows the variant and the reload, and the ' +
+      'URL names no attempts', function () {
+      ready();
+      var env = persistentStore();
+      var fx = mountFixture(env.options);
+      var input = fx.byId('ctl-maxAttempts');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      type(input, '5');
+      expect(shown(fx.store)).toEqual(['mega16', 5, true]);
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html?v=mega16&attempts=5');
+      clear(input);
+      expect(shown(fx.store)).toEqual(['mega16', 2, false]);
+      expect(input.value).toBe('2');
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html?v=mega16');
+      expect(JSON.parse(env.data['sg.lastConfig.v1']).attemptsExplicit).toBe(false);
+      expect(shown(env.again())).toEqual(['mega16', 2, false]);
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(shown(fx.store)).toEqual(['classic9', 8, false]);
+      expect(input.value).toBe('8');
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html');
+      expect(shown(env.again())).toEqual(['classic9', 8, false]);
+      pick(fx.byId('ctl-variant'), 'mega12');
+      expect(input.value).toBe('4');
+      // A field that was never chosen is cleared the same way, and a typed value works again afterwards.
+      clear(input);
+      expect(shown(fx.store)).toEqual(['mega12', 4, false]);
+      type(input, '3');
+      expect(shown(fx.store)).toEqual(['mega12', 3, true]);
+    });
+
+    it('MS05r5p-T04: a typed number equal to the default is explicit, and reset() gives default mode', function () {
+      ready();
+      var env = persistentStore();
+      var fx = mountFixture(env.options);
+      var input = fx.byId('ctl-maxAttempts');
+      pick(fx.byId('ctl-variant'), 'mega16');
+      type(input, '2');
+      expect(shown(fx.store)).toEqual(['mega16', 2, true]);
+      expect(env.urls[env.urls.length - 1]).toBe('/index.html?v=mega16&attempts=2');
+      expect(shown(env.again())).toEqual(['mega16', 2, true]);
+      pick(fx.byId('ctl-variant'), 'classic9');
+      expect(shown(fx.store)).toEqual(['classic9', 2, true]);
+      expect(input.value).toBe('2');
+      fx.store.reset();
+      expect(shown(fx.store)).toEqual(['classic9', 8, false]);
+      expect(input.value).toBe('8');
+      expect(shown(env.again())).toEqual(['classic9', 8, false]);
+      pick(fx.byId('ctl-variant'), 'mega16');
+      expect(input.value).toBe('2');
+      expect(fx.store.get().attemptsExplicit).toBe(false);
+    });
+  });
+
+  // MS18c: a stored (or linked) level that qualification has hidden is corrected while the store loads, which
+  // the app does before it builds this form. The form shows the note from its first render, once, in the
+  // language of the page; nothing about it is stored.
+  describe('controls: the note of a level corrected at start-up (MS18c)', function () {
+    var LAST = 'sg.lastConfig.v1';
+    var PREFS = 'sg.prefs.v1';
+
+    function storageOf(config, prefs) {
+      var data = {};
+      if (config) data[LAST] = JSON.stringify(config);
+      if (prefs) data[PREFS] = JSON.stringify(prefs);
+      return {
+        data: data,
+        getItem: function (k) { return hasOwn(data, k) ? data[k] : null; },
+        setItem: function (k, v) { data[k] = String(v); },
+        removeItem: function (k) { delete data[k]; }
+      };
+    }
+
+    // The offers start from the whole ladder, whatever the published arrays are (MS18c): each test names the
+    // levels it hides.
+    function withHidden(variantId, hidden, fn) {
+      var def = SG.variants.get(variantId);
+      var original = def.difficultySupport;
+      def.difficultySupport = SG.difficulty.LEVELS.filter(function (level) {
+        return hidden.indexOf(level) === -1;
+      });
+      try {
+        return fn();
+      } finally {
+        def.difficultySupport = original;
+      }
+    }
+
+    /** The store loads first, then the form is built, as `SG.app.start` does. */
+    function startUp(storage) {
+      var doc = createFakeDom();
+      var form = doc.createElement('form');
+      form.setAttribute('id', 'controls-form');
+      doc.body.appendChild(form);
+      var store = S.create({ storage: storage, location: null, history: null, navigator: { languages: [] } });
+      var state = store.load();
+      var view = C.mount(form, store, { notify: function () {} });
+      return { doc: doc, form: form, store: store, state: state, view: view,
+        byId: function (id) { return doc.getElementById(id); } };
+    }
+
+    it('MS18c-T04: the first render says that the stored level is gone, in English and in Vietnamese', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['hell1'], function () {
+          var en = startUp(storageOf({ variantId: 'classic9', difficulty: 'hell1', seed: '5' }));
+          expect(en.state.difficulty).toBe('nightmare');
+          expect(en.byId('ctl-difficulty').value).toBe('nightmare');
+          var notes = en.byId('ctl-notes');
+          expect(notes.hidden).toBe(false);
+          expect(notes.textContent).toBe(I.t('controls.note.difficultyChanged', {
+            variant: I.t('variant.classic9'), from: I.t('difficulty.hell1'), to: I.t('difficulty.nightmare')
+          }));
+          expect(notes.textContent).toMatch(/does not offer/);
+          en.view.destroy();
+          var vi = startUp(storageOf({ variantId: 'classic9', difficulty: 'hell1' }, { lang: 'vi' }));
+          expect(I.current).toBe('vi');
+          expect(vi.byId('ctl-notes').hidden).toBe(false);
+          expect(vi.byId('ctl-notes').textContent).toMatch(/không có mức/);
+          expect(vi.byId('ctl-notes').textContent).toContain(I.t('difficulty.hell1'));
+          expect(vi.byId('ctl-notes').textContent).toContain(I.t('difficulty.nightmare'));
+          vi.view.destroy();
+        });
+      });
+    });
+
+    it('MS18c-T04: the note is shown once, goes with the next choice, and is not stored', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['hell1'], function () {
+          var storage = storageOf({ variantId: 'classic9', difficulty: 'hell1' });
+          var before = JSON.stringify(storage.data);
+          var first = startUp(storage);
+          expect(first.byId('ctl-notes').hidden).toBe(false);
+          expect(JSON.stringify(storage.data)).toBe(before);
+          // Another form on the same store finds nothing to say; a rebuild for the language keeps the note.
+          var second = C.mount(first.doc.createElement('form'), first.store, { notify: function () {} });
+          expect(first.store.takeLoadAdjustments()).toEqual([]);
+          second.destroy();
+          I.setLocale('vi');
+          expect(first.byId('ctl-notes').hidden).toBe(false);
+          expect(first.byId('ctl-notes').textContent).toMatch(/không có mức/);
+          I.setLocale('en');
+          pick(first.byId('ctl-difficulty'), 'hard');
+          expect(first.byId('ctl-notes').hidden).toBe(true);
+          first.view.destroy();
+        });
+      });
+    });
+
+    it('MS18c-T04: nothing is said for a default that is not offered or for an ignored stored level', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['normal'], function () {
+          var fresh = startUp(storageOf(null));
+          expect(fresh.state.difficulty).toBe('easy');
+          expect(fresh.byId('ctl-notes').hidden).toBe(true);
+          fresh.view.destroy();
+        });
+        withHidden('classic9', ['hell1'], function () {
+          var fine = startUp(storageOf({ variantId: 'classic9', difficulty: 'expert' }));
+          expect(fine.byId('ctl-notes').hidden).toBe(true);
+          fine.view.destroy();
+        });
+      });
+    });
+
+    // The real start-up: a private copy of js/ui/app.js on a minimal fake document, with the real store loaded
+    // from the given storage, the real form on a fake DOM and stand-ins for the other views. `app.start()` is
+    // the code that loads the store and then mounts the controls.
+    function startApp(storage) {
+      var node = SG.test.node;
+      if (!node) SG.test.skip('needs the file system (Node only)');
+      var noop = function () {};
+      function element() {
+        return {
+          nodeType: 1, hidden: false, disabled: false, textContent: '', className: '',
+          style: { setProperty: noop },
+          classList: { toggle: noop, contains: function () { return false; }, add: noop, remove: noop },
+          setAttribute: noop, getAttribute: function () { return null; }, removeAttribute: noop,
+          addEventListener: noop, removeEventListener: noop, appendChild: function (c) { return c; },
+          removeChild: noop, contains: function () { return false; }, querySelector: function () { return null; },
+          focus: noop
+        };
+      }
+      var form = createFakeDom();
+      var formRoot = form.createElement('form');
+      formRoot.setAttribute('id', 'controls-form');
+      formRoot.classList = { toggle: noop, contains: function () { return false; }, add: noop, remove: noop };
+      form.body.appendChild(formRoot);
+      var byId = {};
+      ['board-svg', 'board-root', 'controls-root', 'btn-generate', 'btn-regenerate', 'btn-cancel', 'btn-export',
+        'btn-drawer', 'steps-root', 'player-root', 'result-root', 'main']
+        .forEach(function (id) { byId[id] = element(); });
+      byId['controls-form'] = formRoot;
+      var doc = {
+        readyState: 'loading', title: '', body: element(), documentElement: element(), activeElement: null,
+        getElementById: function (id) { return byId[id] || null; },
+        querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+        createElement: element, createElementNS: element, addEventListener: noop, removeEventListener: noop
+      };
+      var sg = Object.assign({}, SG);
+      sg.localeFragments = [];
+      ['app', 'exportUi', 'a11y', 'theme', 'help', 'cache', 'history'].forEach(function (name) { delete sg[name]; });
+      var store = S.create({ storage: storage, location: null, history: null, navigator: { languages: [] } });
+      sg.store = Object.assign({}, S, { instance: function () { return store; } });
+      sg.boardView = { create: function () { return new Proxy({}, { get: function () { return noop; } }); } };
+      sg.stepView = {
+        create: function () { return { clear: noop, setSteps: noop, setPosition: noop, destroy: noop }; }
+      };
+      sg.resultView = { create: function () { return { clear: noop, show: noop, refresh: noop, destroy: noop }; } };
+      sg.player = {
+        LAYER_NAMES: [],
+        create: function () {
+          return { reset: noop, load: noop, bindControls: noop, setPreparation: noop, setAnalysis: noop,
+            destroy: noop, state: function () { return { finished: false, loaded: false, position: 0, length: 0 }; } };
+        },
+        createPreparation: function () { return { start: noop, cancel: noop, press: noop }; }
+      };
+      var source = node.fs.readFileSync(node.path.join(node.root, 'js/ui/app.js'), 'utf8');
+      new Function('self', 'document', source)({ SG: sg, setTimeout: setTimeout, clearTimeout: clearTimeout }, doc);
+      expect(sg.app.start()).toBe(true);
+      return { app: sg.app, store: store, notes: function () { return form.getElementById('ctl-notes'); },
+        select: function () { return form.getElementById('ctl-difficulty'); }, destroy: function () { sg.app.destroy(); } };
+    }
+
+    function withApp(storage, fn) {
+      var page = startApp(storage);
+      try {
+        return fn(page);
+      } finally {
+        page.destroy();
+        I.setLocale('en');
+      }
+    }
+
+    it('MS18c-T04: app start-up shows the note for a stored hidden level, in both languages', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('classic9', ['hell1'], function () {
+          withApp(storageOf({ variantId: 'classic9', difficulty: 'hell1' }), function (page) {
+            expect(page.store.get().difficulty).toBe('nightmare');
+            expect(page.select().value).toBe('nightmare');
+            expect(page.notes().hidden).toBe(false);
+            expect(page.notes().textContent).toMatch(/does not offer/);
+          });
+          withApp(storageOf({ variantId: 'classic9', difficulty: 'hell1' }, { lang: 'vi' }), function (page) {
+            expect(page.notes().hidden).toBe(false);
+            expect(page.notes().textContent).toMatch(/không có mức/);
+          });
+          withApp(storageOf({ variantId: 'classic9', difficulty: 'expert' }), function (page) {
+            expect(page.notes().hidden).toBe(true);
+          });
+        });
+      });
+    });
+
+    it('MS18c-T04: the attempts intent is untouched by the correction at start-up', function () {
+      ready();
+      withEnglish(function () {
+        withHidden('mega16', ['hell1'], function () {
+          withApp(storageOf({ variantId: 'mega16', difficulty: 'hell1' }), function (page) {
+            var s = page.store.get();
+            expect([s.difficulty, s.maxAttempts, s.attemptsExplicit]).toEqual(['nightmare', 2, false]);
+            expect(page.notes().hidden).toBe(false);
+          });
+          withApp(storageOf({ variantId: 'mega16', difficulty: 'hell1', maxAttempts: 5, attemptsExplicit: true }),
+            function (page) {
+              var s = page.store.get();
+              expect([s.difficulty, s.maxAttempts, s.attemptsExplicit]).toEqual(['nightmare', 5, true]);
+              expect(page.notes().hidden).toBe(false);
+            });
+        });
+      });
+    });
+
+    it('MS18c-T04: the public request for a hidden level still throws and the fixed diagnostics still run', function () {
+      ready();
+      withHidden('classic9', ['hell1'], function () {
+        var threw = null;
+        try {
+          SG.pipeline.normalizeConfig({ variantId: 'classic9', difficulty: 'hell1', seed: 1 });
+        } catch (err) {
+          threw = err.code;
+        }
+        expect(threw).toBe('difficulty.unsupportedLevel');
+        var inside = SG.fixtures.toolRecords.withRequestedLevel('classic9', 'hell1', function () {
+          return SG.pipeline.normalizeConfig(S.toConfig({ variantId: 'classic9', difficulty: 'hell1', seed: '1' }))
+            .difficulty;
+        });
+        expect([inside.value, inside.overridden]).toEqual(['hell1', true]);
+        expect(SG.variants.get('classic9').difficultySupport.indexOf('hell1')).toBe(-1);
+      });
     });
   });
 })();

@@ -1,0 +1,6 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-mega16.json --cells=mega16/nightmare:3@1 --budget-seconds=420
+mega16/nightmare #1: 26456.7 ms, hit true, achieved nightmare, exact true, approximate false
+mega16/nightmare #2: 446.0 ms, hit true, achieved nightmare, exact true, approximate false
+mega16/nightmare #3: 15514.7 ms, hit true, achieved nightmare, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-mega16.json (42.42 s)
+exit=0 seconds=42.962

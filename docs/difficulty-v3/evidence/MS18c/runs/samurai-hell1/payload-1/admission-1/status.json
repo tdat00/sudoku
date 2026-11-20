@@ -1,0 +1,284 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "runId": "ms18c-20261118T213117729-18244",
+  "cell": "samurai/hell1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "payloadSlot": 1,
+  "admissionOrdinal": 1,
+  "state": "finished",
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "inputs": {
+    "ratingVersion": 3,
+    "engineSources": "0ca29eaeebc295b6",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77"
+  },
+  "policy": "MS18c-GQ-host-active",
+  "method": "MS18c-GQ-structural-v1",
+  "supervisor": {
+    "pid": 18244,
+    "createdUtcMicros": "2026-11-18T21:31:16.961905Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x800;killOnClose=False;breakawayOk=True;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 34644,
+    "createdUtcMicros": "2026-11-18T21:31:28.653549Z"
+  },
+  "clocks": {
+    "oStart": "2026-11-18T21:31:17.725Z",
+    "oSeconds": 7200.0,
+    "oDeadline": "2026-11-18T23:31:17.7291386Z",
+    "T": 4500.0,
+    "tStart": "2026-11-18T21:31:28.636Z",
+    "tDeadline": "2026-11-18T22:46:28.6497617Z",
+    "rSeconds": 7.3395493,
+    "wSeconds": 368.08897,
+    "lockWaitedSeconds": 6.234,
+    "note": "T starts at the creation of the owned launcher after the lock acquisition and excludes that wait",
+    "elapsedSeconds": 366.95
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\status.json",
+    "supervisorLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\supervisor.log",
+    "preLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\pre-ms18c-20261118T213117729-18244.log",
+    "events": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\events.jsonl",
+    "readiness": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\readiness.json",
+    "stdout": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\stdout.txt",
+    "stderr": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\stderr.txt",
+    "qualifierJson": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\qualifier.json",
+    "qualifierMarkdown": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\payload-1\\admission-1\\qualifier.md",
+    "journal": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\journal.jsonl",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\acceptance-receipt.json"
+  },
+  "members": [
+    3200,
+    8732,
+    17812,
+    20148,
+    21252,
+    23260,
+    27160,
+    29516,
+    30716,
+    32536,
+    32556,
+    32712,
+    33500,
+    33532,
+    34476,
+    34644
+  ],
+  "membersSeen": [
+    {
+      "pid": 3200,
+      "createdUtcMicros": "2026-11-18T21:31:36.318940Z"
+    },
+    {
+      "pid": 8732,
+      "createdUtcMicros": "2026-11-18T21:31:35.233240Z"
+    },
+    {
+      "pid": 17812,
+      "createdUtcMicros": "2026-11-18T21:31:35.977122Z"
+    },
+    {
+      "pid": 20148,
+      "createdUtcMicros": "2026-11-18T21:31:29.477108Z"
+    },
+    {
+      "pid": 21252,
+      "createdUtcMicros": "2026-11-18T21:31:29.501799Z"
+    },
+    {
+      "pid": 23260,
+      "createdUtcMicros": "2026-11-18T21:31:35.960404Z"
+    },
+    {
+      "pid": 27160,
+      "createdUtcMicros": "2026-11-18T21:31:36.516146Z"
+    },
+    {
+      "pid": 29516,
+      "createdUtcMicros": "2026-11-18T21:31:36.501514Z"
+    },
+    {
+      "pid": 30716,
+      "createdUtcMicros": "2026-11-18T21:31:36.527502Z"
+    },
+    {
+      "pid": 32536,
+      "createdUtcMicros": "2026-11-18T21:31:35.245569Z"
+    },
+    {
+      "pid": 32556,
+      "createdUtcMicros": "2026-11-18T21:31:28.678120Z"
+    },
+    {
+      "pid": 32712,
+      "createdUtcMicros": "2026-11-18T21:31:36.358792Z"
+    },
+    {
+      "pid": 33500,
+      "createdUtcMicros": "2026-11-18T21:31:28.787712Z"
+    },
+    {
+      "pid": 33532,
+      "createdUtcMicros": "2026-11-18T21:31:36.540897Z"
+    },
+    {
+      "pid": 34476,
+      "createdUtcMicros": "2026-11-18T21:31:28.811496Z"
+    },
+    {
+      "pid": 34644,
+      "createdUtcMicros": "2026-11-18T21:31:28.653549Z"
+    }
+  ],
+  "heartbeatAt": "2026-11-18T21:37:37.326Z",
+  "finalStatus": "record-accepted",
+  "exitCode": 0,
+  "activeProcesses": 5,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 34644,
+    "launcherCreated": "2026-11-18T21:31:28.653549Z",
+    "tStartIso": "2026-11-18T21:31:28.636Z",
+    "tStartTicks": 6322698812238,
+    "tStartNs": 632269881223800,
+    "createdAfterSeconds": 0.0339948,
+    "resumedAfterSeconds": 0.038554,
+    "launcherExit": 0,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 368.08897,
+    "launcherExitedAfterSeconds": 368.0853198,
+    "members": [
+      3200,
+      8732,
+      17812,
+      20148,
+      21252,
+      23260,
+      27160,
+      29516,
+      30716,
+      32536,
+      32556,
+      32712,
+      33500,
+      33532,
+      34476,
+      34644
+    ],
+    "membersDetail": [
+      {
+        "pid": 3200,
+        "createdUtcMicros": "2026-11-18T21:31:36.318940Z"
+      },
+      {
+        "pid": 8732,
+        "createdUtcMicros": "2026-11-18T21:31:35.233240Z"
+      },
+      {
+        "pid": 17812,
+        "createdUtcMicros": "2026-11-18T21:31:35.977122Z"
+      },
+      {
+        "pid": 20148,
+        "createdUtcMicros": "2026-11-18T21:31:29.477108Z"
+      },
+      {
+        "pid": 21252,
+        "createdUtcMicros": "2026-11-18T21:31:29.501799Z"
+      },
+      {
+        "pid": 23260,
+        "createdUtcMicros": "2026-11-18T21:31:35.960404Z"
+      },
+      {
+        "pid": 27160,
+        "createdUtcMicros": "2026-11-18T21:31:36.516146Z"
+      },
+      {
+        "pid": 29516,
+        "createdUtcMicros": "2026-11-18T21:31:36.501514Z"
+      },
+      {
+        "pid": 30716,
+        "createdUtcMicros": "2026-11-18T21:31:36.527502Z"
+      },
+      {
+        "pid": 32536,
+        "createdUtcMicros": "2026-11-18T21:31:35.245569Z"
+      },
+      {
+        "pid": 32556,
+        "createdUtcMicros": "2026-11-18T21:31:28.678120Z"
+      },
+      {
+        "pid": 32712,
+        "createdUtcMicros": "2026-11-18T21:31:36.358792Z"
+      },
+      {
+        "pid": 33500,
+        "createdUtcMicros": "2026-11-18T21:31:28.787712Z"
+      },
+      {
+        "pid": 33532,
+        "createdUtcMicros": "2026-11-18T21:31:36.540897Z"
+      },
+      {
+        "pid": 34476,
+        "createdUtcMicros": "2026-11-18T21:31:28.811496Z"
+      },
+      {
+        "pid": 34644,
+        "createdUtcMicros": "2026-11-18T21:31:28.653549Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  },
+  "post": {
+    "ok": true,
+    "outcome": "record-accepted",
+    "verdict": "accepted",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell1\\acceptance-receipt.json",
+    "monitor": {
+      "proceed": true,
+      "invalid": [],
+      "invalidTiming": [],
+      "breaches": [],
+      "metrics": {
+        "rSeconds": 7.3395493,
+        "requests": 9,
+        "maxMs": 120051.7349,
+        "stopped": "time",
+        "secondRoundRan": false,
+        "slowTotal": 9,
+        "slowFirstRound": 9,
+        "qSeconds": 360.553,
+        "sSeconds": 360.01466000000005,
+        "sFirstRoundSeconds": 360.01466000000005,
+        "sSecondRoundSeconds": 0,
+        "qMinusS": 0.5383399999999674,
+        "wSeconds": 368.08897,
+        "wMinusQ": 7.53597000000003
+      }
+    }
+  },
+  "writeFailures": 0
+}

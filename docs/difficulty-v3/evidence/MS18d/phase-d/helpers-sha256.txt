@@ -1,0 +1,3 @@
+2FC991E3AF50C509A9B1D741C0F05C42A4B88297D6D7194B03DFD4338B1B9377  generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js
+8D9CAA126ED11E6AEE8B72D06D727772B755339D0015FE3E544622EAB3F836BF  generator\tests\artifacts\difficulty-v3\MS18d\phase-d\test-closeout.js
+6199B9AEBF5EBFA122B670F2654E37F0E47C11925660C2C28281672643D16E01  generator\tests\artifacts\difficulty-v3\MS18d\phase-d\run-locked-d.ps1

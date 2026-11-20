@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the score of rating v3 > --results=..\docs\difficulty-v3\evidence\MS17b\gd\score-v3.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL difficulty: 14 passed, 1 failed  (665 ms)
+
+Failures:
+  FAIL difficulty > difficulty: the score of rating v3 > reproduces the worked examples: classic9 499 and Samurai 633
+       AssertionError: expected {nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1, nakedPair: 1, xWing: 1, skyscraper: 1} to equal {nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1, nakedPair: 1, xWing: 1, simpleColouring: 1}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\manual\difficulty.test.js:679:35)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  15 total, 14 passed, 1 failed, 0 skipped
+Time:   665 ms running tests, 916 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/score-v3.json
+exit=1 seconds=1.133

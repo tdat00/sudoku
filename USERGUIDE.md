@@ -98,18 +98,23 @@ while the puzzle can still be solved with the techniques that fit the band of th
 *technique-bounded oracle*, [design.md](generator/design.md) §6.8), and it only returns puzzles with a complete logical
 proof. The same seed with the same options always gives the same puzzle.
 
-**Rating v2 compatibility.** "The same seed gives the same puzzle" holds within one rating/generator version.
-This version changes the scoring and the generation (rating v2), so a link or a history entry made by an older
-version may regenerate a different puzzle, and the scores already stored in the history are not re-rated (what
-changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-and-pre-generation)).
+**Rating version compatibility.** "The same seed gives the same puzzle" holds within one rating/generator version.
+This version changes what a level means and the generation (rating v3), so a link or a history entry made by an older
+version may regenerate a different puzzle, the puzzles an older version cached are dropped once, and the scores already
+stored in the history are not re-rated (what
+changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-and-pre-generation)). The history
+keeps only the recipe (seed and settings), not the puzzle: an entry that does not say which rating version made
+it, or that was made by an earlier one, carries the note "Made by an earlier version", because selecting it
+generates the recipe again with the current rating model.
 
 ## Generator features
 
 - **15 variants** — classic 4×4, 6×6 and 9×9; Mega 12×12 and Monster 16×16; Diagonal (X); Hyper (Windoku);
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
 - **Nine difficulty levels** — very easy, easy, normal, hard, expert, master, nightmare, hell 1 and
-  hell 2 — scored from 21 human solving techniques (singles, locked candidates, subsets, fish, wings,
-  chains) plus 3 cage and 2 inequality techniques; every variant offers the levels it reaches reliably.
+  hell 2 — scored from 40 human solving techniques (34 classic ones: singles, locked candidates, subsets, fish,
+  wings, chains; 1 for Jigsaw, 3 cage and 2 inequality techniques); every variant offers the levels it reaches
+  reliably.
 - **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
   with a notch for every step), in two views of the same changes: by default a few steps chosen so that the score
   rises steadily and never goes down, or, with **Show all moves**, every recorded change, including the ones
@@ -135,12 +140,14 @@ changed in the stored data is in the [developer guide](DEVELOPERGUIDE.md#cache-a
   points and its share of the score, then the empty cells, and a Total equal to the score; the Generation steps
   tab shows the same table for every step, so at the last step its Total is the score of the Summary.
 - **Generated puzzles list** — every puzzle you make is saved in the browser (up to 100, newest first) and shown
-  on the left as "variant" and "level: score, seed"; click one to open it again (the same seed gives the same
-  puzzle within one generator version), remove one, or clear the list.
+  on the left as "variant" and "level: score, seed"; click one to open it again (the puzzle is generated again
+  from its seed and settings with the current rating model; an entry made by an earlier version, or one that does
+  not record its version, says "Made by an earlier version" and may give a different puzzle), remove one, or clear
+  the list.
 - **Bilingual interface** (English / Vietnamese), switched without a reload; every string, including the
   solving techniques and the variant rules, exists in both languages.
-- **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level or, when it
-  cannot be reached, the closest puzzle with a clear notice.
+- **Guaranteed result** — exactly one solution (checked by a separate solver), the requested level (a score in its
+  band and a technique of that level's tier) or, when it cannot be reached, the best puzzle with a clear notice.
 - **Print / PDF** — the Print dialog prints the puzzles you tick in the saved list (the one on screen is ticked at
   first), 1, 2 or 4 to a page (4 at first), optionally with their solutions on pages of their own; choose "Save as PDF" in the print dialog to get a PDF file (vector graphics, so the lines stay sharp).
 - **Text export** — the **Export** button next to **Print** shows the puzzles you tick in the saved list as readable text (`#1,Classic Sudoku 9x9,Hard,<seed>` then one grid row per line, `.` for empty cells) with a Copy
@@ -163,19 +170,19 @@ The variants (`id` is the value of the URL parameter `v`):
 |------|---------|-------:|------:|----------------|
 | `classic4` | Classic Sudoku 4×4 | 4 | 16 | veryEasy |
 | `classic6` | Classic Sudoku 6×6 | 6 | 36 | veryEasy, hard |
-| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–hell1 |
-| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–hell2 |
-| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–hell2 |
-| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy–hell2 |
-| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy–hell2 |
-| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–hell2 |
-| `killer` | Killer Sudoku | 9 | 81 | veryEasy–hell2 |
-| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–hell2 |
-| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy–hell2 |
-| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy–hell2 |
-| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy–hell2 |
-| `flower` | Flower Sudoku | 9 | 189 | veryEasy–hell2 |
-| `wordoku` | Wordoku | 9 | 81 | veryEasy–hell1 |
+| `classic9` | Classic Sudoku 9×9 | 9 | 81 | veryEasy–nightmare |
+| `mega12` | Mega Sudoku 12×12 | 12 | 144 | veryEasy–nightmare, hell2 |
+| `mega16` | Monster Sudoku 16×16 | 16 | 256 | veryEasy–hard, master, hell2 |
+| `diagonalX` | Diagonal Sudoku (X) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `hyper` | Hyper Sudoku (Windoku) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `jigsaw9` | Jigsaw Sudoku | 9 | 81 | veryEasy–hard, master, hell2 |
+| `killer` | Killer Sudoku | 9 | 81 | veryEasy–normal |
+| `greaterThan` | Greater-Than Sudoku | 9 | 81 | veryEasy–easy, hard, master, hell2 |
+| `samurai` | Samurai Sudoku | 9 | 369 | veryEasy, normal–master |
+| `sohei` | Sohei Sudoku | 9 | 288 | veryEasy, normal–master, hell2 |
+| `butterfly` | Butterfly Sudoku | 9 | 144 | veryEasy, normal–nightmare, hell2 |
+| `flower` | Flower Sudoku | 9 | 189 | veryEasy, normal–hard, master, hell2 |
+| `wordoku` | Wordoku | 9 | 81 | veryEasy–easy, hard–nightmare |
 
 ## Screenshots
 
@@ -215,13 +222,20 @@ included.
 | `sym` | `sym=mirrorH` | Symmetry of the given cells: `none`, `rotational180` (default), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Symbol set: `digits`, `letters`, `colors`, `shapes`, `word` (Wordoku only). Default: the variant's own. |
 | `order` | `order=snake` | Order in which clues are tried: `random` (default), `rowByRow`, `snake`, `spiral`, `jumpOne`. |
-| `attempts` | `attempts=12` | Full grids to try before settling for the closest puzzle, 1–20. Default 8. |
+| `attempts` | `attempts=12` | Full grids to try before settling for the closest puzzle, 1–20. Without it the number follows the board: 8 up to 81 cells, 4 up to 144 cells (Mega 12×12, Butterfly), 2 above (Flower, Sohei, Samurai, Monster 16×16). A link written with `attempts` keeps that number, also one equal to the default. |
 | `sol` | `sol=1` | Show the solution next to the puzzle. |
 | `o.<id>` | `o.cageSize=2` | An option of the chosen variant, for example `o.compactness=0.8` (jigsaw9), `o.futoshiki=1` (greaterThan), `o.placement=row` (wordoku). |
 | `lang` | `lang=vi` | Language: `en` or `vi`. Default: the stored choice, then the browser language. |
 | `auto` | `auto=1` | Generate as soon as the page loads (a link with a `seed` does so anyway). |
 
-`?v=classic9&d=master&seed=42&lang=vi&auto=1` always gives the same puzzle. Settings are also kept in the
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` always gives the same puzzle. The **Maximum attempts** option
+(Advanced options) is the same number as `attempts`. Until you type one it follows the board you choose; a number
+you type is kept for every board, in the address bar and after a reload, and emptying the field makes it follow the
+board again. A puzzle that is opened again from the history list, rebuilt from a cached copy or exported again is
+generated with the number it was made with, so an older puzzle of a large board made with 8 attempts is made with 8
+again, and the field then shows that number as your own. Settings saved by an older version that hold 8 are read as
+the default, because they cannot be told from a deliberately chosen 8; entering 8 again makes it an explicit choice,
+kept for every board. Settings are also kept in the
 browser's `localStorage`, never sent anywhere: `sg.prefs.v1` (language, theme, text size, reduced motion, the
 colour-blind symbol), `sg.lastConfig.v1` (the last options), `sg.cache.v1` (up to 20 recently generated puzzles,
 so that the same puzzle opens at once), `sg.history.v1` (the list of generated puzzles on the left, up to 100). A
@@ -266,13 +280,26 @@ The format of the link, and how to point the button at another copy of the playe
   from measurements of generated puzzles, not from tests with human solvers
   ([details](DEVELOPERGUIDE.md#known-technical-limitations)). A combination that is hard to reach (a strict
   symmetry with a very high level) returns the closest puzzle with a notice instead of the exact level.
-- **Not every level is offered everywhere**: Classic 4×4 offers only very easy and Classic 6×6 very easy and hard;
-  Classic 9×9 and Wordoku stop at hell 1; every other variant offers all nine levels. The levels a variant
-  offers are the ones it passed in the qualification ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)).
-- **The hardest levels are the slowest**: the slowest combinations are Greater-Than and Killer from expert
-  upwards and the hell levels of the large boards, with a 95th percentile of up to about 9.5 s (Greater-Than
-  expert; Killer expert and nightmare 8–9 s; Monster 16×16 and Samurai hell 2 6–7 s) and single requests up to
-  about 13 s; most other combinations take well under a second.
+- **Large boards stop sooner**: a request for a large board tries fewer grids by default (4 for Mega 12×12 and
+  Butterfly, 2 for Flower, Sohei, Samurai and Monster 16×16, against 8 for the others), because one attempt on
+  such a board can take from several seconds to about a minute and the page stops a generation after 120 seconds.
+  When none of those grids reaches the requested level exactly you get the closest puzzle with a notice: it is
+  valid and has one solution, but its level can differ, most often on the hardest levels. Which levels a large board
+  offers is decided by the qualification, not by this default; you can raise the number in the advanced options at
+  the price of longer waits.
+- **Not every level is offered everywhere**: only the levels in the table above, 79 of the 135 combinations of
+  variant and level. Classic 4×4 offers only very easy and Classic 6×6 very easy and hard; Killer offers very easy
+  to normal, and no variant offers all nine levels. A level is offered only when it passed the qualification
+  ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)); Killer hard and expert are
+  also withheld on purpose (decision S-OD7) until a later calibration, whatever a new qualification says. A stored
+  setting or a link that names a level its variant no longer offers is moved to the nearest one it offers (the
+  easier on a tie), and the page says so.
+- **The hardest levels are the slowest**: of the 79 offered levels, 49 have a 95th percentile under one second.
+  The slowest are the hell levels and nightmare of the large boards: Sohei hell 2 (95th percentile 27 s), Monster
+  16×16 hell 2 (25 s), Butterfly nightmare (16 s) and hell 2 (11 s), then Mega 12×12 hell 2, Flower hell 2,
+  Greater-Than hell 2 and Hyper nightmare (8.5 to 9.5 s). Single requests took up to 67 s (Samurai master); the
+  page stops a generation after 120 seconds. These times come from the final qualification, which ran on a busy
+  machine (not strict-quiet); qualification.md lists all of them.
 - **Wordoku in Vietnamese**: nine-letter words with nine different letters are rare in Vietnamese, so the
   list is short; when it is too short the English list is used and a notice says so.
 - **Settings**: the switch that turns background pre-generation off is not remembered between visits.
@@ -327,7 +354,9 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   on-screen number pad; notes (`N`); erase; undo / redo (`Ctrl+Z`, `Ctrl+Y`).
 - Error checking: off, rule conflicts (repeats, cage sums, signs) or every wrong entry as you type.
 - **Hints** in three steps (the technique and where to look, the cells, the move) that are always correct and
-  name one of 26 techniques, with a translated name and description.
+  name one of 40 techniques, with a translated name and description. If a chain step represents a group of cells, it
+  is written in brackets: `(R1C1=5 ∨ R1C2=5)` means that at least one of those cells holds the 5, and
+  `(R1C1≠5 ∧ R1C2≠5)` that none of them does; a true group does not tell you which cell holds the digit.
 - Symbol modes: digits, letters, colours (always with a shape), shapes and the Wordoku word; a solved Wordoku
   shows its key word and, when the built-in word book knows the word, its meaning.
 - A timer that pauses when you leave the tab, completion detection and reveal-a-cell.
@@ -342,7 +371,7 @@ account, nothing to install. **Open it: [tdat00.github.io/sudoku/player](https:/
   keys next to it; on a small screen the tools and the pad are fixed to the bottom and the buttons are icons.
 - Settings (language, theme, text size, reduced motion, colour symbol, check mode, notes behaviour,
   coordinates), and a **guide** (`help.html`, opened by the Help button in a new tab): the basics of playing, how
-  the hints work, the techniques that solve harder puzzles with a real example for each of the 26, and the
+  the hints work, the techniques that solve harder puzzles with a real example for each of the 40, and the
   keyboard shortcuts.
 - Accessible: skip link, an ARIA grid with spoken cell labels, live announcements, focus kept in dialogs,
   contrast checked from the design tokens, forced-colours and reduced-motion support.

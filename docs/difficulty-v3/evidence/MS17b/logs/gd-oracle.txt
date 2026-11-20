@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger: technique-bounded oracle > --results=..\docs\difficulty-v3\evidence\MS17b\gd\oracle.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 7 passed  (1.64 s)
+
+Suites: 1
+Tests:  7 total, 7 passed, 0 failed, 0 skipped
+Time:   1.64 s running tests, 1.91 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/oracle.json
+exit=0 seconds=2.146

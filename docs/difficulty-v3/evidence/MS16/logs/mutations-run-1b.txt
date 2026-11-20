@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS16\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS16\mutations-sdc-1b.txt 0 138
+mutation 31 (G13 the cells of a box are not sorted): DETECTED by run 0 (generator tech-als ~sue-de-coq) - 62 total, 61 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.5 s
+mutation 66 (V05 |C| below |I| + p + q is allowed): DETECTED by run 0 (generator tech-als ~sue-de-coq) - 12 total, 11 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.6 s
+detected 2 of 2, survivors 0, 9.1 s
+exit=0 seconds=9.169

@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped graph
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 25 passed, 1 failed  (2.21 s)
+
+Failures:
+  FAIL tech-chain > grouped graph (R16, inactive): ownership, determinism and state reuse > never writes to the state, the model or the context
+       TypeError: Cannot freeze array buffer views with elements
+       at Object.freeze (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:4155:14)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  26 total, 25 passed, 1 failed, 0 skipped
+Time:   2.21 s running tests, 2.32 s total
+exit=1 seconds=2.424

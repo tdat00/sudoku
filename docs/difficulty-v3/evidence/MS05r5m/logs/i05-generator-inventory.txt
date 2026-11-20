@@ -1,0 +1,2 @@
+Inventory: 3207 tests in 49 suites (0 skipped, 28 benchmarks), registration 0.5 s
+Written: docs/difficulty-v3/evidence/MS05r5m/generator-inventory.json

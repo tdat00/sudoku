@@ -1,0 +1,113 @@
+mutation 18 (a line with one candidate is a base line): DETECTED - 480 total, 407 passed, 73 failed, 0 skipped - 73 failing, 73 of the finned fish - 16.3 s
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: fins in two boxes: R1C5 (B2) and R4C9 (B6) (as listed)
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: fins in two boxes: R1C5 (B2) and R4C9 (B6) (transposed)
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: fins on one line in two boxes: R4C5 (B5) and R4C9 (B6) (as listed)
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: fins on one line in two boxes: R4C5 (B5) and R4C9 (B6) (transposed)
+mutation 19 (the last digit is not searched): DETECTED - 480 total, 450 passed, 30 failed, 0 skipped - 30 failing, 30 of the finned fish - 17.6 s
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has no finned fish and costs no work on a board without boxes (a Latin square), unlike the same board with them
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+mutation 20 (the parent budget is checked one unit early): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned fish - 21.2 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+mutation 21 (the parent budget is checked one unit late): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned fish - 21.3 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+mutation 22 (the position of the last budget check is not updated): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned fish - 77.4 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+mutation 23 (the budget is not checked at the entry of the call): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned fish - 21.1 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+mutation 24 (cancellation (every error but the work cap) is swallowed like a spent budget): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned fish - 21.2 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 25 (a spent budget propagates instead of "nothing found"): DETECTED - 480 total, 470 passed, 10 failed, 0 skipped - 10 failing, 4 of the finned fish - 20.9 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 26 (a spent work limit propagates instead of "nothing found"): DETECTED - 480 total, 452 passed, 28 failed, 0 skipped - 28 failing, 18 of the finned fish - 19.9 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+mutation 27 (the observer never sees the work cap): DETECTED - 480 total, 465 passed, 15 failed, 0 skipped - 15 failing, 12 of the finned fish - 20.0 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > takes a size of 2 or 3 and a work limit like the other seams, and rejects anything else
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > ends a call whose limit is spent with nothing found (never a finding), and says so
+mutation 28 (the observer sees one unit too much): DETECTED - 480 total, 432 passed, 48 failed, 0 skipped - 48 failing, 31 of the finned fish - 18.7 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > has R10's limit of 50000 tested pairs, and the registered finder reports it
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > counts one unit per tested pair of base lines, from a fresh counter on every call
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 pairs pass between two checks
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > has R10's limit of 50000 tested pairs, and the registered finder reports it
+mutation 29 (the work limit allows one unit more): DETECTED - 480 total, 459 passed, 21 failed, 0 skipped - 21 failing, 14 of the finned fish - 19.9 s
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > skyscraper (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > emptyRectangle (R11): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 30 (the work limit constant is 50001): DETECTED - 480 total, 476 passed, 4 failed, 0 skipped - 4 failing, 4 of the finned fish - 21.2 s
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has R10's limit of 50000 tested combinations, and the registered finder reports it
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > is registered as a technique of its own beside the finned X-Wing, with a limit of its own
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+mutation 31 (the unit is not counted (no work is spent on a combination of base lines)): DETECTED - 480 total, 447 passed, 33 failed, 0 skipped - 33 failing, 33 of the finned fish - 19.0 s
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has R10's limit of 50000 tested combinations, and the registered finder reports it
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has no finned fish and costs no work on a board without boxes (a Latin square), unlike the same board with them
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 combinations pass between two checks
+mutation 32 (the cells are not sorted): DETECTED - 480 total, 453 passed, 27 failed, 0 skipped - 27 failing, 27 of the finned fish - 16.5 s
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 16 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+mutation 33 (the eliminations are not sorted): DETECTED - 480 total, 475 passed, 5 failed, 0 skipped - 5 failing, 5 of the finned fish - 20.9 s
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 16 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on the jigsaw board and on its transpose, where the irregular regions are the boxes
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+mutation 34 (the fins are listed in line order, not in cell order): DETECTED - 480 total, 468 passed, 12 failed, 0 skipped - 12 failing, 12 of the finned fish - 19.4 s
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 16 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on the jigsaw board and on its transpose, where the irregular regions are the boxes
+mutation 35 (the covers are listed in reverse unit order): NOT STARTED (elapsed 392.4 s)
+detected 17 of 17, 1 not started, 392.4 s

@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795088863051,
+  "startedAtMs": 1795088863176,
+  "lockAcquiredAtMs": 1795088863092,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795088846952,
+    "lastCheckMs": 1795088862498,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 270,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 125,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795088837634,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 25542,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 24856,
+    "task": "MS18d GP record mega16-easy.i0.n50 a1",
+    "controllerPid": 18740,
+    "controllerParentPid": 24856,
+    "wrapperPid": 24856
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+      "present": true
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-plan.js
+ok   R24: the frozen table is exactly what the common rule derives (79 rows)
+ok   R24: 114 commands, 3,950 requests, 35 extra starts, 62 + 52, sums 7739 and 19023, max P 448
+ok   R24: the shapes of mega16/hell2, samurai/master and greaterThan/hell2; ranges are contiguous
+ok   R24: the derivation rejects an invalid maximum instead of inventing a bound
+ok   R24: a damaged frozen table is reported, never corrected
+ok   canonicalJson is the recipe of toolRecords.canonicalJson (the real tool, in a VM)
+ok   R2: the manifest declares 114 chunks and the literal run slots (2 per chunk + final merge)
+ok   R2: optional selected-cell merge slots are declared only when asked for (79 more)
+ok   manifest verification rejects a changed target (the hash no longer matches)
+ok   manifest verification rejects a changed seed
+ok   manifest verification rejects a chunk that is not contiguous
+ok   manifest verification rejects a duplicated chunk
+ok   manifest verification rejects a projection over 450 s
+ok   manifest verification rejects a slot with a traversing path
+ok   manifest verification rejects a slot declared twice
+ok   manifest verification rejects a slot assigned to the wrong cell
+ok   manifest verification rejects an extra slot
+ok   manifest verification rejects a changed slot policy
+ok   manifest verification rejects a missing loaded-source manifest
+ok   manifest verification rejects a wrong request count
+ok   manifest verification rejects a final merge that names a cell
+ok   ledger: a conforming ledger of a planned chunk has no problem; indices and seeds follow it
+ok   ledger: another schema is a problem
+ok   ledger: another chunk id is a problem
+ok   ledger: another target is a problem
+ok   ledger: a warm-up is a problem
+ok   ledger: jobs 2 is a problem
+ok   ledger: a budget is a problem
+ok   ledger: two measure calls is a problem
+ok   ledger: too few requests is a problem
+ok   ledger: a wrong index is a problem
+ok   ledger: a wrong seed is a problem
+ok   ledger: a negative time is a problem
+ok   ledger: a NaN time is a problem
+ok   ledger: a string time is a problem
+ok   ledger: an execArgv flag is a problem
+ok   ledger: NODE_OPTIONS is a problem
+ok   ledger: an identity member missing is a problem
+ok   ledger: an upper-case digest is a problem
+ok   ledger: no loaded files is a problem
+ok   ledger: no observation is a problem
+ok   ledger: stand-in provenance is a problem
+ok   ledger: a fixture marks stand-in provenance only where the caller allows it
+ok   ledger: the completion marker and the start line are exact
+ok   loader: perf.js recipe: declared order, js/ui and js/worker omitted, absent files dropped
+ok   loader: the executed digest is that of the string the VM gets (no BOM); raw digest kept
+ok   loader: E identities are derived from the captured texts (LF-normalized, raw sources)
+ok   loader: a file changed on disk after the capture does not change what the VM runs
+ok   loader (the real tree, captured, NOT executed): 64 declared, 18 excluded, 49 loaded, E
+ok   R4: a chunk with no earlier run has no admission and no payload: allowed
+ok   R4: a started payload is final: no retry and no replacement, whatever its outcome
+ok   R4: a plain hold is not an eligible unstarted hold: one admission used, no second one
+ok   R4: an eligible unstarted hold allows ONE re-ask, only at least 60 s after its release
+ok   R4: counts survive a restart: they are derived from the folders and the log each time
+ok   R4: conflicting or missing evidence holds for a ruling instead of defaulting to zero
+ok   R4: an admitted run without a result counts as a started payload (uncertain: consumed)
+ok   R4: other chunks and merge runs never count against this chunk
+ok   F1: a pre-window-hold line of the C log names no folder and consumes no admission
+ok   F2/F5: a stdout, stderr or ledger file is a sign of a payload, as a transcript is
+ok   F3: a committed ruling for an unstarted hold allows attempt 2 (no 60 s, no eligibility)
+ok   F3: only the matching chunk and held run: another chunk, run or attempt is not covered
+ok   F3: never after a started payload and never beyond two admissions
+ok   F3: a stale ruling (before the release) or a prospective one (after now) is no authority
+ok   F3: an absent, malformed, contradictory or not exactly shaped journal is a problem
+ok   F3: the rulings and host-binding journals are the pack files, read by the same code
+65 passed, 0 failed
+exit=0 seconds=0.880

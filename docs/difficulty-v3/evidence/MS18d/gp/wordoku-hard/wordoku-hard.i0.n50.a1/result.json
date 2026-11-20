@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "wordoku-hard.i0.n50.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "wordoku",
+    "level": "hard",
+    "targetMs": 600
+  },
+  "task": "MS18d GP record wordoku-hard.i0.n50 a1",
+  "startedAtMs": 1795124612690,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=1.884",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "wordoku-hard.i0.n50",
+      "requests": 50,
+      "sha256": "5050feca1eb86603901413d4b615a284350c536db82875fea2ad661b3bd6a72c"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 28416,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=1.884",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 209,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 109000,
+      "systemMicros": 453000
+    },
+    "tee": {
+      "userMicros": 15000,
+      "systemMicros": 46000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795124624324
+}

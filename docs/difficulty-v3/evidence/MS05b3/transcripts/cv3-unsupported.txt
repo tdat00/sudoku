@@ -1,0 +1,1172 @@
+== BATCH cv3-unsupported : 15 cells at 2026-11-14T04:40:39.6837628+07:00
+== CELL cv3-classic4-unsupported requests=8 projection=1s (no generation: 8 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-classic4-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: classic4 > CV3 unsupported: other levels are refused (1 ms)
+ok   variants: 1 passed  (2 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   2 ms running tests, 178 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-classic4-unsupported.json
+== END cv3-classic4-unsupported class=pass exit=0 process=0.367s wall=0.372s slot=none status=pass
+== CELL cv3-classic6-unsupported requests=7 projection=1s (no generation: 7 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-classic6-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: classic6 > CV3 unsupported: other levels are refused (1 ms)
+ok   variants: 1 passed  (2 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   2 ms running tests, 178 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-classic6-unsupported.json
+== END cv3-classic6-unsupported class=pass exit=0 process=0.371s wall=0.372s slot=none status=pass
+== CELL cv3-classic9-unsupported requests=1 projection=1s (no generation: 1 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-classic9-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: classic9 > CV3 unsupported: other levels are refused (1 ms)
+ok   variants: 1 passed  (2 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   2 ms running tests, 181 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-classic9-unsupported.json
+== END cv3-classic9-unsupported class=pass exit=0 process=0.373s wall=0.374s slot=none status=pass
+== CELL cv3-mega12-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-mega12-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: mega12 > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 233 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega12-unsupported.json
+== END cv3-mega12-unsupported class=pass exit=0 process=0.467s wall=0.468s slot=none status=pass
+== CELL cv3-mega16-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-mega16-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: mega16 > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 204 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-mega16-unsupported.json
+== END cv3-mega16-unsupported class=pass exit=0 process=0.411s wall=0.411s slot=none status=pass
+== CELL cv3-diagonalX-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-diagonalX-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: diagonalX > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 189 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-diagonalX-unsupported.json
+== END cv3-diagonalX-unsupported class=pass exit=0 process=0.388s wall=0.389s slot=none status=pass
+== CELL cv3-hyper-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-hyper-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: hyper > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 192 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-hyper-unsupported.json
+== END cv3-hyper-unsupported class=pass exit=0 process=0.38s wall=0.381s slot=none status=pass
+== CELL cv3-jigsaw9-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-jigsaw9-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: jigsaw9 > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 203 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-jigsaw9-unsupported.json
+== END cv3-jigsaw9-unsupported class=pass exit=0 process=0.413s wall=0.414s slot=none status=pass
+== CELL cv3-killer-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-killer-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: killer > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 208 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-killer-unsupported.json
+== END cv3-killer-unsupported class=pass exit=0 process=0.414s wall=0.415s slot=none status=pass
+== CELL cv3-greaterThan-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-greaterThan-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: greaterThan > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 191 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-greaterThan-unsupported.json
+== END cv3-greaterThan-unsupported class=pass exit=0 process=0.392s wall=0.393s slot=none status=pass
+== CELL cv3-samurai-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-samurai-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: samurai > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 189 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-samurai-unsupported.json
+== END cv3-samurai-unsupported class=pass exit=0 process=0.381s wall=0.382s slot=none status=pass
+== CELL cv3-sohei-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-sohei-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: sohei > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 208 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-sohei-unsupported.json
+== END cv3-sohei-unsupported class=pass exit=0 process=0.4s wall=0.401s slot=none status=pass
+== CELL cv3-butterfly-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-butterfly-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: butterfly > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 189 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-butterfly-unsupported.json
+== END cv3-butterfly-unsupported class=pass exit=0 process=0.377s wall=0.378s slot=none status=pass
+== CELL cv3-flower-unsupported requests=0 projection=1s (no generation: 0 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-flower-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: flower > CV3 unsupported: other levels are refused (0 ms)
+ok   variants: 1 passed  (1 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   1 ms running tests, 190 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-flower-unsupported.json
+== END cv3-flower-unsupported class=pass exit=0 process=0.38s wall=0.381s slot=none status=pass
+== CELL cv3-wordoku-unsupported requests=1 projection=1s (no generation: 1 refused requests of difficulty.unsupportedLevel; registration and load only)
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS05b3/selectors/cv3-wordoku-unsupported.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+variants
+  ok   variants > variants: wordoku > CV3 unsupported: other levels are refused (1 ms)
+ok   variants: 1 passed  (2 ms)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   2 ms running tests, 192 ms total
+Results: docs/difficulty-v3/evidence/MS05b3/cv3/cv3-wordoku-unsupported.json
+== END cv3-wordoku-unsupported class=pass exit=0 process=0.386s wall=0.386s slot=none status=pass
+== BATCH cv3-unsupported finished at 2026-11-14T04:40:50.4636754+07:00

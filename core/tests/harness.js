@@ -7,6 +7,9 @@
  *   SG.test.skip(reason)   marks the running test as skipped (use for environment limits)
  *   SG.test.node           { fs, path, vm, root } provided by the Node runner, undefined in a browser
  *   SG.test.run(options)   runs everything registered so far, resolves with SG.testResults
+ *   SG.test.list(options)  what run(options) would select, in the same order, without running a test, a
+ *                          hook or a benchmark: { tests: [{ suite, ordinal, fullName, kind, skipped,
+ *                          timeoutMs }], registrationErrors: [...] }
  *   SG.test.timeLimit(ms)  the limit a time assertion of a unit suite uses for a budget of design.md 9.1:
  *                          `ms * SG.test.TIME_FACTOR` (see TIME_FACTOR below)
  *
@@ -337,7 +340,8 @@
     try {
       fn.call(suite);
     } catch (err) {
-      addTest('test', '(describe block threw)', function () { throw err; });
+      addTest('test', '(describe block threw)', function () { throw err; },
+        { registrationError: { type: 'describe', error: err } });
     } finally {
       stack.pop();
     }
@@ -382,7 +386,8 @@
   /** Reports a file that failed to load as a failing test, so it can not go unnoticed. */
   function addLoadError(suiteName, err) {
     setSuite(suiteName);
-    addTest('test', '(failed to load)', function () { throw err; });
+    addTest('test', '(failed to load)', function () { throw err; },
+      { registrationError: { type: 'load', error: err } });
   }
 
   function now() {
@@ -486,10 +491,101 @@
   }
 
   /**
+   * What run and list select: the suites named by `suite`, then the tests whose full name contains `filter`
+   * (case-insensitive) or, with `exact`, equals it (case-sensitive; every row of that name, duplicates
+   * included). `exact` and `filter` are mutually exclusive.
+   */
+  function selectionOf(options) {
+    var filter = options.filter ? String(options.filter).toLowerCase() : null;
+    var exact = options.exact;
+    var accepts;
+    if (exact !== undefined && exact !== null) {
+      if (typeof exact !== 'string' || exact === '') {
+        throw new TypeError('exact needs the full name of a test');
+      }
+      if (filter) throw new Error('exact and filter are mutually exclusive');
+      accepts = function (fullName) { return fullName === exact; };
+    } else if (filter) {
+      accepts = function (fullName) { return fullName.toLowerCase().indexOf(filter) !== -1; };
+    } else {
+      accepts = function () { return true; };
+    }
+    return { wanted: parseSuiteList(options.suite), accepts: accepts };
+  }
+
+  function isWanted(file, wanted) {
+    return !wanted || wanted.indexOf(file.name.toLowerCase()) !== -1;
+  }
+
+  /**
+   * The one walk of run and list: every test and benchmark under `suite`, in registration order, before any
+   * filter. `ordinal` counts them from 0 within the file suite (a file that failed to load continues the
+   * count of the partial suite of the same name), so it tells equal names apart and does not depend on the
+   * selection.
+   */
+  function* walkLeaves(suite, chain, names, ordinals) {
+    for (var c = 0; c < suite.children.length; c++) {
+      var child = suite.children[c];
+      if (child.type !== 'test') {
+        yield* walkLeaves(child, chain.concat(child), names.concat(child.name), ordinals);
+        continue;
+      }
+      var ordinal = ordinals.get(names[0]) || 0;
+      ordinals.set(names[0], ordinal + 1);
+      yield {
+        test: child,
+        chain: chain,
+        names: names,
+        ordinal: ordinal,
+        fullName: names.concat(child.name).join(' > '),
+        skipped: child.skipped || chain.some(function (s) { return s.skipped; })
+      };
+    }
+  }
+
+  /**
+   * What run(options) would select, in the same order, without calling a hook, a test or a benchmark and
+   * without touching SG.testResults. Takes the suite, filter and exact options of run.
+   * @returns {{tests: Object[], registrationErrors: Object[]}} `tests`: { suite, ordinal, fullName, kind,
+   *   skipped, timeoutMs } of every selected test (an inherited describe.skip shows as skipped; a runtime
+   *   skip cannot be known); `registrationErrors`: every describe block that threw and every file that
+   *   failed to load in the selected suites, whatever the filter, as { suite, ordinal, fullName, type:
+   *   'describe' | 'load', name, message }. Each of them is also a failing test of the registry, listed in
+   *   `tests` when selected.
+   */
+  function list(options) {
+    options = options || {};
+    var selection = selectionOf(options);
+    var ordinals = new Map();
+    var tests = [];
+    var registrationErrors = [];
+    rootSuite.children.forEach(function (file) {
+      if (!isWanted(file, selection.wanted)) return;
+      for (var leaf of walkLeaves(file, [file], [file.name], ordinals)) {
+        var test = leaf.test;
+        if (test.registrationError) {
+          var error = normalizeError(test.registrationError.error);
+          registrationErrors.push({
+            suite: leaf.names[0], ordinal: leaf.ordinal, fullName: leaf.fullName,
+            type: test.registrationError.type, name: error.name, message: error.message
+          });
+        }
+        if (!selection.accepts(leaf.fullName)) continue;
+        tests.push({
+          suite: leaf.names[0], ordinal: leaf.ordinal, fullName: leaf.fullName, kind: test.kind,
+          skipped: leaf.skipped, timeoutMs: test.timeout || DEFAULT_TIMEOUT_MS
+        });
+      }
+    });
+    return { tests: tests, registrationErrors: registrationErrors };
+  }
+
+  /**
    * Runs every registered test.
    * @param {Object} [options]
    * @param {string|string[]} [options.suite]  Only suites with these names (comma separated string ok).
    * @param {string} [options.filter]          Only tests whose "suite > describe > test" name contains this.
+   * @param {string} [options.exact]           Only tests whose full name is exactly this (not with `filter`).
    * @param {boolean} [options.bail]           Stop after the first failure.
    * @param {number} [options.yieldMs]         Give the event loop a turn about every N ms (browser UI).
    * @param {function} [options.onSuiteStart]  Called with the suite name just before its first test runs.
@@ -499,42 +595,41 @@
    */
   async function run(options) {
     options = options || {};
-    var wanted = parseSuiteList(options.suite);
-    var filter = options.filter ? String(options.filter).toLowerCase() : null;
+    var selection = selectionOf(options);
     var results = SG.testResults = emptyResults();
+    var ordinals = new Map();
     var runStart = now();
     var lastYield = runStart;
 
-    async function walk(suite, chain, names, summary) {
-      for (var c = 0; c < suite.children.length; c++) {
-        if (results.bailed) return;
-        var child = suite.children[c];
+    for (var f = 0; f < rootSuite.children.length && !results.bailed; f++) {
+      var file = rootSuite.children[f];
+      if (!isWanted(file, selection.wanted)) continue;
+      var summary = { name: file.name, total: 0, passed: 0, failed: 0, skipped: 0, ms: 0 };
+      var suiteStart = now();
 
-        if (child.type !== 'test') {
-          await walk(child, chain.concat(child), names.concat(child.name), summary);
-          continue;
-        }
+      for (var leaf of walkLeaves(file, [file], [file.name], ordinals)) {
+        if (results.bailed) break;
+        if (!selection.accepts(leaf.fullName)) continue;
 
-        var fullName = names.concat(child.name).join(' > ');
-        if (filter && fullName.toLowerCase().indexOf(filter) === -1) continue;
-
+        var child = leaf.test;
         var testStart = now();
         if (summary.total === 0) notify(options.onSuiteStart, summary.name);
         var outcome;
-        if (child.skipped || chain.some(function (s) { return s.skipped; })) {
+        if (leaf.skipped) {
           outcome = { status: 'skip', error: null, reason: '', bench: null };
         } else {
-          outcome = await runTest(child, chain);
+          outcome = await runTest(child, leaf.chain);
         }
 
         var record = {
-          suite: names[0],
+          suite: leaf.names[0],
           name: child.name,
-          fullName: fullName,
+          fullName: leaf.fullName,
           status: outcome.status,
           ms: now() - testStart,
           reason: outcome.reason,
-          error: outcome.error ? normalizeError(outcome.error) : null
+          error: outcome.error ? normalizeError(outcome.error) : null,
+          ordinal: leaf.ordinal
         };
         results.tests.push(record);
         results.total++;
@@ -543,7 +638,7 @@
         else if (outcome.status === 'fail') { results.failed++; summary.failed++; }
         else { results.skipped++; summary.skipped++; }
         if (outcome.bench) {
-          results.benches.push(Object.assign({ suite: names[0], name: fullName }, outcome.bench));
+          results.benches.push(Object.assign({ suite: leaf.names[0], name: leaf.fullName }, outcome.bench));
         }
         notify(options.onTestEnd, record);
 
@@ -553,14 +648,7 @@
           lastYield = now();
         }
       }
-    }
 
-    for (var f = 0; f < rootSuite.children.length && !results.bailed; f++) {
-      var file = rootSuite.children[f];
-      if (wanted && wanted.indexOf(file.name.toLowerCase()) === -1) continue;
-      var summary = { name: file.name, total: 0, passed: 0, failed: 0, skipped: 0, ms: 0 };
-      var suiteStart = now();
-      await walk(file, [file], [file.name], summary);
       summary.ms = now() - suiteStart;
       if (summary.total > 0) {
         results.suites.push(summary);
@@ -594,6 +682,7 @@
     addLoadError: addLoadError,
     suiteNames: suiteNames,
     run: run,
+    list: list,
     deepEqual: deepEqual,
     AssertionError: AssertionError,
     TIME_FACTOR: TIME_FACTOR,

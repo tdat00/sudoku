@@ -1,0 +1,11 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-jigsaw9.json --cells=jigsaw9/expert:2,jigsaw9/nightmare:3,jigsaw9/hell1:3 --budget-seconds=420
+jigsaw9/expert #0: 123.4 ms, hit true, achieved expert, exact true, approximate false
+jigsaw9/expert #1: 560.4 ms, hit true, achieved expert, exact true, approximate false
+jigsaw9/nightmare #0: 140.6 ms, hit true, achieved nightmare, exact true, approximate false
+jigsaw9/nightmare #1: 327.1 ms, hit true, achieved nightmare, exact true, approximate false
+jigsaw9/nightmare #2: 154.0 ms, hit true, achieved nightmare, exact true, approximate false
+jigsaw9/hell1 #0: 15265.6 ms, hit false, achieved hell1, exact false, approximate true
+jigsaw9/hell1 #1: 9381.4 ms, hit false, achieved hell1, exact false, approximate true
+jigsaw9/hell1 #2: 14427.1 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-jigsaw9.json (40.385 s)
+exit=0 seconds=40.877

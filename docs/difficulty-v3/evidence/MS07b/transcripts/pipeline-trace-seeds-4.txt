@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS07b\explore-trace.js expert 21 24
+{"level":"expert","seed":21,"total":211,"nonMicro":29,"capped":211,"attempts":1,"exact":true,"score":936,"ms":38}
+{"level":"expert","seed":22,"total":1153,"nonMicro":96,"capped":1153,"attempts":1,"exact":true,"score":965,"ms":39}
+{"level":"expert","seed":23,"total":1457,"nonMicro":124,"capped":1457,"attempts":1,"exact":true,"score":929,"ms":39}
+{"level":"expert","seed":24,"total":1780,"nonMicro":137,"capped":1780,"attempts":1,"exact":true,"score":872,"ms":33}
+exit=0 seconds=0.330

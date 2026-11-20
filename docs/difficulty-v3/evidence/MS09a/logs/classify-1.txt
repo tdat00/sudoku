@@ -1,0 +1,15 @@
+$ node tests\artifacts\difficulty-v3\MS09a\classify.js 300 20260101,99,777
+{"name":"rated:constructed-nightmare-1","unique":true,"digit":2,"kind":"row","bases":["R5","R8"],"covers":["C1","C5"],"fins":["R8C6"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R7C5"],"patterns":2}
+{"name":"rated:constructed-nightmare-2","unique":true,"digit":4,"kind":"row","bases":["R3","R7"],"covers":["C4","C9"],"fins":["R3C7","R3C8"],"body":[1,2],"sashimi":true,"sameEl":true,"el":["R1C9","R2C9"],"patterns":2}
+{"name":"rand20260101#16","unique":true,"digit":3,"kind":"row","bases":["R5","R7"],"covers":["C6","C8"],"fins":["R7C7","R7C9"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R9C8"],"patterns":1}
+{"name":"rand20260101#24","unique":true,"digit":8,"kind":"row","bases":["R3","R9"],"covers":["C3","C4"],"fins":["R9C2"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R8C3"],"patterns":1}
+{"name":"rand20260101#40","unique":true,"digit":3,"kind":"col","bases":["C1","C6"],"covers":["R5","R8"],"fins":["R7C1","R9C1"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R8C2"],"patterns":3}
+{"name":"rand20260101#48","unique":true,"digit":5,"kind":"col","bases":["C1","C7"],"covers":["R1","R9"],"fins":["R2C1","R3C1"],"body":[1,2],"sashimi":true,"sameEl":true,"el":["R1C3"],"patterns":2}
+{"name":"rand20260101#184","unique":true,"digit":1,"kind":"col","bases":["C3","C5"],"covers":["R1","R5"],"fins":["R3C5"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R1C4"],"patterns":1}
+{"name":"rand20260101#280","unique":true,"digit":1,"kind":"col","bases":["C4","C7"],"covers":["R6","R9"],"fins":["R8C4"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R9C6"],"patterns":1}
+{"name":"rand99#24","unique":true,"digit":5,"kind":"row","bases":["R4","R8"],"covers":["C3","C8"],"fins":["R8C1","R8C2"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R7C3"],"patterns":2}
+{"name":"rand99#56","unique":true,"digit":4,"kind":"col","bases":["C5","C7"],"covers":["R6","R8"],"fins":["R5C7"],"body":[2,2],"sashimi":false,"sameEl":true,"el":["R6C8"],"patterns":1}
+{"name":"rand777#176","unique":true,"digit":7,"kind":"row","bases":["R1","R7"],"covers":["C6","C7"],"fins":["R7C4","R7C5"],"body":[2,1],"sashimi":true,"sameEl":true,"el":["R9C6"],"patterns":1}
+{"name":"rand777#272","unique":true,"digit":3,"kind":"col","bases":["C5","C8"],"covers":["R2","R5"],"fins":["R4C8","R6C8"],"body":[2,1],"sashimi":true,"sameEl":true,"el":["R5C9"],"patterns":1}
+puzzles 256 hits 12 disagreements 0
+exit=0 seconds=0.857

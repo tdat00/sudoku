@@ -1,0 +1,36 @@
+{
+  "schema": "ms18d-c-cleanup-1",
+  "verdict": "clean",
+  "startedAtMs": 1795120892395,
+  "finishedAtMs": 1795120892614,
+  "selfPid": 32336,
+  "includeController": true,
+  "simulated": false,
+  "snapshotOk": true,
+  "snapshotError": null,
+  "processCount": 292,
+  "roots": [
+    {
+      "Role": "controller",
+      "Pid": 31660,
+      "State": "absent"
+    },
+    {
+      "Role": "tee",
+      "Pid": 25516,
+      "State": "absent"
+    },
+    {
+      "Role": "command",
+      "Pid": 24852,
+      "State": "absent"
+    }
+  ],
+  "survivors": [],
+  "ignored": [],
+  "stops": [],
+  "confirmedGone": true,
+  "stillAlive": [],
+  "ambiguous": false,
+  "problems": []
+}

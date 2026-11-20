@@ -1,0 +1,10 @@
+[
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\pipeline-trace-seeds-3.txt",
+    "args": ["tests\\artifacts\\difficulty-v3\\MS07b\\explore-trace.js", "master", "21", "26"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\pipeline-trace-seeds-4.txt",
+    "args": ["tests\\artifacts\\difficulty-v3\\MS07b\\explore-trace.js", "expert", "21", "24"]
+  }
+]

@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --suite=difficulty --exact=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row --list-tests=..\docs\difficulty-v3\evidence\MS18e\preflight\e2-selectors\GD-confusion.json
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.3 s
+Written: docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors/GD-confusion.json
+exit=0 seconds=0.368

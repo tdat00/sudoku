@@ -1,0 +1,19 @@
+mutation 7 (F08 the fallback ignores the window minimum): DETECTED - 220 total, 219 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 16.9 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > runs its fallback under the same window: a proof below the minimum is nothing there too
+mutation 33 (A20 the gate check of the search starts at zero): NOT DETECTED, EQUIVALENT (r.checkedAt is read only by gate(), which only groupedExpand calls; groupedExpand is reached only from groupedSearch, and scanGrouped calls that only right after assigning r.checkedAt = r.work, so the initial value is never read) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 23.6 s
+mutation 34 (P01 the node cells shared with the graph): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c): proofs, ownership and the singleton rules > gives every step of a Finding an array of its own: also the start that both paths share
+mutation 42 (P09 the endpoint eliminations unsorted): NOT DETECTED (exit 0) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 23.0 s
+mutation 45 (S01 every start a singleton): NOT DETECTED (exit 0) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 22.8 s
+mutation 46 (S02 a group has a true start): DETECTED - 231 total, 230 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.3 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > counts the stages of real positions exactly: the construction by the checker, the search and the checks recorded
+mutation 47 (S03 polarity proofs from a group start): NOT DETECTED (exit 0) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 49 (S05 endpoints from a true start): NOT DETECTED, EQUIVALENT (r.mark is written only in groupedSearch for a start with truth 0, with the stamp of that very search, and the stamp rises at every search; in a search from a true start no node carries the current stamp, so commonTargets returns null and nothing is recorded: the guard is redundant) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 50 (S06 an endpoint at the start node itself): NOT DETECTED (exit 0) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 51 (S07 a start with no strong link searched): DETECTED - 231 total, 230 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > counts the stages of real positions exactly: the construction by the checker, the search and the checks recorded
+mutation 65 (E08 a group target eliminated): NOT DETECTED, EQUIVALENT (r.mark[j] equals the current stamp only for a node written by the marking loop of this search, which writes only indices below r.singles (its own condition), so j < r.singles already holds) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 23.4 s
+mutation 66 (E09 a start marks the group neighbours too): NOT DETECTED, EQUIVALENT (commonTargets reads r.mark[j] only for j < r.singles (its first condition), so a mark written for a group node (index >= singles) is never read) - 239 total, 239 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 74 (B06 the link that proves is not counted): DETECTED - 231 total, 230 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.5 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the parent budget, cancellation and the record > counts the stages of real positions exactly: the construction by the checker, the search and the checks recorded
+detected 5 of 13, survivors 8, 270.4 s

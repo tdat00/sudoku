@@ -1,0 +1,1207 @@
+{
+  "schema": "ms18e-variants-compatibility-1",
+  "label": "reused-compatible",
+  "note": "The MS18c record (285/285 passed under 13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f) keeps its old hash and receipts; it is not retagged with the current with-manual fingerprint d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3.",
+  "identity": {
+    "oldCommit": "e0596801cf95d79761073a344ffc2e60f7764c8f",
+    "oldCommitType": "commit",
+    "head": "9b6182cefde341163098f970bddf17d3f55bbff8",
+    "dirty": [
+      " M .gitattributes",
+      " M .github/scripts/generator-quick.js",
+      " M .github/scripts/generator-quick.selftest.js",
+      " M DEVELOPERGUIDE.md",
+      " M DEVELOPERGUIDE.vn.md",
+      " M USERGUIDE.md",
+      " M USERGUIDE.vn.md",
+      " M generator/design.md",
+      " M generator/tests/manual/difficulty.test.js",
+      " M generator/tests/manual/perf.test.js",
+      " M player/design.md",
+      " M player/tests/browser/help.js",
+      "?? docs/difficulty-v3/evidence/MS18e/",
+      "?? generator/tests/artifacts/difficulty-v3/MS18e/"
+    ],
+    "sgDeepUnsetInThisProcess": true,
+    "node": "v26.13.0",
+    "originalFingerprint": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+    "finalFingerprint": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3"
+  },
+  "criterion1": {
+    "sourceFilesParsed": 64,
+    "fixtureDirs": {
+      "core/tests/fixtures": {
+        "old": [
+          "chain-proofs.js",
+          "classic.js",
+          "jigsaw-models.js",
+          "jigsaw-techniques.js",
+          "techniques-helper.js",
+          "techniques.js",
+          "testkit.js"
+        ],
+        "final": [
+          "chain-proofs.js",
+          "classic.js",
+          "jigsaw-models.js",
+          "jigsaw-techniques.js",
+          "techniques-helper.js",
+          "techniques.js",
+          "testkit.js"
+        ],
+        "missingFromFinal": [],
+        "addedInFinal": []
+      },
+      "generator/tests/fixtures": {
+        "old": [
+          "difficulty-diagnostics.js",
+          "manual-corpus.js",
+          "mega-contract.js",
+          "pattern-cost.js",
+          "perf-helper.js",
+          "qualification-records.js",
+          "rated.js",
+          "recovery-profile.js",
+          "regression.js",
+          "replay-goldens.js",
+          "replay-recording.js",
+          "replay-wire.js",
+          "testkit-provider.js",
+          "tool-records.js"
+        ],
+        "final": [
+          "difficulty-diagnostics.js",
+          "manual-corpus.js",
+          "mega-contract.js",
+          "pattern-cost.js",
+          "perf-helper.js",
+          "qualification-records.js",
+          "rated.js",
+          "recovery-profile.js",
+          "regression.js",
+          "replay-goldens.js",
+          "replay-recording.js",
+          "replay-wire.js",
+          "testkit-provider.js",
+          "tool-records.js"
+        ],
+        "missingFromFinal": [],
+        "addedInFinal": []
+      }
+    },
+    "localRequires": [
+      {
+        "file": "generator/tests/node-runner.js",
+        "request": "../../core/tests/node-evidence.js",
+        "resolved": "core/tests/node-evidence.js"
+      }
+    ],
+    "blobs": [
+      {
+        "path": "core/tests/harness.js",
+        "oldBlob": "df0ccaee9afb28e1f0d6637e0a57aa76f3f5e29c",
+        "headBlob": "df0ccaee9afb28e1f0d6637e0a57aa76f3f5e29c",
+        "finalBlob": "df0ccaee9afb28e1f0d6637e0a57aa76f3f5e29c",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/node-evidence.js",
+        "oldBlob": "fc3825ce84566d49614002acc5d7f1935ae72c1d",
+        "headBlob": "fc3825ce84566d49614002acc5d7f1935ae72c1d",
+        "finalBlob": "fc3825ce84566d49614002acc5d7f1935ae72c1d",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/node-runner.js",
+        "oldBlob": "ea9d9903202c618e1a0179d6013cbc9da470b7c3",
+        "headBlob": "ea9d9903202c618e1a0179d6013cbc9da470b7c3",
+        "finalBlob": "ea9d9903202c618e1a0179d6013cbc9da470b7c3",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/manual/variants.test.js",
+        "oldBlob": "04cf3695aec7bf7467d05d697fad374c015cfe5e",
+        "headBlob": "04cf3695aec7bf7467d05d697fad374c015cfe5e",
+        "finalBlob": "04cf3695aec7bf7467d05d697fad374c015cfe5e",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/ns.js",
+        "oldBlob": "1dc48f0a748481ad8c14530b80ea59976a014613",
+        "headBlob": "1dc48f0a748481ad8c14530b80ea59976a014613",
+        "finalBlob": "1dc48f0a748481ad8c14530b80ea59976a014613",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/errors.js",
+        "oldBlob": "96786e966154d3a32b1bb6c74c92626805d92b80",
+        "headBlob": "96786e966154d3a32b1bb6c74c92626805d92b80",
+        "finalBlob": "96786e966154d3a32b1bb6c74c92626805d92b80",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/bits.js",
+        "oldBlob": "b3e12493041e65e4511887c681c18b9f20994f91",
+        "headBlob": "b3e12493041e65e4511887c681c18b9f20994f91",
+        "finalBlob": "b3e12493041e65e4511887c681c18b9f20994f91",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/budget.js",
+        "oldBlob": "3e3ab18c330ebf0b58607333b933803b1353385c",
+        "headBlob": "3e3ab18c330ebf0b58607333b933803b1353385c",
+        "finalBlob": "3e3ab18c330ebf0b58607333b933803b1353385c",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/rng.js",
+        "oldBlob": "9b04b30993b38966b93fb98f3cc12442ab70202a",
+        "headBlob": "9b04b30993b38966b93fb98f3cc12442ab70202a",
+        "finalBlob": "9b04b30993b38966b93fb98f3cc12442ab70202a",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/model.js",
+        "oldBlob": "aabdb5f70bfb44c157bb4351819d37cf2663164a",
+        "headBlob": "aabdb5f70bfb44c157bb4351819d37cf2663164a",
+        "finalBlob": "aabdb5f70bfb44c157bb4351819d37cf2663164a",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/constraints.js",
+        "oldBlob": "740b1019991e8dffa307560079c6709fc0d2a8a8",
+        "headBlob": "740b1019991e8dffa307560079c6709fc0d2a8a8",
+        "finalBlob": "740b1019991e8dffa307560079c6709fc0d2a8a8",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/combo-table.js",
+        "oldBlob": "f4a6dc5860dbb9b4d341af000ef2b4e99fca8503",
+        "headBlob": "f4a6dc5860dbb9b4d341af000ef2b4e99fca8503",
+        "finalBlob": "f4a6dc5860dbb9b4d341af000ef2b4e99fca8503",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/dfs-solver.js",
+        "oldBlob": "27baf7f766a1a844f6711d82a1101dc304889716",
+        "headBlob": "27baf7f766a1a844f6711d82a1101dc304889716",
+        "finalBlob": "27baf7f766a1a844f6711d82a1101dc304889716",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/techniques.js",
+        "oldBlob": "0bb3f7b766291a0ff534fe2700542a198475452b",
+        "headBlob": "0bb3f7b766291a0ff534fe2700542a198475452b",
+        "finalBlob": "0bb3f7b766291a0ff534fe2700542a198475452b",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/logical-solver.js",
+        "oldBlob": "2b8725f94b598f43c25a2f414d09663ecaa508eb",
+        "headBlob": "2b8725f94b598f43c25a2f414d09663ecaa508eb",
+        "finalBlob": "2b8725f94b598f43c25a2f414d09663ecaa508eb",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-basic.js",
+        "oldBlob": "28adf45f325b4c261d6a2760d733d3c3ab3f2a4b",
+        "headBlob": "28adf45f325b4c261d6a2760d733d3c3ab3f2a4b",
+        "finalBlob": "28adf45f325b4c261d6a2760d733d3c3ab3f2a4b",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-subset.js",
+        "oldBlob": "a0e41a5857ff161a6d9946ff8b847a7f3f1bc1a3",
+        "headBlob": "a0e41a5857ff161a6d9946ff8b847a7f3f1bc1a3",
+        "finalBlob": "a0e41a5857ff161a6d9946ff8b847a7f3f1bc1a3",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-fish.js",
+        "oldBlob": "a7d986c5b690a439a5d967e7a1be59e2ddba47db",
+        "headBlob": "a7d986c5b690a439a5d967e7a1be59e2ddba47db",
+        "finalBlob": "a7d986c5b690a439a5d967e7a1be59e2ddba47db",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-wing.js",
+        "oldBlob": "4567ebf76810675d32926cb7609999d8c1eedd9a",
+        "headBlob": "4567ebf76810675d32926cb7609999d8c1eedd9a",
+        "finalBlob": "4567ebf76810675d32926cb7609999d8c1eedd9a",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-chain.js",
+        "oldBlob": "fd74dd155752e56c98936bf1d494f7e8ddc31934",
+        "headBlob": "fd74dd155752e56c98936bf1d494f7e8ddc31934",
+        "finalBlob": "fd74dd155752e56c98936bf1d494f7e8ddc31934",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-als.js",
+        "oldBlob": "b295319e11c6edc6ae6dc9633d702936a4f7b15b",
+        "headBlob": "b295319e11c6edc6ae6dc9633d702936a4f7b15b",
+        "finalBlob": "b295319e11c6edc6ae6dc9633d702936a4f7b15b",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-cage.js",
+        "oldBlob": "8ebffbb531c69ef43a1c6e5ac64f71a3ab42257c",
+        "headBlob": "8ebffbb531c69ef43a1c6e5ac64f71a3ab42257c",
+        "finalBlob": "8ebffbb531c69ef43a1c6e5ac64f71a3ab42257c",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/tech-ineq.js",
+        "oldBlob": "d06e713f22a3af103c4fcde842a8e2223336b28e",
+        "headBlob": "d06e713f22a3af103c4fcde842a8e2223336b28e",
+        "finalBlob": "d06e713f22a3af103c4fcde842a8e2223336b28e",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/classic-model.js",
+        "oldBlob": "fca26ebea8ea1e099c8f35b009883847dc4c72a9",
+        "headBlob": "fca26ebea8ea1e099c8f35b009883847dc4c72a9",
+        "finalBlob": "fca26ebea8ea1e099c8f35b009883847dc4c72a9",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/engine/model-aids.js",
+        "oldBlob": "4a8bd8a24462944529c8fc3aaf336aa702ba4a3f",
+        "headBlob": "4a8bd8a24462944529c8fc3aaf336aa702ba4a3f",
+        "finalBlob": "4a8bd8a24462944529c8fc3aaf336aa702ba4a3f",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/difficulty.js",
+        "oldBlob": "1cec9f591d46a1eca64df2f1d98ef001d28a79d5",
+        "headBlob": "1cec9f591d46a1eca64df2f1d98ef001d28a79d5",
+        "finalBlob": "1cec9f591d46a1eca64df2f1d98ef001d28a79d5",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/full-grid.js",
+        "oldBlob": "82f7639fb41b7028e69b50f7bc6ff9fd29e78a22",
+        "headBlob": "82f7639fb41b7028e69b50f7bc6ff9fd29e78a22",
+        "finalBlob": "82f7639fb41b7028e69b50f7bc6ff9fd29e78a22",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/symmetry.js",
+        "oldBlob": "7ec0101b08d01203fb2f6571d048556cad8313e1",
+        "headBlob": "7ec0101b08d01203fb2f6571d048556cad8313e1",
+        "finalBlob": "7ec0101b08d01203fb2f6571d048556cad8313e1",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/digger.js",
+        "oldBlob": "93381069127dbfb8a1f97dbb8c793e42ad2a86fd",
+        "headBlob": "93381069127dbfb8a1f97dbb8c793e42ad2a86fd",
+        "finalBlob": "93381069127dbfb8a1f97dbb8c793e42ad2a86fd",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/events.js",
+        "oldBlob": "41e67326073f62309a1cf89c3f68edbed9fccdf0",
+        "headBlob": "41e67326073f62309a1cf89c3f68edbed9fccdf0",
+        "finalBlob": "41e67326073f62309a1cf89c3f68edbed9fccdf0",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/explain-data.js",
+        "oldBlob": "cdcea922b153c7d56a821f64c030bed7af84655d",
+        "headBlob": "cdcea922b153c7d56a821f64c030bed7af84655d",
+        "finalBlob": "cdcea922b153c7d56a821f64c030bed7af84655d",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/pipeline.js",
+        "oldBlob": "f8a54be937e7e71dec284967065462c84052e72e",
+        "headBlob": "f8a54be937e7e71dec284967065462c84052e72e",
+        "finalBlob": "f8a54be937e7e71dec284967065462c84052e72e",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/engine/replay.js",
+        "oldBlob": "ad1a2df08478a63611db67625636293e3377aebe",
+        "headBlob": "ad1a2df08478a63611db67625636293e3377aebe",
+        "finalBlob": "ad1a2df08478a63611db67625636293e3377aebe",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/registry.js",
+        "oldBlob": "c3eee1c40b5a9366b6663f8df3c404f84ffa15ee",
+        "headBlob": "c3eee1c40b5a9366b6663f8df3c404f84ffa15ee",
+        "finalBlob": "c3eee1c40b5a9366b6663f8df3c404f84ffa15ee",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/classic.js",
+        "oldBlob": "da266df69e73a5fc8fd4f6f72e176bf5707885ac",
+        "headBlob": "da266df69e73a5fc8fd4f6f72e176bf5707885ac",
+        "finalBlob": "da266df69e73a5fc8fd4f6f72e176bf5707885ac",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/mega.js",
+        "oldBlob": "8ee48ed45c922dd857b90645e252392e0dd23ea5",
+        "headBlob": "8ee48ed45c922dd857b90645e252392e0dd23ea5",
+        "finalBlob": "8ee48ed45c922dd857b90645e252392e0dd23ea5",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/extra-regions.js",
+        "oldBlob": "663efaf0afb59999cd3078282ba76937e4ac56f1",
+        "headBlob": "663efaf0afb59999cd3078282ba76937e4ac56f1",
+        "finalBlob": "663efaf0afb59999cd3078282ba76937e4ac56f1",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/jigsaw.js",
+        "oldBlob": "1b2f4f608a74f6925aeb89ffb23f85d6dabf52fe",
+        "headBlob": "1b2f4f608a74f6925aeb89ffb23f85d6dabf52fe",
+        "finalBlob": "1b2f4f608a74f6925aeb89ffb23f85d6dabf52fe",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/killer.js",
+        "oldBlob": "aa47842a91b0a1fb83cf44d3818e91bed70ae87f",
+        "headBlob": "aa47842a91b0a1fb83cf44d3818e91bed70ae87f",
+        "finalBlob": "aa47842a91b0a1fb83cf44d3818e91bed70ae87f",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/greater-than.js",
+        "oldBlob": "d831a52b86c6d31950bf4db22ddcbe4d0a3198d6",
+        "headBlob": "d831a52b86c6d31950bf4db22ddcbe4d0a3198d6",
+        "finalBlob": "d831a52b86c6d31950bf4db22ddcbe4d0a3198d6",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/multigrid.js",
+        "oldBlob": "16e01d6e9d7755977d1b3bfe7f43d031b99aa5e2",
+        "headBlob": "16e01d6e9d7755977d1b3bfe7f43d031b99aa5e2",
+        "finalBlob": "16e01d6e9d7755977d1b3bfe7f43d031b99aa5e2",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/variants/wordoku.js",
+        "oldBlob": "0216f8118e3578a262ba2c47994627bcddaffc81",
+        "headBlob": "0216f8118e3578a262ba2c47994627bcddaffc81",
+        "finalBlob": "0216f8118e3578a262ba2c47994627bcddaffc81",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/assets/wordlists/isograms.en.js",
+        "oldBlob": "b5b9da6562c6d25a9d0dcf3c2d424513cd1fcfcf",
+        "headBlob": "b5b9da6562c6d25a9d0dcf3c2d424513cd1fcfcf",
+        "finalBlob": "b5b9da6562c6d25a9d0dcf3c2d424513cd1fcfcf",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/assets/wordlists/isograms.vi.js",
+        "oldBlob": "e882da7a3c33faa75b195efdfc63277b497eb9b3",
+        "headBlob": "e882da7a3c33faa75b195efdfc63277b497eb9b3",
+        "finalBlob": "e882da7a3c33faa75b195efdfc63277b497eb9b3",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/worker/worker-client.js",
+        "oldBlob": "dd57aab47f12513fa18064f4d46491ee23e0e8ba",
+        "headBlob": "dd57aab47f12513fa18064f4d46491ee23e0e8ba",
+        "finalBlob": "dd57aab47f12513fa18064f4d46491ee23e0e8ba",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/ui/exchange.js",
+        "oldBlob": "b661b472c16e05560912ab93cd30fdf6a9f708aa",
+        "headBlob": "b661b472c16e05560912ab93cd30fdf6a9f708aa",
+        "finalBlob": "b661b472c16e05560912ab93cd30fdf6a9f708aa",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/i18n.js",
+        "oldBlob": "ad859592a1453c8f0a9518baaca2a5e14cf08d74",
+        "headBlob": "ad859592a1453c8f0a9518baaca2a5e14cf08d74",
+        "finalBlob": "ad859592a1453c8f0a9518baaca2a5e14cf08d74",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/locale.en.js",
+        "oldBlob": "9d0d04cb850070581315a88ac5588482e4326fb8",
+        "headBlob": "9d0d04cb850070581315a88ac5588482e4326fb8",
+        "finalBlob": "9d0d04cb850070581315a88ac5588482e4326fb8",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/locale.vi.js",
+        "oldBlob": "e09bddad91043ae47e1ad0848b875c920322b57e",
+        "headBlob": "e09bddad91043ae47e1ad0848b875c920322b57e",
+        "finalBlob": "e09bddad91043ae47e1ad0848b875c920322b57e",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/locale.shell.js",
+        "oldBlob": "1b0d25b5e12652b5b512868a3118795f77831d06",
+        "headBlob": "1b0d25b5e12652b5b512868a3118795f77831d06",
+        "finalBlob": "1b0d25b5e12652b5b512868a3118795f77831d06",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/ui/symbols.js",
+        "oldBlob": "dd72b5cfd32b3ea589af0fdd1e10df8ccc7fd2e0",
+        "headBlob": "dd72b5cfd32b3ea589af0fdd1e10df8ccc7fd2e0",
+        "finalBlob": "dd72b5cfd32b3ea589af0fdd1e10df8ccc7fd2e0",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/ui/board-view.js",
+        "oldBlob": "fc2ec5a4875fb5958cf13f216ffd63b11a523f44",
+        "headBlob": "fc2ec5a4875fb5958cf13f216ffd63b11a523f44",
+        "finalBlob": "fc2ec5a4875fb5958cf13f216ffd63b11a523f44",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/store.js",
+        "oldBlob": "7f8d4ac70d4039f717d8ecb5ce68d25030e8e799",
+        "headBlob": "7f8d4ac70d4039f717d8ecb5ce68d25030e8e799",
+        "finalBlob": "7f8d4ac70d4039f717d8ecb5ce68d25030e8e799",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/controls.js",
+        "oldBlob": "6c47cb4a74ddaa1dc11c7181261d89f28d1fe3f2",
+        "headBlob": "6c47cb4a74ddaa1dc11c7181261d89f28d1fe3f2",
+        "finalBlob": "6c47cb4a74ddaa1dc11c7181261d89f28d1fe3f2",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/step-view.js",
+        "oldBlob": "ca1a213c48c9c0bf4d25e23be63173a8dd442c80",
+        "headBlob": "ca1a213c48c9c0bf4d25e23be63173a8dd442c80",
+        "finalBlob": "ca1a213c48c9c0bf4d25e23be63173a8dd442c80",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/explain.js",
+        "oldBlob": "4bd08cf520fc8593832a5237074fc0d7b812cd9c",
+        "headBlob": "4bd08cf520fc8593832a5237074fc0d7b812cd9c",
+        "finalBlob": "4bd08cf520fc8593832a5237074fc0d7b812cd9c",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/player.js",
+        "oldBlob": "3e5bd8d9db0ca3763f03d4617848064b8e9691dd",
+        "headBlob": "3e5bd8d9db0ca3763f03d4617848064b8e9691dd",
+        "finalBlob": "3e5bd8d9db0ca3763f03d4617848064b8e9691dd",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/assets/wordbook/words.vi.js",
+        "oldBlob": "561dd62ce66b4f441ba536b920330a30b87f93ea",
+        "headBlob": "561dd62ce66b4f441ba536b920330a30b87f93ea",
+        "finalBlob": "561dd62ce66b4f441ba536b920330a30b87f93ea",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/assets/wordbook/words.en.js",
+        "oldBlob": "d6569d636ccb5389634e5e1616233850c28c0b99",
+        "headBlob": "d6569d636ccb5389634e5e1616233850c28c0b99",
+        "finalBlob": "d6569d636ccb5389634e5e1616233850c28c0b99",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/js/ui/wordbook.js",
+        "oldBlob": "51e694f6d7e5179750641c17db8d1e959d0e1d91",
+        "headBlob": "51e694f6d7e5179750641c17db8d1e959d0e1d91",
+        "finalBlob": "51e694f6d7e5179750641c17db8d1e959d0e1d91",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/result-view.js",
+        "oldBlob": "e2166e240a8cca6a8ef03073b96b5cb04a357302",
+        "headBlob": "e2166e240a8cca6a8ef03073b96b5cb04a357302",
+        "finalBlob": "e2166e240a8cca6a8ef03073b96b5cb04a357302",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/cache.js",
+        "oldBlob": "4776b09b983797abe4eed099c78eb0729922b4db",
+        "headBlob": "4776b09b983797abe4eed099c78eb0729922b4db",
+        "finalBlob": "4776b09b983797abe4eed099c78eb0729922b4db",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/history.js",
+        "oldBlob": "c244d39a2c169c898da30efdbf1c3b8536d0e39d",
+        "headBlob": "c244d39a2c169c898da30efdbf1c3b8536d0e39d",
+        "finalBlob": "c244d39a2c169c898da30efdbf1c3b8536d0e39d",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/export.js",
+        "oldBlob": "1ffffc23f866f731ee0e0302b05421b050d07621",
+        "headBlob": "1ffffc23f866f731ee0e0302b05421b050d07621",
+        "finalBlob": "1ffffc23f866f731ee0e0302b05421b050d07621",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/a11y.js",
+        "oldBlob": "69a0e5466ed08f3594b63941a8c66a9b2bf8c574",
+        "headBlob": "69a0e5466ed08f3594b63941a8c66a9b2bf8c574",
+        "finalBlob": "69a0e5466ed08f3594b63941a8c66a9b2bf8c574",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/theme.js",
+        "oldBlob": "1f12bc46847ade1d200359a14ac4325411ec3f24",
+        "headBlob": "1f12bc46847ade1d200359a14ac4325411ec3f24",
+        "finalBlob": "1f12bc46847ade1d200359a14ac4325411ec3f24",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/help.js",
+        "oldBlob": "5bff8db511d6f757ce848e8a6c2508213f30f164",
+        "headBlob": "5bff8db511d6f757ce848e8a6c2508213f30f164",
+        "finalBlob": "5bff8db511d6f757ce848e8a6c2508213f30f164",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/js/ui/app.js",
+        "oldBlob": "8ec42ca19b60160ea6a95c4d573e3f874e5385a2",
+        "headBlob": "8ec42ca19b60160ea6a95c4d573e3f874e5385a2",
+        "finalBlob": "8ec42ca19b60160ea6a95c4d573e3f874e5385a2",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/chain-proofs.js",
+        "oldBlob": "88026e5d4b2e4bd3770c9368d9795c068fd96af3",
+        "headBlob": "88026e5d4b2e4bd3770c9368d9795c068fd96af3",
+        "finalBlob": "88026e5d4b2e4bd3770c9368d9795c068fd96af3",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/classic.js",
+        "oldBlob": "647e6090605a22b8ac6544b321f3481db6ccef37",
+        "headBlob": "647e6090605a22b8ac6544b321f3481db6ccef37",
+        "finalBlob": "647e6090605a22b8ac6544b321f3481db6ccef37",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/jigsaw-models.js",
+        "oldBlob": "b07119967399584658a3b41ea93549506fefa46d",
+        "headBlob": "b07119967399584658a3b41ea93549506fefa46d",
+        "finalBlob": "b07119967399584658a3b41ea93549506fefa46d",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/jigsaw-techniques.js",
+        "oldBlob": "ffb35c23f9a345e37d1c4d404202f94e8d8ef18d",
+        "headBlob": "ffb35c23f9a345e37d1c4d404202f94e8d8ef18d",
+        "finalBlob": "ffb35c23f9a345e37d1c4d404202f94e8d8ef18d",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/techniques-helper.js",
+        "oldBlob": "08e9a4e8be8b1f369ca64fd9098f719f5a4dd7ca",
+        "headBlob": "08e9a4e8be8b1f369ca64fd9098f719f5a4dd7ca",
+        "finalBlob": "08e9a4e8be8b1f369ca64fd9098f719f5a4dd7ca",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/techniques.js",
+        "oldBlob": "7f0b0f2a285ed7086a8649bb0ed011f30c9960ad",
+        "headBlob": "7f0b0f2a285ed7086a8649bb0ed011f30c9960ad",
+        "finalBlob": "7f0b0f2a285ed7086a8649bb0ed011f30c9960ad",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "core/tests/fixtures/testkit.js",
+        "oldBlob": "a241c20163c91f6a3d674947feb9204b913805e0",
+        "headBlob": "a241c20163c91f6a3d674947feb9204b913805e0",
+        "finalBlob": "a241c20163c91f6a3d674947feb9204b913805e0",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/difficulty-diagnostics.js",
+        "oldBlob": "079f42c64a1bef869644bc1efdc04cf36c3cfb88",
+        "headBlob": "079f42c64a1bef869644bc1efdc04cf36c3cfb88",
+        "finalBlob": "079f42c64a1bef869644bc1efdc04cf36c3cfb88",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/manual-corpus.js",
+        "oldBlob": "d128ab2585d3edbfd3558369ac8fc97c9e42d02b",
+        "headBlob": "d128ab2585d3edbfd3558369ac8fc97c9e42d02b",
+        "finalBlob": "d128ab2585d3edbfd3558369ac8fc97c9e42d02b",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/mega-contract.js",
+        "oldBlob": "b1b70636dca151e93152fcc8b8111807c38fef9f",
+        "headBlob": "b1b70636dca151e93152fcc8b8111807c38fef9f",
+        "finalBlob": "b1b70636dca151e93152fcc8b8111807c38fef9f",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/pattern-cost.js",
+        "oldBlob": "6f8668da7bd53e91c56b532c5b91c346f6b7f05c",
+        "headBlob": "6f8668da7bd53e91c56b532c5b91c346f6b7f05c",
+        "finalBlob": "6f8668da7bd53e91c56b532c5b91c346f6b7f05c",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/perf-helper.js",
+        "oldBlob": "7fda15b457d45417fcd4b84c6a90bcdfcb475ab1",
+        "headBlob": "2f66bd914a44820f7bfaa7e161290c35fb109e11",
+        "finalBlob": "2f66bd914a44820f7bfaa7e161290c35fb109e11",
+        "identical": false,
+        "expectedDifferent": true
+      },
+      {
+        "path": "generator/tests/fixtures/qualification-records.js",
+        "oldBlob": "ec52ab0f8986491a8d0bac168fb9bc7bae68c498",
+        "headBlob": "ec52ab0f8986491a8d0bac168fb9bc7bae68c498",
+        "finalBlob": "ec52ab0f8986491a8d0bac168fb9bc7bae68c498",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/rated.js",
+        "oldBlob": "bde88034b29706d4012e95f93adc4261a50fd184",
+        "headBlob": "bde88034b29706d4012e95f93adc4261a50fd184",
+        "finalBlob": "bde88034b29706d4012e95f93adc4261a50fd184",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/recovery-profile.js",
+        "oldBlob": "e932a6a940c60cc0f5742d822854c22f3416f6cb",
+        "headBlob": "e932a6a940c60cc0f5742d822854c22f3416f6cb",
+        "finalBlob": "e932a6a940c60cc0f5742d822854c22f3416f6cb",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/regression.js",
+        "oldBlob": "442f71de64574b8f1d3d19342cce32ffdb921663",
+        "headBlob": "442f71de64574b8f1d3d19342cce32ffdb921663",
+        "finalBlob": "442f71de64574b8f1d3d19342cce32ffdb921663",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/replay-goldens.js",
+        "oldBlob": "59c7126314e77ccadeae2b5e4027f1b9fb122aba",
+        "headBlob": "59c7126314e77ccadeae2b5e4027f1b9fb122aba",
+        "finalBlob": "59c7126314e77ccadeae2b5e4027f1b9fb122aba",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/replay-recording.js",
+        "oldBlob": "bbc96419dc76cedaeb4d8fa4520ca37ba911571f",
+        "headBlob": "bbc96419dc76cedaeb4d8fa4520ca37ba911571f",
+        "finalBlob": "bbc96419dc76cedaeb4d8fa4520ca37ba911571f",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/replay-wire.js",
+        "oldBlob": "5afdf33d3a24e70eaf7fbe6951415585d3b2d4a1",
+        "headBlob": "5afdf33d3a24e70eaf7fbe6951415585d3b2d4a1",
+        "finalBlob": "5afdf33d3a24e70eaf7fbe6951415585d3b2d4a1",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/testkit-provider.js",
+        "oldBlob": "f6137a70a4bab5cf65f2b3dbb950cc3b6b174dc8",
+        "headBlob": "f6137a70a4bab5cf65f2b3dbb950cc3b6b174dc8",
+        "finalBlob": "f6137a70a4bab5cf65f2b3dbb950cc3b6b174dc8",
+        "identical": true,
+        "expectedDifferent": false
+      },
+      {
+        "path": "generator/tests/fixtures/tool-records.js",
+        "oldBlob": "2108db27bb0fb9418432528d89a7f40f81c19107",
+        "headBlob": "2108db27bb0fb9418432528d89a7f40f81c19107",
+        "finalBlob": "2108db27bb0fb9418432528d89a7f40f81c19107",
+        "identical": true,
+        "expectedDifferent": false
+      }
+    ],
+    "identicalCount": 88,
+    "comparedCount": 89,
+    "proved": true
+  },
+  "criterion2": {
+    "diffLinesChanged": 31,
+    "byClass": {
+      "comment-or-blank": 7,
+      "PERF_TARGETS-row": 24
+    },
+    "classifiedLines": [
+      {
+        "sign": "-",
+        "class": "comment-or-blank",
+        "text": "* the 79 offered levels and no recalibration: every target of an offered level is the one it had, and the old"
+      },
+      {
+        "sign": "+",
+        "class": "comment-or-blank",
+        "text": "* the 79 offered levels and no recalibration: every target of an offered level was the one it had, and the old"
+      },
+      {
+        "sign": "+",
+        "class": "comment-or-blank",
+        "text": "* Rating v3 (MS18d): the 17 offered cells whose final qualification p95 (q) was above their target take"
+      },
+      {
+        "sign": "+",
+        "class": "comment-or-blank",
+        "text": "* min(budget, max(the target already selected for the level before, ceil(3 q))) from the raw q of"
+      },
+      {
+        "sign": "+",
+        "class": "comment-or-blank",
+        "text": "* docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json; the other 62 targets are kept (q at most"
+      },
+      {
+        "sign": "+",
+        "class": "comment-or-blank",
+        "text": "* the target), without a cascade; the table is in docs/difficulty-v3/evidence/MS18d/gp-preflight.json. It"
+      },
+      {
+        "sign": "+",
+        "class": "comment-or-blank",
+        "text": "* is a rule applied to qualification data, not a measurement of this script."
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "classic4: row(10, null, null, null, null, null, null, null, null),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "classic6: row(10, null, null, 350, null, null, null, null, null),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "classic9: row(60, 150, 150, 400, 400, 900, 2500, null, null),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "diagonalX: row(80, null, 200, 500, null, 1200, 3000, null, 3000),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "hyper: row(80, null, 200, 500, null, 1200, 3000, null, 5000),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "jigsaw9: row(150, 350, 350, 900, null, 2000, null, null, 5000),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "wordoku: row(100, 250, null, 600, 600, 1500, 1500, null, null),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "killer: row(300, 700, 700, null, null, null, null, null, null),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "classic4: row(31, null, null, null, null, null, null, null, null),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "classic6: row(39, null, null, 350, null, null, null, null, null),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "classic9: row(60, 2342, 2627, 400, 1323, 900, 8377, null, null),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "diagonalX: row(80, null, 200, 500, null, 1200, 10000, null, 3000),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "hyper: row(80, null, 1573, 500, null, 1200, 10000, null, 5000),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "jigsaw9: row(150, 1905, 350, 900, null, 2000, null, null, 10000),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "wordoku: row(100, 2921, null, 600, 600, 1500, 1500, null, null),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "killer: row(300, 700, 5425, null, null, null, null, null, null),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "mega12: row(400, 1000, 1000, 3000, 3000, 3000, 3000, null, 16000),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "mega16: row(1500, 4000, 4000, 10000, null, 10000, null, null, 10000),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "butterfly: row(1000, null, 3000, 8000, 8000, 8000, 8000, null, 15000),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "mega12: row(400, 1000, 1000, 3000, 3000, 3000, 18842, null, 16000),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "mega16: row(1500, 4000, 4000, 10000, null, 10000, null, null, 30000),"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "butterfly: row(1000, null, 3000, 8000, 8000, 8000, 30000, null, 15000),"
+      },
+      {
+        "sign": "-",
+        "class": "PERF_TARGETS-row",
+        "text": "sohei: row(3000, null, 8000, 20000, 20000, 20000, null, null, 20000)"
+      },
+      {
+        "sign": "+",
+        "class": "PERF_TARGETS-row",
+        "text": "sohei: row(3000, null, 8000, 20000, 20000, 20000, null, null, 30000)"
+      }
+    ],
+    "changedTargetRows": [
+      "classic4",
+      "classic6",
+      "classic9",
+      "diagonalX",
+      "hyper",
+      "jigsaw9",
+      "wordoku",
+      "killer",
+      "mega12",
+      "mega16",
+      "butterfly",
+      "sohei"
+    ],
+    "changedTargetRowCount": 12,
+    "changedCellValueCount": 17,
+    "rowsExpected": 12,
+    "valuesExpected": 17,
+    "consumersInLoadedPathExceptDefiningFixture": [],
+    "commentOnlyReferencesInLoadedPath": [
+      {
+        "file": "generator/tests/fixtures/regression.js",
+        "line": 3,
+        "text": "* of the puzzle that the pipeline gives for each of the 20 fixed seeds (see perf-helper.js)."
+      }
+    ],
+    "definingFixtureReferences": [
+      {
+        "line": 4,
+        "text": "* SG.fixtures.perfTools."
+      },
+      {
+        "line": 6,
+        "text": "*  - PERF_TARGETS    the p95 budgets of design.md section 9.1 in milliseconds, by variant and level."
+      },
+      {
+        "line": 62,
+        "text": "var PERF_TARGETS = {"
+      },
+      {
+        "line": 87,
+        "text": "Object.keys(PERF_TARGETS).forEach(function (variant) {"
+      },
+      {
+        "line": 89,
+        "text": "Object.keys(PERF_TARGETS[variant]).forEach(function (level) {"
+      },
+      {
+        "line": 92,
+        "text": "variant: variant, level: level, target: PERF_TARGETS[variant][level], key: variant + '/' + level"
+      },
+      {
+        "line": 508,
+        "text": "SG.fixtures.perfTools = {"
+      },
+      {
+        "line": 509,
+        "text": "PERF_TARGETS: PERF_TARGETS,"
+      }
+    ],
+    "testSideReferences": [
+      {
+        "file": "generator/tests/suites/manual-corpus.test.js",
+        "loadedBySuiteVariants": false
+      },
+      {
+        "file": "generator/tests/suites/perf-tooling.test.js",
+        "loadedBySuiteVariants": false
+      },
+      {
+        "file": "generator/tests/suites/smoke.test.js",
+        "loadedBySuiteVariants": false
+      },
+      {
+        "file": "generator/tests/manual/perf.test.js",
+        "loadedBySuiteVariants": false
+      },
+      {
+        "file": "generator/tests/perf.js",
+        "loadedBySuiteVariants": false
+      },
+      {
+        "file": "generator/tests/soak.js",
+        "loadedBySuiteVariants": false
+      }
+    ],
+    "proved": true
+  },
+  "criterion3": {
+    "runnerLines": {
+      "sourceFilesLoop": [
+        276
+      ],
+      "fixturesLoop": [
+        291
+      ],
+      "selectionBySuite": [
+        315
+      ],
+      "selectedSuiteLoop": [
+        327
+      ],
+      "selectedSuiteRunFile": [
+        330
+      ],
+      "manualTreesOnlyForFingerprint": [
+        129
+      ],
+      "listFiles": [
+        199
+      ]
+    },
+    "selectionOfNewInventory": {
+      "set": "suites",
+      "suites": [
+        "variants"
+      ],
+      "filter": null,
+      "exact": null,
+      "count": 285
+    },
+    "suitesInRegisteredRows": [
+      "variants"
+    ],
+    "fingerprintInputsChangedSinceMs18c": [
+      {
+        "path": "DEVELOPERGUIDE.md",
+        "change": "changed",
+        "classification": "document-or-page: hashed for the fingerprint, never executed"
+      },
+      {
+        "path": "DEVELOPERGUIDE.vn.md",
+        "change": "changed",
+        "classification": "document-or-page: hashed for the fingerprint, never executed"
+      },
+      {
+        "path": "USERGUIDE.md",
+        "change": "changed",
+        "classification": "document-or-page: hashed for the fingerprint, never executed"
+      },
+      {
+        "path": "USERGUIDE.vn.md",
+        "change": "changed",
+        "classification": "document-or-page: hashed for the fingerprint, never executed"
+      },
+      {
+        "path": "generator/design.md",
+        "change": "changed",
+        "classification": "document-or-page: hashed for the fingerprint, never executed"
+      },
+      {
+        "path": "generator/tests/fixtures/perf-helper.js",
+        "change": "changed",
+        "classification": "perf-helper: criterion 2"
+      },
+      {
+        "path": "generator/tests/manual/difficulty.test.js",
+        "change": "changed",
+        "classification": "manual suite: not loaded by --suite=variants"
+      },
+      {
+        "path": "generator/tests/manual/perf.test.js",
+        "change": "changed",
+        "classification": "manual suite: not loaded by --suite=variants"
+      },
+      {
+        "path": "generator/tests/suites/manual-corpus.test.js",
+        "change": "changed",
+        "classification": "quick suite: not loaded by --suite=variants"
+      },
+      {
+        "path": "generator/tests/suites/mega.test.js",
+        "change": "changed",
+        "classification": "quick suite: not loaded by --suite=variants"
+      },
+      {
+        "path": "generator/tests/suites/multigrid.test.js",
+        "change": "changed",
+        "classification": "quick suite: not loaded by --suite=variants"
+      }
+    ],
+    "manualFilesHashedOnly": [
+      "generator/tests/manual/difficulty.test.js",
+      "generator/tests/manual/extra-regions.test.js",
+      "generator/tests/manual/greater-than.test.js",
+      "generator/tests/manual/jigsaw.test.js",
+      "generator/tests/manual/killer.test.js",
+      "generator/tests/manual/perf.test.js",
+      "generator/tests/manual/variants.test.js",
+      "generator/tests/manual/wordoku.test.js"
+    ],
+    "proved": true
+  },
+  "criterion4": {
+    "oldTests": 285,
+    "newTests": 285,
+    "omittedFromNew": [],
+    "addedInNew": [],
+    "duplicateKeysInNew": [],
+    "duplicateOrdinalsInNew": [],
+    "registrationErrorsNew": 0,
+    "registrationErrorsOld": 0,
+    "completeNew": true,
+    "completeOld": true,
+    "selectionOld": {
+      "set": "suites",
+      "suites": [
+        "variants"
+      ],
+      "filter": null,
+      "exact": null,
+      "count": 285
+    },
+    "selectionNew": {
+      "set": "suites",
+      "suites": [
+        "variants"
+      ],
+      "filter": null,
+      "exact": null,
+      "count": 285
+    },
+    "orderIdentical": true,
+    "sgDeepUnsetInThisProcess": true,
+    "proved": true
+  },
+  "deviations": []
+}

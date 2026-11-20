@@ -1,0 +1,4 @@
+$ node tests\qualify.js --merge=..\docs\difficulty-v3\evidence\MS07e\qualification --jobs=4 --json=..\docs\difficulty-v3\qualification-checkpoint-2026-11-15.json --markdown=..\docs\difficulty-v3\evidence\MS07e\table.md
+qualify: the merge is rejected, nothing was written (1 problem):
+  - missing 6 of 135 cells: mega12/hell1, mega16/nightmare, mega16/hell1, greaterThan/expert, greaterThan/hell1, butterfly/hell1
+exit=1 seconds=0.276

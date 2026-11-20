@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\make-plan.js
+gg-plan.json: 104 shards, 26 combinations, projections 2289 s (factor 3), measured 398.58 s in MS18c
+by projection, at a budget of 420 s: 6 compound(s) from 0, 28, 52, 72, 76, 88
+exit=0 seconds=0.103

@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record mega16-easy.i0.n50 a2",
+  "runId": "mega16-easy.i0.n50.a2",
+  "cell": "mega16/easy",
+  "payload": "gp-recorder",
+  "chunkId": "mega16-easy.i0.n50",
+  "attempt": 2,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-easy/mega16-easy.i0.n50.a2",
+  "requestedAt": "2026-11-19T20:50:13.346+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795096197620,
+    "lastCheckMs": 1795096213156,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 269
+  },
+  "startedAtFromChild": "2026-11-19T20:50:13.489+07:00",
+  "finished": "2026-11-19T20:50:13.562+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2902,
+    "cheapCheckMs": 125,
+    "ageMs": 135,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T20:50:13.563+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 64,
+  "controllerOutcome": "control-hold",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": "MS18d GP record mega16-easy.i0.n50 a2 command failed: 64",
+  "outcome": "control-hold",
+  "problems": []
+}

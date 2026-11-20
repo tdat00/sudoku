@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "c50a3c3b5b4ae9ce93b715c92fe2d674029b541385fe41eda9592409546e5e78",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "058f16d0871c99377b19a21cff87e0c3b7de5533",
+  "dirty": true,
+  "generatedAt": "2026-11-16T22:17:54.417Z",
+  "argv": ["--hash-key=killer/easy","--hash-from=15","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14a\\hashes\\killer-easy-15.json"],
+  "records": [
+    {"key":"killer/easy#1597","variant":"killer","level":"easy","seed":1597,"hash":"cda500b8c27e15c4","ms":22,"overrides":[]},
+    {"key":"killer/easy#2584","variant":"killer","level":"easy","seed":2584,"hash":"417d5494b4dbbcb0","ms":25,"overrides":[]},
+    {"key":"killer/easy#4181","variant":"killer","level":"easy","seed":4181,"hash":"f0f6ed371611452b","ms":21,"overrides":[]},
+    {"key":"killer/easy#6765","variant":"killer","level":"easy","seed":6765,"hash":"f6e936b8b44c019c","ms":19,"overrides":[]},
+    {"key":"killer/easy#10946","variant":"killer","level":"easy","seed":10946,"hash":"49b1d4fc260b3810","ms":21,"overrides":[]}
+  ]
+}

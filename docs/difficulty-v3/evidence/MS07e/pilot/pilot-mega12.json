@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega12.json",
+    "--cells=mega12/nightmare:2,mega12/hell1:1,mega12/hell2:3",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T04:39:50.356Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "mega12/nightmare": {
+      "variant": "mega12",
+      "level": "nightmare",
+      "asked": 2,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 3929828716,
+          "hit": true,
+          "ms": 447.8591,
+          "achieved": "nightmare",
+          "score": 2301,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 3946606335,
+          "hit": true,
+          "ms": 105.4273,
+          "achieved": "nightmare",
+          "score": 2216,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 2,
+      "meanMs": 276.643,
+      "maxMs": 447.8591
+    },
+    "mega12/hell1": {
+      "variant": "mega12",
+      "level": "hell1",
+      "asked": 1,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1220491447,
+          "hit": false,
+          "ms": 36538.3776,
+          "achieved": "hell1",
+          "score": 3195,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 1,
+      "hits": 0,
+      "meanMs": 36538.378,
+      "maxMs": 36538.3776
+    },
+    "mega12/hell2": {
+      "variant": "mega12",
+      "level": "hell2",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 4171779926,
+          "hit": true,
+          "ms": 6493.8211,
+          "achieved": "hell2",
+          "score": 3953,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 4188557545,
+          "hit": true,
+          "ms": 2497.3086,
+          "achieved": "hell2",
+          "score": 4007,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 4138224688,
+          "hit": true,
+          "ms": 1131.9777,
+          "achieved": "hell2",
+          "score": 3813,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 3,
+      "meanMs": 3374.369,
+      "maxMs": 6493.8211
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T04:40:37.577Z",
+  "seconds": 47.219
+}

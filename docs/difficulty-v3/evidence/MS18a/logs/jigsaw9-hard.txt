@@ -1,0 +1,6 @@
+$ node tests\soak.js --variant=jigsaw9 --level=hard --count=12 --seed=20260101 --no-gate --json=..\docs\difficulty-v3\evidence\MS18a\jigsaw9-hard.json
+TASK MS18a jigsaw9-hard
+STRICT SCREEN NOT READY: mean 1.291, max 3.011 busy cores of 16 (jigsaw9-hard.json)
+POLICY MS18a-Q1-host-active HOLD: another process (svchost.exe, PID 3640) gained 3.38 CPU-s in 5.72 s (0.59 per second, limit 0.5)
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+NOT STARTED: another process (svchost.exe, PID 3640) gained 3.38 CPU-s in 5.72 s (0.59 per second, limit 0.5)

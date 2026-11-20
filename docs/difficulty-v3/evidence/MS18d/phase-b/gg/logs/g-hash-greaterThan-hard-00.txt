@@ -1,0 +1,4 @@
+$ node tests\perf.js --hash-key=greaterThan/hard --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS18d\hashes\greaterThan-hard-00.json
+  greaterThan/hard: seeds 1, 2, 3, 5, 8 (11.7 s)
+recorded 5 of 520 keys (greaterThan/hard, seed indexes 0-4 (seeds 1, 2, 3, 5, 8)) in docs/difficulty-v3/evidence/MS18d/hashes/greaterThan-hard-00.json; a ledger is one shard, merge them all with --hash-merge
+exit=0 seconds=12.390

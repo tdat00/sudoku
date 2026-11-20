@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS13c\roundtrip-probe.js
+#589 solved true steps 91 v2 steps 11:forcingChainLong len5, 14:forcingChainLong len5, 22:forcingChainLong len5, 23:forcingChainLong len6, 24:forcingChainLong len8, 33:forcingChainLong len5 | forcingChain:k7/91 v1 forcingChainLong:k9/91 v1
+#68 solved true steps 81 v2 steps 13:forcingChainLong len5, 15:forcingChainLong len5, 16:forcingChain len4, 19:forcingChain len4, 20:forcingChain len4, 21:forcingChain len4, 22:forcingChainLong len7, 23:forcingChainLong len7, 24:forcingChainLong len6 | forcingChain:k13/81 v1 forcingChainLong:k14/81 v2
+#1244 solved true steps 96 v2 steps 20:forcingChainLong len5, 21:forcingChainLong len6, 25:forcingChainLong len6, 30:forcingChainLong len6, 31:forcingChainLong len6, 32:forcingChainLong len7, 33:forcingChainLong len6, 34:forcingChainLong len6, 36:forcingChainLong len7, 37:forcingChainLong len8, 38:forcingChainLong len8, 43:forcingChain len4 | forcingChain:k18/96 v1 forcingChainLong:k19/96 v1
+#1349 solved true steps 88 v2 steps 10:forcingChainLong len7, 11:forcingChainLong len8, 15:forcingChain len4, 16:forcingChain len4, 31:forcingChain len3 | forcingChain:k16/88 v2 forcingChainLong:k11/88 v2
+#2475 solved true steps 75 v2 steps 13:forcingChain len4, 14:forcingChainLong len8, 23:forcingChainLong len8 | forcingChain:k14/75 v2 forcingChainLong:k15/75 v2
+#1024 solved true steps 88 v2 steps 24:forcingChainLong len5, 25:forcingChainLong len6, 31:forcingChainLong len6, 36:forcingChainLong len6, 38:forcingChainLong len6, 40:forcingChainLong len6, 42:forcingChainLong len7 | forcingChain:k33/88 v1 forcingChainLong:k25/88 v2
+#1375 solved true steps 82 v2 steps 9:forcingChainLong len6, 10:forcingChainLong len7, 11:forcingChain len4, 14:forcingChain len4, 19:forcingChainLong len5, 20:forcingChainLong len5, 21:forcingChainLong len5, 22:forcingChainLong len6, 28:forcingChain len4 | forcingChain:k12/82 v2 forcingChainLong:k10/82 v2
+exit=0 seconds=1.189

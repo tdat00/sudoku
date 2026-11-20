@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --suite=killer,jigsaw,greater-than,extra-regions,wordoku,perf,manual-corpus --list-tests=..\docs\difficulty-v3\evidence\MS18c\closure\population\inventory-before-current.json
+Inventory: 710 tests in 7 suites (0 skipped, 1 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS18c/closure/population/inventory-before-current.json
+exit=0 seconds=0.334

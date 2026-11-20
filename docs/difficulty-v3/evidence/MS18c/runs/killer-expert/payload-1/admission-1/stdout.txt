@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+killer/expert: 2/12 hits, p95 34.4 s (budget 10.0 s), hidden (stopped: time)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| killer | expert | 12 | 2 | 17 % | 13.5 s | 34.4 s | 34.4 s | 10.0 s | hidden (stopped: time) |
+
+killer: []

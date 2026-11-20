@@ -1,0 +1,44 @@
+== BATCH i5-part3 : 53 cells at 2026-11-14T03:52:58.7141156+07:00
+== SKIP i5-killer-veryEasy: already recorded (ran)
+== SKIP i5-killer-easy: already recorded (ran)
+== SKIP i5-killer-normal: already recorded (ran)
+== SKIP i5-killer-hard: already recorded (ran)
+== SKIP i5-killer-expert: already recorded (ran)
+== SKIP i5-killer-master: already recorded (ran)
+== SKIP i5-killer-nightmare: already recorded (ran)
+== SKIP i5-killer-hell1: already recorded (ran)
+== SKIP i5-killer-hell2: already recorded (ran)
+== SKIP i5-jigsaw-veryEasy: already recorded (ran)
+== SKIP i5-jigsaw-easy: already recorded (ran)
+== SKIP i5-jigsaw-normal: already recorded (ran)
+== SKIP i5-jigsaw-hard: already recorded (ran)
+== SKIP i5-jigsaw-expert: already recorded (ran)
+== SKIP i5-jigsaw-master: already recorded (deferred)
+== SKIP i5-jigsaw-nightmare: already recorded (ran)
+== SKIP i5-jigsaw-hell1: already recorded (ran)
+== SKIP i5-jigsaw-hell2: already recorded (ran)
+== SKIP i5-greater-than-veryEasy: already recorded (ran)
+== SKIP i5-greater-than-easy: already recorded (ran)
+== SKIP i5-greater-than-normal: already recorded (ran)
+== CELL i5-greater-than-hard requests=10 projection=123s (budget: 2 x BUDGET_MS of the suite (6000 ms, design.md 9.1 p95 of rating v2) per request x 10 requests + 3 s; not a v3 measurement)
+--list-tests=..\docs\difficulty-v3\evidence\MS05b3\selectors\i5-greater-than-hard.json: the file exists already (an evidence file is never overwritten)
+
+Usage: node tests/node-runner.js [options]
+
+Without options only the quick suites of tests/suites run.
+
+  --all                    run the quick suites and the manual (heavy) ones of tests/manual
+  --manual                 run only the manual (heavy) suites
+  --suite=<name>[,<name>]  run only these suites, quick or manual (file name without ".test.js")
+  --filter=<text>          run only tests whose full name contains <text> (case-insensitive)
+  --exact=<full name>      run only tests whose full name ("suite > describe > test") is exactly this
+                           (case-sensitive, every test of that name); not with --filter
+  --list-tests=<file.json> write the inventory of the selected tests (no test, hook or benchmark runs; the
+                           suites still register as for a run); a new project-relative path in the repository
+  --results=<file.json>    run, then also write the result of every selected test there (same path rules);
+                           not with --list-tests
+  --bail                   stop after the first failing test
+  --verbose                print every test, skipped source files and benchmark timings
+  --help                   show this help
+== STOP i5-greater-than-hard: the preflight did not select exactly the expected test
+== BATCH i5-part3 finished at 2026-11-14T03:52:59.3166258+07:00

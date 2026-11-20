@@ -1,0 +1,47 @@
+$ node tests\artifacts\difficulty-v3\MS11b\explore-dug.js 4242 30000 0 below
+explore-dug: seed 4242, puzzles 30000 from 0, mode below, model classic9, cutoff = order of uniqueRectangle = 180, prefix of 25 techniques (nakedSingle hiddenSingleBox hiddenSingleLine pointing boxLine nakedPair hiddenPair nakedTriple hiddenTriple nakedQuad hiddenQuad xWing skyscraper twoStringKite remotePairs simpleColouring emptyRectangle finnedXWing swordfish finnedSwordfish jellyfish xyWing xyzWing wxyzWing wWing), print limit 12
+#0 2.....7...31...5..7.6..82..3......9....41.......7.2.....8.6..1..4...5........382. type1 args {"cell":"R1C2","digitX":5,"digitY":9} cells [1,4,19,22] elim R1C2-5(1) R1C2-9(1)
+#42 ...9....8.6.....3..7.8..4.......12.3.43.7..5.1...2.6....6.45......2..16.3.8...... hidden links 4 pair 45 cells R1C1 R1C3 R8C1 R8C3 elim R8C3-5(65) work 0+1
+#46 .65.....7...735.9....8...1..8...96....35..4....6..38.5.9..........9...6.3.4...... type1 args {"cell":"R7C3","digitX":1,"digitY":7} cells [56,60,65,69] elim R7C3-1(56) R7C3-7(56)
+#114 7.39...4....4..8....9.87...5...2......4.79..1.6.....5.62....7.......512..9....... hidden links 7 pair 78 cells R8C3 R8C4 R9C3 R9C4 elim R9C4-8(75) work 12+7
+#120 ...2.186..9.4....21...................5..794.8...695....2.3...66...4.1.7.4...6... type2 args {"roof1":"R5C4","roof2":"R5C9","digitX":1,"digitY":3,"digit":8} cells [39,44,48,53] elim R5C5-8(40)
+#138 .1...7.327...9...5.....1..65......7..3...51....87.3.5.8....93.....8.....19.2...6. hidden links 9 pair 49 cells R5C1 R5C9 R6C1 R6C9 elim R5C1-4(36) work 0+2
+#152 .1.......4...2........5.86...5.4.61...75.8...1..2..3..7...8...3..9..62.1...4..... type2 args {"roof1":"R1C3","roof2":"R2C3","digitX":6,"digitY":8,"digit":3} cells [2,3,11,12] elim R3C3-3(20)
+#154 .....1.......2...9..17......8...4.9..2...543..4..1...6..29.....3.......2.74..38.. type2 args {"roof1":"R1C9","roof2":"R3C9","digitX":3,"digitY":8,"digit":4} cells [4,8,22,26] elim R1C8-4(7) R2C8-4(16) R3C8-4(25) R7C9-4(62)
+#156 ...6.9....73....6.29............6.928....5.......1.53.6.27...8991...8.5..8.1....7 type4 roofs R5C4 R6C4 digits 49 removed 4 unit C4 elim R5C4-4 R6C4-4 work 22
+#192 4.1..8.....576....7......8...3...2..8..32....6.....5.7...6..14..6.4..9.2...1..... hidden links 6 pair 56 cells R1C8 R1C9 R9C8 R9C9 elim R9C9-5(80) work 69+2
+#230 ..5.1.384...5..7..8.......13.4..6..71.9..74.5.6.9.........2.94..7.....1...8...... type1 args {"cell":"R3C2","digitX":2,"digitY":9} cells [1,5,19,23] elim R3C2-2(19) R3C2-9(19)
+#244 5...42.....4.......7..9...84...7.6.5.9......16..13.7....28.4.............1.75.4.. hidden links 9 pair 89 cells R4C6 R4C8 R6C6 R6C8 elim R6C8-8(52) work 0+10
+#254 ..27..8.5.1..5....5.8...9....4.7..3....835..78...6.1....5.9..43.31...........6... type4 roofs R2C1 R9C1 digits 79 removed 9 unit C1 elim R2C1-9 R9C1-9 work 5
+#258 .1.2....7..9.6..43...31.9...7....4.592..8.........7.9.5......89...1..7.66........ hidden links 2 pair 23 cells R7C6 R7C7 R9C6 R9C7 elim R9C6-3(77) work 9+13
+#272 ..6138....9...58....2.9.7.......4.21...2.1.........3..2.5....489........38....... hidden links 7 pair 57 cells R1C1 R1C2 R4C1 R4C2 elim R1C1-5(0) work 0+2
+#274 ...84...78...5..6..79....1.2.5.7.3....6............741....8.....9.4..57..5...6... hidden links 6 pair 26 cells R3C4 R3C5 R6C4 R6C5 elim R3C4-2(21) work 0+2
+#286 3..6..7..2.15.8.6......4...6.........9....4....4.....3......1....6..587.72.8..34. type4 roofs R4C9 R5C9 digits 27 removed 2 unit C9 elim R4C9-2 R5C9-2 work 24
+#289 .16......38.....2.7.....5.1.34......5..2...13.......852..3.4....9...8..2..1..6.3. hidden links 3 pair 39 cells R3C5 R3C6 R6C5 R6C6 elim R6C5-9(49) work 0+3
+#296 ...1.8..7...64...3..3..58.......6.1......7458.12...............43..5....895...... hidden links 4 pair 34 cells R6C4 R6C6 R7C4 R7C6 elim R7C4-3(57) work 4+4
+#310 ....9..1......4.3..12...8..6...27.....3...12.5.....4.......8....9.5.....34....6.8 type3 roofs R7C9 R8C9 digits 12 part 3459 real R1C9 R3C9 R4C9 unit C9 elim R2C9-5 R2C9-9 work 23
+#314 ....9..579.6..54....78.....8....612...5.....3.2.1...4.2..4......5...8....4....73. hidden links 4 pair 24 cells R3C5 R3C6 R5C5 R5C6 elim R5C5-2(40) work 21+4
+#352 6..7.5..2.9....1.....2....8..4.2.8...5..6..49.7.1..6..9.8.31...5....2..........9. hidden links 2 pair 24 cells R7C2 R7C7 R9C2 R9C7 elim R9C7-4(78) work 0+7
+#596 9...1.....1..9..4......4.7..49.6.....51..9.683..2.............3..7...59...61.5... type4 roofs R6C7 R6C9 digits 19 removed 1 unit R6 elim R6C7-1 R6C9-1 work 23
+#598 ....6...57....9.2.823...6....4.7......1.9....96....15.3..54...6...8..4.34......7. type4 roofs R4C6 R5C6 digits 25 removed 2 unit C6 elim R4C6-2 R5C6-2 work 51
+#637 ...6.........2.7.8..8.57..9.17...4...........4....38...4.9..17..25.3....8..5.69.. type3 roofs R4C8 R4C9 digits 23 part 569 real R4C5 R4C6 unit R4 elim R4C1-5 R4C1-6 work 2
+#690 .........2.1...4..47.1...32..68......3..1.5......3..2932.....8.1..7..34.7.4..8... type4 roofs R8C5 R8C6 digits 25 removed 5 unit R8 elim R8C5-5 R8C6-5 work 56
+#734 ...1.38.4.89.2...........1..3..7.......4..7....5....29...7..3..96....4....23.1... type3 roofs R9C1 R9C2 digits 47 part 568 real R9C8 R9C9 unit R9 elim R9C5-6 work 6
+#790 ..14.....2.5....18.9..7......83.2.5....1.6.2.9......8..8.7...39.26...........4..1 type4 roofs R9C5 R9C7 digits 26 removed 6 unit R9 elim R9C5-6 R9C7-6 work 15
+#792 6...3.84......1.....42.5....3..279.1......28...7......9......5.4......2...1...3.8 type4 roofs R2C3 R2C9 digits 25 removed 5 unit R2 elim R2C3-5 R2C9-5 work 14
+#828 8......4......49.5....93.1...4.172..9.8......21.93....1....9.24.657............6. type4 roofs R1C2 R1C3 digits 29 removed 2 unit R1 elim R1C2-2 R1C3-2 work 18
+#846 ...3....45.96...........76.3....7.5...1.86...2.....1..62.4.19.8.3...8..........7. type4 roofs R9C1 R9C2 digits 14 removed 4 unit R9 elim R9C1-4 R9C2-4 work 62
+#868 ....7.....93.....6.1...58......6..9.2..1..3..3.62..4...3...6.416....8...42....... type4 roofs R1C9 R3C9 digits 24 removed 2 unit C9 elim R1C9-2 R3C9-2 work 39
+#944 981..........5...1....2...77.64...38.1...6...8...7...........6....2.9...627...5.4 type3 roofs R5C1 R5C3 digits 23 part 4579 real R5C7 R5C8 R5C9 unit R5 elim R5C5-9 work 29
+#946 ..7..9..39...35.........72........8.2.9..641..8.32.9.......4......85..7.5..9..8.1 type4 roofs R3C5 R7C5 digits 16 removed 6 unit C5 elim R3C5-6 R7C5-6 work 5
+#1040 2.95........6.9...4....32.5..8.6.4.93..9.5.17...3......67....8..2....7..........4 type3 roofs R2C1 R2C2 digits 57 part 138 real R2C7 R2C9 unit R2 elim R2C3-3 work 3
+#1230 ..8..71...4.6..23.2.59..8.......9..3....6...1.6.8..42.5..........4753......2.8... type3 roofs R7C2 R8C2 digits 28 part 1379 real R1C2 R3C2 R9C2 unit C2 elim R4C2-1 R4C2-7 R5C2-7 R5C2-9 work 9
+#1276 ...4..21..5..1...4.3.78....2...9..678....3.......2...5.......92....46.....7...4.. type3 roofs R8C2 R9C2 digits 29 part 468 real R5C2 R7C2 unit C2 elim R1C2-8 R6C2-6 work 45
+#1674 ..47..9.....91..3...8.4....9.6....5...3.7..8..4...9......25............68.51...23 type3 roofs R6C4 R6C5 digits 38 part 12567 real R6C1 R6C3 R6C8 R6C9 unit R6 elim R6C7-1 R6C7-2 work 15
+#1776 .3....4...92..635..86.2.........7......8..1.7..365........73.6.....6.794...4.9... type3 roofs R5C1 R5C2 digits 26 part 3459 real R5C3 R5C5 R5C8 unit R5 elim R5C6-4 work 10
+#1850 ......96...9.....8.48....71...82..5....93....8.314..2.9..........7...5..65....41. type3 roofs R2C4 R2C5 digits 57 part 123 real R2C6 R2C7 unit R2 elim R2C1-2 work 6
+#2068 ......13..1.5............9.13..46....8..2...9..6..94..7....4.8....31...59......4. type3 roofs R7C9 R9C9 digits 13 part 24678 real R1C9 R2C9 R3C9 R4C9 unit C9 elim R6C9-7 R6C9-8 work 40
+#2140 ....812....7.........9.734.3...7.4.2..5.6........5..761.9......8....37...2....8.. type3 roofs R8C8 R9C8 digits 19 part 2356 real R7C7 R7C8 R7C9 unit B9 elim R8C9-5 R9C9-3 work 32
+seed 4242 puzzles 30000 (from 0): attempted 30000, fully solved by the prefix 24882, first Findings by subtype {"type1":452,"hidden":992,"type2":95,"type4":322,"type3":158}, calls that ran the second pass 29453, most work 280, capped calls 0, 37.3 s
+hidden Findings: corners holding exactly the pair {"1":864,"2":128}, target holding exactly the pair 128
+exit=0 seconds=37.688

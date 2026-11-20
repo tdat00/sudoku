@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS11a\ur-flood.js
+flood: finding {"technique":"uniqueRectangle","cells":[0,8,16,24],"placements":[],"eliminations":[[0,2],[8,2]],"i18nKey":"technique.uniqueRectangle.type4.step","i18nArgs":{"roof1":"R1C1","roof2":"R1C9","digits":[1,2],"digit":2,"unit":"R1"}} record {"id":"uniqueRectangle","work":200,"limit":50000,"capHit":null,"retained":null}
+unbounded: {"id":"uniqueRectangle","work":200,"limit":100000000,"capHit":null,"retained":null}
+exit=0 seconds=0.228

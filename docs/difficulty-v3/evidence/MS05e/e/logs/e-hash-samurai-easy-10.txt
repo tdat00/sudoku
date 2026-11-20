@@ -1,0 +1,2 @@
+  samurai/easy: seeds 144, 233, 377, 610, 987 (1.2 s)
+recorded 5 of 520 keys (samurai/easy, seed indexes 10-14 (seeds 144, 233, 377, 610, 987)) in docs/difficulty-v3/evidence/MS05e/hashes/samurai-easy-10.json; a ledger is one shard, merge them all with --hash-merge

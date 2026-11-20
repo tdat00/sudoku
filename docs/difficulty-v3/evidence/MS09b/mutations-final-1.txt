@@ -1,0 +1,97 @@
+mutation 0 (a base cell may be a target (the base lines are not excluded: a body cell or a fin)): DETECTED - 483 total, 380 passed, 103 failed, 0 skipped - 103 failing, 99 of the finned fish - 13.2 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 1 (a selection without a fin is accepted (the ordinary fish is relabelled)): DETECTED - 483 total, 447 passed, 36 failed, 0 skipped - 36 failing, 36 of the finned fish - 17.7 s
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: no fin: the two lines are an ordinary X-Wing (as listed)
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: no fin: the two lines are an ordinary X-Wing (transposed)
+    FAIL tech-fish > finnedXWing (R12): geometry > leaves the line of fins only to boxLine and the ordinary X-Wing to xWing, never relabelling either
+    FAIL tech-fish > finnedXWing (R12): real positions > finds nothing at the negative positions: nothing left after it, an ordinary X-Wing, a kite
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+mutation 2 (a base line with no body cell (fins only) is accepted): DETECTED - 483 total, 468 passed, 15 failed, 0 skipped - 15 failing, 15 of the finned fish - 20.2 s
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: a base line of fins only: R4 {C7, C9} has no cell on the covers (a box/line reduction) (as listed)
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: a base line of fins only: R4 {C7, C9} has no cell on the covers (a box/line reduction) (transposed)
+    FAIL tech-fish > finnedXWing (R12): geometry > leaves the line of fins only to boxLine and the ordinary X-Wing to xWing, never relabelling either
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+mutation 3 (a target that sees only the first fin): DETECTED - 483 total, 478 passed, 5 failed, 0 skipped - 5 failing, 5 of the finned fish - 21.1 s
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedSwordfish (R12): a region as the fin box, and the ownership on multi-grid boards > needs the target to see every fin through real peers: a window of the hyper board joins it to one fin only
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+mutation 4 (a target need not see any fin): DETECTED - 483 total, 388 passed, 95 failed, 0 skipped - 95 failing, 91 of the finned fish - 13.1 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): geometry > does not authorize an elimination: an off-cover target: R5C7 sees the fin but C7 is no cover (as listed)
+mutation 5 (a target must lie in the box of the fins instead of seeing them (a peer of a fin outside the box is lost)): DETECTED - 483 total, 479 passed, 4 failed, 0 skipped - 4 failing, 4 of the finned fish - 21.0 s
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+mutation 6 (the target need not be a candidate of the digit): DETECTED - 483 total, 393 passed, 90 failed, 0 skipped - 90 failing, 86 of the finned fish - 13.1 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 7 (a target may be a placed cell): NOT DETECTED (exit 0) - 483 total, 483 passed, 0 failed, 0 skipped - 0 failing, 0 of the finned fish - 21.8 s
+mutation 8 (the targets are taken from the base lines instead of the covers (the wrong anchor)): DETECTED - 483 total, 395 passed, 88 failed, 0 skipped - 88 failing, 88 of the finned fish - 15.7 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 9 (the ownership of the base line dropped (a candidate in several lines of its kind is accepted)): DETECTED - 483 total, 481 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned fish - 22.1 s
+    FAIL tech-fish > finnedXWing (R12): geometry > needs candidates with a single row and a single column: an extra line through a base line, a cover or a fin spoils the pattern, and an extra line elsewhere does not
+    FAIL tech-fish > finnedSwordfish (R12): geometry > needs candidates with a single row and a single column: an extra line through a base line, a cover or a fin spoils the pattern, and an extra line elsewhere does not
+mutation 10 (the ownership of the cover dropped (a candidate with no single cover line is accepted)): DETECTED - 483 total, 481 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned fish - 22.7 s
+    FAIL tech-fish > finnedXWing (R12): geometry > needs candidates with a single row and a single column: an extra line through a base line, a cover or a fin spoils the pattern, and an extra line elsewhere does not
+    FAIL tech-fish > finnedSwordfish (R12): geometry > needs candidates with a single row and a single column: an extra line through a base line, a cover or a fin spoils the pattern, and an extra line elsewhere does not
+mutation 11 (an overlapped box (two owners) counts as the box of its cells): DETECTED - 483 total, 478 passed, 5 failed, 0 skipped - 5 failing, 2 of the finned fish - 23.1 s
+    FAIL tech-fish > twoStringKite (R11): geometry > needs a box that is the only box of both bridge cells (an overlapped box has two owners)
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > counts the owners of a cell over both kinds: a box and a region over the same cells bridge nothing
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs a box that is the only box-like unit of its candidates (an overlapped box has two owners)
+    FAIL tech-fish > finnedXWing (R12): geometry > needs a fin box that is the only box-like unit of every fin (an overlapped box has two owners)
+    FAIL tech-fish > finnedSwordfish (R12): geometry > needs a fin box that is the only box-like unit of every fin (an overlapped box has two owners)
+mutation 12 (fins in two boxes are accepted (the one-box rule dropped)): DETECTED - 483 total, 479 passed, 4 failed, 0 skipped - 4 failing, 4 of the finned fish - 53.7 s
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on diagonalX (extra regions are real peers: a target may see a fin through one)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > agrees on hyper (extra regions are real peers: a target may see a fin through one)
+mutation 13 (a fin with no single box owner is accepted): DETECTED - 483 total, 479 passed, 4 failed, 0 skipped - 4 failing, 4 of the finned fish - 21.7 s
+    FAIL tech-fish > finnedXWing (R12): geometry > needs complete units: an incomplete base line, cover or fin box gives nothing
+    FAIL tech-fish > finnedXWing (R12): geometry > needs a fin box that is the only box-like unit of every fin (an overlapped box has two owners)
+    FAIL tech-fish > finnedSwordfish (R12): geometry > needs complete units: an incomplete base line, cover or fin box gives nothing
+    FAIL tech-fish > finnedSwordfish (R12): geometry > needs a fin box that is the only box-like unit of every fin (an overlapped box has two owners)
+mutation 14 (box-only eligibility: a region of a jigsaw board is not a box-like unit): DETECTED - 483 total, 455 passed, 28 failed, 0 skipped - 28 failing, 14 of the finned fish - 19.2 s
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > bridges through a region: the vector on the jigsaw board (J4 holds R3C5 and R4C7)
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > finds the transposed vector on the transposed jigsaw board (J4 holds R5C3 and R7C4)
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > counts the owners of a cell over both kinds: a box and a region over the same cells bridge nothing
+    FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > has a region as the only box-like unit of a board of rows, columns and regions (the jigsaw layout)
+    FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on the jigsaw board and on its transpose, where the irregular regions are the bridges
+    FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on the jigsaw9 board of the environment, whatever its layout (no minimum: the layouts differ)
+mutation 15 (a board without a box-like unit is still scanned (and costs work)): DETECTED - 483 total, 481 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned fish - 21.7 s
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has no finned fish and costs no work on a board without boxes (a Latin square), unlike the same board with them
+    FAIL tech-fish > finnedSwordfish (R12): work limit, budget, cancellation and the capped prefix > has no finned Swordfish and costs no work on a board without boxes (a Latin square), unlike the same board with them
+mutation 16 (an incomplete unit counts as a line, a box or a cover): DETECTED - 483 total, 476 passed, 7 failed, 0 skipped - 7 failing, 2 of the finned fish - 21.6 s
+    FAIL tech-fish > fish: what the routine must not use > honours ctx.completeUnits: with no complete line there is no fish
+    FAIL tech-fish > fish: what the routine must not use > honours ctx.completeUnits for one line: an incomplete base row breaks the pattern
+    FAIL tech-fish > skyscraper (R11): geometry > needs complete lines: an incomplete base row, base column or shared line gives nothing
+    FAIL tech-fish > twoStringKite (R11): geometry > needs complete lines and a complete box: an incomplete row, column or box gives nothing
+    FAIL tech-fish > emptyRectangle (R11): geometry > needs complete units: an incomplete box, pair unit, arm row or arm column gives nothing
+    FAIL tech-fish > finnedXWing (R12): geometry > needs complete units: an incomplete base line, cover or fin box gives nothing
+mutation 17 (a base line in which the digit is placed is still a base line): DETECTED - 483 total, 481 passed, 2 failed, 0 skipped - 2 failing, 2 of the finned fish - 21.6 s
+    FAIL tech-fish > finnedXWing (R12): geometry > skips a base line in which the digit is placed
+    FAIL tech-fish > finnedSwordfish (R12): geometry > skips a base line in which the digit is placed
+detected 17 of 18, 384.3 s

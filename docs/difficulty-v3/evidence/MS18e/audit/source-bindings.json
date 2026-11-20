@@ -1,0 +1,1010 @@
+{
+  "schema": "ms18e-source-bindings-v1",
+  "head": "28d5b2095ae3657c8d7f15b3bf8187d1595ad088",
+  "base": "547168b4",
+  "identitiesStart": {
+    "generatorQuick": "46b3d0e22307b7900114cf619ef3fd376336a73c0c73878cc6d894b43c19205f",
+    "playerQuick": "45dc04735d65dd353a547e851904c9bca41367cc6c37da04969a0f435044c8a7",
+    "generatorWithManual": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+  },
+  "identitiesEnd": {
+    "generatorQuick": "46b3d0e22307b7900114cf619ef3fd376336a73c0c73878cc6d894b43c19205f",
+    "playerQuick": "45dc04735d65dd353a547e851904c9bca41367cc6c37da04969a0f435044c8a7",
+    "generatorWithManual": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+  },
+  "identitiesE2": {
+    "generatorQuick": "46b3d0e22307b7900114cf619ef3fd376336a73c0c73878cc6d894b43c19205f",
+    "playerQuick": "45dc04735d65dd353a547e851904c9bca41367cc6c37da04969a0f435044c8a7",
+    "generatorWithManual": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+  },
+  "sevenValues": {
+    "generatorQuick": "46b3d0e22307b7900114cf619ef3fd376336a73c0c73878cc6d894b43c19205f",
+    "playerQuick": "45dc04735d65dd353a547e851904c9bca41367cc6c37da04969a0f435044c8a7",
+    "generatorWithManual": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1",
+    "producerSources": "75b0955e3e356bd1",
+    "targetTable": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a"
+  },
+  "targetRecheck": {
+    "counts": {
+      "positions": 135,
+      "active": 79,
+      "absent": 56,
+      "retained": 62,
+      "updated": 17
+    },
+    "designTable": {
+      "cells": 135,
+      "bold": 17,
+      "equalToFrozen": true
+    },
+    "statedInAllThree": true,
+    "problems": []
+  },
+  "changedSinceBase": {
+    "count": 236,
+    "byArea": {
+      ".github/scripts": 1,
+      ".github/workflows": 2,
+      "docs/README.md": 1,
+      "evidence MS18e": 229,
+      "docs/difficulty-v3": 2,
+      "generator/tests": 1
+    },
+    "fingerprintInputs": [],
+    "files": [
+      {
+        "path": ".github/scripts/generator-quick.json",
+        "fingerprints": []
+      },
+      {
+        "path": ".github/workflows/pages.yml",
+        "fingerprints": []
+      },
+      {
+        "path": ".github/workflows/pull-request.yml",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/README.md",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/coverage.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/gates.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/items-e3-input.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/manual-hidden-requests-final-v3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/remote-ci.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/audit/workflow-audit.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/generator-all.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/player-all.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-core-shared.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-digger-target.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-mega.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-own-fast.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-pipeline.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-player.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-replay.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before/shard-steps.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/generator-all.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/player-all.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-core-shared.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-digger-target.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-mega.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-own-fast.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-pipeline.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-player.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-replay.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final/shard-steps.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/ci/quick-cost.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-cv5-a.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-cv5-b.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-cv5-other.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-invariant-1.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-invariant-2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-invariant-3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/hell1/mega12-hell1-invariant-4.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-cv5-a.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-cv5-b.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-cv5-other.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-invariant-1.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-invariant-2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-invariant-3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-invariant-4.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-cv5-a.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-cv5-b.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-cv5-other.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-invariant-1.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-invariant-2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-invariant-3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-invariant-4.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/e2-summary.md",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/lock-log.jsonl",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/confusion-matrix.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/expert.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/hard.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/master.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/nightmare.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/normal.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-01.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-02.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-03.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-04.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-05.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-06.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-07.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-08.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-09.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-10.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-11.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-12.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-13.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/rest-14.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/difficulty/veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-diagonalX-hard.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-diagonalX-hell2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-diagonalX-master.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-diagonalX-nightmare.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-diagonalX-normal.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-diagonalX-veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-hyper-hard.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-hyper-hell2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-hyper-master.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-hyper-nightmare.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-hyper-normal.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/extra-regions-hyper-veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/greater-than-easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/greater-than-hard.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/greater-than-hell2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/greater-than-master.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/greater-than-veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/jigsaw-easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/jigsaw-hard.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/jigsaw-hell2.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/jigsaw-master.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/jigsaw-normal.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/jigsaw-veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/killer-easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/killer-normal.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/killer-veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/wordoku-easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/wordoku-expert.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/wordoku-hard.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/wordoku-master.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/wordoku-nightmare.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/manual/i5/wordoku-veryEasy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-hell1-partial.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-nightmare.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors/GD-confusion.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors/GD-easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors/I5-greater-than-easy.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/inventory-variants-v3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v3.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-core-shared.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-digger-target.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-mega.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-own-fast.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-pipeline.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-player.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-replay.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/generator-steps.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/quick/player-quick.json",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-cv5-a.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-cv5-b.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-cv5-other.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-cv5-a.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-cv5-b.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-cv5-other.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-invariant-1.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-invariant-2.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-invariant-3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-hell1-invariant-4.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-invariant-1.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-invariant-2.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-invariant-3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega12-invariant-4.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-cv5-a.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-cv5-b.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-cv5-other.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-invariant-1.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-invariant-2.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-invariant-3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/DEEP-mega16-invariant-4.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-confusion.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-expert.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-hard.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-master.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-nightmare.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-normal.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-01.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-02.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-03.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-04.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-05.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-06.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-07.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-08.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-09.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-10.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-11.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-12.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-13.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-rest-14.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/GD-veryEasy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-hard-diagonalX.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-hard-hyper.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-hell2-diagonalX.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-hell2-hyper.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-master-diagonalX.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-master-hyper.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-nightmare-diagonalX.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-nightmare-hyper.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-normal-diagonalX.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-normal-hyper.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-veryEasy-diagonalX.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-extra-regions-veryEasy-hyper.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-greater-than-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-greater-than-hard.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-greater-than-hell2.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-greater-than-master.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-greater-than-veryEasy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-jigsaw-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-jigsaw-hard.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-jigsaw-hell2.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-jigsaw-master.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-jigsaw-normal.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-jigsaw-veryEasy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-killer-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-killer-normal.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-killer-veryEasy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-wordoku-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-wordoku-expert.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-wordoku-hard.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-wordoku-master.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-wordoku-nightmare.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/I5-wordoku-veryEasy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/ci-check-e3-before.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/compat-v3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/deep-reconcile-hell1-partial.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/deep-reconcile-nightmare.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e2-identities.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e2-sel-GD-confusion.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e2-sel-GD-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e2-sel-I5-greater-than-easy.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-bindings.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-ci-check-final.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-ci-selftest.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-cost-dry.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-cost.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-coverage.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-gg-check.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-gh-check.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-gr-analysis-check.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-gr-wire-check.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-identities-end.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-identities-start.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-scan-final-v3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/e3-workflow-audit.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/inventory-variants-v3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-core-shared.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-digger-target.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-mega.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-own-fast.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-pipeline.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-player.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-replay.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-generator-steps.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/quick-player.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18e/transcripts/targets-recheck-final-v3.txt",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/notes.md",
+        "fingerprints": []
+      },
+      {
+        "path": "docs/difficulty-v3/release-v3.md",
+        "fingerprints": []
+      },
+      {
+        "path": "generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs",
+        "fingerprints": []
+      }
+    ]
+  },
+  "problems": []
+}

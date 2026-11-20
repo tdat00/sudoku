@@ -1,0 +1,125 @@
+$ node tests\node-runner.js --suite=replay,steps,player,pipeline,cache,worker
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (9.68 s)
+ok   pipeline: 151 passed  (32.26 s)
+(node:14668) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL player: 66 passed, 3 failed  (24.89 s)
+FAIL replay: 142 passed, 12 failed  (16.02 s)
+FAIL steps: 51 passed, 6 failed  (16.49 s)
+ok   worker: 144 passed  (42.92 s)
+
+Failures:
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected "replay.final.signs" to be "replay.folded.reveal"
+       at Q:\git\sudoku\generator\tests\suites\player.test.js:701:30
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:698:22)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > Greater-Than: the sign that causes the jump keeps its removed mark and also gets the frame
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:951:19)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)
+       AssertionError: expected 24 to be 27
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1005:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: synthetic logs > keeps the structure step of a Killer result without a log
+       AssertionError: expected 809 to be 968
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:398:41)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: synthetic logs > recognises a rebuilt Killer log only by its exact shape and the level asked
+       AssertionError: expected length 204 of Array(204)[{op: "pass", pass: "random", clues: 81}, {op: "accept", cells: Array(2)[0, 80]}, {op: "accept", cells: Array(2)[12, 68]}, {op: "accept", cells: Array(2)[25, 55]}, {op: "accept", cells: Array(2)[23, 57]}, {op: "accept", cells: Array(2)[27, 53]}, {op: "accept", cells: Array(2)[16, 64]}, {op: "accept", cells: Array(2)[14, 66]}, {op: "accept", cells: Array(2)[18, 62]}, {op: "accept", cells: Array(2)[34, 46]}, {op: "accept", cells: Array(2)[11, 69]}, {op: "accept", cells: Array(2)[35, 45]}, ...] to be 190
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:437:29)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > rates a stuck board honestly: attempted counts and two solutions (Classic 9x9, section 2.3)
+       AssertionError: expected {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1, wWing: 2, ...} to equal {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, wWing: 2, uniqueRectangle: 1, ...}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:521:29)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > is unverified when the uniqueness count runs out of its guard, and rated with the default one
+       AssertionError: expected 2331 to be 2327
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:564:27)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: views and transitions (synthetic) > keeps the structure step of a Killer fallback: no change for it, "first" at the final board
+       AssertionError: expected Array(5)["final", 809, "first", 0, 809] to equal Array(5)["final", 968, "first", 0, 968]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1041:95
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1037:30)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G11, G12, G01)
+       AssertionError: expected Array(3)[577, 740, "newPeak"] to equal Array(3)[133, 549, "jump"]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1197:75
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1193:85)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has 13 compact, 14 details and 18 distinct jump transitions in the 14 goldens
+       AssertionError: expected {compact: 12, details: 12} to equal {compact: 13, details: 14}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1219:21)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G11)
+       TypeError: Cannot read properties of undefined (reading 'before')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1228:19
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1226:9)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > golden G11: the generator's choice, the first use and the restricted check
+       AssertionError: expected "checked" to be "combined"
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1338:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1334:17)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 14 details
+       AssertionError: expected {compact: 12, details: 12} to equal {compact: 13, details: 14}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1561:21)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R5C9 and the two sign jumps of G11
+       TypeError: Cannot read properties of null (reading 'class')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1567:54)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G11, G12)
+       AssertionError: expected "single-sign" to be "multi-move"
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1583:29
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1577:32)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > marks 13 compact and 14 details jumps over the 14 goldens, and one first rated puzzle per view
+       AssertionError: expected {compact: 12, details: 12} to equal {compact: 13, details: 14}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:855:23)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:913:20
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:902:7)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       AssertionError: expected "Removing each clue alone gives 50 and 50; removing the whole group gives 2,501." to be "Removing each clue alone gives 50 and 50; removing the whole group gives 2,461."
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1066:10)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of null (reading 'class')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1096:22
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1091:58)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidates 5, 6 and 8 in one cell, a placement, candidate 1 in a cell
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1349:23
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1348:11
+  FAIL steps > stepView: the callout, the badge and the legend on the page > explains the frames of a jump in the legend only when the view uses them
+       AssertionError: expected Array(4)["revealed", "signRemoved", "signKept", "signCause"] not to contain "signCause"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1511:35
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1506:7)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 6
+Tests:  681 total, 660 passed, 21 failed, 0 skipped
+Time:   142.27 s running tests, 142.40 s total
+exit=1 seconds=142.522

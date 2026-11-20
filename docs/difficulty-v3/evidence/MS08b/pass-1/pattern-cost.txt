@@ -1,0 +1,9 @@
+$ node tests\pattern-cost.js --ids=twoStringKite --runs=20 --json=..\docs\difficulty-v3\evidence\MS08b\pattern-cost.json
+pattern-cost: 5 of 5 cases x 20 runs (100 finds), complete true, found 2, none 3, outcome not the fixture's 0, capped 0, wall 0.016 s
+  twoStringKite:positive:1 found, work 11 of 50000, ms p50 0.045 p95 0.127 max 0.433
+  twoStringKite:positive:2 found, work 22 of 50000, ms p50 0.023 p95 0.048 max 0.052
+  twoStringKite:negative:1 none, work 98 of 50000, ms p50 0.012 p95 0.063 max 0.075
+  twoStringKite:negative:2 none, work 7 of 50000, ms p50 0.007 p95 0.023 max 0.249
+  twoStringKite:negative:3 none, work 41 of 50000, ms p50 0.012 p95 0.023 max 0.042
+record: docs/difficulty-v3/evidence/MS08b/pattern-cost.json
+exit=0 seconds=0.565

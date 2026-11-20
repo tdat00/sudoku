@@ -1,0 +1,56 @@
+mutation 119 (list elements are compared loosely): NOT DETECTED, EQUIVALENT (the lists hold numbers (typed arrays or arrays of integers), for which loose and strict equality coincide) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.6 s
+mutation 120 (typed arrays are no lists): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 121 (anything is a list): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 122 (a data view is a list): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 123 (cells need not be integers): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 124 (negative cells are accepted): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 125 (cells beyond the board are accepted): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 126 (membership lists are not sorted): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 127 (membership lists are sorted downwards): NOT DETECTED, EQUIVALENT (a membership list is compared as a multiset, and any canonical order of its numbers, descending included, gives equal text for equal multisets) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.3 s
+mutation 128 (membership lists use the default sort): NOT DETECTED, EQUIVALENT (the default sort orders by the text of the numbers: a deterministic order of the multiset, so equal multisets give equal text) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.7 s
+mutation 129 (a vector of another length is accepted): NOT DETECTED (exit 0) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.9 s
+mutation 130 (vector entries are not checked): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 131 (board vectors are sorted): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 132 (a null item is kept): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 133 (a cage need not be a record): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 134 (a cage sum need not be a number): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 135 (a cage sum may be infinite): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 136 (a cage flag need not be a boolean): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 137 (a sign need not be a record): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 138 (sign ends need not be integers): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 139 (the first sign end is not bounded): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 140 (the second sign end is not bounded): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 141 (the first sign end may be negative): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 142 (the second sign end may be negative): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 143 (the first sign end may pass the board): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 144 (the second sign end may pass the board): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 145 (a sign loses its direction): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 146 (an overlay need not be a record): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.7 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 147 (an overlay kind need not be a text): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 14.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 148 (a sub-grid need not be a record): NOT STARTED (elapsed 402.5 s)
+detected 25 of 29, survivors 4, 1 not started, 402.5 s

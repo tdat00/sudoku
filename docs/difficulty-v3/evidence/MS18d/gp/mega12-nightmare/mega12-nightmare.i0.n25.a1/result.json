@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "mega12-nightmare.i0.n25.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "mega12",
+    "level": "nightmare",
+    "targetMs": 18842
+  },
+  "task": "MS18d GP record mega12-nightmare.i0.n25 a1",
+  "startedAtMs": 1795088344534,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=66.519",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "mega12-nightmare.i0.n25",
+      "requests": 25,
+      "sha256": "fcdeb221b967c8c6b18c06bc09c32080920bc891ab1abe6053a2dc6cee00027b"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 31712,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=66.519",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 217,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 156000,
+      "systemMicros": 203000
+    },
+    "tee": {
+      "userMicros": 31000,
+      "systemMicros": 78000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795088420835
+}

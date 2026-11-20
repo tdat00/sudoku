@@ -1,0 +1,1 @@
+MS06c1 characterize HEAD final exit=0 seconds=0.384

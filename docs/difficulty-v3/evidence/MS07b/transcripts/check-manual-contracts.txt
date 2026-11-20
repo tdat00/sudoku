@@ -1,0 +1,22 @@
+$ node tests\artifacts\difficulty-v3\MS07b\check-manual-contracts.js
+veryEasy | 0 | 45 | nakedSingle,hiddenSingleBox,hiddenSingleLine | 3
+easy | 45 | 180 | pointing,boxLine,nakedPair | 6
+normal | 180 | 400 | hiddenPair,nakedTriple,hiddenTriple,nakedQuad,hiddenQuad | 11
+hard | 400 | 700 | xWing,simpleColouring,swordfish,jellyfish | 15
+expert | 700 | 1000 | xyWing,xyzWing | 17
+master | 1000 | 1500 | wWing,uniqueRectangle,forcingChain | 20
+nightmare | 1500 | 2400 | forcingChainLong,nishio | 22
+hell1 | 2400 | 3600 | nishioDeep | 23
+hell2 | unsupported
+forcingChain 1383 master master true
+forcingChainLong 1758 nightmare nightmare true
+nishio 2133 nightmare nightmare true
+nishioDeep 3258 hell1 hell1 true
+escargot hell2 nishioDeep true
+worlds-hardest-2012 hell2 nishioDeep true
+platinum-blonde hell2 nishioDeep true
+golden-nugget hell2 nishioDeep true
+constructed-nightmare-1 solvable with CHAINS (old ids) true with the four true wings stuck true
+constructed-nightmare-2 solvable with CHAINS (old ids) true with the four true wings stuck true
+constructed-nightmare-3 solvable with CHAINS (old ids) true with the four true wings stuck true
+exit=0 seconds=0.447

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "1b3980f978427b54318c3c4df1061455a3316381",
+  "dirty": true,
+  "generatedAt": "2026-11-19T02:18:33.722Z",
+  "argv": ["--hash-key=killer/hard","--hash-from=15","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\e\\hashes\\killer-hard-15.json"],
+  "records": [
+    {"key":"killer/hard#1597","variant":"killer","level":"hard","seed":1597,"hash":"e4a84af6314fd34a","ms":6823,"overrides":["killer:hard"]},
+    {"key":"killer/hard#2584","variant":"killer","level":"hard","seed":2584,"hash":"bfefdca26b175dd6","ms":5917,"overrides":["killer:hard"]},
+    {"key":"killer/hard#4181","variant":"killer","level":"hard","seed":4181,"hash":"30fde1e1bc69becd","ms":5366,"overrides":["killer:hard"]},
+    {"key":"killer/hard#6765","variant":"killer","level":"hard","seed":6765,"hash":"744737bca394c788","ms":4771,"overrides":["killer:hard"]},
+    {"key":"killer/hard#10946","variant":"killer","level":"hard","seed":10946,"hash":"47d25178effcb3a4","ms":6049,"overrides":["killer:hard"]}
+  ]
+}

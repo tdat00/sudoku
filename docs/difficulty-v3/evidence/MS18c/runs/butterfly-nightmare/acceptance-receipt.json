@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "butterfly/nightmare",
+  "runId": "ms18c-20261118T220142782-32760",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "7639eb25f4127cb846fc26b77e6316135c6ddd052d959a83e9d94fd514a1bc55"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "8ce1ab33d21fa66fad78ab17cc581eebe4dbf01c6ef2379dcaa8f94cbd4ba704"
+    }
+  },
+  "wSeconds": 71.5892945,
+  "rSeconds": 7.319355,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.319355,
+      "requests": 40,
+      "maxMs": 21241.2245,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 64.076,
+      "sSeconds": 63.50076339999999,
+      "sFirstRoundSeconds": 63.50076339999999,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5752366000000111,
+      "wSeconds": 71.5892945,
+      "wMinusQ": 7.513294499999989
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 3935.7604,
+    "p95": 16120.4641,
+    "max": 21241.2245,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\butterfly-nightmare.json",
+      "sha256": "7639eb25f4127cb846fc26b77e6316135c6ddd052d959a83e9d94fd514a1bc55"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\butterfly-nightmare.md",
+      "sha256": "8ce1ab33d21fa66fad78ab17cc581eebe4dbf01c6ef2379dcaa8f94cbd4ba704"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

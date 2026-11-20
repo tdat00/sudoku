@@ -1,0 +1,38 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in r4",
+  "runId": "r4",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-5/runs4/classic4-veryEasy/r4",
+  "requestedAt": "2026-11-19T18:13:06.758+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795086771352,
+    "lastCheckMs": 1795086786742,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": "2026-11-19T18:13:06.882+07:00",
+  "finished": "2026-11-19T18:13:08.616+07:00",
+  "releaseObservedAt": "2026-11-19T18:13:08.617+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 65,
+  "controllerOutcome": "stop",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": "stand-in r4 command failed: 65",
+  "outcome": "stop",
+  "problems": [
+    "the controller outcome 'stop' with exit 65 is a stop"
+  ]
+}

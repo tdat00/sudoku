@@ -1,0 +1,9 @@
+Sudoku Generator performance  (node v26.13.0, AMD EPYC 7763 64-Core Processor, 2 runs per cell, trace summary, seed 7000)
+p95 target = design.md section 9.1; cells = variant x level the variant offers
+
+variant     level        target      p50      p95      max     mean   result
+classic9    hell1         2.5 s     6614     9800     9800     8207   ✗
+
+0 of 1 cells meet their p95 target (0 %, acceptance: at least 90 %)
+Misses:
+  classic9/hell1: p95 9800 ms against 2.5 s (x3.92), max 9800 ms

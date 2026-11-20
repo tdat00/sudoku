@@ -1,0 +1,15 @@
+MS18e E0 baseline identities, captured 2026-11-20 10:56:53-10:57:04 (+07:00) before any E1 edit.
+HEAD b0a29ffd7e7bd45b962c4d3221e3ee1acb3b5859, working tree clean of source edits at that time.
+Source: transcripts\baseline-identities.txt (unchanged MS18c\identities-now.cjs, one locked command, exit 0, 0.642 s)
+and transcripts\targets-recheck-before.txt (unchanged MS18d\phase-b\freeze-targets.js, exit 0, 0.272 s).
+
+Generator quick:         10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec
+Player quick:            00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799
+Generator with manual:   a818c0b9e0fdcbc8111ac75c365783859afd894c285bfbd8763cfe25d1cc6e3a
+Replay:                  1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc
+Hashes:                  344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1
+Producer sources:        75b0955e3e356bd1
+Targets (table SHA-256): 3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a
+
+Every value equals the dispatch value. The targets re-check (preflight\targets-recheck-before.json) has 135 positions,
+79 active, 56 absent, 62 retained, 17 updated, no problems. These are MS18e re-checks, not new Phase B freezes.

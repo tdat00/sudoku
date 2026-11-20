@@ -1,0 +1,6 @@
+{"at":"2026-11-18T22:11:24.034Z","t":0.1430186,"type":"launcher-start","who":"launcher","pid":29780,"node":"v26.13.0","cell":"flower/expert","runId":"ms18c-20261118T221112576-34216","slot":1,"ordinal":1,"startSeconds":0.1424221}
+{"at":"2026-11-18T22:11:24.037Z","t":0.1450981,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8549167}
+{"at":"2026-11-18T22:11:31.218Z","t":7.3260503,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.325,"ready":false}
+{"at":"2026-11-18T22:11:31.225Z","t":7.3330412,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=flower","--level=expert","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-expert\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\flower-expert\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T22:11:31.247Z","t":7.3551093,"type":"qualifier-created","who":"launcher","pid":33820,"rSeconds":7.3530071}
+{"at":"2026-11-18T22:11:56.196Z","t":32.3042466,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":24.9512064,"eventFailures":0}

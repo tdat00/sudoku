@@ -1,0 +1,2 @@
+$ node --check generator\tests\artifacts\difficulty-v3\MS18e\profile-s-av11.cjs
+exit=0 seconds=0.096

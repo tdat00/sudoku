@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=killer --level=nightmare --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-nightmare.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\killer-nightmare.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+killer/nightmare: 19/24 hits, p95 24.9 s (budget 10.0 s), hidden (stopped: time)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| killer | nightmare | 24 | 19 | 79 % | 4.11 s | 24.9 s | 33.7 s | 10.0 s | hidden (stopped: time) |
+
+killer: []
+exit=0 seconds=68.167

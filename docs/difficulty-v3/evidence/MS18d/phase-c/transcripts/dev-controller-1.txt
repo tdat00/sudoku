@@ -1,0 +1,61 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-controller.js
+ok   a complete success: exit 0 through the controller, every record written, the barrier clean
+ok   C0-5: the CPU time of the controller and of the tee is recorded, and no process is queried while the payload runs
+ok   a complete MISS: exit 1 comes through the controller as exit 1, the row's mark is authoritative
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: an exit-1 crash with a stack on stderr
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: partial output
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a row for another cell
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a row with another target
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a summary of two cells
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: a MISS without its Misses: entry
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: ok and 1 of 1 with exit 1
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: MISS and 0 of 1 with exit 0
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: an ok row with the summary 0 of 1
+ok   STOP, never a result (exit 65), the real CLI exit and all bytes kept: an unexplained line on stderr after a perfect result
+ok   C0-3: any stderr byte makes a perfect result incomplete, even one the line normalisation would drop
+ok   HOLD before any payload (exit 64, nothing started): a late start (a request 10 s before the controller started) with no foreign release proved
+ok   HOLD before any payload (exit 64, nothing started): a busy slot at the request
+ok   HOLD before any payload (exit 64, nothing started): the timing lock busy at the request
+ok   HOLD before any payload (exit 64, nothing started): another job's release 5 s before, with an old own log (coordinator evidence)
+ok   HOLD before any payload (exit 64, nothing started): our own release 3 s ago in the Phase C log
+ok   HOLD before any payload (exit 64, nothing started): the newest release only in the Phase A log (all three logs are read)
+ok   HOLD before any payload (exit 64, nothing started): a required log that is missing
+ok   HOLD before any payload (exit 64, nothing started): a corrupt line in the Phase C log
+ok   HOLD before any payload (exit 64, nothing started): no lock watch record
+ok   HOLD before any payload (exit 64, nothing started): a lock watch that gave up
+ok   HOLD before any payload (exit 64, nothing started): a lock watch window of 15.299 s
+ok   HOLD before any payload (exit 64, nothing started): a lock watch whose last check is not right before the call
+ok   HOLD before any payload (exit 64, nothing started): a lock watch with checks more than a second apart
+ok   HOLD before any payload (exit 64, nothing started): an engine file changed (another E hash identity)
+ok   HOLD before any payload (exit 64, nothing started): another HEAD than the frozen one
+ok   HOLD before any payload (exit 64, nothing started): a changed tracked file in the status
+ok   HOLD before any payload (exit 64, nothing started): a staged ledger
+ok   HOLD before any payload (exit 64, nothing started): an untracked ledger
+ok   HOLD before any payload (exit 64, nothing started): a ledger that is not a pure append of its committed bytes
+ok   HOLD before any payload (exit 64, nothing started): another target table
+ok   HOLD before any payload (exit 64, nothing started): another target for the cell
+ok   HOLD before any payload (exit 64, nothing started): another Node
+ok   HOLD before any payload (exit 64, nothing started): another machine
+ok   A/B/C continuity: the same history proceeds when the newest release is old enough, wherever it is
+ok   a busy or late acquisition proceeds only on a foreign release proved 15 s before the start
+ok   the lock must be ours: absent, held by another process, or with the timing lock present, the controller holds
+ok   a helper manifest that does not match, or a payload table that disagrees on exit 1, is a hold
+ok   bytes are on disk BEFORE the command ends, and a kill of the controller keeps them; the wrapper barrier then stops the orphans
+ok   the tee dies first with a surviving command and grandchild: the controller's barrier stops them before the next run
+ok   a grandchild that outlives a command that exited 0 with a perfect result: stopped, and the result is a stop
+ok   unknown liveness is a hold for the orchestrator (exit 66): a table that cannot be read, a reused pid, nothing stopped
+FAIL a pid held by a process created long after the spawn window, with no proof the command ended, holds (exit 66) and stops nothing: AssertionError [ERR_ASSERTION]: nothing was stopped on an unproved identity
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-controller.js:522:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-controller.js:76:5)
+    at async transportAndCleanup (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-controller.js:505:3)
+    at async main (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\test-controller.js:577:3)
+ok   C0-6: a ledger-writing payload plugs in with its own classifier on the same transport (success)
+ok   C0-6: the ledger payload is a stop, never a result: short (and exit 1 is not defined for it)
+ok   C0-6: the ledger payload is a stop, never a result: nowrite (and exit 1 is not defined for it)
+ok   C0-6: the ledger payload is a stop, never a result: exit1 (and exit 1 is not defined for it)
+ok   C0-6: the generic payload takes any command and accepts exit 0 only
+ok   C0-6: a request whose payload type is unknown or whose stand-in module is missing is refused before anything runs
+51 passed, 1 failed
+FAILED: a pid held by a process created long after the spawn window, with no proof the command ended, holds (exit 66) and stops nothing
+exit=1 seconds=47.099

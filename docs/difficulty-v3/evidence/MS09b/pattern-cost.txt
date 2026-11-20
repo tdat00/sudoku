@@ -1,0 +1,9 @@
+$ node tests\pattern-cost.js --ids=finnedSwordfish --runs=20 --json=..\docs\difficulty-v3\evidence\MS09b\pattern-cost.json
+pattern-cost: 5 of 5 cases x 20 runs (100 finds), complete true, found 2, none 3, outcome not the fixture's 0, capped 0, wall 0.058 s
+  finnedSwordfish:positive:1 found, work 121 of 50000, ms p50 0.306 p95 1.800 max 1.896
+  finnedSwordfish:positive:2 found, work 129 of 50000, ms p50 0.244 p95 0.359 max 0.430
+  finnedSwordfish:negative:1 none, work 86 of 50000, ms p50 0.094 p95 0.160 max 0.162
+  finnedSwordfish:negative:2 none, work 184 of 50000, ms p50 0.176 p95 0.396 max 0.523
+  finnedSwordfish:negative:3 none, work 338 of 50000, ms p50 0.509 p95 0.644 max 0.657
+record: docs/difficulty-v3/evidence/MS09b/pattern-cost.json
+exit=0 seconds=0.591

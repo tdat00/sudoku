@@ -15,12 +15,19 @@
   var resultCache = {};
   var analysisCache = [];
 
+  // A fixed diagnostic request whose level qualification may have hidden: the variant offers the level for the
+  // length of the call only, and the exact array is put back in `finally` (MS18c).
+  function requested(request, run) {
+    return SG.fixtures.toolRecords.withRequestedLevel(request.variantId, request.difficulty, run).value;
+  }
+
   /** A real result (memoised). */
   function realResult(variantId, difficulty, seed) {
     var key = [variantId, difficulty, seed].join('/');
     if (!resultCache[key]) {
-      resultCache[key] = SG.pipeline.run(
-        { variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      resultCache[key] = requested({ variantId: variantId, difficulty: difficulty }, function () {
+        return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+      });
     }
     return resultCache[key];
   }
@@ -30,8 +37,9 @@
     var key = 'golden/' + id;
     if (!resultCache[key]) {
       var g = GOLDENS.filter(function (x) { return x.id === id; })[0];
-      resultCache[key] = WIRE[id] ? R.fromPlainWire(WIRE[id])
-        : SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      resultCache[key] = WIRE[id] ? R.fromPlainWire(WIRE[id]) : requested(g.request, function () {
+        return SG.pipeline.run(SG.store.toConfig(g.request), null, SG.budget.create({ ms: 120000 }));
+      });
     }
     return resultCache[key];
   }
@@ -197,6 +205,26 @@
   }
 
   describe('player: the replay steps of a result', function () {
+    it('reads G13 from the saved wire and never regenerates it (a spy on the pipeline)', function () {
+      var saved = resultCache['golden/G13'];
+      var run = SG.pipeline.run;
+      var calls = 0;
+      delete resultCache['golden/G13'];
+      SG.pipeline.run = function () {
+        calls++;
+        throw new Error('G13 comes from SG.fixtures.replayWire, not from the pipeline');
+      };
+      try {
+        var result = goldenResult('G13');
+        expect(calls).toBe(0);
+        expect(Object.keys(WIRE)).toContain('G13');
+        expect(R.toPlainWire(result)).toEqual(WIRE.G13);
+      } finally {
+        SG.pipeline.run = run;
+        if (saved) resultCache['golden/G13'] = saved;
+      }
+    });
+
     var CASES = [['classic9', 'easy', 3], ['classic9', 'normal', 3], ['classic9', 'nightmare', 5],
       ['classic4', 'veryEasy', 2], ['killer', 'normal', 2], ['greaterThan', 'normal', 4],
       ['jigsaw9', 'easy', 6], ['wordoku', 'easy', 1], ['mega12', 'easy', 2]];
@@ -329,16 +357,16 @@
       function () {
         var result = goldenResult('G01');
         var steps = compactOf(result);
-        var four = steps[3];
-        var five = steps[4];
-        expect([four.kind, four.line, four.key]).toEqual(['guided', 'deeper', 'replay.guided']);
-        expect([four.args.rated, four.args.refused]).toEqual([15, 5]);
-        expect([five.key, five.args.rounds, five.args.rated, five.args.refused]).toEqual(
-          ['replay.guided.rounds', 3, 17, 6]);
+        var one = steps[4];
+        var three = steps[3];
+        expect([one.kind, one.line, one.key]).toEqual(['guided', 'deeper', 'replay.guided']);
+        expect([one.args.rated, one.args.refused]).toEqual([6, 4]);
+        expect([three.key, three.args.rounds, three.args.rated, three.args.refused]).toEqual(
+          ['replay.guided.rounds', 3, 33, 8]);
         var analysis = analysisOf(result);
         var removed = [];
-        for (var i = five.first; i <= five.last; i++) removed = removed.concat(analysis.moves[i].removed);
-        expect(five.args.cellList).toEqual(removed);
+        for (var i = three.first; i <= three.last; i++) removed = removed.concat(analysis.moves[i].removed);
+        expect(three.args.cellList).toEqual(removed);
         stepsOf(result).filter(function (s) { return s.kind === 'guided'; }).forEach(function (s) {
           expect(s.line).toBe('deeper');
           expect(s.args.cellList).toEqual(analysis.moves[s.position].removed);
@@ -363,10 +391,12 @@
     });
 
     it('an exchange step counts its moves, the cells it cleared and the clues it restored (gross)', function () {
-      var step = compactOf(goldenResult('G01'))[5];
+      // the only exchange of the goldens is the one of G04 (G07 had two until the cutoff C = 4 of MS07c)
+      var steps = compactOf(goldenResult('G04'));
+      var step = steps[steps.length - 2];
       expect(step.kind).toBe('search');
       expect(step.key).toBe('replay.exchange');
-      expect([step.args.count, step.args.removed, step.args.revealed]).toEqual([5, 10, 10]);
+      expect([step.args.count, step.args.removed, step.args.revealed]).toEqual([1, 2, 2]);
     });
 
     it('Killer: the cages appear in the step after the solution', function () {
@@ -451,12 +481,12 @@
     });
 
     it('one complete move per details step: no position shows half of an exchange', function () {
-      var result = goldenResult('G01');
+      var result = goldenResult('G04');
       var analysis = analysisOf(result);
       var steps = stepsOf(result);
-      expect(steps.length).toBe(33);
+      expect(steps.length).toBe(32);
       var exchanges = steps.filter(function (s) { return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange'; });
-      expect(exchanges.length).toBe(5);
+      expect(exchanges.length).toBe(2);
       exchanges.forEach(function (s) {
         var move = analysis.moves[s.position];
         expect(s.kind).toBe('search');
@@ -538,8 +568,10 @@
         expectFaithful(steps);
       });
 
-    it('real top-level results with clues shown again replay faithfully (mega16, classic9)', function () {
-      [['mega16', 'nightmare', 478576959], ['mega16', 'hell1', 2422420669], ['classic9', 'hell1', 3]]
+    // The two mega16 requests of this case moved unchanged to the case (mega16) of the manual
+    // tests/manual/variants.test.js (MS07f, S-OD8).
+    it('real top-level results with clues shown again replay faithfully (classic9)', function () {
+      [['classic9', 'hell1', 3]]
         .forEach(function (c) {
           var result = realResult(c[0], c[1], c[2]);
           var analysis = analysisOf(result);
@@ -573,27 +605,27 @@
       en: [
         ['Full solution', 'Fill the whole grid with a random solution that follows every rule (81 cells).'],
         ['Random removals', 'Clear 14 cells chosen at random: the puzzle can still be solved without their clues.'],
-        ['Random removals', 'Try to clear 35 cells chosen at random: 29 cells cleared, 6 cells put back because ' +
+        ['Random removals', 'Try to clear 33 cells chosen at random: 29 cells cleared, 4 cells put back because ' +
           'without their clues, the solver did not finish the puzzle with the techniques of this level.'],
-        ['Choosing clues to remove', 'Compare 15 possible removals (5 rejected) and choose the removal ' +
-          'preferred by the generator\'s check: R1C2 and R9C8.'],
-        ['Choosing clues to remove', 'Across 3 accepted removals, compare 17 possible removals (6 rejected); ' +
-          'the removed clues are at R3C3, R7C7, R3C9, R7C1, R4C1 and R6C9.'],
-        ['Adjusting the puzzle', 'Across 5 complete changes, clear 10 cells and restore 10 clues while looking ' +
-          'for a higher-scoring puzzle.'],
+        ['Choosing clues to remove', 'Across 3 accepted removals, compare 33 possible removals (8 rejected); ' +
+          'the removed clues are at R1C5, R9C5, R3C4, R7C6, R2C7 and R8C3.'],
+        ['Choosing clues to remove', 'Compare 6 possible removals (4 rejected) and choose the removal ' +
+          'preferred by the generator\'s check: R2C4 and R8C6.'],
+        ['Adjusting the puzzle', 'Adjust the clues to look for a higher-scoring puzzle: clear 2 cells and ' +
+          'restore 2 clues.'],
         ['Finished puzzle', 'The finished puzzle: 30 clues.']
       ],
       vi: [
         ['Lời giải đầy đủ', 'Điền kín lưới bằng một lời giải ngẫu nhiên tuân theo mọi luật (81 ô).'],
         ['Xóa ngẫu nhiên', 'Bỏ số ở 14 ô được chọn ngẫu nhiên: đề vẫn giải được khi thiếu các số đó.'],
-        ['Xóa ngẫu nhiên', 'Thử bỏ số ở 35 ô được chọn ngẫu nhiên: bỏ được số ở 29 ô và khôi phục số ở 6 ô, vì ' +
+        ['Xóa ngẫu nhiên', 'Thử bỏ số ở 33 ô được chọn ngẫu nhiên: bỏ được số ở 29 ô và khôi phục số ở 4 ô, vì ' +
           'bộ giải chưa giải xong đề bằng các kỹ thuật của mức này khi thiếu các số đó.'],
-        ['Chọn số cho sẵn để bỏ', 'Xét 15 cách bỏ số (5 bị loại) và chọn phương án được ưu tiên theo phép ' +
-          'kiểm tra của trình sinh đề: bỏ số ở R1C2 và R9C8.'],
-        ['Chọn số cho sẵn để bỏ', 'Qua 3 lần chọn phương án bỏ số, đã xét 17 cách bỏ số (6 bị loại); các ô ' +
-          'được bỏ số là R3C3, R7C7, R3C9, R7C1, R4C1 và R6C9.'],
-        ['Điều chỉnh đề', 'Qua 5 thay đổi trọn vẹn nhằm tìm đề có điểm cao hơn, tổng cộng bỏ số ở 10 ô và khôi ' +
-          'phục 10 số cho sẵn.'],
+        ['Chọn số cho sẵn để bỏ', 'Qua 3 lần chọn phương án bỏ số, đã xét 33 cách bỏ số (8 bị loại); các ô ' +
+          'được bỏ số là R1C5, R9C5, R3C4, R7C6, R2C7 và R8C3.'],
+        ['Chọn số cho sẵn để bỏ', 'Xét 6 cách bỏ số (4 bị loại) và chọn phương án được ưu tiên theo phép ' +
+          'kiểm tra của trình sinh đề: bỏ số ở R2C4 và R8C6.'],
+        ['Điều chỉnh đề', 'Qua 1 thay đổi trọn vẹn nhằm tìm đề có điểm cao hơn, tổng cộng bỏ số ở 2 ô và ' +
+          'khôi phục 2 số cho sẵn.'],
         ['Đề hoàn chỉnh', 'Đề hoàn chỉnh: 30 số cho sẵn.']
       ]
     };
@@ -647,23 +679,23 @@
           });
         });
         inLocale('en', function () {
-          expect(P.stepMeta(steps[5])).toBe('10 cells cleared \u00b7 10 clues restored \u00b7 30 clues left');
-          expect(P.stepMeta(steps[3])).toBe('2 cells removed \u00b7 10 cells put back \u00b7 36 clues left');
+          expect(P.stepMeta(steps[5])).toBe('2 cells cleared \u00b7 2 clues restored \u00b7 30 clues left');
+          expect(P.stepMeta(steps[3])).toBe('6 cells removed \u00b7 16 cells put back \u00b7 32 clues left');
           expect(P.stepMeta(steps[0])).toBe('81 cells');
           expect(P.stepMeta(steps[6])).toBe('30 clues');
         });
       });
-      expect(steps.map(function (s) { return s.table.score; })).toEqual([0, 23, 44, 551, 568, 992, 992]);
-      expect(steps.map(function (s) { return s.table.change; })).toEqual([null, 23, 21, 507, 17, 424, 0]);
+      expect(steps.map(function (s) { return s.table.score; })).toEqual([0, 23, 44, 47, 593, 925, 925]);
+      expect(steps.map(function (s) { return s.table.change; })).toEqual([null, 23, 21, 3, 546, 332, 0]);
     }, 60000);
 
     it('the example of the guides: Classic 9x9 easy, seed 3, replays in 7 steps (26 with every move shown)',
       function () {
         var views = viewsOf(realResult('classic9', 'easy', 3));
         expect(views.compact.steps.map(function (s) { return s.table.score; })).toEqual(
-          [0, 14, 24, 34, 44, 46, 46]);
+          [0, 15, 26, 44, 46, 100, 100]);
         expect(kinds(views.compact.steps)).toEqual(
-          ['solution', 'random', 'random', 'random', 'random', 'guided', 'final']);
+          ['solution', 'random', 'random', 'random', 'guided', 'guided', 'final']);
         expect(views.details.steps.length).toBe(26);
         expect(views.compact.steps[6].args.clues).toBe(34);
       });
@@ -671,7 +703,7 @@
     it('tells what a compact step folds: the inner peak (above the level with clues restored, or plain) ' +
       'and nothing for a step that folds nothing',
       function () {
-        [['G06', 5], ['G07', 7], ['G10', 7]].forEach(function (c) {
+        [['G12', 4]].forEach(function (c) {
           var step = compactOf(goldenResult(c[0]))[c[1]];
           var folded = step.parts[step.parts.length - 1];
           expect(folded.key).toBe('replay.folded.reveal');
@@ -680,12 +712,13 @@
               /the score reached [\d,]+, above the chosen level, and \d+ clues? were restored/);
           });
         });
-        var g06 = compactOf(goldenResult('G06'));
-        expect(g06[5].parts[g06[5].parts.length - 1].args.peak).toBe(2967);
-        inLocale('en', function () { expect(P.describeStep(g06[5])).toContain('the score reached 2,967'); });
-        var plain = compactOf(goldenResult('G11'))[2];
+        var g12 = compactOf(goldenResult('G12'));
+        expect(g12[4].parts[g12[4].parts.length - 1].args.peak).toBe(3221);
+        inLocale('en', function () { expect(P.describeStep(g12[4])).toContain('the score reached 3,221'); });
+        var plain = g12[2];
         expect(plain.parts[plain.parts.length - 1].key).toBe('replay.folded.peak');
-        expect(plain.parts[plain.parts.length - 1].args.peak).toBe(275);
+        expect(plain.parts[plain.parts.length - 1].args.peak).toBe(133);
+        var g06 = compactOf(goldenResult('G06'));
         g06.slice(0, 4).forEach(function (s) {
           s.parts.forEach(function (part) { expect(part.key).not.toMatch(/^replay\.folded/); });
         });
@@ -813,14 +846,14 @@
       expect([two.state, two.score, two.change, two.empties]).toEqual(['scored', 23, 23, 14]);
       expect(two.before).toEqual({});
       expect(two.counts).toEqual(analysis.ratings[7].counts);
-      var four = r.player.tableAt(4);
-      expect([four.state, four.score, four.change]).toEqual(['scored', 551, 507]);
-      expect(four.before).toEqual(r.player.tableAt(3).counts);
-      expect(four.transition).toBe(analysis.transitions[analysis.views.compact.steps[3].transition]);
-      expect(four.proof).toBe(analysis.proofs[23]);
+      var four = r.player.tableAt(5);
+      expect([four.state, four.score, four.change]).toEqual(['scored', 593, 546]);
+      expect(four.before).toEqual(r.player.tableAt(4).counts);
+      expect(four.transition).toBe(analysis.transitions[analysis.views.compact.steps[4].transition]);
+      expect(four.proof).toBe(analysis.proofs[26]);
       expect(four.proof).not.toBeNull();
       var seven = r.player.tableAt(7);
-      expect([seven.state, seven.score, seven.change]).toEqual(['final', 992, 0]);
+      expect([seven.state, seven.score, seven.change]).toEqual(['final', 925, 0]);
       expect(seven.counts).toEqual(result.rating.techniqueCounts);
       expect(r.player.tableAt(8)).toBeNull();
       expect(r.player.tableAt(-1)).toBeNull();
@@ -891,51 +924,52 @@
       }) });
     }
 
-    it('example: compact step 4 frames R1C2 as the cause, keeps R9C8 as removed, and the board gets the frame',
+    it('example: compact step 5 frames R2C4 as the cause, keeps R8C6 as removed, and the board gets the frame',
       function () {
         var result = goldenResult('G01');
         var r = loadedRig(result);
         var steps = r.player.getSteps();
-        var r1c2 = cellNamed(result, 'R1C2');
-        var r9c8 = cellNamed(result, 'R9C8');
-        expect([steps[3].marks.cause, steps[3].marks.dug, steps[3].marks.causeRestore]).toEqual(
-          [[r1c2], [r9c8], []]);
+        var r2c4 = cellNamed(result, 'R2C4');
+        var r8c6 = cellNamed(result, 'R8C6');
+        expect([steps[4].marks.cause, steps[4].marks.dug, steps[4].marks.causeRestore]).toEqual(
+          [[r2c4], [r8c6], []]);
         steps.forEach(function (s, i) {
-          if (i === 3) return;
-          expect(s.marks.cause).toEqual([]);
+          if (i !== 4) expect(s.marks.cause).toEqual([]);
           expect(s.marks.causeRestore).toEqual([]);
         });
+        r.player.seek(5);
+        expect(r.board.frames['cell--cause']).toEqual([r2c4]);
+        expect(r.board.frames['cell--dug']).toEqual([r8c6]);
         r.player.seek(4);
-        expect(r.board.frames['cell--cause']).toEqual([r1c2]);
-        expect(r.board.frames['cell--dug']).toEqual([r9c8]);
-        r.player.seek(3);
         expect(r.board.frames['cell--cause']).toBeUndefined();
         r.player.seek(0);
         expect(r.board.frames).toEqual({});
         var start = P.viewAt(viewsOf(result).compact, 0);
         expect([start.marks.cause, start.marks.causeRestore]).toEqual([[], []]);
-        expect(P.viewAt(viewsOf(result).compact, 4).marks.cause).toEqual([r1c2]);
+        expect(P.viewAt(viewsOf(result).compact, 5).marks.cause).toEqual([r2c4]);
       }, 60000);
 
     it('Greater-Than: the sign that causes the jump keeps its removed mark and also gets the frame', function () {
       var result = goldenResult('G11');
       var r = loadedRig(result);
+      r.player.setView('details');
       var steps = r.player.getSteps();
-      var step = steps[6];
+      var step = steps[71];
+      var SIGN_JUMPS = { 71: 98 };
       expect(step.table.transition.cause.class).toBe('single-sign');
-      expect(step.signs.cause).toEqual([6]);
-      expect(step.signs.removed).toContain(6);
+      expect(step.signs.cause).toEqual([98]);
+      expect(step.signs.removed).toContain(98);
       expect(step.marks.cause).toEqual([]);
       expect(step.marks.causeRestore).toEqual([]);
       steps.forEach(function (s, i) {
-        if (i !== 6) expect(s.signs.cause).toEqual([]);
+        expect(s.signs.cause).toEqual(SIGN_JUMPS[i] === undefined ? [] : [SIGN_JUMPS[i]]);
       });
-      r.player.seek(7);
-      expect(r.board.signMarks.cause).toEqual([6]);
-      expect(r.board.signMarks.removed).toContain(6);
+      r.player.seek(72);
+      expect(r.board.signMarks.cause).toEqual([98]);
+      expect(r.board.signMarks.removed).toContain(98);
       expect(r.board.signMarks.removed).toEqual(step.signs.removed);
       expect(r.board.frames['cell--cause']).toBeUndefined();
-      r.player.seek(6);
+      r.player.seek(71);
       expect(r.board.signMarks.cause).toEqual([]);
       r.player.last();
       expect(r.board.signMarks).toBeNull();
@@ -976,7 +1010,7 @@
           });
         });
       });
-      expect(jumps).toBe(29);
+      expect(jumps).toBe(30);
       expect(framed).toBeGreaterThan(8);
       expect(framed).toBeLessThan(jumps);
     }, 120000);
@@ -984,32 +1018,46 @@
     it('a restored culprit is framed as causeRestore and leaves the revealed clues; an unavailable cause has no ' +
       'frame, and the removed cells stay as they were',
       function () {
-        var result = goldenResult('G05');
-        var base = viewsOf(result).compact.steps[4];
-        var transition = base.table.transition;
-        expect(transition.tier).toBe('jump');
+        // No real jump shows a clue again. The exchange of G04 (two clues removed, two shown again) is the
+        // specimen: its transition is made a jump whose culprit is one of the clues it shows again.
+        var result = goldenResult('G04');
+        var analysis = analysisOf(result);
+        var base = viewsOf(result).details.steps.filter(function (s) {
+          return s.role === 'moves' && analysis.moves[s.position].kind === 'exchange';
+        })[0];
+        var index = base.index - 1;
+        expect([base.marks.revealed.length, base.marks.dug.length]).toEqual([2, 2]);
         var cell = base.marks.revealed[0];
+        var other = base.marks.revealed[1];
         var frame = { kind: 'cell', cell: cell, action: 'restore' };
-        var cause = Object.assign({}, transition.cause, { class: 'single-culprit', frame: frame,
-          culprit: { cell: cell, action: 'restore', score: 49, otherScore: 50 } });
+        var transitions = analysis.transitions.map(function (t) {
+          if (t !== base.table.transition) return t;
+          return Object.assign({}, t, { tier: 'jump', ratio: R.badgeRatio(t.before.total, t.after.total),
+            cause: { class: 'single-culprit', changes: [], singles: [], largest: null, sign: null, k: null, n: null,
+              kMove: null, verifiedOnly: false, frame: frame,
+              culprit: { cell: cell, action: 'restore', score: 49, otherScore: 50 } } });
+        });
         var r = rig(81);
         r.player.load(result);
-        r.player.setAnalysis(withCause(result, transition, cause));
-        var step = r.player.getSteps()[4];
+        r.player.setAnalysis(Object.assign({}, analysis, { transitions: transitions }));
+        r.player.setView('details');
+        var step = r.player.getSteps()[index];
         expect([step.marks.causeRestore, step.marks.cause]).toEqual([[cell], []]);
-        expect(step.marks.revealed).toEqual(base.marks.revealed.filter(function (c) { return c !== cell; }));
+        expect(step.marks.revealed).toEqual([other]);
         expect(step.marks.dug).toEqual(base.marks.dug);
-        r.player.seek(5);
+        expect(step.marks.dug).not.toContain(cell);
+        r.player.seek(index + 1);
         expect(r.board.frames['cell--cause']).toEqual([cell]);
-        expect(r.board.frames['cell--revealed'] || []).not.toContain(cell);
+        expect(r.board.frames['cell--revealed']).toEqual([other]);
+        expect(r.board.frames['cell--dug']).toEqual(base.marks.dug);
 
         var one = goldenResult('G01');
-        var jump = viewsOf(one).compact.steps[3].table.transition;
+        var jump = viewsOf(one).compact.steps[4].table.transition;
         var none = rig(81);
         none.player.load(one);
         none.player.setAnalysis(withCause(one, jump, Object.assign({}, jump.cause, { class: 'unavailable',
           frame: null })));
-        var plain = none.player.getSteps()[3];
+        var plain = none.player.getSteps()[4];
         expect([plain.marks.cause, plain.marks.causeRestore]).toEqual([[], []]);
         expect(plain.marks.dug.length).toBe(2);
       }, 60000);
@@ -1163,41 +1211,41 @@
   });
 
   describe('player: the two views and the toggle', function () {
-    it('maps the place when the view changes (the example: compact step 4 is details step 24)', function () {
+    it('maps the place when the view changes (the example: compact step 5 is details step 27)', function () {
       var result = goldenResult('G01');
       var r = loadedRig(result);
       expect(r.player.getView()).toBe('compact');
       var compact = r.player.getSteps();
       var calls = r.steps.length;
-      r.player.seek(4);
-      expect(compact[3].position).toBe(23);
+      r.player.seek(5);
+      expect(compact[4].position).toBe(26);
       r.player.setView('details');
       expect(r.player.getView()).toBe('details');
-      expect(r.player.state().position).toBe(24);
-      expect(r.player.getStep(24).position).toBe(23);
+      expect(r.player.state().position).toBe(27);
+      expect(r.player.getStep(27).position).toBe(26);
       expect(r.steps.length).toBe(calls + 1);
       expect(r.steps[r.steps.length - 1].view).toBe('details');
-      expect(r.steps[r.steps.length - 1].position).toBe(24);
+      expect(r.steps[r.steps.length - 1].position).toBe(27);
       expect(r.positions[r.positions.length - 1].direction).toBe('seek');
-      expect(r.player.tableAt(24)).toBe(r.player.getStep(24).table);
-      expect(r.player.state().length).toBe(33);
+      expect(r.player.tableAt(27)).toBe(r.player.getStep(27).table);
+      expect(r.player.state().length).toBe(29);
       r.player.setView('compact');
-      expect(r.player.state().position).toBe(4);
+      expect(r.player.state().position).toBe(5);
       expect(r.player.state().length).toBe(7);
       expect(r.steps[r.steps.length - 1].view).toBe('compact');
       r.player.setView('details');
-      r.player.seek(26);
-      expect(r.player.getStep(26).position).toBe(25);
+      r.player.seek(25);
+      expect(r.player.getStep(25).position).toBe(24);
       r.player.setView('compact');
-      expect(r.player.state().position).toBe(5);
+      expect(r.player.state().position).toBe(4);
       r.player.first();
       r.player.setView('details');
       expect(r.player.state().position).toBe(0);
       r.player.setView('compact');
       r.player.last();
       r.player.setView('details');
-      expect(r.player.state().position).toBe(33);
-      expect(r.player.getStep(33).role).toBe('final');
+      expect(r.player.state().position).toBe(29);
+      expect(r.player.getStep(29).role).toBe('final');
       r.player.setView('compact');
       expect(r.player.state().position).toBe(7);
       var count = r.steps.length;
@@ -1315,7 +1363,7 @@
       toggle.fire('change');
       expect(r.player.getView()).toBe('details');
       expect(toggle.checked).toBe(true);
-      expect(r.player.state().length).toBe(33);
+      expect(r.player.state().length).toBe(29);
       toggle.checked = false;
       toggle.fire('change');
       expect(r.player.getView()).toBe('compact');
@@ -1453,9 +1501,9 @@
         expect(client.calls.length).toBe(1);
         expect(client.calls[0].result).toBe(result);
         expect(client.calls[0].options.allowMain).toBe(false);
-        expect(t.prep.state()).toEqual({ status: 'preparing', done: 0, total: 32 });
-        client.calls[0].options.onProgress({ done: 5, total: 32 });
-        expect(t.prep.state()).toEqual({ status: 'preparing', done: 5, total: 32 });
+        expect(t.prep.state()).toEqual({ status: 'preparing', done: 0, total: 28 });
+        client.calls[0].options.onProgress({ done: 5, total: 28 });
+        expect(t.prep.state()).toEqual({ status: 'preparing', done: 5, total: 28 });
         var analysis = { marker: 'analysis' };
         client.calls[0].resolve(analysis);
         await flush();
@@ -1800,5 +1848,26 @@
         }
         expect(calls).toBe(0);
       });
+  });
+
+  // MS18c: the fixed requests of this suite are diagnostics; a level that qualification hides stays reachable.
+  describe('player: a fixed request whose level is hidden (MS18c)', function () {
+    it('MS18c-T03: a real result and a golden are generated although their level is not offered, and the ' +
+      'offers come back', function () {
+      var def = SG.variants.get('classic9');
+      var original = def.difficultySupport;
+      var offered = original.filter(function (level) { return level !== 'easy' && level !== 'veryEasy'; });
+      def.difficultySupport = offered;
+      try {
+        var real = realResult('classic9', 'easy', 424243);
+        expect([real.config.variantId, real.config.difficulty]).toEqual(['classic9', 'easy']);
+        expect(def.difficultySupport).toBe(offered);
+        expect(goldenResult('G02').config.difficulty).toBe('veryEasy');
+        expect(def.difficultySupport).toBe(offered);
+      } finally {
+        def.difficultySupport = original;
+      }
+      expect(def.difficultySupport).toBe(original);
+    });
   });
 })();

@@ -1,0 +1,59 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": true,
+  "problems": [],
+  "head": {
+    "actual": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "base": null,
+    "descendant": null,
+    "diff": null,
+    "ok": false
+  },
+  "status": {
+    "rawText": [],
+    "rawClean": true,
+    "reviewedClean": true,
+    "entries": [],
+    "allowed": [],
+    "violations": []
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-eUxuB3\\helpers-manifest.txt",
+    "entries": 54,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "e94a9b774fb620d50ea1b7199eeb949ff5e5ba63137ec032bf567c3ec496ebf6"
+  }
+}

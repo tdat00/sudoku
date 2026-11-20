@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["killer"],"filter":"> normal: 20 puzzles > I5:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 9913.9,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 9680.9,
+    "tests": [
+      {"suite":"killer","name":"I5: every puzzle has a complete proof; one rated as requested has its score in the band","fullName":"killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > normal: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band","status":"pass","ms":9680.428,"reason":"","error":null,"ordinal":55}
+    ],
+    "suites": [
+      {"name":"killer","total":1,"passed":1,"failed":0,"skipped":0,"ms":9680.786}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=killer","--filter=> normal: 20 puzzles > I5:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\killer-normal.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

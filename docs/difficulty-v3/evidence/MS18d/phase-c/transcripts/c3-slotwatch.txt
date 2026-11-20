@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\run-ps-test.js tests\artifacts\difficulty-v3\MS18d\phase-c\test-slot-watch.ps1
+ok   a free slot: a lock-free window of the asked length, checked at least once a second, recorded
+ok   a foreign lock appearing inside the window restarts it: the proof starts after the lock is gone
+ok   the timing lock restarts the window as well
+ok   the wait is bounded: a lock that never goes ends in a give-up, never in a start
+ok   an observation gap restarts the window: checks further apart than the maximum prove nothing
+ok   the earliest instant of the call is honoured even when the slot was quiet all along
+ok   the defaults are the 15.3 s window, a 1 s maximum interval and a 20 minute bound
+7 passed, 0 failed
+exit=0 seconds=13.556

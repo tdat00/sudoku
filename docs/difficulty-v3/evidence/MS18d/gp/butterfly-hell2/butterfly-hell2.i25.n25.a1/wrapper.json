@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record butterfly-hell2.i25.n25 a1",
+  "runId": "butterfly-hell2.i25.n25.a1",
+  "cell": "butterfly/hell2",
+  "payload": "gp-recorder",
+  "chunkId": "butterfly-hell2.i25.n25",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-hell2/butterfly-hell2.i25.n25.a1",
+  "requestedAt": "2026-11-20T03:53:32.985+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795121597286,
+    "lastCheckMs": 1795121612812,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T03:53:33.118+07:00",
+  "finished": "2026-11-20T03:55:40.577+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3064,
+    "cheapCheckMs": 125,
+    "ageMs": 135,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T03:55:40.578+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

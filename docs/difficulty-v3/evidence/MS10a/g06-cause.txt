@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS10a\g06-cause.js
+ratings keys: status, reasons, score, counts, empties, hardest, P, W, R, V, level, checks, memo
+positions 32 / 32
+position 30: score without 3002, with 3017; hardest without nishio, with nishio
+  without {"nakedSingle":41,"hiddenSingleBox":14,"hiddenSingleLine":4,"pointing":18,"boxLine":3,"nakedPair":1,"hiddenPair":1,"xWing":1,"skyscraper":1,"simpleColouring":1,"finnedXWing":1,"xyWing":1,"forcingChainLong":1,"nishio":4}
+  with    {"nakedSingle":41,"hiddenSingleBox":14,"hiddenSingleLine":4,"pointing":18,"boxLine":3,"nakedPair":1,"hiddenPair":1,"xWing":2,"skyscraper":1,"remotePairs":1,"finnedXWing":1,"xyWing":1,"forcingChainLong":1,"nishio":4}
+positions whose score differs: 1
+exit=0 seconds=0.338

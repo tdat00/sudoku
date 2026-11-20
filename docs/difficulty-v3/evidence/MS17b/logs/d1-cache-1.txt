@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=cache,history,export,technique-weights
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL cache: 105 passed, 1 failed  (11.50 s)
+(node:25376) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   export: 78 passed  (8.81 s)
+ok   history: 29 passed  (2.39 s)
+ok   technique-weights: 18 passed  (9 ms)
+
+Failures:
+  FAIL cache > cache: serialisation > MS05a-T01: keeps the exactness flag; an entry stored before it decodes as not exact
+       GenerationError: unexpected
+       at invalidData (Q:\git\sudoku\generator\js\ui\cache.js:114:12)
+       at Object.deserialize (Q:\git\sudoku\generator\js\ui\cache.js:363:35)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\cache.test.js:514:16)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 4
+Tests:  231 total, 230 passed, 1 failed, 0 skipped
+Time:   22.71 s running tests, 22.84 s total
+exit=1 seconds=22.986

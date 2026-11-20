@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "c3035e8032685c3ed4f5d92e0ffc0535062d460e6e6c45a908fa404ce4950bfa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: killer > CV3 expert:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 28993.4,
+  "results": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 28814.6,
+    "tests": [
+      {"suite":"variants","name":"CV3 expert: puzzles at the supported level","fullName":"variants > variants: killer > CV3 expert: puzzles at the supported level","status":"fail","ms":28813.124,"reason":"","error":{"name":"Error","message":"killer expert: none of 3 puzzles hit it","stack":"Error: killer expert: none of 3 puzzles hit it\n    at checkSupportedLevel (<repo>\\generator\\tests\\manual\\variants.test.js:224:13)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\variants.test.js:438:15)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"},"ordinal":127}
+    ],
+    "suites": [
+      {"name":"variants","total":1,"passed":0,"failed":1,"skipped":0,"ms":28814.497}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: killer > CV3 expert:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05b3\\cv3\\cv3-killer-expert.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

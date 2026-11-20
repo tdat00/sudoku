@@ -1,0 +1,31 @@
+$ node tests\artifacts\difficulty-v3\MS13c\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS13c\mutations-1.txt 0 80
+mutation 0 (F01 fallback after every stop (a window and a spent budget included)): DETECTED - 221 total, 220 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+mutation 1 (F02 fallback after a completed negative): DETECTED - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.0 s
+mutation 2 (F03 fallback never): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+mutation 3 (F04 forcingChainLong falls back too): DETECTED - 99 total, 98 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.5 s
+mutation 4 (F05 forcingChain never falls back): DETECTED - 75 total, 74 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.1 s
+mutation 5 (F06 no parent-budget check before the fallback): DETECTED - 224 total, 223 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+mutation 6 (F07 the fallback has the grouped allowance as its limit): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.8 s
+mutation 7 (F08 the fallback ignores the window minimum): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 8 (F09 the fallback outcome inverted): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 9 (F10 the fallback entry never noted): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+mutation 10 (F11 the domain of a fallback stays grouped): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.3 s
+mutation 11 (F12 a spent budget in the fallback overwrites the cap): DETECTED - 224 total, 223 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+mutation 12 (F13 cancellation and other errors swallowed): DETECTED - 47 total, 46 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.0 s
+mutation 13 (F14 the fallback runs on a fresh result of the window (min above 1)): DETECTED - 218 total, 217 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 14 (A01 the search restarts the counter): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 15 (A02 the search work includes the construction): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+mutation 16 (A03 the record omits the construction): DETECTED - 216 total, 215 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 16.9 s
+mutation 17 (A04 the record omits the fallback): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+mutation 18 (A05 the record omits the search): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+mutation 19 (A06 a fresh allowance for the search): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 20 (A07 the construction ignores the allowance of the call): DETECTED - 220 total, 219 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 21 (A08 the construction ignores the node quota of the call): DETECTED - 219 total, 218 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+mutation 22 (A09 construction work cap named a node cap): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.4 s
+mutation 23 (A10 a spent budget of the construction named a work cap): DETECTED - 224 total, 223 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+mutation 24 (A11 the search cap named a construction cap): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.1 s
+mutation 25 (A12 the cap of the no-fallback call always work): DETECTED - 219 total, 218 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+mutation 26 (A13 the limit of the record always the allowance): DETECTED - 75 total, 74 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 7.1 s
+mutation 27 (A14 the cap of forcingChain published too): DETECTED - 100 total, 99 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.3 s
+detected 27 of 28, survivors 1, 53 not started, 390.6 s
+exit=1 seconds=390.648

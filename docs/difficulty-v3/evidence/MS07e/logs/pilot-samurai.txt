@@ -1,0 +1,12 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-samurai.json --cells=samurai/normal:3,samurai/nightmare:2,samurai/hell1:2,samurai/hell2:2 --budget-seconds=420
+samurai/normal #0: 256.9 ms, hit true, achieved normal, exact true, approximate false
+samurai/normal #1: 86.7 ms, hit true, achieved normal, exact true, approximate false
+samurai/normal #2: 50.7 ms, hit true, achieved normal, exact true, approximate false
+samurai/nightmare #0: 2196.8 ms, hit true, achieved nightmare, exact true, approximate false
+samurai/nightmare #1: 3000.9 ms, hit true, achieved nightmare, exact true, approximate false
+samurai/hell1 #0: 21341.3 ms, hit false, achieved hell1, exact false, approximate true
+samurai/hell1 #1: 22290.7 ms, hit false, achieved hell1, exact false, approximate true
+samurai/hell2 #0: 7412.5 ms, hit true, achieved hell2, exact true, approximate false
+samurai/hell2 #1: 2345.7 ms, hit true, achieved hell2, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-samurai.json (59.017 s)
+exit=0 seconds=59.499

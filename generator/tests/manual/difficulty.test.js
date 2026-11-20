@@ -192,8 +192,11 @@
         expect(specs[0].allowedTechniques).toEqual(['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine']);
         // The edges of the pruning rule: 1.25 x weight against the band maximum.
         var firsts = { easy: ['pointing', 'boxLine', 'nakedPair'], normal: ['hiddenPair', 'hiddenQuad'],
-          hard: ['xWing', 'jellyfish'], expert: ['xyWing', 'xyzWing'], master: ['wWing', 'forcingChain'],
-          nightmare: ['nishio'] };
+          hard: ['xWing', 'skyscraper', 'twoStringKite', 'remotePairs', 'emptyRectangle', 'finnedXWing',
+            'finnedSwordfish', 'jellyfish'],
+          expert: ['xyWing', 'xyzWing'],
+          master: ['wxyzWing', 'wWing', 'bugPlusOne', 'xyChain', 'forcingChain'],
+          nightmare: ['alsXz', 'sueDeCoq', 'forcingChainLong', 'nishio'], hell1: ['nishioDeep'] };
         Object.keys(firsts).forEach(function (level) {
           var i = idx(level);
           firsts[level].forEach(function (id) {
@@ -375,7 +378,13 @@
       var modules = {
         fs: {
           readFileSync: node.fs.readFileSync, existsSync: node.fs.existsSync,
-          writeFileSync: function (name, text) { written[name] = text; }
+          writeFileSync: function (name, text) { written[name] = text; },
+          renameSync: function (from, to) {
+            written[to] = written[from];
+            delete written[from];
+          },
+          mkdirSync: function () {},
+          rmSync: function (name) { delete written[name]; }
         },
         path: node.path, vm: node.vm, child_process: { fork: fork }, crypto: {},
         os: { cpus: function () { return []; }, totalmem: function () { return 0; } }
@@ -387,14 +396,18 @@
       });
       node.vm.runInContext(node.fs.readFileSync(file, 'utf8'), ctx, { filename: file });
       ctx.fakeSG = {
-        difficulty: { LEVELS: ['veryEasy'] },
+        difficulty: { LEVELS: ['veryEasy'], RATING_VERSION: 2 },
         variants: {
-          list: function () { return [{ id: 'classic4', build: function () { return { cellCount: 16 }; } }]; }
+          list: function () { return [{ id: 'classic4', build: function () { return { cellCount: 16 }; } }]; },
+          cellCountOf: function () { return 16; }
         },
+        digger: { defaultMaxAttempts: function () { return 8; } },
         rng: { create: function () { return { fork: function () { return {}; } }; } }
       };
       node.vm.runInContext('loadSources = function () { return fakeSG; };' +
         'engineInfo = function () { return { sources: "test" }; };' +
+        'qualifierHash = function () { return "test"; };' +
+        'attemptPolicy = function () { return { function: "SG.digger.defaultMaxAttempts" }; };' +
         'machineInfo = function (jobs) { return { cpu: "test", jobs: jobs }; };', ctx);
       return { ctx: ctx, written: written };
     }
@@ -588,7 +601,7 @@
       });
   });
 
-  describe('difficulty: the score of rating v2', function () {
+  describe('difficulty: the score of rating v3', function () {
     var RANDOM_IDS = ['nakedSingle', 'hiddenSingleBox', 'hiddenSingleLine', 'pointing', 'boxLine',
       'nakedPair', 'hiddenTriple', 'xWing', 'swordfish', 'xyWing', 'forcingChain', 'nishio', 'cageCombo',
       'ruleOf45', 'ineqChain'];
@@ -615,17 +628,24 @@
     it('has the weight table of section 5.2, and a technique without a weight is an error', function () {
       expect(D.WEIGHTS).toEqual({
         nakedSingle: 1, hiddenSingleBox: 1.25, hiddenSingleLine: 1.5, pointing: 40, boxLine: 50,
-        nakedPair: 120, hiddenPair: 145, nakedTriple: 180, hiddenTriple: 220, nakedQuad: 260, hiddenQuad: 300,
-        xWing: 320, simpleColouring: 360, swordfish: 420, jellyfish: 520, xyWing: 650, xyzWing: 750,
-        wWing: 850, uniqueRectangle: 900, forcingChain: 1100, nishio: 1700, cageCombo: 40, ruleOf45: 260,
-        cageSplit: 520, ineqChain: 40, minMaxForcing: 180
+        nakedPair: 120, hiddenPair: 145, nakedTriple: 180, lawOfLeftovers: 200, hiddenTriple: 220, nakedQuad: 260,
+        hiddenQuad: 300,
+        xWing: 320, skyscraper: 330, twoStringKite: 340, remotePairs: 350, simpleColouring: 360, emptyRectangle: 380,
+        finnedXWing: 400, swordfish: 420, finnedSwordfish: 480,
+        jellyfish: 520, xyWing: 650, xyzWing: 750, wxyzWing: 800, wWing: 850, uniqueRectangle: 900,
+        bugPlusOne: 920, xyChain: 1000, forcingChain: 1100, alsXz: 1250, sueDeCoq: 1300,
+        forcingChainLong: 1400, nishio: 1700, nishioDeep: 2600, cageCombo: 40, ruleOf45: 260, cageSplit: 520,
+        ineqChain: 40, minMaxForcing: 180
       });
       SG.techniques.list().forEach(function (t) { expect(D.weightOf(t.id)).toBe(D.WEIGHTS[t.id]); });
       expectCode(function () { D.weightOf('noSuchTechnique'); }, 'difficulty.unknownTechnique');
       expectCode(function () { D.scoreOf({ noSuchTechnique: 1 }, 10); }, 'difficulty.unknownTechnique');
     });
 
-    it('reproduces the worked examples: classic9 499 and Samurai 633', function () {
+    it('reproduces the worked examples: published 499 and 633, current 499 and 593', function () {
+      // The published calculations use fixed count maps (docs/difficulty-rating); the current ratings
+      // are what the canonical solver gives for the same puzzles today. The classic9 one is the same in
+      // both, the Samurai one is not.
       var classic = { nakedSingle: 29, hiddenSingleBox: 19, hiddenSingleLine: 5, pointing: 5, nakedPair: 1,
         xWing: 1 };
       var parts = D.breakdown(classic, 53);
@@ -635,6 +655,7 @@
       expect(parts.workTerm).toBeCloseTo(133.82, 2);
       expect(parts.score).toBe(499);
       expect(D.levelOfScore(parts.score)).toBe('hard');
+      // The published Samurai counts (Simple Colouring is the hardest step): 263 empty cells of 369.
       var samurai = { nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1,
         nakedPair: 1, xWing: 1, simpleColouring: 1 };
       var big = D.breakdown(samurai, 263);
@@ -642,6 +663,16 @@
       expect(big.work).toBeCloseTo(1372, 9);
       expect(big.empty).toBeCloseTo(69.44, 2);
       expect(big.score).toBe(633);
+      // The current counts of the same puzzle (106 givens): the Skyscraper (weight 330, earlier in the
+      // ladder) replaces the Simple Colouring (weight 360), so the peak, the work and the score fall and
+      // the level stays Hard.
+      var samuraiNow = { nakedSingle: 204, hiddenSingleBox: 42, hiddenSingleLine: 17, pointing: 6, boxLine: 1,
+        nakedPair: 1, xWing: 1, skyscraper: 1 };
+      var bigNow = D.breakdown(samuraiNow, 263);
+      expect(bigNow.peak).toBe(330);
+      expect(bigNow.work).toBeCloseTo(1342, 9);
+      expect(bigNow.empty).toBeCloseTo(69.44, 2);
+      expect(bigNow.score).toBe(593);
       // The same puzzles rated from their givens (the solver path of the report).
       var rated = D.rate(model9, parse('4037105000170000208000001000004900100006030000900850000090000010' +
         '50000640001056208'));
@@ -659,8 +690,9 @@
         var givens = Int32Array.from(text.split('').map(Number));
         expect(givens.length).toBe(samuraiModel.cellCount);
         var r = D.rate(samuraiModel, givens);
-        expect(r.techniqueCounts).toEqual(samurai);
-        expect(r.score).toBe(633);
+        expect(r.techniqueCounts).toEqual(samuraiNow);
+        expect(r.empties).toBe(263);
+        expect(r.score).toBe(593);
         expect(r.level).toBe('hard');
       }
     });
@@ -720,7 +752,8 @@
 
     it('counts one expensive step in full on any board (no technique floor, no size scaling)', function () {
       [['pointing', 'easy'], ['nakedPair', 'easy'], ['xWing', 'hard'], ['xyWing', 'expert'],
-        ['forcingChain', 'master'], ['nishio', 'nightmare']].forEach(function (c) {
+        ['forcingChain', 'master'], ['forcingChainLong', 'nightmare'], ['nishio', 'nightmare'],
+        ['nishioDeep', 'hell1']].forEach(function (c) {
         var counts = { nakedSingle: 3 };
         counts[c[0]] = 1;
         var rating = D.classify(fakeReport(counts, 4), model9);
@@ -736,6 +769,12 @@
       function () {
         var report = fakeReport({ nakedSingle: 5, xWing: 1, nakedQuad: 6 }, 20);
         expect(D.classify(report, model9).hardestTechnique).toBe('xWing');
+        // the three calibrated ties: equal weights, so the larger order wins (rating v3 orders 46 and 137)
+        var ties = [['nakedQuad', 'ruleOf45'], ['jellyfish', 'cageSplit'], ['ineqChain', 'pointing']];
+        ties.forEach(function (p) {
+          expect(D.WEIGHTS[p[0]]).toBe(D.WEIGHTS[p[1]]);
+          expect(SG.techniques.get(p[0]).order).toBeGreaterThan(SG.techniques.get(p[1]).order);
+        });
         expect(D.breakdown({ nakedQuad: 1, ruleOf45: 1 }, 10).hardest).toBe('nakedQuad');
         expect(D.breakdown({ jellyfish: 1, cageSplit: 1 }, 10).hardest).toBe('jellyfish');
         expect(D.breakdown({ ineqChain: 1, pointing: 1 }, 10).hardest).toBe('ineqChain');
@@ -756,15 +795,15 @@
       expect(rating.empties).toBe(60);
       expect(rating.techniqueCounts).toEqual({ nakedSingle: 20, xWing: 1 });
       expect(rating.hardestTechnique).toBe('xWing');
-      expect(rating.ratingVersion).toBe(2);
+      expect(rating.ratingVersion).toBe(3);
     });
 
-    it('carries the metadata of section 5.4: rawScore = score, ratingVersion 2, the counts', function () {
+    it('carries the metadata of section 5.4: rawScore = score, ratingVersion 3, the counts', function () {
       var rating = D.classify(fakeReport({ nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 }, 50), model9);
       expect(rating.rawScore).toBe(rating.score);
       expect(Number.isInteger(rating.score)).toBe(true);
       expect(rating.ratingVersion).toBe(D.RATING_VERSION);
-      expect(D.RATING_VERSION).toBe(2);
+      expect(D.RATING_VERSION).toBe(3);
       expect(rating.empties).toBe(50);
       expect(rating.solved).toBe(true);
       expect(rating.techniqueCounts).toEqual({ nakedSingle: 30, hiddenSingleBox: 4, nakedPair: 2 });
@@ -915,14 +954,62 @@
       });
     });
 
-    it('classify reproduces the level of every constructed puzzle exactly', function () {
-      SG.fixtures.rated.constructed.forEach(function (entry) {
-        var rating = D.rate(model9, parse(entry.puzzle));
-        expect(rating.level).toBe(entry.label);
+    it('v3 reference: every entry carries its current expectation, and classify gives its level exactly',
+      function () {
+        entries.forEach(function (entry) {
+          expect([entry.name, Object.keys(entry.v3Expected).sort()])
+            .toEqual([entry.name, ['level', 'required']]);
+          var rating = D.rate(model9, parse(entry.puzzle));
+          expect([entry.name, rating.solved ? rating.level : null])
+            .toEqual([entry.name, entry.v3Expected.level]);
+        });
+        // a constructed puzzle keeps the level of its label, except the three Nightmare ones: their chains of 5 and
+        // 6 links are forcingChainLong's at the selected C = 4 (nightmare-2's two of 7 links already since MS07b), which
+        // lifts them to Hell 1; the other moved published label is on record
+        SG.fixtures.rated.constructed.forEach(function (entry) {
+          var level = /^constructed-nightmare-/.test(entry.name) ? 'hell1' : entry.label;
+          expect([entry.name, entry.v3Expected.level]).toEqual([entry.name, level]);
+        });
+        var moved = entries.filter(function (entry) { return entry.v3Expected.level !== entry.label; })
+          .map(function (entry) {
+            return entry.name + ': ' + entry.label + ' -> ' + entry.v3Expected.level;
+          });
+        expect(moved).toEqual(['classic-medium: normal -> easy', 'constructed-nightmare-1: nightmare -> hell1',
+          'constructed-nightmare-2: nightmare -> hell1', 'constructed-nightmare-3: nightmare -> hell1']);
       });
-    });
 
-    it('the certificate of a constructed puzzle is about techniques, not a score', function () {
+    it('v3 reference: the level is required (or vacuous) as expected, derived and by the current floor',
+      function () {
+        entries.forEach(function (entry) {
+          var level = entry.v3Expected.level;
+          var givens = parse(entry.puzzle);
+          var rating = D.rate(model9, givens);
+          var derived = D.requiredOf(rating, level, model9);
+          var reference = D.certifyFloor(model9, givens, level, null);
+          var i = idx(level);
+          expect([entry.name, derived.required]).toEqual([entry.name, entry.v3Expected.required]);
+          expect([entry.name, reference.required]).toEqual([entry.name, entry.v3Expected.required]);
+          expect([entry.name, derived.vacuous]).toEqual([entry.name, reference.vacuous]);
+          expect([entry.name, derived.floorLevel]).toEqual([entry.name, reference.floorLevel]);
+          // the current floor of that level: what the previous global level allows, nothing for veryEasy
+          var floor = D.floorTechniques(level, model9);
+          expect([entry.name, floor]).toEqual([entry.name,
+            i === 0 ? [] : SG.fixtures.toolRecords.withRequestedLevel('classic9', LEVELS[i - 1], function () {
+              return D.spec(LEVELS[i - 1], model9);
+            }).value.allowedTechniques]);
+          expect([entry.name, derived.vacuous]).toEqual([entry.name,
+            i === 0 || D.tierTechniques(level, model9).length === 0]);
+          if (!derived.vacuous) {
+            expect([entry.name, derived.floorLevel]).toEqual([entry.name, LEVELS[i - 1]]);
+            var outside = Object.keys(rating.techniqueCounts).some(function (id) {
+              return rating.techniqueCounts[id] > 0 && floor.indexOf(id) === -1;
+            });
+            expect([entry.name, derived.required]).toEqual([entry.name, outside]);
+          }
+        });
+      });
+
+    it('the v2 certificate of a constructed puzzle is about techniques, not a v3 floor', function () {
       function solvesWith(givens, ids) {
         return SG.logicalSolver.solve(board9, givens, {
           allowedTechniques: ids, collectSteps: false, assumeUniqueness: false
@@ -948,15 +1035,17 @@
       expect(stuck('nightmare', sets.wings)).toBe(true);
     });
 
-    it('rates the famous hardest puzzles hell2, with a Nishio step and a complete proof', function () {
-      ['escargot', 'worlds-hardest-2012', 'platinum-blonde', 'golden-nugget'].forEach(function (name) {
-        var entry = entries.filter(function (e) { return e.name === name; })[0];
-        var rating = D.rate(model9, parse(entry.puzzle));
-        expect(rating.level).toBe('hell2');
-        expect(rating.hardestTechnique).toBe('nishio');
-        expect(rating.solved).toBe(true);
+    it('v3 reference: rates the famous hardest puzzles hell2, with a deep Nishio step and a complete proof',
+      function () {
+        ['escargot', 'worlds-hardest-2012', 'platinum-blonde', 'golden-nugget'].forEach(function (name) {
+          var entry = entries.filter(function (e) { return e.name === name; })[0];
+          var rating = D.rate(model9, parse(entry.puzzle));
+          expect(rating.level).toBe('hell2');
+          expect(rating.hardestTechnique).toBe('nishioDeep');
+          expect(rating.solved).toBe(true);
+          expect(entry.v3Expected).toEqual({ level: 'hell2', required: true });
+        });
       });
-    });
 
     it('puts every label in order: harder labels never rate lower on average', function () {
       var sum = {};
@@ -1179,7 +1268,7 @@
 
       describe(level, function () {
         it('hits the requested level in at least 90 % of the puzzles', function () {
-          var hits = batch(level).puzzles.filter(function (p) { return p.achieved === level; }).length;
+          var hits = batch(level).puzzles.filter(function (p) { return p.exact === true; }).length;
           expect(hits).toBeGreaterThanOrEqual(0.9 * countOf(level));
         });
 
@@ -1209,12 +1298,20 @@
         it('I5: every puzzle has a complete proof; an exact one has its score in the band', function () {
           batch(level).puzzles.forEach(function (p) {
             expect(p.rating.solved).toBe(true);
-            expect(p.exact).toBe(p.achieved === level);
-            if (!p.exact) return;
+            expect(typeof p.exact).toBe('boolean');
+            if (!p.exact) {
+              // A miss is never silent; a complete proof in the level that does not need its tier is shallow.
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.achieved === level);
+              return;
+            }
+            expect(p.achieved).toBe(level);
+            expect(p.warnings).not.toContain('difficulty.approximate');
             var rating = D.rate(model9, p.givens);
             expect(rating.score).toBe(p.rating.score);
             expect(rating.score).toBeGreaterThanOrEqual(spec.min);
             expect(rating.score).toBeLessThan(spec.max);
+            expect(D.requiredOf(rating, level, model9).required).toBe(true);
           });
         });
 
@@ -1313,7 +1410,7 @@
       expect(p.givens).toHaveLength(81);
       expect(p.solution).toHaveLength(81);
       expect(typeof p.stats.oracleCalls).toBe('number');
-      expect(p.rating.ratingVersion).toBe(2);
+      expect(p.rating.ratingVersion).toBe(3);
     });
 
     it('honours minClues and the unit floor of the spec on every level', function () {
@@ -1347,7 +1444,9 @@
     it('keeps the configured symmetry on the top tiers too (proposals and their refinement)', function () {
       ['nightmare', 'hell1'].forEach(function (level) {
         for (var i = 0; i < 3; i++) {
-          var p = SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+          var p = SG.fixtures.toolRecords.withRequestedLevel('classic9', level, function () {
+            return SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+          }).value;
           for (var c = 0; c < 81; c++) {
             expect(p.givens[c] === 0).toBe(p.givens[80 - c] === 0);
           }
@@ -1360,7 +1459,14 @@
       var solution = SG.fullGrid.generate(model9, rng.fork('grid'), null);
       var puzzle = SG.digger.digLevel(model9, solution, 'easy', rng.fork('dig'), {});
       expect(puzzle.requested).toBe('easy');
-      expect(puzzle.exact).toBe(puzzle.achieved === 'easy');
+      // Exact means in the requested level and needing its tier; in the level without the tier is shallow.
+      expect(typeof puzzle.exact).toBe('boolean');
+      if (puzzle.exact) {
+        expect(puzzle.achieved).toBe('easy');
+        expect(D.requiredOf(puzzle.rating, 'easy', puzzle.model).required).toBe(true);
+      } else if (puzzle.achieved === 'easy') {
+        expect(D.requiredOf(puzzle.rating, 'easy', puzzle.model).required).toBe(false);
+      }
       expect(puzzle.unsound).toBe(false);
       expect(SG.dfs.countSolutions(model9, puzzle.givens, 2)).toBe(1);
       expect(puzzle.removed).toBe(81 - puzzle.clues);
@@ -1463,9 +1569,12 @@
       expect(D.rate(model, run.puzzle.givens).score).toBe(run.puzzle.rating.score);
     }
 
-    /** Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. */
-    function exhaustedIn(variantId, level, maxRatings, phase, digTries) {
-      for (var seed = 1; seed <= 12; seed++) {
+    /**
+     * Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. The search
+     * stops at the first match and tries seeds 1 to `lastSeed` (12 unless a caller says otherwise).
+     */
+    function exhaustedIn(variantId, level, maxRatings, phase, digTries, lastSeed) {
+      for (var seed = 1; seed <= (lastSeed || 12); seed++) {
         var run = capped(variantId, level, seed, maxRatings, digTries);
         expectAccounted(run, maxRatings);
         if (run.origins.length === maxRatings && run.origins[maxRatings - 1] === phase) return run;
@@ -1483,7 +1592,9 @@
     }, 120000);
 
     it('runs out inside the downward refinement without passing the cap', function () {
-      exhaustedIn('classic9', 'nightmare', 3, 'refine', 1);
+      // Since MS15b (ALS-XZ) changed the dig path of seed 8, no seed of 1 to 12 qualifies; this call looks at
+      // seeds 1 to 24.
+      exhaustedIn('classic9', 'nightmare', 3, 'refine', 1, 24);
     }, 60000);
 
     it('runs out inside the local search, and hands on the rating it has instead of rating again',
@@ -1683,7 +1794,9 @@
           };
           var r = null;
           try {
-            r = SG.pipeline.run(config);
+            r = SG.fixtures.toolRecords.withRequestedLevel('killer', 'master', function () {
+              return SG.pipeline.run(config);
+            }).value;
           } catch (err) {
             // The one permitted alternative: no completely rated, verified puzzle at all.
             expect(err.code).toBe('digger.noRatedPuzzle');

@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   pipeline: 7 passed  (82 ms)
+
+Suites: 1
+Tests:  7 total, 7 passed, 0 failed, 0 skipped
+Time:   83 ms running tests, 185 ms total
+MS05r5p exit=0 seconds=0.291

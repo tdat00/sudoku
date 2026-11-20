@@ -1,0 +1,5 @@
+plan: 2 item(s), projections sum 450.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 q-gen-pipeline exit=0 node=296.200s (projected 300 s, elapsed before 0.003 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-pipeline.json
+#1 q-gen-core-shared exit=0 node=24.867s (projected 150 s, elapsed before 296.205 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-core-shared.json
+compound complete: 2 item(s) in 321.074 s; next --from=2
+MS05r6b exit=0 seconds=321.181

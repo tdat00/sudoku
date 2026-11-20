@@ -1,0 +1,32 @@
+$ node tests\artifacts\difficulty-v3\MS08a\q-shallow-seeds.cjs
+seed 1 exact true level nightmare score 2136 warnings  126 ms
+seed 2 exact true level nightmare score 2176 warnings  128 ms
+seed 3 exact true level nightmare score 2389 warnings  112 ms
+seed 4 exact true level nightmare score 2238 warnings  228 ms
+seed 5 exact true level nightmare score 1887 warnings  131 ms
+seed 6 exact true level nightmare score 2281 warnings  126 ms
+seed 7 exact true level nightmare score 2378 warnings  134 ms
+seed 8 exact true level nightmare score 2191 warnings  151 ms
+seed 9 exact true level nightmare score 1989 warnings  61 ms
+seed 10 exact true level nightmare score 2363 warnings  255 ms
+seed 11 exact true level nightmare score 2066 warnings  66 ms
+seed 12 exact true level nightmare score 2142 warnings  27 ms
+seed 13 exact true level nightmare score 1992 warnings  83 ms
+seed 14 exact true level nightmare score 2338 warnings  157 ms
+seed 15 exact true level nightmare score 2295 warnings  111 ms
+seed 16 exact true level nightmare score 2144 warnings  5 ms
+seed 17 exact true level nightmare score 2337 warnings  108 ms
+seed 18 exact true level nightmare score 2377 warnings  143 ms
+seed 19 exact true level nightmare score 1962 warnings  19 ms
+seed 20 exact true level nightmare score 2124 warnings  79 ms
+seed 21 exact false level nightmare score 1617 warnings difficulty.approximate+difficulty.shallow 391 ms  <- shallow fallback
+seed 22 exact true level nightmare score 2303 warnings  104 ms
+seed 23 exact true level nightmare score 2193 warnings  155 ms
+seed 24 exact false level nightmare score 1855 warnings difficulty.approximate+difficulty.shallow 514 ms  <- shallow fallback
+seed 25 exact false level hell1 score 2400 warnings difficulty.approximate 127 ms
+seed 26 exact true level nightmare score 2336 warnings  154 ms
+seed 27 exact true level nightmare score 2233 warnings  204 ms
+seed 28 exact true level nightmare score 2152 warnings  111 ms
+seed 29 exact false level nightmare score 1771 warnings difficulty.approximate+difficulty.shallow 387 ms  <- shallow fallback
+shallow fallbacks: [21,24,29]
+exit=0 seconds=4.585

@@ -1,0 +1,13 @@
+$ node tests\artifacts\difficulty-v3\MS14b\seeded-distribution.js 6
+staggered: - | - | - | R4+R5 w1751 | - | -
+staggered (T): C8 w687 | C4+C5 w3995 | C4 w406 | C4+C5 w3367 | - | C8 w556
+wavy: - | R6+R7 w4818 | R7 w1336 | - | - | -
+wavy (T): C7+C8 w4842 | - | - | - | - | -
+mixed: - | - | - | - | - | -
+mixed (T): R8+R9 w2341 | - | - | - | - | -
+ordered: - | R1+R2 w476 | R1+R2 w669 | R1+R2 w1066 | R1+R2 w804 | C1+C2 w2749
+ordered (T): - | C1+C2 w3240 | R1+R2 w1061 | R1+R2 w1803 | C1+C2 w3593 | C1+C2 w1949
+crossed: R8+R9 w2252 | R1+R2 w278 | R8+R9 w2089 | R1+R2 w234 | R8+R9 w1935 | R1+R2 w278
+crossed (T): C1+C2 w2047 | C1+C2 w1928 | C1+C2 w1831 | - | - | C8+C9 w3654
+{"positions":60,"found":30,"capped":0,"units":{"1":4,"2":26},"kind":{"R":16,"C":14}}
+exit=0 seconds=0.908

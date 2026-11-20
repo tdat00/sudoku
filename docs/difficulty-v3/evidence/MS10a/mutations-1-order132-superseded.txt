@@ -1,0 +1,153 @@
+mutation 0 (an adjacent pair is accepted as the ends (the nontrivial minimum of three edges dropped)): DETECTED - 243 total, 199 passed, 44 failed, 0 skipped - 44 failing, 44 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > an adjacent pair is no remote pair: R2C1 sees A and B, and B and C, each pair one edge apart
+mutation 1 (two cells of the same colour (an even path) are accepted as the ends): DETECTED - 243 total, 193 passed, 50 failed, 0 skipped - 50 failing, 50 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > an even path proves nothing: R1C4 sees only A and C, which hold the same digit when B is 7
+mutation 2 (an inconsistent component (an odd cycle) is accepted): DETECTED - 243 total, 236 passed, 7 failed, 0 skipped - 7 failing, 7 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > an odd cycle is inconsistent: a 5-cycle with a target that sees two of its far cells finds nothing
+    FAIL tech-wing > remotePairs (R13): geometry > a triple of the pair in one unit rejects the whole component, a valid-looking chain included
+    FAIL tech-wing > remotePairs (R13): geometry > an inconsistent component is consumed whole: a valid chain hanging off a triangle proves nothing
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+mutation 3 (a component of exactly four cells is rejected (the size bound off by one)): DETECTED - 243 total, 196 passed, 47 failed, 0 skipped - 47 failing, 47 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > the first pair of ends with a target wins: components by their lowest cell, then lower end, higher end
+mutation 4 (a pair of digits held by exactly four cells is not walked (the group bound off by one)): DETECTED - 243 total, 197 passed, 46 failed, 0 skipped - 46 failing, 46 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > two components of two cells prove nothing, even when every cell holds the same pair
+mutation 5 (a pair of digits held by two or three cells is walked (the group bound dropped)): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+mutation 6 (fewer than five open two-candidate cells end the call): DETECTED - 243 total, 209 passed, 34 failed, 0 skipped - 34 failing, 34 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > two components of two cells prove nothing, even when every cell holds the same pair
+mutation 7 (the slot of a pair of digits is the sum of the digits (two pairs share a group)): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+mutation 8 (the slot of a pair of digits is its lower digit (every pair with that digit shares a group)): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+mutation 9 (only the lower digit is removed from a target): DETECTED - 243 total, 204 passed, 39 failed, 0 skipped - 39 failing, 39 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+    FAIL tech-wing > remotePairs (R13): geometry > the length is the shortest way: an 8-cycle holds the ends of 3 and of 5 edges, 3 is reported
+mutation 10 (only the higher digit is removed from a target): DETECTED - 243 total, 197 passed, 46 failed, 0 skipped - 46 failing, 46 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 11 (a digit a target no longer has is listed as an elimination): DETECTED - 243 total, 236 passed, 7 failed, 0 skipped - 7 failing, 7 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > agrees on hyper (extra regions or irregular regions are real peers)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > agrees on jigsaw9 (extra regions or irregular regions are real peers)
+    FAIL tech-wing > wing techniques: soundness (invariant I7) > remotePairs stays sound on 6 digits
+mutation 12 (a target that sees only the lower end): DETECTED - 243 total, 192 passed, 51 failed, 0 skipped - 51 failing, 51 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > an even path proves nothing: R1C4 sees only A and C, which hold the same digit when B is 7
+mutation 13 (a target that sees only the higher end): DETECTED - 243 total, 192 passed, 51 failed, 0 skipped - 51 failing, 51 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > an even path proves nothing: R1C4 sees only A and C, which hold the same digit when B is 7
+mutation 14 (a target need not hold either digit (any open cell that sees both ends)): DETECTED - 243 total, 229 passed, 14 failed, 0 skipped - 14 failing, 14 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > an even path proves nothing: R1C4 sees only A and C, which hold the same digit when B is 7
+    FAIL tech-wing > remotePairs (R13): geometry > an adjacent pair is no remote pair: R2C1 sees A and B, and B and C, each pair one edge apart
+    FAIL tech-wing > remotePairs (R13): geometry > a target that sees only one end proves nothing: R1C9 sees A, R5C9 sees D
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+    FAIL tech-wing > remotePairs (R13): geometry > the length is the shortest way: an 8-cycle holds the ends of 3 and of 5 edges, 3 is reported
+    FAIL tech-wing > remotePairs (R13): geometry > the first pair of ends with a target wins: components by their lowest cell, then lower end, higher end
+mutation 15 (the Finding is made for the pair of ends the other way round (the wrong anchor of the witness)): DETECTED - 243 total, 199 passed, 44 failed, 0 skipped - 44 failing, 44 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 16 (the path cells are not sorted): DETECTED - 243 total, 199 passed, 44 failed, 0 skipped - 44 failing, 44 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 17 (the length counts cells, not edges): DETECTED - 243 total, 199 passed, 44 failed, 0 skipped - 44 failing, 44 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 18 (the ends are given higher first): DETECTED - 243 total, 199 passed, 44 failed, 0 skipped - 44 failing, 44 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 19 (the digits are given higher first): DETECTED - 243 total, 199 passed, 44 failed, 0 skipped - 44 failing, 44 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 20 (the higher end is searched from the highest cell first (pairs in descending order)): DETECTED - 243 total, 225 passed, 18 failed, 0 skipped - 18 failing, 18 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the length is the shortest way: an 8-cycle holds the ends of 3 and of 5 edges, 3 is reported
+    FAIL tech-wing > remotePairs (R13): real positions > the three supplements of the soundness sweep are real unique positions that hold a remote pair
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > agrees on constructed chains on classic9 (a chain of 4 and of 6 cells, three start cells each)
+mutation 21 (the lower end is searched from the highest cell first): DETECTED - 243 total, 224 passed, 19 failed, 0 skipped - 19 failing, 19 of remotePairs - 6.7 s
+    FAIL tech-wing > remotePairs (R13): geometry > the length is the shortest way: an 8-cycle holds the ends of 3 and of 5 edges, 3 is reported
+    FAIL tech-wing > remotePairs (R13): geometry > the witness is the first shortest path of a breadth-first search from the lower end (a 6-cycle tie)
+    FAIL tech-wing > remotePairs (R13): real positions > the three supplements of the soundness sweep are real unique positions that hold a remote pair
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-wing > remotePairs (R13): agreement with an independent enumeration > finds a remote pair exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+mutation 22 (the components are walked from the highest cell first): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the first pair of ends with a target wins: components by their lowest cell, then lower end, higher end
+mutation 23 (the colouring stops at the first conflict, leaving the rest of the component to be walked on its own): DETECTED - 243 total, 239 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > an inconsistent component is consumed whole: a valid chain hanging off a triangle proves nothing
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 24 (the budget is checked one unit early): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 25 (the budget is checked one unit late): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 26 (the position of the last check is not updated): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.8 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+detected 27 of 27, 164.3 s

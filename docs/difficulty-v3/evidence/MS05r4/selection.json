@@ -1,0 +1,3595 @@
+{
+  "schema": 1,
+  "task": "MS05r4",
+  "rule": "Choose the smallest finite cap with no exact-hit loss in any cell against no extra cap and a strict reduction in median full ratings in at least one cell. Otherwise choose no extra cap.",
+  "decision": {
+    "status": "selected",
+    "chosen": "256",
+    "eligible": [
+      "256"
+    ],
+    "problems": []
+  },
+  "identity": {
+    "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+    "toolHash": "da295e75f43dcd8cd5b66e0f566892b14036ea2ce9297b29a848abcb9c98bc72",
+    "node": "v26.13.0",
+    "seedBase": 20260101,
+    "manifestHash": "d881506a5bdb105552e688d2134d8f9f59d312265e561bdd2bfd6eecefc98026",
+    "configHash": "ce509e96a798eaa94ddf61663157ef7b109e5f693ea17c603bb0e92ba61f9a15",
+    "selectingRequests": 288,
+    "diagnosticOutcomes": 12
+  },
+  "cells": {
+    "classic9/normal": {
+      "64": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/classic9-normal.json"
+        ],
+        "requests": 12,
+        "hits": 10,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "errors": 0,
+        "upperMedian": 75,
+        "fullRatings": [
+          3,
+          4,
+          32,
+          44,
+          46,
+          66,
+          75,
+          80,
+          102,
+          118,
+          361,
+          431
+        ],
+        "sumFullRatings": 1362,
+        "sumProposals": 789532,
+        "sumLocalRatings": 991,
+        "sumShallowRatings": 488,
+        "capHits": {
+          "shallow": 2,
+          "ratings": 0,
+          "proposals": 24
+        },
+        "generationMsTotal": 2616.873,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "128": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/classic9-normal.json"
+        ],
+        "requests": 12,
+        "hits": 10,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "errors": 0,
+        "upperMedian": 75,
+        "fullRatings": [
+          3,
+          4,
+          32,
+          44,
+          46,
+          66,
+          75,
+          102,
+          118,
+          144,
+          361,
+          495
+        ],
+        "sumFullRatings": 1490,
+        "sumProposals": 790720,
+        "sumLocalRatings": 1119,
+        "sumShallowRatings": 616,
+        "capHits": {
+          "shallow": 2,
+          "ratings": 0,
+          "proposals": 24
+        },
+        "generationMsTotal": 2691.46,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "256": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/classic9-normal.json"
+        ],
+        "requests": 12,
+        "hits": 10,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "errors": 0,
+        "upperMedian": 75,
+        "fullRatings": [
+          3,
+          4,
+          32,
+          44,
+          46,
+          66,
+          75,
+          102,
+          118,
+          191,
+          361,
+          615
+        ],
+        "sumFullRatings": 1657,
+        "sumProposals": 822401,
+        "sumLocalRatings": 1290,
+        "sumShallowRatings": 787,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 25
+        },
+        "generationMsTotal": 2740.601,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "none": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/classic9-normal.json"
+        ],
+        "requests": 12,
+        "hits": 10,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "errors": 0,
+        "upperMedian": 75,
+        "fullRatings": [
+          3,
+          4,
+          32,
+          44,
+          46,
+          66,
+          75,
+          102,
+          118,
+          191,
+          361,
+          615
+        ],
+        "sumFullRatings": 1657,
+        "sumProposals": 822401,
+        "sumLocalRatings": 1290,
+        "sumShallowRatings": 787,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 25
+        },
+        "generationMsTotal": 2789.599,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      }
+    },
+    "classic9/master": {
+      "64": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/classic9-master.json"
+        ],
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8,
+          9
+        ],
+        "sumFullRatings": 53,
+        "sumProposals": 0,
+        "sumLocalRatings": 0,
+        "sumShallowRatings": 0,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationMsTotal": 765.887,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "128": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/classic9-master.json"
+        ],
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8,
+          9
+        ],
+        "sumFullRatings": 53,
+        "sumProposals": 0,
+        "sumLocalRatings": 0,
+        "sumShallowRatings": 0,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationMsTotal": 711.613,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "256": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/classic9-master.json"
+        ],
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8,
+          9
+        ],
+        "sumFullRatings": 53,
+        "sumProposals": 0,
+        "sumLocalRatings": 0,
+        "sumShallowRatings": 0,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationMsTotal": 782.048,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "none": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/classic9-master.json"
+        ],
+        "requests": 12,
+        "hits": 12,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 4,
+        "fullRatings": [
+          1,
+          1,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          6,
+          7,
+          8,
+          9
+        ],
+        "sumFullRatings": 53,
+        "sumProposals": 0,
+        "sumLocalRatings": 0,
+        "sumShallowRatings": 0,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 0
+        },
+        "generationMsTotal": 775.66,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      }
+    },
+    "classic9/nightmare": {
+      "64": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/classic9-nightmare.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 616,
+        "fullRatings": [
+          577,
+          584,
+          594,
+          608,
+          615,
+          616,
+          616,
+          618,
+          624,
+          629,
+          631,
+          703
+        ],
+        "sumFullRatings": 7415,
+        "sumProposals": 237224,
+        "sumLocalRatings": 6146,
+        "sumShallowRatings": 6043,
+        "capHits": {
+          "shallow": 91,
+          "ratings": 0,
+          "proposals": 5
+        },
+        "generationMsTotal": 39647.274,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "128": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/classic9-nightmare.json"
+        ],
+        "requests": 12,
+        "hits": 1,
+        "hitIndexes": [
+          1
+        ],
+        "errors": 0,
+        "upperMedian": 1000,
+        "fullRatings": [
+          641,
+          897,
+          940,
+          965,
+          975,
+          990,
+          1000,
+          1004,
+          1020,
+          1076,
+          1079,
+          1082
+        ],
+        "sumFullRatings": 11669,
+        "sumProposals": 1316321,
+        "sumLocalRatings": 10438,
+        "sumShallowRatings": 10335,
+        "capHits": {
+          "shallow": 55,
+          "ratings": 0,
+          "proposals": 37
+        },
+        "generationMsTotal": 47784.676,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "256": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/classic9-nightmare.json"
+        ],
+        "requests": 12,
+        "hits": 2,
+        "hitIndexes": [
+          0,
+          1
+        ],
+        "errors": 0,
+        "upperMedian": 1345,
+        "fullRatings": [
+          448,
+          883,
+          1113,
+          1166,
+          1285,
+          1330,
+          1345,
+          1352,
+          1384,
+          1409,
+          1505,
+          1790
+        ],
+        "sumFullRatings": 15010,
+        "sumProposals": 2347289,
+        "sumLocalRatings": 13839,
+        "sumShallowRatings": 13736,
+        "capHits": {
+          "shallow": 17,
+          "ratings": 0,
+          "proposals": 69
+        },
+        "generationMsTotal": 54642.752,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "none": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/classic9-nightmare.json"
+        ],
+        "requests": 12,
+        "hits": 2,
+        "hitIndexes": [
+          0,
+          1
+        ],
+        "errors": 0,
+        "upperMedian": 1417,
+        "fullRatings": [
+          448,
+          1028,
+          1113,
+          1169,
+          1330,
+          1415,
+          1417,
+          1456,
+          1541,
+          1745,
+          1984,
+          3060
+        ],
+        "sumFullRatings": 17706,
+        "sumProposals": 2808930,
+        "sumLocalRatings": 16535,
+        "sumShallowRatings": 16432,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 1,
+          "proposals": 85
+        },
+        "generationMsTotal": 61093.328,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      }
+    },
+    "killer/hard": {
+      "64": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/killer-hard.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 497,
+        "fullRatings": [
+          457,
+          465,
+          470,
+          472,
+          492,
+          496,
+          497,
+          506,
+          511,
+          517,
+          521,
+          523
+        ],
+        "sumFullRatings": 5927,
+        "sumProposals": 2672145,
+        "sumLocalRatings": 4775,
+        "sumShallowRatings": 3650,
+        "capHits": {
+          "shallow": 15,
+          "ratings": 0,
+          "proposals": 81
+        },
+        "generationMsTotal": 56768.041,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "128": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/killer-hard.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 512,
+        "fullRatings": [
+          463,
+          465,
+          492,
+          494,
+          506,
+          508,
+          512,
+          516,
+          521,
+          557,
+          557,
+          569
+        ],
+        "sumFullRatings": 6160,
+        "sumProposals": 3145728,
+        "sumLocalRatings": 5008,
+        "sumShallowRatings": 3883,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationMsTotal": 58194.647,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "256": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/killer-hard.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 512,
+        "fullRatings": [
+          463,
+          465,
+          492,
+          494,
+          506,
+          508,
+          512,
+          516,
+          521,
+          557,
+          557,
+          569
+        ],
+        "sumFullRatings": 6160,
+        "sumProposals": 3145728,
+        "sumLocalRatings": 5008,
+        "sumShallowRatings": 3883,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationMsTotal": 58358.633,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "none": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/killer-hard.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 512,
+        "fullRatings": [
+          463,
+          465,
+          492,
+          494,
+          506,
+          508,
+          512,
+          516,
+          521,
+          557,
+          557,
+          569
+        ],
+        "sumFullRatings": 6160,
+        "sumProposals": 3145728,
+        "sumLocalRatings": 5008,
+        "sumShallowRatings": 3883,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationMsTotal": 58619.709,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      }
+    },
+    "killer/expert": {
+      "64": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/killer-expert.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 2238,
+        "fullRatings": [
+          1509,
+          1803,
+          1878,
+          2014,
+          2034,
+          2218,
+          2238,
+          2259,
+          2357,
+          2384,
+          2465,
+          2536
+        ],
+        "sumFullRatings": 25695,
+        "sumProposals": 2898885,
+        "sumLocalRatings": 4751,
+        "sumShallowRatings": 1510,
+        "capHits": {
+          "shallow": 8,
+          "ratings": 0,
+          "proposals": 88
+        },
+        "generationMsTotal": 119544.55,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "128": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/killer-expert.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 2250,
+        "fullRatings": [
+          1549,
+          1803,
+          1878,
+          2028,
+          2034,
+          2218,
+          2250,
+          2300,
+          2357,
+          2409,
+          2506,
+          2600
+        ],
+        "sumFullRatings": 25932,
+        "sumProposals": 3116038,
+        "sumLocalRatings": 4988,
+        "sumShallowRatings": 1747,
+        "capHits": {
+          "shallow": 1,
+          "ratings": 0,
+          "proposals": 95
+        },
+        "generationMsTotal": 120054.128,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "256": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/killer-expert.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 2250,
+        "fullRatings": [
+          1549,
+          1803,
+          1878,
+          2028,
+          2034,
+          2218,
+          2250,
+          2300,
+          2357,
+          2409,
+          2506,
+          2658
+        ],
+        "sumFullRatings": 25990,
+        "sumProposals": 3145728,
+        "sumLocalRatings": 5046,
+        "sumShallowRatings": 1805,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationMsTotal": 120852.205,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "none": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/killer-expert.json"
+        ],
+        "requests": 12,
+        "hits": 0,
+        "hitIndexes": [],
+        "errors": 0,
+        "upperMedian": 2250,
+        "fullRatings": [
+          1549,
+          1803,
+          1878,
+          2028,
+          2034,
+          2218,
+          2250,
+          2300,
+          2357,
+          2409,
+          2506,
+          2658
+        ],
+        "sumFullRatings": 25990,
+        "sumProposals": 3145728,
+        "sumLocalRatings": 5046,
+        "sumShallowRatings": 1805,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 96
+        },
+        "generationMsTotal": 119598.257,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      }
+    },
+    "jigsaw9/expert": {
+      "64": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/jigsaw9-expert-00-02.json",
+          "docs/difficulty-v3/evidence/MS05r4/selection/64/jigsaw9-expert-03-11.json"
+        ],
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 170,
+        "fullRatings": [
+          2,
+          7,
+          28,
+          115,
+          141,
+          161,
+          170,
+          243,
+          289,
+          325,
+          644,
+          1000
+        ],
+        "sumFullRatings": 3125,
+        "sumProposals": 180088,
+        "sumLocalRatings": 2724,
+        "sumShallowRatings": 1374,
+        "capHits": {
+          "shallow": 21,
+          "ratings": 0,
+          "proposals": 5
+        },
+        "generationMsTotal": 4010.509,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "128": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/jigsaw9-expert-00-02.json",
+          "docs/difficulty-v3/evidence/MS05r4/selection/128/jigsaw9-expert-03-11.json"
+        ],
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 260,
+        "fullRatings": [
+          2,
+          7,
+          28,
+          179,
+          205,
+          225,
+          260,
+          298,
+          460,
+          517,
+          764,
+          1418
+        ],
+        "sumFullRatings": 4363,
+        "sumProposals": 350905,
+        "sumLocalRatings": 3962,
+        "sumShallowRatings": 2612,
+        "capHits": {
+          "shallow": 16,
+          "ratings": 0,
+          "proposals": 10
+        },
+        "generationMsTotal": 5590.775,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "256": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/jigsaw9-expert-00-02.json",
+          "docs/difficulty-v3/evidence/MS05r4/selection/256/jigsaw9-expert-03-11.json"
+        ],
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 318,
+        "fullRatings": [
+          2,
+          7,
+          28,
+          204,
+          258,
+          260,
+          318,
+          454,
+          658,
+          892,
+          901,
+          1633
+        ],
+        "sumFullRatings": 5615,
+        "sumProposals": 675849,
+        "sumLocalRatings": 5214,
+        "sumShallowRatings": 3864,
+        "capHits": {
+          "shallow": 6,
+          "ratings": 0,
+          "proposals": 20
+        },
+        "generationMsTotal": 8126.111,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      },
+      "none": {
+        "shards": [
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/jigsaw9-expert-00-02.json",
+          "docs/difficulty-v3/evidence/MS05r4/selection/none/jigsaw9-expert-03-11.json"
+        ],
+        "requests": 12,
+        "hits": 11,
+        "hitIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "errors": 0,
+        "upperMedian": 318,
+        "fullRatings": [
+          2,
+          7,
+          28,
+          204,
+          258,
+          260,
+          318,
+          647,
+          861,
+          996,
+          1206,
+          1633
+        ],
+        "sumFullRatings": 6420,
+        "sumProposals": 852237,
+        "sumLocalRatings": 6019,
+        "sumShallowRatings": 4669,
+        "capHits": {
+          "shallow": 0,
+          "ratings": 0,
+          "proposals": 26
+        },
+        "generationMsTotal": 9310.436,
+        "references": {
+          "first": "ok",
+          "last": "ok"
+        }
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "setting": "64",
+      "hitLossCells": [
+        "classic9/nightmare"
+      ],
+      "reductionCells": [
+        "classic9/nightmare",
+        "killer/hard",
+        "killer/expert",
+        "jigsaw9/expert"
+      ],
+      "eligible": false,
+      "perCell": [
+        {
+          "cell": "classic9/normal",
+          "hits": 10,
+          "noneHits": 10,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 75,
+          "noneUpperMedian": 75,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "classic9/master",
+          "hits": 12,
+          "noneHits": 12,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 4,
+          "noneUpperMedian": 4,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "classic9/nightmare",
+          "hits": 0,
+          "noneHits": 2,
+          "hitDelta": -2,
+          "hitLoss": true,
+          "upperMedian": 616,
+          "noneUpperMedian": 1417,
+          "medianDelta": -801,
+          "strictReduction": true
+        },
+        {
+          "cell": "killer/hard",
+          "hits": 0,
+          "noneHits": 0,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 497,
+          "noneUpperMedian": 512,
+          "medianDelta": -15,
+          "strictReduction": true
+        },
+        {
+          "cell": "killer/expert",
+          "hits": 0,
+          "noneHits": 0,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 2238,
+          "noneUpperMedian": 2250,
+          "medianDelta": -12,
+          "strictReduction": true
+        },
+        {
+          "cell": "jigsaw9/expert",
+          "hits": 11,
+          "noneHits": 11,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 170,
+          "noneUpperMedian": 318,
+          "medianDelta": -148,
+          "strictReduction": true
+        }
+      ]
+    },
+    {
+      "setting": "128",
+      "hitLossCells": [
+        "classic9/nightmare"
+      ],
+      "reductionCells": [
+        "classic9/nightmare",
+        "jigsaw9/expert"
+      ],
+      "eligible": false,
+      "perCell": [
+        {
+          "cell": "classic9/normal",
+          "hits": 10,
+          "noneHits": 10,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 75,
+          "noneUpperMedian": 75,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "classic9/master",
+          "hits": 12,
+          "noneHits": 12,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 4,
+          "noneUpperMedian": 4,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "classic9/nightmare",
+          "hits": 1,
+          "noneHits": 2,
+          "hitDelta": -1,
+          "hitLoss": true,
+          "upperMedian": 1000,
+          "noneUpperMedian": 1417,
+          "medianDelta": -417,
+          "strictReduction": true
+        },
+        {
+          "cell": "killer/hard",
+          "hits": 0,
+          "noneHits": 0,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 512,
+          "noneUpperMedian": 512,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "killer/expert",
+          "hits": 0,
+          "noneHits": 0,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 2250,
+          "noneUpperMedian": 2250,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "jigsaw9/expert",
+          "hits": 11,
+          "noneHits": 11,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 260,
+          "noneUpperMedian": 318,
+          "medianDelta": -58,
+          "strictReduction": true
+        }
+      ]
+    },
+    {
+      "setting": "256",
+      "hitLossCells": [],
+      "reductionCells": [
+        "classic9/nightmare"
+      ],
+      "eligible": true,
+      "perCell": [
+        {
+          "cell": "classic9/normal",
+          "hits": 10,
+          "noneHits": 10,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 75,
+          "noneUpperMedian": 75,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "classic9/master",
+          "hits": 12,
+          "noneHits": 12,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 4,
+          "noneUpperMedian": 4,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "classic9/nightmare",
+          "hits": 2,
+          "noneHits": 2,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 1345,
+          "noneUpperMedian": 1417,
+          "medianDelta": -72,
+          "strictReduction": true
+        },
+        {
+          "cell": "killer/hard",
+          "hits": 0,
+          "noneHits": 0,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 512,
+          "noneUpperMedian": 512,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "killer/expert",
+          "hits": 0,
+          "noneHits": 0,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 2250,
+          "noneUpperMedian": 2250,
+          "medianDelta": 0,
+          "strictReduction": false
+        },
+        {
+          "cell": "jigsaw9/expert",
+          "hits": 11,
+          "noneHits": 11,
+          "hitDelta": 0,
+          "hitLoss": false,
+          "upperMedian": 318,
+          "noneUpperMedian": 318,
+          "medianDelta": 0,
+          "strictReduction": false
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "case": "G13",
+      "setting": "64",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/64/G13.json",
+      "sha256": "1bdf9ce4e34eb439c1cd84f880aaa3bab259d0db30ef6bff44ea1890113d4d5c",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 80037.763,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 1637,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 83,
+          "proposals": 546,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 546,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 98,
+          "proposals": 314,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 314,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 82,
+          "proposals": 391,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 391,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 100,
+          "proposals": 507,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 507,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 89,
+          "proposals": 395,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 395,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 83,
+          "proposals": 328,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 328,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 80,
+          "proposals": 491,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 491,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 80,
+          "proposals": 385,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 385,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "64",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/64/mega12-nightmare.json",
+      "sha256": "775934a6d656d8586d9e4d7c654633161acffdfe1db99168470a8524f97c594a",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 39398.792,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 2046,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 84,
+          "proposals": 272,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 272,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 83,
+          "proposals": 226,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 226,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 92,
+          "proposals": 270,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 270,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 86,
+          "proposals": 374,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 374,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 87,
+          "proposals": 366,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 366,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 96,
+          "proposals": 393,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 393,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 97,
+          "proposals": 341,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 341,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 88,
+          "proposals": 248,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 248,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "64",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/64/mega16-nightmare.json",
+      "sha256": "786dc3f795ae3574a2850f3da4fe7fda42bc17603a6b7bac8f5b5f62a29b63db",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": true,
+      "required": true,
+      "attempts": 6,
+      "samples": 72,
+      "generationMs": 270424.534,
+      "effectiveMaxAttempts": 8,
+      "warnings": [],
+      "score": 2386,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 103,
+          "proposals": 125,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 125,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 120,
+          "proposals": 320,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 320,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 106,
+          "proposals": 178,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 178,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 109,
+          "proposals": 465,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 465,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 94,
+          "proposals": 139,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 139,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 43,
+          "proposals": 14,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 7,
+              "proposals": 14,
+              "firstShallowAt": 0,
+              "shallowRatings": 7,
+              "shallowLimit": 64,
+              "capHit": null
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "G13",
+      "setting": "128",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/128/G13.json",
+      "sha256": "8d8ec606130e2a8f05425a29ee35d38c58e31ea10fcdad538c6f2d4b526bec6b",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 86727.237,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 1637,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 147,
+          "proposals": 1017,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 1017,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 162,
+          "proposals": 748,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 748,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 146,
+          "proposals": 810,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 810,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 164,
+          "proposals": 948,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 948,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 153,
+          "proposals": 751,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 751,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 147,
+          "proposals": 574,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 574,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 144,
+          "proposals": 921,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 921,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 144,
+          "proposals": 700,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 700,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "128",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/128/mega12-nightmare.json",
+      "sha256": "17998c2fb5e9241e8c5b820845b7088e87f0423c5ae28defc481bc5abe25493e",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 43782.464,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 2046,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 148,
+          "proposals": 814,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 814,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 147,
+          "proposals": 664,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 664,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 156,
+          "proposals": 595,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 595,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 141,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 119,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 119,
+              "shallowLimit": 128,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 151,
+          "proposals": 1177,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 1177,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 160,
+          "proposals": 927,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 927,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 161,
+          "proposals": 673,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 673,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 152,
+          "proposals": 849,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 849,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "128",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/128/mega16-nightmare.json",
+      "sha256": "9472cf2d0238df163b14fac7e756495a2f84fd443f62fe7c9069cfc4c1261da8",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": true,
+      "required": true,
+      "attempts": 6,
+      "samples": 72,
+      "generationMs": 296345.368,
+      "effectiveMaxAttempts": 8,
+      "warnings": [],
+      "score": 2386,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 167,
+          "proposals": 276,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 276,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 184,
+          "proposals": 542,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 542,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 170,
+          "proposals": 387,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 387,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 173,
+          "proposals": 791,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 791,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 158,
+          "proposals": 344,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 128,
+              "proposals": 344,
+              "firstShallowAt": 0,
+              "shallowRatings": 128,
+              "shallowLimit": 128,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 43,
+          "proposals": 14,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 7,
+              "proposals": 14,
+              "firstShallowAt": 0,
+              "shallowRatings": 7,
+              "shallowLimit": 128,
+              "capHit": null
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "G13",
+      "setting": "256",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/256/G13.json",
+      "sha256": "f2f3f40460dd558bd1a983a56acd6907988c00e87b4bca0584322cffe7780c3c",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 104588.955,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 1637,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 275,
+          "proposals": 1885,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1885,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 290,
+          "proposals": 1522,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1522,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 274,
+          "proposals": 1920,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1920,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 292,
+          "proposals": 1867,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1867,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 281,
+          "proposals": 1227,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1227,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 275,
+          "proposals": 1168,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1168,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 272,
+          "proposals": 1652,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1652,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 272,
+          "proposals": 1511,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1511,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "256",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/256/mega12-nightmare.json",
+      "sha256": "febade8907919a64240a849403b509eecbf45116701148230a433defe9b09d43",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 47079.46,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 2046,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 276,
+          "proposals": 1704,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1704,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 275,
+          "proposals": 1511,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1511,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 284,
+          "proposals": 1240,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1240,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 141,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 119,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 119,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 279,
+          "proposals": 7018,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 7018,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 288,
+          "proposals": 3983,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 3983,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 289,
+          "proposals": 1695,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1695,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 280,
+          "proposals": 2653,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 2653,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "256",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/256/mega16-nightmare.json",
+      "sha256": "a6832838341d51fbf71638de82b1c57645c12ab24d863ee351ccfcffd2d3041a",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": true,
+      "required": true,
+      "attempts": 6,
+      "samples": 72,
+      "generationMs": 310245.339,
+      "effectiveMaxAttempts": 8,
+      "warnings": [],
+      "score": 2386,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 295,
+          "proposals": 532,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 532,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 312,
+          "proposals": 1188,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1188,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 298,
+          "proposals": 841,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 841,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 301,
+          "proposals": 1441,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1441,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 286,
+          "proposals": 760,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 760,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 43,
+          "proposals": 14,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 7,
+              "proposals": 14,
+              "firstShallowAt": 0,
+              "shallowRatings": 7,
+              "shallowLimit": 256,
+              "capHit": null
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "G13",
+      "setting": "none",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/none/G13.json",
+      "sha256": "c34b1b272860e0141e49d1857b69158910407293390c06b42359b4841153b657",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 220451.62,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 1637,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 1024,
+          "proposals": 7532,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 1005,
+              "proposals": 7532,
+              "firstShallowAt": 0,
+              "shallowRatings": 1005,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 1024,
+          "proposals": 15529,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 990,
+              "proposals": 15529,
+              "firstShallowAt": 0,
+              "shallowRatings": 990,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 1024,
+          "proposals": 8661,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 1006,
+              "proposals": 8661,
+              "firstShallowAt": 0,
+              "shallowRatings": 1006,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 1024,
+          "proposals": 6179,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 988,
+              "proposals": 6179,
+              "firstShallowAt": 0,
+              "shallowRatings": 988,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 1024,
+          "proposals": 4386,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 999,
+              "proposals": 4386,
+              "firstShallowAt": 0,
+              "shallowRatings": 999,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 1024,
+          "proposals": 4737,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 1005,
+              "proposals": 4737,
+              "firstShallowAt": 0,
+              "shallowRatings": 1005,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 1024,
+          "proposals": 7636,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 1008,
+              "proposals": 7636,
+              "firstShallowAt": 0,
+              "shallowRatings": 1008,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 1024,
+          "proposals": 6856,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 1008,
+              "proposals": 6856,
+              "firstShallowAt": 0,
+              "shallowRatings": 1008,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega12-nightmare",
+      "setting": "none",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/none/mega12-nightmare.json",
+      "sha256": "c984c16ea8c110f56ff8da528d8f83d9cc235ec21eda056ba08450b301fefab0",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": false,
+      "required": false,
+      "attempts": 8,
+      "samples": 96,
+      "generationMs": 65143.453,
+      "effectiveMaxAttempts": 8,
+      "warnings": [
+        "difficulty.approximate",
+        "difficulty.shallow"
+      ],
+      "score": 2046,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 635,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 615,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 615,
+              "shallowLimit": null,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 1024,
+          "proposals": 22059,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 1005,
+              "proposals": 22059,
+              "firstShallowAt": 0,
+              "shallowRatings": 1005,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 1024,
+          "proposals": 5465,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 996,
+              "proposals": 5465,
+              "firstShallowAt": 0,
+              "shallowRatings": 996,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 141,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 119,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 119,
+              "shallowLimit": null,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 1008,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 985,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 985,
+              "shallowLimit": null,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 342,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 310,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 310,
+              "shallowLimit": null,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 7,
+          "ratings": 794,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 761,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 761,
+              "shallowLimit": null,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 8,
+          "ratings": 493,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 469,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 469,
+              "shallowLimit": null,
+              "capHit": "proposals"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    },
+    {
+      "case": "mega16-nightmare",
+      "setting": "none",
+      "file": "docs/difficulty-v3/evidence/MS05r4/diagnostic/none/mega16-nightmare.json",
+      "sha256": "e29d49ad19b95321f69571b58ad7c60d5903582e6a1fb062ff437fa645d25db0",
+      "status": "recorded",
+      "problems": [],
+      "outcome": "ok",
+      "complete": true,
+      "error": null,
+      "exact": true,
+      "required": true,
+      "attempts": 6,
+      "samples": 72,
+      "generationMs": 388749.865,
+      "effectiveMaxAttempts": 8,
+      "warnings": [],
+      "score": 2386,
+      "achieved": "nightmare",
+      "work": [
+        {
+          "attempt": 1,
+          "ratings": 1024,
+          "proposals": 3108,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 985,
+              "proposals": 3108,
+              "firstShallowAt": 0,
+              "shallowRatings": 985,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 2,
+          "ratings": 1024,
+          "proposals": 9152,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 968,
+              "proposals": 9152,
+              "firstShallowAt": 0,
+              "shallowRatings": 968,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 3,
+          "ratings": 1024,
+          "proposals": 3925,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 982,
+              "proposals": 3925,
+              "firstShallowAt": 0,
+              "shallowRatings": 982,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 4,
+          "ratings": 1024,
+          "proposals": 12699,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 979,
+              "proposals": 12699,
+              "firstShallowAt": 0,
+              "shallowRatings": 979,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 5,
+          "ratings": 1024,
+          "proposals": 4281,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 994,
+              "proposals": 4281,
+              "firstShallowAt": 0,
+              "shallowRatings": 994,
+              "shallowLimit": null,
+              "capHit": "ratings"
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        },
+        {
+          "attempt": 6,
+          "ratings": 43,
+          "proposals": 14,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 7,
+              "proposals": 14,
+              "firstShallowAt": 0,
+              "shallowRatings": 7,
+              "shallowLimit": null,
+              "capHit": null
+            }
+          ],
+          "source": "returned",
+          "partial": false
+        }
+      ],
+      "workUnavailableReason": null,
+      "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+      "toolHash": "60087ccda4afe35ec0df7d98d51a61a3ef68c94d99cb931e27eeed4d0e1df5ed",
+      "node": "v26.13.0",
+      "instrumentationProblems": []
+    }
+  ],
+  "inputs": [
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/classic9-normal.json",
+      "sha256": "36d6ca2cf639ea8d2ee2505e07a503d5b3f4fb61f8e17f8a5292de8e3fb6982f",
+      "setting": "64",
+      "cell": "classic9/normal",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/classic9-normal.json",
+      "sha256": "e23abdce88828615f0e1033b142b6f5e07f952b26387812039007e1856a16bdb",
+      "setting": "128",
+      "cell": "classic9/normal",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/classic9-normal.json",
+      "sha256": "8dee11dea368b7de1eb4af39368976f9c1ec2c3cf401691ac3e63dee08c3ce42",
+      "setting": "256",
+      "cell": "classic9/normal",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/classic9-normal.json",
+      "sha256": "bcf61fa2abef411aba6ef23b6c57eb29891aaab3bb62409b1a6233c28204c305",
+      "setting": "none",
+      "cell": "classic9/normal",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/classic9-master.json",
+      "sha256": "346adae2df93e1c5f9e6ff80f90a6fa74e295ae762d0e1b886d5dbfc34eb4e66",
+      "setting": "64",
+      "cell": "classic9/master",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/classic9-master.json",
+      "sha256": "ddc7dbf350028e42c7a6b32c3ff548605e2a9b4f289e419a720753fed0b3e435",
+      "setting": "128",
+      "cell": "classic9/master",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/classic9-master.json",
+      "sha256": "340c2b5aa480e2ee717efe6e3239d37fa390ec3f7c839ff94c00169b74fc1c33",
+      "setting": "256",
+      "cell": "classic9/master",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/classic9-master.json",
+      "sha256": "4f8626f18b0df9542d763a4c24dff44e279dda8974688e872f8d0ff46e313183",
+      "setting": "none",
+      "cell": "classic9/master",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/classic9-nightmare.json",
+      "sha256": "ac48bccdecb87b3f3a67f8f5f18b2400df6d8bd98977037fe234a64375bf991e",
+      "setting": "64",
+      "cell": "classic9/nightmare",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/classic9-nightmare.json",
+      "sha256": "84700a15e76620b76d258db2d98b239bba7e881c430a79099929a4579379e2ec",
+      "setting": "128",
+      "cell": "classic9/nightmare",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/classic9-nightmare.json",
+      "sha256": "6b51426ea2a44dd782a28100bdcf4752bcbb1e11bbb964d5c974d1b2c9c4bb77",
+      "setting": "256",
+      "cell": "classic9/nightmare",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/classic9-nightmare.json",
+      "sha256": "c27d1b50c03a71273fd9bf00201a78a75e870be2f52c5ded1b1265b3ee6308be",
+      "setting": "none",
+      "cell": "classic9/nightmare",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/killer-hard.json",
+      "sha256": "7c4426261efa369d9568d913f8627c9b503de1c8e36f6f59dc3b0f5e4c9e06b9",
+      "setting": "64",
+      "cell": "killer/hard",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/killer-hard.json",
+      "sha256": "d2bb85581fe7aa1e858f838f33bf2f605b74b31809b71fa27d722c03d5879a90",
+      "setting": "128",
+      "cell": "killer/hard",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/killer-hard.json",
+      "sha256": "faea8f229b1f7de010e7424b0646696e0a6c1e37aad208a1c7edf8c8ba9c7d49",
+      "setting": "256",
+      "cell": "killer/hard",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/killer-hard.json",
+      "sha256": "797f3ccfa3ee1e1c70a9ea897fd0620813869f042fd05712e830ac95c49468f5",
+      "setting": "none",
+      "cell": "killer/hard",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/killer-expert.json",
+      "sha256": "b7498fed341aaa8d4bcb8ce71320aa593c53423a956e5648dc0a3e6d484f6ba1",
+      "setting": "64",
+      "cell": "killer/expert",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/killer-expert.json",
+      "sha256": "964beb666cf3da3d6bb8f34d5b442a99149db623df9ac7499a876b4bf76cba03",
+      "setting": "128",
+      "cell": "killer/expert",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/killer-expert.json",
+      "sha256": "b2597ecd2d9d018a0e12adfddc25e6690d8c5f83ea4777babf22427b36da4b7e",
+      "setting": "256",
+      "cell": "killer/expert",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/killer-expert.json",
+      "sha256": "90fd80c4bc3330ebd6d9db778e51584360b2e55cca29dd561565c61fcdf8d405",
+      "setting": "none",
+      "cell": "killer/expert",
+      "from": 0,
+      "requests": 12
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/jigsaw9-expert-00-02.json",
+      "sha256": "5bf25204abe35923850f3932009dc7bceb7681faeee83309cce93b3471227626",
+      "setting": "64",
+      "cell": "jigsaw9/expert",
+      "from": 0,
+      "requests": 3
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/64/jigsaw9-expert-03-11.json",
+      "sha256": "f2cbb4dd86c0ce780dc31018088aa67a72cef65b8afc9432f5f55d9070d43168",
+      "setting": "64",
+      "cell": "jigsaw9/expert",
+      "from": 3,
+      "requests": 9
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/jigsaw9-expert-00-02.json",
+      "sha256": "6d24a4fef5137ade8c587dff7c1c73d26bac8413a25ff8f351dd905fa7757fbd",
+      "setting": "128",
+      "cell": "jigsaw9/expert",
+      "from": 0,
+      "requests": 3
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/128/jigsaw9-expert-03-11.json",
+      "sha256": "35132c8f0a16912b62a43f797c1cf8abe74f4652ca98cb182430ec515ccf3435",
+      "setting": "128",
+      "cell": "jigsaw9/expert",
+      "from": 3,
+      "requests": 9
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/jigsaw9-expert-00-02.json",
+      "sha256": "7a29ed04b70f66fdd9dfccb93d939a770837e808f822da5fc9ba9c164bd4cf1b",
+      "setting": "256",
+      "cell": "jigsaw9/expert",
+      "from": 0,
+      "requests": 3
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/256/jigsaw9-expert-03-11.json",
+      "sha256": "75ecf734d58aeeaba5568ef2c75321a9468f6dc83671648083f9f30ac9ce0ed2",
+      "setting": "256",
+      "cell": "jigsaw9/expert",
+      "from": 3,
+      "requests": 9
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/jigsaw9-expert-00-02.json",
+      "sha256": "5dc4f61cc2ed57b987fcddebd9e92671779264aab6150e6712cdc03814b3199e",
+      "setting": "none",
+      "cell": "jigsaw9/expert",
+      "from": 0,
+      "requests": 3
+    },
+    {
+      "file": "docs/difficulty-v3/evidence/MS05r4/selection/none/jigsaw9-expert-03-11.json",
+      "sha256": "e95a7729aa1a04e0d51bdf492fac6e58a369c74199603faed6a75d176ec66374",
+      "setting": "none",
+      "cell": "jigsaw9/expert",
+      "from": 3,
+      "requests": 9
+    }
+  ],
+  "aggregator": {
+    "file": "generator/tests/artifacts/difficulty-v3/MS05r4/select-cap.cjs",
+    "sha256": "4319abcd86504bfa61091c51ef8b45c0fd80eab561aba31aca049066f4cb3e4b"
+  }
+}

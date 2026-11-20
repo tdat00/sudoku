@@ -1,0 +1,7 @@
+Generator quick set: 3459 tests in 52 suites; Player quick set: 1750 tests in 30 suites
+  group shared-small: 4 shard(s) (core-shared, steps, replay, mega), 1529 tests, projected 630 s of 1800 s
+  group own-suites: 2 shard(s) (own-fast, digger-target), 1707 tests, projected 930 s of 1800 s
+  group pipeline: 1 shard(s) (pipeline), 154 tests, projected 1260 s of 1800 s
+  group replay-player: 1 shard(s) (player), 69 tests, projected 720 s of 1800 s
+  Player job: projected 360 s of 1800 s
+Every quick test is in exactly one shard (3459 of 3459), no manual or unknown suite, no empty shard, every job inside its limit: check passed.

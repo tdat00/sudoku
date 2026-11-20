@@ -1,0 +1,24 @@
+$ node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS12\hashes --check-hashes
+  butterfly-normal-00.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  butterfly-normal-05.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  butterfly-normal-10.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  butterfly-normal-15.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic4-veryEasy-00.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic4-veryEasy-05.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic4-veryEasy-10.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic4-veryEasy-15.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-hard-00.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-hard-05.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-hard-10.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-hard-15.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-veryEasy-00.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-veryEasy-05.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-veryEasy-10.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic6-veryEasy-15.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic9-easy-00.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic9-easy-05.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic9-easy-10.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  classic9-easy-15.json: sourceHash bd7819402f15... is not the current b63ed3e452e1... (recorded from other sources)
+  ... and 84 more
+merge refused: 104 problems; nothing was written
+exit=1 seconds=0.548

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "aa8d3e3b00969291fc63305a9883e703f2a6846b48ff938cd2f5f91029722c88",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "4aa3d11dc82276c114ce2aea47767949996b1cdd",
+  "dirty": true,
+  "generatedAt": "2026-11-17T01:15:01.105Z",
+  "argv": ["--ids=G14","--record=..\\docs\\difficulty-v3\\evidence\\MS13c\\analysis\\G14.json"],
+  "records": [
+    {"key":"G14","request":{"variantId":"mega16","difficulty":"hell2","seed":"12"},"value":{"id":"G14","request":{"variantId":"mega16","difficulty":"hell2","seed":"12"},"today":{"steps":11,"missing":1},"counts":{"compact":7,"details":81},"board":{"cells":256,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,11,"D/Dig",22,31,31,"nakedSingle","—","—","F"],[3,68,"D/Dig",136,65,34,"hiddenSingleBox","—","—","N"],[4,69,"G/Choose",138,1686,1621,"xyChain","Y","R8C4","—"],[5,72,"G/Choose",144,3290,1604,"nishio","—","—","N"],[6,79,"G/Choose",158,6490,3200,"nishioDeep","—","—","N"],[7,79,"F/Final",158,6490,0,"nishioDeep","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,44,45,46,47,48,48,49,50,50,51,52,52,53,53,54,54,55,55,56,56,57,57,58,58,58,59,59,59,60,60,60,61,61,61,62,62,62,62,63,64,64,64,64,65,65,65,65,1686,1686,2049,3290,3513,3889,3911,3929,6489,6490,6490,6490],"alive":null,"folds":[],"jumps":[{"step":4,"from":65,"to":1686,"before":{"P":1.25,"W":143,"R":2.140781,"V":61.818182,"E":136,"level":"easy"},"after":{"P":1000,"W":4639.25,"R":623.875826,"V":62.022472,"E":138,"level":"nightmare"},"choice":{"chosen":null,"others":6,"nulls":0,"max":66,"at":84,"rated":10,"refused":3},"singles":[{"op":"remove","cell":"R8C4","score":1494},{"op":"remove","cell":"R9C13","score":65}],"cause":"single-culprit","frame":"R8C4","firstUse":{"k":93,"n":152,"technique":"xyChain"},"key":"technique.xyChain.step","effects":"remove candidate 12@R16C4"}]},"ms":6004,"overrides":[]}
+  ]
+}

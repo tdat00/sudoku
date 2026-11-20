@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS09b\multigrid-states.js
+samurai seed 4242 0:found@16793 1:found@2885 2:found@3134 3:found@4544 4:found@2615 5:none@0 6:none@0 7:none@0 8:none@23466 9:found@3912 10:found@4122 11:found@3621
+samurai seed 777 0:found@4700 1:found@1860 2:found@1210 3:found@1860 4:found@2 5:none@0 6:none@0 7:none@0 8:found@1866 9:found@2487 10:found@8 11:found@1917
+sohei seed 4242 0:none@6551 1:found@2626 2:found@400 3:found@2759 4:found@168 5:none@0 6:none@0 7:none@0 8:found@4219 9:none@7252 10:found@3327 11:found@358
+sohei seed 777 0:none@8412 1:none@7618 2:found@3736 3:none@7113 4:found@207 5:none@0 6:none@0 7:none@0 8:found@2940 9:found@769 10:found@769 11:found@769
+flower seed 4242 0:none@328 1:none@309 2:none@330 3:none@319 4:found@31 5:none@0 6:none@0 7:none@0 8:none@518 9:none@538 10:none@538 11:none@567
+flower seed 777 0:none@281 1:none@250 2:found@235 3:none@220 4:none@66 5:none@0 6:none@0 7:none@0 8:none@261 9:none@236 10:none@233 11:none@230
+exit=0 seconds=2.347

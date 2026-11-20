@@ -1,0 +1,390 @@
+{
+  "cutoffs": {
+    "4": {
+      "cells": {
+        "classic9-nightmare": {
+          "requests": 12,
+          "exact": 12,
+          "qualified": 12,
+          "inBand": 12,
+          "shallow": 0,
+          "errors": 0,
+          "checks": "PASS",
+          "commandSeconds": 2.889,
+          "generationSeconds": 2.112,
+          "generationMs": {
+            "p50": 146.1,
+            "p95": 511.7,
+            "max": 511.7
+          },
+          "attempts": 14,
+          "fullRatings": 785,
+          "fullRatingsMedian": 35,
+          "techniqueSteps": {
+            "forcingChain": 23,
+            "forcingChainLong": 18,
+            "nishio": 0,
+            "nishioDeep": 0
+          },
+          "chainLengths": {
+            "3": 4,
+            "4": 19,
+            "5": 16,
+            "6": 1,
+            "7": 1
+          },
+          "nishioDepths": {},
+          "guard": {
+            "solves": 6390,
+            "refusals": 0,
+            "requestsWithRefusals": 0
+          },
+          "exactIndexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "missIndexes": [],
+          "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+          "chainWindow": 4,
+          "chainShortMax": 4,
+          "node": "v26.13.0"
+        },
+        "diagonalX-nightmare": {
+          "requests": 12,
+          "exact": 12,
+          "qualified": 12,
+          "inBand": 12,
+          "shallow": 0,
+          "errors": 0,
+          "checks": "PASS",
+          "commandSeconds": 6.498,
+          "generationSeconds": 4.745,
+          "generationMs": {
+            "p50": 263.8,
+            "p95": 1481.4,
+            "max": 1481.4
+          },
+          "attempts": 13,
+          "fullRatings": 696,
+          "fullRatingsMedian": 35,
+          "techniqueSteps": {
+            "forcingChain": 21,
+            "forcingChainLong": 13,
+            "nishio": 0,
+            "nishioDeep": 0
+          },
+          "chainLengths": {
+            "3": 10,
+            "4": 11,
+            "5": 11,
+            "6": 2
+          },
+          "nishioDepths": {},
+          "guard": {
+            "solves": 9680,
+            "refusals": 0,
+            "requestsWithRefusals": 0
+          },
+          "exactIndexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "missIndexes": [],
+          "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+          "chainWindow": 4,
+          "chainShortMax": 4,
+          "node": "v26.13.0"
+        },
+        "jigsaw9-nightmare": {
+          "requests": 12,
+          "exact": 12,
+          "qualified": 12,
+          "inBand": 12,
+          "shallow": 0,
+          "errors": 0,
+          "checks": "PASS",
+          "commandSeconds": 2.893,
+          "generationSeconds": 1.918,
+          "generationMs": {
+            "p50": 142.2,
+            "p95": 481.3,
+            "max": 481.3
+          },
+          "attempts": 13,
+          "fullRatings": 701,
+          "fullRatingsMedian": 35,
+          "techniqueSteps": {
+            "forcingChain": 12,
+            "forcingChainLong": 17,
+            "nishio": 2,
+            "nishioDeep": 0
+          },
+          "chainLengths": {
+            "3": 3,
+            "4": 9,
+            "5": 16,
+            "6": 1
+          },
+          "nishioDepths": {
+            "1": 2
+          },
+          "guard": {
+            "solves": 7382,
+            "refusals": 0,
+            "requestsWithRefusals": 0
+          },
+          "exactIndexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "missIndexes": [],
+          "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+          "chainWindow": 4,
+          "chainShortMax": 4,
+          "node": "v26.13.0"
+        }
+      },
+      "total": {
+        "requests": 36,
+        "exact": 36,
+        "shallow": 0,
+        "errors": 0,
+        "seconds": 12.280000000000001,
+        "generationMs": 8774.617
+      }
+    },
+    "6": {
+      "cells": {
+        "classic9-nightmare": {
+          "requests": 12,
+          "exact": 2,
+          "qualified": 2,
+          "inBand": 12,
+          "shallow": 10,
+          "errors": 0,
+          "checks": "PASS",
+          "commandSeconds": 38.412,
+          "generationSeconds": 31.761,
+          "generationMs": {
+            "p50": 3050.4,
+            "p95": 3369.4,
+            "max": 3369.4
+          },
+          "attempts": 83,
+          "fullRatings": 14848,
+          "fullRatingsMedian": 1462,
+          "techniqueSteps": {
+            "forcingChain": 54,
+            "forcingChainLong": 1,
+            "nishio": 1,
+            "nishioDeep": 0
+          },
+          "chainLengths": {
+            "3": 7,
+            "4": 24,
+            "5": 18,
+            "6": 5,
+            "7": 1
+          },
+          "nishioDepths": {
+            "1": 1
+          },
+          "guard": {
+            "solves": 80006,
+            "refusals": 0,
+            "requestsWithRefusals": 0
+          },
+          "exactIndexes": [
+            0,
+            2
+          ],
+          "missIndexes": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+          "chainWindow": 6,
+          "chainShortMax": 6,
+          "node": "v26.13.0"
+        },
+        "diagonalX-nightmare": {
+          "requests": 12,
+          "exact": 10,
+          "qualified": 10,
+          "inBand": 12,
+          "shallow": 2,
+          "errors": 0,
+          "checks": "PASS",
+          "commandSeconds": 73.36,
+          "generationSeconds": 62.807,
+          "generationMs": {
+            "p50": 5027.3,
+            "p95": 10658.3,
+            "max": 10658.3
+          },
+          "attempts": 56,
+          "fullRatings": 14314,
+          "fullRatingsMedian": 1197,
+          "techniqueSteps": {
+            "forcingChain": 1,
+            "forcingChainLong": 0,
+            "nishio": 10,
+            "nishioDeep": 0
+          },
+          "chainLengths": {
+            "4": 1
+          },
+          "nishioDepths": {
+            "1": 10
+          },
+          "guard": {
+            "solves": 93846,
+            "refusals": 0,
+            "requestsWithRefusals": 0
+          },
+          "exactIndexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "missIndexes": [
+            5,
+            6
+          ],
+          "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+          "chainWindow": 6,
+          "chainShortMax": 6,
+          "node": "v26.13.0"
+        },
+        "jigsaw9-nightmare": {
+          "requests": 12,
+          "exact": 12,
+          "qualified": 12,
+          "inBand": 12,
+          "shallow": 0,
+          "errors": 0,
+          "checks": "PASS",
+          "commandSeconds": 10.008,
+          "generationSeconds": 8.733,
+          "generationMs": {
+            "p50": 423.5,
+            "p95": 2705.3,
+            "max": 2705.3
+          },
+          "attempts": 22,
+          "fullRatings": 3138,
+          "fullRatingsMedian": 107,
+          "techniqueSteps": {
+            "forcingChain": 0,
+            "forcingChainLong": 0,
+            "nishio": 12,
+            "nishioDeep": 0
+          },
+          "chainLengths": {},
+          "nishioDepths": {
+            "1": 12
+          },
+          "guard": {
+            "solves": 24520,
+            "refusals": 0,
+            "requestsWithRefusals": 0
+          },
+          "exactIndexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "missIndexes": [],
+          "sourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+          "chainWindow": 6,
+          "chainShortMax": 6,
+          "node": "v26.13.0"
+        }
+      },
+      "total": {
+        "requests": 36,
+        "exact": 24,
+        "shallow": 12,
+        "errors": 0,
+        "seconds": 121.77999999999999,
+        "generationMs": 103301.89099999999
+      }
+    }
+  },
+  "identity": {
+    "4/classic9-nightmare": "ddf2fa5ad449/efff9dcd558e/v26.13.0",
+    "4/diagonalX-nightmare": "ddf2fa5ad449/efff9dcd558e/v26.13.0",
+    "4/jigsaw9-nightmare": "ddf2fa5ad449/efff9dcd558e/v26.13.0",
+    "6/classic9-nightmare": "ddf2fa5ad449/efff9dcd558e/v26.13.0",
+    "6/diagonalX-nightmare": "ddf2fa5ad449/efff9dcd558e/v26.13.0",
+    "6/jigsaw9-nightmare": "ddf2fa5ad449/efff9dcd558e/v26.13.0"
+  },
+  "rule": "more exact hits in total (the generator's own exact flag, every error or timeout a miss); C = 6 on a tie",
+  "selection": {
+    "exact4": 36,
+    "exact6": 24,
+    "chosen": 4,
+    "tie": false
+  },
+  "identicalIdentity": true
+}

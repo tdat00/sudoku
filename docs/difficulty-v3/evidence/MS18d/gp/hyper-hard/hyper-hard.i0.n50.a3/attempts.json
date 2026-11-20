@@ -1,0 +1,36 @@
+{
+  "schema": "ms18d-c-attempts-1",
+  "chunkId": "hyper-hard.i0.n50",
+  "attempt": 3,
+  "exception": "MS18d-Q3-A",
+  "runs": [
+    {
+      "runId": "hyper-hard.i0.n50.a1",
+      "admitted": false,
+      "payloadStarted": false,
+      "eligibleReAsk": true,
+      "outcome": "control-hold"
+    },
+    {
+      "runId": "hyper-hard.i0.n50.a2",
+      "admitted": false,
+      "payloadStarted": false,
+      "eligibleReAsk": true,
+      "outcome": "control-hold"
+    }
+  ],
+  "admissions": 2,
+  "payloads": 0,
+  "problems": [],
+  "reasons": [],
+  "ruling": null,
+  "rulingsJournal": {
+    "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "commit": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+    "baseCommit": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+    "entryCount": 3,
+    "sha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614",
+    "baseSha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614"
+  },
+  "decision": "allow"
+}

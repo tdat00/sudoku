@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped graph
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 9 passed, 1 failed  (760 ms)
+
+Failures:
+  FAIL tech-chain > grouped graph (R16, inactive): the API and the registered kernels > is referenced by nothing but its own table: the registered finders and the seam keep the singleton graph
+       AssertionError: expected Array(2)["findNishio", true] to equal Array(2)["findNishio", false]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3657:55
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3654:91)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  10 total, 9 passed, 1 failed, 0 skipped
+Time:   761 ms running tests, 872 ms total
+exit=1 seconds=0.986

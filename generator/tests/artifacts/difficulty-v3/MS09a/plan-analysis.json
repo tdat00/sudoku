@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G01 0.802 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G02 0.562 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G03 0.685 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MS08c final E g-analysis-G04 7.173 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 19,
+    "projectionBasis": "MS08c final E g-analysis-G05 6.745 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G06 0.692 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G07 0.682 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G08 0.522 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 34,
+    "projectionBasis": "MS08c final E g-analysis-G09 14.359 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 36,
+    "projectionBasis": "MS08c final E g-analysis-G10 15.196 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 26,
+    "projectionBasis": "MS08c final E g-analysis-G11 10.296 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS08c final E g-analysis-G12 1.166 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08c final E g-analysis-G13 0.773 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS09a\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 10,
+    "projectionBasis": "MS08c final E g-analysis-G14 2.321 s (same shard, source without the finned X-Wing); 2 x + 5 s"
+  }
+]

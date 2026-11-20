@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=wordoku-nightmare.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\wordoku-nightmare\wordoku-nightmare.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=wordoku-nightmare.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=wordoku-nightmare.i0.n50 bytes=21793 sha256=b9df404eaf43193f156944c007820c51a8555224d49a644272e3698b268dae3f
+exit=0 seconds=48.613

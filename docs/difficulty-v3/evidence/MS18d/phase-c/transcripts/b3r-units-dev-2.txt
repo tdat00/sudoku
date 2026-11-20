@@ -1,0 +1,119 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-units.js
+ok   time parsing is strict: an explicit zone, a real instant, ms kept, nothing guessed
+ok   the release history reads every log, takes the latest, and a new log is not a reset
+ok   the release history: coordinator evidence is foreign; unproved input is a problem
+ok   epoch 3: the exact bytes of real line 24 are a pre-window event: skipped, no release
+ok   epoch 3: the first 24 real lines are the pre-a2 history: 24 excluded, 23 the release
+ok   epoch 3: the 25-line history excludes only line 24 and takes the line 25 release
+ok   epoch 3: the saved a2 acquisition facts replayed over the pre-a2 history now proceed
+ok   epoch 3: old and new typed pre-window rows, with or without a diagnostic finished
+ok   epoch 3: variants of the shape and contradictory claims are problems, never skipped
+ok   epoch 3: only the Phase C log has the exemption; an ordinary row still needs finished
+ok   epoch 3: the line-only ruling releases no admission: mega16-easy is still refused
+ok   C0-1: the lock watch proves the last release for locks of others: exact boundaries
+ok   C0-1: no watch record at all is a hold; the logs alone never prove a free slot
+ok   G1: a free slot, a start within 2 s and a release 15 s or more before proceed
+ok   G1: the late-start boundary is exact: 2.000 s is on time, 2.001 s is late and held
+ok   G1: the release boundary is exact: 15.000 s before the start proceeds, 14.999 s holds
+ok   G1: another job's recent release holds despite an old own log (coordinator evidence)
+ok   G1: a busy slot is held; only a foreign release after the request, 15 s old, excuses
+ok   G1: unknown, negative, future and unproved facts hold; nothing is fabricated
+ok   G3: ok + 1 of 1 + real exit 0 is a complete success, controller exit 0
+ok   G3: MISS + 0 of 1 + its Misses: entry + real exit 1: a complete miss, exit 1 kept
+ok   G3: the mark is authoritative: a rounded p95 equal to the target decides nothing
+ok   G3: exit 1 with a stack and no complete output is a crash, never a miss
+ok   G3: STOP, never complete: partial output (no row)
+ok   G3: STOP, never complete: empty stdout
+ok   G3: STOP, never complete: a row for another cell
+ok   G3: STOP, never complete: another target
+ok   G3: STOP, never complete: two cells
+ok   G3: STOP, never complete: a MISS without its Misses: entry
+ok   G3: STOP, never complete: a Misses: entry for another cell
+ok   G3: STOP, never complete: an ok row with a Misses: block
+ok   G3: STOP, never complete: an ok row but 0 of 1
+ok   G3: STOP, never complete: a MISS row but 1 of 1
+ok   G3: STOP, never complete: a percentage that does not fit
+ok   G3: STOP, never complete: ok and 1 of 1 but exit 1
+ok   G3: STOP, never complete: MISS and 0 of 1 but exit 0
+ok   G3: STOP, never complete: a header with 8 runs
+ok   G3: STOP, never complete: a header with another seed
+ok   G3: STOP, never complete: a header with a warm-up
+ok   G3: STOP, never complete: another Node
+ok   G3: STOP, never complete: another CPU
+ok   G3: STOP, never complete: a row that is not stock padded
+ok   G3: STOP, never complete: a line after the result
+ok   G3: STOP, never complete: unexplained stderr
+ok   G3: STOP, never complete: one stray byte on stderr that normalisation would drop (a lone CR)
+ok   G3: STOP, never complete: stderr bytes with no retained text
+ok   G3: STOP, never complete: no raw stderr byte count
+ok   G3: STOP, never complete: a missing stderr record
+ok   G3: STOP, never complete: not the frozen command line
+ok   G3: STOP, never complete: a transcript without its end line
+ok   G3: STOP, never complete: a tee that says another exit
+ok   G3: STOP, never complete: a tee process exit that differs
+ok   G3: STOP, never complete: a survivor of the barrier
+ok   G3: STOP, never complete: an unproved barrier
+ok   G3: STOP, never complete: no barrier record
+ok   G3: STOP, never complete: an unbound source
+ok   G3: STOP, never complete: no admission
+ok   G3: a signal or a missing exit code is a stop and keeps what was seen
+ok   G3: every reason found is listed, not only the first
+ok   G3: a Windows-style CRLF stdout (the retained file) is read like the console one
+ok   G3: the targets are printed as the stock CLI prints them (ms below 1 s, seconds above)
+ok   G3: the generic profile accepts exit 0 only: no universal "allow exit 1"
+ok   C0-6: the registered payload types say whether exit 1 is defined (gp-cell, gp-merge)
+ok   C0-6: exit 1 is a controller exit only for a type that defines it, and a complete miss
+ok   C0-6: a stand-in classifier module plugs in beside the perf.js one and reads the run files
+ok   G4: git status -z is parsed, renames carry both paths, spaces survive
+ok   G4: raw status and the reviewed clean-input check are separate; only appends pass
+ok   C0-4: the release ledger is allowed only as ` M` of a committed exact prefix
+ok   G4: the reviewed check rejects a modified executable helper
+ok   G4: the reviewed check rejects a modified tracked input
+ok   G4: the reviewed check rejects a modified accepted record
+ok   G4: the reviewed check rejects an untracked file in the artifacts tree
+ok   G4: the reviewed check rejects an untracked file in the evidence tree
+ok   G4: the reviewed check rejects an output of an undeclared run
+ok   G4: the reviewed check rejects a nested file under a declared run
+ok   G4: the reviewed check rejects a modified (tracked) file of a declared run
+ok   G4: the reviewed check rejects a staged change
+ok   G4: the reviewed check rejects a deleted file
+ok   G4: the reviewed check rejects the ledger deleted
+ok   R2: only literally declared run directories count; no pattern, guess or traversal
+ok   R3: the diff since the base may list only declared run files, the ledger, pack files
+ok   G4: the helper manifest is verified by hash; a changed, missing, unlisted helper holds
+ok   G4: everything bound: HEAD, a clean reviewed status, identities, table, target, Node, machine
+ok   G4: a mismatch holds: a HEAD that is not a descendant of the base
+ok   G4: a mismatch holds: a base that is not a commit id
+ok   G4: a mismatch holds: a HEAD that is not a commit id
+ok   G4: a mismatch holds: a descendant that changed a helper
+ok   G4: a mismatch holds: a changed tracked file
+ok   G4: a mismatch holds: a different E hash identity
+ok   G4: a mismatch holds: a different replay identity
+ok   G4: a mismatch holds: different producer sources
+ok   G4: a mismatch holds: a different target table
+ok   G4: a mismatch holds: another target for the cell
+ok   G4: a mismatch holds: another Node
+ok   G4: a mismatch holds: another CPU
+ok   G4: a mismatch holds: fewer logical processors
+ok   G4: a mismatch holds: another memory size
+ok   G4: a mismatch holds: another platform
+ok   G4: a mismatch holds: git that fails
+ok   G4: a mismatch holds: identities that cannot be computed
+ok   R3: a descendant of the base with only campaign outputs and pack files is bound
+ok   G4: no helper manifest, or a changed helper, is a hold; raw status shown when dirty
+ok   C0-4: the ledger is decided by its committed bytes: exact prefix (modulo CRLF) or not
+ok   R3: a real run needs the campaign base commit (a stand-in may go without)
+ok   G4 (the real tree, read only): identities, target table, targets, Node, machine
+ok   the frozen Phase B bytes are the ones this phase references
+ok   the Phase C tee writes the transcript and exit code of the Phase B tee: ok
+ok   the Phase C tee writes the transcript and exit code of the Phase B tee: fail 7
+ok   the Phase C tee writes the transcript and exit code of the Phase B tee: chunks
+ok   the Phase C tee writes the transcript and exit code of the Phase B tee: ws
+ok   the Phase C tee writes the transcript and exit code of the Phase B tee: split
+ok   the Phase C tee: spawn record of the command (pid, time window, real exit), streams apart
+ok   C0-3: stderr stays apart; a byte that normalisation drops is still counted raw
+ok   C0-2 and C0-5: controller and tee do no periodic work and query no process during a payload
+ok   the Phase C tee: a command that cannot start has a spawn-error line, 127, no record
+ok   the Phase C tee: an existing transcript or stream file is code 2, unchanged
+116 passed, 0 failed
+exit=0 seconds=5.670

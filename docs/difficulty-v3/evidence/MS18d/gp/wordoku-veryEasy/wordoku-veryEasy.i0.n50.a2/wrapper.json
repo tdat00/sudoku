@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record wordoku-veryEasy.i0.n50 a2",
+  "runId": "wordoku-veryEasy.i0.n50.a2",
+  "cell": "wordoku/veryEasy",
+  "payload": "gp-recorder",
+  "chunkId": "wordoku-veryEasy.i0.n50",
+  "attempt": 2,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-veryEasy/wordoku-veryEasy.i0.n50.a2",
+  "requestedAt": "2026-11-20T04:37:38.697+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795124243004,
+    "lastCheckMs": 1795124258524,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T04:37:38.823+07:00",
+  "finished": "2026-11-20T04:37:48.895+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3523,
+    "cheapCheckMs": 126,
+    "ageMs": 136,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T04:37:48.896+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

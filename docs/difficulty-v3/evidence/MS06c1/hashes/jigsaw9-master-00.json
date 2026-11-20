@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "aec98868443c5c95ef66a58a7f72522b65495481f60090248cfe551c7a397683",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "1d657b1092e3f612370b5541bf3140cacb6252b3",
+  "dirty": true,
+  "generatedAt": "2026-11-14T12:34:25.486Z",
+  "argv": ["--hash-key=jigsaw9/master","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\hashes\\jigsaw9-master-00.json"],
+  "records": [
+    {"key":"jigsaw9/master#1","variant":"jigsaw9","level":"master","seed":1,"hash":"00a9e7462afbf6ba","ms":87,"overrides":[]},
+    {"key":"jigsaw9/master#2","variant":"jigsaw9","level":"master","seed":2,"hash":"287cd2ac64315cf0","ms":39,"overrides":[]},
+    {"key":"jigsaw9/master#3","variant":"jigsaw9","level":"master","seed":3,"hash":"66e69cace3758150","ms":80,"overrides":[]},
+    {"key":"jigsaw9/master#5","variant":"jigsaw9","level":"master","seed":5,"hash":"e059108b7a7ccdcf","ms":91,"overrides":[]},
+    {"key":"jigsaw9/master#8","variant":"jigsaw9","level":"master","seed":8,"hash":"2aded89003eb0a0c","ms":39,"overrides":[]}
+  ]
+}

@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+butterfly/master: 40/40 hits, p95 728 ms (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| butterfly | master | 40 | 40 | 100 % | 272 ms | 728 ms | 948 ms | 30.0 s | offered |
+
+butterfly: ["master"]

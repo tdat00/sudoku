@@ -1,0 +1,98 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+mega
+  FAIL mega > mega puzzles > mega16 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget
+       GenerationError: budget.exceeded
+       at error (<repo>\core\js\engine\budget.js:38:14)
+       at Object.check (<repo>\core\js\engine\budget.js:59:42)
+       at Object.check (<repo>\generator\js\engine\digger.js:702:30)
+       at iterate (<repo>\core\js\engine\logical-solver.js:267:37)
+       at Object.solve (<repo>\core\js\engine\logical-solver.js:328:33)
+       at boundedObjective (<repo>\generator\js\engine\digger.js:710:35)
+       at digGuidedSteps (<repo>\generator\js\engine\digger.js:783:23)
+       at digGuidedSteps.next (<anonymous>)
+       at digStageSteps (<repo>\generator\js\engine\digger.js:881:29)
+       at digStageSteps.next (<anonymous>)
+  FAIL mega > mega puzzles > mega16 nightmare: the same seed gives the same puzzle (CV5)
+       GenerationError: budget.exceeded
+       at error (<repo>\core\js\engine\budget.js:38:14)
+       at sampleClock (<repo>\core\js\engine\budget.js:78:15)
+       at Object.check (<repo>\core\js\engine\budget.js:67:25)
+       at Object.check (<repo>\core\js\engine\techniques.js:220:65)
+       at findSubset (<repo>\core\js\engine\tech-subset.js:204:11)
+       at Object.find (<repo>\core\js\engine\tech-subset.js:245:51)
+       at iterate (<repo>\core\js\engine\logical-solver.js:254:28)
+       at Object.solve (<repo>\core\js\engine\logical-solver.js:328:33)
+       at nightmareObjective (<repo>\generator\js\engine\digger.js:685:41)
+       at digGuidedSteps (<repo>\generator\js\engine\digger.js:783:23)
+FAIL mega: 0 passed, 2 failed  (120.01 s)
+
+Suites: 1
+Tests:  2 total, 0 passed, 2 failed, 0 skipped
+Time:   120.01 s running tests, 120.10 s total
+MS05r4 exit=1 seconds=120.198
+runlog: preflight-mega16-nightmare exit=1 node=120.198 wall=155.37

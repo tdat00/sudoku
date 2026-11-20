@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS12\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS12\mutations-2.txt 4 5
+mutation 4 (the same-digit test of the ends is skipped inside the search): DETECTED - 68 total, 67 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 4.1 s
+mutation 5 (a proof may end in a lower cell than its start (the lower-end rule dropped)): NOT DETECTED (exit 0) - 68 total, 68 passed, 0 failed, 0 skipped - 0 failing, 0 of xyChain - 5.1 s
+detected 1 of 2, 9.1 s
+exit=1 seconds=9.198

@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-journals-1",
+  "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+  "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+  "rulings": {
+    "ok": true,
+    "reference": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "baseCommit": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+      "entryCount": 2,
+      "sha256": "405ce7ab316b7a6c29b1ad3012f923318f59d98d9a0a1c8351bff9bfc0a6a69f",
+      "baseSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "problems": []
+  },
+  "hostBinding": {
+    "ok": true,
+    "reference": {
+      "bindingId": "host-b1",
+      "host": {
+        "pid": 1968,
+        "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+        "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+        "parentPid": 18780,
+        "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+      },
+      "ref": "Initial binding of the already-approved host tuple (pack 9828457a MS18d-c1-readiness-and-rulings.md \"Host-binding journal\": existing tuple approved by the pack and SA1 review of 56b97b26); fresh matching observation by the orchestrator",
+      "journal": {
+        "path": "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl",
+        "commit": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+        "baseCommit": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "entryCount": 1,
+        "sha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705",
+        "baseSha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705"
+      },
+      "evidence": {
+        "file": "tasks/difficulty-v3/MS18d-gp-host-evidence/host-b1.json",
+        "sha256": "8e98bcb569a1243ddc44017bb6c34f1dd31091302dcb80e9d4220061aaf4d15c",
+        "verified": true
+      }
+    },
+    "problems": []
+  }
+}

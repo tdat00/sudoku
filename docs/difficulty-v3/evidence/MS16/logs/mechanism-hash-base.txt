@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS16\mechanism.js --kind=hash --only=classic9/nightmare#377 --out=..\docs\difficulty-v3\evidence\MS16\mechanism-hash-base.json
+classic9/nightmare#377: engine git:8b26e83 clues 36, own rating nightmare/2262
+exit=0 seconds=8.543

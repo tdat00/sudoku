@@ -1,0 +1,52 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T19:53:25.097Z",
+  "finished": "2026-11-18T19:53:27.502Z",
+  "seconds": 2,
+  "cells": [
+    {
+      "variant": "classic6",
+      "level": "expert",
+      "cellCount": 36,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {"n":23,"hits":11,"rate":0.4782608695652174,"p50":316.7262,"p95":580.8733,"max":581.9974,"verdict":"hidden","stopped":"misses","errors":0,"approximate":12,"invalid":0},
+      "requests": [
+        {"key":"classic6/expert","index":0,"seed":2692331124,"hit":false,"ms":574.6405,"achieved":"hard","score":447,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":1,"seed":2709108743,"hit":false,"ms":581.9974,"achieved":"hard","score":543,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":2,"seed":2725886362,"hit":false,"ms":580.8733,"achieved":"hard","score":494,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":3,"seed":2742663981,"hit":false,"ms":549.1729,"achieved":"hard","score":493,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":4,"seed":2625220648,"hit":false,"ms":358.7818,"achieved":"hard","score":462,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":5,"seed":2641998267,"hit":false,"ms":386.3768,"achieved":"hard","score":494,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":6,"seed":2658775886,"hit":true,"ms":96.2391,"achieved":"expert","score":981,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":7,"seed":2675553505,"hit":false,"ms":360.4159,"achieved":"hard","score":493,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":8,"seed":2558110172,"hit":true,"ms":324.1527,"achieved":"expert","score":854,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":9,"seed":2574887791,"hit":false,"ms":359.2132,"achieved":"hard","score":447,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":10,"seed":1771896469,"hit":false,"ms":335.0519,"achieved":"veryEasy","score":33,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":11,"seed":1755118850,"hit":true,"ms":158.9274,"achieved":"expert","score":847,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":12,"seed":1738341231,"hit":true,"ms":316.7262,"achieved":"expert","score":978,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":13,"seed":1721563612,"hit":true,"ms":280.6902,"achieved":"expert","score":845,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":14,"seed":1704785993,"hit":true,"ms":241.2592,"achieved":"expert","score":854,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":15,"seed":1688008374,"hit":false,"ms":315.2269,"achieved":"veryEasy","score":33,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":16,"seed":1671230755,"hit":true,"ms":91.6105,"achieved":"expert","score":924,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":17,"seed":1654453136,"hit":false,"ms":342.1811,"achieved":"master","score":1213,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":18,"seed":1906117421,"hit":true,"ms":295.9813,"achieved":"expert","score":898,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":19,"seed":1889339802,"hit":false,"ms":309.0196,"achieved":"hard","score":454,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic6/expert","index":20,"seed":1872709278,"hit":true,"ms":125.5571,"achieved":"expert","score":959,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":21,"seed":1889486897,"hit":true,"ms":155.9975,"achieved":"expert","score":845,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"classic6/expert","index":22,"seed":1839154040,"hit":true,"ms":55.6807,"achieved":"expert","score":898,"solved":true,"approximate":false,"exact":true,"valid":true}
+      ]
+    }
+  ],
+  "support": {"classic6":[]}
+}

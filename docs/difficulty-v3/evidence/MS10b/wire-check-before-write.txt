@@ -1,0 +1,58 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS10b\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: 23 fields differ from replay-wire.js
+  givens[20]: saved 0, fresh 5
+  givens[27]: saved 8, fresh 0
+  givens[35]: saved 0, fresh 7
+  givens[45]: saved 0, fresh 9
+  givens[53]: saved 5, fresh 0
+  givens[60]: saved 0, fresh 4
+  rating.score: saved 2051, fresh 2199
+  rating.rawScore: saved 2051, fresh 2199
+  rating.confidence: saved 0.7755555555555556, fresh 0.44666666666666666
+  rating.empties: saved 59, fresh 57
+  rating.techniqueCounts.nakedSingle: saved 43, fresh 44
+  rating.techniqueCounts.hiddenSingleBox: saved 7, fresh 5
+  rating.techniqueCounts.pointing: saved 7, fresh 5
+  rating.techniqueCounts.cageCombo: saved 14, fresh 13
+  rating.techniqueCounts.nakedPair: saved 3, fresh 2
+  rating.techniqueCounts.nakedTriple: saved undefined, fresh 1
+  rating.techniqueCounts.wxyzWing: saved undefined, fresh 1
+  rating.techniqueCounts.wWing: saved undefined, fresh 1
+  digLog.length: saved 230, fresh 231
+  digLog[228].cells[0]: saved 27, fresh 26
+  digLog[228].cells[1]: saved 53, fresh 54
+  digLog[229].cells[0]: saved 26, fresh 35
+  digLog[229].cells[1]: saved 54, fresh 45
+G11: matches replay-wire.js
+G12: matches replay-wire.js
+G13: 1066 fields differ from replay-wire.js
+  givens[0]: saved 0, fresh 2
+  givens[2]: saved 4, fresh 0
+  givens[5]: saved 1, fresh 0
+  givens[6]: saved 7, fresh 0
+  givens[8]: saved 0, fresh 6
+  givens[10]: saved 0, fresh 1
+  givens[13]: saved 0, fresh 6
+  givens[14]: saved 4, fresh 0
+  givens[16]: saved 8, fresh 0
+  givens[17]: saved 2, fresh 0
+  givens[18]: saved 6, fresh 0
+  givens[19]: saved 0, fresh 8
+  givens[20]: saved 0, fresh 3
+  givens[21]: saved 2, fresh 0
+  givens[23]: saved 0, fresh 5
+  givens[27]: saved 5, fresh 0
+  givens[30]: saved 0, fresh 6
+  givens[31]: saved 0, fresh 4
+  givens[32]: saved 0, fresh 7
+  givens[34]: saved 2, fresh 0
+  givens[35]: saved 1, fresh 0
+  givens[39]: saved 0, fresh 8
+  givens[43]: saved 0, fresh 9
+  givens[44]: saved 0, fresh 3
+  givens[46]: saved 4, fresh 0
+  ... and 1041 more
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.471

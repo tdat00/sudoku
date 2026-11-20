@@ -1,0 +1,9 @@
+[
+  { "label": "b2-analysis-G07", "args": ["tests\\replay-goldens.js", "--ids=G07", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G07.json"] },
+  { "label": "b2-analysis-G08", "args": ["tests\\replay-goldens.js", "--ids=G08", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G08.json"] },
+  { "label": "b2-analysis-G09", "args": ["tests\\replay-goldens.js", "--ids=G09", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G09.json"] },
+  { "label": "b2-analysis-G10", "args": ["tests\\replay-goldens.js", "--ids=G10", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G10.json"] },
+  { "label": "b2-analysis-G11", "args": ["tests\\replay-goldens.js", "--ids=G11", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G11.json"] },
+  { "label": "b2-analysis-G12", "args": ["tests\\replay-goldens.js", "--ids=G12", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G12.json"] },
+  { "label": "b2-analysis-G14", "args": ["tests\\replay-goldens.js", "--ids=G14", "--record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\analysis\\G14.json"] }
+]

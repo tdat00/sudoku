@@ -1,0 +1,74 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS10b\quick-final
+==== shard core-shared (1798 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS10b\quick-final\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (63 ms)
+ok   board-view: 37 passed  (78 ms)
+ok   constraints: 43 passed  (80 ms)
+ok   exchange: 20 passed  (232 ms)
+ok   harness: 25 passed  (2.32 s)
+ok   logical-solver: 100 passed  (312 ms)
+ok   model: 49 passed  (35 ms)
+ok   solver: 50 passed  (2.65 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+FAIL tech-chain: 105 passed, 2 failed  (8.64 s)
+ok   tech-fish: 483 passed  (24.18 s)
+ok   tech-subset: 100 passed  (1.15 s)
+ok   tech-wing: 319 passed  (8.89 s)
+ok   techniques: 247 passed  (3.28 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Failures:
+  FAIL tech-chain > chain windows: the four registered ids on their own > owns every shortest proof exactly once, for C = 4 and C = 6: the windows partition the scan
+       AssertionError: expected 20 to be > 20
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2225:41)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > chain group: nightmare puzzles > honours maxChainLength given to the solver for the long window too: 7 and 8 links need that much
+       AssertionError: expected Array(3)[8, 6, true] to equal Array(3)[8, 6, false]
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2412:51
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2408:66)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 16
+Tests:  1798 total, 1796 passed, 2 failed, 0 skipped
+Time:   53.77 s running tests, 54.09 s total
+Results: docs/difficulty-v3/evidence/MS10b/quick-final/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS10b\quick-final\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (23.93 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   23.93 s running tests, 24.14 s total
+Results: docs/difficulty-v3/evidence/MS10b/quick-final/generator-steps.json
+==== shard replay (154 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS10b\quick-final\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 154 passed  (22.85 s)
+
+Suites: 1
+Tests:  154 total, 154 passed, 0 failed, 0 skipped
+Time:   22.85 s running tests, 23.05 s total
+Results: docs/difficulty-v3/evidence/MS10b/quick-final/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS10b\quick-final\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (23.14 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   23.14 s running tests, 23.34 s total
+Results: docs/difficulty-v3/evidence/MS10b/quick-final/generator-mega.json
+shard core-shared: exit 1, 54.3 s
+shard steps: exit 0, 24.3 s
+shard replay: exit 0, 23.3 s
+shard mega: exit 0, 23.6 s
+FAILED: core-shared
+exit=1 seconds=126.905

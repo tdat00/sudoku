@@ -1,0 +1,6 @@
+$ node tests\pattern-cost.js --ids=skyscraper --list
+skyscraper:positive:1  skyscraper on digit 1, rows R1 and R8 sharing C2 (constructed-hard-1)
+skyscraper:positive:2  skyscraper on digit 5, columns C5 and C7 sharing R8 (a seeded dug puzzle)
+skyscraper:negative:1  skyscraper has nothing left to do once the techniques through it are exhausted
+skyscraper:negative:2  skyscraper leaves a genuine X-Wing (two shared covers) to xWing
+exit=0 seconds=0.187

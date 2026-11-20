@@ -1,0 +1,5 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs items --register docs/difficulty-v3/evidence/MS18d/phase-d/item-register.json --input docs/difficulty-v3/evidence/MS18e/audit/items-e3-input.json --out docs/difficulty-v3/evidence/MS18e/audit/items.json
+PROBLEM evidence path does not exist (item IR17): manual/difficulty/confusion.json
+PROBLEM evidence path does not exist (item S-AV15): manual/difficulty/confusion.json
+items: 2 problem(s) (30 inherited + 34 added = 64 items; 60 tokens carried)
+exit=2 seconds=0.123

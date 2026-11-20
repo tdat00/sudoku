@@ -1,0 +1,71 @@
+basis cell                  route     total s  slowest s  worst s/attempt  full ratings  s/rating
+classic9/normal            direct       3.14       1.17            0.147          1752  0.001792
+classic9/master            direct       1.16       0.18            0.177            47  0.024669
+classic9/nightmare         direct       14.8       5.07            1.077          2078   0.00712
+killer/hard                pipeline    64.32       6.54            0.817          7525  0.008548
+killer/expert              pipeline   243.56      40.27            5.034         26003  0.009366
+jigsaw9/expert             pipeline    83.43      13.63            1.947          9882  0.008442
+diagonalX/nightmare        direct      20.47       5.83            5.826           637  0.032131
+jigsaw9/nightmare          pipeline   104.28      18.76            6.324          3689  0.028267
+
+entry                                         requests  units  bound s  basis s  admissible
+-- R5-256
+cap-256-classic9-normal                       0-11         15       47      3.7  yes
+cap-256-classic9-master                       0-11         15       45      1.5  yes
+cap-256-classic9-nightmare                    0-11         15       71     18.6  yes
+cap-256-killer-hard                           0-11         15      191     80.1  yes
+cap-256-killer-expert-0-6                     0-5           8      349    159.1  yes
+cap-256-killer-expert-6-6                     6-11          7      315      142  yes
+cap-256-jigsaw9-expert                        0-11         15      226     97.3  yes
+-- R9-C4
+window-4-classic9-nightmare                   0-11         15       71     18.6  yes
+window-4-diagonalX-nightmare                  0-11         15       84     26.6  yes
+window-4-jigsaw9-nightmare                    0-11         15      275      122  yes
+-- R5-64
+cap-64-classic9-normal                        0-11         15       61      3.7  yes
+cap-64-classic9-master                        0-11         15       71      1.5  yes
+cap-64-classic9-nightmare                     0-11         15      271     18.6  yes
+cap-64-killer-hard                            0-11         15      191     80.1  yes
+cap-64-killer-expert-0-6                      0-5           8      349    159.1  yes
+cap-64-killer-expert-6-6                      6-11          7      315      142  yes
+cap-64-jigsaw9-expert                         0-11         15      409     97.3  yes
+-- R5-128
+cap-128-classic9-normal                       0-11         15       61      3.7  yes
+cap-128-classic9-master                       0-11         15       71      1.5  yes
+cap-128-classic9-nightmare                    0-11         15      271     18.6  yes
+cap-128-killer-hard                           0-11         15      191     80.1  yes
+cap-128-killer-expert-0-6                     0-5           8      349    159.1  yes
+cap-128-killer-expert-6-6                     6-11          7      315      142  yes
+cap-128-jigsaw9-expert                        0-11         15      409     97.3  yes
+-- R5-none
+cap-none-classic9-normal                      0-11         15       54      3.7  yes
+cap-none-classic9-master                      0-11         15       45      1.5  yes
+cap-none-classic9-nightmare                   0-11         15       82     18.6  yes
+cap-none-killer-hard                          0-11         15      204     80.1  yes
+cap-none-killer-expert-0-6                    0-5           8      363    159.1  yes
+cap-none-killer-expert-6-6                    6-11          7      315      142  yes
+cap-none-jigsaw9-expert                       0-11         15      421     97.3  yes
+-- R9-C6
+window-6-classic9-nightmare-0-6               0-5           8      437     13.7  yes
+window-6-classic9-nightmare-6-6               6-11          7      386      4.8  yes
+window-6-diagonalX-nightmare-0-4              0-3           5      322      7.8  yes
+window-6-diagonalX-nightmare-4-4              4-7           5      322      9.9  yes
+window-6-diagonalX-nightmare-8-4              8-11          5      322      8.9  yes
+window-6-jigsaw9-nightmare-0-1                0-0           2      406      3.9  yes
+window-6-jigsaw9-nightmare-1-2                1-2           2      406     20.4  yes
+window-6-jigsaw9-nightmare-3-2                3-4           2      406     11.5  yes
+window-6-jigsaw9-nightmare-5-1                5-5           2      406     12.9  yes
+window-6-jigsaw9-nightmare-6-2                6-7           2      406     24.7  yes
+window-6-jigsaw9-nightmare-8-2                8-9           2      406     11.1  yes
+window-6-jigsaw9-nightmare-10-1               10-10         2      406     18.7  yes
+window-6-jigsaw9-nightmare-11-1               11-11         1      218     18.8  yes
+
+44 commands for 30 logical cells, 360 requests; largest bound 437 s (admission 450 s, process ceiling 540 s); not admissible: 0
+  R5-256: 7 commands, bound sum 1244 s
+  R9-C4: 3 commands, bound sum 430 s
+  R5-64: 7 commands, bound sum 1667 s
+  R5-128: 7 commands, bound sum 1667 s
+  R5-none: 7 commands, bound sum 1484 s
+  R9-C6: 13 commands, bound sum 4849 s
+manifest: R5 288 requests, R9 72 requests; source 85537bbd2870, tool efff9dcd558e, Node v26.13.0
+plan-recheck.json sha256 187ef977fdab6dddf482d126c278bcbd3014f5e1dda06e827784881115ee453e

@@ -1,0 +1,68 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": false,
+  "problems": [
+    "since the campaign base 1 path(s) changed that are not campaign outputs or pack files: generator/design.md"
+  ],
+  "head": {
+    "actual": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "descendant": true,
+    "diff": {
+      "paths": [
+        "generator/design.md"
+      ],
+      "violations": [
+        "generator/design.md"
+      ]
+    },
+    "ok": false
+  },
+  "status": {
+    "rawText": [],
+    "rawClean": true,
+    "reviewedClean": true,
+    "entries": [],
+    "allowed": [],
+    "violations": []
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-8fZg9O\\manifest.txt",
+    "entries": 48,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "42bc5f0c31d9cd90fded103a570a804ee092b8f2fd063f267b5c488ab0722848"
+  }
+}

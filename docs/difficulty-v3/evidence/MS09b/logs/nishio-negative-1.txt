@@ -1,0 +1,22 @@
+$ node tests\artifacts\difficulty-v3\MS09b\nishio-negative.js
+ESCARGOT (now): left 57, nishio null, nishioDeep depth 2
+ESCARGOT (before finnedSwordfish): left 57, nishio depth 1 R7C6-9, nishioDeep null
+V2_PUZZLE_1 (now): left 53, nishio depth 1 R1C5-7, nishioDeep null
+V2_PUZZLE_1 (before finnedSwordfish): left 53, nishio depth 1 R1C5-7, nishioDeep null
+V2_PUZZLE_2 (now): left 38, nishio depth 1 R1C7-4, nishioDeep null
+V2_PUZZLE_2 (before finnedSwordfish): left 38, nishio depth 1 R1C7-4, nishioDeep null
+HARD_B (now): left 56, nishio depth 1 R1C8-4, nishioDeep null
+HARD_B (before finnedSwordfish): left 56, nishio depth 1 R1C8-4, nishioDeep null
+PLATINUM (now): left 59, nishio null, nishioDeep depth 2
+PLATINUM (before finnedSwordfish): left 59, nishio null, nishioDeep depth 2
+WORLDS_HARDEST (now): left 60, nishio null, nishioDeep depth 2
+WORLDS_HARDEST (before finnedSwordfish): left 60, nishio null, nishioDeep depth 2
+NUGGET (now): left 60, nishio null, nishioDeep depth 2
+NUGGET (before finnedSwordfish): left 60, nishio null, nishioDeep depth 2
+DUG_24 (now): left 43, nishio depth 1 R2C6-4, nishioDeep null
+DUG_24 (before finnedSwordfish): left 43, nishio depth 1 R2C6-4, nishioDeep null
+DUG_379 (now): left 0, nishio null, nishioDeep null
+DUG_379 (before finnedSwordfish): left 0, nishio null, nishioDeep null
+DUG_155 (now): left 0, nishio null, nishioDeep null
+DUG_155 (before finnedSwordfish): left 0, nishio null, nishioDeep null
+exit=0 seconds=0.378

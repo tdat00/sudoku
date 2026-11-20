@@ -1,0 +1,31 @@
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 66 passed, 3 failed  (138.30 s)
+
+Failures:
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected "replay.clues" to be "replay.folded.reveal"
+       at Q:\git\sudoku\generator\tests\suites\player.test.js:697:30
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:694:22)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > Greater-Than: the sign that causes the jump keeps its removed mark and also gets the frame
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:948:19)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)
+       AssertionError: expected 27 to be 29
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1002:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  69 total, 66 passed, 3 failed, 0 skipped
+Time:   138.30 s running tests, 138.48 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-player.json
+shard player: exit 1, 138.7 s
+FAILED: player
+MS05e exit=1 seconds=139.054

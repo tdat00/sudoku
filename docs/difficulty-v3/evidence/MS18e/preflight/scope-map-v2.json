@@ -1,0 +1,1147 @@
+{
+  "schema": "ms18e-scope-map-1",
+  "inventory": {
+    "file": "docs/difficulty-v3/evidence/MS18e/preflight/inventory-all-v2.json",
+    "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+    "suites": 63,
+    "tests": 5836
+  },
+  "manualSuites": [
+    {
+      "suite": "difficulty",
+      "tests": 146,
+      "assignedByThisDispatch": 146,
+      "notAssigned": 0,
+      "label": "complete (difficulty: every test through the rows of the admission plan; variants: reused)"
+    },
+    {
+      "suite": "extra-regions",
+      "tests": 129,
+      "assignedByThisDispatch": 12,
+      "notAssigned": 117,
+      "label": "the rest is OUTSIDE this dispatch and stays unexecuted: not reported as \"the suite passed\""
+    },
+    {
+      "suite": "greater-than",
+      "tests": 108,
+      "assignedByThisDispatch": 5,
+      "notAssigned": 103,
+      "label": "the rest is OUTSIDE this dispatch and stays unexecuted: not reported as \"the suite passed\""
+    },
+    {
+      "suite": "jigsaw",
+      "tests": 88,
+      "assignedByThisDispatch": 6,
+      "notAssigned": 82,
+      "label": "the rest is OUTSIDE this dispatch and stays unexecuted: not reported as \"the suite passed\""
+    },
+    {
+      "suite": "killer",
+      "tests": 94,
+      "assignedByThisDispatch": 3,
+      "notAssigned": 91,
+      "label": "the rest is OUTSIDE this dispatch and stays unexecuted: not reported as \"the suite passed\""
+    },
+    {
+      "suite": "perf",
+      "tests": 51,
+      "assignedByThisDispatch": 3,
+      "notAssigned": 48,
+      "label": "the rest is OUTSIDE this dispatch and stays unexecuted: not reported as \"the suite passed\""
+    },
+    {
+      "suite": "variants",
+      "tests": 285,
+      "assignedByThisDispatch": 285,
+      "notAssigned": 0,
+      "label": "complete (difficulty: every test through the rows of the admission plan; variants: reused)"
+    },
+    {
+      "suite": "wordoku",
+      "tests": 128,
+      "assignedByThisDispatch": 6,
+      "notAssigned": 122,
+      "label": "the rest is OUTSIDE this dispatch and stays unexecuted: not reported as \"the suite passed\""
+    }
+  ],
+  "families": {
+    "difficulty": {
+      "offeredBatches": 7,
+      "requestsPerBatch": 100,
+      "seeds": "7000+i",
+      "assertionsPerBatch": 8,
+      "confusionMatrixRequests": 700,
+      "rows": [
+        {
+          "id": "GD-veryEasy",
+          "selected": 8
+        },
+        {
+          "id": "GD-easy",
+          "selected": 8
+        },
+        {
+          "id": "GD-normal",
+          "selected": 8
+        },
+        {
+          "id": "GD-hard",
+          "selected": 8
+        },
+        {
+          "id": "GD-expert",
+          "selected": 8
+        },
+        {
+          "id": "GD-master",
+          "selected": 8
+        },
+        {
+          "id": "GD-nightmare",
+          "selected": 8
+        },
+        {
+          "id": "GD-confusion",
+          "selected": 1
+        },
+        {
+          "id": "GD-rest-01",
+          "selected": 4
+        },
+        {
+          "id": "GD-rest-02",
+          "selected": 8
+        },
+        {
+          "id": "GD-rest-03",
+          "selected": 4
+        },
+        {
+          "id": "GD-rest-04",
+          "selected": 6
+        },
+        {
+          "id": "GD-rest-05",
+          "selected": 9
+        },
+        {
+          "id": "GD-rest-06",
+          "selected": 15
+        },
+        {
+          "id": "GD-rest-07",
+          "selected": 4
+        },
+        {
+          "id": "GD-rest-08",
+          "selected": 7
+        },
+        {
+          "id": "GD-rest-09",
+          "selected": 2
+        },
+        {
+          "id": "GD-rest-10",
+          "selected": 7
+        },
+        {
+          "id": "GD-rest-11",
+          "selected": 10
+        },
+        {
+          "id": "GD-rest-12",
+          "selected": 5
+        },
+        {
+          "id": "GD-rest-13",
+          "selected": 5
+        },
+        {
+          "id": "GD-rest-14",
+          "selected": 3
+        }
+      ],
+      "coverage": {
+        "tests": 146,
+        "coveredByRows": 146,
+        "disjointAndComplete": true
+      }
+    },
+    "i5": {
+      "selectors": 32,
+      "bySuite": {
+        "killer": 3,
+        "jigsaw": 6,
+        "greater-than": 5,
+        "wordoku": 6,
+        "extra-regions": 12
+      },
+      "rows": [
+        {
+          "id": "I5-killer-veryEasy",
+          "ordinal": 53,
+          "fullName": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > veryEasy: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+          "selected": 1
+        },
+        {
+          "id": "I5-killer-easy",
+          "ordinal": 54,
+          "fullName": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > easy: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+          "selected": 1
+        },
+        {
+          "id": "I5-killer-normal",
+          "ordinal": 55,
+          "fullName": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > normal: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+          "selected": 1
+        },
+        {
+          "id": "I5-jigsaw-veryEasy",
+          "ordinal": 52,
+          "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+          "selected": 1
+        },
+        {
+          "id": "I5-jigsaw-easy",
+          "ordinal": 56,
+          "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+          "selected": 1
+        },
+        {
+          "id": "I5-jigsaw-normal",
+          "ordinal": 60,
+          "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+          "selected": 1
+        },
+        {
+          "id": "I5-jigsaw-hard",
+          "ordinal": 64,
+          "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+          "selected": 1
+        },
+        {
+          "id": "I5-jigsaw-master",
+          "ordinal": 68,
+          "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+          "selected": 1
+        },
+        {
+          "id": "I5-jigsaw-hell2",
+          "ordinal": 72,
+          "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+          "selected": 1
+        },
+        {
+          "id": "I5-greater-than-veryEasy",
+          "ordinal": 53,
+          "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-greater-than-easy",
+          "ordinal": 59,
+          "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-greater-than-hard",
+          "ordinal": 65,
+          "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-greater-than-master",
+          "ordinal": 71,
+          "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-greater-than-hell2",
+          "ordinal": 77,
+          "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell2: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-wordoku-veryEasy",
+          "ordinal": 61,
+          "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-wordoku-easy",
+          "ordinal": 67,
+          "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-wordoku-hard",
+          "ordinal": 73,
+          "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-wordoku-expert",
+          "ordinal": 79,
+          "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-wordoku-master",
+          "ordinal": 85,
+          "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-wordoku-nightmare",
+          "ordinal": 91,
+          "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-veryEasy-diagonalX",
+          "ordinal": 53,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-normal-diagonalX",
+          "ordinal": 56,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-hard-diagonalX",
+          "ordinal": 59,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-master-diagonalX",
+          "ordinal": 62,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-nightmare-diagonalX",
+          "ordinal": 65,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-hell2-diagonalX",
+          "ordinal": 68,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-veryEasy-hyper",
+          "ordinal": 73,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-normal-hyper",
+          "ordinal": 76,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-hard-hyper",
+          "ordinal": 79,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-master-hyper",
+          "ordinal": 82,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-nightmare-hyper",
+          "ordinal": 85,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        },
+        {
+          "id": "I5-extra-regions-hell2-hyper",
+          "ordinal": 88,
+          "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+          "selected": 1
+        }
+      ]
+    },
+    "cv3": {
+      "publicCells": 79,
+      "refusalChecks": 15,
+      "requestGuardMs": 240000,
+      "perLevel": "samurai, sohei, flower, mega16, butterfly 2; the others 3",
+      "cells": [
+        {
+          "id": "classic4",
+          "level": "veryEasy",
+          "ordinal": 3,
+          "filter": "> variants: classic4 > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "classic4",
+          "level": "unsupported",
+          "ordinal": 4,
+          "filter": "> variants: classic4 > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "classic6",
+          "level": "veryEasy",
+          "ordinal": 12,
+          "filter": "> variants: classic6 > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "classic6",
+          "level": "hard",
+          "ordinal": 13,
+          "filter": "> variants: classic6 > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.4
+        },
+        {
+          "id": "classic6",
+          "level": "unsupported",
+          "ordinal": 14,
+          "filter": "> variants: classic6 > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "classic9",
+          "level": "veryEasy",
+          "ordinal": 22,
+          "filter": "> variants: classic9 > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "classic9",
+          "level": "easy",
+          "ordinal": 23,
+          "filter": "> variants: classic9 > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.2
+        },
+        {
+          "id": "classic9",
+          "level": "normal",
+          "ordinal": 24,
+          "filter": "> variants: classic9 > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.5
+        },
+        {
+          "id": "classic9",
+          "level": "hard",
+          "ordinal": 25,
+          "filter": "> variants: classic9 > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "classic9",
+          "level": "expert",
+          "ordinal": 26,
+          "filter": "> variants: classic9 > CV3 expert:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "classic9",
+          "level": "master",
+          "ordinal": 27,
+          "filter": "> variants: classic9 > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.6
+        },
+        {
+          "id": "classic9",
+          "level": "nightmare",
+          "ordinal": 28,
+          "filter": "> variants: classic9 > CV3 nightmare:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.4
+        },
+        {
+          "id": "classic9",
+          "level": "unsupported",
+          "ordinal": 29,
+          "filter": "> variants: classic9 > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega12",
+          "level": "veryEasy",
+          "ordinal": 37,
+          "filter": "> variants: mega12 > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega12",
+          "level": "easy",
+          "ordinal": 38,
+          "filter": "> variants: mega12 > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega12",
+          "level": "normal",
+          "ordinal": 39,
+          "filter": "> variants: mega12 > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega12",
+          "level": "hard",
+          "ordinal": 40,
+          "filter": "> variants: mega12 > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.2
+        },
+        {
+          "id": "mega12",
+          "level": "expert",
+          "ordinal": 41,
+          "filter": "> variants: mega12 > CV3 expert:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "mega12",
+          "level": "master",
+          "ordinal": 42,
+          "filter": "> variants: mega12 > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1
+        },
+        {
+          "id": "mega12",
+          "level": "nightmare",
+          "ordinal": 43,
+          "filter": "> variants: mega12 > CV3 nightmare:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 5.1
+        },
+        {
+          "id": "mega12",
+          "level": "hell2",
+          "ordinal": 44,
+          "filter": "> variants: mega12 > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 13.5
+        },
+        {
+          "id": "mega12",
+          "level": "unsupported",
+          "ordinal": 45,
+          "filter": "> variants: mega12 > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega16",
+          "level": "veryEasy",
+          "ordinal": 53,
+          "filter": "> variants: mega16 > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega16",
+          "level": "easy",
+          "ordinal": 54,
+          "filter": "> variants: mega16 > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "mega16",
+          "level": "normal",
+          "ordinal": 55,
+          "filter": "> variants: mega16 > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "mega16",
+          "level": "hard",
+          "ordinal": 56,
+          "filter": "> variants: mega16 > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.9
+        },
+        {
+          "id": "mega16",
+          "level": "master",
+          "ordinal": 57,
+          "filter": "> variants: mega16 > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 4.1
+        },
+        {
+          "id": "mega16",
+          "level": "hell2",
+          "ordinal": 58,
+          "filter": "> variants: mega16 > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 3.2
+        },
+        {
+          "id": "mega16",
+          "level": "unsupported",
+          "ordinal": 59,
+          "filter": "> variants: mega16 > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "diagonalX",
+          "level": "veryEasy",
+          "ordinal": 67,
+          "filter": "> variants: diagonalX > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "diagonalX",
+          "level": "normal",
+          "ordinal": 68,
+          "filter": "> variants: diagonalX > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.4
+        },
+        {
+          "id": "diagonalX",
+          "level": "hard",
+          "ordinal": 69,
+          "filter": "> variants: diagonalX > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "diagonalX",
+          "level": "master",
+          "ordinal": 70,
+          "filter": "> variants: diagonalX > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.4
+        },
+        {
+          "id": "diagonalX",
+          "level": "nightmare",
+          "ordinal": 71,
+          "filter": "> variants: diagonalX > CV3 nightmare:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 5.4
+        },
+        {
+          "id": "diagonalX",
+          "level": "hell2",
+          "ordinal": 72,
+          "filter": "> variants: diagonalX > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 7.9
+        },
+        {
+          "id": "diagonalX",
+          "level": "unsupported",
+          "ordinal": 73,
+          "filter": "> variants: diagonalX > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "hyper",
+          "level": "veryEasy",
+          "ordinal": 81,
+          "filter": "> variants: hyper > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "hyper",
+          "level": "normal",
+          "ordinal": 82,
+          "filter": "> variants: hyper > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "hyper",
+          "level": "hard",
+          "ordinal": 83,
+          "filter": "> variants: hyper > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "hyper",
+          "level": "master",
+          "ordinal": 84,
+          "filter": "> variants: hyper > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.4
+        },
+        {
+          "id": "hyper",
+          "level": "nightmare",
+          "ordinal": 85,
+          "filter": "> variants: hyper > CV3 nightmare:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 3.5
+        },
+        {
+          "id": "hyper",
+          "level": "hell2",
+          "ordinal": 86,
+          "filter": "> variants: hyper > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 7.2
+        },
+        {
+          "id": "hyper",
+          "level": "unsupported",
+          "ordinal": 87,
+          "filter": "> variants: hyper > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "jigsaw9",
+          "level": "veryEasy",
+          "ordinal": 95,
+          "filter": "> variants: jigsaw9 > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "jigsaw9",
+          "level": "easy",
+          "ordinal": 96,
+          "filter": "> variants: jigsaw9 > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.4
+        },
+        {
+          "id": "jigsaw9",
+          "level": "normal",
+          "ordinal": 97,
+          "filter": "> variants: jigsaw9 > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "jigsaw9",
+          "level": "hard",
+          "ordinal": 98,
+          "filter": "> variants: jigsaw9 > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.3
+        },
+        {
+          "id": "jigsaw9",
+          "level": "master",
+          "ordinal": 99,
+          "filter": "> variants: jigsaw9 > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.3
+        },
+        {
+          "id": "jigsaw9",
+          "level": "hell2",
+          "ordinal": 100,
+          "filter": "> variants: jigsaw9 > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 6.1
+        },
+        {
+          "id": "jigsaw9",
+          "level": "unsupported",
+          "ordinal": 101,
+          "filter": "> variants: jigsaw9 > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "killer",
+          "level": "veryEasy",
+          "ordinal": 109,
+          "filter": "> variants: killer > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "killer",
+          "level": "easy",
+          "ordinal": 110,
+          "filter": "> variants: killer > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "killer",
+          "level": "normal",
+          "ordinal": 111,
+          "filter": "> variants: killer > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 2.5
+        },
+        {
+          "id": "killer",
+          "level": "unsupported",
+          "ordinal": 112,
+          "filter": "> variants: killer > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "greaterThan",
+          "level": "veryEasy",
+          "ordinal": 120,
+          "filter": "> variants: greaterThan > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "greaterThan",
+          "level": "easy",
+          "ordinal": 121,
+          "filter": "> variants: greaterThan > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "greaterThan",
+          "level": "hard",
+          "ordinal": 122,
+          "filter": "> variants: greaterThan > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 7
+        },
+        {
+          "id": "greaterThan",
+          "level": "master",
+          "ordinal": 123,
+          "filter": "> variants: greaterThan > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 3
+        },
+        {
+          "id": "greaterThan",
+          "level": "hell2",
+          "ordinal": 124,
+          "filter": "> variants: greaterThan > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 18
+        },
+        {
+          "id": "greaterThan",
+          "level": "unsupported",
+          "ordinal": 125,
+          "filter": "> variants: greaterThan > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "samurai",
+          "level": "veryEasy",
+          "ordinal": 133,
+          "filter": "> variants: samurai > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "samurai",
+          "level": "normal",
+          "ordinal": 134,
+          "filter": "> variants: samurai > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 8.1
+        },
+        {
+          "id": "samurai",
+          "level": "hard",
+          "ordinal": 135,
+          "filter": "> variants: samurai > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "samurai",
+          "level": "expert",
+          "ordinal": 136,
+          "filter": "> variants: samurai > CV3 expert:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.7
+        },
+        {
+          "id": "samurai",
+          "level": "master",
+          "ordinal": 137,
+          "filter": "> variants: samurai > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 3.7
+        },
+        {
+          "id": "samurai",
+          "level": "unsupported",
+          "ordinal": 138,
+          "filter": "> variants: samurai > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "sohei",
+          "level": "veryEasy",
+          "ordinal": 146,
+          "filter": "> variants: sohei > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "sohei",
+          "level": "normal",
+          "ordinal": 147,
+          "filter": "> variants: sohei > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.2
+        },
+        {
+          "id": "sohei",
+          "level": "hard",
+          "ordinal": 148,
+          "filter": "> variants: sohei > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.9
+        },
+        {
+          "id": "sohei",
+          "level": "expert",
+          "ordinal": 149,
+          "filter": "> variants: sohei > CV3 expert:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "sohei",
+          "level": "master",
+          "ordinal": 150,
+          "filter": "> variants: sohei > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 3
+        },
+        {
+          "id": "sohei",
+          "level": "hell2",
+          "ordinal": 151,
+          "filter": "> variants: sohei > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 22.6
+        },
+        {
+          "id": "sohei",
+          "level": "unsupported",
+          "ordinal": 152,
+          "filter": "> variants: sohei > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "butterfly",
+          "level": "veryEasy",
+          "ordinal": 160,
+          "filter": "> variants: butterfly > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "butterfly",
+          "level": "normal",
+          "ordinal": 161,
+          "filter": "> variants: butterfly > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "butterfly",
+          "level": "hard",
+          "ordinal": 162,
+          "filter": "> variants: butterfly > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "butterfly",
+          "level": "expert",
+          "ordinal": 163,
+          "filter": "> variants: butterfly > CV3 expert:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "butterfly",
+          "level": "master",
+          "ordinal": 164,
+          "filter": "> variants: butterfly > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.5
+        },
+        {
+          "id": "butterfly",
+          "level": "nightmare",
+          "ordinal": 165,
+          "filter": "> variants: butterfly > CV3 nightmare:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 13.3
+        },
+        {
+          "id": "butterfly",
+          "level": "hell2",
+          "ordinal": 166,
+          "filter": "> variants: butterfly > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 2.8
+        },
+        {
+          "id": "butterfly",
+          "level": "unsupported",
+          "ordinal": 167,
+          "filter": "> variants: butterfly > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "flower",
+          "level": "veryEasy",
+          "ordinal": 175,
+          "filter": "> variants: flower > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "flower",
+          "level": "normal",
+          "ordinal": 176,
+          "filter": "> variants: flower > CV3 normal:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.9
+        },
+        {
+          "id": "flower",
+          "level": "hard",
+          "ordinal": 177,
+          "filter": "> variants: flower > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "flower",
+          "level": "master",
+          "ordinal": 178,
+          "filter": "> variants: flower > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1
+        },
+        {
+          "id": "flower",
+          "level": "hell2",
+          "ordinal": 179,
+          "filter": "> variants: flower > CV3 hell2:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 16.8
+        },
+        {
+          "id": "flower",
+          "level": "unsupported",
+          "ordinal": 180,
+          "filter": "> variants: flower > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "wordoku",
+          "level": "veryEasy",
+          "ordinal": 188,
+          "filter": "> variants: wordoku > CV3 veryEasy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        },
+        {
+          "id": "wordoku",
+          "level": "easy",
+          "ordinal": 189,
+          "filter": "> variants: wordoku > CV3 easy:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.4
+        },
+        {
+          "id": "wordoku",
+          "level": "hard",
+          "ordinal": 190,
+          "filter": "> variants: wordoku > CV3 hard:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.1
+        },
+        {
+          "id": "wordoku",
+          "level": "expert",
+          "ordinal": 191,
+          "filter": "> variants: wordoku > CV3 expert:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.2
+        },
+        {
+          "id": "wordoku",
+          "level": "master",
+          "ordinal": 192,
+          "filter": "> variants: wordoku > CV3 master:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0.2
+        },
+        {
+          "id": "wordoku",
+          "level": "nightmare",
+          "ordinal": 193,
+          "filter": "> variants: wordoku > CV3 nightmare:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 1.7
+        },
+        {
+          "id": "wordoku",
+          "level": "unsupported",
+          "ordinal": 194,
+          "filter": "> variants: wordoku > CV3 unsupported:",
+          "selectedInInventory": 1,
+          "ms18cSeconds": 0
+        }
+      ]
+    },
+    "sOd8": {
+      "ratios": 3,
+      "replayOrdinal": 284
+    },
+    "deep": {
+      "occurrences": 28,
+      "nightmare": 14,
+      "hell1": 14
+    },
+    "sAv11": {
+      "held": true
+    }
+  }
+}

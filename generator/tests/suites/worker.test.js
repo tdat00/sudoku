@@ -64,6 +64,13 @@
     return Object.assign({ variantId: 'classic9', difficulty: 'normal', seed: 1, trace: 'summary' }, extra);
   }
 
+  // MS18c: qualification hides some levels of these fixed requests (Killer Hard and Master, diagonalX and Hyper
+  // Easy): the variant offers the level for the length of the call only, and the exact array is put back in
+  // `finally`. A stepper is driven to its end inside the call.
+  function asRequested(variantId, level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel(variantId, level, fn).value;
+  }
+
   /** Events without time stamps, sequence numbers, time throttled `metric` events and the elapsed time. */
   function shape(events) {
     return events.filter(function (e) { return e.type !== 'metric'; }).map(function (e) {
@@ -79,37 +86,45 @@
 
   function runSync(config) {
     var events = [];
-    var result = P.run(config, function (e) { events.push(e); });
+    var result = asRequested(config.variantId, config.difficulty, function () {
+      return P.run(config, function (e) { events.push(e); });
+    });
     return { result: result, events: events };
   }
 
   /** Runs the stepper `size` steps per slice; returns { result, events, yields }. */
   function runSliced(config, size, extra) {
-    var events = [];
-    var options = Object.assign({ cooperative: true }, extra);
-    var steps = P.runSteps(config, function (e) { events.push(e); }, null, options);
-    var yields = 0;
-    var step;
-    for (;;) {
-      for (var i = 0; i < size; i++) {
-        step = steps.next();
+    return asRequested(config.variantId, config.difficulty, function () {
+      var events = [];
+      var options = Object.assign({ cooperative: true }, extra);
+      var steps = P.runSteps(config, function (e) { events.push(e); }, null, options);
+      var yields = 0;
+      var step;
+      for (;;) {
+        for (var i = 0; i < size; i++) {
+          step = steps.next();
+          if (step.done) break;
+          yields++;
+        }
         if (step.done) break;
-        yields++;
       }
-      if (step.done) break;
-    }
-    return { result: step.value, events: events, yields: yields };
+      return { result: step.value, events: events, yields: yields };
+    });
   }
 
   function expectSameResult(a, b) {
     expect(a.givens).toEqual(b.givens);
     expect(a.solution).toEqual(b.solution);
     expect(a.rating).toEqual(b.rating);
+    expect(typeof a.exact).toBe('boolean');
+    expect(a.exact).toBe(b.exact);
     expect(a.seed).toBe(b.seed);
     expect(a.config).toEqual(b.config);
     expect(a.attempts).toBe(b.attempts);
     expect(a.warnings).toEqual(b.warnings);
     expect(a.model).toEqual(b.model);
+    expect(a.work).toEqual(b.work);
+    expect(a.target).toBe(b.target);
     expect(Object.keys(a.timings)).toEqual(Object.keys(b.timings));
   }
 
@@ -118,6 +133,7 @@
     { variantId: 'classic9', difficulty: 'normal', seed: 7, trace: 'summary' },
     { variantId: 'classic9', difficulty: 'hard', seed: 3, trace: 'off' },
     { variantId: 'classic9', difficulty: 'master', seed: 11, trace: 'summary', maxAttempts: 1 },
+    { variantId: 'classic9', difficulty: 'nightmare', seed: 42, trace: 'summary', maxAttempts: 1 },
     { variantId: 'killer', difficulty: 'easy', seed: 2, trace: 'summary' },
     { variantId: 'greaterThan', difficulty: 'easy', seed: 5, trace: 'summary' },
     { variantId: 'jigsaw9', difficulty: 'normal', seed: 4, trace: 'summary' },
@@ -371,10 +387,12 @@
 
   describe('Resumable variant work: Killer layout and Greater-Than sign dig', function () {
     // Seeds picked for the work they need: the Killer ones repair the layout (split / merge / reveal),
-    // the Greater-Than ones run several rounds of the sign dig.
+    // the Greater-Than ones run several rounds of the sign dig. The Killer puzzles of these seeds are in the
+    // band but need no technique of the level, so a full run would search on for all eight attempts: one
+    // attempt (the one that repairs the layout) is the work these checks are about.
     var SLICED = [
-      { variantId: 'killer', difficulty: 'hard', seed: 5, trace: 'full' },
-      { variantId: 'killer', difficulty: 'master', seed: 2, trace: 'summary' },
+      { variantId: 'killer', difficulty: 'hard', seed: 5, trace: 'full', maxAttempts: 1 },
+      { variantId: 'killer', difficulty: 'master', seed: 2, trace: 'summary', maxAttempts: 1 },
       { variantId: 'greaterThan', difficulty: 'hard', seed: 3, trace: 'full' },
       { variantId: 'greaterThan', difficulty: 'master', seed: 2, trace: 'summary' }
     ];
@@ -392,7 +410,7 @@
         solution: solution,
         rng: master.fork('extra#1'),
         level: level,
-        spec: SG.difficulty.spec(level, model),
+        spec: asRequested(variantId, level, function () { return SG.difficulty.spec(level, model); }),
         attempt: 1,
         budget: null,
         emit: null,
@@ -414,23 +432,25 @@
      * about 2.5 microseconds each in the layout searches.
      */
     function sliceWork(config) {
-      var budget = SG.budget.create({});
-      var current = null;
-      var steps = P.runSteps(config, function (e) {
-        if (e.stepId) current = e.stepId;
-      }, budget, { cooperative: true });
-      var longest = {};
-      var slices = {};
-      var spent = 0;
-      var step;
-      do {
-        step = steps.next();
-        var used = budget.nodes - spent;
-        spent = budget.nodes;
-        longest[current] = Math.max(longest[current] || 0, used);
-        slices[current] = (slices[current] || 0) + 1;
-      } while (!step.done);
-      return { longest: longest, slices: slices };
+      return asRequested(config.variantId, config.difficulty, function () {
+        var budget = SG.budget.create({});
+        var current = null;
+        var steps = P.runSteps(config, function (e) {
+          if (e.stepId) current = e.stepId;
+        }, budget, { cooperative: true });
+        var longest = {};
+        var slices = {};
+        var spent = 0;
+        var step;
+        do {
+          step = steps.next();
+          var used = budget.nodes - spent;
+          spent = budget.nodes;
+          longest[current] = Math.max(longest[current] || 0, used);
+          slices[current] = (slices[current] || 0) + 1;
+        } while (!step.done);
+        return { longest: longest, slices: slices };
+      });
     }
 
     SLICED.forEach(function (c) {
@@ -538,7 +558,9 @@
     WIRE_CASES.forEach(function (pair) {
       it(pair[0] + ': a cloned wire result gives an equal, frozen, valid model with exactly one solution',
         function () {
-          var made = P.run({ variantId: pair[0], difficulty: pair[1], seed: 13, trace: 'off' }, null);
+          var made = asRequested(pair[0], pair[1], function () {
+            return P.run({ variantId: pair[0], difficulty: pair[1], seed: 13, trace: 'off' }, null);
+          });
           var wire = structuredClone(P.toWire(made));
           withoutExtensions(function () {
             var back = P.fromWire(wire);
@@ -592,6 +614,158 @@
       expect(typeof wire.v).toBe('number');
       expect(structuredClone(wire)).toEqual(wire);
     });
+
+    it('MS05a-T01: exact crosses the wire as true, false or absent (absent is false, never inferred)',
+      function () {
+        var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
+        function wireOf(result) { return structuredClone(P.toWire(result)); }
+        [true, false].forEach(function (flag) {
+          var wire = wireOf(Object.assign({}, made, { exact: flag }));
+          expect(wire.v).toBe(1);
+          expect(wire.exact).toBe(flag);
+          expect(P.fromWire(wire).exact).toBe(flag);
+        });
+        // A result without the field is not exact, and its wire says so.
+        var bare = Object.assign({}, made);
+        delete bare.exact;
+        expect(wireOf(bare).exact).toBe(false);
+        expect(P.fromWire(wireOf(bare)).exact).toBe(false);
+        // A wire written before the flag (a cached entry) decodes as false, even when the level names match.
+        var old = wireOf(Object.assign({}, made, { exact: true }));
+        delete old.exact;
+        var rebuilt = P.fromWire(old);
+        expect(rebuilt.rating.level).toBe(rebuilt.config.difficulty);
+        expect(rebuilt.exact).toBe(false);
+        [1, 'true', {}, null].forEach(function (odd) {
+          expect(P.fromWire(Object.assign({}, old, { exact: odd })).exact).toBe(false);
+        });
+      });
+
+    it('MS05r3-T02: the work crosses the wire as owned plain data, nested records copied', function () {
+      var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
+      expect(SG.digger.copyWork(made.work)).toEqual(made.work);
+      var work = [
+        { ratings: 40, proposals: 900, maxRatings: 1024, maxProposals: 32768, localSearches: [
+          { ratings: 30, proposals: 880, firstShallowAt: 2, shallowRatings: 28, shallowLimit: 64,
+            capHit: 'shallow' },
+          { ratings: 0, proposals: 0, firstShallowAt: null, shallowRatings: 0, shallowLimit: null,
+            capHit: null }] },
+        { ratings: 9, proposals: 3, maxRatings: 1024, maxProposals: 32768, localSearches: [
+          { ratings: 9, proposals: 3, firstShallowAt: 0, shallowRatings: 9, shallowLimit: null,
+            capHit: 'ratings' },
+          { ratings: 1, proposals: 3, firstShallowAt: null, shallowRatings: 0, shallowLimit: 256,
+            capHit: 'proposals' }] }
+      ];
+      var source = Object.assign({}, made, { work: work });
+      var wire = P.toWire(source);
+      expect(wire.work).toEqual(work);
+      expect(wire.work).not.toBe(work);
+      expect(wire.work[0].localSearches).not.toBe(work[0].localSearches);
+      expect(wire.work[0].localSearches[0]).not.toBe(work[0].localSearches[0]);
+      // plain counters and nothing else: no timing is part of the work
+      expect(Object.keys(wire.work[0])).toEqual(['ratings', 'proposals', 'maxRatings', 'maxProposals',
+        'localSearches']);
+      expect(Object.keys(wire.work[0].localSearches[0])).toEqual(['ratings', 'proposals', 'firstShallowAt',
+        'shallowRatings', 'shallowLimit', 'capHit']);
+      var cloned = structuredClone(wire);
+      expect(cloned).toEqual(wire);
+      var back = P.fromWire(cloned);
+      expect(back.work).toEqual(work);
+      // each side owns its copy: changing one changes neither the other nor the wire
+      back.work[0].localSearches[0].ratings = 999;
+      work[1].localSearches[1].capHit = null;
+      expect(cloned.work[0].localSearches[0].ratings).toBe(30);
+      expect(wire.work[1].localSearches[1].capHit).toBe('proposals');
+      expect(P.fromWire(cloned).work[0].localSearches[0].ratings).toBe(30);
+      expect(P.fromWire(cloned).work).not.toBe(P.fromWire(cloned).work);
+    });
+
+    it('MS05r3-T02: a real result carries its work over the wire; no work stays unavailable, never zero',
+      function () {
+        var made = P.run({ variantId: 'classic9', difficulty: 'master', seed: 1, trace: 'off', maxAttempts: 1 },
+          null);
+        expect(made.work.length).toBeGreaterThanOrEqual(1);
+        var back = P.fromWire(structuredClone(P.toWire(made)));
+        expect(back.work).toEqual(made.work);
+        expect(back.work).not.toBe(made.work);
+        // a result without work, a wire from before the work existed and a malformed one: unavailable
+        var bare = Object.assign({}, made);
+        delete bare.work;
+        var wire = structuredClone(P.toWire(bare));
+        expect('work' in wire).toBe(false);
+        expect(P.fromWire(wire).work).toBe(undefined);
+        var old = structuredClone(P.toWire(made));
+        delete old.work;
+        expect(P.fromWire(old).work).toBe(undefined);
+        var good = { ratings: 1, proposals: 0, maxRatings: 1024, maxProposals: 32768, localSearches: [] };
+        var search = { ratings: 1, proposals: 1, firstShallowAt: null, shallowRatings: 0, shallowLimit: null,
+          capHit: null };
+        [null, 'x', {}, [null], [{ ratings: 1 }], [Object.assign({}, good, { ratings: -1 })],
+          [Object.assign({}, good, { ratings: 1.5 })], [Object.assign({}, good, { localSearches: null })],
+          [Object.assign({}, good, { localSearches: [Object.assign({}, search, { capHit: 'other' })] })],
+          [Object.assign({}, good, { localSearches: [Object.assign({}, search, { shallowLimit: Infinity })] })],
+          [Object.assign({}, good, { localSearches: [Object.assign({}, search, { firstShallowAt: -1 })] })],
+          [Object.assign({}, good, { localSearches: [null] })]].forEach(function (odd, k) {
+          var tampered = structuredClone(P.toWire(made));
+          tampered.work = odd;
+          expect([k, P.fromWire(tampered).work]).toEqual([k, undefined]);
+          expect('work' in P.toWire(Object.assign({}, made, { work: odd }))).toBe(false);
+        });
+        // the same fields that were there are all there: nothing else of the result moved
+        var restored = P.fromWire(structuredClone(P.toWire(made)));
+        expectSameResult(restored, made);
+      }, SLOW);
+
+    it('MS06c1-T01: the target crosses the wire as a number, zero or null; a wire from before it is null',
+      function () {
+        var made = P.run({ variantId: 'classic4', difficulty: 'veryEasy', seed: 5, trace: 'off' }, null);
+        function wireOf(result) { return structuredClone(P.toWire(result)); }
+        // a fresh request in a finite band has the target its sample drew: the result, its wire and the rebuilt
+        // result all say the same finite number (the producer's draw and origin are proved in `digger-target`)
+        expect(Number.isFinite(made.target)).toBe(true);
+        expect(wireOf(made).target).toBe(made.target);
+        expect(P.fromWire(wireOf(made)).target).toBe(made.target);
+        [812.5, 0, -3, null].forEach(function (value) {
+          var source = Object.assign({}, made, { target: value });
+          var wire = wireOf(source);
+          expect(wire.v).toBe(1);
+          expect(wire.target).toBe(value);
+          expect(P.fromWire(wire).target).toBe(value);
+          // a number is a copy: a later change of the source or of a rebuilt result reaches no other
+          source.target = 5;
+          var back = P.fromWire(wire);
+          back.target = 6;
+          expect(wire.target).toBe(value);
+          expect(P.fromWire(wire).target).toBe(value);
+        });
+        // a result without the field has none, never a midpoint of its band and never its score
+        var bare = Object.assign({}, made);
+        delete bare.target;
+        expect(wireOf(bare).target).toBe(null);
+        // a wire written before the field (a cached entry) and any value that is not a finite number: null
+        var old = wireOf(Object.assign({}, made, { target: 812.5 }));
+        delete old.target;
+        expect(P.fromWire(old).target).toBe(null);
+        [undefined, NaN, Infinity, -Infinity, '812', true, {}, []].forEach(function (odd, k) {
+          expect([k, P.fromWire(Object.assign({}, old, { target: odd })).target]).toEqual([k, null]);
+          expect([k, P.toWire(Object.assign({}, made, { target: odd })).target]).toEqual([k, null]);
+        });
+        var rebuilt = P.fromWire(old);
+        expect(rebuilt.target).not.toBe(rebuilt.rating.score);
+        // an old wire decodes to null for the target alone: everything else of the fresh result is the same
+        expectSameResult(rebuilt, Object.assign({}, made, { target: null }));
+      });
+
+    it('MS05b1-T05: a shallow fallback crosses the wire with exact false and its two warnings', function () {
+      var made = P.run({ variantId: 'classic9', difficulty: 'nightmare', seed: 6, trace: 'off',
+        maxAttempts: 1 }, null);
+      expect(made.exact).toBe(false);
+      expect(made.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+      var back = P.fromWire(structuredClone(P.toWire(made)));
+      expectSameResult(back, made);
+      expect(back.exact).toBe(false);
+      expect(back.warnings).toEqual(['difficulty.approximate', 'difficulty.shallow']);
+    }, SLOW);
 
     it('refuses data that is not of its version', function () {
       expectCode((function () { try { P.fromWire({ v: 99 }); } catch (e) { return e; } })(), 'unexpected');

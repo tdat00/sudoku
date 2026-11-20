@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: the Difficulty Score table (section 5.6) > --results=..\docs\difficulty-v3\evidence\MS17b\gd\score-table.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 4 passed  (45 ms)
+
+Suites: 1
+Tests:  4 total, 4 passed, 0 failed, 0 skipped
+Time:   45 ms running tests, 279 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/score-table.json
+exit=0 seconds=0.512

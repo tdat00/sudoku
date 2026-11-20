@@ -1,0 +1,37 @@
+A. ratios: tests/suites/pipeline.test.js (HEAD) -> tests/manual/perf.test.js
+PASS helpers emitFor, bestTimes, costRatio, generateWork identical (exact text)  46 lines
+PASS the three tests identical (exact text: titles, assertions, limits, attempts, timeouts)  11 lines
+PASS   line in both: it("generating puzzles: verbosity 'off' costs less than 2%", function () {
+PASS   line in both: expect(costRatio(generateWork, 'off', 1.02, 5)).toBeLessThan(1.02);
+PASS   line in both: }, 120000);
+PASS   line in both: it("generating puzzles: verbosity 'summary' costs less than 10%", function () {
+PASS   line in both: expect(costRatio(generateWork, 'summary', 1.10, 4)).toBeLessThan(1.10);
+PASS   line in both: }, 120000);
+PASS   line in both: it("generating puzzles: verbosity 'full' costs less than 35%", function () {
+PASS   line in both: expect(costRatio(generateWork, 'full', 1.35, 4)).toBeLessThan(1.35);
+PASS   line in both: }, 120000);
+PASS now() identical (indentation apart)
+PASS model9 construction identical (indentation apart)
+PASS E alias identical
+PASS no skip, catch or relaxed wrapper in the new describe
+PASS removed block = generateWork + the three tests
+PASS new pipeline.test.js = HEAD without the moved block (only a comment and the header differ)
+PASS helpers still used by the quick tests stay (emitFor, bestTimes, costRatio, now, model9)
+B. replay: tests/suites/player.test.js (HEAD) -> player.test.js (quick) + tests/manual/variants.test.js
+PASS the original input array is the three requests, in order
+PASS quick case = original with the classic9 request only (exact text, timeout 60000)
+PASS manual case = original with the two mega16 requests, in the original order (exact text, timeout 60000)
+PASS new player.test.js = HEAD with only the case replaced and a two-line comment added
+PASS helper realResult identical (indentation apart)
+PASS helper analysisOf identical (indentation apart)
+PASS helper viewsOf identical (indentation apart)
+PASS helper stepsOf identical (indentation apart)
+PASS helper clues identical (indentation apart)
+PASS helper sameValues identical (indentation apart)
+PASS helper expectFaithful identical (exact text)
+PASS aliases P, R and the caches identical
+PASS the manual case is the only test of its describe and is not skipped
+C. the other lines of the manual files
+PASS perf.test.js = HEAD plus the header comment and the new describe at the end (nothing else differs)
+PASS variants.test.js = HEAD plus the header comment and the new describe at the end (nothing else differs)
+ALL PASS

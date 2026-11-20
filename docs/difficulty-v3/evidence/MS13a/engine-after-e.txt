@@ -1,0 +1,18 @@
+MS13a engine bytes after E (2026-11-17T00:56:19+07:00), SHA-256 (generator\tests\artifacts\difficulty-v3\MS13a\freeze-hashes.cjs 'after E'):
+501481B415F1AD9B49D3BE355767C8922C5475FF2D93200A41DA1338705B9AEE  core\js\engine\tech-chain.js
+F29C05059E4721A2F904584AB10490933B75728FF08E889A6325989EFC8081F8  generator\js\engine\difficulty.js
+E659E5012DCF371B2CED4B4C51F647E93E6FC672E314C78579F07FA9CA08D6CD  generator\js\ui\locale.en.js
+BA55C2E524E47792A06658C4FC35729CBB2CBA96A6C779A4AD57B1953D57B03C  generator\js\ui\locale.vi.js
+C9FDB2E97642AE1BDAAE118E0F553414FA48B483908C36078990C5B0D6D6DF1A  player\js\ui\locale.en.js
+787F975A055A197F442C6C8A1FF235DB5BC5B959503C0064E2D4D0F478AC227C  player\js\ui\locale.vi.js
+CDC3CDF9F7CA30F10B4281C06938AC7D92A9FA1683ED35C69B9475AB20240BE2  generator\tests\fixtures\perf-helper.js
+EEC5E268287F0543FB3E1677B293B64C75618D68F50E7F176573DBB1729367C6  generator\tests\fixtures\tool-records.js
+7395472B46BCFE7F93F805EFC1FC4747003DA43E2FA53645EC0AE6A25E8F9A60  generator\tests\perf.js
+2D63205F0D27D1C96A7D19BF791DBFBF56435CE7363CB8F54A19627D2E8887EF  generator\tests\replay-fixtures.js
+5918B212E63E58D0FA3A6ECFF0DF04B5CC1C25AA094E59DA48A3E206B9FD9D9E  generator\tests\replay-goldens.js
+
+tree hashes (SHA-256 of the sorted "relative path : file hash" lines):
+FA86482B4554E4E6BEB179EDEEBAEED55D9B5C9ABA370CFD4F4225011D744235  core\js (23 files)
+5C43DCE2483B71B3E5D1A20553601774334B6B708EE60338D4E4AFA7E4F5FE38  generator\js (37 files)
+
+Every line equals engine-frozen.txt (taken at 00:45:50): the engine, the weights, the four locale packs, the perf and replay helpers and both source trees did not change between the freeze and the end of E. git status shows no change to the canonical outputs (replay-wire.js, replay-goldens.js, the hash fixture): the merge-checks are check-only.

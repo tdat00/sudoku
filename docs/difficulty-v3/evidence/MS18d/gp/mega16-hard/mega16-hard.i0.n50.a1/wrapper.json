@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record mega16-hard.i0.n50 a1",
+  "runId": "mega16-hard.i0.n50.a1",
+  "cell": "mega16/hard",
+  "payload": "gp-recorder",
+  "chunkId": "mega16-hard.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1",
+  "requestedAt": "2026-11-19T23:04:48.549+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795104272809,
+    "lastCheckMs": 1795104288354,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-19T23:04:48.681+07:00",
+  "finished": "2026-11-19T23:05:22.745+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2839,
+    "cheapCheckMs": 129,
+    "ageMs": 139,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:05:22.746+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

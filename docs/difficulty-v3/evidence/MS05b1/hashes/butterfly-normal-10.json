@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "211a1cb1858bb41f947d01176c5f5c86722fd9e898d7043a5cb14d5b8beffb09",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "f788e02616e7968143030700205d9a8ab843904c",
+  "dirty": true,
+  "generatedAt": "2026-11-12T16:07:49.163Z",
+  "argv": ["--hash-key=butterfly/normal","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05b1\\hashes-N\\butterfly-normal-10.json"],
+  "records": [
+    {"key":"butterfly/normal#144","variant":"butterfly","level":"normal","seed":144,"hash":"ecc30f2f5eeaad5b","ms":741,"overrides":[]},
+    {"key":"butterfly/normal#233","variant":"butterfly","level":"normal","seed":233,"hash":"6abd8b19b72a3e35","ms":150,"overrides":[]},
+    {"key":"butterfly/normal#377","variant":"butterfly","level":"normal","seed":377,"hash":"5b5c80220693f996","ms":36,"overrides":[]},
+    {"key":"butterfly/normal#610","variant":"butterfly","level":"normal","seed":610,"hash":"35c5769f3f9f59eb","ms":665,"overrides":[]},
+    {"key":"butterfly/normal#987","variant":"butterfly","level":"normal","seed":987,"hash":"63ba0bb96373c3e5","ms":40,"overrides":[]}
+  ]
+}

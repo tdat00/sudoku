@@ -1,0 +1,720 @@
+[
+  {
+    "population": "classic9 seed 99",
+    "source": "H.randomStatesWithKnownSolution(classic9, rng 99, 1600)",
+    "limit": 50000,
+    "requested": 1600,
+    "calls": 1600,
+    "found": 1034,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 7895,
+    "medianWork": 77,
+    "meanWork": 616.6,
+    "latencyMs": {
+      "mean": 0.013,
+      "p95": 0.055,
+      "max": 0.672
+    }
+  },
+  {
+    "population": "classic9 seed 777",
+    "source": "H.randomStatesWithKnownSolution(classic9, rng 777, 1600)",
+    "limit": 50000,
+    "requested": 1600,
+    "calls": 1600,
+    "found": 994,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 8696,
+    "medianWork": 69,
+    "meanWork": 636.7,
+    "latencyMs": {
+      "mean": 0.012,
+      "p95": 0.054,
+      "max": 1.347
+    }
+  },
+  {
+    "population": "classic9 seed 20260101",
+    "source": "H.randomStatesWithKnownSolution(classic9, rng 20260101, 300)",
+    "limit": 50000,
+    "requested": 300,
+    "calls": 300,
+    "found": 174,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 5554,
+    "medianWork": 94,
+    "meanWork": 726.6,
+    "latencyMs": {
+      "mean": 0.013,
+      "p95": 0.063,
+      "max": 0.135
+    }
+  },
+  {
+    "population": "classic6 seed 777",
+    "source": "H.randomStatesWithKnownSolution(classic6, rng 777, 600)",
+    "limit": 50000,
+    "requested": 600,
+    "calls": 600,
+    "found": 280,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 2610,
+    "medianWork": 7,
+    "meanWork": 127.2,
+    "latencyMs": {
+      "mean": 0.005,
+      "p95": 0.022,
+      "max": 0.08
+    }
+  },
+  {
+    "population": "classic4 seed 777",
+    "source": "H.randomStatesWithKnownSolution(classic4, rng 777, 400)",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 90,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 240,
+    "medianWork": 0,
+    "meanWork": 13,
+    "latencyMs": {
+      "mean": 0.002,
+      "p95": 0.005,
+      "max": 0.517
+    }
+  },
+  {
+    "population": "12 digits seed 2026",
+    "source": "H.randomStatesWithKnownSolution(census-12, rng 2026, 160)",
+    "limit": 50000,
+    "requested": 160,
+    "calls": 160,
+    "found": 107,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 11125,
+    "medianWork": 656,
+    "meanWork": 1666.3,
+    "latencyMs": {
+      "mean": 0.021,
+      "p95": 0.097,
+      "max": 0.162
+    }
+  },
+  {
+    "population": "16 digits seed 2026",
+    "source": "H.randomStatesWithKnownSolution(census-16, rng 2026, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 8,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 26440,
+    "medianWork": 1526,
+    "meanWork": 3786.5,
+    "latencyMs": {
+      "mean": 0.042,
+      "p95": 0.247,
+      "max": 0.247
+    }
+  },
+  {
+    "population": "diagonalX seed 4242",
+    "source": "H.randomStatesWithKnownSolution(diagonalX, rng 4242, 400)",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 165,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 6633,
+    "medianWork": 98,
+    "meanWork": 537.5,
+    "latencyMs": {
+      "mean": 0.009,
+      "p95": 0.037,
+      "max": 0.104
+    }
+  },
+  {
+    "population": "hyper seed 4242",
+    "source": "H.randomStatesWithKnownSolution(hyper, rng 4242, 400)",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 122,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 4486,
+    "medianWork": 93,
+    "meanWork": 451.2,
+    "latencyMs": {
+      "mean": 0.007,
+      "p95": 0.028,
+      "max": 0.062
+    }
+  },
+  {
+    "population": "jigsaw9 seed 4242",
+    "source": "H.randomStatesWithKnownSolution(jigsaw9, rng 4242, 400)",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 90,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 4613,
+    "medianWork": 185,
+    "meanWork": 406.1,
+    "latencyMs": {
+      "mean": 0.006,
+      "p95": 0.025,
+      "max": 0.061
+    }
+  },
+  {
+    "population": "killer seed 4242",
+    "source": "H.randomStatesWithKnownSolution(killer, rng 4242, 400); uncaged 27-unit model of the test helper, no cages",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 239,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 5502,
+    "medianWork": 41,
+    "meanWork": 482.7,
+    "latencyMs": {
+      "mean": 0.008,
+      "p95": 0.043,
+      "max": 0.096
+    }
+  },
+  {
+    "population": "greaterThan seed 4242",
+    "source": "H.randomStatesWithKnownSolution(greaterThan, rng 4242, 400)",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 239,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 5502,
+    "medianWork": 41,
+    "meanWork": 482.7,
+    "latencyMs": {
+      "mean": 0.008,
+      "p95": 0.043,
+      "max": 0.095
+    }
+  },
+  {
+    "population": "wordoku seed 4242",
+    "source": "H.randomStatesWithKnownSolution(wordoku, rng 4242, 400)",
+    "limit": 50000,
+    "requested": 400,
+    "calls": 400,
+    "found": 255,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 6325,
+    "medianWork": 50,
+    "meanWork": 545.3,
+    "latencyMs": {
+      "mean": 0.01,
+      "p95": 0.044,
+      "max": 0.166
+    }
+  },
+  {
+    "population": "samurai seed 4242",
+    "source": "H.randomStatesWithKnownSolution(samurai, rng 4242, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 8,
+    "capped": 1,
+    "cappedStates": [
+      1
+    ],
+    "largestWork": 50000,
+    "medianWork": 9180,
+    "meanWork": 10888.6,
+    "latencyMs": {
+      "mean": 0.161,
+      "p95": 0.546,
+      "max": 0.546
+    }
+  },
+  {
+    "population": "samurai seed 777",
+    "source": "H.randomStatesWithKnownSolution(samurai, rng 777, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 7,
+    "capped": 1,
+    "cappedStates": [
+      9
+    ],
+    "largestWork": 50000,
+    "medianWork": 5110,
+    "meanWork": 13252.9,
+    "latencyMs": {
+      "mean": 0.133,
+      "p95": 0.451,
+      "max": 0.451
+    }
+  },
+  {
+    "population": "sohei seed 4242",
+    "source": "H.randomStatesWithKnownSolution(sohei, rng 4242, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 8,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 42542,
+    "medianWork": 14209,
+    "meanWork": 12780.3,
+    "latencyMs": {
+      "mean": 0.13,
+      "p95": 0.396,
+      "max": 0.396
+    }
+  },
+  {
+    "population": "sohei seed 777",
+    "source": "H.randomStatesWithKnownSolution(sohei, rng 777, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 6,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 32801,
+    "medianWork": 660,
+    "meanWork": 9261.6,
+    "latencyMs": {
+      "mean": 0.086,
+      "p95": 0.302,
+      "max": 0.302
+    }
+  },
+  {
+    "population": "butterfly seed 4242",
+    "source": "H.randomStatesWithKnownSolution(butterfly, rng 4242, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 7,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 5893,
+    "medianWork": 1344,
+    "meanWork": 1607.3,
+    "latencyMs": {
+      "mean": 0.022,
+      "p95": 0.065,
+      "max": 0.065
+    }
+  },
+  {
+    "population": "butterfly seed 777",
+    "source": "H.randomStatesWithKnownSolution(butterfly, rng 777, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 7,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 1652,
+    "medianWork": 309,
+    "meanWork": 578.8,
+    "latencyMs": {
+      "mean": 0.01,
+      "p95": 0.037,
+      "max": 0.037
+    }
+  },
+  {
+    "population": "flower seed 4242",
+    "source": "H.randomStatesWithKnownSolution(flower, rng 4242, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 4,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 4684,
+    "medianWork": 1063,
+    "meanWork": 1294.1,
+    "latencyMs": {
+      "mean": 0.018,
+      "p95": 0.048,
+      "max": 0.048
+    }
+  },
+  {
+    "population": "flower seed 777",
+    "source": "H.randomStatesWithKnownSolution(flower, rng 777, 12)",
+    "limit": 50000,
+    "requested": 12,
+    "calls": 12,
+    "found": 4,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 4073,
+    "medianWork": 1303,
+    "meanWork": 1526.9,
+    "latencyMs": {
+      "mean": 0.019,
+      "p95": 0.047,
+      "max": 0.047
+    }
+  },
+  {
+    "population": "classic4 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 583,
+    "medianWork": 583,
+    "meanWork": 583,
+    "latencyMs": {
+      "mean": 0.042,
+      "p95": 0.042,
+      "max": 0.042
+    }
+  },
+  {
+    "population": "classic6 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 0,
+    "cappedStates": [],
+    "largestWork": 7587,
+    "medianWork": 7587,
+    "meanWork": 7587,
+    "latencyMs": {
+      "mean": 0.142,
+      "p95": 0.142,
+      "max": 0.142
+    }
+  },
+  {
+    "population": "classic9 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.892,
+      "p95": 0.892,
+      "max": 0.892
+    }
+  },
+  {
+    "population": "mega12 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.908,
+      "p95": 0.908,
+      "max": 0.908
+    }
+  },
+  {
+    "population": "mega16 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.957,
+      "p95": 0.957,
+      "max": 0.957
+    }
+  },
+  {
+    "population": "diagonalX flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.968,
+      "p95": 0.968,
+      "max": 0.968
+    }
+  },
+  {
+    "population": "hyper flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.894,
+      "p95": 0.894,
+      "max": 0.894
+    }
+  },
+  {
+    "population": "jigsaw9 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.914,
+      "p95": 0.914,
+      "max": 0.914
+    }
+  },
+  {
+    "population": "killer flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.867,
+      "p95": 0.867,
+      "max": 0.867
+    }
+  },
+  {
+    "population": "greaterThan flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.861,
+      "p95": 0.861,
+      "max": 0.861
+    }
+  },
+  {
+    "population": "samurai flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.825,
+      "p95": 0.825,
+      "max": 0.825
+    }
+  },
+  {
+    "population": "sohei flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.829,
+      "p95": 0.829,
+      "max": 0.829
+    }
+  },
+  {
+    "population": "butterfly flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.854,
+      "p95": 0.854,
+      "max": 0.854
+    }
+  },
+  {
+    "population": "flower flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.835,
+      "p95": 0.835,
+      "max": 0.835
+    }
+  },
+  {
+    "population": "wordoku flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.863,
+      "p95": 0.863,
+      "max": 0.863
+    }
+  },
+  {
+    "population": "census-12 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.923,
+      "p95": 0.923,
+      "max": 0.923
+    }
+  },
+  {
+    "population": "census-16 flood: every cell {1, 2, 3, 4}",
+    "source": "constructed state (no WXYZ-Wing in it)",
+    "limit": 50000,
+    "requested": 1,
+    "calls": 1,
+    "found": 0,
+    "capped": 1,
+    "cappedStates": [
+      0
+    ],
+    "largestWork": 50000,
+    "medianWork": 50000,
+    "meanWork": 50000,
+    "latencyMs": {
+      "mean": 0.948,
+      "p95": 0.948,
+      "max": 0.948
+    }
+  }
+]

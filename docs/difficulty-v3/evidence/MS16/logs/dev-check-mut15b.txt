@@ -1,0 +1,21 @@
+$ node tests\artifacts\difficulty-v3\MS15b\check-mutations.cjs
+mutation 4 (R05 group fish) edit 0: found more than once
+mutation 5 (R06 scoped to classic9) edit 0: found more than once
+mutation 6 (R07 assumes uniqueness) edit 0: found more than once
+mutation 11 (S01 a null opts is accepted) edit 0: not found
+mutation 12 (S02 a non-object opts is accepted) edit 0: not found
+mutation 14 (S04 the limits of opts are not forwarded) edit 0: found more than once
+mutation 44 (O02 the records visited from the end) edit 0: found more than once
+mutation 57 (W07 the record quota is reported before the work cap) edit 0: found more than once
+mutation 58 (W08 the record quota is never reported) edit 0: found more than once
+mutation 59 (W09 any incomplete enumeration is read as the record quota) edit 0: found more than once
+mutation 60 (W10 retained is always 0) edit 0: found more than once
+mutation 61 (W11 the reported limit is the production one) edit 0: found more than once
+mutation 62 (W12 the reported work is the limit) edit 0: found more than once
+mutation 65 (B03 a stop of the parent in the enumeration is not remembered) edit 0: found more than once
+mutation 69 (B07 a Finding survives a failed final check) edit 0: found more than once
+mutation 70 (B08 an observer that throws is swallowed) edit 1: found more than once
+mutation 71 (B09 the record is published twice) edit 0: found more than once
+mutation 72 (B10 the budget is asked again after a cut enumeration) edit 0: found more than once
+73 mutations, 18 with a bad fragment
+exit=1 seconds=0.091

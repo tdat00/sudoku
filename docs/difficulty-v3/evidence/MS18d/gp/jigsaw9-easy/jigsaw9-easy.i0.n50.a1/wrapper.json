@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record jigsaw9-easy.i0.n50 a1",
+  "runId": "jigsaw9-easy.i0.n50.a1",
+  "cell": "jigsaw9/easy",
+  "payload": "gp-recorder",
+  "chunkId": "jigsaw9-easy.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-easy/jigsaw9-easy.i0.n50.a1",
+  "requestedAt": "2026-11-20T00:08:26.504+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795108090805,
+    "lastCheckMs": 1795108106328,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T00:08:26.635+07:00",
+  "finished": "2026-11-20T00:08:55.081+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2967,
+    "cheapCheckMs": 125,
+    "ageMs": 135,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T00:08:55.082+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

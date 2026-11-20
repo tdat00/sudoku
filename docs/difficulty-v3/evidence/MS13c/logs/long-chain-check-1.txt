@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS13c\long-chain-check.js 24 192 3329 2475 1024 68 589 1244 1312 1314 1349 1375 1406 1494 2109 2415 2440 2506 2572 2697 2722 2851 3096 3102
+#24 shortest at the stuck position: 7; the solver needs a limit of > 12
+#192 shortest at the stuck position: 7; the solver needs a limit of > 12
+#3329 shortest at the stuck position: 8; the solver needs a limit of 8
+#2475 shortest at the stuck position: 8; the solver needs a limit of > 12
+#1024 shortest at the stuck position: 7; the solver needs a limit of 7
+#68 shortest at the stuck position: 7; the solver needs a limit of 7
+#589 shortest at the stuck position: 8; the solver needs a limit of > 12
+#1244 shortest at the stuck position: 7; the solver needs a limit of 8
+#1312 shortest at the stuck position: 7; the solver needs a limit of > 12
+#1314 shortest at the stuck position: 7; the solver needs a limit of 7
+#1349 shortest at the stuck position: 7; the solver needs a limit of > 12
+#1375 shortest at the stuck position: 7; the solver needs a limit of > 12
+#1406 shortest at the stuck position: 8; the solver needs a limit of 8
+#1494 shortest at the stuck position: 7; the solver needs a limit of 7
+#2109 shortest at the stuck position: 7; the solver needs a limit of > 12
+#2415 shortest at the stuck position: 7; the solver needs a limit of 7
+#2440 shortest at the stuck position: 7; the solver needs a limit of 7
+#2506 shortest at the stuck position: 7; the solver needs a limit of 7
+#2572 shortest at the stuck position: 7; the solver needs a limit of 7
+#2697 shortest at the stuck position: 7; the solver needs a limit of > 12
+#2722 shortest at the stuck position: 7; the solver needs a limit of > 12
+#2851 shortest at the stuck position: 7; the solver needs a limit of 7
+#3096 shortest at the stuck position: 7; the solver needs a limit of 7
+#3102 shortest at the stuck position: 7; the solver needs a limit of > 12
+exit=0 seconds=5.662

@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "task": "MS05r3",
+  "setting": "SG.digger.SHALLOW_SEARCH_RATINGS",
+  "defaultInThisTask": "Infinity",
+  "note": "Each entry is a quick-suite assertion that MS05r3 changed or scoped. kind schema: an intentional field of the result, the wire, the cache or the ledger. kind no-extra-allowance-premise: the test needs the old caps alone, so it scopes Infinity with a try/finally and puts the previous setting back. No numeric expectation of a validity, exactness, cancellation, cap or performance contract was changed.",
+  "entries": [
+    {
+      "file": "generator/tests/suites/pipeline.test.js",
+      "fullName": "pipeline > pipeline: the PuzzleResult (design.md 13.9) > has exactly the fields of the contract",
+      "kind": "schema",
+      "before": "Object.keys(out.result).sort() equals ['attempts','config','digLog','exact','givens','model','rating','seed','solution','timings','warnings']",
+      "after": "the same sorted list with 'work' added at the end; still an exact-key equality",
+      "preservedRequirement": "The result has exactly the fields of the contract and no stray ones; work is the one internal field the recovery adds (MS05r3, design.md 13.9)",
+      "rationale": "PuzzleResult.work carries the counters of the generation to the tools; it is not part of any exchange format or option",
+      "focusedResult": "command 3 (--filter=> pipeline: the PuzzleResult (design.md 13.9) > has exactly the fields of the contract): 1 passed, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/pipeline.test.js",
+      "fullName": "pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: an exact keeper ends the sampling and the attempt: no other sample, no search",
+      "kind": "schema",
+      "before": "expect(out.work).toEqual([{ ratings: 0, proposals: 0, maxRatings: 1024, maxProposals: 32768 }])",
+      "after": "the same four numeric fields and localSearches: [] in the same toEqual (structural equality kept, no partial matching)",
+      "preservedRequirement": "An exact keeper ends the attempt with no rating, no proposal and no local search",
+      "rationale": "The work of an attempt now lists its local searches; this path starts none, so the list is empty",
+      "focusedResult": "command 4 (--filter=MS05b1-): 30 passed, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/pipeline.test.js",
+      "fullName": "pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: removing a sign starts a new memo, so the same clues are rated again for the new signs",
+      "kind": "no-extra-allowance-premise",
+      "scopedSetting": "SG.digger.SHALLOW_SEARCH_RATINGS = Infinity for the body of the test only, through the helpers withAllowance(value, fn) and noExtraAllowance(fn) of the MS05b1 block (try/finally; the previous setting is put back whatever happens)",
+      "preservedRequirement": "Seed, the 400-proposal limit, the uniqueness checks and every memo assertion are unchanged: a removed sign starts a new memo and the same clues are rated again for the new signs",
+      "rationale": "The setup reaches a sign change with maxProposals 400 and rates many neighbours; a finite allowance can end that search before the sign changes, so the test asks for the old caps alone, explicitly. The rest of the MS05b1 block, first-exact, the normal default and the allowance tests keep their own setting.",
+      "audit": "With the allowance forced to 0 the test fails ('expected 0 to be > 0'); forced to 4, 8, 16, 32 and 64 it still passes for its seed (premise-audit-preload.cjs, DV3_AUDIT_FORCE=1). The scope is kept as the task requires: it does not depend on a number the selection of MS05r4 may choose.",
+      "focusedResult": "command 4: passes inside the 30 MS05b1- cases, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/worker.test.js",
+      "fullName": "worker: expectSameResult (used by the wire round trips and the worker-versus-main-thread cases)",
+      "kind": "schema",
+      "before": "the helper compared givens, solution, rating, exact, seed, config, attempts, warnings, model and the timing keys",
+      "after": "the helper also requires expect(a.work).toEqual(b.work)",
+      "preservedRequirement": "A result that crossed the wire, the worker or the cache equals the fresh one, now including its work",
+      "rationale": "work is a field of the result; the owned deep copy must be equal on both sides",
+      "focusedResult": "command 1: worker 143 passed, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/cache.test.js",
+      "fullName": "cache > cache: serialisation > round trip equals a fresh generation (7 variants) and the shallow-fallback case",
+      "kind": "schema",
+      "before": "sameButTimings compared the fields of the result without work",
+      "after": "sameButTimings also requires expect(a.work).toEqual(b.work)",
+      "preservedRequirement": "A serialised and restored result equals a fresh generation of the same request",
+      "rationale": "work is serialised with the wire; its nested records must survive the JSON round trip",
+      "focusedResult": "command 1: cache 101 passed, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/recovery-profile.test.js",
+      "fullName": "recovery-profile > recovery profile: a small real control > splits the control by stage arguments and reconciles the stages with the work and the rate calls",
+      "kind": "schema",
+      "before": "the work copied by the observation was reduced to the four counters and compared with plain.work",
+      "after": "the copied work keeps localSearches and is compared whole with plain.work (one local search on the real classic6 control)",
+      "preservedRequirement": "The observed run copies exactly the work of the unobserved run and reconciles stages, work and rate calls; the transparency tests are unchanged",
+      "rationale": "MS05r3 is the one task that may extend the MS05r1 driver to copy the richer work (FS33); the four base fields still reconcile",
+      "focusedResult": "command 1: recovery-profile 27 passed, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/difficulty-diagnostics.test.js",
+      "fullName": "difficulty-diagnostics > difficulty diagnostics: rows / the reference and the final path of a request / the summary / the ledger and its text",
+      "kind": "schema",
+      "before": "rows had the old key list and took required, qualifiedHit and shallow from the reference; the summary denominators, the cohorts and the text counted the old verdicts; every request was referenced",
+      "after": "rows take the verdict from the returned canonical rating (generationExact, required, qualifiedHit, shallow, referenceRequired, referenceStatus, referenceError, work fields and workCheck); a reference that failed or was not selected changes neither verdict nor hit; the summary counts unselected references apart (references.notSelected), exactDisagreements and the work; the text says so",
+      "preservedRequirement": "A failed request stays in every denominator, empty cohorts have no statistics, no verdict is invented for a puzzle with a second solution, a failed reference is its own status, the returned puzzle is never changed",
+      "rationale": "MS05r3 derives the verdict from the returned rating and samples the independent reference at the first and the last request of a logical cell",
+      "focusedResult": "command 1: difficulty-diagnostics 80 passed, exit 0"
+    },
+    {
+      "file": "generator/tests/suites/difficulty-diagnostics.test.js",
+      "fullName": "difficulty-diagnostics > difficulty diagnostics: the soak with --json (Node only) > keeps the old text, the puzzles and the engine calls of a run without --json; runs every new solve only after the last generation and the last check of I1-I7; records the source, the commit, the command and the manifest, and every request",
+      "kind": "schema",
+      "before": "five references (one per request) and five final-path rates after the last generation; manifest cells {variant, level, requests, route, unsupported}; every row's referenceStatus 'ok'",
+      "after": "two references (indexes 0 and 4 of the logical cell) and five final-path rates; manifest cells also carry from, logicalTotal and referenceIndexes; the other three rows are 'not-selected'; the ledger says acceptance 'canonical-required-tier' and the allowance in force",
+      "preservedRequirement": "--json changes neither the old text, the puzzles nor the engine calls of the generation; every new solve runs after the last generation and check; the old-lines comparison is unchanged",
+      "rationale": "The independent reference is sampled at the logical ends of a cell (task rule), and the manifest says which span and which allowance a ledger describes",
+      "focusedResult": "command 1: difficulty-diagnostics 80 passed, exit 0"
+    }
+  ],
+  "reviewedUnchanged": [
+    {
+      "where": "generator/tests/suites/pipeline.test.js, the 4x4 unreachable-level tests and the other pipeline tests",
+      "result": "No shallow state is reached: they do not depend on the allowance"
+    },
+    {
+      "where": "pipeline MS05b1-T04 real Nightmare seed 42, cache and worker shallow-fallback cases",
+      "result": "They assert a shallow fallback (exact false, both warnings, one solution), which holds under any allowance; unchanged"
+    },
+    {
+      "where": "digger, difficulty-floor, cache, recovery-profile and the rest of difficulty-diagnostics and worker",
+      "result": "No premise of the old caps alone; unchanged"
+    },
+    {
+      "where": "G13 and the two mega Nightmare closure requests",
+      "result": "Not touched: they are the evidence of MS05r4/r6a/r6b and never run under an override here"
+    }
+  ],
+  "premiseAudit": {
+    "tool": "docs/difficulty-v3/evidence/MS05r3/premise-audit-preload.cjs (audit only: starts the setting at DV3_AUDIT_CAP; DV3_AUDIT_FORCE=1 ignores later assignments)",
+    "forced": "sign-memo test: fails at 0, passes at 4, 8, 16, 32 and 64",
+    "defaultCap64": "digger 64, difficulty-diagnostics 80, difficulty-floor 48, cache 101, recovery-profile 27 pass; pipeline --filter=MS05 49 passed. worker: 3 of 143 fail (gen.worker.js, classic9/normal seed 5, jigsaw9/easy seed 2 and wordoku/easy seed 6, 'worker mode and main thread mode give identical results and traces'): the preload sets the setting in the main realm only, while the worker realm loads its own source at the default Infinity, so only shallowLimit (64 against null) differs in work. This is an artifact of the audit, not a premise: a production default is the same in both realms. The process then stayed open (worker handles of the failed cases) until the 540-second limit.",
+    "note": "A default-pinning assertion of this task's own new test (the default is Infinity) was removed so that MS05r4 can change the literal without touching the test; the soak ledger tests read the setting in force instead of pinning it."
+  }
+}

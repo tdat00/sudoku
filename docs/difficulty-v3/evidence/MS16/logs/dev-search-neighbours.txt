@@ -1,0 +1,25 @@
+$ node tests\artifacts\difficulty-v3\MS16\search-sdc.js neighbours
+alsXz positive #0: sueDeCoq null | alsXz on the 9 and the 7, two almost locked sets, R2C8 loses
+alsXz positive #1: sueDeCoq null | alsXz on the 8 and the 2, two almost locked sets, R5C8 and R
+alsXz negative #0: sueDeCoq null | alsXz has nothing left to do once the techniques through it
+alsXz negative #1: sueDeCoq null | alsXz leaves a chain of 5 links to forcingChainLong (116 alm
+forcingChain positive #0: sueDeCoq null | forcingChain contradiction of 4 links on puzzle 2
+forcingChain positive #1: sueDeCoq null | forcingChain contradiction of 3 links on the first position
+forcingChain negative #0: sueDeCoq null | forcingChain has nothing left to do once the techniques thro
+forcingChain negative #1: sueDeCoq null | forcingChain leaves a chain of 5 links to forcingChainLong (
+forcingChainLong positive #0: sueDeCoq null | forcingChainLong contradiction of 5 links on a dug puzzle
+forcingChainLong positive #1: sueDeCoq null | forcingChainLong contradiction of 6 links on a dug puzzle
+forcingChainLong negative #0: sueDeCoq null | forcingChainLong finds nothing on the stuck position of hard
+forcingChainLong negative #1: sueDeCoq null | forcingChainLong leaves a chain of 4 links to forcingChain (
+nishio positive #0: sueDeCoq null | nishio depth 1 on puzzle 1
+nishio positive #1: sueDeCoq null | nishio depth 1 on puzzle 2
+nishio negative #0: sueDeCoq null | nishio finds nothing on a board where every candidate is sti
+nishio negative #1: sueDeCoq null | nishio leaves the refutation of hard-platinum, which needs a
+nishioDeep positive #0: sueDeCoq null | nishioDeep depth 2 on hard-platinum
+nishioDeep positive #1: sueDeCoq null | nishioDeep depth 2 on the 2012 puzzle
+nishioDeep negative #0: sueDeCoq null | nishioDeep leaves the depth 1 refutation of the first v2 puz
+xyChain positive #0: sueDeCoq null | xyChain on the 8, a chain of 9 edges R3C7 ... R7C7 of bivalu
+xyChain positive #1: sueDeCoq null | xyChain on the 8, a chain of 11 edges R1C6 ... R9C9 of bival
+xyChain negative #0: sueDeCoq null | xyChain has nothing left to do once the techniques through i
+xyChain negative #1: sueDeCoq null | xyChain leaves a chain of unit-conjugate links (a forcing ch
+exit=0 seconds=0.619

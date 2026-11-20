@@ -1,0 +1,13 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   controls: 46 passed  (129 ms)
+ok   help: 30 passed  (3.74 s)
+ok   store: 85 passed  (105 ms)
+ok   ui-contract: 67 passed  (350 ms)
+
+Suites: 4
+Tests:  228 total, 228 passed, 0 failed, 0 skipped
+Time:   4.32 s running tests, 4.50 s total
+Results: docs/difficulty-v3/evidence/MS05r5p/r6b-f01-fix/store-controls-help-ui-contract.json
+MS05r5p exit=0 seconds=4.703

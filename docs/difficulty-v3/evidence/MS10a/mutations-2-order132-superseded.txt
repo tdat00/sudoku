@@ -1,0 +1,107 @@
+mutation 27 (the entry check of the parent budget is gone): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 28 (cancellation and every other error are swallowed): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.3 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+mutation 29 (a spent parent budget is propagated instead of "nothing found"): DETECTED - 243 total, 240 passed, 3 failed, 0 skipped - 3 failing, 3 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > reports a spent budget as nothing found and lets cancellation and other errors through
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 30 (a spent work limit is propagated instead of "nothing found"): DETECTED - 243 total, 238 passed, 5 failed, 0 skipped - 5 failing, 5 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 31 (the limit is off by one (one unit too many)): DETECTED - 243 total, 240 passed, 3 failed, 0 skipped - 3 failing, 3 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 32 (the limit constant is 50001): DETECTED - 243 total, 240 passed, 3 failed, 0 skipped - 3 failing, 3 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+mutation 33 (the registered finder ignores the constant): DETECTED - 243 total, 241 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+mutation 34 (the exported constant is another number): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+mutation 35 (the colouring walk counts no edge extension): DETECTED - 243 total, 235 passed, 8 failed, 0 skipped - 8 failing, 8 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > two components of two cells prove nothing, even when every cell holds the same pair
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 36 (a tested pair of ends counts no unit): DETECTED - 243 total, 239 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 37 (the walk of the witness counts no edge extension): DETECTED - 243 total, 239 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 38 (the walk of the witness goes on after reaching the higher end): DETECTED - 243 total, 239 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > leaves no mark behind: a call after a capped or budget-spent call answers like a fresh one
+mutation 39 (the observer record reports one unit too many): DETECTED - 243 total, 233 passed, 10 failed, 0 skipped - 10 failing, 10 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > two components of two cells prove nothing, even when every cell holds the same pair
+    FAIL tech-wing > remotePairs (R13): geometry > a two-cell component is a naked pair, left to nakedPair: a target of its row is no remote-pair target
+    FAIL tech-wing > remotePairs (R13): actual peers on other unit shapes > samurai: cells of two grids that share a layout row but no unit are not peers, so no chain
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+mutation 40 (the observer record reports the default limit whatever the call used): DETECTED - 243 total, 241 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+mutation 41 (the observer record never reports a capped call): DETECTED - 243 total, 241 passed, 2 failed, 0 skipped - 2 failing, 2 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+mutation 42 (the observer record retains something): DETECTED - 243 total, 239 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+mutation 43 (the seam ignores its limit): DETECTED - 243 total, 239 passed, 4 failed, 0 skipped - 4 failing, 4 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 44 (the seam accepts NaN and an infinite limit): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 45 (the seam rounds a fractional limit instead of flooring it): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 46 (the call stamp is not advanced (the marks of the previous call stay)): DETECTED - 243 total, 183 passed, 60 failed, 0 skipped - 60 failing, 60 of remotePairs - 6.0 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 47 (the counts of the pairs of digits are not cleared between calls): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+mutation 48 (the distances of the witness walk are not cleared between calls): DETECTED - 243 total, 192 passed, 51 failed, 0 skipped - 51 failing, 51 of remotePairs - 61.9 s
+    FAIL tech-wing > remotePairs (R13): geometry > the vector: the common peers of the ends lose both digits, with the ends, the digits and 3 edges
+    FAIL tech-wing > remotePairs (R13): geometry > R5C1 alone, as in the brief: it sees A and D only and loses 2 and 7 (R1C5 has neither left)
+    FAIL tech-wing > remotePairs (R13): geometry > a target loses only the digits it still has
+    FAIL tech-wing > remotePairs (R13): geometry > the transposed vector: the same ends and targets, the path through R5C2
+    FAIL tech-wing > remotePairs (R13): geometry > works with any pair of digits (a pair other than the first ones, the digits in ascending order)
+    FAIL tech-wing > remotePairs (R13): geometry > a path of five edges (six cells): the pair of its ends is the one R7C1 sees far enough apart
+mutation 49 (the root of a component is not marked as reached): DETECTED - 243 total, 236 passed, 7 failed, 0 skipped - 7 failing, 7 of remotePairs - 6.1 s
+    FAIL tech-wing > remotePairs (R13): geometry > two components of two cells prove nothing, even when every cell holds the same pair
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > has R10's limit of 50000, and the registered finder reports it for every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > counts one unit per edge extension and per tested pair of ends, from a fresh counter on every call
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > ends a call whose limit is spent with nothing found (never a finding), and says so
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > is complete or empty: the vector is found with its whole 12 units and lost with 11 (capped prefix)
+    FAIL tech-wing > remotePairs (R13): work limit, budget and cancellation > checks the parent budget at entry and so that at most 256 units pass between two checks
+mutation 50 (another base cost): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.1 s
+    FAIL tech-wing > wing techniques: registration > remotePairs is registered with the agreed group, cost and order
+mutation 51 (another order): DETECTED - 243 total, 242 passed, 1 failed, 0 skipped - 1 failing, 1 of remotePairs - 6.0 s
+    FAIL tech-wing > wing techniques: registration > remotePairs is registered with the agreed group, cost and order
+mutation 52 (the technique is flagged as assuming uniqueness): DETECTED - 243 total, 241 passed, 2 failed, 0 skipped - 2 failing, 1 of remotePairs - 6.0 s
+    FAIL tech-wing > wing techniques: registration > remotePairs is registered with the agreed group, cost and order
+    FAIL tech-wing > wing techniques: registration > only Unique Rectangle is flagged as relying on a unique solution
+detected 26 of 26, 213.3 s

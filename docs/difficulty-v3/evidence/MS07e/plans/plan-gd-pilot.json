@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gd-pilot",
+    "phase": "gd-pilot",
+    "label": "classic9 same-seed pilot (MS05r6b gd-pilot.cjs, unchanged)",
+    "args": [
+      "tests\\artifacts\\difficulty-v3\\MS05r6b\\gd-pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\pilot.json",
+      "--count=8"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-pilot.txt",
+    "allowExit1": false,
+    "projectionSeconds": 150,
+    "projectionBasis": "first 8 requests of each of the 8 offered levels, seeds 7000-7007, the exact call of batch(level): MS07c Hell 1 pilot 5.57 s mean x 8 = 45 s; Nightmare at the old source took 33 s (MS05r6b), now far less; the six other levels 7 s at MS05r6b; 150 s is a conservative bound",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\pilot.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\gd-pilot.txt"
+    ]
+  }
+]

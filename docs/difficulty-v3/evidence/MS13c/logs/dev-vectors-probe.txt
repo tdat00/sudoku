@@ -1,0 +1,10 @@
+$ node tests\artifacts\difficulty-v3\MS13c\vectors-probe.js
+endpoints-vector forcingChain C 4 {"kind":"endpoints","len":1,"v2":false,"cells":[1,19],"elim":[[0,5],[9,5],[18,5],[20,5]],"plc":[],"problems":[],"chains":[[[1,5,0],[19,5,1]]]} grouped
+endpoints-vector forcingChain C 6 {"kind":"endpoints","len":1,"v2":false,"cells":[1,19],"elim":[[0,5],[9,5],[18,5],[20,5]],"plc":[],"problems":[],"chains":[[[1,5,0],[19,5,1]]]} grouped
+endpoints-vector forcingChainLong C 4 null grouped
+endpoints-vector forcingChainLong C 6 null grouped
+sa2 forcingChain C 4 {"kind":"endpoints","len":1,"v2":false,"cells":[0,3],"elim":[[1,1]],"plc":[],"problems":[],"chains":[[[0,1,0],[3,1,1]]]} grouped
+sa2 forcingChain C 6 {"kind":"endpoints","len":1,"v2":false,"cells":[0,3],"elim":[[1,1]],"plc":[],"problems":[],"chains":[[[0,1,0],[3,1,1]]]} grouped
+sa2 forcingChainLong C 4 null grouped
+sa2 forcingChainLong C 6 null grouped
+exit=0 seconds=0.188

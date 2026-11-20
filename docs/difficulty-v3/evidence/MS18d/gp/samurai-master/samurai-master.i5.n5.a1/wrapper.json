@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record samurai-master.i5.n5 a1",
+  "runId": "samurai-master.i5.n5.a1",
+  "cell": "samurai/master",
+  "payload": "gp-recorder",
+  "chunkId": "samurai-master.i5.n5",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i5.n5.a1",
+  "requestedAt": "2026-11-20T01:40:25.922+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795113610227,
+    "lastCheckMs": 1795113625747,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T01:40:26.051+07:00",
+  "finished": "2026-11-20T01:40:45.685+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3007,
+    "cheapCheckMs": 125,
+    "ageMs": 135,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T01:40:45.686+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

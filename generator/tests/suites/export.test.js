@@ -19,8 +19,11 @@
   function realResult(variantId, difficulty, seed, options) {
     var key = variantId + '/' + difficulty + '/' + seed + '/' + JSON.stringify(options || {});
     if (!cache[key]) {
-      cache[key] = SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off',
-        variantOptions: options || {} }, null);
+      // a fixed request may name a level that qualification hides (MS18c): offered for this call only
+      cache[key] = SG.fixtures.toolRecords.withRequestedLevel(variantId, difficulty, function () {
+        return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off',
+          variantOptions: options || {} }, null);
+      }).value;
     }
     return cache[key];
   }
@@ -169,6 +172,20 @@
         'difficulty', 'seed', 'symmetry', 'symbolMode', 'digits', 'cellCount', 'layout', 'givens', 'solution',
         'cages', 'inequalities']);
     });
+
+    it('MS17b-T01: states the rating version the rating states (3 for a current result), never a made-up one',
+      function () {
+        ready();
+        var r = realResult('classic9', 'easy', 5);
+        expect(r.rating.ratingVersion).toBe(3);
+        expect(E.toJson(r, FIXED).difficulty.ratingVersion).toBe(3);
+        var legacy = Object.assign({}, r, { rating: Object.assign({}, r.rating, { ratingVersion: 2 }) });
+        expect(E.toJson(legacy, FIXED).difficulty.ratingVersion).toBe(2);
+        var bare = Object.assign({}, r.rating);
+        delete bare.ratingVersion;
+        var none = E.toJson(Object.assign({}, r, { rating: bare }), FIXED).difficulty;
+        expect('ratingVersion' in none).toBe(false);
+      });
 
     it('is plain data that survives JSON.stringify exactly', function () {
       ready();
@@ -813,5 +830,71 @@
       var html = NODE.fs.readFileSync(NODE.path.join(NODE.root, 'index.html'), 'utf8');
       expect(html).toContain('<link rel="stylesheet" href="css/print.css" media="print">');
     });
+  });
+
+  // The export generates the saved puzzles it does not hold again from their recipes: the configuration is
+  // `toConfig(Object.assign(defaults(), overridesOf(entry)))`, and the number of attempts a recipe recorded wins
+  // over the default marker `defaults()` carries (MS05r5p, CV6-03 (c2)). The client here is a script.
+  describe('export: regenerating a saved puzzle keeps the attempts it recorded (MS05r5p)', function () {
+    function recipe(variantId, level, seed, maxAttempts) {
+      return SG.history.entryOf({
+        seed: seed, givens: [0, 1], rating: { level: level, score: 1500 },
+        config: { variantId: variantId, difficulty: level, symmetry: 'rotational180', digOrder: 'random',
+          maxAttempts: maxAttempts, variantOptions: {} }
+      });
+    }
+
+    it('MS05r5p-T04: an older mega16 entry at 8 and the entries at other numbers are asked for as recorded',
+      async function () {
+        ready();
+        var answer = realResult('classic4', 'veryEasy', 1);
+        var recorded = [
+          recipe('mega16', 'nightmare', '9101', 8), recipe('mega16', 'nightmare', '9102', 2),
+          recipe('butterfly', 'hard', '9103', 3), recipe('classic9', 'hard', '9104', 8),
+          recipe('samurai', 'nightmare', '9105', 8), recipe('mega12', 'master', '9106', 4)
+        ];
+        var asked = [];
+        var savedList = SG.history.list;
+        var savedClient = SG.workerClient;
+        var savedOpen = root.open;
+        SG.history.list = function () { return recorded; };
+        SG.workerClient = {
+          create: function () {
+            return {
+              generate: function (config) { asked.push(config); return Promise.resolve(answer); },
+              dispose: function () {}
+            };
+          }
+        };
+        root.open = function () { return null; };
+        try {
+          E.init({
+            on: function () { return function () {}; },
+            getResult: function () { return null; },
+            toast: function () {}
+          });
+          var info = await E.playOnline();
+          expect(info.count).toBe(6);
+          expect(asked.map(function (c) { return [c.variantId, c.seed, c.maxAttempts]; })).toEqual([
+            ['mega16', 9101, 8], ['mega16', 9102, 2], ['butterfly', 9103, 3], ['classic9', 9104, 8],
+            ['samurai', 9105, 8], ['mega12', 9106, 4]
+          ]);
+          asked.forEach(function (config) {
+            expect(config.trace).toBe('off');
+            expect(Object.keys(config).sort()).toEqual(['difficulty', 'digOrder', 'maxAttempts', 'seed',
+              'symbolMode', 'symmetry', 'trace', 'variantId', 'variantOptions']);
+          });
+          // The merge itself, as the export builds it, leaves the number of the recipe and no marker.
+          var merged = SG.store.toConfig(Object.assign(SG.store.defaults(), SG.history.overridesOf(recorded[0])));
+          expect([merged.variantId, merged.maxAttempts]).toEqual(['mega16', 8]);
+          expect(SG.store.defaults().attemptsExplicit).toBe(false);
+        } finally {
+          SG.history.list = savedList;
+          SG.workerClient = savedClient;
+          if (savedOpen === undefined) delete root.open;
+          else root.open = savedOpen;
+          E.init({ on: function () {}, getResult: function () { return null; }, toast: function () {} });
+        }
+      });
   });
 })();

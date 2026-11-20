@@ -1,0 +1,19 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > --results=..\docs\difficulty-v3\evidence\MS17b\gd\classic9-normal.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL difficulty: 7 passed, 1 failed  (36.97 s)
+
+Failures:
+  FAIL difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > hits the requested level in at least 90 % of the puzzles
+       AssertionError: expected 83 to be >= 90
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\manual\difficulty.test.js:1255:24)
+       at main (Q:\git\sudoku\generator\tests\node-runner.js:357:33)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\node-runner.js:410:1)
+       at Module._compile (node:internal/modules/cjs/loader:1968:14)
+
+Suites: 1
+Tests:  8 total, 7 passed, 1 failed, 0 skipped
+Time:   36.97 s running tests, 37.21 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/classic9-normal.json
+exit=1 seconds=37.454

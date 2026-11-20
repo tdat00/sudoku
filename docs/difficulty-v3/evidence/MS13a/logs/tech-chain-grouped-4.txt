@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped graph
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 13 passed, 1 failed  (1.75 s)
+
+Failures:
+  FAIL tech-chain > grouped graph (R16, inactive): agreement with the independent checker > keeps the old graph on the singletons: the weak and strong links of the forcingChain checker, pair by pair
+       AssertionError: expected 832393 to be > 1000000
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3921:26)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  14 total, 13 passed, 1 failed, 0 skipped
+Time:   1.75 s running tests, 1.85 s total
+exit=1 seconds=1.944

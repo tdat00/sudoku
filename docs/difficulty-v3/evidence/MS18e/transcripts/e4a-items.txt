@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs items --register docs/difficulty-v3/evidence/MS18d/phase-d/item-register.json --input docs/difficulty-v3/evidence/MS18e/audit/items-e3-input.json --patch docs/difficulty-v3/evidence/MS18e/audit/items-e3-corrections.json --patch docs/difficulty-v3/evidence/MS18e/audit/items-e4a-results.json --out docs/difficulty-v3/evidence/MS18e/audit/items-v3.json
+items: ok (30 inherited + 39 added = 69 items; 63 tokens carried)
+exit=0 seconds=0.115

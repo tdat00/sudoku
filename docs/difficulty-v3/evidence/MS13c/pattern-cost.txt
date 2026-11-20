@@ -1,0 +1,12 @@
+$ node tests\pattern-cost.js --ids=forcingChain,forcingChainLong --runs=20 --json=..\docs\difficulty-v3\evidence\MS13c\pattern-cost.json
+pattern-cost: 8 of 8 cases x 20 runs (160 finds), complete true, found 4, none 4, outcome not the fixture's 0, capped 0, wall 0.208 s
+  forcingChain:positive:1 found, work 15933 of unbounded, ms p50 0.849 p95 2.685 max 5.924
+  forcingChain:positive:2 found, work 16959 of unbounded, ms p50 0.740 p95 1.010 max 1.314
+  forcingChain:negative:1 none, work 21921 of unbounded, ms p50 1.213 p95 1.750 max 2.205
+  forcingChain:negative:2 none, work 16819 of unbounded, ms p50 0.945 p95 1.266 max 1.875
+  forcingChainLong:positive:1 found, work 18101 of 50000, ms p50 0.922 p95 1.914 max 2.910
+  forcingChainLong:positive:2 found, work 24808 of 50000, ms p50 0.708 p95 1.116 max 1.130
+  forcingChainLong:negative:1 none, work 27860 of 50000, ms p50 1.016 p95 1.568 max 1.829
+  forcingChainLong:negative:2 none, work 8202 of 50000, ms p50 0.465 p95 0.722 max 0.887
+record: docs/difficulty-v3/evidence/MS13c/pattern-cost.json
+exit=0 seconds=0.836

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "c50a3c3b5b4ae9ce93b715c92fe2d674029b541385fe41eda9592409546e5e78",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "058f16d0871c99377b19a21cff87e0c3b7de5533",
+  "dirty": true,
+  "generatedAt": "2026-11-16T22:15:44.095Z",
+  "argv": ["--hash-key=classic4/veryEasy","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS14a\\hashes\\classic4-veryEasy-00.json"],
+  "records": [
+    {"key":"classic4/veryEasy#1","variant":"classic4","level":"veryEasy","seed":1,"hash":"cfdf9052c826174e","ms":8,"overrides":[]},
+    {"key":"classic4/veryEasy#2","variant":"classic4","level":"veryEasy","seed":2,"hash":"9c3830fae77b7fd6","ms":1,"overrides":[]},
+    {"key":"classic4/veryEasy#3","variant":"classic4","level":"veryEasy","seed":3,"hash":"2d49259e3a97eb32","ms":1,"overrides":[]},
+    {"key":"classic4/veryEasy#5","variant":"classic4","level":"veryEasy","seed":5,"hash":"546c1e997d9013fd","ms":1,"overrides":[]},
+    {"key":"classic4/veryEasy#8","variant":"classic4","level":"veryEasy","seed":8,"hash":"728d910ad8a2c5c6","ms":1,"overrides":[]}
+  ]
+}

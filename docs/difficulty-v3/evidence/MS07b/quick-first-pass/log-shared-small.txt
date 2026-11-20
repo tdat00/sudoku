@@ -1,0 +1,69 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass
+==== shard core-shared (1209 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (62 ms)
+ok   board-view: 37 passed  (79 ms)
+ok   constraints: 43 passed  (80 ms)
+ok   exchange: 20 passed  (234 ms)
+ok   harness: 25 passed  (2.13 s)
+ok   logical-solver: 100 passed  (271 ms)
+ok   model: 49 passed  (36 ms)
+ok   solver: 50 passed  (2.68 s)
+ok   symbols: 12 passed  (3 ms)
+ok   tech-basic: 167 passed  (1.83 s)
+ok   tech-chain: 107 passed  (7.84 s)
+ok   tech-fish: 106 passed  (6.36 s)
+ok   tech-subset: 100 passed  (895 ms)
+ok   tech-wing: 168 passed  (1.62 s)
+ok   techniques: 186 passed  (2.02 s)
+ok   wordbook: 7 passed  (9 ms)
+
+Suites: 16
+Tests:  1209 total, 1209 passed, 0 failed, 0 skipped
+Time:   26.15 s running tests, 26.45 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (18.62 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   18.62 s running tests, 18.79 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-steps.json
+==== shard replay (154 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 153 passed, 1 failed  (18.13 s)
+
+Failures:
+  FAIL replay > replay: golden compact view and transitions > golden G14 compact rows, counts and invariants
+       AssertionError: expected length 1 of Array(1)[{from: 69, to: 76, scope: "complete", inserted: Array(1)[72], remaining: false}] to be 0
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1084:25)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  154 total, 153 passed, 1 failed, 0 skipped
+Time:   18.13 s running tests, 18.31 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS07b\quick-first-pass\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (12.84 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   12.84 s running tests, 13.02 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick-first-pass/generator-mega.json
+shard core-shared: exit 0, 26.7 s
+shard steps: exit 0, 19.0 s
+shard replay: exit 1, 18.5 s
+shard mega: exit 0, 13.2 s
+FAILED: replay
+exit=1 seconds=78.713

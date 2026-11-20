@@ -1,0 +1,6 @@
+{"at":"2026-11-18T21:37:56.472Z","t":0.1329661,"type":"launcher-start","who":"launcher","pid":29188,"node":"v26.13.0","cell":"samurai/hell2","runId":"ms18c-20261118T213748100-27568","slot":1,"ordinal":1,"startSeconds":0.1324051}
+{"at":"2026-11-18T21:37:56.475Z","t":0.1350088,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8650049}
+{"at":"2026-11-18T21:38:03.623Z","t":7.2835059,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.283,"ready":false}
+{"at":"2026-11-18T21:38:03.630Z","t":7.2903706,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=samurai","--level=hell2","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell2\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\samurai-hell2\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T21:38:03.652Z","t":7.311848,"type":"qualifier-created","who":"launcher","pid":4792,"rSeconds":7.3098459}
+{"at":"2026-11-18T21:41:16.446Z","t":200.1073857,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":192.7974893,"eventFailures":0}

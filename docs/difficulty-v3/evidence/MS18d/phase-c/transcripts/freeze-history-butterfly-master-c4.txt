@@ -1,0 +1,57 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-epoch4-proof.js --history --chunk=butterfly-master.i0.n50 --attempt=3 --base=d0b746bbcb1cf698b20b89804093991f4e977ded --expect=allow
+{
+  "clean": true,
+  "head": "d0b746bbcb1cf698b20b89804093991f4e977ded",
+  "slot": "butterfly-master.i0.n50.a3",
+  "slotDeclared": true,
+  "exception": "MS18d-Q4-A",
+  "history": {
+    "problems": [],
+    "releases": 169,
+    "latest": {
+      "label": "C",
+      "line": 121,
+      "atMs": 1795125446160
+    },
+    "skippedPreWindowLines": {
+      "C": [
+        24
+      ]
+    }
+  },
+  "attempts": {
+    "decision": "allow",
+    "reasons": [],
+    "problems": [],
+    "admissions": 2,
+    "payloads": 0,
+    "runs": [
+      {
+        "runId": "butterfly-master.i0.n50.a1",
+        "admitted": false,
+        "payloadStarted": false,
+        "eligibleReAsk": true,
+        "outcome": "control-hold"
+      },
+      {
+        "runId": "butterfly-master.i0.n50.a2",
+        "admitted": false,
+        "payloadStarted": false,
+        "eligibleReAsk": true,
+        "outcome": "control-hold"
+      }
+    ],
+    "ruling": null,
+    "rulingsJournal": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "d0b746bbcb1cf698b20b89804093991f4e977ded",
+      "baseCommit": "d0b746bbcb1cf698b20b89804093991f4e977ded",
+      "entryCount": 3,
+      "sha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614",
+      "baseSha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614"
+    }
+  },
+  "note": "read-only dry run; F4/F2, the readiness and the status checks of the wrapper stay in force",
+  "ok": true
+}
+exit=0 seconds=0.505

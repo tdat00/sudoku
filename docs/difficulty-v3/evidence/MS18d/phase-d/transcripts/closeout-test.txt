@@ -1,0 +1,23 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\test-closeout.js
+ok   the display rounding is four decimals with the zeros dropped and never decides a verdict
+ok   the 79 rows of the committed report agree with the V2 plan and the consumed ledgers
+ok   a missing, duplicated or wrongly targeted cell is a problem, never accepted
+ok   a consumed ledger that is missing, other bytes, other indices or other seeds is a problem
+ok   a changed aggregate (117 ledgers, a different miss set, 34 extra starts) is a problem
+ok   only the 79-row table of the report is compared with the CSV, row by row and exactly
+ok   a tee transcript is cut at its markers; anything else is refused
+ok   the five identity lines are read in order and the baseline, the delta and the stability are checked
+ok   a target re-check is accepted only with the exact counts, identities, table and all eleven statements
+ok   a quick result reconciles by (suite, ordinal) with every selected test exactly once
+ok   a missing or duplicate ordinal, an unexpected row and another full name are problems
+ok   a stale fingerprint, a bailed, unstable or incomplete run and another argv are problems
+ok   a failed row and an unexplained skip are problems; a skip the inventory declares is explained
+ok   the projection rule raises only, in exact integer arithmetic, and the jobs keep their limits
+ok   the item register needs every mandatory item once, every field filled and no placeholder
+ok   the caller records the helper line, the tee marker and the clocks of a successful command
+ok   a nonzero exit is recorded with the thrown message and stops the caller (exit 1, never success)
+ok   an existing transcript or an existing output (or its .part) is refused before anything starts
+ok   the gap since the end of the previous command is kept before the next one starts
+ok   a transcript that is not a plain file name is refused
+20 passed, 0 failed
+exit=0 seconds=10.330

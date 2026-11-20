@@ -1,0 +1,69 @@
+$ node tests\soak.js --variant=jigsaw9 --level=nightmare --count=2 --from=8 --total-count=12 --seed=20260101 --no-gate --chain-window=6 --json=..\docs\difficulty-v3\evidence\MS18b\window-6\shards\jigsaw9-nightmare-8-2.json
+TASK MS18b window-6-jigsaw9-nightmare-8-2
+STRICT SCREEN NOT READY: mean 3.258, max 4.091 busy cores of 16 (window-6-jigsaw9-nightmare-8-2.json)
+POLICY MS18b-host-active ADMITTED: every admission condition of MS18b-host-active holds; the strict screen FAILED and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T20:46:10.728+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 2 puzzles in 73.6 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, lawOfLeftovers 200, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, skyscraper 330, twoStringKite 340, remotePairs 350, simpleColouring 360, emptyRectangle 380, finnedXWing 400, swordfish 420, finnedSwordfish 480, jellyfish 520, xyWing 650, xyzWing 750, wxyzWing 800, wWing 850, uniqueRectangle 900, bugPlusOne 920, xyChain 1000, forcingChain 1100, alsXz 1250, sueDeCoq 1300, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+Short-chain cutoff C: 6 (--chain-window; forcingChain 1 to 6 links, forcingChainLong 7 to 12)
+Shard of jigsaw9/nightmare: requests 8 to 9 of a logical cell of 12
+
+== jigsaw9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+nightmare            .          .          .          .          .          .          2          .          .    2     0%      8.0   40259   40259   402595000 SLOW
+exact: 0 of 2 (0.0%)
+
+group of the hardest technique per requested level (share of puzzles):
+  nightmare  chain 50%  wing 50%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .          .          .          .          .          .      0
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          2          .          .      2 ##############################
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 2 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+NOTE levels that were never hit: jigsaw9/nightmare
+other variants: lowest hit rate 0% (jigsaw9/nightmare), required at least 80%
+RESULT: FAIL (below 80%: jigsaw9/nightmare)
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS18b/window-6/shards/jigsaw9-nightmare-8-2.json): 2 of 2 requests recorded; the diagnostic solves took 0.0 s after the generation and the checks
+
+== jigsaw9/nightmare: 2 requests, 0 errors, 0 unrated, 2 solved in band ==
+  old hits 0/2 (0%), qualified hits 0/2 (0%), shallow 2/2 (100%; 2 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 0, vacuous 0, error 0, skipped 0, notSelected 2, notRun 0; final path: ok 2, mismatch 0, error 0, notRun 0
+  work: ok 2, mismatch 0, unavailable 0; local searches ended by shallow 7, ratings 0, proposals 9
+    full ratings (n=2): min 1891, p10 1891, p50 1931, p90 1931, max 1931, upper median 1931
+  cohort exact (old hits): 0 puzzles, peak -
+    raw position: no value
+    adjusted position: no value
+    adjusted undefined: -
+  cohort all in band: 2 puzzles, peak wWing 1, forcingChain 1
+    raw position (n=2): min 0.007, p10 0.007, p50 0.668, p90 0.668, max 0.668, upper median 0.668
+    adjusted position (n=2): min -0.132, p10 -0.132, p50 0.621, p90 0.621, max 0.621, upper median 0.621
+    adjusted undefined: -
+  forcing-chain steps (1 of 2 rated paths): length 1 1, 3 4; per-puzzle maximum 3 1
+  nishio steps (0 of 2 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+END 2026-11-18T20:47:24.909+07:00
+exit=0 seconds=74.182

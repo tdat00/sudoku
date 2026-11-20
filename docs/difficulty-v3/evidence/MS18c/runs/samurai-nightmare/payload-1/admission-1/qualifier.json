@@ -1,0 +1,46 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T21:27:46.844Z",
+  "finished": "2026-11-18T21:31:08.953Z",
+  "seconds": 202,
+  "cells": [
+    {
+      "variant": "samurai",
+      "level": "nightmare",
+      "cellCount": 369,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {"n":17,"hits":14,"rate":0.8235294117647058,"p50":32277.2602,"p95":120011.5779,"max":120011.5779,"verdict":"hidden","stopped":"time","errors":1,"approximate":2,"invalid":0},
+      "requests": [
+        {"key":"samurai/nightmare","index":0,"seed":1199179411,"hit":false,"ms":72273.0858,"achieved":"nightmare","score":2029,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/nightmare","index":1,"seed":1182401792,"hit":true,"ms":28982.0682,"achieved":"nightmare","score":2256,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":2,"seed":1232734649,"hit":true,"ms":17508.552,"achieved":"nightmare","score":2184,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":3,"seed":1215957030,"hit":false,"error":"budget.exceeded","ms":120011.5779},
+        {"key":"samurai/nightmare","index":4,"seed":1266289887,"hit":true,"ms":10115.5513,"achieved":"nightmare","score":2121,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":5,"seed":1249512268,"hit":true,"ms":17897.5223,"achieved":"nightmare","score":2327,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":6,"seed":1299845125,"hit":true,"ms":18534.0821,"achieved":"nightmare","score":2237,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":7,"seed":1283067506,"hit":true,"ms":9641.7876,"achieved":"nightmare","score":2383,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":8,"seed":1333400363,"hit":true,"ms":2006.3771,"achieved":"nightmare","score":2323,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":9,"seed":1316622744,"hit":true,"ms":56477.2133,"achieved":"nightmare","score":2391,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":10,"seed":571878032,"hit":false,"ms":104569.6636,"achieved":"nightmare","score":1751,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"samurai/nightmare","index":11,"seed":588655651,"hit":true,"ms":53353.3189,"achieved":"nightmare","score":2286,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":12,"seed":605433270,"hit":true,"ms":32277.2602,"achieved":"nightmare","score":2384,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":13,"seed":622210889,"hit":true,"ms":81519.8176,"achieved":"nightmare","score":2267,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":14,"seed":638988508,"hit":true,"ms":48247.5258,"achieved":"nightmare","score":2169,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":15,"seed":655766127,"hit":true,"ms":8199.4941,"achieved":"nightmare","score":2310,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"samurai/nightmare","index":16,"seed":672543746,"hit":true,"ms":45799.4377,"achieved":"nightmare","score":1731,"solved":true,"approximate":false,"exact":true,"valid":true}
+      ]
+    }
+  ],
+  "support": {"samurai":[]}
+}

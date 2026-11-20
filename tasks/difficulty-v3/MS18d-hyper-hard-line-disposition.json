@@ -1,0 +1,41 @@
+{
+  "schema": "ms18d-gp-line-disposition-v1",
+  "runId": "hyper-hard.i0.n50.a2",
+  "chunkId": "hyper-hard.i0.n50",
+  "purpose": "line-release-only",
+  "admissionsSpent": 2,
+  "payloads": 0,
+  "authorizes": "no admission",
+  "sa2Ruling": {
+    "commit": "b0c0bfac752248c4223f633f2ed55bd67f6f6cdc",
+    "file": "tasks/difficulty-v3/MS18d-hyper-hard-holds-and-scheduling.md",
+    "section": "F4 disposition"
+  },
+  "sa1Concurrence": {
+    "text": "SA1 concurs: line-release-only F3 for hyper-hard.i0.n50.a2. Evidence: d3e6b366, C-log lines 44-45; two eligible unstarted consumer holds, 0 payloads. Authorizes no admission.",
+    "ref": "SA1 (SA-Opus) reply to the orchestrator, 2026-11-19 ~23:35 +07:00; conditions: ref to an SA2 pack section (not base-3), append as journal line 2 with the actual time, commit pack-only before any call"
+  },
+  "evidence": {
+    "checkpoint": "d3e6b36690a3c4b03d8bdce8e204943286eaf578",
+    "cLogLines": [
+      44,
+      45
+    ],
+    "runs": [
+      "docs/difficulty-v3/evidence/MS18d/gp/hyper-hard/hyper-hard.i0.n50.a1",
+      "docs/difficulty-v3/evidence/MS18d/gp/hyper-hard/hyper-hard.i0.n50.a2"
+    ],
+    "consumers": [
+      "a1: powershell.exe 32956 (parent AgentExecutor.exe 9848, IntuneWindowsAgent 7220) 0.897 CPU-s/s; svchost 3048 (Dnscache) 0.711",
+      "a2: powershell.exe 20636 (parent AgentExecutor.exe 448, IntuneWindowsAgent 7220) 0.875 CPU-s/s"
+    ]
+  },
+  "campaignBase": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+  "f3Entry": {
+    "journal": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "line": 2,
+    "at": "2026-11-19T23:42:08.814+07:00"
+  },
+  "recordedBy": "orchestrator",
+  "recordedAt": "2026-11-19T23:42:08.814+07:00"
+}

@@ -1,0 +1,59 @@
+{
+  "path": "generator/tests/fixtures/replay-wire.js",
+  "name": "replayWire",
+  "rev": "HEAD",
+  "records": [
+    {
+      "id": "G09",
+      "status": "changed",
+      "changedPaths": 1,
+      "first": [
+        {
+          "path": ".work",
+          "old": "undefined",
+          "new": "[{\"ratings\":305,\"proposals\":32768,\"maxRatings\":1024,\"maxProposals\":32768,\"loc..."
+        }
+      ]
+    },
+    {
+      "id": "G10",
+      "status": "changed",
+      "changedPaths": 1,
+      "first": [
+        {
+          "path": ".work",
+          "old": "undefined",
+          "new": "[{\"ratings\":276,\"proposals\":32768,\"maxRatings\":1024,\"maxProposals\":32768,\"loc..."
+        }
+      ]
+    },
+    {
+      "id": "G11",
+      "status": "changed",
+      "changedPaths": 1,
+      "first": [
+        {
+          "path": ".work",
+          "old": "undefined",
+          "new": "[{\"ratings\":12,\"proposals\":32768,\"maxRatings\":1024,\"maxProposals\":32768,\"loca..."
+        }
+      ]
+    },
+    {
+      "id": "G12",
+      "status": "changed",
+      "changedPaths": 1,
+      "first": [
+        {
+          "path": ".work",
+          "old": "undefined",
+          "new": "[{\"ratings\":12,\"proposals\":32768,\"maxRatings\":1024,\"maxProposals\":32768,\"loca..."
+        }
+      ]
+    },
+    {
+      "id": "G13",
+      "status": "new"
+    }
+  ]
+}

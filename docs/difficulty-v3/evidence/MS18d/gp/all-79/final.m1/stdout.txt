@@ -1,0 +1,112 @@
+ms18d-gp-merge-start scope=all-79 manifest=7d63342a0ffb1a3a6794959276ba4a5aa2ef116f8f6ef154b9888220f0b7dd69 base=6e60b06c7d1af482ecafe28ce2fb35a03c2a54be
+ms18d-gp-merge-epochs 1=a2e6423a:5feeb42f 2=b6de2c46:bd6949ef 3=8e95cb14:4a0e5881 4=6e60b06c:9699d3ee record=4a9a6fb0ffb21125
+cell classic4/veryEasy chunks=1 p50=0.40100000000001046 p95=1.747399999999999 max=8.350600000000014 mean=0.6925959999999992 target=31 meets=true
+cold-start-sensitive cell=classic4/veryEasy first-request-index=0 ms=8.350600000000014 extra-start=false
+cell classic6/veryEasy chunks=1 p50=0.7756000000000256 p95=1.8067999999999813 max=10.963400000000007 mean=1.1609380000000027 target=39 meets=true
+cold-start-sensitive cell=classic6/veryEasy first-request-index=0 ms=10.963400000000007 extra-start=false
+cell classic6/hard chunks=1 p50=88.44030000000001 p95=273.0246000000002 max=277.9232000000002 mean=112.00356600000005 target=350 meets=true
+cell classic9/veryEasy chunks=1 p50=1.108099999999979 p95=3.3824000000000183 max=12.671099999999996 mean=1.6028340000000014 target=60 meets=true
+cold-start-sensitive cell=classic9/veryEasy first-request-index=0 ms=12.671099999999996 extra-start=false
+cell classic9/easy chunks=1 p50=191.9340999999995 p95=1103.9885 max=1429.465400000001 mean=382.30752 target=2342 meets=true
+cell classic9/normal chunks=1 p50=199.75950000000012 p95=798.2815 max=943.2433000000001 mean=278.73522599999995 target=2627 meets=true
+cell classic9/hard chunks=1 p50=19.09660000000008 p95=59.585999999999984 max=173.1932999999999 mean=27.39657000000001 target=400 meets=true
+cold-start-sensitive cell=classic9/hard first-request-index=0 ms=59.585999999999984 extra-start=false
+cell classic9/expert chunks=1 p50=59.75479999999999 p95=432.1985999999997 max=788.4884999999999 mean=121.52287399999999 target=1323 meets=true
+cell classic9/master chunks=1 p50=91.65709999999999 p95=303.4746 max=548.2560000000003 mean=112.61624599999999 target=900 meets=true
+cell classic9/nightmare chunks=1 p50=713.5676000000021 p95=2403.9863000000005 max=3294.5561000000002 mean=1033.5576479999997 target=8377 meets=true
+cell mega12/veryEasy chunks=1 p50=2.6925999999999988 p95=6.234899999999982 max=18.5907 mean=3.4012300000000044 target=400 meets=true
+cold-start-sensitive cell=mega12/veryEasy first-request-index=0 ms=18.5907 extra-start=false
+cell mega12/easy chunks=1 p50=7.24460000000002 p95=26.827300000000037 max=36.31739999999999 mean=10.455149999999998 target=1000 meets=true
+cold-start-sensitive cell=mega12/easy first-request-index=0 ms=36.31739999999999 extra-start=false
+cell mega12/normal chunks=1 p50=14.451900000000023 p95=55.04499999999996 max=71.41129999999998 mean=20.300422000000005 target=1000 meets=true
+cell mega12/hard chunks=1 p50=56.0318000000002 p95=182.64760000000024 max=258.86749999999995 mean=72.81964999999997 target=3000 meets=true
+cell mega12/expert chunks=2 p50=229.42299999999977 p95=4208.3516 max=6291.462 mean=698.2636420000001 target=3000 meets=false
+cold-start-sensitive cell=mega12/expert first-request-index=25 ms=6291.462 extra-start=true
+cell mega12/master chunks=1 p50=257.3084999999992 p95=688.1604000000007 max=878.1257999999998 mean=300.9603060000002 target=3000 meets=true
+cell mega12/nightmare chunks=2 p50=1749.6811000000016 p95=6716.296000000002 max=7748.315099999996 mean=2654.8085460000007 target=18842 meets=true
+cell mega12/hell2 chunks=2 p50=3952.1629000000003 p95=10686.077100000002 max=15673.674800000008 mean=4110.899234 target=16000 meets=true
+cell mega16/veryEasy chunks=1 p50=6.552600000000041 p95=10.449000000000012 max=27.665400000000005 mean=7.4347259999999995 target=1500 meets=true
+cold-start-sensitive cell=mega16/veryEasy first-request-index=0 ms=27.665400000000005 extra-start=false
+cell mega16/easy chunks=1 p50=12.576299999999947 p95=25.355000000000018 max=39.21289999999999 mean=14.224670000000005 target=4000 meets=true
+cold-start-sensitive cell=mega16/easy first-request-index=0 ms=39.21289999999999 extra-start=false
+cell mega16/normal chunks=1 p50=25.200499999999977 p95=77.47440000000006 max=128.9455 mean=31.802118 target=4000 meets=true
+cold-start-sensitive cell=mega16/normal first-request-index=0 ms=128.9455 extra-start=false
+cell mega16/hard chunks=1 p50=312.1082999999999 p95=1299.818000000003 max=1977.2666 mean=479.2169040000001 target=10000 meets=true
+cell mega16/master chunks=1 p50=1762.8775999999925 p95=7992.918699999995 max=12002.333599999998 mean=2355.6936679999994 target=10000 meets=true
+cell mega16/hell2 chunks=6 p50=1810.7873000000009 p95=22444.181699999997 max=38690.8702 mean=3958.9901160000004 target=30000 meets=true
+cold-start-sensitive cell=mega16/hell2 first-request-index=9 ms=38690.8702 extra-start=true
+cell diagonalX/veryEasy chunks=1 p50=1.2190999999999974 p95=3.098700000000008 max=12.896399999999986 mean=1.6562179999999997 target=80 meets=true
+cold-start-sensitive cell=diagonalX/veryEasy first-request-index=0 ms=12.896399999999986 extra-start=false
+cell diagonalX/normal chunks=1 p50=8.263300000000072 p95=64.64999999999998 max=229.9642 mean=21.909529999999997 target=200 meets=true
+cold-start-sensitive cell=diagonalX/normal first-request-index=0 ms=64.64999999999998 extra-start=false
+cell diagonalX/hard chunks=1 p50=12.538599999999974 p95=23.136100000000056 max=41.51649999999998 mean=14.269775999999997 target=500 meets=true
+cold-start-sensitive cell=diagonalX/hard first-request-index=0 ms=41.51649999999998 extra-start=false
+cell diagonalX/master chunks=1 p50=119.58829999999989 p95=364.9200000000001 max=410.15740000000005 mean=161.74395000000007 target=1200 meets=true
+cell diagonalX/nightmare chunks=1 p50=1089.614700000002 p95=4321.8377 max=5692.812600000005 mean=1503.753274000001 target=10000 meets=true
+cell diagonalX/hell2 chunks=1 p50=263.4943000000003 p95=2953.7482 max=3153.4273999999987 mean=756.3620419999996 target=3000 meets=true
+cell hyper/veryEasy chunks=1 p50=1.3556999999999846 p95=3.465299999999985 max=13.527500000000003 mean=1.8486799999999983 target=80 meets=true
+cold-start-sensitive cell=hyper/veryEasy first-request-index=0 ms=13.527500000000003 extra-start=false
+cell hyper/normal chunks=1 p50=67.20629999999983 p95=368.31600000000003 max=492.3013000000001 mean=121.63031800000006 target=1573 meets=true
+cell hyper/hard chunks=1 p50=15.254500000000007 p95=38.78819999999996 max=77.6135 mean=18.367710000000002 target=500 meets=true
+cold-start-sensitive cell=hyper/hard first-request-index=0 ms=77.6135 extra-start=false
+cell hyper/master chunks=1 p50=161.35790000000088 p95=559.9863999999998 max=836.6378999999997 mean=225.13768799999997 target=1200 meets=true
+cell hyper/nightmare chunks=2 p50=2052.1525999999976 p95=7576.986600000004 max=10695.432 mean=2867.903397999999 target=10000 meets=true
+cell hyper/hell2 chunks=1 p50=1104.1474999999991 p95=4289.4738 max=6111.0360999999975 mean=1669.6212719999999 target=5000 meets=true
+cell jigsaw9/veryEasy chunks=1 p50=7.154100000000028 p95=29.769699999999943 max=75.31530000000001 mean=12.828137999999997 target=150 meets=true
+cold-start-sensitive cell=jigsaw9/veryEasy first-request-index=0 ms=45.53880000000001 extra-start=false
+cell jigsaw9/easy chunks=1 p50=216.2977 p95=942.8015999999998 max=1461.2626 mean=366.43525599999987 target=1905 meets=true
+cell jigsaw9/normal chunks=1 p50=47.74950000000001 p95=150.3066 max=238.99640000000022 mean=61.447033999999995 target=350 meets=true
+cell jigsaw9/hard chunks=1 p50=52.20859999999993 p95=139.299 max=188.49509999999987 mean=66.02005799999999 target=900 meets=true
+cold-start-sensitive cell=jigsaw9/hard first-request-index=0 ms=139.299 extra-start=false
+cell jigsaw9/master chunks=1 p50=365.28110000000015 p95=1586.0252 max=3455.757700000002 mean=566.7652279999998 target=2000 meets=true
+cell jigsaw9/hell2 chunks=2 p50=1783.3498 p95=5425.923499999997 max=8163.678099999997 mean=2184.3711479999997 target=10000 meets=true
+cell killer/veryEasy chunks=1 p50=1.6717999999999904 p95=4.677199999999999 max=15.877700000000004 mean=2.196166 target=300 meets=true
+cold-start-sensitive cell=killer/veryEasy first-request-index=0 ms=15.877700000000004 extra-start=false
+cell killer/easy chunks=1 p50=7.872500000000059 p95=23.197900000000004 max=27.54910000000001 mean=10.14724 target=700 meets=true
+cold-start-sensitive cell=killer/easy first-request-index=0 ms=27.54910000000001 extra-start=false
+cell killer/normal chunks=1 p50=401.7645 p95=1932.9269999999997 max=2243.370899999998 mean=671.3794360000002 target=5425 meets=true
+cell greaterThan/veryEasy chunks=1 p50=16.458799999999997 p95=29.09910000000002 max=44.73810000000002 mean=18.496760000000005 target=300 meets=true
+cold-start-sensitive cell=greaterThan/veryEasy first-request-index=0 ms=44.73810000000002 extra-start=false
+cell greaterThan/easy chunks=1 p50=26.891399999999976 p95=57.36240000000001 max=59.349100000000135 mean=29.333852 target=700 meets=true
+cold-start-sensitive cell=greaterThan/easy first-request-index=0 ms=57.36240000000001 extra-start=false
+cell greaterThan/hard chunks=1 p50=206.48019999999997 p95=2894.3935 max=4308.9511999999995 mean=567.1917839999998 target=6000 meets=true
+cold-start-sensitive cell=greaterThan/hard first-request-index=0 ms=2894.3935 extra-start=false
+cell greaterThan/master chunks=2 p50=1061.4382000000005 p95=7620.496199999994 max=15503.438000000002 mean=2063.101438 target=10000 meets=true
+cell greaterThan/hell2 chunks=3 p50=3133.4679999999935 p95=9287.400899999997 max=11288.6218 mean=4071.7723340000016 target=10000 meets=true
+cell samurai/veryEasy chunks=1 p50=10.232899999999972 p95=15.199899999999985 max=32.839 mean=10.962328000000003 target=3000 meets=true
+cold-start-sensitive cell=samurai/veryEasy first-request-index=0 ms=32.839 extra-start=false
+cell samurai/normal chunks=1 p50=193.5004 p95=1689.273299999999 max=4651.5245 mean=441.7367779999999 target=8000 meets=true
+cell samurai/hard chunks=1 p50=111.91679999999997 p95=497.6880000000001 max=650.6681999999996 mean=178.65286400000002 target=20000 meets=true
+cell samurai/expert chunks=2 p50=490.97669999999925 p95=5349.8092000000015 max=9674.0744 mean=1151.124844 target=20000 meets=true
+cell samurai/master chunks=10 p50=881.5951 p95=7547.508599999999 max=16792.6476 mean=1912.27799 target=20000 meets=true
+cell sohei/veryEasy chunks=1 p50=6.695799999999963 p95=12.128500000000003 max=28.682699999999983 mean=7.595313999999994 target=3000 meets=true
+cold-start-sensitive cell=sohei/veryEasy first-request-index=0 ms=28.682699999999983 extra-start=false
+cell sohei/normal chunks=2 p50=131.42650000000003 p95=1802.4207000000001 max=3824.6762 mean=319.869108 target=8000 meets=true
+cell sohei/hard chunks=1 p50=153.02870000000075 p95=650.4107000000004 max=3812.1226 mean=262.280752 target=20000 meets=true
+cell sohei/expert chunks=2 p50=352.78459999999905 p95=5757.546700000003 max=11398.117999999999 mean=1053.5183479999996 target=20000 meets=true
+cell sohei/master chunks=2 p50=1129.5849000000017 p95=4064.878199999999 max=6048.331299999998 mean=1412.6310639999997 target=20000 meets=true
+cell sohei/hell2 chunks=6 p50=7508.599099999999 p95=35522.675 max=41037.9662 mean=11252.329409999998 target=30000 meets=false
+cold-start-sensitive cell=sohei/hell2 first-request-index=42 ms=35522.675 extra-start=true
+cell butterfly/veryEasy chunks=1 p50=3.659099999999995 p95=6.223599999999976 max=22.967600000000004 mean=4.317276 target=1000 meets=true
+cold-start-sensitive cell=butterfly/veryEasy first-request-index=0 ms=22.967600000000004 extra-start=false
+cell butterfly/normal chunks=1 p50=76.45719999999983 p95=639.5039000000006 max=2215.3705999999997 mean=194.811676 target=3000 meets=true
+cell butterfly/hard chunks=1 p50=58.142900000000054 p95=174.62110000000007 max=177.59979999999996 mean=69.23318999999998 target=8000 meets=true
+cell butterfly/expert chunks=1 p50=191.96349999999984 p95=3611.173999999999 max=5818.0161 mean=782.671754 target=8000 meets=true
+cell butterfly/master chunks=1 p50=143.47439999999915 p95=486.2474000000002 max=914.1934000000001 mean=198.32828600000002 target=8000 meets=true
+cell butterfly/nightmare chunks=3 p50=4144.870600000002 p95=15151.791400000002 max=32129.473899999997 mean=5988.946716 target=30000 meets=true
+cell butterfly/hell2 chunks=2 p50=2976.5184999999983 p95=15496.112700000001 max=18624.48449999999 mean=4605.454473999999 target=15000 meets=false
+cold-start-sensitive cell=butterfly/hell2 first-request-index=0 ms=16841.0182 extra-start=false
+cell flower/veryEasy chunks=1 p50=4.258500000000026 p95=9.729600000000005 max=24.407899999999984 mean=5.0356840000000025 target=3000 meets=true
+cold-start-sensitive cell=flower/veryEasy first-request-index=0 ms=24.407899999999984 extra-start=false
+cell flower/normal chunks=1 p50=208.98899999999776 p95=1715.6381000000001 max=1950.5557000000001 mean=414.01666000000006 target=8000 meets=true
+cell flower/hard chunks=1 p50=110.64120000000003 p95=393.3625000000011 max=7528.3136 mean=307.75393800000006 target=20000 meets=true
+cell flower/master chunks=1 p50=438.72290000000066 p95=1392.3329000000003 max=2651.6021 mean=599.4036879999998 target=20000 meets=true
+cell flower/hell2 chunks=2 p50=2772.685199999999 p95=11468.479499999998 max=17223.455499999996 mean=3716.833408 target=20000 meets=true
+cell wordoku/veryEasy chunks=1 p50=1.649799999999999 p95=3.566599999999994 max=13.299599999999984 mean=2.0381659999999995 target=100 meets=true
+cold-start-sensitive cell=wordoku/veryEasy first-request-index=0 ms=13.299599999999984 extra-start=false
+cell wordoku/easy chunks=1 p50=192.44959999999992 p95=1237.2001 max=1481.4616 mean=329.38518 target=2921 meets=true
+cell wordoku/hard chunks=1 p50=18.19780000000003 p95=86.4536999999998 max=235.38480000000004 mean=33.42186400000001 target=600 meets=true
+cell wordoku/expert chunks=1 p50=55.54269999999997 p95=604.1490000000003 max=864.2583 mean=111.87837400000001 target=600 meets=false
+cell wordoku/master chunks=1 p50=104.79140000000007 p95=525.4071999999996 max=693.8551 mean=146.08732599999996 target=1500 meets=true
+cell wordoku/nightmare chunks=1 p50=790.9591 p95=2800.4616000000005 max=4443.854599999999 mean=967.8530320000001 target=1500 meets=false
+ms18d-gp-merge-result scope=all-79 complete=true meets=true successes=74 cells=79 required=72

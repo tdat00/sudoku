@@ -1,0 +1,1 @@
+{"id":"classic4","source":"tree","candidate":200000,"shortMax":4,"limits":{"groups":4096,"work":50000},"populations":[{"name":"base-ladder","calls":0,"rows":[]},{"name":"activation-ladder","calls":0,"rows":[]}],"seconds":0}

@@ -1,0 +1,6 @@
+09:58:57 pilot compound 1: from 0
+LOCKED MS13c GP pilot compound 1 from 0: exit=0 node=410.897s wait=45.2s
+10:06:33 pilot compound 2: from 14
+LOCKED MS13c GP pilot compound 2 from 14: exit=0 node=419.312s wait=0s
+10:13:48 pilot compound 3: from 25
+LOCKED MS13c GP pilot compound 3 from 25: exit=0 node=s wait=s ERROR 540-second limit reached; record the timeout

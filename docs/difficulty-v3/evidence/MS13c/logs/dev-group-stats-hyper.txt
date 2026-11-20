@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS13c\group-stats.js hyper 300
+hyper 300 states, seed 77003
+  33 forcingChain endpoints len1 endGroup {"index":3,"elim":[[24,1],[34,1]],"plc":[],"problems":0}
+exit=0 seconds=0.706

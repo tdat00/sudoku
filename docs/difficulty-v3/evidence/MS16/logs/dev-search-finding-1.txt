@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS16\search-sdc.js finding ..5.6..2.24...1....134.9......5..3....127..6.....1.5..4....8..1......8..9....5... propagated
+{"technique":"sueDeCoq","cells":[58,65,66,67,76],"placements":[],"eliminations":[[64,6],[64,7],[70,7],[71,6],[71,7]],"i18nKey":"technique.sueDeCoq.step","i18nArgs":{"digits":[6,7],"partDigits":[3,4,9],"forced":[],"line":"R8","box":"B8"}}
+cells R7C5 R8C3 R8C4 R8C5 R9C5 | eliminations R8C2-6 R8C2-7 R8C8-7 R8C9-6 R8C9-7
+unsound: 0, open cells 29
+exit=0 seconds=0.202

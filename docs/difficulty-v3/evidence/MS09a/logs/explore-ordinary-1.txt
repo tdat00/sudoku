@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS09a\explore-ordinary.js 300 20260101,99,777
+{"name":"rand20260101#32","puzzle":".....3.......89172.......3.4....7...81....75..6.9....4..2.31....83.9..61.7.4.....","unique":true,"digit":6,"base":["R2","R7"],"cover":["C1","C4"],"left":44}
+{"name":"rand99#96","puzzle":"8.......2.1.638....6.1.....7...81...........8..4.53..1.....7..6..9...37.17.32..9.","unique":true,"digit":9,"base":["C2","C6"],"cover":["R1","R5"],"left":43}
+{"name":"rand99#256","puzzle":"1..6............5.56.8.3.....3....4.28.1...9..4.97.1..7.......5....1.2....97..41.","unique":true,"digit":8,"base":["C5","C7"],"cover":["R4","R7"],"left":31}
+puzzles 256 ordinary X-Wing without a finned one: 3
+exit=0 seconds=0.412

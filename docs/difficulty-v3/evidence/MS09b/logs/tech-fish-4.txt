@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-fish
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-fish: 482 passed, 1 failed  (21.55 s)
+
+Failures:
+  FAIL tech-fish > finnedSwordfish (R12): a region as the fin box, and the ownership on multi-grid boards > holds no finned Swordfish in a satisfiable state of the Butterfly, whatever the kind of state, and the same pattern in a state without a solution shows that the argument needs one
+       AssertionError: expected length 2 of Array(2)[{digit: 1, kind: "row", bases: Array(3)[0, 1, 27], covers: Array(3)[9, 10, 42], fins: Array(1)[82], cells: Array(6)[0, 1, 9, 10, 81, 82], body: Array(3)[2, 2, 1], targets: Array(1)[84], ...}, {digit: 1, kind: "col", bases: Array(3)[9, 10, 42], covers: Array(3)[0, 1, 27], fins: Array(1)[84], cells: Array(6)[0, 1, 9, 10, 81, 84], body: Array(3)[2, 2, 1], targets: Array(1)[82], ...}] to be 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:6082:24)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  483 total, 482 passed, 1 failed, 0 skipped
+Time:   21.55 s running tests, 21.65 s total
+exit=1 seconds=21.772

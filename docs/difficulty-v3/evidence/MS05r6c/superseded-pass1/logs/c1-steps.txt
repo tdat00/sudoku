@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (11.24 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   11.24 s running tests, 11.44 s total
+Results: docs/difficulty-v3/evidence/MS05r6c/quick/generator-steps.json

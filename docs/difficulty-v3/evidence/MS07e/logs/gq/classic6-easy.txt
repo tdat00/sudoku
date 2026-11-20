@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=classic6 --level=easy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-easy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\classic6-easy.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+classic6/easy: 0/14 hits, p95 333 ms (budget 2.00 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| classic6 | easy | 14 | 0 | 0 % | 263 ms | 333 ms | 333 ms | 2.00 s | hidden (stopped: misses) |
+
+classic6: []
+exit=0 seconds=1.756

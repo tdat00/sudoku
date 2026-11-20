@@ -1,0 +1,27 @@
+'use strict';
+module.exports = [
+  { name: 'P1 straight row cage sum 8, 1 excluded from the third cell by R5C4=1',
+    cages: [{ cells: ['R1C2', 'R1C3', 'R1C4'], sum: 8 }],
+    fix: { R1C2: 1, R1C3: 2, R1C4: 5, R5C4: 1 }, givens: { R5C4: 1 } },
+  { name: 'P1 without the given: the third cell can hold 1',
+    cages: [{ cells: ['R1C2', 'R1C3', 'R1C4'], sum: 8 }],
+    fix: { R1C2: 1, R1C3: 2, R1C4: 5 }, givens: {} },
+  { name: 'P1b L-shape with a given',
+    cages: [{ cells: ['R1C3', 'R1C4', 'R2C4'], sum: 8 }],
+    fix: { R1C3: 1, R1C4: 3, R2C4: 4, R2C7: 1 }, givens: { R2C7: 1 } },
+  { name: 'P1b L-shape without the given',
+    cages: [{ cells: ['R1C3', 'R1C4', 'R2C4'], sum: 8 }],
+    fix: { R1C3: 1, R1C4: 3, R2C4: 4 }, givens: {} },
+  { name: 'S2a pair 17 in a row across two boxes',
+    cages: [{ cells: ['R5C3', 'R5C4'], sum: 17 }],
+    fix: { R5C3: 8, R5C4: 9 }, givens: {} },
+  { name: 'S2b pair 3 diagonal in a box',
+    cages: [{ cells: ['R7C7', 'R8C8'], sum: 3 }],
+    fix: { R7C7: 1, R8C8: 2 }, givens: {} },
+  { name: 'N2 pair 3 sharing no unit',
+    cages: [{ cells: ['R3C3', 'R4C4'], sum: 3 }],
+    fix: { R3C3: 1, R4C4: 2 }, givens: {} },
+  { name: 'N2 pair 10 in a row',
+    cages: [{ cells: ['R5C3', 'R5C4'], sum: 10 }],
+    fix: { R5C3: 4, R5C4: 6 }, givens: {} }
+];

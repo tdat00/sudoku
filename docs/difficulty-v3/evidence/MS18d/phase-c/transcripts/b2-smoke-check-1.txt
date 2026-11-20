@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-epoch2-proof.js --check --b2=44cbfa1217644f2b7780d263014e6e13cb6fccff --h2=docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c2-sha256.txt --record=Q:\git\sudoku\.scratch-ms18d-b2\draft.jsonl
+{
+  "ok": false,
+  "problem": "base-2 record: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js: a manifest change that is not in the committed diff; base-2 record: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js: a manifest change that is not in the committed diff; base-2 record: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1: a manifest change that is not in the committed diff; base-2 record: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-epoch2-proof.js: a manifest change that is not in the committed diff; base-2 record: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-recorder-merge.js: a manifest change that is not in the committed diff"
+}
+exit=2 seconds=0.767

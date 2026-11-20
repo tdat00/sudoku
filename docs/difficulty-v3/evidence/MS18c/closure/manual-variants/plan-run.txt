@@ -1,0 +1,25 @@
+$ node ..\generator\tests\artifacts\difficulty-v3\MS18c\variants-shards.cjs plan
+variant-sohei: 14 tests, worst case 224 s
+variant-butterfly: 15 tests, worst case 181 s
+variant-mega16: 14 tests, worst case 177 s
+variant-mega12: 16 tests, worst case 147 s
+variant-greaterThan: 13 tests, worst case 137 s
+variant-flower: 13 tests, worst case 82 s
+variant-hyper: 14 tests, worst case 117 s
+variant-diagonalX: 14 tests, worst case 85 s
+variant-jigsaw9: 14 tests, worst case 83 s
+variant-samurai: 13 tests, worst case 86 s
+variant-classic9: 15 tests, worst case 63 s
+variant-wordoku: 14 tests, worst case 50 s
+variant-killer: 11 tests, worst case 41 s
+variant-classic6: 10 tests, worst case 32 s
+variant-classic4: 9 tests, worst case 30 s
+option-schema: 81 tests, worst case 120 s
+mega16-replay: 1 tests, worst case 300 s
+rest: 4 tests, worst case 120 s
+total 285, leftover 4
+  variants > variants: the sweep covers every registered variant > has a describe block for each of the 15 variants, found through SG.variants.list()
+  variants > variants: the sweep covers every registered variant > lists a variant registered later, and the sweep runs every check on it
+  variants > variants: the sweep covers every registered variant > checks I6 against the clue floor the variant declares
+  variants > variants: the sweep covers every registered variant > has teeth: an invalid model fails CV1, and puzzles below the declared floor fail CV4
+exit=0 seconds=0.116

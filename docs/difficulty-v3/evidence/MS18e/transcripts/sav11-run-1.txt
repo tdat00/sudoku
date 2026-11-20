@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\profile-s-av11.cjs --owner-decision=1573242656648069141 --json=docs/difficulty-v3/evidence/MS18e/profile/s-av11/record-1.json
+jigsaw9 expert 1111: returned, exact true, attempts 5; hrtime 342.092 s; timings seven keys
+record: docs/difficulty-v3/evidence/MS18e/profile/s-av11/record-1.json
+exit=0 seconds=342.803

@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-gg.js
+ok   a clean compound: every shard passes, transcripts and ledgers are complete, runs are recorded
+ok   admission: a shard that does not fit is not started, the compound ends normally and resumes
+ok   a nonzero exit stops the compound: the next shard never starts, the failed one is kept
+ok   exit 0 is not a pass without its complete ledger of the right identity: partial
+ok   exit 0 is not a pass without its complete ledger of the right identity: badsource
+ok   exit 0 is not a pass without its complete ledger of the right identity: nofile
+ok   a shard already run is never run again or replaced; nothing is touched
+ok   a stray or .partial file in the ledgers directory stops everything before the first shard
+ok   the compound is killed mid-shard: the partial transcript stays, no end record, no ledger
+FAIL a dry run writes nothing; refusals of bad arguments and plans are exit 2: AssertionError [ERR_ASSERTION]: a compound is planned at 450 s at most
+
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-gg.js:235:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-gg.js:94:5)
+    at async main (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-gg.js:226:3)
+9 passed, 1 failed
+FAILED: a dry run writes nothing; refusals of bad arguments and plans are exit 2
+exit=1 seconds=7.168

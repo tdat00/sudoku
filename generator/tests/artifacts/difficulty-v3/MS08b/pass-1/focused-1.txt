@@ -1,0 +1,13 @@
+$ node tests\node-runner.js --suite=tech-fish,techniques,technique-weights,difficulty-floor
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (27.41 s)
+ok   tech-fish: 155 passed  (6.59 s)
+ok   technique-weights: 7 passed  (2 ms)
+ok   techniques: 204 passed  (1.68 s)
+
+Suites: 4
+Tests:  414 total, 414 passed, 0 failed, 0 skipped
+Time:   35.69 s running tests, 35.79 s total
+exit=0 seconds=35.911

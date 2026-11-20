@@ -1,0 +1,5 @@
+$ node tests\mega-contract.js --request=mega12-hell1-invariant-1 --record=..\docs\difficulty-v3\evidence\MS07b\mega-hell1\records\mega12-hell1-invariant-1.json
+mega12-hell1-invariant-1: outcome ok, correctness pass, exact false, attempts 4 of 4, warnings difficulty.approximate,difficulty.shallow
+  generation 29.321 s, checks 0.040 s, guard margin 470.639 s of 500.000 s, allowance 256
+record: docs/difficulty-v3/evidence/MS07b/mega-hell1/records/mega12-hell1-invariant-1.json
+exit=0 seconds=29.858

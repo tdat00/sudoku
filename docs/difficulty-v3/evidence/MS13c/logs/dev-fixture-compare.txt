@@ -1,0 +1,58 @@
+$ node tests\artifacts\difficulty-v3\MS13c\fixture-compare.js
+fixture#0 X-chain of 3 links (two eliminations) forcingChain: NEW v1 endpoints len 3 elim [[70,2],[71,2]] plc [] cells [63,0,6,78] [grouped work 12405]
+      OLD v1 endpoints len 3 elim [[70,2],[71,2]] plc [] cells [63,0,6,78]
+fixture#0 X-chain of 3 links (two eliminations) forcingChainLong: NEW null [grouped work 11326]
+      OLD null
+fixture#1 X-chain of 3 links (one elimination) forcingChain: NEW v1 endpoints len 3 elim [[55,8]] plc [] cells [10,14,3,57] [grouped work 8117]
+      OLD v1 endpoints len 3 elim [[55,8]] plc [] cells [10,14,3,57]
+fixture#1 X-chain of 3 links (one elimination) forcingChainLong: NEW null [grouped work 3745]
+      OLD null
+fixture#2 contradiction chain of 3 links forcingChain: NEW v1 contradiction len 3 elim [[1,5]] plc [] cells [1,7,79,60,55] [grouped work 8642]
+      OLD v1 contradiction len 3 elim [[1,5]] plc [] cells [1,7,79,60,55]
+fixture#2 contradiction chain of 3 links forcingChainLong: NEW null [grouped work 4996]
+      OLD null
+fixture#3 contradiction chain of 4 links forcingChain: NEW v1 contradiction len 4 elim [[32,8]] plc [] cells [32,29,33,51,50] [grouped work 4876]
+      OLD v1 contradiction len 4 elim [[32,8]] plc [] cells [32,29,33,51,50]
+fixture#3 contradiction chain of 4 links forcingChainLong: NEW null [grouped work 1964]
+      OLD null
+fixture#4 contradiction chain of 5 links forcingChain: NEW null [grouped work 11801]
+      OLD null
+fixture#4 contradiction chain of 5 links forcingChainLong: NEW v1 contradiction len 5 elim [[1,2]] plc [] cells [1,6,3,39,31,10,28] [grouped work 11922]
+      OLD v1 contradiction len 5 elim [[1,2]] plc [] cells [1,6,3,39,31,10,28]
+fixture#5 contradiction chain of 6 links forcingChain: NEW v2 contradiction len 3 elim [[51,7]] plc [] cells [39,42,43,51,66,69] [grouped work 14243]
+      OLD null
+fixture#5 contradiction chain of 6 links forcingChainLong: NEW null [grouped work 19174]
+      OLD v1 contradiction len 6 elim [[36,2]] plc [] cells [36,37,55,60,69,39,66]
+fixture#6 forced chain of 4 links (a placement) forcingChain: NEW v1 forced len 4 elim [] plc [[14,2]] cells [14,15,33,32] [grouped work 7470]
+      OLD v1 forced len 4 elim [] plc [[14,2]] cells [14,15,33,32]
+fixture#6 forced chain of 4 links (a placement) forcingChainLong: NEW null [grouped work 3349]
+      OLD null
+fixture#7 forced chain of 4 links (second example) forcingChain: NEW v1 forced len 4 elim [] plc [[14,1]] cells [14,17,7,3,23] [grouped work 5511]
+      OLD v1 forced len 4 elim [] plc [[14,1]] cells [14,17,7,3,23]
+fixture#7 forced chain of 4 links (second example) forcingChainLong: NEW null [grouped work 1947]
+      OLD null
+escargot forcingChain: NEW v2 contradiction len 4 elim [[57,9]] plc [] cells [36,46,49,57,58,63,66,67,68,76] [grouped work 21209]
+      OLD null
+escargot forcingChainLong: NEW null [grouped work 17277]
+      OLD null
+worlds-hardest-2012 forcingChain: NEW null [grouped work 29711]
+      OLD null
+worlds-hardest-2012 forcingChainLong: NEW null [grouped work 32993]
+      OLD null
+hard-platinum forcingChain: NEW null [grouped work 26955]
+      OLD null
+hard-platinum forcingChainLong: NEW null [grouped work 27860]
+      OLD null
+hard-nugget forcingChain: NEW null [grouped work 24143]
+      OLD null
+hard-nugget forcingChainLong: NEW null [grouped work 24533]
+      OLD null
+hard-b forcingChain: NEW v1 contradiction len 3 elim [[29,2]] plc [] cells [29,45] [grouped work 16959]
+      OLD v1 contradiction len 3 elim [[29,2]] plc [] cells [29,45]
+hard-b forcingChainLong: NEW null [grouped work 13896]
+      OLD null
+hard-c forcingChain: NEW null [grouped work 22101]
+      OLD null
+hard-c forcingChainLong: NEW null [grouped work 22223]
+      OLD null
+exit=0 seconds=0.252

@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --filter=> variants: classic9 > --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-variant-classic9.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 15 passed  (7.06 s)
+
+Suites: 1
+Tests:  15 total, 15 passed, 0 failed, 0 skipped
+Time:   7.06 s running tests, 7.31 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-variant-classic9.json
+exit=0 seconds=7.543

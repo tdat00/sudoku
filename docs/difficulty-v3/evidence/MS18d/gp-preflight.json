@@ -1,0 +1,3291 @@
+{
+  "schema": 1,
+  "kind": "ms18d-gp-preflight",
+  "task": "MS18d",
+  "phase": "A",
+  "note": "Read-only preflight: no puzzle was generated, nothing here is a timing result or an admission.",
+  "qualificationHash": "b8e546fc0ba5bd1f79f408984bf3bf8f82559305ea6bd63cbe6dc53beff0df04",
+  "qualificationEngine": {
+    "sources": "0ca29eaeebc295b6",
+    "commit": "ed2fe50c",
+    "commits": [
+      "ed2fe50c"
+    ],
+    "dirty": true
+  },
+  "publishedCells": [
+    {
+      "key": "classic4/veryEasy",
+      "variant": "classic4",
+      "level": "veryEasy",
+      "cellCount": 16,
+      "target": 10
+    },
+    {
+      "key": "classic6/veryEasy",
+      "variant": "classic6",
+      "level": "veryEasy",
+      "cellCount": 36,
+      "target": 10
+    },
+    {
+      "key": "classic6/hard",
+      "variant": "classic6",
+      "level": "hard",
+      "cellCount": 36,
+      "target": 350
+    },
+    {
+      "key": "classic9/veryEasy",
+      "variant": "classic9",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 60
+    },
+    {
+      "key": "classic9/easy",
+      "variant": "classic9",
+      "level": "easy",
+      "cellCount": 81,
+      "target": 150
+    },
+    {
+      "key": "classic9/normal",
+      "variant": "classic9",
+      "level": "normal",
+      "cellCount": 81,
+      "target": 150
+    },
+    {
+      "key": "classic9/hard",
+      "variant": "classic9",
+      "level": "hard",
+      "cellCount": 81,
+      "target": 400
+    },
+    {
+      "key": "classic9/expert",
+      "variant": "classic9",
+      "level": "expert",
+      "cellCount": 81,
+      "target": 400
+    },
+    {
+      "key": "classic9/master",
+      "variant": "classic9",
+      "level": "master",
+      "cellCount": 81,
+      "target": 900
+    },
+    {
+      "key": "classic9/nightmare",
+      "variant": "classic9",
+      "level": "nightmare",
+      "cellCount": 81,
+      "target": 2500
+    },
+    {
+      "key": "mega12/veryEasy",
+      "variant": "mega12",
+      "level": "veryEasy",
+      "cellCount": 144,
+      "target": 400
+    },
+    {
+      "key": "mega12/easy",
+      "variant": "mega12",
+      "level": "easy",
+      "cellCount": 144,
+      "target": 1000
+    },
+    {
+      "key": "mega12/normal",
+      "variant": "mega12",
+      "level": "normal",
+      "cellCount": 144,
+      "target": 1000
+    },
+    {
+      "key": "mega12/hard",
+      "variant": "mega12",
+      "level": "hard",
+      "cellCount": 144,
+      "target": 3000
+    },
+    {
+      "key": "mega12/expert",
+      "variant": "mega12",
+      "level": "expert",
+      "cellCount": 144,
+      "target": 3000
+    },
+    {
+      "key": "mega12/master",
+      "variant": "mega12",
+      "level": "master",
+      "cellCount": 144,
+      "target": 3000
+    },
+    {
+      "key": "mega12/nightmare",
+      "variant": "mega12",
+      "level": "nightmare",
+      "cellCount": 144,
+      "target": 3000
+    },
+    {
+      "key": "mega12/hell2",
+      "variant": "mega12",
+      "level": "hell2",
+      "cellCount": 144,
+      "target": 16000
+    },
+    {
+      "key": "mega16/veryEasy",
+      "variant": "mega16",
+      "level": "veryEasy",
+      "cellCount": 256,
+      "target": 1500
+    },
+    {
+      "key": "mega16/easy",
+      "variant": "mega16",
+      "level": "easy",
+      "cellCount": 256,
+      "target": 4000
+    },
+    {
+      "key": "mega16/normal",
+      "variant": "mega16",
+      "level": "normal",
+      "cellCount": 256,
+      "target": 4000
+    },
+    {
+      "key": "mega16/hard",
+      "variant": "mega16",
+      "level": "hard",
+      "cellCount": 256,
+      "target": 10000
+    },
+    {
+      "key": "mega16/master",
+      "variant": "mega16",
+      "level": "master",
+      "cellCount": 256,
+      "target": 10000
+    },
+    {
+      "key": "mega16/hell2",
+      "variant": "mega16",
+      "level": "hell2",
+      "cellCount": 256,
+      "target": 10000
+    },
+    {
+      "key": "diagonalX/veryEasy",
+      "variant": "diagonalX",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 80
+    },
+    {
+      "key": "diagonalX/normal",
+      "variant": "diagonalX",
+      "level": "normal",
+      "cellCount": 81,
+      "target": 200
+    },
+    {
+      "key": "diagonalX/hard",
+      "variant": "diagonalX",
+      "level": "hard",
+      "cellCount": 81,
+      "target": 500
+    },
+    {
+      "key": "diagonalX/master",
+      "variant": "diagonalX",
+      "level": "master",
+      "cellCount": 81,
+      "target": 1200
+    },
+    {
+      "key": "diagonalX/nightmare",
+      "variant": "diagonalX",
+      "level": "nightmare",
+      "cellCount": 81,
+      "target": 3000
+    },
+    {
+      "key": "diagonalX/hell2",
+      "variant": "diagonalX",
+      "level": "hell2",
+      "cellCount": 81,
+      "target": 3000
+    },
+    {
+      "key": "hyper/veryEasy",
+      "variant": "hyper",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 80
+    },
+    {
+      "key": "hyper/normal",
+      "variant": "hyper",
+      "level": "normal",
+      "cellCount": 81,
+      "target": 200
+    },
+    {
+      "key": "hyper/hard",
+      "variant": "hyper",
+      "level": "hard",
+      "cellCount": 81,
+      "target": 500
+    },
+    {
+      "key": "hyper/master",
+      "variant": "hyper",
+      "level": "master",
+      "cellCount": 81,
+      "target": 1200
+    },
+    {
+      "key": "hyper/nightmare",
+      "variant": "hyper",
+      "level": "nightmare",
+      "cellCount": 81,
+      "target": 3000
+    },
+    {
+      "key": "hyper/hell2",
+      "variant": "hyper",
+      "level": "hell2",
+      "cellCount": 81,
+      "target": 5000
+    },
+    {
+      "key": "jigsaw9/veryEasy",
+      "variant": "jigsaw9",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 150
+    },
+    {
+      "key": "jigsaw9/easy",
+      "variant": "jigsaw9",
+      "level": "easy",
+      "cellCount": 81,
+      "target": 350
+    },
+    {
+      "key": "jigsaw9/normal",
+      "variant": "jigsaw9",
+      "level": "normal",
+      "cellCount": 81,
+      "target": 350
+    },
+    {
+      "key": "jigsaw9/hard",
+      "variant": "jigsaw9",
+      "level": "hard",
+      "cellCount": 81,
+      "target": 900
+    },
+    {
+      "key": "jigsaw9/master",
+      "variant": "jigsaw9",
+      "level": "master",
+      "cellCount": 81,
+      "target": 2000
+    },
+    {
+      "key": "jigsaw9/hell2",
+      "variant": "jigsaw9",
+      "level": "hell2",
+      "cellCount": 81,
+      "target": 5000
+    },
+    {
+      "key": "killer/veryEasy",
+      "variant": "killer",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 300
+    },
+    {
+      "key": "killer/easy",
+      "variant": "killer",
+      "level": "easy",
+      "cellCount": 81,
+      "target": 700
+    },
+    {
+      "key": "killer/normal",
+      "variant": "killer",
+      "level": "normal",
+      "cellCount": 81,
+      "target": 700
+    },
+    {
+      "key": "greaterThan/veryEasy",
+      "variant": "greaterThan",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 300
+    },
+    {
+      "key": "greaterThan/easy",
+      "variant": "greaterThan",
+      "level": "easy",
+      "cellCount": 81,
+      "target": 700
+    },
+    {
+      "key": "greaterThan/hard",
+      "variant": "greaterThan",
+      "level": "hard",
+      "cellCount": 81,
+      "target": 6000
+    },
+    {
+      "key": "greaterThan/master",
+      "variant": "greaterThan",
+      "level": "master",
+      "cellCount": 81,
+      "target": 10000
+    },
+    {
+      "key": "greaterThan/hell2",
+      "variant": "greaterThan",
+      "level": "hell2",
+      "cellCount": 81,
+      "target": 10000
+    },
+    {
+      "key": "samurai/veryEasy",
+      "variant": "samurai",
+      "level": "veryEasy",
+      "cellCount": 369,
+      "target": 3000
+    },
+    {
+      "key": "samurai/normal",
+      "variant": "samurai",
+      "level": "normal",
+      "cellCount": 369,
+      "target": 8000
+    },
+    {
+      "key": "samurai/hard",
+      "variant": "samurai",
+      "level": "hard",
+      "cellCount": 369,
+      "target": 20000
+    },
+    {
+      "key": "samurai/expert",
+      "variant": "samurai",
+      "level": "expert",
+      "cellCount": 369,
+      "target": 20000
+    },
+    {
+      "key": "samurai/master",
+      "variant": "samurai",
+      "level": "master",
+      "cellCount": 369,
+      "target": 20000
+    },
+    {
+      "key": "sohei/veryEasy",
+      "variant": "sohei",
+      "level": "veryEasy",
+      "cellCount": 288,
+      "target": 3000
+    },
+    {
+      "key": "sohei/normal",
+      "variant": "sohei",
+      "level": "normal",
+      "cellCount": 288,
+      "target": 8000
+    },
+    {
+      "key": "sohei/hard",
+      "variant": "sohei",
+      "level": "hard",
+      "cellCount": 288,
+      "target": 20000
+    },
+    {
+      "key": "sohei/expert",
+      "variant": "sohei",
+      "level": "expert",
+      "cellCount": 288,
+      "target": 20000
+    },
+    {
+      "key": "sohei/master",
+      "variant": "sohei",
+      "level": "master",
+      "cellCount": 288,
+      "target": 20000
+    },
+    {
+      "key": "sohei/hell2",
+      "variant": "sohei",
+      "level": "hell2",
+      "cellCount": 288,
+      "target": 20000
+    },
+    {
+      "key": "butterfly/veryEasy",
+      "variant": "butterfly",
+      "level": "veryEasy",
+      "cellCount": 144,
+      "target": 1000
+    },
+    {
+      "key": "butterfly/normal",
+      "variant": "butterfly",
+      "level": "normal",
+      "cellCount": 144,
+      "target": 3000
+    },
+    {
+      "key": "butterfly/hard",
+      "variant": "butterfly",
+      "level": "hard",
+      "cellCount": 144,
+      "target": 8000
+    },
+    {
+      "key": "butterfly/expert",
+      "variant": "butterfly",
+      "level": "expert",
+      "cellCount": 144,
+      "target": 8000
+    },
+    {
+      "key": "butterfly/master",
+      "variant": "butterfly",
+      "level": "master",
+      "cellCount": 144,
+      "target": 8000
+    },
+    {
+      "key": "butterfly/nightmare",
+      "variant": "butterfly",
+      "level": "nightmare",
+      "cellCount": 144,
+      "target": 8000
+    },
+    {
+      "key": "butterfly/hell2",
+      "variant": "butterfly",
+      "level": "hell2",
+      "cellCount": 144,
+      "target": 15000
+    },
+    {
+      "key": "flower/veryEasy",
+      "variant": "flower",
+      "level": "veryEasy",
+      "cellCount": 189,
+      "target": 3000
+    },
+    {
+      "key": "flower/normal",
+      "variant": "flower",
+      "level": "normal",
+      "cellCount": 189,
+      "target": 8000
+    },
+    {
+      "key": "flower/hard",
+      "variant": "flower",
+      "level": "hard",
+      "cellCount": 189,
+      "target": 20000
+    },
+    {
+      "key": "flower/master",
+      "variant": "flower",
+      "level": "master",
+      "cellCount": 189,
+      "target": 20000
+    },
+    {
+      "key": "flower/hell2",
+      "variant": "flower",
+      "level": "hell2",
+      "cellCount": 189,
+      "target": 20000
+    },
+    {
+      "key": "wordoku/veryEasy",
+      "variant": "wordoku",
+      "level": "veryEasy",
+      "cellCount": 81,
+      "target": 100
+    },
+    {
+      "key": "wordoku/easy",
+      "variant": "wordoku",
+      "level": "easy",
+      "cellCount": 81,
+      "target": 250
+    },
+    {
+      "key": "wordoku/hard",
+      "variant": "wordoku",
+      "level": "hard",
+      "cellCount": 81,
+      "target": 600
+    },
+    {
+      "key": "wordoku/expert",
+      "variant": "wordoku",
+      "level": "expert",
+      "cellCount": 81,
+      "target": 600
+    },
+    {
+      "key": "wordoku/master",
+      "variant": "wordoku",
+      "level": "master",
+      "cellCount": 81,
+      "target": 1500
+    },
+    {
+      "key": "wordoku/nightmare",
+      "variant": "wordoku",
+      "level": "nightmare",
+      "cellCount": 81,
+      "target": 1500
+    }
+  ],
+  "projections": [
+    {
+      "key": "classic4/veryEasy",
+      "requests": 40,
+      "mean": 1.9594325,
+      "p50": 0.8954,
+      "p95": 10.1122,
+      "max": 12.9531,
+      "meanAlertSeconds": 0.097971625,
+      "flagged": false,
+      "maxAlertSeconds": 0.647655,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic6/veryEasy",
+      "requests": 40,
+      "mean": 2.634445,
+      "p50": 1.5014,
+      "p95": 12.9032,
+      "max": 13.8671,
+      "meanAlertSeconds": 0.13172225,
+      "flagged": false,
+      "maxAlertSeconds": 0.693355,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic6/hard",
+      "requests": 40,
+      "mean": 105.310815,
+      "p50": 64.6925,
+      "p95": 321.2095,
+      "max": 399.0431,
+      "meanAlertSeconds": 5.26554075,
+      "flagged": false,
+      "maxAlertSeconds": 19.952155,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/veryEasy",
+      "requests": 40,
+      "mean": 4.1891575,
+      "p50": 2.6101,
+      "p95": 18.0743,
+      "max": 19.8093,
+      "meanAlertSeconds": 0.209457875,
+      "flagged": false,
+      "maxAlertSeconds": 0.990465,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/easy",
+      "requests": 40,
+      "mean": 354.4734975,
+      "p50": 218.4696,
+      "p95": 780.3884,
+      "max": 1318.719,
+      "meanAlertSeconds": 17.723674875,
+      "flagged": false,
+      "maxAlertSeconds": 65.93595,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/normal",
+      "requests": 40,
+      "mean": 398.3672975,
+      "p50": 398.2207,
+      "p95": 875.5958,
+      "max": 952.5775,
+      "meanAlertSeconds": 19.918364875,
+      "flagged": false,
+      "maxAlertSeconds": 47.628875,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/hard",
+      "requests": 40,
+      "mean": 66.370315,
+      "p50": 33.7814,
+      "p95": 256.0389,
+      "max": 493.1213,
+      "meanAlertSeconds": 3.31851575,
+      "flagged": false,
+      "maxAlertSeconds": 24.656065,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/expert",
+      "requests": 40,
+      "mean": 114.5702325,
+      "p50": 38.9743,
+      "p95": 440.7861,
+      "max": 544.8815,
+      "meanAlertSeconds": 5.728511625,
+      "flagged": false,
+      "maxAlertSeconds": 27.244075,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/master",
+      "requests": 40,
+      "mean": 149.507375,
+      "p50": 113.7322,
+      "p95": 351.9134,
+      "max": 468.8741,
+      "meanAlertSeconds": 7.47536875,
+      "flagged": false,
+      "maxAlertSeconds": 23.443705,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "classic9/nightmare",
+      "requests": 40,
+      "mean": 1088.8949075,
+      "p50": 941.8817,
+      "p95": 2792.0346,
+      "max": 3228.1024,
+      "meanAlertSeconds": 54.444745375,
+      "flagged": false,
+      "maxAlertSeconds": 161.40512,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/veryEasy",
+      "requests": 40,
+      "mean": 8.32444,
+      "p50": 6.2568,
+      "p95": 25.0184,
+      "max": 26.8378,
+      "meanAlertSeconds": 0.416222,
+      "flagged": false,
+      "maxAlertSeconds": 1.34189,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/easy",
+      "requests": 40,
+      "mean": 17.9278475,
+      "p50": 11.878,
+      "p95": 48.6071,
+      "max": 53.8743,
+      "meanAlertSeconds": 0.896392375,
+      "flagged": false,
+      "maxAlertSeconds": 2.693715,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/normal",
+      "requests": 40,
+      "mean": 31.055645,
+      "p50": 22.0446,
+      "p95": 70.2291,
+      "max": 127.5042,
+      "meanAlertSeconds": 1.55278225,
+      "flagged": false,
+      "maxAlertSeconds": 6.37521,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/hard",
+      "requests": 40,
+      "mean": 90.02476,
+      "p50": 53.7559,
+      "p95": 219.9961,
+      "max": 372.2446,
+      "meanAlertSeconds": 4.501238,
+      "flagged": false,
+      "maxAlertSeconds": 18.61223,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/expert",
+      "requests": 40,
+      "mean": 624.999815,
+      "p50": 246.5182,
+      "p95": 2592.9769,
+      "max": 7953.7019,
+      "meanAlertSeconds": 31.24999075,
+      "flagged": false,
+      "maxAlertSeconds": 397.685095,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/master",
+      "requests": 40,
+      "mean": 289.8168975,
+      "p50": 210.8869,
+      "p95": 841.9312,
+      "max": 1112.9419,
+      "meanAlertSeconds": 14.490844875,
+      "flagged": false,
+      "maxAlertSeconds": 55.647095,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/nightmare",
+      "requests": 40,
+      "mean": 2807.462955,
+      "p50": 2356.3226,
+      "p95": 6280.4697,
+      "max": 8736.1104,
+      "meanAlertSeconds": 140.37314775,
+      "flagged": false,
+      "maxAlertSeconds": 436.80552,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega12/hell2",
+      "requests": 40,
+      "mean": 4774.1268125,
+      "p50": 5289.1353,
+      "p95": 9459.1886,
+      "max": 11526.3005,
+      "meanAlertSeconds": 238.706340625,
+      "flagged": false,
+      "maxAlertSeconds": 576.315025,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega16/veryEasy",
+      "requests": 40,
+      "mean": 15.0782025,
+      "p50": 12.5978,
+      "p95": 36.8126,
+      "max": 39.7954,
+      "meanAlertSeconds": 0.753910125,
+      "flagged": false,
+      "maxAlertSeconds": 1.98977,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega16/easy",
+      "requests": 40,
+      "mean": 24.5014725,
+      "p50": 20.0249,
+      "p95": 56.4618,
+      "max": 61.4999,
+      "meanAlertSeconds": 1.225073625,
+      "flagged": false,
+      "maxAlertSeconds": 3.074995,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega16/normal",
+      "requests": 40,
+      "mean": 43.2463925,
+      "p50": 38.9147,
+      "p95": 89.5037,
+      "max": 134.6989,
+      "meanAlertSeconds": 2.162319625,
+      "flagged": false,
+      "maxAlertSeconds": 6.734945,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega16/hard",
+      "requests": 40,
+      "mean": 529.7419425,
+      "p50": 361.1461,
+      "p95": 1715.2888,
+      "max": 2023.2603,
+      "meanAlertSeconds": 26.487097125,
+      "flagged": false,
+      "maxAlertSeconds": 101.163015,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega16/master",
+      "requests": 40,
+      "mean": 2123.6773375,
+      "p50": 1817.2125,
+      "p95": 5528.2588,
+      "max": 6384.3164,
+      "meanAlertSeconds": 106.183866875,
+      "flagged": false,
+      "maxAlertSeconds": 319.21582,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "mega16/hell2",
+      "requests": 40,
+      "mean": 4119.40283,
+      "p50": 1592.5674,
+      "p95": 25239.0671,
+      "max": 43048.0792,
+      "meanAlertSeconds": 205.9701415,
+      "flagged": false,
+      "maxAlertSeconds": 2152.40396,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "diagonalX/veryEasy",
+      "requests": 40,
+      "mean": 4.3263,
+      "p50": 2.7111,
+      "p95": 18.1067,
+      "max": 19.6909,
+      "meanAlertSeconds": 0.216315,
+      "flagged": false,
+      "maxAlertSeconds": 0.984545,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "diagonalX/normal",
+      "requests": 40,
+      "mean": 48.0498375,
+      "p50": 21.7763,
+      "p95": 189.9598,
+      "max": 399.7115,
+      "meanAlertSeconds": 2.402491875,
+      "flagged": false,
+      "maxAlertSeconds": 19.985575,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "diagonalX/hard",
+      "requests": 40,
+      "mean": 27.698805,
+      "p50": 23.0243,
+      "p95": 76.5739,
+      "max": 98.2527,
+      "meanAlertSeconds": 1.38494025,
+      "flagged": false,
+      "maxAlertSeconds": 4.912635,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "diagonalX/master",
+      "requests": 40,
+      "mean": 200.8866425,
+      "p50": 94.285,
+      "p95": 662.9567,
+      "max": 914.6799,
+      "meanAlertSeconds": 10.044332125,
+      "flagged": false,
+      "maxAlertSeconds": 45.733995,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "diagonalX/nightmare",
+      "requests": 40,
+      "mean": 2079.5596975,
+      "p50": 1719.0385,
+      "p95": 5368.3201,
+      "max": 7414.5825,
+      "meanAlertSeconds": 103.977984875,
+      "flagged": false,
+      "maxAlertSeconds": 370.729125,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "diagonalX/hell2",
+      "requests": 40,
+      "mean": 1100.9425525,
+      "p50": 342.5132,
+      "p95": 2887.0696,
+      "max": 3373.9294,
+      "meanAlertSeconds": 55.047127625,
+      "flagged": false,
+      "maxAlertSeconds": 168.69647,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "hyper/veryEasy",
+      "requests": 40,
+      "mean": 4.48507,
+      "p50": 2.8225,
+      "p95": 18.0367,
+      "max": 19.3498,
+      "meanAlertSeconds": 0.2242535,
+      "flagged": false,
+      "maxAlertSeconds": 0.96749,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "hyper/normal",
+      "requests": 40,
+      "mean": 201.7639425,
+      "p50": 128.216,
+      "p95": 524.3035,
+      "max": 805.5777,
+      "meanAlertSeconds": 10.088197125,
+      "flagged": false,
+      "maxAlertSeconds": 40.278885,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "hyper/hard",
+      "requests": 40,
+      "mean": 34.68468,
+      "p50": 23.3619,
+      "p95": 80.1618,
+      "max": 138.827,
+      "meanAlertSeconds": 1.734234,
+      "flagged": false,
+      "maxAlertSeconds": 6.94135,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "hyper/master",
+      "requests": 40,
+      "mean": 243.676985,
+      "p50": 195.9561,
+      "p95": 507.0018,
+      "max": 1545.0021,
+      "meanAlertSeconds": 12.18384925,
+      "flagged": false,
+      "maxAlertSeconds": 77.250105,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "hyper/nightmare",
+      "requests": 40,
+      "mean": 2691.3291675,
+      "p50": 1830.6205,
+      "p95": 8503.0273,
+      "max": 11272.8636,
+      "meanAlertSeconds": 134.566458375,
+      "flagged": false,
+      "maxAlertSeconds": 563.64318,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "hyper/hell2",
+      "requests": 40,
+      "mean": 1944.920435,
+      "p50": 1481.6247,
+      "p95": 4838.1594,
+      "max": 6729.419,
+      "meanAlertSeconds": 97.24602175,
+      "flagged": false,
+      "maxAlertSeconds": 336.47095,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "jigsaw9/veryEasy",
+      "requests": 40,
+      "mean": 21.76098,
+      "p50": 14.7281,
+      "p95": 54.2844,
+      "max": 74.0841,
+      "meanAlertSeconds": 1.088049,
+      "flagged": false,
+      "maxAlertSeconds": 3.704205,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "jigsaw9/easy",
+      "requests": 40,
+      "mean": 193.1272975,
+      "p50": 69.9216,
+      "p95": 634.7225,
+      "max": 768.6908,
+      "meanAlertSeconds": 9.656364875,
+      "flagged": false,
+      "maxAlertSeconds": 38.43454,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "jigsaw9/normal",
+      "requests": 40,
+      "mean": 80.9937775,
+      "p50": 47.3663,
+      "p95": 225.2274,
+      "max": 413.6342,
+      "meanAlertSeconds": 4.049688875,
+      "flagged": false,
+      "maxAlertSeconds": 20.68171,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "jigsaw9/hard",
+      "requests": 40,
+      "mean": 80.1715275,
+      "p50": 69.1395,
+      "p95": 144.9141,
+      "max": 160.6444,
+      "meanAlertSeconds": 4.008576375,
+      "flagged": false,
+      "maxAlertSeconds": 8.03222,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "jigsaw9/master",
+      "requests": 40,
+      "mean": 699.31361,
+      "p50": 502.25,
+      "p95": 1742.2121,
+      "max": 2719.933,
+      "meanAlertSeconds": 34.9656805,
+      "flagged": false,
+      "maxAlertSeconds": 135.99665,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "jigsaw9/hell2",
+      "requests": 40,
+      "mean": 3286.5239075,
+      "p50": 2978.6974,
+      "p95": 6102.238,
+      "max": 9904.8754,
+      "meanAlertSeconds": 164.326195375,
+      "flagged": false,
+      "maxAlertSeconds": 495.24377,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "killer/veryEasy",
+      "requests": 40,
+      "mean": 5.44717,
+      "p50": 3.2354,
+      "p95": 21.8626,
+      "max": 25.5256,
+      "meanAlertSeconds": 0.2723585,
+      "flagged": false,
+      "maxAlertSeconds": 1.27628,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "killer/easy",
+      "requests": 40,
+      "mean": 18.63101,
+      "p50": 12.8891,
+      "p95": 39.0628,
+      "max": 64.8644,
+      "meanAlertSeconds": 0.9315505,
+      "flagged": false,
+      "maxAlertSeconds": 3.24322,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "killer/normal",
+      "requests": 40,
+      "mean": 565.7752825,
+      "p50": 369.4359,
+      "p95": 1808.2659,
+      "max": 2252.0779,
+      "meanAlertSeconds": 28.288764125,
+      "flagged": false,
+      "maxAlertSeconds": 112.603895,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "greaterThan/veryEasy",
+      "requests": 40,
+      "mean": 28.2855125,
+      "p50": 24.4367,
+      "p95": 54.0895,
+      "max": 55.2629,
+      "meanAlertSeconds": 1.414275625,
+      "flagged": false,
+      "maxAlertSeconds": 2.763145,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "greaterThan/easy",
+      "requests": 40,
+      "mean": 48.4273575,
+      "p50": 36.4243,
+      "p95": 92.0121,
+      "max": 112.6005,
+      "meanAlertSeconds": 2.421367875,
+      "flagged": false,
+      "maxAlertSeconds": 5.630025,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "greaterThan/hard",
+      "requests": 40,
+      "mean": 726.7220325,
+      "p50": 163.2679,
+      "p95": 2832.4741,
+      "max": 3213.7686,
+      "meanAlertSeconds": 36.336101625,
+      "flagged": false,
+      "maxAlertSeconds": 160.68843,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "greaterThan/master",
+      "requests": 40,
+      "mean": 1965.08224,
+      "p50": 979.105,
+      "p95": 5952.2994,
+      "max": 7828.2704,
+      "meanAlertSeconds": 98.254112,
+      "flagged": false,
+      "maxAlertSeconds": 391.41352,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "greaterThan/hell2",
+      "requests": 40,
+      "mean": 4498.49288,
+      "p50": 3830.2362,
+      "p95": 8826.2361,
+      "max": 19426.627,
+      "meanAlertSeconds": 224.924644,
+      "flagged": false,
+      "maxAlertSeconds": 971.33135,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "samurai/veryEasy",
+      "requests": 40,
+      "mean": 20.8009225,
+      "p50": 16.8204,
+      "p95": 46.6892,
+      "max": 49.7793,
+      "meanAlertSeconds": 1.040046125,
+      "flagged": false,
+      "maxAlertSeconds": 2.488965,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "samurai/normal",
+      "requests": 40,
+      "mean": 371.88681,
+      "p50": 231.4172,
+      "p95": 837.0937,
+      "max": 2718.3111,
+      "meanAlertSeconds": 18.5943405,
+      "flagged": false,
+      "maxAlertSeconds": 135.915555,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "samurai/hard",
+      "requests": 40,
+      "mean": 259.680175,
+      "p50": 166.3303,
+      "p95": 886.5133,
+      "max": 1142.9887,
+      "meanAlertSeconds": 12.98400875,
+      "flagged": false,
+      "maxAlertSeconds": 57.149435,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "samurai/expert",
+      "requests": 40,
+      "mean": 1084.2117475,
+      "p50": 512.7572,
+      "p95": 4030.8085,
+      "max": 9047.9127,
+      "meanAlertSeconds": 54.210587375,
+      "flagged": false,
+      "maxAlertSeconds": 452.395635,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "samurai/master",
+      "requests": 40,
+      "mean": 4115.6179625,
+      "p50": 1651.5367,
+      "p95": 6686.7277,
+      "max": 66790.9568,
+      "meanAlertSeconds": 205.780898125,
+      "flagged": false,
+      "maxAlertSeconds": 3339.54784,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "sohei/veryEasy",
+      "requests": 40,
+      "mean": 15.91255,
+      "p50": 13.645,
+      "p95": 40.9578,
+      "max": 44.398,
+      "meanAlertSeconds": 0.7956275,
+      "flagged": false,
+      "maxAlertSeconds": 2.2199,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "sohei/normal",
+      "requests": 40,
+      "mean": 730.95182,
+      "p50": 212.6812,
+      "p95": 3725.2219,
+      "max": 9022.8878,
+      "meanAlertSeconds": 36.547591,
+      "flagged": false,
+      "maxAlertSeconds": 451.14439,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "sohei/hard",
+      "requests": 40,
+      "mean": 209.64716,
+      "p50": 134.8213,
+      "p95": 516.3258,
+      "max": 606.0797,
+      "meanAlertSeconds": 10.482358,
+      "flagged": false,
+      "maxAlertSeconds": 30.303985,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "sohei/expert",
+      "requests": 40,
+      "mean": 1092.903835,
+      "p50": 307.9285,
+      "p95": 7013.194,
+      "max": 13851.4877,
+      "meanAlertSeconds": 54.64519175,
+      "flagged": false,
+      "maxAlertSeconds": 692.574385,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "sohei/master",
+      "requests": 40,
+      "mean": 1584.3721675,
+      "p50": 952.202,
+      "p95": 4697.8951,
+      "max": 8092.3715,
+      "meanAlertSeconds": 79.218608375,
+      "flagged": false,
+      "maxAlertSeconds": 404.618575,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "sohei/hell2",
+      "requests": 40,
+      "mean": 9711.9411975,
+      "p50": 6287.22,
+      "p95": 27155.5581,
+      "max": 41652.8343,
+      "meanAlertSeconds": 485.597059875,
+      "flagged": true,
+      "maxAlertSeconds": 2082.641715,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "flagged-mean-alert",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "FS23 mean alert above 450 s before setup, readiness and variance"
+      }
+    },
+    {
+      "key": "butterfly/veryEasy",
+      "requests": 40,
+      "mean": 10.04259,
+      "p50": 7.4502,
+      "p95": 28.947,
+      "max": 34.3091,
+      "meanAlertSeconds": 0.5021295,
+      "flagged": false,
+      "maxAlertSeconds": 1.715455,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "butterfly/normal",
+      "requests": 40,
+      "mean": 195.4233125,
+      "p50": 97.9472,
+      "p95": 1041.8416,
+      "max": 1486.743,
+      "meanAlertSeconds": 9.771165625,
+      "flagged": false,
+      "maxAlertSeconds": 74.33715,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "butterfly/hard",
+      "requests": 40,
+      "mean": 98.1880675,
+      "p50": 83.1098,
+      "p95": 211.0418,
+      "max": 309.2124,
+      "meanAlertSeconds": 4.909403375,
+      "flagged": false,
+      "maxAlertSeconds": 15.46062,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "butterfly/expert",
+      "requests": 40,
+      "mean": 1288.49632,
+      "p50": 330.4227,
+      "p95": 4440.7484,
+      "max": 4966.2758,
+      "meanAlertSeconds": 64.424816,
+      "flagged": false,
+      "maxAlertSeconds": 248.31379,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "butterfly/master",
+      "requests": 40,
+      "mean": 322.0707075,
+      "p50": 272.0867,
+      "p95": 728.3479,
+      "max": 948.0175,
+      "meanAlertSeconds": 16.103535375,
+      "flagged": false,
+      "maxAlertSeconds": 47.400875,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "butterfly/nightmare",
+      "requests": 40,
+      "mean": 6068.4327875,
+      "p50": 3935.7604,
+      "p95": 16120.4641,
+      "max": 21241.2245,
+      "meanAlertSeconds": 303.421639375,
+      "flagged": false,
+      "maxAlertSeconds": 1062.061225,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "butterfly/hell2",
+      "requests": 40,
+      "mean": 4499.643625,
+      "p50": 3409.5322,
+      "p95": 10951.9404,
+      "max": 14259.1274,
+      "meanAlertSeconds": 224.98218125,
+      "flagged": false,
+      "maxAlertSeconds": 712.95637,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "flower/veryEasy",
+      "requests": 40,
+      "mean": 11.7476325,
+      "p50": 8.9194,
+      "p95": 33.5013,
+      "max": 35.3335,
+      "meanAlertSeconds": 0.587381625,
+      "flagged": false,
+      "maxAlertSeconds": 1.766675,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "flower/normal",
+      "requests": 40,
+      "mean": 273.0860325,
+      "p50": 134.8944,
+      "p95": 766.8224,
+      "max": 2033.104,
+      "meanAlertSeconds": 13.654301625,
+      "flagged": false,
+      "maxAlertSeconds": 101.6552,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "flower/hard",
+      "requests": 40,
+      "mean": 278.9644625,
+      "p50": 159.5153,
+      "p95": 515.6041,
+      "max": 3523.2231,
+      "meanAlertSeconds": 13.948223125,
+      "flagged": false,
+      "maxAlertSeconds": 176.161155,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "flower/master",
+      "requests": 40,
+      "mean": 530.6888375,
+      "p50": 429.1758,
+      "p95": 1068.8657,
+      "max": 2364.3572,
+      "meanAlertSeconds": 26.534441875,
+      "flagged": false,
+      "maxAlertSeconds": 118.21786,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "flower/hell2",
+      "requests": 40,
+      "mean": 3298.5426775,
+      "p50": 1183.5646,
+      "p95": 9075.4496,
+      "max": 13936.7153,
+      "meanAlertSeconds": 164.927133875,
+      "flagged": false,
+      "maxAlertSeconds": 696.835765,
+      "maxAlertOver450": true,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "wordoku/veryEasy",
+      "requests": 40,
+      "mean": 5.44971,
+      "p50": 3.7002,
+      "p95": 18.4295,
+      "max": 21.3596,
+      "meanAlertSeconds": 0.2724855,
+      "flagged": false,
+      "maxAlertSeconds": 1.06798,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "wordoku/easy",
+      "requests": 40,
+      "mean": 345.7235775,
+      "p50": 211.3426,
+      "p95": 973.633,
+      "max": 1338.2495,
+      "meanAlertSeconds": 17.286178875,
+      "flagged": false,
+      "maxAlertSeconds": 66.912475,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "wordoku/hard",
+      "requests": 40,
+      "mean": 78.1739275,
+      "p50": 39.8837,
+      "p95": 283.262,
+      "max": 710.1285,
+      "meanAlertSeconds": 3.908696375,
+      "flagged": false,
+      "maxAlertSeconds": 35.506425,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "wordoku/expert",
+      "requests": 40,
+      "mean": 139.8631525,
+      "p50": 84.8384,
+      "p95": 392.5801,
+      "max": 599.3611,
+      "meanAlertSeconds": 6.993157625,
+      "flagged": false,
+      "maxAlertSeconds": 29.968055,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "wordoku/master",
+      "requests": 40,
+      "mean": 158.5351875,
+      "p50": 142.325,
+      "p95": 344.9143,
+      "max": 437.3951,
+      "meanAlertSeconds": 7.926759375,
+      "flagged": false,
+      "maxAlertSeconds": 21.869755,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    },
+    {
+      "key": "wordoku/nightmare",
+      "requests": 40,
+      "mean": 691.57365,
+      "p50": 549.555,
+      "p95": 1323.0135,
+      "max": 4217.0411,
+      "meanAlertSeconds": 34.5786825,
+      "flagged": false,
+      "maxAlertSeconds": 210.852055,
+      "maxAlertOver450": false,
+      "admission": {
+        "status": "unadmitted-no-reviewed-basis",
+        "approved": false,
+        "basis": null,
+        "margin": null,
+        "reason": "no source-qualified whole-command planning basis; a mean alert below 450 s is not a bound"
+      }
+    }
+  ],
+  "flagged": [
+    {
+      "key": "sohei/hell2",
+      "requests": 40,
+      "mean": 9711.9411975,
+      "meanAlertSeconds": 485.597059875
+    }
+  ],
+  "targetProposal": {
+    "rule": "keep t when q <= t; else min(b, max(predecessor, ceil(3 * q))); predecessor = selected target of the previous published level of the variant, 0 if none; q = raw GQ p95, b = board budget (ms)",
+    "summary": {
+      "cells": 79,
+      "kept": 62,
+      "changed": 17
+    },
+    "anomalies": [],
+    "changes": [
+      {
+        "key": "classic4/veryEasy",
+        "q": 10.1122,
+        "oldTarget": 10,
+        "proposedTarget": 31,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "classic6/veryEasy",
+        "q": 12.9032,
+        "oldTarget": 10,
+        "proposedTarget": 39,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "classic9/easy",
+        "q": 780.3884,
+        "oldTarget": 150,
+        "proposedTarget": 2342,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "classic9/normal",
+        "q": 875.5958,
+        "oldTarget": 150,
+        "proposedTarget": 2627,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "classic9/expert",
+        "q": 440.7861,
+        "oldTarget": 400,
+        "proposedTarget": 1323,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "classic9/nightmare",
+        "q": 2792.0346,
+        "oldTarget": 2500,
+        "proposedTarget": 8377,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "mega12/nightmare",
+        "q": 6280.4697,
+        "oldTarget": 3000,
+        "proposedTarget": 18842,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "mega16/hell2",
+        "q": 25239.0671,
+        "oldTarget": 10000,
+        "proposedTarget": 30000,
+        "decidedBy": "budget"
+      },
+      {
+        "key": "diagonalX/nightmare",
+        "q": 5368.3201,
+        "oldTarget": 3000,
+        "proposedTarget": 10000,
+        "decidedBy": "budget"
+      },
+      {
+        "key": "hyper/normal",
+        "q": 524.3035,
+        "oldTarget": 200,
+        "proposedTarget": 1573,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "hyper/nightmare",
+        "q": 8503.0273,
+        "oldTarget": 3000,
+        "proposedTarget": 10000,
+        "decidedBy": "budget"
+      },
+      {
+        "key": "jigsaw9/easy",
+        "q": 634.7225,
+        "oldTarget": 350,
+        "proposedTarget": 1905,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "jigsaw9/hell2",
+        "q": 6102.238,
+        "oldTarget": 5000,
+        "proposedTarget": 10000,
+        "decidedBy": "budget"
+      },
+      {
+        "key": "killer/normal",
+        "q": 1808.2659,
+        "oldTarget": 700,
+        "proposedTarget": 5425,
+        "decidedBy": "ceil3q"
+      },
+      {
+        "key": "sohei/hell2",
+        "q": 27155.5581,
+        "oldTarget": 20000,
+        "proposedTarget": 30000,
+        "decidedBy": "budget"
+      },
+      {
+        "key": "butterfly/nightmare",
+        "q": 16120.4641,
+        "oldTarget": 8000,
+        "proposedTarget": 30000,
+        "decidedBy": "budget"
+      },
+      {
+        "key": "wordoku/easy",
+        "q": 973.633,
+        "oldTarget": 250,
+        "proposedTarget": 2921,
+        "decidedBy": "ceil3q"
+      }
+    ],
+    "rows": [
+      {
+        "key": "classic4/veryEasy",
+        "q": 10.1122,
+        "oldTarget": 10,
+        "predecessor": 0,
+        "ceil3q": 31,
+        "budget": 2000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 31
+      },
+      {
+        "key": "classic6/veryEasy",
+        "q": 12.9032,
+        "oldTarget": 10,
+        "predecessor": 0,
+        "ceil3q": 39,
+        "budget": 2000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 39
+      },
+      {
+        "key": "classic6/hard",
+        "q": 321.2095,
+        "oldTarget": 350,
+        "predecessor": 39,
+        "ceil3q": 964,
+        "budget": 2000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 350
+      },
+      {
+        "key": "classic9/veryEasy",
+        "q": 18.0743,
+        "oldTarget": 60,
+        "predecessor": 0,
+        "ceil3q": 55,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 60
+      },
+      {
+        "key": "classic9/easy",
+        "q": 780.3884,
+        "oldTarget": 150,
+        "predecessor": 60,
+        "ceil3q": 2342,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 2342
+      },
+      {
+        "key": "classic9/normal",
+        "q": 875.5958,
+        "oldTarget": 150,
+        "predecessor": 2342,
+        "ceil3q": 2627,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 2627
+      },
+      {
+        "key": "classic9/hard",
+        "q": 256.0389,
+        "oldTarget": 400,
+        "predecessor": 2627,
+        "ceil3q": 769,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 400
+      },
+      {
+        "key": "classic9/expert",
+        "q": 440.7861,
+        "oldTarget": 400,
+        "predecessor": 400,
+        "ceil3q": 1323,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 1323
+      },
+      {
+        "key": "classic9/master",
+        "q": 351.9134,
+        "oldTarget": 900,
+        "predecessor": 1323,
+        "ceil3q": 1056,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 900
+      },
+      {
+        "key": "classic9/nightmare",
+        "q": 2792.0346,
+        "oldTarget": 2500,
+        "predecessor": 900,
+        "ceil3q": 8377,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 8377
+      },
+      {
+        "key": "mega12/veryEasy",
+        "q": 25.0184,
+        "oldTarget": 400,
+        "predecessor": 0,
+        "ceil3q": 76,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 400
+      },
+      {
+        "key": "mega12/easy",
+        "q": 48.6071,
+        "oldTarget": 1000,
+        "predecessor": 400,
+        "ceil3q": 146,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1000
+      },
+      {
+        "key": "mega12/normal",
+        "q": 70.2291,
+        "oldTarget": 1000,
+        "predecessor": 1000,
+        "ceil3q": 211,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1000
+      },
+      {
+        "key": "mega12/hard",
+        "q": 219.9961,
+        "oldTarget": 3000,
+        "predecessor": 1000,
+        "ceil3q": 660,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "mega12/expert",
+        "q": 2592.9769,
+        "oldTarget": 3000,
+        "predecessor": 3000,
+        "ceil3q": 7779,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "mega12/master",
+        "q": 841.9312,
+        "oldTarget": 3000,
+        "predecessor": 3000,
+        "ceil3q": 2526,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "mega12/nightmare",
+        "q": 6280.4697,
+        "oldTarget": 3000,
+        "predecessor": 3000,
+        "ceil3q": 18842,
+        "budget": 30000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 18842
+      },
+      {
+        "key": "mega12/hell2",
+        "q": 9459.1886,
+        "oldTarget": 16000,
+        "predecessor": 18842,
+        "ceil3q": 28378,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 16000
+      },
+      {
+        "key": "mega16/veryEasy",
+        "q": 36.8126,
+        "oldTarget": 1500,
+        "predecessor": 0,
+        "ceil3q": 111,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1500
+      },
+      {
+        "key": "mega16/easy",
+        "q": 56.4618,
+        "oldTarget": 4000,
+        "predecessor": 1500,
+        "ceil3q": 170,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 4000
+      },
+      {
+        "key": "mega16/normal",
+        "q": 89.5037,
+        "oldTarget": 4000,
+        "predecessor": 4000,
+        "ceil3q": 269,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 4000
+      },
+      {
+        "key": "mega16/hard",
+        "q": 1715.2888,
+        "oldTarget": 10000,
+        "predecessor": 4000,
+        "ceil3q": 5146,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 10000
+      },
+      {
+        "key": "mega16/master",
+        "q": 5528.2588,
+        "oldTarget": 10000,
+        "predecessor": 10000,
+        "ceil3q": 16585,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 10000
+      },
+      {
+        "key": "mega16/hell2",
+        "q": 25239.0671,
+        "oldTarget": 10000,
+        "predecessor": 10000,
+        "ceil3q": 75718,
+        "budget": 30000,
+        "action": "update",
+        "decidedBy": "budget",
+        "proposedTarget": 30000
+      },
+      {
+        "key": "diagonalX/veryEasy",
+        "q": 18.1067,
+        "oldTarget": 80,
+        "predecessor": 0,
+        "ceil3q": 55,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 80
+      },
+      {
+        "key": "diagonalX/normal",
+        "q": 189.9598,
+        "oldTarget": 200,
+        "predecessor": 80,
+        "ceil3q": 570,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 200
+      },
+      {
+        "key": "diagonalX/hard",
+        "q": 76.5739,
+        "oldTarget": 500,
+        "predecessor": 200,
+        "ceil3q": 230,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 500
+      },
+      {
+        "key": "diagonalX/master",
+        "q": 662.9567,
+        "oldTarget": 1200,
+        "predecessor": 500,
+        "ceil3q": 1989,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1200
+      },
+      {
+        "key": "diagonalX/nightmare",
+        "q": 5368.3201,
+        "oldTarget": 3000,
+        "predecessor": 1200,
+        "ceil3q": 16105,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "budget",
+        "proposedTarget": 10000
+      },
+      {
+        "key": "diagonalX/hell2",
+        "q": 2887.0696,
+        "oldTarget": 3000,
+        "predecessor": 10000,
+        "ceil3q": 8662,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "hyper/veryEasy",
+        "q": 18.0367,
+        "oldTarget": 80,
+        "predecessor": 0,
+        "ceil3q": 55,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 80
+      },
+      {
+        "key": "hyper/normal",
+        "q": 524.3035,
+        "oldTarget": 200,
+        "predecessor": 80,
+        "ceil3q": 1573,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 1573
+      },
+      {
+        "key": "hyper/hard",
+        "q": 80.1618,
+        "oldTarget": 500,
+        "predecessor": 1573,
+        "ceil3q": 241,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 500
+      },
+      {
+        "key": "hyper/master",
+        "q": 507.0018,
+        "oldTarget": 1200,
+        "predecessor": 500,
+        "ceil3q": 1522,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1200
+      },
+      {
+        "key": "hyper/nightmare",
+        "q": 8503.0273,
+        "oldTarget": 3000,
+        "predecessor": 1200,
+        "ceil3q": 25510,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "budget",
+        "proposedTarget": 10000
+      },
+      {
+        "key": "hyper/hell2",
+        "q": 4838.1594,
+        "oldTarget": 5000,
+        "predecessor": 10000,
+        "ceil3q": 14515,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 5000
+      },
+      {
+        "key": "jigsaw9/veryEasy",
+        "q": 54.2844,
+        "oldTarget": 150,
+        "predecessor": 0,
+        "ceil3q": 163,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 150
+      },
+      {
+        "key": "jigsaw9/easy",
+        "q": 634.7225,
+        "oldTarget": 350,
+        "predecessor": 150,
+        "ceil3q": 1905,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 1905
+      },
+      {
+        "key": "jigsaw9/normal",
+        "q": 225.2274,
+        "oldTarget": 350,
+        "predecessor": 1905,
+        "ceil3q": 676,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 350
+      },
+      {
+        "key": "jigsaw9/hard",
+        "q": 144.9141,
+        "oldTarget": 900,
+        "predecessor": 350,
+        "ceil3q": 435,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 900
+      },
+      {
+        "key": "jigsaw9/master",
+        "q": 1742.2121,
+        "oldTarget": 2000,
+        "predecessor": 900,
+        "ceil3q": 5227,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 2000
+      },
+      {
+        "key": "jigsaw9/hell2",
+        "q": 6102.238,
+        "oldTarget": 5000,
+        "predecessor": 2000,
+        "ceil3q": 18307,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "budget",
+        "proposedTarget": 10000
+      },
+      {
+        "key": "killer/veryEasy",
+        "q": 21.8626,
+        "oldTarget": 300,
+        "predecessor": 0,
+        "ceil3q": 66,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 300
+      },
+      {
+        "key": "killer/easy",
+        "q": 39.0628,
+        "oldTarget": 700,
+        "predecessor": 300,
+        "ceil3q": 118,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 700
+      },
+      {
+        "key": "killer/normal",
+        "q": 1808.2659,
+        "oldTarget": 700,
+        "predecessor": 700,
+        "ceil3q": 5425,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 5425
+      },
+      {
+        "key": "greaterThan/veryEasy",
+        "q": 54.0895,
+        "oldTarget": 300,
+        "predecessor": 0,
+        "ceil3q": 163,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 300
+      },
+      {
+        "key": "greaterThan/easy",
+        "q": 92.0121,
+        "oldTarget": 700,
+        "predecessor": 300,
+        "ceil3q": 277,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 700
+      },
+      {
+        "key": "greaterThan/hard",
+        "q": 2832.4741,
+        "oldTarget": 6000,
+        "predecessor": 700,
+        "ceil3q": 8498,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 6000
+      },
+      {
+        "key": "greaterThan/master",
+        "q": 5952.2994,
+        "oldTarget": 10000,
+        "predecessor": 6000,
+        "ceil3q": 17857,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 10000
+      },
+      {
+        "key": "greaterThan/hell2",
+        "q": 8826.2361,
+        "oldTarget": 10000,
+        "predecessor": 10000,
+        "ceil3q": 26479,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 10000
+      },
+      {
+        "key": "samurai/veryEasy",
+        "q": 46.6892,
+        "oldTarget": 3000,
+        "predecessor": 0,
+        "ceil3q": 141,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "samurai/normal",
+        "q": 837.0937,
+        "oldTarget": 8000,
+        "predecessor": 3000,
+        "ceil3q": 2512,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 8000
+      },
+      {
+        "key": "samurai/hard",
+        "q": 886.5133,
+        "oldTarget": 20000,
+        "predecessor": 8000,
+        "ceil3q": 2660,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "samurai/expert",
+        "q": 4030.8085,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 12093,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "samurai/master",
+        "q": 6686.7277,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 20061,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "sohei/veryEasy",
+        "q": 40.9578,
+        "oldTarget": 3000,
+        "predecessor": 0,
+        "ceil3q": 123,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "sohei/normal",
+        "q": 3725.2219,
+        "oldTarget": 8000,
+        "predecessor": 3000,
+        "ceil3q": 11176,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 8000
+      },
+      {
+        "key": "sohei/hard",
+        "q": 516.3258,
+        "oldTarget": 20000,
+        "predecessor": 8000,
+        "ceil3q": 1549,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "sohei/expert",
+        "q": 7013.194,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 21040,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "sohei/master",
+        "q": 4697.8951,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 14094,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "sohei/hell2",
+        "q": 27155.5581,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 81467,
+        "budget": 30000,
+        "action": "update",
+        "decidedBy": "budget",
+        "proposedTarget": 30000
+      },
+      {
+        "key": "butterfly/veryEasy",
+        "q": 28.947,
+        "oldTarget": 1000,
+        "predecessor": 0,
+        "ceil3q": 87,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1000
+      },
+      {
+        "key": "butterfly/normal",
+        "q": 1041.8416,
+        "oldTarget": 3000,
+        "predecessor": 1000,
+        "ceil3q": 3126,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "butterfly/hard",
+        "q": 211.0418,
+        "oldTarget": 8000,
+        "predecessor": 3000,
+        "ceil3q": 634,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 8000
+      },
+      {
+        "key": "butterfly/expert",
+        "q": 4440.7484,
+        "oldTarget": 8000,
+        "predecessor": 8000,
+        "ceil3q": 13323,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 8000
+      },
+      {
+        "key": "butterfly/master",
+        "q": 728.3479,
+        "oldTarget": 8000,
+        "predecessor": 8000,
+        "ceil3q": 2186,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 8000
+      },
+      {
+        "key": "butterfly/nightmare",
+        "q": 16120.4641,
+        "oldTarget": 8000,
+        "predecessor": 8000,
+        "ceil3q": 48362,
+        "budget": 30000,
+        "action": "update",
+        "decidedBy": "budget",
+        "proposedTarget": 30000
+      },
+      {
+        "key": "butterfly/hell2",
+        "q": 10951.9404,
+        "oldTarget": 15000,
+        "predecessor": 30000,
+        "ceil3q": 32856,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 15000
+      },
+      {
+        "key": "flower/veryEasy",
+        "q": 33.5013,
+        "oldTarget": 3000,
+        "predecessor": 0,
+        "ceil3q": 101,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 3000
+      },
+      {
+        "key": "flower/normal",
+        "q": 766.8224,
+        "oldTarget": 8000,
+        "predecessor": 3000,
+        "ceil3q": 2301,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 8000
+      },
+      {
+        "key": "flower/hard",
+        "q": 515.6041,
+        "oldTarget": 20000,
+        "predecessor": 8000,
+        "ceil3q": 1547,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "flower/master",
+        "q": 1068.8657,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 3207,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "flower/hell2",
+        "q": 9075.4496,
+        "oldTarget": 20000,
+        "predecessor": 20000,
+        "ceil3q": 27227,
+        "budget": 30000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 20000
+      },
+      {
+        "key": "wordoku/veryEasy",
+        "q": 18.4295,
+        "oldTarget": 100,
+        "predecessor": 0,
+        "ceil3q": 56,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 100
+      },
+      {
+        "key": "wordoku/easy",
+        "q": 973.633,
+        "oldTarget": 250,
+        "predecessor": 100,
+        "ceil3q": 2921,
+        "budget": 10000,
+        "action": "update",
+        "decidedBy": "ceil3q",
+        "proposedTarget": 2921
+      },
+      {
+        "key": "wordoku/hard",
+        "q": 283.262,
+        "oldTarget": 600,
+        "predecessor": 2921,
+        "ceil3q": 850,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 600
+      },
+      {
+        "key": "wordoku/expert",
+        "q": 392.5801,
+        "oldTarget": 600,
+        "predecessor": 600,
+        "ceil3q": 1178,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 600
+      },
+      {
+        "key": "wordoku/master",
+        "q": 344.9143,
+        "oldTarget": 1500,
+        "predecessor": 600,
+        "ceil3q": 1035,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1500
+      },
+      {
+        "key": "wordoku/nightmare",
+        "q": 1323.0135,
+        "oldTarget": 1500,
+        "predecessor": 1500,
+        "ceil3q": 3970,
+        "budget": 10000,
+        "action": "keep",
+        "decidedBy": null,
+        "proposedTarget": 1500
+      }
+    ]
+  },
+  "totals": {
+    "publishedCells": 79,
+    "requestsPerCellInGq": [
+      40
+    ],
+    "sumOfMeanAlertSeconds": 3803.9658065,
+    "flaggedCells": 1,
+    "cellsWithMaxAlertOver450": [
+      "mega12/hell2",
+      "mega16/hell2",
+      "hyper/nightmare",
+      "jigsaw9/hell2",
+      "greaterThan/hell2",
+      "samurai/expert",
+      "samurai/master",
+      "sohei/normal",
+      "sohei/expert",
+      "sohei/hell2",
+      "butterfly/nightmare",
+      "butterfly/hell2",
+      "flower/hell2"
+    ],
+    "unadmittedWithoutBasis": 78,
+    "largestMeanAlerts": [
+      {
+        "key": "sohei/hell2",
+        "mean": 9711.9411975,
+        "meanAlertSeconds": 485.597059875
+      },
+      {
+        "key": "butterfly/nightmare",
+        "mean": 6068.4327875,
+        "meanAlertSeconds": 303.421639375
+      },
+      {
+        "key": "mega12/hell2",
+        "mean": 4774.1268125,
+        "meanAlertSeconds": 238.706340625
+      },
+      {
+        "key": "butterfly/hell2",
+        "mean": 4499.643625,
+        "meanAlertSeconds": 224.98218125
+      },
+      {
+        "key": "greaterThan/hell2",
+        "mean": 4498.49288,
+        "meanAlertSeconds": 224.924644
+      },
+      {
+        "key": "mega16/hell2",
+        "mean": 4119.40283,
+        "meanAlertSeconds": 205.9701415
+      },
+      {
+        "key": "samurai/master",
+        "mean": 4115.6179625,
+        "meanAlertSeconds": 205.780898125
+      }
+    ]
+  },
+  "inputs": {
+    "qualification": {
+      "path": "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+      "bytes": 856169,
+      "sha256": "b8e546fc0ba5bd1f79f408984bf3bf8f82559305ea6bd63cbe6dc53beff0df04",
+      "acceptedSha256": "b8e546fc0ba5bd1f79f408984bf3bf8f82559305ea6bd63cbe6dc53beff0df04",
+      "equalsAccepted": true,
+      "measuredSources": "0ca29eaeebc295b6",
+      "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+      "ratingVersion": 3,
+      "seedBase": 20260601,
+      "jobs": 4,
+      "guardMs": 120000,
+      "started": "2026-11-18T19:39:50.326Z",
+      "finished": "2026-11-18T22:30:42.150Z",
+      "totals": {
+        "cells": 135,
+        "requests": 4313,
+        "hits": 3783,
+        "errors": 27,
+        "approximate": 503,
+        "invalid": 0,
+        "offered": 79,
+        "hidden": 56,
+        "stopped": 54
+      },
+      "machine": {
+        "cpu": "AMD EPYC 7763 64-Core Processor",
+        "logicalProcessors": 16,
+        "memoryGb": 64,
+        "platform": "win32 10.0.26300",
+        "node": "v26.13.0",
+        "jobs": 4
+      }
+    },
+    "publication": {
+      "sources": "75b0955e3e356bd1",
+      "acceptedSources": "75b0955e3e356bd1",
+      "equalsAccepted": true,
+      "measuredSourcesAccepted": "0ca29eaeebc295b6",
+      "measuredEqualsAccepted": true,
+      "qualifierHashNow": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+      "qualifierHashEqualsRecord": true,
+      "proof": {
+        "file": "docs/difficulty-v3/evidence/MS18c/closure/final/publication-check-final-2.txt",
+        "present": true,
+        "sha256": "a7c02e1db41c8b6555bbc35d17483d4fdf42fb7156e414458dbecc72d6b49ce5",
+        "namesPublicationSources": true,
+        "okLine": true
+      }
+    },
+    "tools": {
+      "tests/perf.js": {
+        "sha256": "7395472b46bcfe7f93f805efc1fc4747003da43e2fa53645ec0ae6a25e8f9a60",
+        "acceptedBase": "7395472b46bcfe7f93f805efc1fc4747003da43e2fa53645ec0ae6a25e8f9a60",
+        "equalsAcceptedBase": true
+      },
+      "tests/fixtures/perf-helper.js": {
+        "sha256": "d64f8b3c207f94fb8c2ce614c480ca06d96f5d9015e66ca6368bba43b59b1724",
+        "acceptedBase": "d64f8b3c207f94fb8c2ce614c480ca06d96f5d9015e66ca6368bba43b59b1724",
+        "equalsAcceptedBase": true
+      },
+      "tests/fixtures/tool-records.js": {
+        "sha256": "eec5e268287f0543fb3e1677b293b64c75618d68f50e7f176573dbb1729367c6",
+        "acceptedBase": "eec5e268287f0543fb3e1677b293b64c75618d68f50e7f176573dbb1729367c6",
+        "equalsAcceptedBase": true
+      },
+      "tests/fixtures/qualification-records.js": {
+        "sha256": "278bb9b0ba8e21a6d1a52808980eb9b00de401129a50d8180210c9f01ee1b7db",
+        "acceptedBase": null,
+        "equalsAcceptedBase": null
+      },
+      "tests/qualify.js": {
+        "sha256": "d96c15bb8653c851f580e117c7382bdc6d489ff8fc64da1353232612353ca6af",
+        "acceptedBase": null,
+        "equalsAcceptedBase": null
+      },
+      "tests/replay-fixtures.js": {
+        "sha256": "2d63205f0d27d1c96a7d19bf791dbfbf56435ce7363cb8f54a19627d2e8887ef",
+        "acceptedBase": null,
+        "equalsAcceptedBase": null
+      }
+    },
+    "identities": {
+      "hashIdentity": "1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0",
+      "acceptedHashIdentity": "1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0",
+      "hashIdentityEqualsAccepted": true,
+      "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+      "acceptedReplayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+      "replayIdentityEqualsAccepted": true,
+      "engineFiles": 46
+    },
+    "declarations": {
+      "loadedFiles": 47,
+      "loader": "tests/replay-fixtures.js loadFixtures",
+      "perfCellsEqualPublished": true,
+      "attemptsByVariant": {
+        "classic4": 8,
+        "classic6": 8,
+        "classic9": 8,
+        "mega12": 4,
+        "mega16": 2,
+        "diagonalX": 8,
+        "hyper": 8,
+        "jigsaw9": 8,
+        "killer": 8,
+        "greaterThan": 8,
+        "samurai": 2,
+        "sohei": 2,
+        "butterfly": 4,
+        "flower": 2,
+        "wordoku": 8
+      }
+    },
+    "node": "v26.13.0",
+    "machine": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300",
+      "node": "v26.13.0"
+    },
+    "machineEqualsGq": true,
+    "git": {
+      "head": "a13d3414dedd7a3c4daa7b8eb3d00c22919351f3",
+      "changedPaths": []
+    },
+    "protocol": {
+      "runs": 50,
+      "seedBase": 7000,
+      "seedStride": 101,
+      "warmup": 0,
+      "trace": "summary",
+      "jobs": 1,
+      "comparison": "p95 < target, strict, unrounded (no SG_TIME_FACTOR)",
+      "gate": {
+        "cells": 79,
+        "requestsPerCell": 50,
+        "requests": 3950,
+        "minSuccesses": 72
+      },
+      "alertLimitSeconds": 450,
+      "hardLimitSeconds": 540,
+      "gqProtocol": "trace off, jobs 4, guard 120000 ms, seeds 20260601 base: a scheduling signal only"
+    },
+    "exactTimesAreFourDecimals": true
+  }
+}

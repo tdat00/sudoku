@@ -1,0 +1,86 @@
+mutation 88 (W21 a refusal is read as a record cap): DETECTED by run 0 (generator tech-als) - 45 total, 44 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > is one counter for the whole call: it continues from what is spent and is never reset
+mutation 89 (W22 every error is swallowed): DETECTED by run 0 (generator tech-als) - 52 total, 51 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.4 s
+    FAIL tech-als > als enumerator: the parent budget, cancellation and other errors > lets cancellation and every other error through, with nothing returned and nothing published
+mutation 90 (W23 cancellation is swallowed too): DETECTED by run 0 (generator tech-als) - 52 total, 51 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.5 s
+    FAIL tech-als > als enumerator: the parent budget, cancellation and other errors > lets cancellation and every other error through, with nothing returned and nothing published
+mutation 91 (W24 a spent budget propagates): DETECTED by run 0 (generator tech-als) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > publishes no onPatternWork record, whatever the outcome: the enclosing finder does
+mutation 92 (W25 a thrown null is not rethrown as it is): DETECTED by run 0 (generator tech-als) - 52 total, 51 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.5 s
+    FAIL tech-als > als enumerator: the parent budget, cancellation and other errors > lets cancellation and every other error through, with nothing returned and nothing published
+mutation 93 (W26 the default work limit is the record limit): DETECTED by run 0 (generator tech-als) - 40 total, 39 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > reaches the real limit of 4096 on a 16 x 16 board with two candidates per cell, within the work limit
+mutation 94 (W27 a new guard is marked capped): DETECTED by run 0 (generator tech-als) - 40 total, 39 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > reaches the real limit of 4096 on a 16 x 16 board with two candidates per cell, within the work limit
+mutation 95 (W28 a new guard has used 1): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 96 (W29 a new guard has a check mark of 1): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 97 (W30 a fractional work limit is rounded): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 98 (W31 a fractional work limit is not floored): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 99 (W32 a limit of 0 is refused): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 100 (W33 a negative limit is allowed): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 101 (W34 an infinite limit is allowed): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 102 (W35 a refusal throws another error): DETECTED by run 0 (generator tech-als) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > publishes no onPatternWork record, whatever the outcome: the enclosing finder does
+mutation 103 (V01 a guard without the refusal flag is accepted): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 104 (V02 a guard may have used more than its limit): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 105 (V03 a guard may have a check mark ahead of its use): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 106 (V04 a null guard is not checked): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 107 (V05 a guard of another type is accepted): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 108 (V06 a fractional count is a count): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.8 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 109 (V07 a negative count is a count): DETECTED by run 0 (generator tech-als) - 43 total, 42 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the shared work guard and the work limit > needs a guard made by createWork: a missing, wrong or hand-made invalid one is solver.invalidOption
+mutation 110 (V08 limits may be null): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 111 (V09 limits may be any value): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 112 (V10 the record limit is not read): DETECTED by run 0 (generator tech-als) - 37 total, 36 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.3 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > keeps the first records of the order and says so: every lowered limit is a prefix of the whole
+mutation 113 (V11 the cell limit is not read): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 114 (V12 the option error has another code): DETECTED by run 0 (generator tech-als) - 41 total, 40 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 2.7 s
+    FAIL tech-als > als enumerator: the record limit and its prefix > floors a fractional limit and rejects an invalid one with solver.invalidOption
+mutation 115 (V13 an absent limits object is an error): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 116 (G01 the last unit is skipped): DETECTED by run 0 (generator tech-als) - 14 total, 13 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes genuine PARTIAL all-different units: a cage of three cells that no complete unit shares
+mutation 117 (G02 the first unit is skipped): DETECTED by run 0 (generator tech-als) - 9 total, 8 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+mutation 118 (G03 only complete units): DETECTED by run 0 (generator tech-als) - 14 total, 13 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes genuine PARTIAL all-different units: a cage of three cells that no complete unit shares
+mutation 119 (G04 only rows, columns and boxes): DETECTED by run 0 (generator tech-als) - 14 total, 13 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes genuine PARTIAL all-different units: a cage of three cells that no complete unit shares
+mutation 120 (G05 cages are not units): DETECTED by run 0 (generator tech-als) - 14 total, 13 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes genuine PARTIAL all-different units: a cage of three cells that no complete unit shares
+mutation 121 (G06 diagonals and windows are not units): DETECTED by run 0 (generator tech-als) - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes the diagonal and window units of other grids, and the regions of a Jigsaw
+mutation 122 (G07 regions are not units): DETECTED by run 0 (generator tech-als) - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes the diagonal and window units of other grids, and the regions of a Jigsaw
+mutation 123 (G08 only rows and columns): DETECTED by run 0 (generator tech-als) - 14 total, 13 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: what is an almost-locked set > takes genuine PARTIAL all-different units: a cage of three cells that no complete unit shares
+mutation 124 (S01 the tables are remembered per state object): DETECTED by run 0 (generator tech-als) - 57 total, 56 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.0 s
+    FAIL tech-als > als enumerator: ownership, immutability and no cache > keeps no candidate list: the same state object, changed between calls, is read again every time
+mutation 125 (S02 the digit lists are shared between records): DETECTED by run 0 (generator tech-als) - 54 total, 53 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 3.5 s
+    FAIL tech-als > als enumerator: ownership, immutability and no cache > returns arrays of its own: writing to the result changes nothing in the next call
+mutation 126 (S03 the unit of the model is sorted in place): DETECTED by run 0 (generator tech-als) - 17 total, 16 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: order and duplicates > does not depend on the order of the units or on the order of the cells inside a unit
+mutation 127 (S04 the state is written): DETECTED by run 0 (generator tech-als) - 17 total, 16 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-als > als enumerator: order and duplicates > does not depend on the order of the units or on the order of the cells inside a unit
+mutation 128 (S05 the context is written): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+mutation 129 (S06 the records are remembered for the next call): NOT DETECTED - 111 total, 111 passed, 0 failed, 0 skipped - 0 failing - 8.8 s
+mutation 130 (S07 the model is written): DETECTED by run 0 (generator tech-als) - 3 total, 2 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-als > als enumerator: scope > returns exactly records, complete and capHit, and records of exactly cells, digits and occurrences
+detected 42 of 43, survivors 1, 82.1 s

@@ -1,0 +1,7 @@
+$ node tests\artifacts\difficulty-v3\MS18c\identities-now.cjs
+generator quick fingerprint fc31c9db8a2cea17e480f5130d531042a4c073bc4dd0d2c97296afc6a6079ac2
+player quick fingerprint 4c21573fbc00ca82a4e6d0a15bf6e8201be84940d00f87840a49e2046bd3d25a
+generator with the manual trees 13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f
+replay identity (wire and analysis ledgers) 1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc
+hash identity (hash ledgers) 1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0
+exit=0 seconds=0.585

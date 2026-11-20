@@ -1,0 +1,46 @@
+{
+  "schema": "ms18d-c-cleanup-1",
+  "verdict": "stopped-owned",
+  "startedAtMs": 1795078123639,
+  "finishedAtMs": 1795078124255,
+  "selfPid": 32108,
+  "includeController": true,
+  "simulated": false,
+  "snapshotOk": true,
+  "snapshotError": null,
+  "processCount": 286,
+  "roots": [
+    {
+      "Role": "controller",
+      "Pid": 12384,
+      "State": "absent"
+    },
+    {
+      "Role": "command",
+      "Pid": 13004,
+      "State": "alive"
+    }
+  ],
+  "survivors": [
+    {
+      "Pid": 13004,
+      "CreatedMs": 1795078123611,
+      "Name": "node.exe",
+      "Why": "the recorded command"
+    }
+  ],
+  "ignored": [],
+  "stops": [
+    {
+      "pid": 13004,
+      "createdMs": 1795078123611,
+      "name": "node.exe",
+      "why": "the recorded command",
+      "outcome": "stopped"
+    }
+  ],
+  "confirmedGone": true,
+  "stillAlive": [],
+  "ambiguous": false,
+  "problems": []
+}

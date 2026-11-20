@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=replay,cache,worker,pipeline,digger-target
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (10.27 s)
+FAIL digger-target: 74 passed, 1 failed  (1.83 s)
+ok   pipeline: 151 passed  (37.97 s)
+ok   replay: 154 passed  (23.03 s)
+(node:24296) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   worker: 144 passed  (45.46 s)
+
+Failures:
+  FAIL digger-target > digGuidedSteps: a real pass follows the policy, replayed from its dig log (MS06c2) > those passes meet every kind of objective: each refusal reason, scores, and stuck proposals
+       AssertionError: expected 29 to be > 30
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\digger-target.test.js:687:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 5
+Tests:  630 total, 629 passed, 1 failed, 0 skipped
+Time:   118.56 s running tests, 118.71 s total
+exit=1 seconds=118.849

@@ -1,0 +1,3 @@
+Inventory: 1683 tests in 30 suites (0 skipped, 19 benchmarks), registration 0.3 s
+Written: docs/difficulty-v3/evidence/MS05r5/player-inventory.json
+MS05r5 exit=0 seconds=0.37

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"time) > hell1 >","exact":null,"count":8},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 9736.8,
+  "results": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 9551.3,
+    "tests": [
+      {"suite":"difficulty","name":"hits the requested level in at least 90 % of the puzzles","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > hits the requested level in at least 90 % of the puzzles","status":"pass","ms":9359.195,"reason":"","error":null,"ordinal":122},
+      {"suite":"difficulty","name":"I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)","status":"pass","ms":1.209,"reason":"","error":null,"ordinal":123},
+      {"suite":"difficulty","name":"I2, I3, I6: givens belong to the solution they determine; at least minClues","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I2, I3, I6: givens belong to the solution they determine; at least minClues","status":"pass","ms":1.688,"reason":"","error":null,"ordinal":124},
+      {"suite":"difficulty","name":"I5: every puzzle has a complete proof; an exact one has its score in the band","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I5: every puzzle has a complete proof; an exact one has its score in the band","status":"pass","ms":93.525,"reason":"","error":null,"ordinal":125},
+      {"suite":"difficulty","name":"stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)","status":"pass","ms":0.028,"reason":"","error":null,"ordinal":126},
+      {"suite":"difficulty","name":"I7: every deduction on the way to the solution is sound","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > I7: every deduction on the way to the solution is sound","status":"pass","ms":94.49,"reason":"","error":null,"ordinal":127},
+      {"suite":"difficulty","name":"has the pattern of empty cells that the default symmetry asks for (rotational 180)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > has the pattern of empty cells that the default symmetry asks for (rotational 180)","status":"pass","ms":0.151,"reason":"","error":null,"ordinal":128},
+      {"suite":"difficulty","name":"is generated well inside the budget of design.md section 9.1 (median time)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hell1 > is generated well inside the budget of design.md section 9.1 (median time)","status":"pass","ms":0.084,"reason":"","error":null,"ordinal":129}
+    ],
+    "suites": [
+      {"name":"difficulty","total":8,"passed":8,"failed":0,"skipped":0,"ms":9551.147}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=time) > hell1 >","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-hell1.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

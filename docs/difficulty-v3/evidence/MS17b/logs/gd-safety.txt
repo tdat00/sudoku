@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: safety net against a technique bug (risk R3) > --results=..\docs\difficulty-v3\evidence\MS17b\gd\safety.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 3 passed  (5.08 s)
+
+Suites: 1
+Tests:  3 total, 3 passed, 0 failed, 0 skipped
+Time:   5.08 s running tests, 5.34 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/safety.json
+exit=0 seconds=5.580

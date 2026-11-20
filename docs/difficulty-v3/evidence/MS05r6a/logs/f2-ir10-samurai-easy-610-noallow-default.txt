@@ -1,0 +1,1 @@
+samurai/easy#610 allowance none, attempts default: hash 232b9a6d6e02d281, 1 attempt(s), exact true, 392 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\samurai-easy-610-noallow-default.json

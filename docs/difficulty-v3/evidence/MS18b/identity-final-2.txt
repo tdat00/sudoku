@@ -1,0 +1,10 @@
+HEAD 393775a1ea855787d731cb2684b196dfb45519ab
+git status --porcelain: 169 entries
+git diff --stat 57c1b10 HEAD, last line:  158 files changed, 74302 insertions(+), 142 deletions(-)
+git diff --quiet 57c1b10 HEAD outside tasks/: exit 1
+generator quick-set fingerprint 274067a0beb67a595f711be792ed2625193d2549ee8ec9a8bfc795cc8ef73b3c
+player quick-set fingerprint 5e55cec60307ec6c0d4235d5e07b63934cabb4f1fe077da40b99277e5576d14c
+replay identity (E wires and analyses) ff55cbce4c34034d501ee495417e7c69da953143c9f74a4bae4f5b722d719421
+hash identity (E hashes) b1c78ecbcf3a0e4bb0d6a1f661f235e5f9ce63e4b3756dc3260892ac19270a58
+soak sourceHash (64 SOURCE_FILES) 85537bbd28702233722e448d36d87f5faf445ca25668b1926e8ffb22f4b93c3a
+soak toolHash (soak.js and its two helpers) efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7

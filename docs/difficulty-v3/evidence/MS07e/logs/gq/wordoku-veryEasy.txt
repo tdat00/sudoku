@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=wordoku --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-veryEasy.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+wordoku/veryEasy: 40/40 hits, p95 19 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| wordoku | veryEasy | 40 | 40 | 100 % | 3 ms | 19 ms | 22 ms | 10.0 s | offered |
+
+wordoku: ["veryEasy"]
+exit=0 seconds=0.717

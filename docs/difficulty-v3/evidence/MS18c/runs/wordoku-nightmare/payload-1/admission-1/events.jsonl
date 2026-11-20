@@ -1,0 +1,6 @@
+{"at":"2026-11-18T22:28:16.192Z","t":0.1417963,"type":"launcher-start","who":"launcher","pid":9020,"node":"v26.13.0","cell":"wordoku/nightmare","runId":"ms18c-20261118T222805089-23176","slot":1,"ordinal":1,"startSeconds":0.1411586}
+{"at":"2026-11-18T22:28:16.195Z","t":0.144341,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8556876}
+{"at":"2026-11-18T22:28:23.393Z","t":7.3430796,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.342,"ready":false}
+{"at":"2026-11-18T22:28:23.400Z","t":7.3499159,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=wordoku","--level=nightmare","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-nightmare\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-nightmare\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T22:28:23.421Z","t":7.3710516,"type":"qualifier-created","who":"launcher","pid":9540,"rSeconds":7.3688851}
+{"at":"2026-11-18T22:28:31.285Z","t":15.234384,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":7.8654582,"eventFailures":0}

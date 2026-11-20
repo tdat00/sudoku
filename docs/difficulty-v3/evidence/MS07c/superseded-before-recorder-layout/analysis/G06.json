@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "e0a59bb866fa134f3b7a4620bb4b66e3f692f8ca8e689ce015749804eae27a1d",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "1ee14fcf52be7808a1b7ba7a8837553ef85a4969",
+  "dirty": true,
+  "generatedAt": "2026-11-14T23:48:18.536Z",
+  "argv": ["--ids=G06","--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\analysis\\G06.json"],
+  "records": [
+    {"key":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"value":{"id":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"today":{"steps":16,"missing":2},"counts":{"compact":8,"details":32},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,19,"hiddenSingleBox","—","—","N"],[4,26,"G/Choose",51,48,4,"hiddenSingleBox","—","—","—"],[5,27,"G/Choose",53,530,482,"simpleColouring","Y","R5C9","—"],[6,29,"G/Choose",57,711,181,"simpleColouring","—","—","—"],[7,30,"G/Choose",59,2330,1619,"forcingChainLong","Y","R8C9","—"],[8,30,"F/Final",59,2330,0,"forcingChainLong","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,44,44,45,46,47,48,530,657,711,2330,2330],"alive":null,"folds":[],"jumps":[{"step":5,"from":48,"to":530,"before":{"P":1.25,"W":54.75,"R":1.714196,"V":44.835165,"E":51,"level":"easy"},"after":{"P":360,"W":580,"R":124.619747,"V":45.591398,"E":53,"level":"hard"},"choice":{"chosen":530,"others":7,"nulls":0,"max":49,"at":94,"rated":9,"refused":1},"singles":[{"op":"remove","cell":"R5C1","score":48},{"op":"remove","cell":"R5C9","score":530}],"cause":"single-culprit","frame":"R5C9","firstUse":{"k":31,"n":56,"technique":"simpleColouring"},"key":"technique.simpleColouring.step","effects":"remove candidate 4@R1C2, 4@R2C9, 4@R4C3, 4@R5C4, 4@R5C8, 4@R6C1"},{"step":7,"from":711,"to":2330,"before":{"P":360,"W":3389.25,"R":304.247989,"V":47.010309,"E":57,"level":"expert"},"after":{"P":1400,"W":6642.25,"R":882.760325,"V":47.676768,"E":59,"level":"nightmare"},"choice":{"chosen":2330,"others":1,"nulls":0,"max":726,"at":109,"rated":2,"refused":0},"singles":[{"op":"remove","cell":"R2C1","score":712},{"op":"remove","cell":"R8C9","score":2330}],"cause":"single-culprit","frame":"R8C9","firstUse":{"k":25,"n":85,"technique":"forcingChainLong"},"key":"technique.forcingChainLong.step.contradiction","effects":"remove candidate 6@R5C8"}]},"ms":203,"overrides":[]}
+  ]
+}

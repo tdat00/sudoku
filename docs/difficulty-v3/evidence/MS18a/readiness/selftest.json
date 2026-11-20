@@ -1,0 +1,132 @@
+{
+  "task": "MS18a selftest",
+  "payload": [
+    "node",
+    "--version"
+  ],
+  "wrapper": "launch.cjs (MS18a)",
+  "wrapperStartedAt": "2026-11-18T17:35:41.283+07:00",
+  "node": "v26.13.0",
+  "host": "CPC-ledat-4UIQ7",
+  "screen": {
+    "intervals": 5,
+    "intervalMs": 1000,
+    "meanMax": 0.5,
+    "peakMax": 1
+  },
+  "locks": {
+    "foreign": {
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-timing.lock",
+      "present": false
+    },
+    "own": {
+      "path": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+      "present": true,
+      "modified": "2026-11-18T17:35:41.192+07:00",
+      "content": "27616|MS18a selftest|2026-11-18T10:35:41.1835242Z"
+    },
+    "ownMatchesTask": true
+  },
+  "processSnapshots": {
+    "before": "288 processes",
+    "after": "288 processes"
+  },
+  "logicalCpus": 16,
+  "counterSource": "os.cpus() cumulative times (user, nice, sys, idle, irq), idle share of the total",
+  "intervals": [
+    {
+      "index": 1,
+      "start": "2026-11-18T17:35:41.831+07:00",
+      "end": "2026-11-18T17:35:42.835+07:00",
+      "idleDelta": 14640,
+      "totalDelta": 16072,
+      "busyFraction": 0.08909905425584863,
+      "busyCores": 1.425584868093578
+    },
+    {
+      "index": 2,
+      "start": "2026-11-18T17:35:42.835+07:00",
+      "end": "2026-11-18T17:35:43.834+07:00",
+      "idleDelta": 15235,
+      "totalDelta": 16082,
+      "busyFraction": 0.05266757865937077,
+      "busyCores": 0.8426812585499324
+    },
+    {
+      "index": 3,
+      "start": "2026-11-18T17:35:43.834+07:00",
+      "end": "2026-11-18T17:35:44.835+07:00",
+      "idleDelta": 15611,
+      "totalDelta": 16065,
+      "busyFraction": 0.028260192966075293,
+      "busyCores": 0.4521630874572047
+    },
+    {
+      "index": 4,
+      "start": "2026-11-18T17:35:44.835+07:00",
+      "end": "2026-11-18T17:35:45.835+07:00",
+      "idleDelta": 14936,
+      "totalDelta": 16141,
+      "busyFraction": 0.0746546062821386,
+      "busyCores": 1.1944737005142176
+    },
+    {
+      "index": 5,
+      "start": "2026-11-18T17:35:45.835+07:00",
+      "end": "2026-11-18T17:35:46.835+07:00",
+      "idleDelta": 14798,
+      "totalDelta": 16144,
+      "busyFraction": 0.08337462834489595,
+      "busyCores": 1.3339940535183352
+    }
+  ],
+  "meanBusyCores": 1.0497793936266535,
+  "maxBusyCores": 1.425584868093578,
+  "processContext": {
+    "note": "cumulative CPU seconds gained between the two snapshots (about the five intervals plus the snapshots); context only, not a gate",
+    "busiest": [
+      {
+        "pid": 1968,
+        "name": "copilot",
+        "cpuSeconds": 0.734,
+        "thisWrapperOrItsParent": false
+      },
+      {
+        "pid": 20812,
+        "name": "Code",
+        "cpuSeconds": 0.063,
+        "thisWrapperOrItsParent": false
+      },
+      {
+        "pid": 2988,
+        "name": "Code",
+        "cpuSeconds": 0.031,
+        "thisWrapperOrItsParent": false
+      },
+      {
+        "pid": 16980,
+        "name": "Code",
+        "cpuSeconds": 0.016,
+        "thisWrapperOrItsParent": false
+      },
+      {
+        "pid": 15804,
+        "name": "msedgewebview2",
+        "cpuSeconds": 0.016,
+        "thisWrapperOrItsParent": false
+      },
+      {
+        "pid": 7428,
+        "name": "node",
+        "cpuSeconds": 0.016,
+        "thisWrapperOrItsParent": true
+      }
+    ]
+  },
+  "ready": false,
+  "reasons": [
+    "mean 1.050 busy cores is above 0.5",
+    "maximum 1.426 busy cores is above 1"
+  ],
+  "readinessSeconds": 6.083
+}

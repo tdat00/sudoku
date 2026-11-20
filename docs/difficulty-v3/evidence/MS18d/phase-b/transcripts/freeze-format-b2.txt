@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\check-format.js --outputs ..\docs\difficulty-v3\evidence\MS18d\phase-b\outputs-b2-sha256.txt ..\docs\difficulty-v3\evidence\MS18d\phase-b\format-check-b2.txt ..\generator\design.md ..\DEVELOPERGUIDE.md ..\DEVELOPERGUIDE.vn.md tests\suites\mega.test.js tests\suites\multigrid.test.js tests\suites\manual-corpus.test.js tests\fixtures\perf-helper.js
+checked 283 files, 0 with problems
+exit=0 seconds=0.417

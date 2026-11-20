@@ -1,0 +1,52 @@
+[
+  {
+    "label": "g-wire-G09",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\wire\\G09.json"
+    ],
+    "projectionSeconds": 34,
+    "projectionBasis": "MS08b pass 2a g-wire-G09 14.217 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G10",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\wire\\G10.json"
+    ],
+    "projectionSeconds": 35,
+    "projectionBasis": "MS08b pass 2a g-wire-G10 14.908 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G11",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\wire\\G11.json"
+    ],
+    "projectionSeconds": 22,
+    "projectionBasis": "MS08b pass 2a g-wire-G11 8.457 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G12",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\wire\\G12.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS08b pass 2a g-wire-G12 4.573 s (box-like kite, same shard); 2 x + 5 s"
+  },
+  {
+    "label": "g-wire-G13",
+    "args": [
+      "tests\\replay-fixtures.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS08b\\wire\\G13.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS08b pass 2a g-wire-G13 0.71 s (box-like kite, same shard); 2 x + 5 s"
+  }
+]

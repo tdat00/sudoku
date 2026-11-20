@@ -1,0 +1,90 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "tee-first",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in tee-first",
+  "startedAtMs": 1795102765452,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-cell",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "cli-no-exit",
+      "stderr-output",
+      "marker-missing",
+      "orphan",
+      "partial-output"
+    ],
+    "problems": [
+      "the command has no recorded exit code",
+      "the raw stderr byte count was not recorded",
+      "the tee transcript does not end with exit=<code> seconds=<n>: p95 target = design.md section 9.1; cells = variant x level the variant offers",
+      "the orphan barrier did not find the command and its descendants gone: stopped-owned",
+      "stdout ends before the column header"
+    ],
+    "header": {
+      "node": "v26.13.0",
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "runs": 50,
+      "warmup": 0,
+      "seed": 7000
+    },
+    "row": null,
+    "summary": null,
+    "miss": null,
+    "cli": {
+      "exit": null,
+      "signal": null
+    },
+    "tee": {
+      "marker": "p95 target = design.md section 9.1; cells = variant x level the variant offers",
+      "exit": 1
+    }
+  },
+  "cli": {
+    "exit": null,
+    "signal": null
+  },
+  "tee": {
+    "pid": 31588,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "p95 target = design.md section 9.1; cells = variant x level the variant offers",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "stopped-owned",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": null,
+    "stderr": null
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 78000,
+      "systemMicros": 78000
+    },
+    "tee": null
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 65,
+  "finishedAtMs": 1795102767372
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "diagonalX/nightmare",
+  "runId": "ms18c-20261118T203259560-30960",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-nightmare\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "619d31cd9b973b09fa0aaea4e73b65f7aa0dcea7b1c7faccc6fa191c11f7b2d1"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-nightmare\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "a408803091c314443b66541cf931ec2b6cc749c2e4bdbe7e5ad448cdab9f1a79"
+    }
+  },
+  "wSeconds": 30.4997825,
+  "rSeconds": 7.2172745,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2172745,
+      "requests": 40,
+      "maxMs": 7414.5825,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 23.1,
+      "sSeconds": 22.5862661,
+      "sFirstRoundSeconds": 22.5862661,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5137338999999993,
+      "wSeconds": 30.4997825,
+      "wMinusQ": 7.399782499999998
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 1719.0385,
+    "p95": 5368.3201,
+    "max": 7414.5825,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\diagonalX-nightmare.json",
+      "sha256": "619d31cd9b973b09fa0aaea4e73b65f7aa0dcea7b1c7faccc6fa191c11f7b2d1"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\diagonalX-nightmare.md",
+      "sha256": "a408803091c314443b66541cf931ec2b6cc749c2e4bdbe7e5ad448cdab9f1a79"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

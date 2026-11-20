@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["steps"],"filter":null,"exact":"steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 336.4,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 165.1,
+    "tests": [
+      {"suite":"steps","name":"a jump over several moves says in which complete change the new technique first appears","fullName":"steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears","status":"pass","ms":164.759,"reason":"","error":null,"ordinal":23}
+    ],
+    "suites": [
+      {"name":"steps","total":1,"passed":1,"failed":0,"skipped":0,"ms":164.896}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=steps","--exact=steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\steps-23.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795077726098,
+  "startedAtMs": 1795077726181,
+  "lockAcquiredAtMs": 1795077726103,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795077710597,
+    "lastCheckMs": 1795077725897,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 1500,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": false
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 83,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795076827095,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899086,
+  "reasons": [
+    "foreign-lock-watch-interval-over-1s"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 29016,
+    "task": "stand-in hold-a-lock-watch-with-checks-more-than-a-second-apar",
+    "controllerPid": 21568,
+    "controllerParentPid": 29016,
+    "wrapperPid": 29016
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-a-lock-watch-with-checks-more-than-a-second-apar\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-a-lock-watch-with-checks-more-than-a-second-apar\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-a-lock-watch-with-checks-more-than-a-second-apar\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

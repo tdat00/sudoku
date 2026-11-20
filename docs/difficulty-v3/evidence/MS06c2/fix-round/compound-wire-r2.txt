@@ -1,0 +1,7 @@
+plan: 5 item(s), 5 with their own projection, sum 132.0 s
+#0 g-wire-G09-r2 exit=0 node=13.738s: recorded 1 of 5 keys (G09) in docs/difficulty-v3/evidence/MS06c2/wire/G09.json; a ledger is one shard, merge them all with --merge
+#1 g-wire-G10-r2 exit=0 node=24.752s: recorded 1 of 5 keys (G10) in docs/difficulty-v3/evidence/MS06c2/wire/G10.json; a ledger is one shard, merge them all with --merge
+#2 g-wire-G11-r2 exit=0 node=8.325s: recorded 1 of 5 keys (G11) in docs/difficulty-v3/evidence/MS06c2/wire/G11.json; a ledger is one shard, merge them all with --merge
+#3 g-wire-G12-r2 exit=0 node=4.607s: recorded 1 of 5 keys (G12) in docs/difficulty-v3/evidence/MS06c2/wire/G12.json; a ledger is one shard, merge them all with --merge
+#4 g-wire-G13-r2 exit=0 node=19.752s: recorded 1 of 5 keys (G13) in docs/difficulty-v3/evidence/MS06c2/wire/G13.json; a ledger is one shard, merge them all with --merge
+compound complete: 5 shard(s) in 71.2 s; next --from=5

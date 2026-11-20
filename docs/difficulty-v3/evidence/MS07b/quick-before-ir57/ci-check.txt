@@ -1,0 +1,12 @@
+$ bash .github/scripts/generator-suites.sh check
+Generator quick set: 3449 tests in 52 suites; Player quick set: 1749 tests in 30 suites
+  group shared-small: 4 shard(s) (core-shared, steps, replay, mega), 1528 tests, projected 630 s of 1800 s
+  group own-suites: 2 shard(s) (own-fast, digger-target), 1698 tests, projected 930 s of 1800 s
+  group pipeline: 1 shard(s) (pipeline), 154 tests, projected 1260 s of 1800 s
+  group replay-player: 1 shard(s) (player), 69 tests, projected 720 s of 1800 s
+  Player job: projected 360 s of 1800 s
+Every quick test is in exactly one shard (3449 of 3449), no manual or unknown suite, no empty shard, every job inside its limit: check passed.
+exit=0 seconds=3.9
+$ bash .github/scripts/generator-suites.sh selftest
+50 checks, 0 failed
+exit=0

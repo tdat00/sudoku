@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=play --filter=real grouped hint
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+FAIL play: 0 passed, 1 failed  (328 ms)
+
+Failures:
+  FAIL play > play: group proofs of version 2 > plays a real grouped hint of the engine: the full union of the cells, every group member written, nothing of the hint changed (MS13c)
+       AssertionError: expected Array(4)[9, "forcingChainLong", "contradiction", 6] to equal Array(4)[0, "x", "x", 0]
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\play.test.js:514:92)
+       at main (Q:\git\sudoku\player\tests\node-runner.js:295:33)
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\node-runner.js:348:1)
+       at Module._compile (node:internal/modules/cjs/loader:1968:14)
+
+Suites: 1
+Tests:  1 total, 0 passed, 1 failed, 0 skipped
+Time:   328 ms running tests, 399 ms total
+exit=1 seconds=0.491

@@ -1,0 +1,38 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T20:21:47.920Z",
+  "finished": "2026-11-18T20:27:48.467Z",
+  "seconds": 361,
+  "cells": [
+    {
+      "variant": "mega16",
+      "level": "hell1",
+      "cellCount": 256,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {"n":9,"hits":0,"rate":0,"p50":120004.1561,"p95":120015.1966,"max":120015.1966,"verdict":"hidden","stopped":"time","errors":9,"approximate":0,"invalid":0},
+      "requests": [
+        {"key":"mega16/hell1","index":0,"seed":1595984747,"hit":false,"error":"budget.exceeded","ms":120012.9989},
+        {"key":"mega16/hell1","index":1,"seed":1579207128,"hit":false,"error":"budget.exceeded","ms":120015.1966},
+        {"key":"mega16/hell1","index":2,"seed":1629539985,"hit":false,"error":"budget.exceeded","ms":120001.6639},
+        {"key":"mega16/hell1","index":3,"seed":1612762366,"hit":false,"error":"budget.exceeded","ms":120008.9768},
+        {"key":"mega16/hell1","index":4,"seed":1663095223,"hit":false,"error":"budget.exceeded","ms":120002.4467},
+        {"key":"mega16/hell1","index":5,"seed":1646317604,"hit":false,"error":"budget.exceeded","ms":120002.3292},
+        {"key":"mega16/hell1","index":6,"seed":1696650461,"hit":false,"error":"budget.exceeded","ms":120004.1561},
+        {"key":"mega16/hell1","index":7,"seed":1679872842,"hit":false,"error":"budget.exceeded","ms":120006.2977},
+        {"key":"mega16/hell1","index":8,"seed":1461763795,"hit":false,"error":"budget.exceeded","ms":120001.2027}
+      ]
+    }
+  ],
+  "support": {"mega16":[]}
+}

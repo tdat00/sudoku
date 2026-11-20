@@ -1,0 +1,32 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=xyChain,nishio --sources=tests\artifacts\difficulty-v3\MS13c\sources-catalogue.json --max-puzzles=64 --max-hints=400 --write
+selected 2 technique ID(s); mode write
+replaying 27 puzzle(s) for 2 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/27 classic9 Easy 1 -> 47 hint(s), solved; wanted found: -
+puzzle 2/27 classic9 Nightmare 1156 -> 76 hint(s), solved; wanted found: -
+puzzle 3/27 classic9 Nightmare 75 -> 77 hint(s), solved; wanted found: -
+puzzle 4/27 classic9 Nightmare 44 -> 59 hint(s), solved; wanted found: -
+puzzle 5/27 killer Easy 11 -> 51 hint(s), solved; wanted found: -
+puzzle 6/27 greaterThan Normal 4 -> 67 hint(s), solved; wanted found: -
+puzzle 7/27 classic9 Hard 18 -> 62 hint(s), solved; wanted found: -
+puzzle 8/27 classic9 Nightmare 176 -> 68 hint(s), solved; wanted found: xyChain
+puzzle 9/27 classic9 Hard 55 -> 58 hint(s), solved; wanted found: -
+puzzle 10/27 classic9 Hell 2 escargot -> 112 hint(s), solved; wanted found: nishio
+puzzle 11/27 greaterThan Normal 8 -> 58 hint(s), solved; wanted found: -
+puzzle 12/27 classic9 Nightmare 692 -> 61 hint(s), solved; wanted found: -
+puzzle 13/27 killer Hard 16 -> 148 hint(s), solved; wanted found: -
+puzzle 14/27 classic9 Nightmare 989 -> 60 hint(s), solved; wanted found: -
+puzzle 15/27 hyper Nightmare 162 -> 93 hint(s), solved; wanted found: -
+puzzle 16/27 classic9 Hell 1 644 -> 88 hint(s), solved; wanted found: -
+puzzle 17/27 classic9 Hell 1 214 -> 70 hint(s), solved; wanted found: xyChain
+puzzle 18/27 classic9 Nightmare 648 -> 78 hint(s), solved; wanted found: xyChain
+puzzle 19/27 classic9 Nightmare 561 -> 58 hint(s), solved; wanted found: -
+puzzle 20/27 classic9 Nightmare 3 -> 60 hint(s), solved; wanted found: -
+puzzle 21/27 killer Master 54 -> 157 hint(s), solved; wanted found: -
+puzzle 22/27 classic9 - testkit-4242-5335 -> 77 hint(s), solved; wanted found: -
+puzzle 23/27 classic9 Nightmare 13 -> 73 hint(s), solved; wanted found: -
+puzzle 24/27 classic9 Nightmare 70 -> 71 hint(s), solved; wanted found: xyChain
+puzzle 25/27 classic9 Nightmare 11 -> 69 hint(s), solved; wanted found: -
+puzzle 26/27 classic9 - testkit-4242-14 -> 57 hint(s), solved; wanted found: -
+puzzle 27/27 classic9 Hell 1 8 -> 75 hint(s), solved; wanted found: -
+wrote player/js/ui/help-examples.js (37 examples; 2 selected: xyChain, nishio; the others kept)
+exit=0 seconds=3.358

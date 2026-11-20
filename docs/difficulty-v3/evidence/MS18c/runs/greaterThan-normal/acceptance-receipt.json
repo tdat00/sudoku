@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "greaterThan/normal",
+  "runId": "ms18c-20261118T211017895-32856",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\greaterThan-normal\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "6f70a7f6f30c567ae1a11a139d98f07a040295e7fda01906d8250f6935690bed"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\greaterThan-normal\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "f5be7cdaac488d4e6af9d0633b8d57710f546272fb21073f26a77aae322ff3e6"
+    }
+  },
+  "wSeconds": 36.9886546,
+  "rSeconds": 7.2137032,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2137032,
+      "requests": 40,
+      "maxMs": 10639.4935,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 3,
+      "slowFirstRound": 3,
+      "qSeconds": 29.592,
+      "sSeconds": 29.027317099999998,
+      "sFirstRoundSeconds": 29.027317099999998,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5646829000000034,
+      "wSeconds": 36.9886546,
+      "wMinusQ": 7.396654599999994
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 1999.4735,
+    "p95": 10192.4051,
+    "max": 10639.4935,
+    "verdict": "hidden",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\greaterThan-normal.json",
+      "sha256": "6f70a7f6f30c567ae1a11a139d98f07a040295e7fda01906d8250f6935690bed"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\greaterThan-normal.md",
+      "sha256": "f5be7cdaac488d4e6af9d0633b8d57710f546272fb21073f26a77aae322ff3e6"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

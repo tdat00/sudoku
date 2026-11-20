@@ -1,0 +1,14 @@
+$ node tests\node-runner.js --suite=techniques,tech-wing,technique-weights,difficulty-floor,tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (28.65 s)
+ok   tech-chain: 107 passed  (7.09 s)
+ok   tech-wing: 355 passed  (9.18 s)
+ok   technique-weights: 13 passed  (5 ms)
+ok   techniques: 250 passed  (2.77 s)
+
+Suites: 5
+Tests:  773 total, 773 passed, 0 failed, 0 skipped
+Time:   47.71 s running tests, 47.82 s total
+exit=0 seconds=47.946

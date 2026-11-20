@@ -1,0 +1,9 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=forcingChain,forcingChainLong --max-puzzles=16 --max-hints=400 --check
+selected 2 technique ID(s); mode check
+replaying 2 puzzle(s) for 2 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/2 classic9 - - -> 78 hint(s), solved; wanted found: forcingChain
+puzzle 2/2 classic9 - - -> 77 hint(s), solved; wanted found: forcingChainLong
+forcingChain: matches help-examples.js
+forcingChainLong: matches help-examples.js
+help-examples.js is up to date for the 2 selected ID(s)
+exit=0 seconds=0.651

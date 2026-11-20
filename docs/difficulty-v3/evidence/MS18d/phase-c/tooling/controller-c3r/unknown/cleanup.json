@@ -1,0 +1,22 @@
+{
+  "schema": "ms18d-c-cleanup-1",
+  "verdict": "hold-unknown",
+  "startedAtMs": 1795101676441,
+  "finishedAtMs": 1795101676537,
+  "selfPid": 24528,
+  "includeController": false,
+  "simulated": true,
+  "snapshotOk": false,
+  "snapshotError": null,
+  "processCount": 0,
+  "roots": [],
+  "survivors": [],
+  "ignored": [],
+  "stops": [],
+  "confirmedGone": true,
+  "stillAlive": [],
+  "ambiguous": true,
+  "problems": [
+    "no usable process table: "
+  ]
+}

@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js audit --out=docs\difficulty-v3\evidence\MS18d\phase-d\provenance-audit.json
+ms18d-closeout audit error: ENOENT: no such file or directory, open 'Q:\git\sudoku\docs\difficulty-v3\evidence\MS18d\gp\mega16-easy\mega16-easy.i0.n50.a2\journals.json'
+exit=3 seconds=3.019

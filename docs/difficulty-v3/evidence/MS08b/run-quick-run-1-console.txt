@@ -1,0 +1,201 @@
+==== shard core-shared (1356 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (63 ms)
+ok   board-view: 37 passed  (83 ms)
+ok   constraints: 43 passed  (77 ms)
+ok   exchange: 20 passed  (233 ms)
+ok   harness: 25 passed  (2.30 s)
+ok   logical-solver: 100 passed  (278 ms)
+ok   model: 49 passed  (35 ms)
+ok   solver: 50 passed  (2.69 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.91 s)
+ok   tech-chain: 107 passed  (7.81 s)
+ok   tech-fish: 235 passed  (10.22 s)
+ok   tech-subset: 100 passed  (920 ms)
+ok   tech-wing: 168 passed  (1.67 s)
+ok   techniques: 204 passed  (2.05 s)
+ok   wordbook: 7 passed  (14 ms)
+
+Suites: 16
+Tests:  1356 total, 1356 passed, 0 failed, 0 skipped
+Time:   30.37 s running tests, 30.68 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (16.35 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   16.35 s running tests, 16.55 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-steps.json
+==== shard replay (154 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 154 passed  (15.47 s)
+
+Suites: 1
+Tests:  154 total, 154 passed, 0 failed, 0 skipped
+Time:   15.47 s running tests, 15.68 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (9.55 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   9.55 s running tests, 9.76 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-mega.json
+shard core-shared: exit 0, 30.9 s
+shard steps: exit 0, 16.7 s
+shard replay: exit 0, 15.9 s
+shard mega: exit 0, 10.0 s
+MS08b quick quick-final shared-small exit=0 seconds=75.005
+shared-small started 2026-11-15T19:58:11.800+07:00 finished 2026-11-15T19:59:26.886+07:00 exit=0
+==== shard own-fast (1680 tests): node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,pattern-cost-tools,perf-tooling,purity,qualification-records,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (74 ms)
+ok   cache: 106 passed  (9.46 s)
+(node:6272) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 46 passed  (97 ms)
+ok   difficulty-diagnostics: 94 passed  (12.84 s)
+ok   difficulty-floor: 48 passed  (27.26 s)
+ok   digger: 64 passed  (997 ms)
+ok   events: 68 passed  (522 ms)
+ok   export: 78 passed  (6.12 s)
+ok   format: 18 passed  (213 ms)
+ok   full-grid: 42 passed  (2.49 s)
+ok   help: 30 passed  (4.61 s)
+ok   history: 15 passed  (1.54 s)
+ok   i18n: 83 passed  (946 ms)
+ok   manual-corpus: 46 passed  (2.35 s)
+ok   mega-contract: 44 passed  (1.88 s)
+ok   multigrid: 184 passed  (19.18 s)
+ok   pattern-cost-tools: 32 passed  (3.18 s)
+ok   perf-tooling: 31 passed  (12.20 s)
+ok   purity: 41 passed  (23 ms)
+ok   qualification-records: 46 passed  (2.13 s)
+ok   recovery-profile: 27 passed  (569 ms)
+ok   replay-recorders: 39 passed  (7.94 s)
+ok   result-view: 22 passed  (1.82 s)
+ok   rng: 28 passed  (27 ms)
+ok   smoke: 44 passed  (5.08 s)
+ok   store: 85 passed  (102 ms)
+ok   technique-weights: 8 passed  (1 ms)
+ok   theme: 57 passed  (31 ms)
+ok   ui-contract: 67 passed  (353 ms)
+ok   variants-registry: 12 passed  (9 ms)
+ok   worker: 144 passed  (46.99 s)
+
+Suites: 31
+Tests:  1680 total, 1680 passed, 0 failed, 0 skipped
+Time:   171.03 s running tests, 171.41 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-own-fast.json
+==== shard digger-target (75 tests): node tests/node-runner.js --suite=digger-target --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-digger-target.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   digger-target: 75 passed  (1.49 s)
+
+Suites: 1
+Tests:  75 total, 75 passed, 0 failed, 0 skipped
+Time:   1.49 s running tests, 1.69 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-digger-target.json
+shard own-fast: exit 0, 171.6 s
+shard digger-target: exit 0, 1.9 s
+MS08b quick quick-final own-suites exit=0 seconds=175.754
+own-suites started 2026-11-15T19:59:42.903+07:00 finished 2026-11-15T20:02:38.665+07:00 exit=0
+==== shard pipeline (151 tests): node tests/node-runner.js --suite=pipeline --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-pipeline.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   pipeline: 151 passed  (31.81 s)
+
+Suites: 1
+Tests:  151 total, 151 passed, 0 failed, 0 skipped
+Time:   31.81 s running tests, 32.01 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-pipeline.json
+shard pipeline: exit 0, 32.2 s
+MS08b quick quick-final pipeline exit=0 seconds=32.825
+pipeline started 2026-11-15T20:02:54.678+07:00 finished 2026-11-15T20:03:27.510+07:00 exit=0
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS08b\quick-final\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   player: 69 passed  (23.62 s)
+
+Suites: 1
+Tests:  69 total, 69 passed, 0 failed, 0 skipped
+Time:   23.62 s running tests, 23.80 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/generator-player.json
+shard player: exit 0, 24.0 s
+MS08b quick quick-final replay-player exit=0 seconds=24.645
+replay-player started 2026-11-15T20:03:43.511+07:00 finished 2026-11-15T20:04:08.163+07:00 exit=0
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   bits: 32 passed  (61 ms)
+ok   board-view: 37 passed  (76 ms)
+ok   constraints: 43 passed  (76 ms)
+ok   exchange: 20 passed  (219 ms)
+ok   harness: 25 passed  (1.85 s)
+ok   logical-solver: 100 passed  (320 ms)
+ok   model: 49 passed  (38 ms)
+ok   solver: 50 passed  (2.65 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+ok   tech-chain: 107 passed  (7.79 s)
+FAIL tech-fish: 232 passed, 3 failed  (357.93 s)
+ok   tech-subset: 100 passed  (912 ms)
+ok   tech-wing: 168 passed  (1.62 s)
+ok   techniques: 204 passed  (2.57 s)
+ok   wordbook: 7 passed  (9 ms)
+ok   a11y: 24 passed  (18 ms)
+ok   app: 15 passed  (12 ms)
+ok   fixtures: 21 passed  (14 ms)
+ok   help-example-tools: 51 passed  (4.77 s)
+ok   help: 27 passed  (1.33 s)
+ok   i18n: 66 passed  (83 ms)
+ok   importer: 88 passed  (320 ms)
+ok   model-aids: 7 passed  (2 ms)
+ok   play: 68 passed  (167 ms)
+ok   progress: 26 passed  (47 ms)
+ok   store: 17 passed  (3 ms)
+ok   text-boards: 14 passed  (14 ms)
+ok   theme: 54 passed  (37 ms)
+ok   ui-contract: 62 passed  (142 ms)
+
+Failures:
+  FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > bridges through a region: the vector on the jigsaw board (J4 holds R3C5 and R4C7)
+       AssertionError: expected 0 to be 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2493:31)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL tech-fish > twoStringKite (R11): a region as the box, and the ownership on multi-grid boards > finds the transposed vector on the transposed jigsaw board (J4 holds R5C3 and R7C4)
+       AssertionError: expected 0 to be 1
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2510:31)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+  FAIL tech-fish > twoStringKite (R11): agreement with an independent enumeration > agrees on jigsaw9 and on its transpose, where the irregular regions are the bridges
+       AssertionError: expected Array(2)["jigsaw9Turned", false] to equal Array(2)["jigsaw9Turned", true]
+       at Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2720:54
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2715:35)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 30
+Tests:  1896 total, 1893 passed, 3 failed, 0 skipped
+Time:   384.93 s running tests, 385.21 s total
+Results: docs/difficulty-v3/evidence/MS08b/quick-final/player-quick.json
+(node:22792) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+MS08b quick quick-final player exit=1 seconds=385.599
+player finished 2026-11-15T20:10:49.779+07:00 exit=1

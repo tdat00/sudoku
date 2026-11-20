@@ -1,0 +1,304 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "runId": "ms18c-20261118T222712357-20728",
+  "cell": "wordoku/expert",
+  "epoch": "MS18c-GQ-20261118-01",
+  "payloadSlot": 1,
+  "admissionOrdinal": 1,
+  "state": "finished",
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "inputs": {
+    "ratingVersion": 3,
+    "engineSources": "0ca29eaeebc295b6",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77"
+  },
+  "policy": "MS18c-GQ-host-active",
+  "method": "MS18c-GQ-structural-v1",
+  "supervisor": {
+    "pid": 20728,
+    "createdUtcMicros": "2026-11-18T22:27:11.593973Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x800;killOnClose=False;breakawayOk=True;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 27540,
+    "createdUtcMicros": "2026-11-18T22:27:17.449441Z"
+  },
+  "clocks": {
+    "oStart": "2026-11-18T22:27:12.353Z",
+    "oSeconds": 5550.0,
+    "oDeadline": "2026-11-18T23:59:42.3570457Z",
+    "T": 2850.0,
+    "tStart": "2026-11-18T22:27:17.430Z",
+    "tDeadline": "2026-11-18T23:14:47.4442086Z",
+    "rSeconds": null,
+    "wSeconds": 9.7047154,
+    "lockWaitedSeconds": 0.037,
+    "note": "T starts at the creation of the owned launcher after the lock acquisition and excludes that wait",
+    "elapsedSeconds": 0.328
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\status.json",
+    "supervisorLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\supervisor.log",
+    "preLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\pre-ms18c-20261118T222712357-20728.log",
+    "events": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\events.jsonl",
+    "readiness": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\readiness.json",
+    "stdout": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\stdout.txt",
+    "stderr": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\stderr.txt",
+    "qualifierJson": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\qualifier.json",
+    "qualifierMarkdown": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\payload-1\\admission-1\\qualifier.md",
+    "journal": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\journal.jsonl",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\acceptance-receipt.json"
+  },
+  "members": [
+    2856,
+    6244,
+    15140,
+    18476,
+    18824,
+    24300,
+    24528,
+    27268,
+    27296,
+    27540,
+    29416,
+    29564,
+    31348,
+    31580,
+    31948,
+    32824,
+    34112,
+    34348
+  ],
+  "membersSeen": [
+    {
+      "pid": 2856,
+      "createdUtcMicros": "2026-11-18T22:27:25.241719Z"
+    },
+    {
+      "pid": 6244,
+      "createdUtcMicros": "2026-11-18T22:27:17.476441Z"
+    },
+    {
+      "pid": 15140,
+      "createdUtcMicros": "2026-11-18T22:27:25.056963Z"
+    },
+    {
+      "pid": 18476,
+      "createdUtcMicros": "2026-11-18T22:27:25.096457Z"
+    },
+    {
+      "pid": 18824,
+      "createdUtcMicros": "2026-11-18T22:27:24.905946Z"
+    },
+    {
+      "pid": 24300,
+      "createdUtcMicros": "2026-11-18T22:27:25.256234Z"
+    },
+    {
+      "pid": 24528,
+      "createdUtcMicros": "2026-11-18T22:27:17.605001Z"
+    },
+    {
+      "pid": 27268,
+      "createdUtcMicros": "2026-11-18T22:27:25.266833Z"
+    },
+    {
+      "pid": 27296,
+      "createdUtcMicros": "2026-11-18T22:27:17.580755Z"
+    },
+    {
+      "pid": 27540,
+      "createdUtcMicros": "2026-11-18T22:27:17.449441Z"
+    },
+    {
+      "pid": 29416,
+      "createdUtcMicros": "2026-11-18T22:27:23.976284Z"
+    },
+    {
+      "pid": 29564,
+      "createdUtcMicros": "2026-11-18T22:27:25.279422Z"
+    },
+    {
+      "pid": 31348,
+      "createdUtcMicros": "2026-11-18T22:27:18.265005Z"
+    },
+    {
+      "pid": 31580,
+      "createdUtcMicros": "2026-11-18T22:27:24.699390Z"
+    },
+    {
+      "pid": 31948,
+      "createdUtcMicros": "2026-11-18T22:27:25.126829Z"
+    },
+    {
+      "pid": 32824,
+      "createdUtcMicros": "2026-11-18T22:27:24.715568Z"
+    },
+    {
+      "pid": 34112,
+      "createdUtcMicros": "2026-11-18T22:27:18.288270Z"
+    },
+    {
+      "pid": 34348,
+      "createdUtcMicros": "2026-11-18T22:27:23.988766Z"
+    }
+  ],
+  "heartbeatAt": "2026-11-18T22:27:27.731Z",
+  "finalStatus": "record-accepted",
+  "exitCode": 0,
+  "activeProcesses": 4,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 27540,
+    "launcherCreated": "2026-11-18T22:27:17.449441Z",
+    "tStartIso": "2026-11-18T22:27:17.430Z",
+    "tStartTicks": 6356186811632,
+    "tStartNs": 635618681163200,
+    "createdAfterSeconds": 0.0382565,
+    "resumedAfterSeconds": 0.0433316,
+    "launcherExit": 0,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 9.7047154,
+    "launcherExitedAfterSeconds": 9.7013345,
+    "members": [
+      2856,
+      6244,
+      15140,
+      18476,
+      18824,
+      24300,
+      24528,
+      27268,
+      27296,
+      27540,
+      29416,
+      29564,
+      31348,
+      31580,
+      31948,
+      32824,
+      34112,
+      34348
+    ],
+    "membersDetail": [
+      {
+        "pid": 2856,
+        "createdUtcMicros": "2026-11-18T22:27:25.241719Z"
+      },
+      {
+        "pid": 6244,
+        "createdUtcMicros": "2026-11-18T22:27:17.476441Z"
+      },
+      {
+        "pid": 15140,
+        "createdUtcMicros": "2026-11-18T22:27:25.056963Z"
+      },
+      {
+        "pid": 18476,
+        "createdUtcMicros": "2026-11-18T22:27:25.096457Z"
+      },
+      {
+        "pid": 18824,
+        "createdUtcMicros": "2026-11-18T22:27:24.905946Z"
+      },
+      {
+        "pid": 24300,
+        "createdUtcMicros": "2026-11-18T22:27:25.256234Z"
+      },
+      {
+        "pid": 24528,
+        "createdUtcMicros": "2026-11-18T22:27:17.605001Z"
+      },
+      {
+        "pid": 27268,
+        "createdUtcMicros": "2026-11-18T22:27:25.266833Z"
+      },
+      {
+        "pid": 27296,
+        "createdUtcMicros": "2026-11-18T22:27:17.580755Z"
+      },
+      {
+        "pid": 27540,
+        "createdUtcMicros": "2026-11-18T22:27:17.449441Z"
+      },
+      {
+        "pid": 29416,
+        "createdUtcMicros": "2026-11-18T22:27:23.976284Z"
+      },
+      {
+        "pid": 29564,
+        "createdUtcMicros": "2026-11-18T22:27:25.279422Z"
+      },
+      {
+        "pid": 31348,
+        "createdUtcMicros": "2026-11-18T22:27:18.265005Z"
+      },
+      {
+        "pid": 31580,
+        "createdUtcMicros": "2026-11-18T22:27:24.699390Z"
+      },
+      {
+        "pid": 31948,
+        "createdUtcMicros": "2026-11-18T22:27:25.126829Z"
+      },
+      {
+        "pid": 32824,
+        "createdUtcMicros": "2026-11-18T22:27:24.715568Z"
+      },
+      {
+        "pid": 34112,
+        "createdUtcMicros": "2026-11-18T22:27:18.288270Z"
+      },
+      {
+        "pid": 34348,
+        "createdUtcMicros": "2026-11-18T22:27:23.988766Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  },
+  "post": {
+    "ok": true,
+    "outcome": "record-accepted",
+    "verdict": "accepted",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-expert\\acceptance-receipt.json",
+    "monitor": {
+      "proceed": true,
+      "invalid": [],
+      "invalidTiming": [],
+      "breaches": [],
+      "metrics": {
+        "rSeconds": 7.2846278,
+        "requests": 40,
+        "maxMs": 599.3611,
+        "stopped": null,
+        "secondRoundRan": false,
+        "slowTotal": 0,
+        "slowFirstRound": 0,
+        "qSeconds": 2.228,
+        "sSeconds": 1.6699865,
+        "sFirstRoundSeconds": 1.6699865,
+        "sSecondRoundSeconds": 0,
+        "qMinusS": 0.5580135,
+        "wSeconds": 9.7047154,
+        "wMinusQ": 7.476715399999999
+      }
+    }
+  },
+  "writeFailures": 0
+}

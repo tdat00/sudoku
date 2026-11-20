@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: safety net against a technique bug (risk R3) >","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 5336.4,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 5083.6,
+    "tests": [
+      {"suite":"difficulty","name":"never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","status":"pass","ms":102.093,"reason":"","error":null,"ordinal":151},
+      {"suite":"difficulty","name":"digLevel marks the puzzle it had to replace","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > digLevel marks the puzzle it had to replace","status":"pass","ms":77.033,"reason":"","error":null,"ordinal":152},
+      {"suite":"difficulty","name":"never returns an ambiguous candidate of a search either: the keeper counts before it keeps","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous candidate of a search either: the keeper counts before it keeps","status":"pass","ms":4903.886,"reason":"","error":null,"ordinal":153}
+    ],
+    "suites": [
+      {"name":"difficulty","total":3,"passed":3,"failed":0,"skipped":0,"ms":5083.347}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: safety net against a technique bug (risk R3) >","--results=..\\docs\\difficulty-v3\\evidence\\MS17b\\gd\\safety.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

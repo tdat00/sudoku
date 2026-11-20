@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":null,"exact":"variants > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 331897.4,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 331645.2,
+    "tests": [
+      {"suite":"variants","name":"real top-level results with clues shown again replay faithfully (mega16)","fullName":"variants > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)","status":"pass","ms":331643.659,"reason":"","error":null,"ordinal":284}
+    ],
+    "suites": [
+      {"name":"variants","total":1,"passed":1,"failed":0,"skipped":0,"ms":331644.034}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--exact=variants > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-mega16-replay.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": false,
+  "problems": [
+    "since the campaign base 1 path(s) changed that are not campaign outputs or pack files: docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/r1/x.json"
+  ],
+  "head": {
+    "actual": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "descendant": true,
+    "diff": {
+      "paths": [
+        "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/r1/x.json"
+      ],
+      "violations": [
+        "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/r1/x.json"
+      ]
+    },
+    "ok": false
+  },
+  "status": {
+    "rawText": [],
+    "rawClean": true,
+    "reviewedClean": true,
+    "entries": [],
+    "allowed": [],
+    "violations": []
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\manifest.txt",
+    "entries": 48,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "955b4035fa9e4216f21dc4d781377b36f92ff99c6d0f2aed7ec24af261195afe"
+  }
+}

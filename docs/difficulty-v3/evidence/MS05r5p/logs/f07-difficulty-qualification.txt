@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 6 passed  (3.37 s)
+
+Suites: 1
+Tests:  6 total, 6 passed, 0 failed, 0 skipped
+Time:   3.38 s running tests, 3.46 s total
+MS05r5p exit=0 seconds=3.563

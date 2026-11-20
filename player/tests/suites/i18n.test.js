@@ -980,6 +980,214 @@
       expect(Object.keys(kinds).length).toBeGreaterThanOrEqual(F.ids.length);
     }, 30000);
 
+    it('renders the step of the Jigsaw technique lawOfLeftovers in both languages from its real fixtures, with exactly ' +
+      'the arguments its finding provides', function () {
+        packsReady();
+        var JT = SG.fixtures && SG.fixtures.jigsawTechniques;
+        if (!JT || !H) SG.test.skip('the Jigsaw technique fixtures are not loaded');
+        var tech = SG.techniques.get('lawOfLeftovers');
+        JT.byId.lawOfLeftovers.positive.forEach(function (fixture) {
+          var model = JT.modelOf(fixture);
+          var finding = tech.find(model, JT.stateOf(fixture), SG.techniques.createContext(model));
+          if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+          expect(finding.i18nKey).toBe('technique.lawOfLeftovers.step');
+          var args = finding.i18nArgs;
+          expect(Object.keys(args).sort()).toEqual(['cells', 'digits', 'lines', 'regions']);
+          args.digits.forEach(function (digit) { expect(typeof digit).toBe('number'); });
+          ['lines', 'regions', 'cells'].forEach(function (name) {
+            args[name].forEach(function (label) { expect(typeof label).toBe('string'); });
+          });
+          LOCALES.forEach(function (code) {
+            var text = inLocale(code, function () { return I.t(finding.i18nKey, args); });
+            if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+              throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code + ' with args ' +
+                JSON.stringify(args));
+            }
+            placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+              expect(hasOwn(args, name)).toBe(true);
+            });
+            // the lines, the regions, the cells left over and the removed digits are all named, in the order given
+            ['lines', 'regions', 'cells', 'digits'].forEach(function (name) {
+              expect([code, name, text.indexOf(args[name].join(', ')) !== -1]).toEqual([code, name, true]);
+            });
+          });
+        });
+      });
+
+    it('renders every subtype of the Unique Rectangle in both languages from its real fixtures (types 1 to 4 and the ' +
+      'hidden form)',
+      function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        var keys = {};
+        try {
+          F.byId.uniqueRectangle.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('uniqueRectangle').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            keys[finding.i18nKey] = true;
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+        expect(Object.keys(keys).sort()).toEqual(['technique.uniqueRectangle.hidden.step',
+          'technique.uniqueRectangle.type1.step', 'technique.uniqueRectangle.type2.step',
+          'technique.uniqueRectangle.type3.step', 'technique.uniqueRectangle.type4.step']);
+      });
+
+    it('renders the BUG+1 step in both languages from its real fixtures, with the label of the cell and the digit',
+      function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.bugPlusOne.positive).toHaveLength(2);
+          F.byId.bugPlusOne.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('bugPlusOne').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            expect(finding.i18nKey).toBe('technique.bugPlusOne.step');
+            expect(Object.keys(finding.i18nArgs)).toEqual(['cell', 'label', 'digit']);
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              expect(text).toContain(finding.i18nArgs.label);
+              expect(text).toContain(String(finding.i18nArgs.digit));
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
+    it('renders the XY-chain step in both languages from its real fixtures, with the digit, the length and the ' +
+      'cells of the chain', function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.xyChain.positive).toHaveLength(2);
+          F.byId.xyChain.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('xyChain').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            expect(finding.i18nKey).toBe('technique.xyChain.step');
+            expect(Object.keys(finding.i18nArgs)).toEqual(['digit', 'kind', 'length', 'chains']);
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              expect(text).toContain(String(finding.i18nArgs.length));
+              finding.i18nArgs.chains[0].forEach(function (step) {
+                expect(text).toContain(SG.model.cellLabel(model, step[0]) + (step[2] === 1 ? '=' : '\u2260') +
+                  step[1]);
+              });
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
+    it('renders the ALS-XZ step in both languages from its real fixtures, with both digits and the cells of the ' +
+      'two sets', function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.alsXz.positive).toHaveLength(2);
+          F.byId.alsXz.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('alsXz').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            expect(finding.i18nKey).toBe('technique.alsXz.step');
+            expect(Object.keys(finding.i18nArgs)).toEqual(['digitX', 'digitY', 'cells']);
+            finding.i18nArgs.cells.forEach(function (label) { expect(typeof label).toBe('string'); });
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, finding.i18nArgs); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              expect([code, text.indexOf(finding.i18nArgs.cells.join(', ')) !== -1]).toEqual([code, true]);
+              expect(text).toContain(String(finding.i18nArgs.digitX));
+              expect(text).toContain(String(finding.i18nArgs.digitY));
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(finding.i18nArgs, name)).toBe(true);
+              });
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
+    it('renders the Sue de Coq step in both languages from its real fixtures, both forms: the line, the ' +
+      'box and every digit list, and the left-over digit only when there is one', function () {
+        packsReady();
+        if (!F || !H) SG.test.skip('the technique fixtures are not loaded');
+        var model = H.model('classic9');
+        var ctx = SG.techniques.createContext(model);
+        I.setCellLabeler(function (i) { return SG.model.cellLabel(model, i); });
+        try {
+          expect(F.byId.sueDeCoq.positive).toHaveLength(2);
+          var keys = [];
+          F.byId.sueDeCoq.positive.forEach(function (fixture) {
+            var finding = SG.techniques.get('sueDeCoq').find(model, stateOf(model, fixture), ctx);
+            if (finding === null) throw new Error('fixture "' + fixture.name + '" found nothing');
+            keys.push(finding.i18nKey);
+            var args = finding.i18nArgs;
+            expect(Object.keys(args)).toEqual(['digits', 'partDigits', 'forced', 'line', 'box']);
+            var base = 'technique.sueDeCoq.step';
+            expect(finding.i18nKey).toBe(base + (args.forced.length === 0 ? '' : '.extra'));
+            LOCALES.forEach(function (code) {
+              var text = inLocale(code, function () { return I.t(finding.i18nKey, args); });
+              if (/[{}]|undefined|NaN|\[object/.test(text) || text === finding.i18nKey) {
+                throw new Error(finding.i18nKey + ' renders as "' + text + '" in ' + code);
+              }
+              [args.line, args.box, args.digits.join(', '), args.partDigits.join(', ')]
+                .forEach(function (part) {
+                  expect([code, text.indexOf(part) !== -1]).toEqual([code, true]);
+                });
+              if (args.forced.length > 0) expect(text).toContain(args.forced.join(', '));
+              placeholders(SG.locales[code][finding.i18nKey]).forEach(function (name) {
+                expect(hasOwn(args, name)).toBe(true);
+              });
+            });
+          });
+          expect(keys).toEqual(['technique.sueDeCoq.step', 'technique.sueDeCoq.step.extra']);
+          // the two forms differ in the placeholder set: only the extra one names the left-over digit
+          LOCALES.forEach(function (code) {
+            expect(placeholders(SG.locales[code]['technique.sueDeCoq.step'])).not.toContain('forced');
+            expect(placeholders(SG.locales[code]['technique.sueDeCoq.step.extra'])).toContain('forced');
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
+
     it('picks the colouring text that matches args.rule', function () {
       packsReady();
       var args = { digit: 4, colour1: ['R1C1'], colour2: ['R2C2'], falseColour: 1,
@@ -1032,6 +1240,177 @@
         I.setCellLabeler(null);
       }
     });
+  });
+
+  // The group proofs of difficulty v3 (R16, MS13b): `i18nArgs = { proofVersion: 2, kind, length, chains }` with nodes
+  // `{ cells, digit, truth }`. No finder emits them yet. SG.play.localizeArgs writes the cells as labels and the
+  // digits as symbols first (play.test.js, with the proofs of the independent checker); here the formatter reads the
+  // forms it can be given: ids with a label function, or labels and symbols that are already written.
+  describe('i18n: chains of proof version 2 (grouped nodes)', function () {
+    var H = SG.techHelper;
+    var NE = '\u2260';
+    var OR = ' \u2228 ';
+    var AND = ' \u2227 ';
+    var THEN = ' \u21d2 ';
+
+    function node(cells, digit, truth) {
+      return { cells: cells, digit: digit, truth: truth };
+    }
+
+    function ready() {
+      packsReady();
+      if (!H) SG.test.skip('the technique helper is not loaded');
+    }
+
+    function withLabels(model, fn) {
+      I.setCellLabeler(function (cell) { return SG.model.cellLabel(model, cell); });
+      try {
+        return fn();
+      } finally {
+        I.setCellLabeler(null);
+      }
+    }
+
+    function chainsText(key, chains) {
+      return I.t(key, { kind: 'contradiction', length: 3, chains: chains });
+    }
+
+    it('writes a true group as the disjunction of its members and a false group as every member false, in both ' +
+      'languages', function () {
+        ready();
+        var model = H.model('classic9');
+        var key = 'technique.forcingChain.step.contradiction';
+        var chains = [[node([0], 5, 1), node([1], 5, 0), node([0, 1], 5, 1)],
+          [node([0], 5, 1), node([9], 5, 0), node([0, 1, 2], 5, 0)]];
+        withLabels(model, function () {
+          LOCALES.forEach(function (code) {
+            var text = inLocale(code, function () { return chainsText(key, chains); });
+            expect([code, text.indexOf('R1C1=5' + THEN + 'R1C2' + NE + '5' + THEN + '(R1C1=5' + OR + 'R1C2=5) | R1C1=5' +
+              THEN + 'R2C1' + NE + '5' + THEN + '(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5' + AND + 'R1C3' + NE + '5)') !== -1])
+              .toEqual([code, true]);
+            expect(/[{}]|undefined|NaN|\[object/.test(text)).toBe(false);
+          });
+        });
+      });
+
+    // The body of each subtype explanation after its prefix "<name> of {length} links: {chains}. " (SA2's ruling of MS13b).
+    var BODY = {
+      en: {
+        endpoints: 'If the first end is false, the last end is true, so at least one end is true. Candidates that ' +
+          'conflict with every candidate represented by each end are removed.',
+        contradiction: 'If the first candidate were true, a statement about a candidate or group would be both true ' +
+          'and false, which is impossible. So the first candidate is false and is removed.',
+        forced: 'If the first candidate were false, a statement about a candidate or group would be both true and ' +
+          'false, which is impossible. So the first candidate is true and is placed.'
+      },
+      vi: {
+        endpoints: 'Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với ' +
+          'từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.',
+        contradiction: 'Nếu ứng viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều ' +
+          'không thể xảy ra. Vậy ứng viên đầu tiên sai và bị loại.',
+        forced: 'Nếu ứng viên đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể ' +
+          'xảy ra. Vậy ứng viên đầu tiên đúng và được điền vào.'
+      }
+    };
+    var PREFIX = {
+      forcingChain: { en: 'Forcing chain of 3 links: ', vi: 'Chuỗi suy luận dài 3 liên kết: ' },
+      forcingChainLong: { en: 'Long forcing chain of 3 links: ', vi: 'Chuỗi suy luận dài hơn thường, 3 liên kết: ' }
+    };
+
+    it('says in the three explanations of both forcing chains what a group end and a group in a proof mean, with the ' +
+      'prefix and the placeholders of each text unchanged', function () {
+        ready();
+        var model = H.model('classic9');
+        // a group end (an endpoints proof starts from the false group), a group inside and at the end of two paths
+        var chains = [[node([0, 1], 5, 0), node([4], 5, 1)], [node([0, 1], 5, 0), node([9], 5, 1)]];
+        var shown = '(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)' + THEN + 'R1C5=5 | (R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)' +
+          THEN + 'R2C1=5';
+        withLabels(model, function () {
+          ['endpoints', 'contradiction', 'forced'].forEach(function (kind) {
+            ['forcingChain', 'forcingChainLong'].forEach(function (id) {
+              var key = 'technique.' + id + '.step.' + kind;
+              LOCALES.forEach(function (code) {
+                var text = inLocale(code, function () { return I.t(key, { kind: kind, length: 3, chains: chains }); });
+                expect([key, code, text]).toEqual([key, code, PREFIX[id][code] + shown + '. ' + BODY[code][kind]]);
+                expect(placeholders(SG.locales[code][key])).toEqual(['chains', 'length']);
+                // the old wording said that candidates "see" the ends and that "some candidate" had both truth values
+                expect(/see both ends|some candidate|nhìn thấy cả hai đầu|sẽ có một ứng viên/.test(text)).toBe(false);
+              });
+            });
+          });
+        });
+      });
+
+    it('reads a legacy triple, a one-cell node and a group node mixed in one path, and written labels and symbols ' +
+      'as they are', function () {
+        ready();
+        var model = H.model('classic9');
+        var key = 'technique.forcingChain.step.contradiction';
+        withLabels(model, function () {
+          var plain = 'R1C1' + NE + '5' + THEN + 'R1C2=5' + THEN + 'R2C2' + NE + '5 | R1C1=5' + THEN + 'R2C1' + NE + '5';
+          expect(chainsText(key, [[[0, 5, 0], [1, 5, 1], [10, 5, 0]], [[0, 5, 1], [9, 5, 0]]])).toContain(plain);
+          expect(chainsText(key, [[node([0], 5, 0), node([1], 5, 1), node([10], 5, 0)],
+            [node([0], 5, 1), node([9], 5, 0)]])).toContain(plain);
+          expect(chainsText(key, [[[0, 5, 0], node([1], 5, 1), [10, 5, 0]], [node([0], 5, 1), [9, 5, 0]]]))
+            .toContain(plain);
+          var localized = [[node(['R4C4', 'R4C6'], '0', 1), node(['R4C9'], 'F', 0)],
+            [node(['R1C1', 'R1C2'], 'E', 0), ['R9C9', 'A', 1]]];
+          expect(chainsText(key, localized)).toContain('(R4C4=0' + OR + 'R4C6=0)' + THEN + 'R4C9' + NE + 'F | (R1C1' +
+            NE + 'E' + AND + 'R1C2' + NE + 'E)' + THEN + 'R9C9=A');
+        });
+      });
+
+    it('leaves the arguments of a Finding as they were and gives the same text on the next call', function () {
+      ready();
+      var model = H.model('classic9');
+      var args = { proofVersion: 2, kind: 'contradiction', length: 2, chains: [
+        [node([0], 5, 1), node([1], 5, 0), node([0, 1], 5, 1)], [node([0], 5, 1), node([9], 5, 0), node([0, 1], 5, 0)]] };
+      var before = JSON.stringify(args);
+      var key = 'technique.forcingChain.step.contradiction';
+      withLabels(model, function () {
+        var text = I.t(key, args);
+        expect(JSON.stringify(args)).toBe(before);
+        expect(I.t(key, args)).toBe(text);
+      });
+      expect(JSON.stringify(args)).toBe(before);
+    });
+
+    it('explains in the descriptions of both forcing chains how a group is read, with the text the formatter writes',
+      function () {
+        packsReady();
+        var label = function (cell) { return 'R1C' + (cell + 1); };
+        I.setCellLabeler(label);
+        try {
+          var key = 'technique.forcingChain.step.endpoints';
+          var shown = function (truth) {
+            return I.t(key, { kind: 'endpoints', length: 1, chains: [[node([0, 1], 5, truth)]] });
+          };
+          LOCALES.forEach(function (code) {
+            var shortDesc = SG.locales[code]['technique.forcingChain.desc'];
+            var longDesc = SG.locales[code]['technique.forcingChainLong.desc'];
+            inLocale(code, function () {
+              expect(shown(1)).toContain('(R1C1=5' + OR + 'R1C2=5)');
+              expect(shown(0)).toContain('(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)');
+            });
+            expect(shortDesc).toContain('(R1C1=5' + OR + 'R1C2=5)');
+            expect(shortDesc).toContain('(R1C1' + NE + '5' + AND + 'R1C2' + NE + '5)');
+            // a group is described conditionally ("If a proof step represents a group ..."): no grouped finder is active yet
+            var conditional = code === 'en' ? 'If a proof step represents a group' :
+              'Nếu một bước chứng minh biểu diễn một nhóm';
+            expect(shortDesc).toContain(conditional);
+            expect(longDesc).toContain(conditional);
+            [shortDesc, longDesc].forEach(function (text) {
+              expect(text).toContain(code === 'en' ? 'must conflict with every candidate represented by each end' :
+                'phải xung đột với từng ứng viên được biểu diễn ở mỗi đầu');
+              expect(/[{}]/.test(text)).toBe(false);
+              // the existing forcingChain keeps its unbounded work policy: no description claims a work cap
+              expect(/50[,.\s]?000|work (cap|limit)/i.test(text)).toBe(false);
+            });
+          });
+        } finally {
+          I.setCellLabeler(null);
+        }
+      });
   });
 
   // ---------------------------------------------------------------------------------------------

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=sohei-normal.i25.n25 --out=..\docs\difficulty-v3\evidence\MS18d\gp\sohei-normal\sohei-normal.i25.n25.a1\ledger.json
+ms18d-gp-recorder-start chunk=sohei-normal.i25.n25 i0=25 n=25 seedBase=9525
+ms18d-gp-ledger-complete chunk=sohei-normal.i25.n25 bytes=19617 sha256=f6c29981b66b545e175829fdabb34f01f4c185e31e9d1ff2f5a82e8c11dd9c9a
+exit=0 seconds=10.939

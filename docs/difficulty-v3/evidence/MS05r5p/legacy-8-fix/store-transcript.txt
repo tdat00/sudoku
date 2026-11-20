@@ -1,0 +1,159 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+store
+  ok   store > store: defaults and sanitising > has the documented defaults (1 ms)
+  ok   store > store: defaults and sanitising > returns a new object every time and sanitising the defaults changes nothing (1 ms)
+  ok   store > store: defaults and sanitising > turns junk into a complete valid state (0 ms)
+  ok   store > store: defaults and sanitising > is idempotent and does not touch its input (0 ms)
+  ok   store > store: defaults and sanitising > falls back to the closest supported difficulty of the variant (0 ms)
+  ok   store > store: defaults and sanitising > takes the easier of two equally close supported levels (a list with a gap) (0 ms)
+  ok   store > store: defaults and sanitising > keeps the symbol set inside the variant symbolModes (0 ms)
+  ok   store > store: defaults and sanitising > clamps the maximum attempts to 1..20 (0 ms)
+  ok   store > store: defaults and sanitising > sanitises the variant options and resets the ones that are hidden (1 ms)
+  ok   store > store: defaults and sanitising > cleans the seed text without trimming what is still being typed (0 ms)
+  ok   store > store: defaults and sanitising > reports the cross-option corrections (0 ms)
+  ok   store > store: defaults and sanitising > evaluates visibleWhen like the variants declare it (0 ms)
+  ok   store > store: seeds > tells random, number and text seeds apart (0 ms)
+  ok   store > store: seeds > hashes anything that is not a uint32 to a stable uint32 (0 ms)
+  ok   store > store: seeds > hashes composed and decomposed Vietnamese text alike (0 ms)
+  ok   store > store: URL parameters > parses the example link of design.md 14.2 (1 ms)
+  ok   store > store: URL parameters > writes nothing for the defaults (0 ms)
+  ok   store > store: URL parameters > ignores trace and speed of older links and drops them from the canonical URL (1 ms)
+  ok   store > store: URL parameters > accepts a bare query, a full URL, a fragment and encoded text (1 ms)
+  ok   store > store: URL parameters > ignores invalid values and keeps the valid ones (0 ms)
+  ok   store > store: URL parameters > clamps attempts and applies the cross-option constraints (0 ms)
+  ok   store > store: URL parameters > reads variant options as o.<id> and only writes the non-default ones (1 ms)
+  ok   store > store: URL parameters > writes a boolean option that is on by default as =0 (0 ms)
+  ok   store > store: URL parameters > round-trips a state of every variant through the URL (3 ms)
+  ok   store > store: URL parameters > round-trips awkward seed text (0 ms)
+  ok   store > store: URL parameters > builds share links that always name the puzzle (0 ms)
+  ok   store > store: URL parameters > lists the parameters in a fixed order (0 ms)
+  ok   store > store: toConfig > gives the same config for the same state (0 ms)
+  ok   store > store: toConfig > leaves the seed out when it is blank and uses uint32 numbers as they are (0 ms)
+  ok   store > store: toConfig > contains exactly the fields of a GenerateConfig and no UI state (0 ms)
+  ok   store > store: toConfig > is a valid pipeline configuration for every variant and every level it supports (4 ms)
+  ok   store > store: toConfig > is accepted by SG.pipeline.run and reproduces the puzzle (12 ms)
+  ok   store > store: toConfig > is accepted by SG.pipeline.run with variant options, which applies its default trace (24 ms)
+  ok   store > store: the stateful store > starts with the defaults and hands out a frozen state (1 ms)
+  ok   store > store: the stateful store > merges a patch, sanitises it and keeps the previous value for an invalid one (1 ms)
+  ok   store > store: the stateful store > keeps the difficulty and symbol set when the new variant allows them (0 ms)
+  ok   store > store: the stateful store > falls back and reports it when the new variant does not allow them (0 ms)
+  ok   store > store: the stateful store > lets the symbol set follow the default of the variant, but not a choice of the user (0 ms)
+  ok   store > store: the stateful store > resets the options on a variant change and merges option patches otherwise (0 ms)
+  ok   store > store: the stateful store > subscribes and unsubscribes, with the changed keys and the meta (1 ms)
+  ok   store > store: the stateful store > ignores trace and speed in a patch: they are not part of the state (0 ms)
+  ok   store > store: the stateful store > notifies in order when a subscriber sets state, and survives a throwing subscriber (0 ms)
+  ok   store > store: the stateful store > switches the i18n language when lang is set (0 ms)
+  ok   store > store: the stateful store > rolls a new random seed into the state (0 ms)
+  ok   store > store: the stateful store > resets the puzzle configuration but keeps the preferences (0 ms)
+  ok   store > store: the stateful store > shares one browser-less instance (0 ms)
+  ok   store > store: URL synchronisation > replaces the URL with the non-default values and keeps path and fragment (0 ms)
+  ok   store > store: URL synchronisation > does not touch the URL when asked not to persist, nor when nothing changed (0 ms)
+  ok   store > store: URL synchronisation > survives a history that throws and a missing history or location (0 ms)
+  ok   store > store: URL synchronisation > restores the exact state from the URL that it wrote (1 ms)
+  ok   store > store: load, save and storage > prefers the URL over the stored values over the defaults (0 ms)
+  ok   store > store: load, save and storage > keeps the stored configuration when the URL only carries language, auto or old replay settings (0 ms)
+  ok   store > store: load, save and storage > ignores the trace and speed an older version stored, and stops writing them (0 ms)
+  ok   store > store: load, save and storage > reads the records an older version wrote with a `v` field, and stops writing it (0 ms)
+  ok   store > store: load, save and storage > does not let the receiver last configuration bend a shared link (0 ms)
+  ok   store > store: load, save and storage > detects the start language: URL, stored preference, browser, English (0 ms)
+  ok   store > store: load, save and storage > tells the subscribers about the loaded state (0 ms)
+  ok   store > store: load, save and storage > rewrites the URL to its canonical form after loading (old replay settings disappear) (0 ms)
+  ok   store > store: load, save and storage > writes preferences and the last configuration under the documented keys (0 ms)
+  ok   store > store: load, save and storage > persists across stores that share a storage (0 ms)
+  ok   store > store: load, save and storage > ignores corrupt or invalid stored data (0 ms)
+  ok   store > store: load, save and storage > keeps working when the storage is blocked (0 ms)
+  ok   store > store: load, save and storage > keeps working when reading the storage object itself throws (0 ms)
+  ok   store > store: load, save and storage > works without any storage (0 ms)
+  ok   store > store: load, save and storage > does not save when persist is false (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T01: the default of every board is the policy of its size, read from the definition (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T01: a board that declares its cells gets its policy without a model being built (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: in default mode the number follows the board; a chosen number stays across variants (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a number equal to the default of the board is still a chosen one, not a default (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a link without attempts takes the default of its own variant; attempts is a chosen number (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: the intent is saved with the configuration and survives a reload (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a record from before the size defaults moves a stored 8 of a larger board to the default, once (3 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a saved explicit 8 on a larger board is not migrated again; a saved default follows the policy (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: an unmarked legacy 8 on a small board is the default and follows every later switch (2 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: the migrated state is saved with the default marker, before and after a large-board switch (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: a marked explicit 8 on a small board stays chosen across a switch and a reload (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: entering 8 after the migration is a chosen number that survives a reload (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: a legacy 8 with a missing or unknown variant loads as the default of the fallback variant (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: loading the same unmarked legacy record twice, with no save between, gives the same state (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: the URL outranks what is stored, and an attempts parameter is not migrated (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: blocked or full storage keeps the intent in memory, and an unwritten record migrates the same way every time (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a replay (source app) keeps its recorded number and the intent it found (1 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: toConfig hands the pipeline the number, never the intent; a recorded number wins over an inherited default (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a state that says default but carries another number than its board is a chosen number (0 ms)
+  ok   store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-T04: a patch that names the default intent (what a cleared field sends) and reset() give default mode (0 ms)
+ok   store: 85 passed  (82 ms)
+
+Suites: 1
+Tests:  85 total, 85 passed, 0 failed, 0 skipped
+Time:   82 ms running tests, 254 ms total
+Results: docs/difficulty-v3/evidence/MS05r5p/legacy-8-fix/store.json
+MS05r5p exit=0 seconds=0.446

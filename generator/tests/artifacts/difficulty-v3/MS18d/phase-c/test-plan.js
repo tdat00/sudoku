@@ -1,0 +1,1122 @@
+'use strict';
+
+/*
+ * MS18d Phase C0b task-owned tests, FILE-ONLY and fake-data: the frozen R24 plan (plan-data.js), the chunk
+ * manifest builder and verifier, the raw-time ledger contract (ledger-schema.js), the source loader
+ * (loader.js), the attempt accounting derived from immutable folders (attempts.js, R4) and the reduced
+ * plan of the stand-in project. Nothing is measured and nothing generates a puzzle; the one real-tree read
+ * is the loader's capture of the real sources (no execution), compared with the frozen identities.
+ *   node generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-plan.js
+ */
+const assert = require('assert');
+const childProcess = require('child_process');
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
+const plan = require('./plan-data.js');
+const loader = require('./loader.js');
+const ledger = require('./ledger-schema.js');
+const { chunkAttempts } = require('./attempts.js');
+const journals = require('./journals.js');
+const standin = require('./standin-gp.js');
+const { sha256 } = require('./common.js');
+
+const REPO = path.resolve(__dirname, '..', '..', '..', '..', '..', '..');
+const scratch = fs.mkdtempSync(path.join(REPO, '.scratch-ms18d-c-plan-'));
+const at = (...p) => path.join(scratch, ...p);
+
+let passed = 0;
+const failed = [];
+async function test(name, fn) {
+  try {
+    await fn();
+    passed++;
+    console.log('ok   ' + name);
+  } catch (err) {
+    failed.push(name);
+    console.log('FAIL ' + name + ': ' + (err && err.stack));
+  }
+}
+
+async function planTests() {
+  const rows = plan.frozenRows();
+
+  await test('R24: the frozen table is exactly what the common rule derives (79 rows)', () => {
+    assert.strictEqual(rows.length, 79);
+    assert.deepStrictEqual(plan.checkFrozen(rows), []);
+    assert.strictEqual(new Set(rows.map((r) => r.key)).size, 79);
+  });
+
+  await test('R24: 114 commands, 3,950 requests, 35 extra starts, 62 + 52, sums 7739 and 19023, max P 448',
+    () => {
+      const one = rows.filter((r) => r.route === 'C');
+      const multi = rows.filter((r) => r.route === 'R');
+      assert.strictEqual(one.length, 62);
+      assert.strictEqual(multi.length, 17);
+      assert.ok(one.every((r) => r.chunks.length === 1 && r.chunks[0][0] === 0 && r.chunks[0][1] === 50));
+      assert.strictEqual(one.reduce((s, r) => s + r.chunks[0][2], 0), 7739);
+      const multiChunks = multi.reduce((s, r) => s + r.chunks.length, 0);
+      assert.strictEqual(multiChunks, 52);
+      assert.strictEqual(multi.reduce((s, r) => s + r.chunks.reduce((t, c) => t + c[2], 0), 0), 19023);
+      const all = rows.reduce((s, r) => s + r.chunks.length, 0);
+      assert.strictEqual(all, 114);
+      assert.strictEqual(rows.reduce((s, r) => s + r.chunks.reduce((t, c) => t + c[1], 0), 0), 3950);
+      assert.strictEqual(all - rows.length, 35);
+      const maxP = rows.reduce((m, r) => r.chunks.reduce((x, c) => Math.max(x, c[2]), m), 0);
+      assert.strictEqual(maxP, 448);
+      const shape = {};
+      multi.forEach((r) => { shape[r.chunks.length] = (shape[r.chunks.length] || 0) + 1; });
+      assert.deepStrictEqual(shape, { 2: 12, 3: 2, 6: 2, 10: 1 });
+    });
+
+  await test('R24: the shapes of mega16/hell2, samurai/master and greaterThan/hell2; ranges are contiguous',
+    () => {
+      const byKey = (k) => rows.filter((r) => r.key === k)[0];
+      assert.deepStrictEqual(byKey('mega16/hell2').chunks,
+        [[0, 9, 448], [9, 9, 448], [18, 8, 405], [26, 8, 405], [34, 8, 405], [42, 8, 405]]);
+      assert.strictEqual(byKey('samurai/master').chunks.length, 10);
+      assert.ok(byKey('samurai/master').chunks.every((c) => c[1] === 5 && c[2] === 394));
+      assert.deepStrictEqual(byKey('greaterThan/hell2').chunks, [[0, 17, 391], [17, 17, 391], [34, 16, 371]]);
+      rows.forEach((r) => {
+        let next = 0;
+        r.chunks.forEach((c) => {
+          assert.strictEqual(c[0], next, r.key);
+          next += c[1];
+          assert.ok(c[2] <= 450, r.key + ' P ' + c[2]);
+        });
+        assert.strictEqual(next, 50, r.key);
+        const sizes = r.chunks.map((c) => c[1]);
+        assert.ok(sizes.every((s, i) => i === 0 || sizes[i - 1] >= s), 'larger chunks first: ' + r.key);
+        assert.ok(Math.max.apply(null, sizes) - Math.min.apply(null, sizes) <= 1, 'balanced: ' + r.key);
+      });
+    });
+
+  await test('R24: the derivation rejects an invalid maximum instead of inventing a bound', () => {
+    [0, -1, NaN, Infinity, '12', null, undefined].forEach((m) => {
+      assert.throws(() => plan.deriveChunks(m), /invalid maximum/, String(m));
+    });
+    assert.strictEqual(plan.deriveChunks(390000).k, 50, 'one request per command is the limit');
+    assert.throws(() => plan.deriveChunks(390001), /zero capacity/);
+    assert.throws(() => plan.deriveChunks(400000), /zero capacity/);
+    assert.deepStrictEqual(plan.deriveChunks(7953.7019).chunks, [[0, 25, 259], [25, 25, 259]]);
+  });
+
+  await test('R24: a damaged frozen table is reported, never corrected', () => {
+    const bad = plan.frozenRows();
+    bad[0].p50 += 1;
+    bad[17].chunks = [[0, 50, 637]];
+    bad[10].chunks = [[0, 49, 61]];
+    const problems = plan.checkFrozen(bad);
+    assert.ok(problems.some((p) => /classic4\/veryEasy: P50/.test(p)));
+    assert.ok(problems.some((p) => /mega12\/hell2: k/.test(p) || /mega12\/hell2: frozen chunks/.test(p)));
+    assert.ok(problems.some((p) => /mega12\/veryEasy: chunks cover 49/.test(p)));
+  });
+
+  await test('canonicalJson is the recipe of toolRecords.canonicalJson (the real tool, in a VM)', () => {
+    const file = path.join(REPO, 'generator', 'tests', 'fixtures', 'tool-records.js');
+    const sandbox = vm.createContext({});
+    vm.runInContext('var SG = {};', sandbox);
+    vm.runInContext(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, ''), sandbox, { filename: file });
+    const real = vm.runInContext('SG.fixtures.toolRecords.canonicalJson', sandbox);
+    const samples = [{ b: 1, a: [3, { z: null, y: 'é"\\' }], c: -0.5, d: true }, [], {}, 'x', 7000,
+      [[1, 2], []],
+      { n: { n: { n: 1.25e-7 } } }, { '': 0, 'a b': 'c' }];
+    samples.forEach((s) => assert.strictEqual(plan.canonicalJson(s), real(s), JSON.stringify(s)));
+    assert.throws(() => plan.canonicalJson({ a: NaN }), /not finite/);
+    assert.throws(() => plan.canonicalJson({ a: undefined }), /not plain JSON/);
+    assert.ok(/^[0-9a-f]{64}$/.test(plan.canonicalSha256({ a: 1 })), 'lowercase hex');
+  });
+
+  const base = 'docs/difficulty-v3/evidence/MS18d/gp';
+  const inputs = (over) => Object.assign({ plan: { packCommit: 'c'.repeat(40) }, targets: { offered: 79 },
+    sources: {}, environment: {}, policy: { choice: 'A' },
+    loader: { recipe: { loaded: 1 }, files: [{ rel: 'x', sha256: 'a'.repeat(64) }],
+      hashIdentity: 'a'.repeat(64) },
+    mergeBase: base }, over || {});
+
+  await test('R2: the manifest declares 114 chunks and the literal run slots (2 per chunk + final merge)',
+    () => {
+      const doc = plan.buildManifest(inputs());
+      assert.deepStrictEqual(plan.verifyManifest(doc), []);
+      assert.strictEqual(doc.chunks.length, 114);
+      assert.strictEqual(doc.counts.requests, 3950);
+      assert.strictEqual(doc.counts.runSlots, 114 * 2 + 1);
+      assert.strictEqual(doc.slotPolicy.cellMerge, false, 'selected-cell merges are not declared');
+      const dirs = plan.declaredDirsOf(doc);
+      assert.strictEqual(new Set(dirs).size, dirs.length);
+      assert.ok(dirs.indexOf(base + '/all-79/final.m1') !== -1);
+      assert.ok(dirs.indexOf(base + '/classic4-veryEasy/classic4-veryEasy.i0.n50.a1') !== -1);
+      assert.ok(dirs.indexOf(base + '/classic4-veryEasy/classic4-veryEasy.i0.n50.a2') !== -1);
+      assert.ok(dirs.indexOf(base + '/mega16-hell2/mega16-hell2.i42.n8.a2') !== -1);
+      assert.ok(!dirs.some((d) => /merge\.m1/.test(d)), 'no selected-cell merge directory');
+      assert.strictEqual(doc.gate.requiredSuccesses, 72);
+      assert.strictEqual(doc.counts.extraColdStarts, 35);
+      assert.strictEqual(doc.counts.maxProjectionSeconds, 448);
+      assert.strictEqual(doc.counts.reservedSeconds, 7739 + 19023);
+      const chunk = doc.chunks.filter((c) => c.chunkId === 'mega16-hell2.i26.n8')[0];
+      assert.deepStrictEqual(chunk.seeds, [26, 27, 28, 29, 30, 31, 32, 33].map((i) => 7000 + 101 * i));
+      assert.strictEqual(chunk.seedBase, 7000 + 101 * 26);
+      assert.strictEqual(doc.chunks.reduce((s, c) => s + c.seeds.length, 0), 3950);
+    });
+
+  await test('R2: optional selected-cell merge slots are declared only when asked for (79 more)', () => {
+    const doc = plan.buildManifest(inputs({ cellMergeSlots: true }));
+    assert.deepStrictEqual(plan.verifyManifest(doc), []);
+    assert.strictEqual(doc.counts.runSlots, 114 * 2 + 79 + 1);
+    assert.ok(plan.declaredDirsOf(doc).indexOf(base + '/classic4-veryEasy/merge.m1') !== -1);
+    assert.strictEqual(plan.slotForDir(doc, base + '/all-79/final.m1').role, 'final-merge');
+    assert.strictEqual(plan.slotForDir(doc, base + '/all-79/final.m1/').role, 'final-merge');
+    assert.strictEqual(plan.slotForDir(doc, base + '/all-79/final.m2'), null);
+    assert.strictEqual(plan.slotForDir(doc, base + '/classic4-veryEasy'), null);
+  });
+
+  const tamper = (label, edit, pattern) => {
+    return test('manifest verification rejects ' + label, () => {
+      const doc = JSON.parse(JSON.stringify(plan.buildManifest(inputs({ cellMergeSlots: true }))));
+      edit(doc);
+      const problems = plan.verifyManifest(doc);
+      assert.ok(problems.length > 0, 'accepted');
+      assert.ok(problems.some((p) => pattern.test(p)), problems.slice(0, 4).join(' | '));
+    });
+  };
+  await tamper('a changed target (the hash no longer matches)', (d) => { d.chunks[0].target += 1; },
+    /manifest hash/);
+  await tamper('a changed seed', (d) => { d.chunks[3].seeds[1] += 1; d.manifestSha256 = 'x'; }, /seed 1/);
+  await tamper('a chunk that is not contiguous', (d) => { d.chunks[2].i0 += 1; },
+    /not contiguous|ID differs/);
+  await tamper('a duplicated chunk', (d) => { d.chunks[1] = JSON.parse(JSON.stringify(d.chunks[0])); },
+    /duplicate chunk ID/);
+  await tamper('a projection over 450 s', (d) => { d.chunks[5].projectionSeconds = 451; }, /over 450 s/);
+  await tamper('a slot with a traversing path', (d) => { d.runSlots[0].dir += '/../x'; }, /wrong path/);
+  await tamper('a slot declared twice', (d) => { d.runSlots[1] = JSON.parse(JSON.stringify(d.runSlots[0])); },
+    /declared twice|attempt/);
+  await tamper('a slot assigned to the wrong cell', (d) => {
+    const s = d.runSlots.filter((x) => x.role === 'chunk')[0];
+    s.cell = 'classic6/veryEasy';
+    s.dir = s.dir.replace('classic4-veryEasy', 'classic6-veryEasy');
+  }, /not the cell of its chunk/);
+  await tamper('an extra slot', (d) => {
+    d.runSlots.push({ role: 'chunk', runId: 'x.a3', dir: base + '/classic4-veryEasy/x.a3',
+      cell: 'classic4/veryEasy', chunkId: 'classic4-veryEasy.i0.n50', attempt: 3 });
+  }, /attempt 3|unexpected|expected/);
+  await tamper('a changed slot policy', (d) => { d.slotPolicy.chunkAttempts = 3; }, /slot policy/);
+  await tamper('a missing loaded-source manifest', (d) => { delete d.loader; }, /loaded-source manifest/);
+  await tamper('a wrong request count', (d) => { d.counts.requests -= 1; }, /request count/);
+  await tamper('a final merge that names a cell', (d) => {
+    d.runSlots[d.runSlots.length - 1].cell = 'classic4/veryEasy';
+  }, /names a cell|wrong path/);
+}
+
+async function ledgerTests() {
+  const made = (() => {
+    fs.mkdirSync(at('l-repo'), { recursive: true });
+    standin.makeFakeProject(at('l-repo'));
+    return standin.makeFakeManifest(at('l-repo'));
+  })();
+  const chunk = made.doc.chunks.filter((c) => c.chunkId === 'fakeb-easy.i25.n25')[0];
+  const times = standin.timesFor(chunk, 50, 3);
+  const identity = () => ({ planManifestSha256: 'a'.repeat(64), helperManifestSha256: 'b'.repeat(64),
+    hashIdentity: 'c'.repeat(64), tableSha256: 'd'.repeat(64), sourcesPublished: 'e'.repeat(16),
+    loadedFiles: [{ rel: 'x.js', bytes: 1, rawSha256: 'f'.repeat(64), sha256: 'f'.repeat(64) }],
+    loaderRecipe: { loaded: 1 }, node: 'v26.13.0', machine: {}, execArgv: [], nodeOptions: '',
+    base: 'b'.repeat(40),
+    selectedPolicy: {}, identityMethod: ledger.IDENTITY_METHOD });
+  const build = (mutate) => {
+    const l = ledger.buildLedger(chunk, times.slice(), identity(), { provenance: { standin: false } }, {});
+    if (mutate) mutate(l);
+    return l;
+  };
+  const problems = (l, options) => ledger.validateLedgerShape(l, chunk, options);
+
+  await test('ledger: a conforming ledger of a planned chunk has no problem; indices and seeds follow it',
+    () => {
+      const l = build();
+      assert.deepStrictEqual(problems(l), []);
+      assert.strictEqual(l.requests[0].index, 25);
+      assert.strictEqual(l.requests[0].seed, 7000 + 101 * 25);
+      assert.strictEqual(l.requests[24].index, 49);
+      assert.strictEqual(l.schema, 'ms18d-gp-request-ledger-v1');
+      assert.deepStrictEqual(l.requests.map((r) => r.ms), times, 'raw times, not rounded');
+    });
+
+  const bad = [
+    ['another schema', (l) => { l.schema = 'x'; }, /schema/],
+    ['another chunk id', (l) => { l.chunk.chunkId = 'fakeb-easy.i0.n25'; }, /chunk\.chunkId/],
+    ['another target', (l) => { l.chunk.target = 301; }, /chunk\.target/],
+    ['a warm-up', (l) => { l.policy.warmup = 1; }, /policy/],
+    ['jobs 2', (l) => { l.policy.jobs = 2; }, /policy/],
+    ['a budget', (l) => { l.policy.budget = 1000; }, /policy/],
+    ['two measure calls', (l) => { l.protocol.measureCalls = 2; }, /one measure call/],
+    ['too few requests', (l) => { l.requests.pop(); }, /requests are 24/],
+    ['a wrong index', (l) => { l.requests[3].index = 99; }, /request 3 has index/],
+    ['a wrong seed', (l) => { l.requests[4].seed += 1; }, /seed/],
+    ['a negative time', (l) => { l.requests[2].ms = -0.5; }, /finite non-negative/],
+    ['a NaN time', (l) => { l.requests[2].ms = NaN; }, /finite non-negative/],
+    ['a string time', (l) => { l.requests[2].ms = '5'; }, /finite non-negative/],
+    ['an execArgv flag', (l) => { l.identity.execArgv = ['--inspect']; }, /execArgv/],
+    ['NODE_OPTIONS', (l) => { l.identity.nodeOptions = '--max-old-space-size=1'; }, /NODE_OPTIONS/],
+    ['an identity member missing', (l) => { delete l.identity.hashIdentity; },
+      /identity\.hashIdentity is missing/],
+    ['an upper-case digest', (l) => { l.identity.tableSha256 = 'D'.repeat(64); }, /lowercase hex/],
+    ['no loaded files', (l) => { l.identity.loadedFiles = []; }, /loadedFiles/],
+    ['no observation', (l) => { delete l.observation; }, /observation/],
+    ['stand-in provenance', (l) => { l.observation.provenance.standin = true; }, /stand-in provenance/]
+  ];
+  for (const [name, mutate, pattern] of bad) {
+    await test('ledger: ' + name + ' is a problem', () => {
+      const p = problems(build(mutate));
+      assert.ok(p.some((x) => pattern.test(x)), p.join(' | '));
+    });
+  }
+  await test('ledger: a fixture marks stand-in provenance only where the caller allows it', () => {
+    const l = build((x) => { x.observation.provenance.standin = true; });
+    assert.deepStrictEqual(problems(l, { allowStandin: true }), []);
+  });
+  await test('ledger: the completion marker and the start line are exact', () => {
+    const sha = 'a'.repeat(64);
+    const marker = 'ms18d-gp-ledger-complete chunk=a.i0.n5 bytes=10 sha256=';
+    assert.ok(ledger.MARKER.test(marker + sha));
+    assert.ok(!ledger.MARKER.test(marker + sha.toUpperCase()));
+    assert.ok(!ledger.MARKER.test(marker + sha + ' '));
+    assert.ok(ledger.START.test('ms18d-gp-recorder-start chunk=a.i0.n5 i0=0 n=5 seedBase=7000'));
+  });
+}
+
+async function loaderTests() {
+  await test('loader: perf.js recipe: declared order, js/ui and js/worker omitted, absent files dropped',
+    () => {
+      fs.mkdirSync(at('ld'), { recursive: true });
+      const g = standin.makeFakeProject(at('ld'));
+      const cap = loader.captureAll(g);
+      assert.deepStrictEqual(cap.engine.map((c) => c.rel), ['js/core/alpha.js', 'js/core/beta.js',
+        'js/core/gamma.js']);
+      assert.deepStrictEqual(cap.fixtures.map((c) => c.rel), ['tests/fixtures/perf-helper.js',
+        'tests/fixtures/tool-records.js', 'tests/fixtures/regression.js']);
+      assert.deepStrictEqual(cap.recipe, { declared: 6, excluded: 2, missing: 1, engine: 3, fixtures: 3,
+        loaded: 6 });
+      assert.strictEqual(cap.perfJs.rel, 'tests/perf.js');
+      assert.ok(cap.loaded.indexOf(cap.perfJs) === -1, 'perf.js is captured for E only, never loaded');
+      const no = standin.makeFakeProject(at('ld2'), { noRegression: true });
+      assert.strictEqual(loader.captureAll(no).recipe.loaded, 5);
+    });
+
+  await test('loader: the executed digest is that of the string the VM gets (no BOM); raw digest kept',
+    () => {
+      fs.mkdirSync(at('ld3'), { recursive: true });
+      const g = standin.makeFakeProject(at('ld3'), { bom: true });
+      const cap = loader.captureAll(g);
+      const reg = cap.fixtures[2];
+      const raw = fs.readFileSync(path.join(g, 'tests/fixtures/regression.js'));
+      assert.strictEqual(reg.rawSha256, sha256(raw));
+      assert.strictEqual(reg.execSha256, sha256(Buffer.from(reg.text, 'utf8')));
+      assert.notStrictEqual(reg.rawSha256, reg.execSha256, 'a BOM is the one difference');
+      assert.ok(!reg.text.startsWith('\uFEFF'));
+      const m = loader.loadedManifest(cap);
+      assert.strictEqual(m.length, 6);
+      assert.strictEqual(m[5].sha256, reg.execSha256);
+      assert.strictEqual(m[5].rawSha256, reg.rawSha256);
+    });
+
+  await test('loader: E identities are derived from the captured texts (LF-normalized, raw sources)',
+    () => {
+      const a = at('ld4a');
+      const b = at('ld4b');
+      fs.mkdirSync(a, { recursive: true });
+      fs.mkdirSync(b, { recursive: true });
+      const ga = standin.makeFakeProject(a);
+      const gb = standin.makeFakeProject(b);
+      const ia = loader.identitiesOf(loader.captureAll(ga));
+      assert.deepStrictEqual(loader.identitiesOf(loader.captureAll(gb)), ia, 'same bytes, same identity');
+      fs.writeFileSync(path.join(gb, 'js/core/beta.js'), "SG.order.push('beta');\r\n");
+      const ib = loader.identitiesOf(loader.captureAll(gb));
+      assert.strictEqual(ib.hashIdentity, ia.hashIdentity, 'a CRLF copy keeps E (LF-normalized)');
+      assert.notStrictEqual(ib.sources, ia.sources, 'but not the raw-byte sources hash');
+      const mA = loader.loadedManifest(loader.captureAll(ga));
+      const mB = loader.loadedManifest(loader.captureAll(gb));
+      assert.notStrictEqual(mA[1].sha256, mB[1].sha256, 'nor the executed digest: normalization is no proof');
+      fs.writeFileSync(path.join(gb, 'js/core/beta.js'), "SG.order.push('beta2');\n");
+      assert.notStrictEqual(loader.identitiesOf(loader.captureAll(gb)).hashIdentity, ia.hashIdentity);
+      fs.writeFileSync(path.join(gb, 'js/core/beta.js'), "SG.order.push('beta');\n");
+      fs.writeFileSync(path.join(gb, 'tests/perf.js'), "throw new Error('changed');\n// x\n");
+      assert.notStrictEqual(loader.identitiesOf(loader.captureAll(gb)).hashIdentity, ia.hashIdentity,
+        'perf.js is part of E');
+    });
+
+  await test('loader: a file changed on disk after the capture does not change what the VM runs', () => {
+    fs.mkdirSync(at('ld5'), { recursive: true });
+    const g = standin.makeFakeProject(at('ld5'));
+    const script = "const loader=require(" + JSON.stringify(path.join(__dirname, 'loader.js')) + ");" +
+      "const fs=require('fs');const path=require('path');const g=" + JSON.stringify(g) + ";" +
+      "const cap=loader.captureAll(g);const before=loader.loadedManifest(cap);" +
+      "fs.writeFileSync(path.join(g,'js/core/beta.js'),\"SG.order.push('CHANGED');\\n\");" +
+      "const ran=loader.execute(cap);const jb=JSON.stringify(before);" +
+      "console.log(JSON.stringify({order:ran.order,same:jb===JSON.stringify(loader.loadedManifest(cap))," +
+      "now:loader.loadedManifest(loader.captureAll(g))[1].sha256!==before[1].sha256}));";
+    const run = childProcess.spawnSync(process.execPath, ['-e', script], { encoding: 'utf8' });
+    assert.strictEqual(run.status, 0, run.stderr);
+    const out = JSON.parse(run.stdout);
+    assert.deepStrictEqual(out.order, ['alpha', 'beta', 'gamma', 'regression'], 'the captured string ran');
+    assert.strictEqual(out.same, true);
+    assert.strictEqual(out.now, true, 'a fresh capture sees the change');
+  });
+
+  await test('loader (the real tree, captured, NOT executed): 64 declared, 18 excluded, 49 loaded, E', () => {
+    const cap = loader.captureAll(path.join(REPO, 'generator'));
+    assert.deepStrictEqual(cap.recipe, { declared: 64, excluded: 18, missing: 0, engine: 46, fixtures: 3,
+      loaded: 49 });
+    assert.strictEqual(cap.fixtures[2].rel, 'tests/fixtures/regression.js');
+    const ids = loader.identitiesOf(cap);
+    assert.strictEqual(ids.hashIdentity, '344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1');
+    assert.strictEqual(ids.sources, '75b0955e3e356bd1');
+    const gp = require(path.join(REPO, 'generator', 'tests', 'artifacts', 'difficulty-v3', 'MS18d',
+      'project-gp.js'));
+    const frozen = gp.computeIdentities(path.join(REPO, 'generator'));
+    assert.strictEqual(ids.hashIdentity, frozen.hashIdentity, 'the same recipe as the frozen Phase A helper');
+    assert.strictEqual(ids.sources, frozen.sources);
+  });
+}
+
+async function attemptTests() {
+  const base = at('att');
+  const gpDir = path.join(base, 'cell');
+  const CHUNK = 'cell-x.i0.n50';
+  const run = (name, files) => {
+    const dir = path.join(gpDir, name);
+    fs.mkdirSync(dir, { recursive: true });
+    Object.keys(files).forEach((f) => {
+      fs.writeFileSync(path.join(dir, f), typeof files[f] === 'string' ? files[f] : JSON.stringify(files[f]));
+    });
+    return dir;
+  };
+  const request = (id) => ({ chunk: { chunkId: id || CHUNK } });
+  const heldRun = (name, extra) => run(name, { 'request.json': request(),
+    'wrapper.json': { chunkId: CHUNK, outcome: 'control-hold' },
+    'admission.json': { decision: 'hold' }, 'result.json': Object.assign({ outcome: 'control-hold',
+      payloadStarted: false }, extra || {}) });
+  const startedRun = (name, outcome) => run(name, { 'request.json': request(),
+    'wrapper.json': { chunkId: CHUNK, outcome }, 'admission.json': { decision: 'proceed' },
+    'result.json': { outcome, payloadStarted: true }, 'transcript.txt': '$ node x\n',
+    'pids.jsonl': '{"role":"tee"}\n' });
+  // the committed rulings journal as journals.rulingsState reads it (the text is the committed text at HEAD)
+  const rulingsState = (text) => journals.rulingsState(() => text, 'a'.repeat(40), null);
+  const input = (over) => Object.assign({ baseDir: gpDir, chunkId: CHUNK, runId: 'now',
+    ledgerFile: at('att', 'c.jsonl'), rulings: rulingsState(''), nowMs: 10000000 }, over || {});
+  const clearRuns = () => {
+    for (const name of fs.readdirSync(gpDir)) {
+      fs.rmSync(path.join(gpDir, name), { recursive: true, force: true });
+    }
+  };
+  const ledgerRow = (name, extra) => JSON.stringify(Object.assign({ runDir: 'x/cell/' + name,
+    chunkId: CHUNK, releaseObservedAt: new Date(1000000).toISOString(), controllerOutcome: 'control-hold' },
+  extra || {})) + '\r\n';
+
+  await test('R4: a chunk with no earlier run has no admission and no payload: allowed', () => {
+    fs.mkdirSync(gpDir, { recursive: true });
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.decision, 'allow');
+    assert.strictEqual(a.admissions, 0);
+    assert.strictEqual(a.payloads, 0);
+  });
+
+  await test('R4: a started payload is final: no retry and no replacement, whatever its outcome', () => {
+    startedRun('cell-x.i0.n50.a1', 'stop');
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1', { controllerOutcome: 'stop' }));
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.decision, 'refuse');
+    assert.strictEqual(a.payloads, 1);
+    assert.ok(a.reasons.some((r) => /payload-already-started/.test(r)));
+    for (const outcome of ['success', 'miss', 'stop']) {
+      fs.rmSync(path.join(gpDir, 'cell-x.i0.n50.a1'), { recursive: true, force: true });
+      startedRun('cell-x.i0.n50.a1', outcome);
+      fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1', { controllerOutcome: outcome }));
+      assert.strictEqual(chunkAttempts(input()).decision, 'refuse', outcome);
+    }
+  });
+
+  await test('R4: a plain hold is not an eligible unstarted hold: one admission used, no second one', () => {
+    fs.rmSync(path.join(gpDir, 'cell-x.i0.n50.a1'), { recursive: true, force: true });
+    heldRun('cell-x.i0.n50.a1');
+    run('cell-x.i0.n50.a1/x', {}); // a nested directory is ignored by the accounting
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.payloads, 0);
+    assert.strictEqual(a.decision, 'refuse');
+    assert.ok(a.reasons.some((r) => /not an eligible unstarted hold/.test(r)), a.reasons.join());
+  });
+
+  await test('R4: an eligible unstarted hold allows ONE re-ask, only at least 60 s after its release', () => {
+    fs.rmSync(path.join(gpDir, 'cell-x.i0.n50.a1'), { recursive: true, force: true });
+    heldRun('cell-x.i0.n50.a1', { eligibleReAsk: true });
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+    const early = chunkAttempts(input({ nowMs: 1000000 + 59999 }));
+    assert.strictEqual(early.decision, 'refuse');
+    assert.ok(early.reasons.some((r) => /60 s/.test(r)));
+    const late = chunkAttempts(input({ nowMs: 1000000 + 1000 + 60000 }));
+    assert.strictEqual(late.decision, 'allow', late.reasons.join());
+    assert.strictEqual(late.admissions, 1);
+    heldRun('cell-x.i0.n50.a2', { eligibleReAsk: true });
+    fs.appendFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a2'));
+    const third = chunkAttempts(input({ runId: 'third', nowMs: 99999999 }));
+    assert.strictEqual(third.decision, 'refuse');
+    assert.ok(third.reasons.some((r) => /at most two/.test(r)));
+  });
+
+  await test('R4: counts survive a restart: they are derived from the folders and the log each time', () => {
+    const first = chunkAttempts(input({ nowMs: 99999999 }));
+    const second = chunkAttempts(input({ nowMs: 99999999 }));
+    assert.deepStrictEqual(first, second);
+    assert.strictEqual(first.admissions, 2, 'two eligible holds were admitted and released');
+    assert.ok(!fs.readdirSync(base).some((n) => /counter|state/i.test(n)), 'no mutable counter file');
+  });
+
+  await test('R4: conflicting or missing evidence holds for a ruling instead of defaulting to zero', () => {
+    clearRuns();
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+    let a = chunkAttempts(input());
+    assert.strictEqual(a.decision, 'refuse');
+    assert.ok(a.problems.some((p) => /folder is gone/.test(p)));
+    // a folder that finished without a log line
+    fs.writeFileSync(at('att', 'c.jsonl'), '');
+    heldRun('cell-x.i0.n50.a1');
+    a = chunkAttempts(input());
+    assert.ok(a.problems.some((p) => /without a C lock log line/.test(p)));
+    // a result that says unstarted next to a transcript
+    run('cell-x.i0.n50.a2', { 'request.json': request(), 'wrapper.json': { chunkId: CHUNK },
+      'result.json': { outcome: 'control-hold', payloadStarted: false }, 'transcript.txt': 'x' });
+    a = chunkAttempts(input());
+    assert.ok(a.problems.some((p) => /records show one/.test(p)));
+    // an unparsable record
+    run('cell-x.i0.n50.a3', { 'result.json': '{not json' });
+    a = chunkAttempts(input());
+    assert.ok(a.problems.some((p) => /result\.json/.test(p)));
+    assert.strictEqual(a.decision, 'refuse');
+  });
+
+  await test('R4: an admitted run without a result counts as a started payload (uncertain: consumed)', () => {
+    clearRuns();
+    fs.writeFileSync(at('att', 'c.jsonl'), '');
+    run('cell-x.i0.n50.a1', { 'request.json': request(), 'admission.json': { decision: 'proceed' } });
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.payloads, 1);
+    assert.strictEqual(a.decision, 'refuse');
+  });
+
+  await test('R4: other chunks and merge runs never count against this chunk', () => {
+    clearRuns();
+    run('other.i0.n25.a1', { 'request.json': request('other.i0.n25'),
+      'admission.json': { decision: 'proceed' },
+      'result.json': { outcome: 'success', payloadStarted: true }, 'transcript.txt': 'x' });
+    run('merge.m1', { 'request.json': { scope: 'cell:cell/x' }, 'result.json': { outcome: 'success',
+      payloadStarted: true }, 'transcript.txt': 'x' });
+    fs.writeFileSync(at('att', 'c.jsonl'), '');
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.admissions, 0);
+    assert.strictEqual(a.decision, 'allow', a.reasons.join());
+  });
+
+  // ---- F1, F2, F3 (SA1): the pre-window hold, the sign of a payload, the committed rulings -------------
+  // the held run is released at 1,000,000 ms, `asked` is at 1,001,000 ms: a ruling dated 1,000,500 is current
+  const ruling = (over) => JSON.stringify(Object.assign({ chunkId: CHUNK, heldRunId: 'cell-x.i0.n50.a1',
+    allowAttempt: 2, ref: 'SA2 ruling 1', at: new Date(1000500).toISOString() }, over || {})) + '\n';
+  const asked = (text, over) => chunkAttempts(input(Object.assign({ rulings: rulingsState(text),
+    nowMs: 1000000 + 1000 }, over || {})));
+  const freshHold = (extra) => {
+    clearRuns();
+    heldRun('cell-x.i0.n50.a1', extra);
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+  };
+
+  await test('F1: a pre-window-hold line of the C log names no folder and consumes no admission', () => {
+    clearRuns();
+    fs.writeFileSync(at('att', 'c.jsonl'), JSON.stringify({ schema: 'ms18d-c-run-1', type: 'pre-window-hold',
+      chunkId: CHUNK, attempt: 1, runId: 'cell-x.i0.n50.a1', outcome: 'pre-window-hold' }) + '\r\n');
+    const a = chunkAttempts(input());
+    assert.strictEqual(a.admissions, 0);
+    assert.deepStrictEqual(a.problems, []);
+    assert.strictEqual(a.decision, 'allow', a.reasons.join());
+    // the same line without its type would be a log line whose folder is gone (a problem)
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+    assert.strictEqual(chunkAttempts(input()).decision, 'refuse');
+  });
+
+  await test('F2/F5: a stdout, stderr or ledger file is a sign of a payload, as a transcript is', () => {
+    ['stdout.txt', 'stderr.txt', 'ledger.json'].forEach((name) => {
+      clearRuns();
+      run('cell-x.i0.n50.a1', { 'request.json': request(), 'wrapper.json': { chunkId: CHUNK },
+        'result.json': { outcome: 'control-hold', payloadStarted: false }, [name]: 'x' });
+      fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1'));
+      const a = chunkAttempts(input());
+      assert.ok(a.problems.some((p) => /records show one/.test(p)), name + ': ' + a.problems.join());
+      assert.strictEqual(a.decision, 'refuse', name);
+    });
+  });
+
+  await test('F3: a committed ruling for an unstarted hold allows attempt 2 (no 60 s, no eligibility)',
+    () => {
+      freshHold();
+      const a = asked(ruling());
+      assert.strictEqual(a.decision, 'allow', a.reasons.join());
+      assert.strictEqual(a.ruling.ref, 'SA2 ruling 1');
+      assert.strictEqual(a.rulingsJournal.entryCount, 1, 'the journal reference is recorded');
+      assert.strictEqual(asked('').decision, 'refuse', 'no ruling = no re-ask of a plain hold');
+    });
+
+  await test('F3: only the matching chunk and held run: another chunk, run or attempt is not covered', () => {
+    freshHold();
+    [{ chunkId: 'other.i0.n25' }, { heldRunId: 'cell-x.i0.n50.a2' }].forEach((over) => {
+      assert.strictEqual(asked(ruling(over)).decision, 'refuse', JSON.stringify(over));
+    });
+  });
+
+  await test('F3: never after a started payload and never beyond two admissions', () => {
+    clearRuns();
+    startedRun('cell-x.i0.n50.a1', 'stop');
+    fs.writeFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a1', { controllerOutcome: 'stop' }));
+    const started = asked(ruling());
+    assert.strictEqual(started.decision, 'refuse');
+    assert.ok(started.reasons.some((r) => /payload-already-started/.test(r)));
+    freshHold();
+    heldRun('cell-x.i0.n50.a2');
+    fs.appendFileSync(at('att', 'c.jsonl'), ledgerRow('cell-x.i0.n50.a2'));
+    const third = asked(ruling() + ruling({ heldRunId: 'cell-x.i0.n50.a2' }), { runId: 'third' });
+    assert.strictEqual(third.decision, 'refuse');
+    assert.ok(third.reasons.some((r) => /at most two/.test(r)));
+  });
+
+  await test('F3: a stale ruling (before the release) or a prospective one (after now) is no authority',
+    () => {
+    freshHold();
+    const stale = asked(ruling({ at: new Date(999000).toISOString() }));
+    assert.strictEqual(stale.decision, 'refuse');
+    assert.ok(stale.reasons.some((r) => /the ruling is stale/.test(r)), stale.reasons.join());
+    const prospective = asked(ruling({ at: new Date(1002000).toISOString() }));
+    assert.strictEqual(prospective.decision, 'refuse');
+    assert.ok(prospective.reasons.some((r) => /the ruling is prospective/.test(r)),
+      prospective.reasons.join());
+    assert.strictEqual(asked(ruling({ at: new Date(1000000).toISOString() })).decision, 'allow',
+      'dated at the release itself is current');
+    assert.strictEqual(asked(ruling({ at: new Date(1001000).toISOString() })).decision, 'allow',
+      'dated at now itself is current');
+    // an eligible hold needs no ruling: a stale one does not stand in the way once the 60 s have passed
+    freshHold({ eligibleReAsk: true });
+    const eligible = asked(ruling({ at: new Date(999000).toISOString() }), { nowMs: 1000000 + 60000 });
+    assert.strictEqual(eligible.decision, 'allow', eligible.reasons.join());
+    assert.strictEqual(eligible.ruling, null);
+  });
+
+  await test('F3: an absent, malformed, contradictory or not exactly shaped journal is a problem', () => {
+    freshHold();
+    ['{broken\n', ruling({ allowAttempt: 3 }), ruling({ ref: '' }), ruling({ at: undefined }),
+      ruling({ heldRunId: undefined }), ruling({ at: 'soon' }), ruling({ extra: 1 }),
+      ruling() + ruling({ ref: 'again' })].forEach((text) => {
+      const a = asked(text);
+      assert.strictEqual(a.decision, 'refuse', text);
+      assert.ok(a.problems.some((p) => /the rulings journal: ruling line/.test(p)),
+        text + ' ' + a.problems.join());
+    });
+    const none = chunkAttempts(input({ rulings: null, nowMs: 1001000 }));
+    assert.strictEqual(none.decision, 'refuse', 'no journal read = no ruling and no allowance');
+    assert.ok(none.problems.some((p) => /no committed rulings journal was read/.test(p)));
+    assert.strictEqual(asked('').decision, 'refuse', 'an empty journal rules nothing');
+    const keptBase = journals.rulingsState((args) => (args[1].startsWith('b') ? ruling() : ruling() +
+      ruling({ chunkId: 'c2' })), 'a'.repeat(40), 'b'.repeat(40));
+    assert.ok(keptBase.ok, 'an appended journal keeps the base version as a prefix');
+    const rewritten = journals.rulingsState(
+      (args) => (args[1].startsWith('b') ? ruling({ ref: 'x' }) : ruling()), 'a'.repeat(40), 'b'.repeat(40));
+    assert.strictEqual(rewritten.ok, false);
+    assert.ok(/does not keep the version committed at the base/.test(rewritten.problems.join()));
+    assert.strictEqual(chunkAttempts(input({ rulings: rewritten, nowMs: 1001000 })).decision, 'refuse');
+  });
+
+  await test('F3: the rulings and host-binding journals are the pack files, read by the same code', () => {
+    assert.strictEqual(journals.RULINGS_REL, 'tasks/difficulty-v3/MS18d-gp-rulings.jsonl');
+    assert.strictEqual(journals.BINDINGS_REL, 'tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl');
+    assert.strictEqual(journals.EVIDENCE_DIR, 'tasks/difficulty-v3/MS18d-gp-host-evidence/');
+    const src = fs.readFileSync(path.join(__dirname, 'controller.js'), 'utf8');
+    assert.ok(/journalsMod\.rulingsState\(io\.git, head, base\)/.test(src),
+      'the controller reads the committed text');
+    const payload = fs.readFileSync(path.join(__dirname, 'payload-gp.js'), 'utf8');
+    assert.ok(!/rulingsFile|readRulings/.test(payload));
+  });
+}
+
+async function v2Tests() {
+  const base = 'docs/difficulty-v3/evidence/MS18d/gp';
+  const v1 = plan.buildManifest({ plan: { packCommit: 'c'.repeat(40) }, targets: { offered: 79 }, sources: {},
+    environment: {}, policy: { choice: 'A' }, mergeBase: base,
+    loader: { recipe: { loaded: 1 }, files: [{ rel: 'x', sha256: 'a'.repeat(64) }],
+      hashIdentity: 'a'.repeat(64) } });
+  const V1REF = { file: 'docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json',
+    rawSha256: 'e'.repeat(64) };
+  const COMMIT = 'c'.repeat(40);
+  // an owner selector as the pack file has it (one owner reply binds each question by its own label)
+  const selector = (q, choice, over) => Object.assign({ question: 'MS18d-Q' + q, choice,
+    owner: 'amicably8850', answeredAt: '2026-11-19T22:50:08.320Z', source: { channel: 'ai-agent-session2',
+      channelId: '1571779348573323334', messageId: '1573108143389675704' },
+  answer: 'Q2=' + choice + ', Q3=' + choice + ', Q4=' + choice, binding: 'Q' + q + '=' + choice,
+  questionMessageId: '15729771244768' + q, reAskMessageId: '1573095012768682146',
+  chunkId: plan.CANDIDATES[q - 2].chunkId, cell: 'x/y', queuePosition: q }, over || {});
+  const record = (q, choice, over) => ({ id: 'S-OD' + (14 + q), selector: selector(q, choice, over) });
+  const records = (letters) => letters.map((l, i) => record(i + 2, l));
+  const rehash = (d) => {
+    const rest = Object.assign({}, d);
+    delete rest.manifestSha256;
+    d.manifestSha256 = plan.canonicalSha256(rest);
+    return d;
+  };
+  const clone = (d) => JSON.parse(JSON.stringify(d));
+  const CHUNKS = plan.CANDIDATES.map((c) => c.chunkId);
+  const masks = [0, 1, 2, 3, 4, 5, 6, 7];
+  const lettersOf = (mask) => [0, 1, 2].map((i) => (mask & (1 << i) ? 'A' : 'B'));
+  const built = (mask) => {
+    const res = plan.resolveSubset(records(lettersOf(mask)), COMMIT);
+    return { res, v2: plan.buildManifestV2(v1, V1REF, res.granted) };
+  };
+
+  await test('V2: the 8 subsets of the candidates build, verify, and are the exact permitted delta', () => {
+    assert.deepStrictEqual(plan.verifyManifest(v1), []);
+    assert.strictEqual(v1.counts.runSlots, 229);
+    masks.forEach((mask) => {
+      const letters = lettersOf(mask);
+      const { res, v2 } = built(mask);
+      const want = CHUNKS.filter((c, i) => letters[i] === 'A');
+      assert.deepStrictEqual(res.unresolved, [], 'mask ' + mask);
+      assert.deepStrictEqual(res.granted.map((g) => g.question), want.map((c) => plan.CANDIDATES
+        .filter((x) => x.chunkId === c)[0].question));
+      if (want.length === 0) {
+        assert.strictEqual(v2, null, 'an empty subset has no V2 (no B4)');
+        assert.deepStrictEqual(res.granted, []);
+        assert.deepStrictEqual(res.declined, [2, 3, 4]);
+        return;
+      }
+      assert.deepStrictEqual(plan.verifyManifest(v2), [], 'mask ' + mask);
+      assert.deepStrictEqual(plan.v2DeltaProblems(v2, v1, V1REF.rawSha256), [], 'mask ' + mask);
+      assert.deepStrictEqual(plan.v2AuthorityProblems(v2, records(letters)), [], 'mask ' + mask);
+      assert.strictEqual(v2.schema, plan.V2_SCHEMA);
+      assert.strictEqual(v2.runSlots.length, 229 + want.length);
+      assert.strictEqual(v2.counts.runSlots, 229 + want.length);
+      assert.strictEqual(v2.counts.requests, 3950);
+      assert.strictEqual(v2.slotPolicy.chunkAttempts, 2);
+      assert.deepStrictEqual(v2.runSlots.slice(0, 229), v1.runSlots, 'the original slots keep their order');
+      assert.deepStrictEqual(v2.runSlots.slice(229).map((s) => s.chunkId), want);
+      assert.ok(v2.runSlots.slice(229).every((s) => s.attempt === 3 && s.runId === s.chunkId + '.a3'));
+      assert.ok(v2.runSlots.slice(0, 229).every((s) => s.attempt !== 3), 'no other chunk has an a3');
+      assert.deepStrictEqual(plan.subsetOf(v2), res.granted.map((g) => 'MS18d-Q' + g.question + '-A'));
+      assert.deepStrictEqual(v2.parent, { file: V1REF.file, rawSha256: V1REF.rawSha256,
+        manifestSha256: v1.manifestSha256 });
+      assert.strictEqual(plan.exceptionFor(v2, want[0]).runId, want[0] + '.a3');
+      CHUNKS.filter((c) => want.indexOf(c) === -1).forEach((c) => assert.strictEqual(plan.exceptionFor(v2, c),
+        null));
+    });
+    assert.strictEqual(v1.counts.runSlots, 229, 'the V1 document is never mutated');
+    assert.strictEqual(plan.exceptionFor(v1, CHUNKS[0]), null, 'V1 declares no exception');
+  });
+
+  await test('V2: the real V1 plan file builds all 8 subsets the same way (read-only)', () => {
+    const file = path.join(REPO, 'docs', 'difficulty-v3', 'evidence', 'MS18d', 'phase-c',
+      'gp-chunk-manifest.json');
+    const bytes = fs.readFileSync(file);
+    const real = JSON.parse(bytes.toString('utf8').replace(/^\uFEFF/, ''));
+    assert.deepStrictEqual(plan.verifyManifest(real), []);
+    const ref = { file: V1REF.file, rawSha256: sha256(bytes) };
+    masks.forEach((mask) => {
+      const res = plan.resolveSubset(records(lettersOf(mask)), COMMIT);
+      const v2 = plan.buildManifestV2(real, ref, res.granted);
+      if (v2 === null) return assert.strictEqual(res.granted.length, 0);
+      assert.deepStrictEqual(plan.v2DeltaProblems(v2, real, ref.rawSha256), [], 'mask ' + mask);
+      assert.strictEqual(v2.runSlots.length, real.runSlots.length + res.granted.length);
+      assert.strictEqual(v2.counts.requests, real.counts.requests);
+    });
+  });
+
+  const unresolvedCase = (label, mutate, pattern) => test('V2 authority: ' + label + ' is unresolved, not B',
+    () => {
+      const recs = records(['A', 'A', 'A']);
+      const out = mutate(recs) || recs;
+      const res = plan.resolveSubset(out, COMMIT);
+      const mine = res.unresolved.filter((u) => u.question === 3);
+      assert.strictEqual(mine.length, 1, JSON.stringify(res));
+      assert.ok(pattern.test(mine[0].reason), mine[0].reason);
+      assert.deepStrictEqual(res.declined, [], 'an unclear reply is never taken as B');
+      assert.deepStrictEqual(res.granted.map((g) => g.question), [2, 4], 'the clear replies still stand');
+      const all = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+      const v2 = plan.buildManifestV2(v1, V1REF, all);
+      assert.ok(plan.v2AuthorityProblems(v2, out).some((p) => /Q3 is unresolved/.test(p)));
+    });
+  await unresolvedCase('a missing selector', (r) => r.filter((x) => x.id !== 'S-OD17'), /missing/);
+  await unresolvedCase('two selectors for one question', (r) => r.concat([record(3, 'A')]), /ambiguous/);
+  await unresolvedCase('a reply answering both ways', (r) => { r[1].selector.answer = 'Q3=A and Q3=B'; },
+    /two ways/);
+  await unresolvedCase('another question\'s selector', (r) => { r[1].selector.question = 'MS18d-Q2'; },
+    /wrong question/);
+  await unresolvedCase('a reply with the labels of the others only', (r) => {
+    r[1].selector.answer = 'Q2=A, Q4=A';
+  }, /ties no answer/);
+  await unresolvedCase('a bare "A"', (r) => { r[1].selector.answer = 'A'; }, /ties no answer/);
+  await unresolvedCase('a lower-case letter', (r) => { r[1].selector.answer = 'Q3=a'; },
+    /neither A nor B/);
+  await unresolvedCase('a choice that contradicts the reply', (r) => { r[1].selector.choice = 'B'; },
+    /not the reply answer/);
+  await unresolvedCase('a binding that is not its own label', (r) => { r[1].selector.binding = 'Q2=A'; },
+    /binding Q2=A is not Q3=A/);
+  await unresolvedCase('a reply of another owner', (r) => { r[1].selector.owner = 'someone'; },
+    /the owner is not amicably8850/);
+  await unresolvedCase('a selector of another chunk', (r) => {
+    r[1].selector.chunkId = 'mega16-easy.i0.n50';
+  },
+    /the chunk mega16-easy\.i0\.n50 is not hyper-hard\.i0\.n50/);
+  await unresolvedCase('a selector without a message id string', (r) => {
+    r[1].selector.source.messageId = 1573108143389675704;
+  }, /no message id string/);
+  await unresolvedCase('a selector without a zoned time', (r) => {
+    r[1].selector.answeredAt = '2026-11-20 09:00';
+  }, /no answer time/);
+
+  await test('V2 authority: the owner commit must be a FULL 40-hex id, nothing else resolves', () => {
+    ['f2f345a1', 'F'.repeat(40), '', undefined, 'g'.repeat(40)].forEach((bad) => {
+      const res = plan.resolveSubset(records(['A', 'A', 'A']), bad);
+      assert.strictEqual(res.granted.length, 0, String(bad));
+      assert.strictEqual(res.unresolved.length, 3);
+      assert.ok(res.unresolved.every((u) => /no full owner commit id/.test(u.reason)));
+    });
+    const grant = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+    assert.deepStrictEqual(grant.map((g) => g.ownerDecision.ref), ['S-OD16', 'S-OD17', 'S-OD18']
+      .map((id) => COMMIT + ':tasks/difficulty-v3/check-list.md#' + id), 'a Git object plus the selector');
+    assert.deepStrictEqual(grant[0].ownerDecision, { id: 'S-OD16', choice: 'A',
+      messageId: '1573108143389675704', at: '2026-11-19T22:50:08.320Z', ref: grant[0].ownerDecision.ref },
+    'the message id and the time are copied byte for byte');
+    const v2 = plan.buildManifestV2(v1, V1REF, grant);
+    [['an abbreviated commit', (d) => { d.ref = d.ref.slice(7); }],
+      ['a path with a hash sign only', (d) => { d.ref = 'tasks/difficulty-v3/check-list.md#S-OD16'; }],
+      ['the old "@" form', (d) => { d.ref = 'tasks/difficulty-v3/check-list.md@' + COMMIT; }],
+      ['another selector', (d) => { d.ref = d.ref.replace('S-OD16', 'S-OD17'); }],
+      ['a Markdown anchor', (d) => { d.ref = COMMIT + ':tasks/difficulty-v3/check-list.md#s-od16'; }],
+      ['a number as the message id', (d) => { d.messageId = 1573108143389675704; }]]
+      .forEach(([what, edit]) => {
+      const d = clone(v2.admissionExceptions[0].ownerDecision);
+      edit(d);
+      assert.ok(plan.ownerDecisionProblems(d, plan.CANDIDATES[0]).length > 0, what);
+    });
+  });
+
+  await test('V2 authority: the selectors are parsed from the pack file at the commit, once, exactly', () => {
+    const line = (id, sel) => id + ' ' + JSON.stringify(sel);
+    const body = (lines) => ['## 4', '', '### S-OD16 / S-OD17 / S-OD18 — owner-choice records', '',
+      'text', '',
+      '```text'].concat(lines, ['```', '', 'after'].concat([])).join('\r\n');
+    const good = records(['A', 'A', 'A']).map((r) => line(r.id, r.selector));
+    const parsed = plan.parseOwnerSelectors(body(good));
+    assert.deepStrictEqual(parsed.problems, []);
+    assert.deepStrictEqual(parsed.entries, records(['A', 'A', 'A']));
+    assert.ok(plan.parseOwnerSelectors('no subsection').problems.length > 0);
+    assert.ok(plan.parseOwnerSelectors(body(good) + '\n' + body(good)).problems.length > 0, 'twice');
+    assert.ok(plan.parseOwnerSelectors(body(good.concat([good[0]]))).problems.some((p) => /twice/.test(p)));
+    assert.ok(plan.parseOwnerSelectors(body(good.concat(['S-OD99 {broken}']))).problems
+      .some((p) => /not JSON/.test(p)));
+    assert.ok(plan.parseOwnerSelectors(body(good.concat(['free text']))).problems.length > 0);
+    assert.ok(plan.parseOwnerSelectors('### S-OD16 / S-OD17 / S-OD18\n\nno fence\n').problems.length > 0);
+  });
+
+  await test('V2 authority: a self-consistent V2 that the decisions do not grant is refused', () => {
+    const all = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+    const v2 = plan.buildManifestV2(v1, V1REF, all);
+    assert.deepStrictEqual(plan.v2DeltaProblems(v2, v1, V1REF.rawSha256), [], 'it is the exact delta');
+    assert.ok(plan.v2AuthorityProblems(v2, records(['A', 'B', 'A']))
+      .some((p) => /not exactly the subset/.test(p)),
+      'Q3 declined: its exception is unauthorized');
+    assert.ok(plan.v2AuthorityProblems(v2, []).some((p) => /unresolved/.test(p)), 'no records');
+    const moved = records(['A', 'A', 'A']);
+    moved[2].selector.source.messageId = '1573108143389675999';
+    assert.ok(plan.v2AuthorityProblems(v2, moved).some((p) => /not exactly the subset/.test(p)),
+      'a decision that differs from its selector');
+    const other = clone(v2);
+    other.admissionExceptions[1].ownerDecision.ref = other.admissionExceptions[1].ownerDecision.ref
+      .replace(COMMIT, 'd'.repeat(40));
+    assert.ok(plan.v2AuthorityProblems(other, records(['A', 'A', 'A']))
+      .some((p) => /one and the same full commit/.test(p)), 'two commits');
+    assert.deepStrictEqual(plan.v2AuthorityProblems(v2, records(['A', 'A', 'A'])), []);
+  });
+
+  const deltaCase = (label, edit, pattern) => test('V2 delta: ' + label + ' is rejected', () => {
+    const { v2 } = built(7);
+    const copy = clone(v2);
+    edit(copy);
+    rehash(copy);
+    const problems = plan.v2DeltaProblems(copy, v1, V1REF.rawSha256).concat(plan.verifyManifest(copy));
+    assert.ok(problems.length > 0, 'accepted');
+    assert.ok(problems.some((p) => pattern.test(p)), problems.slice(0, 4).join(' | '));
+  });
+  deltaCase('a changed target in a chunk', (d) => { d.chunks[0].target += 1; }, /exact V1 -> V2 delta/);
+  deltaCase('a changed slot policy', (d) => { d.slotPolicy.chunkAttempts = 3; }, /slot policy|exact V1/);
+  deltaCase('a changed gate', (d) => { d.gate.requiredSuccesses = 70; }, /exact V1 -> V2 delta/);
+  deltaCase('a changed original slot', (d) => { d.runSlots[3].dir += 'x'; }, /wrong path|exact V1/);
+  deltaCase('an a3 slot of a chunk that has no exception', (d) => {
+    d.runSlots.push({ role: 'chunk', runId: 'classic4-veryEasy.i0.n50.a3', cell: 'classic4/veryEasy',
+      dir: base + '/classic4-veryEasy/classic4-veryEasy.i0.n50.a3', chunkId: 'classic4-veryEasy.i0.n50',
+      attempt: 3 });
+    d.counts.runSlots += 1;
+  }, /appended a3 slot|attempt-3|attempt 3|extra/);
+  deltaCase('an a4 slot', (d) => {
+    const last = clone(d.runSlots[d.runSlots.length - 1]);
+    last.runId = last.runId.replace('.a3', '.a4');
+    last.dir = last.dir.replace('.a3', '.a4');
+    last.attempt = 4;
+    d.runSlots.push(last);
+    d.counts.runSlots += 1;
+  }, /attempt|a4|extra/);
+  deltaCase('an exception that is not the a3 of its chunk', (d) => { d.admissionExceptions[1].attempt = 2; },
+    /a3 slot|attempt/);
+  deltaCase('exceptions out of the order Q2, Q3, Q4', (d) => {
+    d.admissionExceptions.reverse();
+  }, /order/);
+  deltaCase('a third admission that allows a second payload', (d) => {
+    d.admissionExceptions[0].maxPayloads = 2;
+  }, /maxPayloads/);
+  deltaCase('a parent that is not the V1', (d) => { d.parent.manifestSha256 = 'f'.repeat(64); },
+    /parent canonical hash/);
+  deltaCase('a decision that is not exactly A', (d) => {
+    d.admissionExceptions[0].ownerDecision.choice = 'B';
+  },
+    /not exactly A/);
+
+  await test('V2 delta: the parent raw hash must be the V1 file, and V1 can never carry an a3', () => {
+    const { v2 } = built(1);
+    assert.ok(plan.v2DeltaProblems(v2, v1, 'd'.repeat(64)).some((p) => /raw hash/.test(p)));
+    const v1WithA3 = clone(v1);
+    v1WithA3.runSlots.push({ role: 'chunk', runId: CHUNKS[0] + '.a3', cell: 'mega16/easy',
+      dir: base + '/mega16-easy/' + CHUNKS[0] + '.a3', chunkId: CHUNKS[0], attempt: 3 });
+    v1WithA3.counts.runSlots += 1;
+    rehash(v1WithA3);
+    assert.ok(plan.verifyManifest(v1WithA3).some((p) => /attempt 3/.test(p)), 'V1 rejects attempt 3');
+  });
+
+  await test('V2: the builder refuses a bad subset (a non-candidate, twice, a B, a loose reference)', () => {
+    const granted = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, 'x'), /not a list/);
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [{ question: 9, ownerDecision: {} }]),
+      /no candidate question/);
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [granted[1], granted[0]]), /out of order or twice/);
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [granted[0], granted[0]]), /out of order or twice/);
+    const decline = Object.assign({}, granted[0], { ownerDecision: Object.assign({}, granted[0].ownerDecision,
+      { choice: 'B' }) });
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [decline]), /not exactly A/);
+    assert.throws(() => plan.buildManifestV2(v1, { file: 'x' }, granted), /parent reference/);
+    assert.throws(() => plan.buildManifestV2(Object.assign({}, v1, { manifestSha256: 'x' }), V1REF, granted),
+      /unsound/);
+    const v2 = plan.buildManifestV2(v1, V1REF, granted);
+    assert.throws(() => plan.buildManifestV2(v2, V1REF, granted), /not a V1 manifest/);
+  });
+}
+
+async function exceptionTests() {
+  const CH = 'mega16-easy.i0.n50';
+  const OTHER = 'hyper-hard.i0.n50';
+  const entries = [2, 3, 4].map((q) => ({ id: 'S-OD' + (14 + q), selector: { question: 'MS18d-Q' + q,
+    choice: 'A', owner: 'amicably8850', answeredAt: '2026-11-19T22:50:08.320Z',
+    source: { channel: 'c', channelId: '1', messageId: '1573108143389675704' },
+    answer: 'Q2=A, Q3=A, Q4=A', binding: 'Q' + q + '=A', chunkId: plan.CANDIDATES[q - 2].chunkId } }));
+  const v1 = plan.buildManifest({ plan: { packCommit: 'c'.repeat(40) }, targets: { offered: 79 }, sources: {},
+    environment: {}, policy: { choice: 'A' }, mergeBase: 'docs/difficulty-v3/evidence/MS18d/gp',
+    loader: { recipe: { loaded: 1 }, files: [{ rel: 'x', sha256: 'a'.repeat(64) }],
+      hashIdentity: 'a'.repeat(64) } });
+  const v2 = plan.buildManifestV2(v1, { file: 'p.json', rawSha256: 'e'.repeat(64) },
+    plan.resolveSubset(entries, 'c'.repeat(40)).granted);
+  const EXC = plan.exceptionFor(v2, CH);
+  const EXC_OTHER = plan.exceptionFor(v2, OTHER);
+  let seq = 0;
+  const fresh = () => {
+    const root = at('exc', String(++seq));
+    fs.mkdirSync(path.join(root, 'gp', 'cell'), { recursive: true });
+    return { cell: path.join(root, 'gp', 'cell'), log: path.join(root, 'c.jsonl') };
+  };
+  const put = (w, name, files) => {
+    const dir = path.join(w.cell, name);
+    fs.mkdirSync(dir, { recursive: true });
+    Object.keys(files).forEach((f) => fs.writeFileSync(path.join(dir, f),
+      typeof files[f] === 'string' ? files[f] : JSON.stringify(files[f])));
+  };
+  const hold = (w, chunk, n, over) => put(w, chunk + '.a' + n, {
+    'request.json': { chunk: { chunkId: chunk } },
+    'wrapper.json': { chunkId: chunk, outcome: 'control-hold' }, 'admission.json': { decision: 'hold' },
+    'result.json': Object.assign({ outcome: 'control-hold', payloadStarted: false }, over || {}) });
+  const line = (w, chunk, n, over) => fs.appendFileSync(w.log, JSON.stringify(Object.assign({
+    schema: 'ms18d-c-run-1', runDir: 'x/cell/' + chunk + '.a' + n, chunkId: chunk,
+    releaseObservedAt: new Date(1000000).toISOString(), controllerOutcome: 'control-hold' }, over || {})) +
+    '\r\n');
+  const ready = (w, chunk) => {
+    [1, 2].forEach((n) => { hold(w, chunk, n); line(w, chunk, n); });
+  };
+  const emptyJournal = journals.rulingsState(() => '', 'a'.repeat(40), null);
+  const ask = (w, over) => chunkAttempts(Object.assign({ baseDir: w.cell, chunkId: CH, runId: CH + '.a3',
+    ledgerFile: w.log, rulings: emptyJournal, nowMs: 5000000000, exception: EXC }, over || {}));
+  const refused = (a, pattern) => {
+    const all = a.reasons.concat(a.problems);
+    assert.strictEqual(a.decision, 'refuse', JSON.stringify(a));
+    assert.ok(all.some((r) => pattern.test(r)), all.join(' | '));
+  };
+
+  await test('a3: a chunk with its own two proven-unstarted holds and matching log lines is allowed', () => {
+    const w = fresh();
+    ready(w, CH);
+    const a = ask(w);
+    assert.strictEqual(a.decision, 'allow', a.reasons.concat(a.problems).join(' | '));
+    assert.strictEqual(a.admissions, 2);
+    assert.strictEqual(a.payloads, 0);
+    assert.strictEqual(a.attempt, 3);
+    assert.strictEqual(a.exception, 'MS18d-Q2-A');
+    assert.strictEqual(a.ruling, null, 'no ruling is ever consulted for an a3');
+  });
+
+  await test('a3: an eligible and a non-eligible hold alike count (the real a1/a2 shape), no wait', () => {
+    const w = fresh();
+    hold(w, CH, 1, { eligibleReAsk: true });
+    hold(w, CH, 2);
+    line(w, CH, 1);
+    line(w, CH, 2, { releaseObservedAt: new Date(5000000000).toISOString() });
+    assert.strictEqual(ask(w, { nowMs: 5000000000 }).decision, 'allow');
+  });
+
+  await test('a3: each a3 needs its OWN two holds (no exception, another chunk\'s: no borrowing)', () => {
+    const w = fresh();
+    ready(w, CH);
+    refused(ask(w, { exception: null }), /no-admission-exception/);
+    refused(ask(w, { exception: EXC_OTHER }), /exception-for-another-chunk|not the a3 exception/);
+    const w2 = fresh();
+    ready(w2, OTHER);
+    hold(w2, CH, 1);
+    line(w2, CH, 1);
+    refused(ask(w2), /needs its own a1 and a2/);
+    const own = chunkAttempts({ baseDir: w2.cell, chunkId: OTHER, runId: OTHER + '.a3', ledgerFile: w2.log,
+      rulings: emptyJournal, nowMs: 5000000000, exception: EXC_OTHER });
+    assert.strictEqual(own.decision, 'allow', 'the other chunk has its own two holds');
+  });
+
+  await test('a3: only an a1 and no a2 (or two folders of the wrong names) is refused', () => {
+    const w = fresh();
+    hold(w, CH, 1);
+    line(w, CH, 1);
+    refused(ask(w), /needs its own a1 and a2/);
+    const w2 = fresh();
+    hold(w2, CH, 1);
+    hold(w2, CH, 5);
+    line(w2, CH, 1);
+    line(w2, CH, 5);
+    refused(ask(w2), /needs its own a1 and a2|stray-chunk-folder/);
+  });
+
+  await test('a3: earlier payload evidence, an uncertain start or a loose result is refused', () => {
+    const started = fresh();
+    hold(started, CH, 1);
+    put(started, CH + '.a2', { 'request.json': { chunk: { chunkId: CH } },
+      'wrapper.json': { chunkId: CH, outcome: 'stop' }, 'admission.json': { decision: 'proceed' },
+      'result.json': { outcome: 'stop', payloadStarted: true }, 'transcript.txt': '$ node x\n',
+      'pids.jsonl': '{"role":"tee"}\n' });
+    line(started, CH, 1);
+    line(started, CH, 2, { controllerOutcome: 'stop' });
+    refused(ask(started), /chunk-payload-already-started/);
+    const uncertain = fresh();
+    hold(uncertain, CH, 1);
+    line(uncertain, CH, 1);
+    put(uncertain, CH + '.a2', { 'request.json': { chunk: { chunkId: CH } },
+      'admission.json': { decision: 'proceed' } });
+    refused(ask(uncertain), /uncertain-start/);
+    const loose = fresh();
+    ready(loose, CH);
+    put(loose, CH + '.a2', { 'request.json': { chunk: { chunkId: CH } },
+      'wrapper.json': { chunkId: CH, outcome: 'control-hold' }, 'admission.json': { decision: 'hold' },
+      'result.json': { outcome: 'control-hold' } });
+    refused(ask(loose), /not-proven-unstarted|uncertain/);
+    const wrongOutcome = fresh();
+    ready(wrongOutcome, CH);
+    hold(wrongOutcome, CH, 2, { outcome: 'success' });
+    refused(ask(wrongOutcome), /not-proven-unstarted|inconsistent/);
+  });
+
+  await test('a3: a missing or contradictory C-log history is refused, nothing is guessed', () => {
+    const none = fresh();
+    hold(none, CH, 1);
+    hold(none, CH, 2);
+    refused(ask(none), /missing-or-contradictory-history|inconsistent/);
+    const half = fresh();
+    hold(half, CH, 1);
+    hold(half, CH, 2);
+    line(half, CH, 1);
+    refused(ask(half), /missing-or-contradictory-history|inconsistent/);
+    const clash = fresh();
+    ready(clash, CH);
+    fs.appendFileSync(clash.log, JSON.stringify({ schema: 'ms18d-c-run-1', runDir: 'x/cell/' + CH + '.a2',
+      chunkId: CH, controllerOutcome: 'stop' }) + '\r\n');
+    refused(ask(clash), /missing-or-contradictory-history|inconsistent/);
+    const gone = fresh();
+    hold(gone, CH, 1);
+    line(gone, CH, 1);
+    line(gone, CH, 2);
+    refused(ask(gone), /folder is gone|needs its own/);
+  });
+
+  await test('a3: a completed chunk, an existing a3 line, a stray folder and an a4 are refused', () => {
+    const done = fresh();
+    ready(done, CH);
+    line(done, CH, 9, { controllerOutcome: 'success', outcome: 'success', runDir: 'x/cell/other' });
+    refused(ask(done), /chunk-already-succeeded|inconsistent/);
+    const twice = fresh();
+    ready(twice, CH);
+    hold(twice, CH, 3);
+    line(twice, CH, 3);
+    refused(ask(twice), /already has a line/);
+    const stray = fresh();
+    ready(stray, CH);
+    fs.mkdirSync(path.join(stray.cell, CH + '.a4'));
+    refused(ask(stray), /stray-chunk-folder/);
+    const a4 = fresh();
+    ready(a4, CH);
+    refused(ask(a4, { runId: CH + '.a4' }), /chunk-attempt-beyond-the-exception/);
+    refused(ask(a4, { runId: CH + '.a5', exception: null }), /chunk-attempt-beyond-the-exception/);
+  });
+
+  await test('a3: the default stays two admissions; a1 and a2 never read the exception', () => {
+    const w = fresh();
+    ready(w, CH);
+    const third = ask(w, { runId: 'third' });
+    refused(third, /at most two/);
+    assert.strictEqual(third.attempt, null);
+    const a2 = chunkAttempts({ baseDir: w.cell, chunkId: 'mega16-normal.i0.n50',
+      runId: 'mega16-normal.i0.n50.a2', ledgerFile: w.log, rulings: emptyJournal, nowMs: 5000000000,
+      exception: EXC });
+    assert.strictEqual(a2.admissions, 0, 'another chunk is judged by its own folders');
+    assert.strictEqual(a2.decision, 'allow');
+  });
+
+  await test('a3: an F3 ruling never authorizes an a3 and an a3 needs no ruling', () => {
+    const w = fresh();
+    hold(w, CH, 1);
+    line(w, CH, 1);
+    const journal = journals.rulingsState(() => JSON.stringify({ chunkId: CH, heldRunId: CH + '.a1',
+      allowAttempt: 2, ref: 'SA2', at: new Date(2000000).toISOString() }) + '\n', 'a'.repeat(40), null);
+    const withRuling = ask(w, { rulings: journal });
+    refused(withRuling, /needs its own a1 and a2/);
+    assert.strictEqual(withRuling.ruling, null);
+    const w2 = fresh();
+    ready(w2, CH);
+    assert.strictEqual(ask(w2, { rulings: journal }).decision, 'allow', 'allowed with or without a ruling');
+    assert.strictEqual(ask(w2, { rulings: journal }).ruling, null);
+  });
+}
+
+async function main() {
+  await planTests();
+  await ledgerTests();
+  await loaderTests();
+  await attemptTests();
+  await v2Tests();
+  await exceptionTests();
+}
+
+main().then(() => {
+  console.log(passed + ' passed, ' + failed.length + ' failed');
+  if (failed.length > 0) console.log('FAILED: ' + failed.join(' | '));
+  process.exitCode = failed.length === 0 ? 0 : 1;
+}, (err) => {
+  console.log('ERROR ' + (err && err.stack));
+  process.exitCode = 1;
+}).then(() => fs.rmSync(scratch, { recursive: true, force: true }));

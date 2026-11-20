@@ -1,0 +1,3795 @@
+{
+  "schema": "ms18d-gp-merge-report-v1",
+  "scope": "all-79",
+  "complete": true,
+  "meets": true,
+  "successes": 74,
+  "required": 72,
+  "extraColdStarts": 35,
+  "resultLine": "ms18d-gp-merge-result scope=all-79 complete=true meets=true successes=74 cells=79 required=72",
+  "problems": [],
+  "totals": {
+    "cells": 79,
+    "completeCells": 79,
+    "requests": 3950,
+    "holds": [
+      "mega16-easy.i0.n50.a1",
+      "mega16-easy.i0.n50.a2",
+      "mega16-normal.i0.n50.a1",
+      "hyper-hard.i0.n50.a1",
+      "hyper-hard.i0.n50.a2",
+      "greaterThan-easy.i0.n50.a1",
+      "butterfly-master.i0.n50.a1",
+      "butterfly-master.i0.n50.a2",
+      "wordoku-veryEasy.i0.n50.a1"
+    ]
+  },
+  "cells": [
+    {
+      "cell": "classic4/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 0.40100000000001046,
+        "p95": 1.747399999999999,
+        "max": 8.350600000000014,
+        "mean": 0.6925959999999992,
+        "target": 31,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic4-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 8.350600000000014,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "classic6/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 0.7756000000000256,
+        "p95": 1.8067999999999813,
+        "max": 10.963400000000007,
+        "mean": 1.1609380000000027,
+        "target": 39,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic6-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 10.963400000000007,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "classic6/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 88.44030000000001,
+        "p95": 273.0246000000002,
+        "max": 277.9232000000002,
+        "mean": 112.00356600000005,
+        "target": 350,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic6-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "classic9/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1.108099999999979,
+        "p95": 3.3824000000000183,
+        "max": 12.671099999999996,
+        "mean": 1.6028340000000014,
+        "target": 60,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 12.671099999999996,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "classic9/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 191.9340999999995,
+        "p95": 1103.9885,
+        "max": 1429.465400000001,
+        "mean": 382.30752,
+        "target": 2342,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "classic9/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 199.75950000000012,
+        "p95": 798.2815,
+        "max": 943.2433000000001,
+        "mean": 278.73522599999995,
+        "target": 2627,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "classic9/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 19.09660000000008,
+        "p95": 59.585999999999984,
+        "max": 173.1932999999999,
+        "mean": 27.39657000000001,
+        "target": 400,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 59.585999999999984,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "classic9/expert",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 59.75479999999999,
+        "p95": 432.1985999999997,
+        "max": 788.4884999999999,
+        "mean": 121.52287399999999,
+        "target": 1323,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-expert.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "classic9/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 91.65709999999999,
+        "p95": 303.4746,
+        "max": 548.2560000000003,
+        "mean": 112.61624599999999,
+        "target": 900,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "classic9/nightmare",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 713.5676000000021,
+        "p95": 2403.9863000000005,
+        "max": 3294.5561000000002,
+        "mean": 1033.5576479999997,
+        "target": 8377,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "classic9-nightmare.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega12/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 2.6925999999999988,
+        "p95": 6.234899999999982,
+        "max": 18.5907,
+        "mean": 3.4012300000000044,
+        "target": 400,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 18.5907,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "mega12/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 7.24460000000002,
+        "p95": 26.827300000000037,
+        "max": 36.31739999999999,
+        "mean": 10.455149999999998,
+        "target": 1000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 36.31739999999999,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "mega12/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 14.451900000000023,
+        "p95": 55.04499999999996,
+        "max": 71.41129999999998,
+        "mean": 20.300422000000005,
+        "target": 1000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega12/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 56.0318000000002,
+        "p95": 182.64760000000024,
+        "max": 258.86749999999995,
+        "mean": 72.81964999999997,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega12/expert",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 229.42299999999977,
+        "p95": 4208.3516,
+        "max": 6291.462,
+        "mean": 698.2636420000001,
+        "target": 3000,
+        "meets": false
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-expert.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega12-expert.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 25,
+          "ms": 6291.462,
+          "extraStart": true
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "mega12/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 257.3084999999992,
+        "p95": 688.1604000000007,
+        "max": 878.1257999999998,
+        "mean": 300.9603060000002,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega12/nightmare",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1749.6811000000016,
+        "p95": 6716.296000000002,
+        "max": 7748.315099999996,
+        "mean": 2654.8085460000007,
+        "target": 18842,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-nightmare.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega12-nightmare.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega12/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 3952.1629000000003,
+        "p95": 10686.077100000002,
+        "max": 15673.674800000008,
+        "mean": 4110.899234,
+        "target": 16000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega12-hell2.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega12-hell2.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega16/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 6.552600000000041,
+        "p95": 10.449000000000012,
+        "max": 27.665400000000005,
+        "mean": 7.4347259999999995,
+        "target": 1500,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega16-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 27.665400000000005,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "mega16/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 12.576299999999947,
+        "p95": 25.355000000000018,
+        "max": 39.21289999999999,
+        "mean": 14.224670000000005,
+        "target": 4000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega16-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 2,
+          "holdRuns": [
+            "mega16-easy.i0.n50.a1",
+            "mega16-easy.i0.n50.a2"
+          ]
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 39.21289999999999,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "mega16/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 25.200499999999977,
+        "p95": 77.47440000000006,
+        "max": 128.9455,
+        "mean": 31.802118,
+        "target": 4000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega16-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 1,
+          "holdRuns": [
+            "mega16-normal.i0.n50.a1"
+          ]
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 128.9455,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "mega16/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 312.1082999999999,
+        "p95": 1299.818000000003,
+        "max": 1977.2666,
+        "mean": 479.2169040000001,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega16-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega16/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1762.8775999999925,
+        "p95": 7992.918699999995,
+        "max": 12002.333599999998,
+        "mean": 2355.6936679999994,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega16-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "mega16/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1810.7873000000009,
+        "p95": 22444.181699999997,
+        "max": 38690.8702,
+        "mean": 3958.9901160000004,
+        "target": 30000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "mega16-hell2.i0.n9",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega16-hell2.i9.n9",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega16-hell2.i18.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega16-hell2.i26.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega16-hell2.i34.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "mega16-hell2.i42.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 9,
+          "ms": 38690.8702,
+          "extraStart": true
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "diagonalX/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1.2190999999999974,
+        "p95": 3.098700000000008,
+        "max": 12.896399999999986,
+        "mean": 1.6562179999999997,
+        "target": 80,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "diagonalX-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 12.896399999999986,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "diagonalX/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 8.263300000000072,
+        "p95": 64.64999999999998,
+        "max": 229.9642,
+        "mean": 21.909529999999997,
+        "target": 200,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "diagonalX-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 64.64999999999998,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "diagonalX/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 12.538599999999974,
+        "p95": 23.136100000000056,
+        "max": 41.51649999999998,
+        "mean": 14.269775999999997,
+        "target": 500,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "diagonalX-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 41.51649999999998,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "diagonalX/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 119.58829999999989,
+        "p95": 364.9200000000001,
+        "max": 410.15740000000005,
+        "mean": 161.74395000000007,
+        "target": 1200,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "diagonalX-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "diagonalX/nightmare",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1089.614700000002,
+        "p95": 4321.8377,
+        "max": 5692.812600000005,
+        "mean": 1503.753274000001,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "diagonalX-nightmare.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "diagonalX/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 263.4943000000003,
+        "p95": 2953.7482,
+        "max": 3153.4273999999987,
+        "mean": 756.3620419999996,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "diagonalX-hell2.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "hyper/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1.3556999999999846,
+        "p95": 3.465299999999985,
+        "max": 13.527500000000003,
+        "mean": 1.8486799999999983,
+        "target": 80,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "hyper-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 13.527500000000003,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "hyper/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 67.20629999999983,
+        "p95": 368.31600000000003,
+        "max": 492.3013000000001,
+        "mean": 121.63031800000006,
+        "target": 1573,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "hyper-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "hyper/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 15.254500000000007,
+        "p95": 38.78819999999996,
+        "max": 77.6135,
+        "mean": 18.367710000000002,
+        "target": 500,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "hyper-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 2,
+          "holdRuns": [
+            "hyper-hard.i0.n50.a1",
+            "hyper-hard.i0.n50.a2"
+          ]
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 77.6135,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "hyper/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 161.35790000000088,
+        "p95": 559.9863999999998,
+        "max": 836.6378999999997,
+        "mean": 225.13768799999997,
+        "target": 1200,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "hyper-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "hyper/nightmare",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 2052.1525999999976,
+        "p95": 7576.986600000004,
+        "max": 10695.432,
+        "mean": 2867.903397999999,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "hyper-nightmare.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "hyper-nightmare.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "hyper/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1104.1474999999991,
+        "p95": 4289.4738,
+        "max": 6111.0360999999975,
+        "mean": 1669.6212719999999,
+        "target": 5000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "hyper-hell2.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "jigsaw9/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 7.154100000000028,
+        "p95": 29.769699999999943,
+        "max": 75.31530000000001,
+        "mean": 12.828137999999997,
+        "target": 150,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "jigsaw9-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 45.53880000000001,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "jigsaw9/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 216.2977,
+        "p95": 942.8015999999998,
+        "max": 1461.2626,
+        "mean": 366.43525599999987,
+        "target": 1905,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "jigsaw9-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "jigsaw9/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 47.74950000000001,
+        "p95": 150.3066,
+        "max": 238.99640000000022,
+        "mean": 61.447033999999995,
+        "target": 350,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "jigsaw9-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "jigsaw9/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 52.20859999999993,
+        "p95": 139.299,
+        "max": 188.49509999999987,
+        "mean": 66.02005799999999,
+        "target": 900,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "jigsaw9-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 139.299,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "jigsaw9/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 365.28110000000015,
+        "p95": 1586.0252,
+        "max": 3455.757700000002,
+        "mean": 566.7652279999998,
+        "target": 2000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "jigsaw9-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "jigsaw9/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1783.3498,
+        "p95": 5425.923499999997,
+        "max": 8163.678099999997,
+        "mean": 2184.3711479999997,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "jigsaw9-hell2.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "jigsaw9-hell2.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "killer/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1.6717999999999904,
+        "p95": 4.677199999999999,
+        "max": 15.877700000000004,
+        "mean": 2.196166,
+        "target": 300,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "killer-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 15.877700000000004,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "killer/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 7.872500000000059,
+        "p95": 23.197900000000004,
+        "max": 27.54910000000001,
+        "mean": 10.14724,
+        "target": 700,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "killer-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 27.54910000000001,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "killer/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 401.7645,
+        "p95": 1932.9269999999997,
+        "max": 2243.370899999998,
+        "mean": 671.3794360000002,
+        "target": 5425,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "killer-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "greaterThan/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 16.458799999999997,
+        "p95": 29.09910000000002,
+        "max": 44.73810000000002,
+        "mean": 18.496760000000005,
+        "target": 300,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "greaterThan-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 44.73810000000002,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "greaterThan/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 26.891399999999976,
+        "p95": 57.36240000000001,
+        "max": 59.349100000000135,
+        "mean": 29.333852,
+        "target": 700,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "greaterThan-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 1,
+          "holdRuns": [
+            "greaterThan-easy.i0.n50.a1"
+          ]
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 57.36240000000001,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "greaterThan/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 206.48019999999997,
+        "p95": 2894.3935,
+        "max": 4308.9511999999995,
+        "mean": 567.1917839999998,
+        "target": 6000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "greaterThan-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 2894.3935,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "greaterThan/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1061.4382000000005,
+        "p95": 7620.496199999994,
+        "max": 15503.438000000002,
+        "mean": 2063.101438,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "greaterThan-master.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "greaterThan-master.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "greaterThan/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 3133.4679999999935,
+        "p95": 9287.400899999997,
+        "max": 11288.6218,
+        "mean": 4071.7723340000016,
+        "target": 10000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "greaterThan-hell2.i0.n17",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "greaterThan-hell2.i17.n17",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "greaterThan-hell2.i34.n16",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "samurai/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 10.232899999999972,
+        "p95": 15.199899999999985,
+        "max": 32.839,
+        "mean": 10.962328000000003,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "samurai-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 32.839,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "samurai/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 193.5004,
+        "p95": 1689.273299999999,
+        "max": 4651.5245,
+        "mean": 441.7367779999999,
+        "target": 8000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "samurai-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "samurai/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 111.91679999999997,
+        "p95": 497.6880000000001,
+        "max": 650.6681999999996,
+        "mean": 178.65286400000002,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "samurai-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "samurai/expert",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 490.97669999999925,
+        "p95": 5349.8092000000015,
+        "max": 9674.0744,
+        "mean": 1151.124844,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "samurai-expert.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-expert.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "samurai/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 881.5951,
+        "p95": 7547.508599999999,
+        "max": 16792.6476,
+        "mean": 1912.27799,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "samurai-master.i0.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i5.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i10.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i15.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i20.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i25.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i30.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i35.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i40.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "samurai-master.i45.n5",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "sohei/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 6.695799999999963,
+        "p95": 12.128500000000003,
+        "max": 28.682699999999983,
+        "mean": 7.595313999999994,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "sohei-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 28.682699999999983,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "sohei/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 131.42650000000003,
+        "p95": 1802.4207000000001,
+        "max": 3824.6762,
+        "mean": 319.869108,
+        "target": 8000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "sohei-normal.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-normal.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "sohei/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 153.02870000000075,
+        "p95": 650.4107000000004,
+        "max": 3812.1226,
+        "mean": 262.280752,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "sohei-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "sohei/expert",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 352.78459999999905,
+        "p95": 5757.546700000003,
+        "max": 11398.117999999999,
+        "mean": 1053.5183479999996,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "sohei-expert.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-expert.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "sohei/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1129.5849000000017,
+        "p95": 4064.878199999999,
+        "max": 6048.331299999998,
+        "mean": 1412.6310639999997,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "sohei-master.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-master.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "sohei/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 7508.599099999999,
+        "p95": 35522.675,
+        "max": 41037.9662,
+        "mean": 11252.329409999998,
+        "target": 30000,
+        "meets": false
+      },
+      "chunks": [
+        {
+          "chunkId": "sohei-hell2.i0.n9",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-hell2.i9.n9",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-hell2.i18.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-hell2.i26.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-hell2.i34.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "sohei-hell2.i42.n8",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 42,
+          "ms": 35522.675,
+          "extraStart": true
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 3.659099999999995,
+        "p95": 6.223599999999976,
+        "max": 22.967600000000004,
+        "mean": 4.317276,
+        "target": 1000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 22.967600000000004,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 76.45719999999983,
+        "p95": 639.5039000000006,
+        "max": 2215.3705999999997,
+        "mean": 194.811676,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 58.142900000000054,
+        "p95": 174.62110000000007,
+        "max": 177.59979999999996,
+        "mean": 69.23318999999998,
+        "target": 8000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/expert",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 191.96349999999984,
+        "p95": 3611.173999999999,
+        "max": 5818.0161,
+        "mean": 782.671754,
+        "target": 8000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-expert.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 143.47439999999915,
+        "p95": 486.2474000000002,
+        "max": 914.1934000000001,
+        "mean": 198.32828600000002,
+        "target": 8000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 2,
+          "holdRuns": [
+            "butterfly-master.i0.n50.a1",
+            "butterfly-master.i0.n50.a2"
+          ]
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/nightmare",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 4144.870600000002,
+        "p95": 15151.791400000002,
+        "max": 32129.473899999997,
+        "mean": 5988.946716,
+        "target": 30000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-nightmare.i0.n17",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "butterfly-nightmare.i17.n17",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "butterfly-nightmare.i34.n16",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "butterfly/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 2976.5184999999983,
+        "p95": 15496.112700000001,
+        "max": 18624.48449999999,
+        "mean": 4605.454473999999,
+        "target": 15000,
+        "meets": false
+      },
+      "chunks": [
+        {
+          "chunkId": "butterfly-hell2.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "butterfly-hell2.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 16841.0182,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "flower/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 4.258500000000026,
+        "p95": 9.729600000000005,
+        "max": 24.407899999999984,
+        "mean": 5.0356840000000025,
+        "target": 3000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "flower-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 24.407899999999984,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "flower/normal",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 208.98899999999776,
+        "p95": 1715.6381000000001,
+        "max": 1950.5557000000001,
+        "mean": 414.01666000000006,
+        "target": 8000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "flower-normal.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "flower/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 110.64120000000003,
+        "p95": 393.3625000000011,
+        "max": 7528.3136,
+        "mean": 307.75393800000006,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "flower-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "flower/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 438.72290000000066,
+        "p95": 1392.3329000000003,
+        "max": 2651.6021,
+        "mean": 599.4036879999998,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "flower-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "flower/hell2",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 2772.685199999999,
+        "p95": 11468.479499999998,
+        "max": 17223.455499999996,
+        "mean": 3716.833408,
+        "target": 20000,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "flower-hell2.i0.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        },
+        {
+          "chunkId": "flower-hell2.i25.n25",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "wordoku/veryEasy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 1.649799999999999,
+        "p95": 3.566599999999994,
+        "max": 13.299599999999984,
+        "mean": 2.0381659999999995,
+        "target": 100,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "wordoku-veryEasy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 1,
+          "holdRuns": [
+            "wordoku-veryEasy.i0.n50.a1"
+          ]
+        }
+      ],
+      "coldStartSensitive": true,
+      "coldStart": [
+        {
+          "index": 0,
+          "ms": 13.299599999999984,
+          "extraStart": false
+        }
+      ],
+      "problems": []
+    },
+    {
+      "cell": "wordoku/easy",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 192.44959999999992,
+        "p95": 1237.2001,
+        "max": 1481.4616,
+        "mean": 329.38518,
+        "target": 2921,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "wordoku-easy.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "wordoku/hard",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 18.19780000000003,
+        "p95": 86.4536999999998,
+        "max": 235.38480000000004,
+        "mean": 33.42186400000001,
+        "target": 600,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "wordoku-hard.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "wordoku/expert",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 55.54269999999997,
+        "p95": 604.1490000000003,
+        "max": 864.2583,
+        "mean": 111.87837400000001,
+        "target": 600,
+        "meets": false
+      },
+      "chunks": [
+        {
+          "chunkId": "wordoku-expert.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "wordoku/master",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 104.79140000000007,
+        "p95": 525.4071999999996,
+        "max": 693.8551,
+        "mean": 146.08732599999996,
+        "target": 1500,
+        "meets": true
+      },
+      "chunks": [
+        {
+          "chunkId": "wordoku-master.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    },
+    {
+      "cell": "wordoku/nightmare",
+      "complete": true,
+      "stats": {
+        "n": 50,
+        "p50": 790.9591,
+        "p95": 2800.4616000000005,
+        "max": 4443.854599999999,
+        "mean": 967.8530320000001,
+        "target": 1500,
+        "meets": false
+      },
+      "chunks": [
+        {
+          "chunkId": "wordoku-nightmare.i0.n50",
+          "complete": 1,
+          "failed": 0,
+          "holds": 0,
+          "holdRuns": []
+        }
+      ],
+      "coldStartSensitive": false,
+      "coldStart": [],
+      "problems": []
+    }
+  ],
+  "consumed": [
+    {
+      "chunkId": "classic4-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1",
+      "ledgerSha256": "60ab03daa610d9e1488613c69731608cb1f3f2774cda683780a8c8ac520860ab",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic6-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1",
+      "ledgerSha256": "45ebf5eb50f15bee72a165f277d63225d59aad3ce31bb24fdb69f763ab62243d",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic6-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1",
+      "ledgerSha256": "ee226a9c5670f6d5640a87f2b7700acefb4041e51e47f8ef6f544082d6ed34fc",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1",
+      "ledgerSha256": "86dc8668c264d897a708700f40552764aa15ba711b2ecf01b763e162e5a3bb37",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1",
+      "ledgerSha256": "cbdb34252c342c864b6821cb93e3d42b6f20cb1b11ea9d3772326787b2d1cdf5",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1",
+      "ledgerSha256": "77b1bc6c993b8cfbafab0efaf35bbd1debd3b712545fd4b72a528f63b3ee17d2",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1",
+      "ledgerSha256": "51a240ddb6730bde648f30394f4ce030db5407534482929dcbd87b6bfb525e22",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-expert.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1",
+      "ledgerSha256": "2e3e61d2784bce89178c598ca7a51ce721220cee2a9c55f3c149512a5d13b7ba",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1",
+      "ledgerSha256": "4c9de55665e52ff3cad6bab7a9f3e48f5218eeb1379e98bb39f3a4ddc3907dfb",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "classic9-nightmare.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1",
+      "ledgerSha256": "1502c63f8eba1c758295453b84b461e57e9f4563850b1e74facbb9c6c95cdf6a",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1",
+      "ledgerSha256": "9f89f4d7c9c92d0fe2e51c19a207a2475c230bf4adb2b06a75956c7859591a24",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1",
+      "ledgerSha256": "cd2e8e82cd301bb435a1b1802f14c50e3351fe8c4871d6eebb4220c38738dcd0",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1",
+      "ledgerSha256": "3cac48c0c8271f00357216ec47fd1db00fd36e8056476d532c05b395007f601c",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1",
+      "ledgerSha256": "37680eff82bb7f3d88671bcfdb99ba4c9baad786812d8d9893b3f2083a42ac6b",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-expert.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1",
+      "ledgerSha256": "1fe6b672ff6564482b8609ecc3cc7a531b4cf8c4ac2394d8a45eb48b7e0633ed",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-expert.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1",
+      "ledgerSha256": "ce3cf46b2e312716ec861c2236ed445ad708bd0bbc57694b147616726f4158a8",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1",
+      "ledgerSha256": "e8ad4db3bbb25e64ad24779fb8f1aecefd42dedce499dbfd5b362fcaab94149d",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-nightmare.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-nightmare/mega12-nightmare.i0.n25.a1",
+      "ledgerSha256": "fcdeb221b967c8c6b18c06bc09c32080920bc891ab1abe6053a2dc6cee00027b",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-nightmare.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-nightmare/mega12-nightmare.i25.n25.a1",
+      "ledgerSha256": "5a5f6850a697c6abec77028dd75f1587f6e9ec7898e73a4a65cd763beb7ea48d",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-hell2.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hell2/mega12-hell2.i0.n25.a1",
+      "ledgerSha256": "c529e38aa406f63e6b94c5acc47486a9ffd68eece21f0e034d9fb71198138675",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega12-hell2.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hell2/mega12-hell2.i25.n25.a1",
+      "ledgerSha256": "6172bb4ff9b8c5705858a2991dfeab17872a820a57fb373cd72bfa0ceb5230c4",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega16-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-veryEasy/mega16-veryEasy.i0.n50.a1",
+      "ledgerSha256": "3bd6669a17ceeb6172229e1e1444c7e94e50fb49a9709ad00fb1cf68ce8d554f",
+      "head": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+      "epoch": {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+      }
+    },
+    {
+      "chunkId": "mega16-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-easy/mega16-easy.i0.n50.a3",
+      "ledgerSha256": "77dff53c911c6038301a8173d9251505af87590561fd9e97405a6d80eea22f67",
+      "head": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+      "epoch": {
+        "id": 4,
+        "base": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+        "helperManifestSha256": "9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15"
+      }
+    },
+    {
+      "chunkId": "mega16-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-normal/mega16-normal.i0.n50.a2",
+      "ledgerSha256": "58c92a6cbda12f41fa80cc64046c0eedf8084dad15136eca980033534ffea08a",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hard/mega16-hard.i0.n50.a1",
+      "ledgerSha256": "8583fcbf9714d7c8277a45a02e86f2a57f9106d2768a32e911d27621102d9947",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-master/mega16-master.i0.n50.a1",
+      "ledgerSha256": "3fb77c4ac7620352aa3d8d700cedca65778ee0d64d62bbfac4d857c46a25b423",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hell2.i0.n9",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i0.n9.a1",
+      "ledgerSha256": "10eef5ab490a2ced9a2eac692723eb6f1e923e6744c4f452487db865784b55d8",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hell2.i9.n9",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i9.n9.a1",
+      "ledgerSha256": "d13729d89a79b7d752652e28af5bb70f332d68ce210207e31ab878b88a5dcfdf",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hell2.i18.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i18.n8.a1",
+      "ledgerSha256": "580cbf05b6d7e1e5b1f823fd590c158fbc12f945fdaab604696979fc0cf9972d",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hell2.i26.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i26.n8.a1",
+      "ledgerSha256": "725a8ab9ac298f5670527dae9bf6756c67718eac643aed8a05f41c3ef2d06085",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hell2.i34.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i34.n8.a1",
+      "ledgerSha256": "bc2cb034bcf4941927de9d39aecb6e84de7cfe8902f2816b1d36b5d0151eaa7c",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "mega16-hell2.i42.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/mega16-hell2/mega16-hell2.i42.n8.a1",
+      "ledgerSha256": "ec54db27a756dc27d6208cf4bd98e534652cedd9760f1703f508a97a8eb08f14",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "diagonalX-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-veryEasy/diagonalX-veryEasy.i0.n50.a1",
+      "ledgerSha256": "8149ca376b06eeb42d593eb82d7c6115e985cdeaeb3e60c6fde80fcc19e9db5a",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "diagonalX-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-normal/diagonalX-normal.i0.n50.a1",
+      "ledgerSha256": "ec9d74f00af5dfde44e801d524eacb57a3f230b961a870ec5600f6b636049d1a",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "diagonalX-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-hard/diagonalX-hard.i0.n50.a1",
+      "ledgerSha256": "273bc60bbc41511d00a4c06f9d449f5b1be2393091b7b15257f7563b9bcccfb1",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "diagonalX-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-master/diagonalX-master.i0.n50.a1",
+      "ledgerSha256": "f1ae6da4a7a2a2c7ed282c6ecf1171d4a8e250f12d3db777f4b7402818728c26",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "diagonalX-nightmare.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-nightmare/diagonalX-nightmare.i0.n50.a1",
+      "ledgerSha256": "1baa16c87d9d45266b37fac67d54873509bdb0588b458d319de87bb089be31b7",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "diagonalX-hell2.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-hell2/diagonalX-hell2.i0.n50.a1",
+      "ledgerSha256": "6041c95b16c31110c95a46ead67db15f8d6351be5274ae9a62728c0eccf3545b",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "hyper-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-veryEasy/hyper-veryEasy.i0.n50.a1",
+      "ledgerSha256": "b92a1a2f8246e8f61fd1e9c477df4e596e5476e34f088f48693733f244778c5d",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "hyper-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-normal/hyper-normal.i0.n50.a1",
+      "ledgerSha256": "753e68b8ca72d1c7a3913c767da64376899c9bc2bd6e05f93cc271c50e2dc801",
+      "head": "bce27077044f5d92e5bb1729713e188bf304cd8f",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "hyper-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-hard/hyper-hard.i0.n50.a3",
+      "ledgerSha256": "215016e11f46236318208658d2a9a253a90d303066643cdb9adc34535a2ac171",
+      "head": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+      "epoch": {
+        "id": 4,
+        "base": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+        "helperManifestSha256": "9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15"
+      }
+    },
+    {
+      "chunkId": "hyper-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-master/hyper-master.i0.n50.a1",
+      "ledgerSha256": "90eb00551eb2916cc0b070767f821a737b4d366cf6820ffffd50383f607b0da1",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "hyper-nightmare.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-nightmare/hyper-nightmare.i0.n25.a1",
+      "ledgerSha256": "392e02ce65fce833090aaa82f6ca79cfcfa03219d83f449ad538ca2dac97912c",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "hyper-nightmare.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-nightmare/hyper-nightmare.i25.n25.a1",
+      "ledgerSha256": "42e80a02ef271a2810b42f470c47d3def3095d09639e5d39f17dc371016d59ca",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "hyper-hell2.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-hell2/hyper-hell2.i0.n50.a1",
+      "ledgerSha256": "23634f53fb7a34bd94fe45fbbd48a182f856bb1d2d7fec21ef06cc0609944d82",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-veryEasy/jigsaw9-veryEasy.i0.n50.a1",
+      "ledgerSha256": "bbd64b8c354488e04814a12ac2ca48b3cb34f7928af39516bd2a49412775fbb8",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-easy/jigsaw9-easy.i0.n50.a1",
+      "ledgerSha256": "3d636f0907a7de0a7cf65d56d3462ca8b32427903fe4366fb596d78dc605b672",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-normal/jigsaw9-normal.i0.n50.a1",
+      "ledgerSha256": "6fc973808098dee162ea87fa49656fb5d583403c175a42a148079e33bf3bc9cb",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-hard/jigsaw9-hard.i0.n50.a1",
+      "ledgerSha256": "fefd867089b5bf39ee416028e68c6f795a4760c2425b580ebb5ac0a26177df8d",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-master/jigsaw9-master.i0.n50.a1",
+      "ledgerSha256": "fc5472d5d3289abaa5c7ee676b032b1b51d66e639c067e534f470898d6450f56",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-hell2.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-hell2/jigsaw9-hell2.i0.n25.a1",
+      "ledgerSha256": "428e4e01da96613ad46ea9552f42152ddf302b728e820efcf24a532c4c48e272",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "jigsaw9-hell2.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-hell2/jigsaw9-hell2.i25.n25.a1",
+      "ledgerSha256": "b47e3e7b2a12e1554447dbf7ecaa6679abbc159b480e2f57f16c700447e60b88",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "killer-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/killer-veryEasy/killer-veryEasy.i0.n50.a1",
+      "ledgerSha256": "36ac3eecca7f37e1940e00c1c2de2b4c4100bd74cb1614d5bb59faf6675bdb55",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "killer-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/killer-easy/killer-easy.i0.n50.a1",
+      "ledgerSha256": "206ab947fc4d9efb84a9788ee3c6c775ce0ad08d8a1fce52492cac9f794865f0",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "killer-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/killer-normal/killer-normal.i0.n50.a1",
+      "ledgerSha256": "a19b4671d404c6c127c7cf913b9be7d48c70cddc38763b7577a16df6a0fb9dec",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-veryEasy/greaterThan-veryEasy.i0.n50.a1",
+      "ledgerSha256": "1eaceed34f67b65192913e7a90570048b94bb7df3621c5136b7aab4f3bdb01e0",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-easy/greaterThan-easy.i0.n50.a2",
+      "ledgerSha256": "15e39d88ef4397a1bf3d6207faf0155ebad5cb7674bcd39e17e12f68528280c9",
+      "head": "1bf8945f611601f3196a22e30eed2134f7a8f9e7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-hard/greaterThan-hard.i0.n50.a1",
+      "ledgerSha256": "b15dffc62e35f221cd7191d7cc55ccfe972735603433b161d2513eaafba49d78",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-master.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-master/greaterThan-master.i0.n25.a1",
+      "ledgerSha256": "f20e4c894d9d125f55a54dfb2f5cb8ee48e6670207cab1aae30e2c0848fa7b13",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-master.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-master/greaterThan-master.i25.n25.a1",
+      "ledgerSha256": "33442fb5211cf0c02bf0d35357abd905c6ad29bb5309ca502a274d50b836eed0",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-hell2.i0.n17",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-hell2/greaterThan-hell2.i0.n17.a1",
+      "ledgerSha256": "67ed72ebcdaa27b03e51f7e3eb375ed961197a565dff962ccddf1e91f8385456",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-hell2.i17.n17",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-hell2/greaterThan-hell2.i17.n17.a1",
+      "ledgerSha256": "32116b855077457425653e8656859fbd371f70aa9ff308303f107fb004fd9ba5",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "greaterThan-hell2.i34.n16",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/greaterThan-hell2/greaterThan-hell2.i34.n16.a1",
+      "ledgerSha256": "bd83d5861e344a64b3513cdd9699bddab814fbed6bfe126c9e35bb5ba8b3c713",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-veryEasy/samurai-veryEasy.i0.n50.a1",
+      "ledgerSha256": "ce10454a0ecf654a160ca51fc05ad75c9cd21f9551ee3a7d623c1eba75c4fd4a",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-normal/samurai-normal.i0.n50.a1",
+      "ledgerSha256": "a072759f261b8c30a68bbf8930b82db246892f69e98becb737ee662badec28b5",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-hard/samurai-hard.i0.n50.a1",
+      "ledgerSha256": "351b0dfa3c484513e2e385ce940367b796fc33b707273693ade1042db7faf92d",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-expert.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-expert/samurai-expert.i0.n25.a1",
+      "ledgerSha256": "9d7ce0f8233d6c8a222ac823a46f52b9197c60c7ec0c41adbafcc8e285683d9d",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-expert.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-expert/samurai-expert.i25.n25.a1",
+      "ledgerSha256": "89d9937753d4a54d25be8b05fa4777d96cbd4d3cab75522dcbb4fef98c34d9d1",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i0.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i0.n5.a1",
+      "ledgerSha256": "f36c46013e0e3221688da4cccf6e16533a26bf16833d9e05275fea03bb912417",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i5.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i5.n5.a1",
+      "ledgerSha256": "d15a5914c976830f3f875d8e7189a4900fabae5db7496ff8d242809359bd914a",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i10.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i10.n5.a1",
+      "ledgerSha256": "3551d364b26fb6ae99caae843ad651a823a65ff8024fdb44c7731aea5dd4f00a",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i15.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i15.n5.a1",
+      "ledgerSha256": "38666023d83b1c0072cf06fe7a9b8e596467da601e2cee669847369a9cf2e495",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i20.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i20.n5.a1",
+      "ledgerSha256": "a2b67fd4c7f789d7b6251417e773db360bb8e0bd1f02ef34dbbb15fb06b0d635",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i25.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i25.n5.a1",
+      "ledgerSha256": "55e67360ec69eab5f60d5d74d2a5f95beb6ee5c15002cca6a82f23379c699e77",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i30.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i30.n5.a1",
+      "ledgerSha256": "bdaf7e051e103ef682b6816f8fd23cde26674f7cc96ee48dc9585ab18a30c746",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i35.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i35.n5.a1",
+      "ledgerSha256": "4f80f8d72fc95500ead75ad6debf25c0b0275f580808f2463888d1a9b84cd5e1",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i40.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i40.n5.a1",
+      "ledgerSha256": "e5d8a1ee5f0a89895a8978a1482004ddb9228a3269d6bdd2967c9eaea4d7cc63",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "samurai-master.i45.n5",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-master/samurai-master.i45.n5.a1",
+      "ledgerSha256": "cf02c82511046a113e10d06b1fcce433894d4eae56b0473af5686cf717ff1113",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-veryEasy/sohei-veryEasy.i0.n50.a1",
+      "ledgerSha256": "1ab83b43e74bb937e5f30bfa520e0b4df5bda172b8f90e44419d18161ce6558d",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-normal.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-normal/sohei-normal.i0.n25.a1",
+      "ledgerSha256": "33e3c51668a0efd0e741ce2411e20d2a5f1e993e540395a196812e7f48b70497",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-normal.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-normal/sohei-normal.i25.n25.a1",
+      "ledgerSha256": "f6c29981b66b545e175829fdabb34f01f4c185e31e9d1ff2f5a82e8c11dd9c9a",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hard/sohei-hard.i0.n50.a1",
+      "ledgerSha256": "d4e32aba9cd5c9caaf1cd66aa8d054de6743056dec9cd6cd7d51053f482bf9ac",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-expert.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-expert/sohei-expert.i0.n25.a1",
+      "ledgerSha256": "2109c2e2d64b01f82b44412c1f3e5d41620988b9f272342f3b2650436a04a7ac",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-expert.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-expert/sohei-expert.i25.n25.a1",
+      "ledgerSha256": "1214a254115cf64ff7e89ac595316e81e822edb5247083831ebb4ad5109d0ca6",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-master.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-master/sohei-master.i0.n25.a1",
+      "ledgerSha256": "5e9f066e17cd3cb699ed6e18039fba2aed54e3cdb43b903e89e0b6ed06e96633",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-master.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-master/sohei-master.i25.n25.a1",
+      "ledgerSha256": "e5b466910e35ba3f6320fa269cd03a3c53321f104484c7e4fc4f8e9de7eef9a9",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hell2.i0.n9",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hell2/sohei-hell2.i0.n9.a1",
+      "ledgerSha256": "e467f3c42ec8e99ce0c2ae1049d4e728f46fd09d07397d6ee8eb4c272aec5706",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hell2.i9.n9",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hell2/sohei-hell2.i9.n9.a1",
+      "ledgerSha256": "6e9d620c2d1429afe6cb9b8f4d9d0252a1fa4e46537e168c91a462453c8e0a9a",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hell2.i18.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hell2/sohei-hell2.i18.n8.a1",
+      "ledgerSha256": "a4487b8747724f8de4b989972268504a19bb4d3b223396f10ec6fd1f2cc56124",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hell2.i26.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hell2/sohei-hell2.i26.n8.a1",
+      "ledgerSha256": "db71eaf384214d3c4f872c95d764aea23662f8d6c37c478a8f36dac3e16351bd",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hell2.i34.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hell2/sohei-hell2.i34.n8.a1",
+      "ledgerSha256": "23c470695d908fa41889e7a63f6facada2c6de955f5f6ea814fc64cfb935ff59",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "sohei-hell2.i42.n8",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/sohei-hell2/sohei-hell2.i42.n8.a1",
+      "ledgerSha256": "19d9c160279e175985f886d758a1c87d4157d5ed62e9c98f1ab9b46fc965d9c3",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-veryEasy/butterfly-veryEasy.i0.n50.a1",
+      "ledgerSha256": "332fb4001b6e5cd7c2f5999edd21ec7c3c52c4beda5728c673e14d99a04205c8",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-normal/butterfly-normal.i0.n50.a1",
+      "ledgerSha256": "10a1b43a64c8f4a83cb32154ea2f007307b5a00adb448b2f7345d4310d17affc",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-hard/butterfly-hard.i0.n50.a1",
+      "ledgerSha256": "3d2b85268bb5b41e4f19989e743d78343f0811c3af6f18042f275887ec9b1d53",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-expert.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-expert/butterfly-expert.i0.n50.a1",
+      "ledgerSha256": "85bf1a23d5b3a6bae5279b2f6ffd3d325f8eaff6c147a144de65e090ac306a7b",
+      "head": "3fa933605a3b5aaad1e0049dcf4bece3051bedd7",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-master/butterfly-master.i0.n50.a3",
+      "ledgerSha256": "39b500eba2583ea6141885af620273c92bb9d2c5915567e42acd77055f93235d",
+      "head": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+      "epoch": {
+        "id": 4,
+        "base": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+        "helperManifestSha256": "9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15"
+      }
+    },
+    {
+      "chunkId": "butterfly-nightmare.i0.n17",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-nightmare/butterfly-nightmare.i0.n17.a1",
+      "ledgerSha256": "ec78769bfe7a7850d907c9685740d6a9ac02d8c959880fc135edaae89427103a",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-nightmare.i17.n17",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-nightmare/butterfly-nightmare.i17.n17.a1",
+      "ledgerSha256": "cfd02ba052a2396067e00dc1b45f3934fb5cd622be69b9af54dcac119003da5c",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-nightmare.i34.n16",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-nightmare/butterfly-nightmare.i34.n16.a1",
+      "ledgerSha256": "d76e82705578b968b17b12b332c15710969ca82200235b2e0c219f7c2ff4b6ff",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-hell2.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-hell2/butterfly-hell2.i0.n25.a1",
+      "ledgerSha256": "57d4d239aa13c070cccdd0c59c5ee28bf093d48192149c277c6a1c8ba0ef9095",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "butterfly-hell2.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-hell2/butterfly-hell2.i25.n25.a1",
+      "ledgerSha256": "64974d4e2cf43fce0f91128fd66910ea7a8f67b0cc455f45146d673b8269b3b2",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "flower-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-veryEasy/flower-veryEasy.i0.n50.a1",
+      "ledgerSha256": "2e974d562c0397e571dd092deef3068f622ea3e38018836895648c7f788f7659",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "flower-normal.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-normal/flower-normal.i0.n50.a1",
+      "ledgerSha256": "0453734565886fdd484576770c8f4348a331d1bf08780899219252945c4283d7",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "flower-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-hard/flower-hard.i0.n50.a1",
+      "ledgerSha256": "d6dea168b986ace6af35896251cd05263a632712526c8cbe49db2672937ee388",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "flower-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-master/flower-master.i0.n50.a1",
+      "ledgerSha256": "cbe866769e62b68c18cee1dbb92d495bfca5b72b1c44fa969e7fc518b77ddb9a",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "flower-hell2.i0.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-hell2/flower-hell2.i0.n25.a1",
+      "ledgerSha256": "ddaab49fb0b0cb9e0727f0ca47d1c0a9f1d419d7cf827d7913ab9605b2322030",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "flower-hell2.i25.n25",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-hell2/flower-hell2.i25.n25.a1",
+      "ledgerSha256": "d47d94084a8b68675298637fb997c80b5c276527e4402da9e34a0d066146ea20",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "wordoku-veryEasy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-veryEasy/wordoku-veryEasy.i0.n50.a2",
+      "ledgerSha256": "107ffec5f50c7a287778e86d58b3c889eedfcd8c7719b4d65cf5c1dd65a91946",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "wordoku-easy.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-easy/wordoku-easy.i0.n50.a1",
+      "ledgerSha256": "5698462b68039c3b84f5ddb42f7734f51b7f02bf3825f1ed7fe605220d69f315",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "wordoku-hard.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-hard/wordoku-hard.i0.n50.a1",
+      "ledgerSha256": "5050feca1eb86603901413d4b615a284350c536db82875fea2ad661b3bd6a72c",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "wordoku-expert.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-expert/wordoku-expert.i0.n50.a1",
+      "ledgerSha256": "546758a64a9aae59916e5f8f67f490cd75046c37abc661135c56981f04ca66d5",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "wordoku-master.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-master/wordoku-master.i0.n50.a1",
+      "ledgerSha256": "e30989b9a332a30abf1759064518acbeb8cf00be0e792b36d7abaafd3bfe7cdf",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    },
+    {
+      "chunkId": "wordoku-nightmare.i0.n50",
+      "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-nightmare/wordoku-nightmare.i0.n50.a1",
+      "ledgerSha256": "b9df404eaf43193f156944c007820c51a8555224d49a644272e3698b268dae3f",
+      "head": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+      "epoch": {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d"
+      }
+    }
+  ],
+  "identity": {
+    "manifestSha256": "7d63342a0ffb1a3a6794959276ba4a5aa2ef116f8f6ef154b9888220f0b7dd69",
+    "helperManifestSha256": "9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15",
+    "base": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be"
+  },
+  "epochs": {
+    "pairs": [
+      {
+        "id": 1,
+        "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+        "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03",
+        "attempts": [
+          1,
+          2
+        ],
+        "plan": {
+          "file": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json",
+          "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+          "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+        }
+      },
+      {
+        "id": 2,
+        "base": "b6de2c46e73581f54e61f1ece92a360dd9879736",
+        "helperManifestSha256": "bd6949efbef5aa7bc827324405faf5c3aa68ab248f09bba07daf1dc55504c0ae",
+        "attempts": [
+          1,
+          2
+        ],
+        "plan": {
+          "file": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json",
+          "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+          "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+        }
+      },
+      {
+        "id": 3,
+        "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+        "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d",
+        "attempts": [
+          1,
+          2
+        ],
+        "plan": {
+          "file": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json",
+          "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+          "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+        }
+      },
+      {
+        "id": 4,
+        "base": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+        "helperManifestSha256": "9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15",
+        "attempts": [
+          3
+        ],
+        "plan": {
+          "file": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest-a3-v2.json",
+          "rawSha256": "989799e62fe2b8864da2de1bedc35264fb717f84b004689f6de941e03d747125",
+          "manifestSha256": "7d63342a0ffb1a3a6794959276ba4a5aa2ef116f8f6ef154b9888220f0b7dd69"
+        }
+      }
+    ],
+    "record": {
+      "file": "tasks/difficulty-v3/MS18d-gp-campaign-base-4.jsonl",
+      "sha256": "4a9a6fb0ffb21125bae526d7cbce4c751bcde179a149b971f1a83893350e8501"
+    },
+    "chain": [
+      {
+        "epoch": 2,
+        "file": "tasks/difficulty-v3/MS18d-gp-campaign-base-2.jsonl",
+        "sha256": "0e4ab066776509f32a4d99a88e57b1be56c80ff3b3a1625c868730bf0173d478"
+      },
+      {
+        "epoch": 3,
+        "file": "tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl",
+        "sha256": "11fc3447753c11073093feb8e9c0901a8d4bf602f94ee774fc48dd3c4fc3baa4"
+      },
+      {
+        "epoch": 4,
+        "file": "tasks/difficulty-v3/MS18d-gp-campaign-base-4.jsonl",
+        "sha256": "4a9a6fb0ffb21125bae526d7cbce4c751bcde179a149b971f1a83893350e8501"
+      }
+    ]
+  },
+  "observation": {
+    "argv": [
+      "--plan=docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest-a3-v2.json",
+      "--scope=all-79",
+      "--out=..\\docs\\difficulty-v3\\evidence\\MS18d\\gp\\all-79\\final.m1\\report.json"
+    ],
+    "pid": 15444,
+    "at": "2026-11-20T00:31:52.133Z",
+    "standin": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": false,
+  "problems": [
+    "helper bytes differ from the manifest: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js, generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js, generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1, generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1"
+  ],
+  "head": {
+    "actual": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "base": null,
+    "descendant": null,
+    "diff": null,
+    "ok": false
+  },
+  "status": {
+    "rawText": [],
+    "rawClean": true,
+    "reviewedClean": true,
+    "entries": [],
+    "allowed": [],
+    "violations": []
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-VJ5oYZ\\helpers-manifest.txt",
+    "entries": 52,
+    "mismatches": [
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js",
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js",
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1",
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1"
+    ],
+    "missing": [],
+    "sha256": "42c70630c03290734726c3b0651243974141b50f8bc28f318124118b12f59278"
+  }
+}

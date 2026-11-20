@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS13a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS13a\mutations-3.txt 53 53
+mutation 53 (checker: extra edges of a graph are not counted): DETECTED - 35 total, 34 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+detected 1 of 1, survivors 0, 2.5 s
+exit=0 seconds=2.542

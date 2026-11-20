@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in r1",
+  "runId": "r1",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-7/runs1/classic4-veryEasy/r1",
+  "requestedAt": "2026-11-19T20:02:19.182+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795093323642,
+    "lastCheckMs": 1795093339139,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 256
+  },
+  "startedAtFromChild": "2026-11-19T20:02:19.312+07:00",
+  "finished": "2026-11-19T20:02:19.414+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 36,
+    "cheapCheckMs": 0,
+    "ageMs": 11,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T20:02:19.415+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 64,
+  "controllerOutcome": "control-hold",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": "stand-in r1 command failed: 64",
+  "outcome": "control-hold",
+  "problems": []
+}

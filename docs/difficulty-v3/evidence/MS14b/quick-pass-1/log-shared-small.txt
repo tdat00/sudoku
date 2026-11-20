@@ -1,0 +1,74 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1
+==== shard core-shared (2195 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (72 ms)
+ok   board-view: 37 passed  (62 ms)
+ok   constraints: 43 passed  (93 ms)
+ok   exchange: 20 passed  (276 ms)
+ok   harness: 25 passed  (2.64 s)
+ok   logical-solver: 100 passed  (354 ms)
+ok   model: 49 passed  (37 ms)
+ok   solver: 50 passed  (2.71 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.97 s)
+ok   tech-chain: 239 passed  (26.51 s)
+ok   tech-fish: 483 passed  (24.37 s)
+ok   tech-subset: 167 passed  (9.03 s)
+ok   tech-wing: 496 passed  (11.66 s)
+ok   techniques: 268 passed  (6.42 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Suites: 16
+Tests:  2195 total, 2195 passed, 0 failed, 0 skipped
+Time:   86.21 s running tests, 86.61 s total
+Results: docs/difficulty-v3/evidence/MS14b/quick-pass-1/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (43.35 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   43.35 s running tests, 43.57 s total
+Results: docs/difficulty-v3/evidence/MS14b/quick-pass-1/generator-steps.json
+==== shard replay (158 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 156 passed, 2 failed  (43.12 s)
+
+Failures:
+  FAIL replay > replay: ratings > is unverified when the uniqueness count runs out of its guard, and rated with the default one
+       AssertionError: expected 2374 to be 2369
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:568:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R4C6 and the sign jumps of G11 and G12
+       TypeError: Cannot read properties of null (reading 'class')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1606:54)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  158 total, 156 passed, 2 failed, 0 skipped
+Time:   43.12 s running tests, 43.36 s total
+Results: docs/difficulty-v3/evidence/MS14b/quick-pass-1/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS14b\quick-pass-1\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (24.72 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   24.72 s running tests, 24.94 s total
+Results: docs/difficulty-v3/evidence/MS14b/quick-pass-1/generator-mega.json
+shard core-shared: exit 0, 86.9 s
+shard steps: exit 0, 43.8 s
+shard replay: exit 1, 43.6 s
+shard mega: exit 0, 25.2 s
+FAILED: replay
+exit=1 seconds=201.189

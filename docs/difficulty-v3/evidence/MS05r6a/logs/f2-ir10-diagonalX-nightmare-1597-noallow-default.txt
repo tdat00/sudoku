@@ -1,0 +1,1 @@
+diagonalX/nightmare#1597 allowance none, attempts default: hash 14ba46aac1d27f96, 3 attempt(s), exact true, 4749 ms; record ..\docs\difficulty-v3\evidence\MS05r6a\diagnostic\diagonalX-nightmare-1597-noallow-default.json

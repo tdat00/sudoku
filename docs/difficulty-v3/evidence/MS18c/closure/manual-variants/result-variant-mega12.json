@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["variants"],"filter":"> variants: mega12 >","exact":null,"count":16},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 29539.1,
+  "results": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 29285.8,
+    "tests": [
+      {"suite":"variants","name":"CV0 the definition and its difficulty spec are sound","fullName":"variants > variants: mega12 > CV0 the definition and its difficulty spec are sound","status":"pass","ms":4.716,"reason":"","error":null,"ordinal":34},
+      {"suite":"variants","name":"CV1 every model passes model.validate (all option values too)","fullName":"variants > variants: mega12 > CV1 every model passes model.validate (all option values too)","status":"pass","ms":9.574,"reason":"","error":null,"ordinal":35},
+      {"suite":"variants","name":"CV2 full grids are valid for every seed","fullName":"variants > variants: mega12 > CV2 full grids are valid for every seed","status":"pass","ms":6.717,"reason":"","error":null,"ordinal":36},
+      {"suite":"variants","name":"CV3 veryEasy: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 veryEasy: puzzles at the supported level","status":"pass","ms":25.863,"reason":"","error":null,"ordinal":37},
+      {"suite":"variants","name":"CV3 easy: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 easy: puzzles at the supported level","status":"pass","ms":32.468,"reason":"","error":null,"ordinal":38},
+      {"suite":"variants","name":"CV3 normal: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 normal: puzzles at the supported level","status":"pass","ms":44.464,"reason":"","error":null,"ordinal":39},
+      {"suite":"variants","name":"CV3 hard: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 hard: puzzles at the supported level","status":"pass","ms":163.789,"reason":"","error":null,"ordinal":40},
+      {"suite":"variants","name":"CV3 expert: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 expert: puzzles at the supported level","status":"pass","ms":534.94,"reason":"","error":null,"ordinal":41},
+      {"suite":"variants","name":"CV3 master: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 master: puzzles at the supported level","status":"pass","ms":1043.032,"reason":"","error":null,"ordinal":42},
+      {"suite":"variants","name":"CV3 nightmare: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 nightmare: puzzles at the supported level","status":"pass","ms":5074.444,"reason":"","error":null,"ordinal":43},
+      {"suite":"variants","name":"CV3 hell2: puzzles at the supported level","fullName":"variants > variants: mega12 > CV3 hell2: puzzles at the supported level","status":"pass","ms":13491.677,"reason":"","error":null,"ordinal":44},
+      {"suite":"variants","name":"CV3 unsupported: other levels are refused","fullName":"variants > variants: mega12 > CV3 unsupported: other levels are refused","status":"pass","ms":0.309,"reason":"","error":null,"ordinal":45},
+      {"suite":"variants","name":"CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","fullName":"variants > variants: mega12 > CV4 invariants I1-I7 hold (I6 with the variant's clue floor)","status":"pass","ms":270.712,"reason":"","error":null,"ordinal":46},
+      {"suite":"variants","name":"CV5 the same seed gives the same puzzle","fullName":"variants > variants: mega12 > CV5 the same seed gives the same puzzle","status":"pass","ms":8580.941,"reason":"","error":null,"ordinal":47},
+      {"suite":"variants","name":"CV6 soft: generation never hangs (milestones: perf.test.js)","fullName":"variants > variants: mega12 > CV6 soft: generation never hangs (milestones: perf.test.js)","status":"pass","ms":0.12,"reason":"","error":null,"ordinal":48},
+      {"suite":"variants","name":"CV7 name, options and levels exist in both locale packs","fullName":"variants > variants: mega12 > CV7 name, options and levels exist in both locale packs","status":"pass","ms":1.069,"reason":"","error":null,"ordinal":49}
+    ],
+    "suites": [
+      {"name":"variants","total":16,"passed":16,"failed":0,"skipped":0,"ms":29285.558}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=variants","--filter=> variants: mega12 >","--results=..\\docs\\difficulty-v3\\evidence\\MS18c\\closure\\manual-variants\\result-variant-mega12.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

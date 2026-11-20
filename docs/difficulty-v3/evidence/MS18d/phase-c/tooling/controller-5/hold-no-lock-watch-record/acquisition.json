@@ -1,0 +1,55 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795094260392,
+  "startedAtMs": 1795094260477,
+  "lockAcquiredAtMs": 1795094260397,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": null,
+  "busyAtRequest": false,
+  "startDelayMs": 85,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795093361389,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899088,
+  "reasons": [
+    "foreign-lock-watch-missing"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 33512,
+    "task": "stand-in hold-no-lock-watch-record",
+    "controllerPid": 34036,
+    "controllerParentPid": 33512,
+    "wrapperPid": 33512
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\hold-no-lock-watch-record\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\hold-no-lock-watch-record\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-N1mHNg\\hold-no-lock-watch-record\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

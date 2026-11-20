@@ -1,0 +1,39 @@
+$ node tests\artifacts\difficulty-v3\MS09b\fish-differential.js
+classic9 seed 777: 400 states, 991 findings of the seven
+classic9 seed 99: 400 states, 966 findings of the seven
+classic9 seed 20260101: 300 states, 691 findings of the seven
+classic6 seed 777: 400 states, 751 findings of the seven
+classic4 seed 777: 300 states, 90 findings of the seven
+fishTest12 seed 2026: 60 states, 197 findings of the seven
+fishTest16 seed 2026: 32 states, 117 findings of the seven
+diagonalX seed 4242: 120 states, 202 findings of the seven
+hyper seed 4242: 120 states, 227 findings of the seven
+jigsaw9 seed 4242: 120 states, 205 findings of the seven
+killer seed 4242: 12 states, 31 findings of the seven
+greaterThan seed 4242: 12 states, 31 findings of the seven
+wordoku seed 4242: 12 states, 22 findings of the seven
+samurai seed 4242: 12 states, 31 findings of the seven
+sohei seed 4242: 12 states, 35 findings of the seven
+butterfly seed 4242: 12 states, 3 findings of the seven
+flower seed 4242: 12 states, 18 findings of the seven
+OLD 53728 lines 0cdd6252f5a76a3af8b8c0ca340b9346a2a6f39f0ccaf0bafbbbd7f455170d40
+classic9 seed 777: 400 states, 991 findings of the seven
+classic9 seed 99: 400 states, 966 findings of the seven
+classic9 seed 20260101: 300 states, 691 findings of the seven
+classic6 seed 777: 400 states, 751 findings of the seven
+classic4 seed 777: 300 states, 90 findings of the seven
+fishTest12 seed 2026: 60 states, 197 findings of the seven
+fishTest16 seed 2026: 32 states, 117 findings of the seven
+diagonalX seed 4242: 120 states, 202 findings of the seven
+hyper seed 4242: 120 states, 227 findings of the seven
+jigsaw9 seed 4242: 120 states, 205 findings of the seven
+killer seed 4242: 12 states, 31 findings of the seven
+greaterThan seed 4242: 12 states, 31 findings of the seven
+wordoku seed 4242: 12 states, 22 findings of the seven
+samurai seed 4242: 12 states, 31 findings of the seven
+sohei seed 4242: 12 states, 35 findings of the seven
+butterfly seed 4242: 12 states, 3 findings of the seven
+flower seed 4242: 12 states, 18 findings of the seven
+NEW 53728 lines 0cdd6252f5a76a3af8b8c0ca340b9346a2a6f39f0ccaf0bafbbbd7f455170d40
+IDENTICAL: the seven patterns (X-Wing, Swordfish, Jellyfish, Skyscraper, Kite, Empty Rectangle, finned X-Wing) and the size-3 seam of the base commit and of the working tree agree on every line
+exit=0 seconds=13.947

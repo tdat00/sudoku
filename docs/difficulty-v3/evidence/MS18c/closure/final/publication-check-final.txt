@@ -1,0 +1,24 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18c\publication-check.cjs
+NOTE measured engine.sources 0ca29eaeebc295b6 (ed2fe50c, dirty)
+NOTE publication engine.sources 75b0955e3e356bd1, 46 files, 8 changed: classic.js, mega.js, extra-regions.js, jigsaw.js, killer.js, greater-than.js, multigrid.js, wordoku.js
+NOTE qualifierHash c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77 and attempt-policy digest unchanged
+NOTE registry definitions equal apart from difficultySupport: 15 of 15; support lists differing from HEAD: 0 (classic4 and classic6 unchanged)
+NOTE classic4: veryEasy
+NOTE classic6: veryEasy, hard
+NOTE classic9: veryEasy, easy, normal, hard, expert, master, nightmare
+NOTE mega12: veryEasy, easy, normal, hard, expert, master, nightmare, hell2
+NOTE mega16: veryEasy, easy, normal, hard, master, hell2
+NOTE diagonalX: veryEasy, normal, hard, master, nightmare, hell2
+NOTE hyper: veryEasy, normal, hard, master, nightmare, hell2
+NOTE jigsaw9: veryEasy, easy, normal, hard, master, hell2
+NOTE killer: veryEasy, easy, normal
+NOTE greaterThan: veryEasy, easy, hard, master, hell2
+NOTE samurai: veryEasy, normal, hard, expert, master
+NOTE sohei: veryEasy, normal, hard, expert, master, hell2
+NOTE butterfly: veryEasy, normal, hard, expert, master, nightmare, hell2
+NOTE flower: veryEasy, normal, hard, master, hell2
+NOTE wordoku: veryEasy, easy, hard, expert, master, nightmare
+NOTE live report: 336 lines, 135 table rows, 39 removals
+PROBLEM 0 lists differ, not 13
+1 problems
+exit=1 seconds=6.315

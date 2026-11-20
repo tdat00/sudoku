@@ -1,0 +1,24 @@
+$ node tests\node-runner.js --suite=tech-wing,techniques,technique-weights,difficulty-floor,tech-chain,i18n,pattern-cost-tools,digger-target
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (29.03 s)
+FAIL digger-target: 74 passed, 1 failed  (1.65 s)
+ok   i18n: 85 passed  (152 ms)
+ok   pattern-cost-tools: 32 passed  (2.69 s)
+ok   tech-chain: 107 passed  (7.34 s)
+ok   tech-wing: 496 passed  (11.16 s)
+ok   technique-weights: 14 passed  (3 ms)
+ok   techniques: 259 passed  (2.91 s)
+
+Failures:
+  FAIL digger-target > digGuidedSteps: a real pass follows the policy, replayed from its dig log (MS06c2) > those passes meet every kind of objective: each refusal reason, scores, and stuck proposals
+       AssertionError: expected 27 to be > 30
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\digger-target.test.js:688:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 8
+Tests:  1116 total, 1115 passed, 1 failed, 0 skipped
+Time:   54.93 s running tests, 55.08 s total
+exit=1 seconds=55.217

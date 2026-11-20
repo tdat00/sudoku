@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-subset --filter=law of leftovers
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-subset: 65 passed, 1 failed  (7.13 s)
+
+Failures:
+  FAIL tech-subset > law of leftovers registered: seeded dug puzzles at the position where the registry reaches it > gives the oracle's Finding, and its cap where the oracle needs more than 50000 units, on 60 puzzles of the five layouts and their transposes
+       AssertionError: expected 4 to be > 5
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-subset.test.js:3065:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  66 total, 65 passed, 1 failed, 0 skipped
+Time:   7.13 s running tests, 7.26 s total
+exit=1 seconds=7.372

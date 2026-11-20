@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=manual-corpus --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\g7.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   manual-corpus: 53 passed  (2.53 s)
+
+Suites: 1
+Tests:  53 total, 53 passed, 0 failed, 0 skipped
+Time:   2.53 s running tests, 2.74 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/g7.json
+exit=0 seconds=2.952

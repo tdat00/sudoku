@@ -1,0 +1,34 @@
+$ node tests\artifacts\difficulty-v3\MS11c\stuck-count.js
+tree
+cases read from the test file: 29
+  classic4/veryEasy/4/false/0.5: scores 0, stuck 0, guided accepts 0
+  classic6/hard/4/false/0.25: scores 16, stuck 0, guided accepts 3
+  diagonalX/hard/4/false/: scores 70, stuck 0, guided accepts 5
+  classic9/veryEasy/4/false/0.5: scores 0, stuck 0, guided accepts 0
+  classic9/veryEasy/9/false/: scores 0, stuck 0, guided accepts 0
+  classic9/veryEasy/14/false/0.9: scores 0, stuck 0, guided accepts 0
+  classic9/easy/4/false/0.5: scores 18, stuck 0, guided accepts 2
+  classic9/easy/9/false/0.1: scores 9, stuck 0, guided accepts 2
+  classic9/easy/14/false/: scores 24, stuck 0, guided accepts 2
+  classic9/normal/4/false/0.5: scores 27, stuck 0, guided accepts 4
+  classic9/normal/9/false/0.9: scores 20, stuck 0, guided accepts 4
+  classic9/normal/14/false/: scores 30, stuck 0, guided accepts 4
+  classic9/hard/4/false/0.5: scores 27, stuck 0, guided accepts 4
+  classic9/hard/9/false/0.1: scores 20, stuck 0, guided accepts 4
+  classic9/hard/14/false/: scores 33, stuck 0, guided accepts 6
+  classic9/expert/4/false/0.5: scores 27, stuck 0, guided accepts 4
+  classic9/expert/9/false/0.9: scores 20, stuck 0, guided accepts 4
+  classic9/expert/14/false/: scores 33, stuck 0, guided accepts 6
+  classic9/master/4/false/0.5: scores 27, stuck 0, guided accepts 4
+  classic9/master/9/false/0.1: scores 21, stuck 0, guided accepts 4
+  classic9/master/14/false/: scores 31, stuck 0, guided accepts 4
+  classic9/normal/4/true/: scores 27, stuck 0, guided accepts 4
+  classic9/expert/9/true/0.5: scores 20, stuck 0, guided accepts 4
+  classic9/nightmare/4/true/: scores 27, stuck 0, guided accepts 4
+  classic9/master/7/true/0.5: scores 24, stuck 2, guided accepts 5
+  classic9/master/16/true/: scores 30, stuck 2, guided accepts 5
+  classic9/hell1/14/true/: scores 31, stuck 5, guided accepts 6
+  classic9/hell1/13/true/: scores 21, stuck 3, guided accepts 5
+  classic9/hell1/30/true/: scores 26, stuck 15, guided accepts 5
+scores 659, stuck 27, refusal reasons ambiguous+techniques+tooHard, guided accepts 104
+exit=0 seconds=0.513

@@ -1,0 +1,67 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795102762543,
+  "startedAtMs": 1795102762617,
+  "lockAcquiredAtMs": null,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795102747043,
+    "lastCheckMs": 1795102762343,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 74,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795101863541,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899076,
+  "reasons": [
+    "lock-acquisition-instant-unknown",
+    "our-lock-file-is-absent"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": false,
+    "timingPresent": false,
+    "ownerPid": null,
+    "task": null,
+    "controllerPid": 31336,
+    "controllerParentPid": 32784,
+    "wrapperPid": 32784
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-Ec5TJM\\lock-absent\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-Ec5TJM\\lock-absent\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-Ec5TJM\\lock-absent\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

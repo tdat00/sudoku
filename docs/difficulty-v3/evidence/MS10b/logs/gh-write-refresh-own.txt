@@ -1,0 +1,12 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=hiddenSingleBox,hiddenSingleLine,twoStringKite,remotePairs,jellyfish,wWing,forcingChain --max-puzzles=16 --max-hints=400 --write
+selected 7 technique ID(s); mode write
+replaying 7 puzzle(s) for 7 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/7 classic9 - - -> 76 hint(s), solved; wanted found: hiddenSingleBox
+puzzle 2/7 classic9 - - -> 76 hint(s), solved; wanted found: hiddenSingleLine
+puzzle 3/7 classic9 - - -> 69 hint(s), solved; wanted found: twoStringKite
+puzzle 4/7 classic9 - - -> 67 hint(s), solved; wanted found: remotePairs
+puzzle 5/7 classic9 - - -> 78 hint(s), solved; wanted found: jellyfish
+puzzle 6/7 classic9 - - -> 67 hint(s), solved; wanted found: wWing
+puzzle 7/7 classic9 - - -> 81 hint(s), solved; wanted found: forcingChain
+wrote player/js/ui/help-examples.js (35 examples; 7 selected: hiddenSingleBox, hiddenSingleLine, twoStringKite, remotePairs, jellyfish, wWing, forcingChain; the others kept)
+exit=0 seconds=1.087

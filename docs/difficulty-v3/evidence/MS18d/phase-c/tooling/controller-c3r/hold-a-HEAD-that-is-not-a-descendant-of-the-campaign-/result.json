@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-a-HEAD-that-is-not-a-descendant-of-the-campaign-",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-a-HEAD-that-is-not-a-descendant-of-the-campaign-",
+  "startedAtMs": 1795101662840,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "HEAD bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb is neither the campaign base aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa nor a descendant of it"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 62000
+    }
+  },
+  "finishedAtMs": 1795101662893
+}

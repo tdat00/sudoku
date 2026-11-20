@@ -1,0 +1,57 @@
+$ node tests\node-runner.js --suite=help,i18n,technique-weights,techniques,steps
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   help: 30 passed  (4.45 s)
+ok   i18n: 83 passed  (146 ms)
+FAIL steps: 50 passed, 7 failed  (14.80 s)
+ok   technique-weights: 7 passed  (1 ms)
+ok   techniques: 195 passed  (1.67 s)
+
+Failures:
+  FAIL steps > stepView: the score table of every step > draws the start, the steps before the first score, the scored steps and the final one (the example)
+       AssertionError: expected "925 (+304)" to be "969 (+734)"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:602:27
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:565:9)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: the tiers, the badge and the lines > marks 14 compact and 17 details jumps over the 14 goldens, and one first rated puzzle per view
+       AssertionError: expected {compact: 13, details: 16} to equal {compact: 14, details: 17}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:855:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > the example: the first rated puzzle, the new hardest technique without a badge, an unchanged total
+       AssertionError: expected null to be "The generator's solution now uses Hidden Single (box) (weight 1.25) as its hardest technique, instead of Naked Single..."
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:873:30
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:863:11
+       at withLabels (Q:\git\sudoku\generator\tests\suites\steps.test.js:58:14)
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       AssertionError: expected 1964 to be 1967
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:909:49
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:897:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: the callout of a score jump > the example (Classic 9x9 expert, step 5) reads as specified, in English and Vietnamese
+       AssertionError: expected "621 (+574)" to be "235 (+188)"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1015:32
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1012:11
+       at Array.forEach (<anonymous>)
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of null (reading 'class')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1092:22
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1087:58)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: the callout, the badge and the legend on the page > puts the callout after the table; "Why?" is a closed details with a summary
+       AssertionError: expected "Score jump: 47 → 621 (+574)" to be "Score jump: 47 → 235 (+188)"
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1423:53
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1413:11
+       at withLabels (Q:\git\sudoku\generator\tests\suites\steps.test.js:58:14)
+
+Suites: 5
+Tests:  372 total, 365 passed, 7 failed, 0 skipped
+Time:   21.06 s running tests, 21.17 s total
+exit=1 seconds=21.278

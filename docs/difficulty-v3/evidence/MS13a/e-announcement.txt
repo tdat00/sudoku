@@ -1,0 +1,10 @@
+MS13a E announcement (check-list section 7: announce to the orchestrator before a heavy gate; a sub-agent has no channel to the orchestrator before its reply, so this record and the reply carry it).
+
+Task / gate: MS13a inactive group graph and proof checker, complete E per SA2's ruling 7 (choice b): GR wires G09-G13, GR analyses G01-G14, GG 520 hashes, recorded on the final source under evidence/MS13a/{wire,analysis,hashes} and merge-checked against the unchanged canonical outputs. No fixture write, no --update-hashes, no partial Nightmare check.
+Cases: the E route of check-list section 7, one child process per shard, IR12 compounds (admission elapsed + max(projection, 60 s) <= 450 s, 540 s process ceiling), at least 15 s between locks.
+Planned node time (projections, 2 x the MS12 final measurement of the same shard + 5 s): wires 181 s, analyses 294 s, hashes 1,298 s (104 shards).
+Output paths: docs/difficulty-v3/evidence/MS13a/{wire,analysis,hashes,logs}/, shard-runs.jsonl, lock-log.jsonl.
+Slot: every command through Invoke-Dv3Node (shared lock with the pentomino repository); the wait of every compound is recorded in lock-log.jsonl.
+Authority: SA2's rulings on MS13a (pack amended in d9143de): group family box/region x row/col only, every tested same-digit pair charged, quota enforced during insertion, 'nodes' tag, checker over-restriction removed, gate (b) with all five wires, fourteen analyses and 520 hashes.
+Frozen source: engine-frozen.txt (tech-chain.js, difficulty.js, four locale packs, the perf and replay helpers, core/js and generator/js tree hashes); re-verified after E in engine-after-e.txt.
+Order: wires G09-G13 (merge-check against the unchanged published wire fixture), analyses G01-G14 (merge-check against the unchanged published analysis fixture), then the 520 hashes (merge-check against the unchanged published hash fixture). The builder is inactive, so every recorded value must equal the published one: any difference is an inactivity failure to investigate, never refreshed away, and a stop with QUESTION.

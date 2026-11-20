@@ -1,0 +1,22 @@
+MS18e identities at E3, captured 2026-11-20 13:31:56 and 13:59:07 (+07:00).
+Source: transcripts\e3-identities-start.txt and transcripts\e3-identities-end.txt (unchanged MS18c\identities-now.cjs, locked, exit 0,
+SG_TIME_FACTOR=2, CI unset) and audit\targets-recheck-final-v3.json (unchanged MS18d\phase-b\freeze-targets.js, locked, exit 0).
+HEAD 28d5b2095ae3657c8d7f15b3bf8187d1595ad088 (E2 commit); the tree holds only the E3 files (documents outside the fingerprints, the
+CI manifest metadata, the helper audit.cjs and MS18e evidence).
+
+Generator quick:          46b3d0e22307b7900114cf619ef3fd376336a73c0c73878cc6d894b43c19205f
+Player quick:             45dc04735d65dd353a547e851904c9bca41367cc6c37da04969a0f435044c8a7
+Generator with manual:    d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3
+Replay:                   1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc
+Hashes:                   344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1
+Producer sources:         75b0955e3e356bd1
+Targets (table SHA-256):  3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a
+
+Start, end and the E2 source identity (transcripts\final-identities-v2.txt) agree on all five values; audit\source-bindings.json
+checks it and finds 0 changed fingerprint inputs since 547168b4 (236 changed or added files at its capture, all evidence, documents
+outside the fingerprints, CI metadata or the helper).
+The targets re-check after E3 (audit\targets-recheck-final-v3.json) is byte-identical to the E1 one (JSON SHA-256 starts 9EC4AC6E576C81C0):
+135 positions, 79 active, 56 absent, 62 retained, 17 updated, table and bold-cell checks equal to the frozen ones, all eleven retained-budget
+pairs stated in design, en and vi, no problems.
+The quick results carry the same fingerprints: Generator sourceHash 46b3d0e2... in all eight shard results and Player 45dc0473...
+(audit\coverage.json).

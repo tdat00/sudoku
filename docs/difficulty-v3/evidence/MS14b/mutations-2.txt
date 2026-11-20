@@ -1,0 +1,5 @@
+mutation 9 (R10 not registered twice: the guard dropped): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 42 total, 41 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+    FAIL tech-subset > law of leftovers registered: registration, scope and order > is registered once even when the file is loaded again: the registry keeps its first definition
+mutation 40 (A11 a second board accepted for the killer scope): DETECTED by run 0 (generator pattern-cost-tools) - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.8 s
+    FAIL pattern-cost-tools > pattern cost: the scoped Jigsaw adapter (MS14b) > refuses scoped fixtures made for another scope, another board or none, and says why, with no case
+detected 2 of 2, survivors 0, 6.4 s

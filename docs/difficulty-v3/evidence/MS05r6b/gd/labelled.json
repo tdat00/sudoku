@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: labelled puzzles (fixtures/rated.js)","exact":null,"count":7},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 969.8,
+  "results": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 786.5,
+    "tests": [
+      {"suite":"difficulty","name":"has at least 20 labelled puzzles, each with exactly one solution","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > has at least 20 labelled puzzles, each with exactly one solution","status":"pass","ms":12.886,"reason":"","error":null,"ordinal":50},
+      {"suite":"difficulty","name":"classify matches every label within one level","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > classify matches every label within one level","status":"pass","ms":208.634,"reason":"","error":null,"ordinal":51},
+      {"suite":"difficulty","name":"v3 reference: every entry carries its current expectation, and classify gives its level exactly","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: every entry carries its current expectation, and classify gives its level exactly","status":"pass","ms":175.524,"reason":"","error":null,"ordinal":52},
+      {"suite":"difficulty","name":"v3 reference: the level is required (or vacuous) as expected, derived and by the current floor","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: the level is required (or vacuous) as expected, derived and by the current floor","status":"pass","ms":195.46,"reason":"","error":null,"ordinal":53},
+      {"suite":"difficulty","name":"the v2 certificate of a constructed puzzle is about techniques, not a v3 floor","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > the v2 certificate of a constructed puzzle is about techniques, not a v3 floor","status":"pass","ms":17.416,"reason":"","error":null,"ordinal":54},
+      {"suite":"difficulty","name":"v3 reference: rates the famous hardest puzzles hell2, with a Nishio step and a complete proof","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > v3 reference: rates the famous hardest puzzles hell2, with a Nishio step and a complete proof","status":"pass","ms":162.367,"reason":"","error":null,"ordinal":55},
+      {"suite":"difficulty","name":"puts every label in order: harder labels never rate lower on average","fullName":"difficulty > difficulty: labelled puzzles (fixtures/rated.js) > puts every label in order: harder labels never rate lower on average","status":"pass","ms":13.235,"reason":"","error":null,"ordinal":56}
+    ],
+    "suites": [
+      {"name":"difficulty","total":7,"passed":7,"failed":0,"skipped":0,"ms":786.442}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js)","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\labelled.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

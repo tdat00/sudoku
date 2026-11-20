@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "b0d11a5d16a499cd0117e6817666d38e78285924c1a68ec937ff47e436bc3cc4",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["mega"],"filter":"mega16 size-default","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 216.2,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 43.9,
+    "tests": [
+      {"suite":"mega","name":"the size default stops after two attempts with a truthful two-warning shallow fallback","fullName":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > the size default stops after two attempts with a truthful two-warning shallow fallback","status":"pass","ms":21.57,"reason":"","error":null,"ordinal":97},
+      {"suite":"mega","name":"an explicit number of attempts wins over the size default","fullName":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default","status":"pass","ms":12.675,"reason":"","error":null,"ordinal":98},
+      {"suite":"mega","name":"a cancelled or exhausted budget propagates its error and never returns the best puzzle so far","fullName":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > a cancelled or exhausted budget propagates its error and never returns the best puzzle so far","status":"pass","ms":9.053,"reason":"","error":null,"ordinal":99}
+    ],
+    "suites": [
+      {"name":"mega","total":3,"passed":3,"failed":0,"skipped":0,"ms":43.814}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=mega","--filter=mega16 size-default","--results=..\\docs\\difficulty-v3\\evidence\\MS05r5m\\quick\\mega16-size-default-controls.json","--verbose"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

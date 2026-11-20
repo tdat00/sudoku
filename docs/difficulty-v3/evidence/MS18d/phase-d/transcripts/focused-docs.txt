@@ -1,0 +1,13 @@
+$ node tests\node-runner.js --suite=perf-tooling,smoke,help --results=..\docs\difficulty-v3\evidence\MS18d\phase-d\results\focused-docs.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   help: 30 passed  (5.78 s)
+ok   perf-tooling: 31 passed  (16.75 s)
+ok   smoke: 44 passed  (4.73 s)
+
+Suites: 3
+Tests:  105 total, 105 passed, 0 failed, 0 skipped
+Time:   27.26 s running tests, 27.50 s total
+Results: docs/difficulty-v3/evidence/MS18d/phase-d/results/focused-docs.json
+exit=0 seconds=27.796

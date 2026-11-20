@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS14b\s-av37.js ..\docs\difficulty-v3\evidence\MS14b\s-av37.json
+blank: staggered 50000 CAP (2.434 ms); wavy 50000 CAP (2.222 ms); mixed 33784 (1.662 ms); crossed 6469 (0.79 ms); boxes 3436 (0.623 ms)
+seeded: 60 positions, found 30, capped 0, work {"n":60,"min":234,"p50":3436,"p95":5305,"max":5842,"mean":3036.817}, ms {"n":60,"min":0.034,"p50":0.674,"p95":0.781,"max":0.822,"mean":0.501}
+real: 14 puzzles, 38 calls, capped 0, max work 3845, steps 5 in 4 puzzles, replays match true, all solved true; recorded source equal true
+  discovery batch 1: jigsaw9 hard seed 1: solved, clues 26, calls 3, work {"n":3,"min":175,"p50":3551,"p95":3575,"max":3575,"mean":2433.667}, steps 1, ms {"n":3,"min":0.024,"p50":0.688,"p95":0.701,"max":0.701,"mean":0.471}
+  discovery batch 1: jigsaw9 hard seed 2: solved, clues 28, calls 6, work {"n":6,"min":3502,"p50":3509,"p95":3538,"max":3538,"mean":3519.833}, steps 0, ms {"n":6,"min":0.677,"p50":0.684,"p95":0.725,"max":0.725,"mean":0.692}
+  discovery batch 1: jigsaw9 hard seed 3: solved, clues 30, calls 3, work {"n":3,"min":3550,"p50":3568,"p95":3568,"max":3568,"mean":3562}, steps 0, ms {"n":3,"min":0.673,"p50":0.688,"p95":0.695,"max":0.695,"mean":0.685}
+  discovery batch 1: jigsaw9 hard seed 4: solved, clues 22, calls 3, work {"n":3,"min":3509,"p50":3515,"p95":3515,"max":3515,"mean":3513}, steps 0, ms {"n":3,"min":0.67,"p50":0.682,"p95":0.708,"max":0.708,"mean":0.686}
+  discovery batch 1: jigsaw9 hard seed 5: solved, clues 30, calls 3, work {"n":3,"min":1994,"p50":3614,"p95":3614,"max":3614,"mean":3074}, steps 1, ms {"n":3,"min":0.354,"p50":0.69,"p95":0.705,"max":0.705,"mean":0.583}
+  discovery batch 1: jigsaw9 hard seed 6: solved, clues 22, calls 1, work {"n":1,"min":3545,"p50":3545,"p95":3545,"max":3545,"mean":3545}, steps 0, ms {"n":1,"min":0.669,"p50":0.669,"p95":0.669,"max":0.669,"mean":0.669}
+  discovery batch 1: jigsaw9 hard seed 7: solved, clues 26, calls 1, work {"n":1,"min":3483,"p50":3483,"p95":3483,"max":3483,"mean":3483}, steps 0, ms {"n":1,"min":0.701,"p50":0.701,"p95":0.701,"max":0.701,"mean":0.701}
+  discovery batch 1: jigsaw9 hard seed 8: solved, clues 32, calls 1, work {"n":1,"min":3528,"p50":3528,"p95":3528,"max":3528,"mean":3528}, steps 0, ms {"n":1,"min":0.694,"p50":0.694,"p95":0.694,"max":0.694,"mean":0.694}
+  discovery batch 1: jigsaw9 hard seed 9: solved, clues 22, calls 5, work {"n":5,"min":512,"p50":3690,"p95":3845,"max":3845,"mean":3101.6}, steps 2, ms {"n":5,"min":0.05,"p50":0.715,"p95":1.065,"max":1.065,"mean":0.709}
+  discovery batch 1: jigsaw9 hard seed 10: solved, clues 24, calls 3, work {"n":3,"min":3501,"p50":3512,"p95":3570,"max":3570,"mean":3527.667}, steps 0, ms {"n":3,"min":0.693,"p50":0.693,"p95":0.697,"max":0.697,"mean":0.695}
+  discovery batch 1: jigsaw9 hard seed 11: solved, clues 26, calls 4, work {"n":4,"min":3470,"p50":3470,"p95":3698,"max":3698,"mean":3527}, steps 0, ms {"n":4,"min":0.659,"p50":0.672,"p95":0.676,"max":0.676,"mean":0.67}
+  discovery batch 1: jigsaw9 hard seed 12: solved, clues 28, calls 2, work {"n":2,"min":3436,"p50":3436,"p95":3436,"max":3436,"mean":3436}, steps 0, ms {"n":2,"min":0.655,"p50":0.655,"p95":0.659,"max":0.659,"mean":0.657}
+  existing source 1: jigsaw9 hard seed 1: solved, clues 24, calls 3, work {"n":3,"min":175,"p50":3551,"p95":3575,"max":3575,"mean":2433.667}, steps 1, ms {"n":3,"min":0.027,"p50":0.691,"p95":0.692,"max":0.692,"mean":0.47}
+  existing source 2: jigsaw9 easy seed 3: solved, clues 34, calls 0, work null, steps 0, ms null
+exit=0 seconds=1.937

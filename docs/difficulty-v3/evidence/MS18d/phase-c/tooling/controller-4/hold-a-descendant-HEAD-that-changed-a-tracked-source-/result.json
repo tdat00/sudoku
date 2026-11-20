@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-a-descendant-HEAD-that-changed-a-tracked-source-",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-a-descendant-HEAD-that-changed-a-tracked-source-",
+  "startedAtMs": 1795086601823,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "since the campaign base 1 path(s) changed that are not campaign outputs or pack files: generator/design.md"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 93000,
+      "systemMicros": 78000
+    }
+  },
+  "finishedAtMs": 1795086601883
+}

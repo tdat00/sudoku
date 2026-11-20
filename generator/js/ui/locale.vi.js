@@ -232,8 +232,11 @@
       'được bằng các kỹ thuật cho phép ở mức đó.',
     'explain.dig.how': 'Các ô được bỏ theo từng nhóm đối xứng. Sau mỗi lần bỏ, bộ giải logic kiểm tra đề ' +
       'còn giải được bằng các kỹ thuật cho phép hay không (điều này cũng chứng minh lời giải là duy nhất); ' +
-      'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, giữ lại những lần bỏ làm đề ' +
-      'khó nhất. Cuối cùng là kiểm tra lần nữa rằng chỉ còn đúng một lời giải.',
+      'nếu không thì nhóm ô đó được trả lại. Một lượt thứ hai, có định hướng, chấm nhiều phương án bỏ số ' +
+      'rồi chọn phương án hợp nhất với điểm mục tiêu của đề: phương án mà lời giải dùng một kỹ thuật của ' +
+      'mức đó, với điểm gần mục tiêu nhất trong dải của mức (điểm cao nhất nếu mức đó không có cận trên). ' +
+      'Khi lời giải đã dùng một kỹ thuật như vậy, lượt này dừng khi không còn phương án nào đưa đề lại ' +
+      'gần hơn. Cuối cùng là kiểm tra lần nữa rằng chỉ còn đúng một lời giải.',
     'explain.dig.live': 'Đã thử {attempts} · chấp nhận {accepted} · từ chối {rejected} · còn {clues} ' +
       'số cho sẵn',
     'explain.dig.code.order': 'order ← shuffle(các nhóm ô đối xứng)',
@@ -243,7 +246,7 @@
     'explain.dig.code.check': 'nếu đề vẫn giải được bằng các kỹ thuật cho phép:',
     'explain.dig.code.accept': 'giữ group ở trạng thái đã bỏ',
     'explain.dig.code.reject': 'nếu không thì trả group về chỗ cũ',
-    'explain.dig.code.deeper': 'rồi đào sâu hơn: giữ lần bỏ làm đề khó nhất',
+    'explain.dig.code.deeper': 'rồi đào sâu hơn: giữ lần bỏ đưa đề gần nhất với điểm mục tiêu',
     'explain.dig.code.verify': 'xác minh rằng chỉ còn đúng một lời giải',
 
     'explain.rate.what': 'Đo xem đề khó đến đâu.',
@@ -262,11 +265,14 @@
     'explain.tune.what': 'So kết quả với mức độ bạn yêu cầu, rồi hoàn tất.',
     'explain.tune.why': 'Việc đào là ngẫu nhiên nên đề đầu tiên có thể hơi dễ hoặc hơi khó. Kiểm tra rồi ' +
       'thử lại là cách đảm bảo đúng mức độ.',
-    'explain.tune.how': 'Nếu đúng mức độ thì nhận đề. Nếu không, thử đào lại trên cùng lưới hoặc tạo một ' +
-      'lưới mới. Khi hết lượt thử, dùng đề gần nhất và đánh dấu là gần đúng. Cuối cùng kết quả được đóng ' +
-      'gói cùng số liệu thống kê.',
+    'explain.tune.how': 'Nếu đề được giải đầy đủ bằng logic, nằm trong dải đã chọn và cần một kỹ thuật ' +
+      'thuộc tầng của mức đó thì nhận đề. Nếu không, thử đào lại trên cùng lưới hoặc tạo một lưới mới. ' +
+      'Khi hết lượt thử, dùng đề gần nhất và đánh dấu là gần đúng; nếu đề nằm trong dải nhưng không cần ' +
+      'kỹ thuật của tầng đó thì thông báo nói rõ điều này. Cuối cùng kết quả được đóng gói cùng số liệu ' +
+      'thống kê.',
     'explain.tune.live': '{clues} số cho sẵn · điểm {score}',
-    'explain.tune.code.compare': 'nếu mức độ của đề đúng bằng mức độ yêu cầu:',
+    'explain.tune.code.compare': 'nếu đề được giải đầy đủ bằng logic, điểm nằm trong dải đã chọn và đề cần ' +
+      'một kỹ thuật thuộc tầng của mức đã chọn:',
     'explain.tune.code.accept': 'nhận đề',
     'explain.tune.code.retry': 'nếu không thì đào đề khác, hoặc tạo lưới mới',
     'explain.tune.code.best': 'khi hết lượt thử, dùng đề gần nhất',
@@ -300,6 +306,12 @@
     'technique.nakedTriple': 'Bộ ba trần (Naked Triple)',
     'technique.nakedTriple.desc': 'Ba ô trong cùng một nhóm mà ứng viên chỉ gồm cùng ba chữ số thì phải ' +
       'chứa ba chữ số đó, nên ta loại chúng khỏi các ô còn lại của nhóm.',
+    'technique.lawOfLeftovers': 'Luật phần dư (Law of Leftovers)',
+    'technique.lawOfLeftovers.desc': 'Trong Jigsaw, một hoặc hai hàng (hoặc cột) trọn vẹn không có ô chung ' +
+      'chứa mỗi chữ số một lần trên mỗi hàng, và số vùng trọn vẹn không có ô chung bằng đúng số đó cũng vậy. ' +
+      'Bỏ đi những ô mà các hàng và các vùng dùng chung: các ô còn lại của các hàng và các ô còn lại của ' +
+      'các vùng (từ một đến bốn ô mỗi phía) phải chứa cùng các chữ số, tính cả chữ số lặp và chữ số đã ' +
+      'điền. Ứng viên nào không thuộc một cách điền nào làm hai phía giống nhau thì bị loại.',
     'technique.hiddenTriple': 'Bộ ba ẩn (Hidden Triple)',
     'technique.hiddenTriple.desc': 'Ba chữ số chỉ có thể nằm trong cùng ba ô của một nhóm thì phải lấp đầy ' +
       'ba ô đó, nên ta loại mọi ứng viên khác khỏi các ô này.',
@@ -313,12 +325,47 @@
     'technique.xWing.desc': 'Khi một chữ số chỉ có hai ô khả dĩ trên mỗi hàng trong hai hàng, và các ô đó ' +
       'nằm trong cùng hai cột, ta loại chữ số đó khỏi phần còn lại của hai cột ấy (tương tự khi đổi vai ' +
       'trò hàng và cột).',
+    'technique.skyscraper': 'Skyscraper (nhà chọc trời)',
+    'technique.skyscraper.desc': 'Hai hàng (hoặc hai cột) mà trong mỗi hàng một chữ số chỉ có hai ô khả dĩ, ' +
+      'và một ô của mỗi hàng nằm trong cùng một cột (hoặc hàng). Hai ô đó nhìn thấy nhau nên không thể ' +
+      'cùng chứa chữ số này: ít nhất một trong hai ô còn lại chứa nó, và chữ số bị loại khỏi mọi ô nhìn ' +
+      'thấy cả hai ô ấy.',
+    'technique.twoStringKite': 'Two-String Kite (diều hai dây)',
+    'technique.twoStringKite.desc': 'Một hàng và một cột mà trong mỗi đường một chữ số chỉ có hai ô khả dĩ, ' +
+      'và một ô của hàng cùng một ô của cột nằm trong cùng một khối (hoặc vùng). Hai ô đó nhìn thấy nhau ' +
+      'nên không thể cùng chứa chữ số này: ít nhất một trong hai ô còn lại chứa nó, và chữ số bị loại khỏi ' +
+      'mọi ô nhìn thấy cả hai ô ấy.',
     'technique.simpleColouring': 'Tô màu đơn giản (Simple Colouring)',
     'technique.simpleColouring.desc': 'Các ô nối nhau bằng quan hệ “hoặc ô này hoặc ô kia” cho một chữ số ' +
       'được tô bằng hai màu. Chỉ một màu là đúng, từ đó lộ ra những ô không thể chứa chữ số đó.',
+    'technique.emptyRectangle': 'Empty Rectangle (hình chữ nhật rỗng)',
+    'technique.emptyRectangle.desc': 'Trong một khối (hoặc vùng) một chữ số chỉ có thể nằm trong một hàng và ' +
+      'một cột của khối, thành hai phần không có ô chung. Một cặp ô ngoài khối là hai ô duy nhất có thể chứa ' +
+      'chữ số trong cùng một nhóm sẽ quyết định: nếu đầu nhìn thấy mọi chữ số của một phần chứa nó thì phần ' +
+      'đó mất chữ số và phần còn lại chứa nó; nếu không thì đầu kia chứa nó. Dù thế nào, chữ số bị loại khỏi ' +
+      'mọi ô nhìn thấy cả phần còn lại lẫn đầu kia.',
+    'technique.finnedXWing': 'Finned X-Wing (cánh X có vây)',
+    'technique.finnedXWing.desc': 'Một X-Wing mà các đường gốc có thêm những ô chứa chữ số, gọi là vây, nằm ' +
+      'cùng trong một khối hoặc vùng và ngoài hai đường phủ. Nếu không vây nào chứa chữ số thì các đường gốc ' +
+      'lấp đầy hai đường phủ như X-Wing; nếu một vây chứa nó thì chữ số bị loại khỏi mọi ô nhìn thấy vây đó. ' +
+      'Dù thế nào, chữ số cũng bị loại khỏi mọi ô của đường phủ, nằm ngoài các đường gốc, nhìn thấy tất cả ' +
+      'các vây. Đường gốc chỉ có một ô trên các đường phủ (sashimi) hoạt động y như vậy. Tương tự khi đổi vai ' +
+      'trò hàng và cột.',
     'technique.swordfish': 'Swordfish (cá kiếm)',
     'technique.swordfish.desc': 'Phiên bản ba đường của X-Wing: chữ số chỉ nằm trong cùng ba cột ở ba hàng ' +
       'thì bị loại khỏi phần còn lại của ba cột đó.',
+    'technique.finnedSwordfish': 'Finned Swordfish (cá kiếm có vây)',
+    'technique.finnedSwordfish.desc': 'Một Swordfish mà các đường gốc có thêm những ô chứa chữ số, gọi là vây, ' +
+      'nằm cùng trong một khối hoặc vùng và ngoài ba đường phủ. Nếu không vây nào chứa chữ số thì các đường ' +
+      'gốc lấp đầy ba đường phủ như Swordfish; nếu một vây chứa nó thì chữ số bị loại khỏi mọi ô nhìn thấy ' +
+      'vây đó. Dù thế nào, chữ số cũng bị loại khỏi mọi ô của đường phủ, nằm ngoài các đường gốc, nhìn thấy ' +
+      'tất cả các vây. Một đường gốc có thể có ít hơn ba ô trên các đường phủ, miễn là có ít nhất một ô. ' +
+      'Tương tự khi đổi vai trò hàng và cột.',
+    'technique.remotePairs': 'Remote Pairs (cặp từ xa)',
+    'technique.remotePairs.desc': 'Một chuỗi các ô cùng chỉ có hai ứng viên giống nhau, mỗi ô nhìn thấy ô kế ' +
+      'tiếp. Hai ô liền nhau trong chuỗi nhận hai chữ số khác nhau, nên hai chữ số xen kẽ dọc theo chuỗi. ' +
+      'Khi chuỗi có số liên kết lẻ, từ ba trở lên, hai đầu chuỗi chứa hai chữ số khác nhau, tức là cùng dùng ' +
+      'hết cả hai chữ số, nên cả hai chữ số bị loại khỏi mọi ô khác nhìn thấy cả hai đầu.',
     'technique.xyWing': 'XY-Wing',
     'technique.xyWing.desc': 'Ô trục có hai ứng viên nhìn thấy hai ô càng, mỗi ô càng chung một ứng viên ' +
       'với ô trục. Dù ô trục nhận giá trị nào thì một ô càng cũng chứa chữ số chung, nên chữ số đó bị ' +
@@ -326,6 +373,12 @@
     'technique.xyzWing': 'XYZ-Wing',
     'technique.xyzWing.desc': 'Giống XY-Wing nhưng ô trục có ba ứng viên: chữ số chung bị loại khỏi mọi ô ' +
       'nhìn thấy ô trục và cả hai ô càng.',
+    'technique.wxyzWing': 'WXYZ-Wing',
+    'technique.wxyzWing.desc': 'Bốn ô chỉ chứa bốn chữ số giữa chúng. Ba chữ số bị hạn chế: các ô chứa một ' +
+      'trong số đó đều nhìn thấy nhau, nên chữ số ấy chỉ đặt được vào một trong bốn ô. Chữ số thứ tư là chữ ' +
+      'số duy nhất mà hai ô chứa nhưng không nhìn thấy nhau. Ba chữ số hạn chế chỉ điền được tối đa ba trong ' +
+      'bốn ô, nên chữ số thứ tư phải nằm trong một ô chứa nó, và bị loại khỏi mọi ô khác nhìn thấy tất cả ' +
+      'các ô chứa nó.',
     'technique.jellyfish': 'Jellyfish (sứa)',
     'technique.jellyfish.desc': 'Phiên bản bốn đường của X-Wing: chữ số chỉ nằm trong cùng bốn cột ở bốn ' +
       'hàng thì bị loại khỏi phần còn lại của bốn cột đó.',
@@ -335,12 +388,54 @@
     'technique.uniqueRectangle': 'Hình chữ nhật duy nhất (Unique Rectangle)',
     'technique.uniqueRectangle.desc': 'Một đề chỉ có đúng một lời giải, nên bốn ô trong hai hàng, hai cột ' +
       'và hai khối không thể chỉ còn cùng hai ứng viên. Điều này buộc phải loại thêm một ứng viên.',
+    'technique.bugPlusOne': 'BUG+1 (ô thừa một ứng viên)',
+    'technique.bugPlusOne.desc': 'Mọi ô trống đều có hai ứng viên, trừ một ô có ba ứng viên, và mỗi chữ số ' +
+      'còn phải điền trong một hàng, một cột, một khối hay bất kỳ vùng nào khác đều có đúng hai ô để điền, ' +
+      'khi bỏ ứng viên thừa của ô có ba ứng viên. Một vị trí như vậy không có lời giải hoặc có ít nhất hai ' +
+      'lời giải. Đề có đúng một lời giải, nên ô có ba ứng viên phải là chữ số thừa đó.',
+    'technique.xyChain': 'Chuỗi XY (XY-Chain)',
+    'technique.xyChain.desc': 'Chuỗi các ô mà mỗi ô chỉ còn đúng hai ứng viên. Hai ô liền nhau trong chuỗi ' +
+      'nhìn thấy nhau và có chung một chữ số, nên nếu một đầu chuỗi không phải chữ số đó thì đầu kia phải ' +
+      'là chữ số đó. Ít nhất một đầu chuỗi chứa chữ số này, và ô nhìn thấy cả hai đầu không thể chứa nó.',
     'technique.forcingChain': 'Chuỗi suy luận (Forcing Chain)',
     'technique.forcingChain.desc': 'Chuỗi các suy luận kiểu “nếu thế này thì thế kia”, chứng minh một ứng ' +
-      'viên là sai (hoặc một chữ số là đúng).',
+      'viên là sai (hoặc một chữ số là đúng). Nếu một bước chứng minh biểu diễn một nhóm, bước đó liệt kê ' +
+      'các ô còn có thể chứa cùng một chữ số tại giao của một khối (hoặc vùng) với một hàng hoặc cột. Nhóm ' +
+      'đúng khi có ít nhất một ô của nhóm chứa chữ số đó, viết (R1C1=5 \u2228 R1C2=5), và sai khi không ô ' +
+      'nào của nhóm chứa nó, viết (R1C1\u22605 \u2227 R1C2\u22605); nhóm đúng không cho biết ô nào chứa ' +
+      'chữ số. Ứng viên bị loại theo quy tắc hai đầu phải xung đột với từng ứng viên được biểu diễn ở mỗi ' +
+      'đầu. Chuỗi chỉ được tìm đến một độ dài giới hạn, nên gợi ý không cam kết tìm ra mọi chuỗi.',
+    'technique.alsXz': 'ALS-XZ (tập gần khóa)',
+    'technique.alsXz.desc': 'Tập gần khóa là một số ô của cùng một vùng mà tổng số chữ số ứng viên của ' +
+      'chúng nhiều hơn số ô đúng một, nên chúng chứa đủ các chữ số đó trừ một chữ số. Lấy hai tập như vậy ' +
+      'không có ô chung và một chữ số X mà cả hai tập đều có thể chứa, sao cho mọi ô chứa X của tập này ' +
+      'đều nhìn thấy mọi ô chứa X của tập kia. Hai tập không thể cùng chứa X, nên một trong hai tập thiếu ' +
+      'X và chứa đủ mọi chữ số còn lại. Chữ số Z mà cả hai tập đều có thể chứa vì thế nằm trong một trong ' +
+      'hai tập, và ô nhìn thấy mọi ô chứa Z của cả hai tập không thể chứa Z.',
+    'technique.sueDeCoq': 'Sue de Coq (giao của hàng/cột và khối)',
+    'technique.sueDeCoq.desc': 'Sue de Coq dùng ở chỗ một hàng hoặc cột cắt một khối hoặc vùng, trên hai ' +
+      'hoặc ba ô còn trống của chỗ giao. Các ô đó cùng có thể chứa một số chữ số. Lấy một tập gần khóa ' +
+      'nằm trong hàng hoặc cột ngoài khối và một tập gần khóa nằm trong khối ngoài hàng hoặc cột, hai tập ' +
+      'không có chữ số chung và đều nằm trong các chữ số của chỗ giao, sao cho số chữ số của chỗ giao ' +
+      'đúng bằng tổng số ô của chỗ giao và của hai tập. Khi đó chỗ giao chứa chữ số mà mỗi tập còn thiếu ' +
+      'và mọi chữ số không thuộc tập nào. Vì vậy mọi chữ số của tập thứ nhất được dùng trong hàng hoặc ' +
+      'cột, mọi chữ số của tập thứ hai được dùng trong khối, và mọi chữ số còn lại nằm ở chỗ giao, tức ' +
+      'là nằm trong cả hai. Nhờ đó loại được các chữ số của tập thứ nhất khỏi phần còn lại của hàng hoặc ' +
+      'cột, các chữ số của tập thứ hai khỏi phần còn lại của khối, và chữ số còn lại khỏi phần còn lại ' +
+      'của cả hai.',
+    'technique.forcingChainLong': 'Chuỗi suy luận dài (Long Forcing Chain)',
+    'technique.forcingChainLong.desc': 'Cùng loại chuỗi với Chuỗi suy luận nhưng quá dài so với nó: chuỗi ' +
+      'ngắn nhất dùng được có nhiều liên kết hơn mức Chuỗi suy luận thường cho phép (tối đa 12 liên kết). ' +
+      'Nếu một bước chứng minh biểu diễn một nhóm, ý nghĩa đúng và sai của nhóm giống như trong Chuỗi suy ' +
+      'luận. Ứng viên bị loại theo quy tắc hai đầu phải xung đột với từng ứng viên được biểu diễn ở mỗi ' +
+      'đầu. Gợi ý không cam kết tìm ra mọi chuỗi.',
     'technique.nishio': 'Nishio (thử–sai)',
     'technique.nishio.desc': 'Thử–sai có giới hạn: giả sử một ứng viên là đúng; nếu các suy luận đơn giản ' +
       'sau đó dẫn đến mâu thuẫn thì ứng viên ấy là sai.',
+    'technique.nishioDeep': 'Nishio sâu (thử–sai trong thử–sai)',
+    'technique.nishioDeep.desc': 'Thử–sai hai tầng: giả sử một ứng viên là đúng; nếu các suy luận đơn giản, ' +
+      'cùng với thêm một phép thử–sai nữa bên trong giả thiết đó, dẫn đến mâu thuẫn thì ứng viên ấy là ' +
+      'sai. Chỉ dùng khi một phép thử đơn không đủ.',
     'technique.cageCombo.desc': 'Các chữ số trong một lồng đều khác nhau và cộng lại bằng tổng của lồng, ' +
       'nên thường chỉ còn vài tổ hợp khả dĩ.',
     'technique.ruleOf45.desc': 'Mỗi hàng, cột và khối có tổng bằng 45, nhiều nhóm cùng loại gộp lại thì ' +
@@ -368,6 +463,12 @@
       '{digits}. Các chữ số này thuộc về hai ô đó, nên được loại khỏi các ô còn lại của {unit}.',
     'technique.nakedTriple.step': 'Trong {unitKind} {unit}, ba ô {cells} chỉ có thể chứa các chữ số ' +
       '{digits}. Các chữ số này thuộc về ba ô đó, nên được loại khỏi các ô còn lại của {unit}.',
+    'technique.lawOfLeftovers.step': 'Luật phần dư: các hàng/cột {lines} và các vùng {regions} đều trọn vẹn ' +
+      'và trong mỗi nhóm không có hai đơn vị nào chung ô, nên mỗi nhóm chứa mỗi chữ số đúng bằng số đơn vị ' +
+      'của nhóm. Bỏ đi những ô mà các hàng/cột và các vùng dùng chung. Các ô còn lại, {cells}, chia thành ' +
+      'hai phía, một phía từ các hàng/cột và một phía từ các vùng, và hai phía phải chứa cùng các chữ số, ' +
+      'tính cả chữ số lặp. Ở ô nào mà mọi cách điền hai phía giống nhau đều không đặt một trong các chữ số ' +
+      '{digits} vào đó, chữ số ấy bị loại khỏi ô.',
     'technique.nakedQuad.step': 'Trong {unitKind} {unit}, bốn ô {cells} chỉ có thể chứa các chữ số ' +
       '{digits}. Các chữ số này thuộc về bốn ô đó, nên được loại khỏi các ô còn lại của {unit}.',
     'technique.hiddenPair.step': 'Trong {unitKind} {unit}, các chữ số {digits} chỉ có thể nằm ở hai ô ' +
@@ -379,9 +480,32 @@
     'technique.xWing.step': 'X-Wing cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Hai chữ số {digit} của các đường gốc lấp đầy cả hai đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',
+    'technique.skyscraper.step': 'Skyscraper cho {digit}: trong {lines}, chữ số {digit} mỗi đường chỉ có thể ' +
+      'nằm ở hai ô, và một ô của mỗi đường nằm chung trên một đường khác, nên hai ô đó không thể cùng là ' +
+      '{digit}. Ít nhất một trong hai ô còn lại, {ends}, là {digit}, nên {digit} bị loại khỏi mọi ô khác ' +
+      'nhìn thấy cả hai ô đó.',
+    'technique.twoStringKite.step': 'Two-String Kite cho {digit}: trong {lines}, chữ số {digit} mỗi đường chỉ có ' +
+      'thể nằm ở hai ô, và các ô {bridge} (cầu nối) nằm trong cùng một khối (hoặc vùng), nên chúng không thể ' +
+      'cùng là {digit}. Ít nhất một trong hai ô còn lại, {ends}, là {digit}, nên {digit} bị loại khỏi mọi ô ' +
+      'khác nhìn thấy cả hai ô đó.',
+    'technique.emptyRectangle.step': 'Empty Rectangle cho {digit}: trong {box}, chữ số {digit} chỉ có thể nằm ở ' +
+      'các ô của {lines}, thành hai phần không có ô chung. {ends} là hai ô duy nhất có thể chứa {digit} trong ' +
+      'cùng một nhóm, nên một trong hai ô đó là {digit}. Nếu đầu nhìn thấy mọi {digit} của một phần là ' +
+      '{digit}, phần đó mất {digit} và phần còn lại chứa {digit}; nếu không thì đầu kia là {digit}. Dù thế ' +
+      'nào, {digit} bị loại khỏi mọi ô khác nhìn thấy cả phần còn lại lẫn đầu kia.',
+    'technique.finnedXWing.step': 'Finned X-Wing cho {digit}: trong {bases}, chữ số {digit} chỉ có thể nằm ở ' +
+      '{covers}, trừ các ô vây {fins} cùng nằm trong một khối hoặc vùng. Nếu không ô vây nào là {digit} thì ' +
+      'hai chữ số {digit} của các đường gốc lấp đầy cả hai đường phủ; nếu một ô vây là {digit} thì nó loại ' +
+      '{digit} khỏi mọi ô nhìn thấy nó. Dù thế nào, {digit} cũng bị loại khỏi mọi ô của {covers} nằm ngoài ' +
+      'các đường gốc {bases} và nhìn thấy tất cả các ô vây.',
     'technique.swordfish.step': 'Swordfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',
+    'technique.finnedSwordfish.step': 'Finned Swordfish cho {digit}: trong {bases}, chữ số {digit} chỉ có thể ' +
+      'nằm ở {covers}, trừ các ô vây {fins} cùng nằm trong một khối hoặc vùng. Nếu không ô vây nào là ' +
+      '{digit} thì ba chữ số {digit} của các đường gốc lấp đầy cả ba đường phủ; nếu một ô vây là {digit} ' +
+      'thì nó loại {digit} khỏi mọi ô nhìn thấy nó. Dù thế nào, {digit} cũng bị loại khỏi mọi ô của ' +
+      '{covers} nằm ngoài các đường gốc {bases} và nhìn thấy tất cả các ô vây.',
     'technique.jellyfish.step': 'Jellyfish cho {digit}: trong {baseUnits}, chữ số {digit} chỉ có thể nằm ở ' +
       '{coverUnits}. Bốn chữ số {digit} của các đường gốc lấp đầy cả bốn đường phủ, nên {digit} bị loại ' +
       'khỏi mọi ô còn lại của {coverUnits}.',
@@ -394,12 +518,20 @@
     'technique.simpleColouring.step.trap': 'Tô màu đơn giản cho {digit} (bẫy màu): màu 1 là {colour1}, ' +
       'màu 2 là {colour2}. Một trong hai màu chứa chữ số này, mà một ô ngoài chuỗi lại nhìn thấy cả hai ' +
       'màu, nên ô đó không thể là {digit}. {digit} bị loại khỏi những ô như vậy.',
+    'technique.remotePairs.step': 'Remote Pairs {digits}: một chuỗi {length} liên kết nối {ends}, và mọi ô trong ' +
+      'chuỗi chỉ chứa {digits}. Hai ô liền nhau trong chuỗi nhận hai chữ số khác nhau nên các chữ số xen kẽ ' +
+      'dọc theo chuỗi; vì số liên kết là số lẻ, hai đầu nhận hai chữ số khác nhau, tức là cùng dùng hết cả hai ' +
+      'chữ số {digits}. Cả hai chữ số bị loại khỏi mọi ô khác nhìn thấy cả hai đầu ({ends}).',
     'technique.xyWing.step': 'XY-Wing: ô trục {pivot} chứa {digitX} hoặc {digitY}; ô càng {pincer1} chứa ' +
       '{digitX} hoặc {digit}; ô càng {pincer2} chứa {digitY} hoặc {digit}. Dù ô trục nhận chữ số nào thì ' +
       'một trong hai ô càng cũng phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả hai ô càng.',
     'technique.xyzWing.step': 'XYZ-Wing: ô trục {pivot} chứa {digitX}, {digitY} hoặc {digit}; ô càng ' +
       '{pincer1} chứa {digitX} hoặc {digit}; ô càng {pincer2} chứa {digitY} hoặc {digit}. Một trong ba ô ' +
       'này phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả ba ô.',
+    'technique.wxyzWing.step': 'WXYZ-Wing trên {digits}: các ô {cells} không chứa chữ số nào khác. Mọi chữ ' +
+      'số ngoài {digit} chỉ xuất hiện trong các ô nhìn thấy nhau, nên chỉ đặt được vào nhiều nhất một trong ' +
+      'bốn ô. Ba chữ số điền được tối đa ba ô, nên một trong các ô chứa {digit} phải là {digit}. {digit} bị ' +
+      'loại khỏi mọi ô khác nhìn thấy tất cả các ô của mẫu hình chứa {digit}.',
     'technique.wWing.step': 'W-Wing: {cell1} và {cell2} đều chỉ chứa {digitX} hoặc {digit} và không nhìn ' +
       'thấy nhau. Một liên kết mạnh trên {digitX} trong {unit} ({link1} và {link2}) nối hai ô này, nên một ' +
       'trong hai ô phải là {digit}. {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',
@@ -409,17 +541,73 @@
     'technique.uniqueRectangle.type2.step': 'Hình chữ nhật duy nhất: hai góc chỉ chứa {digitX} và ' +
       '{digitY}; hai góc còn lại, {roof1} và {roof2}, còn chứa thêm {digit}. Để tránh hai lời giải, một ' +
       'trong hai ô đó phải là {digit}, nên {digit} bị loại khỏi mọi ô nhìn thấy cả hai.',
-    'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
-      'đầu tiên sai thì ứng viên cuối đúng, nên ít nhất một đầu của chuỗi là đúng. Các ứng viên nhìn thấy ' +
-      'cả hai đầu bị loại.',
+    'technique.uniqueRectangle.type3.step': 'Hình chữ nhật duy nhất: hai góc không phải {roof1} và {roof2} ' +
+      'chỉ chứa {digits}. Để tránh hai lời giải, {roof1} hoặc {roof2} phải chứa một chữ số không thuộc ' +
+      '{digits}, và mọi chữ số như vậy đều là một trong {partDigits}. Trong {unit}, ô đó cùng các ô {cells}, vốn ' +
+      'chỉ chứa các chữ số của {partDigits}, có số ô bằng số chữ số của {partDigits}, nên chúng dùng hết các ' +
+      'chữ số đó. Loại {partDigits} khỏi các ô của {unit}, trừ cả {roof1}, {roof2} và các ô {cells}.',
+    'technique.uniqueRectangle.type4.step': 'Hình chữ nhật duy nhất: hai góc không phải {roof1} và {roof2} ' +
+      'chỉ chứa {digits}. Trong {unit}, {roof1} và {roof2} là hai ô duy nhất còn có thể là chữ số của ' +
+      '{digits} khác {digit}, nên một trong hai ô đó là chữ số ấy. Ô còn lại cũng không thể là {digit}, vì ' +
+      'khi đó cả bốn góc chỉ chứa {digits} và đề sẽ có hai lời giải. Vậy {digit} bị loại khỏi cả {roof1} và ' +
+      '{roof2}.',
+    'technique.uniqueRectangle.hidden.step': 'Hình chữ nhật duy nhất, dạng ẩn: các góc {cells} đều chứa {digits}, ' +
+      'và ít nhất một góc trong số đó chỉ chứa {digits}. Trong hàng và trong cột của góc đối diện với góc ấy, ' +
+      '{digit} chỉ có hai vị trí: chính góc đối diện và một trong hai góc còn lại. Nếu góc đối diện là chữ số của ' +
+      '{digits} khác {digit}, cả hai góc còn lại đều phải là {digit}, và góc chỉ chứa {digits} cũng phải là chữ số ' +
+      'kia. ' +
+      'Khi đó bốn góc chứa {digits} theo hai cách hoán đổi được cho nhau và đề sẽ có hai lời giải. Vậy chữ số của ' +
+      '{digits} khác {digit} bị loại khỏi góc đối diện.',
+    'technique.bugPlusOne.step': 'BUG+1: mọi ô trống đều có hai ứng viên, trừ {label} có ba ứng viên. Nếu ' +
+      'bỏ {digit} khỏi {label}, mọi chữ số còn phải điền trong một hàng, một cột, một khối hay bất kỳ vùng ' +
+      'nào khác đều có đúng hai ô để điền. Một vị trí như vậy không có lời giải hoặc có ít nhất hai lời ' +
+      'giải. Đề chỉ có một lời giải, nên {label} là {digit}.',
+    'technique.xyChain.step': 'Chuỗi XY của chữ số {digit}, dài {length} liên kết: {chains}. Mọi ô trong ' +
+      'chuỗi chỉ có đúng hai ứng viên, và mỗi liên kết nối hai ô nhìn thấy nhau qua cùng một chữ số. Nếu ' +
+      'đầu chuỗi đầu tiên không phải {digit} thì các liên kết buộc đầu cuối là {digit}, nên ít nhất một đầu ' +
+      'chuỗi là {digit}. Ứng viên {digit} nhìn thấy cả hai đầu bị loại.',
+    'technique.forcingChain.step.endpoints': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu đầu thứ ' +
+      'nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung đột với từng ứng viên ' +
+      'được biểu diễn ở mỗi đầu đều bị loại.',
     'technique.forcingChain.step.contradiction': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng ' +
-      'viên đầu tiên đúng thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu ' +
-      'tiên sai và bị loại.',
+      'viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. ' +
+      'Vậy ứng viên đầu tiên sai và bị loại.',
     'technique.forcingChain.step.forced': 'Chuỗi suy luận dài {length} liên kết: {chains}. Nếu ứng viên ' +
-      'đầu tiên sai thì sẽ có một ứng viên vừa đúng vừa sai, điều không thể xảy ra. Vậy ứng viên đầu ' +
-      'tiên đúng và được điền vào.',
+      'đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không thể xảy ra. Vậy ' +
+      'ứng viên đầu tiên đúng và được điền vào.',
+    'technique.alsXz.step': 'ALS-XZ với chữ số {digitX} và {digitY}: các ô {cells} tạo thành hai tập gần ' +
+      'khóa không có ô chung, và cả hai tập đều có thể chứa {digitX} và {digitY}. Mọi ô chứa {digitX} của ' +
+      'tập này đều nhìn thấy mọi ô chứa {digitX} của tập kia, nên nhiều nhất một tập chứa {digitX}. Tập ' +
+      'còn lại khi đó chứa đủ mọi chữ số khác của nó, nên một trong hai tập chứa {digitY}. Ứng viên ' +
+      '{digitY} nhìn thấy mọi ô chứa {digitY} của cả hai tập bị loại.',
+    'technique.sueDeCoq.step': 'Sue de Coq tại chỗ {line} giao {box}: các ô đánh dấu ở đó chỉ có thể chứa ' +
+      'các chữ số {digits} và {partDigits}. Cùng với các ô đánh dấu của {line} nằm ngoài {box}, chỉ có thể ' +
+      'chứa {digits}, và các ô đánh dấu của {box} nằm ngoài {line}, chỉ có thể chứa {partDigits}, số ô ' +
+      'đúng bằng số chữ số. Vì vậy mỗi chữ số trong {digits} được dùng ở các ô đánh dấu của {line}, và ' +
+      'mỗi chữ số trong {partDigits} được dùng ở các ô đánh dấu của {box}. Các chữ số {digits} bị loại ' +
+      'khỏi các ô còn lại của {line}, và {partDigits} bị loại khỏi các ô còn lại của {box}.',
+    'technique.sueDeCoq.step.extra': 'Sue de Coq tại chỗ {line} giao {box}: các ô đánh dấu ở đó chỉ có thể ' +
+      'chứa các chữ số {digits}, {partDigits} và {forced}. Cùng với các ô đánh dấu của {line} nằm ngoài ' +
+      '{box}, chỉ có thể chứa {digits}, và các ô đánh dấu của {box} nằm ngoài {line}, chỉ có thể chứa ' +
+      '{partDigits}, số ô đúng bằng số chữ số. Vì vậy mỗi chữ số trong {digits} được dùng ở các ô đánh dấu ' +
+      'của {line}, mỗi chữ số trong {partDigits} được dùng ở các ô đánh dấu của {box}, và chữ số {forced} ' +
+      'được dùng ở chỗ giao, tức là nằm trong cả hai. Các chữ số {digits} bị loại khỏi các ô còn lại của ' +
+      '{line}, {partDigits} bị loại khỏi các ô còn lại của {box}, và {forced} bị loại khỏi các ô còn lại ' +
+      'của cả hai.',
     'technique.nishio.step': 'Thử–sai (độ sâu {depth}): nếu {label} là {digit} thì các suy luận đơn giản ' +
-      'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.'
+      'sẽ dẫn đến mâu thuẫn. Vậy {digit} bị loại khỏi {label}.',
+    'technique.forcingChainLong.step.endpoints': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +
+      '{chains}. Nếu đầu thứ nhất sai thì đầu cuối đúng, nên ít nhất một đầu là đúng. Các ứng viên xung ' +
+      'đột với từng ứng viên được biểu diễn ở mỗi đầu đều bị loại.',
+    'technique.forcingChainLong.step.contradiction': 'Chuỗi suy luận dài hơn thường, {length} liên kết: ' +
+      '{chains}. Nếu ứng viên đầu tiên đúng thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, ' +
+      'điều không thể xảy ra. Vậy ứng viên đầu tiên sai và bị loại.',
+    'technique.forcingChainLong.step.forced': 'Chuỗi suy luận dài hơn thường, {length} liên kết: {chains}. ' +
+      'Nếu ứng viên đầu tiên sai thì một mệnh đề về ứng viên hoặc nhóm sẽ vừa đúng vừa sai, điều không ' +
+      'thể xảy ra. Vậy ứng viên đầu tiên đúng và được điền vào.',
+    'technique.nishioDeep.step': 'Thử–sai sâu (độ sâu {depth}): nếu {label} là {digit} thì các suy luận ' +
+      'đơn giản, cùng một phép thử thứ hai bên trong giả thiết đó, sẽ dẫn đến mâu thuẫn. Vậy {digit} bị ' +
+      'loại khỏi {label}.'
   });
 
   // Event log lines
@@ -468,7 +656,7 @@
     'dig.try': 'Thử bỏ {cells}.',
     'dig.accept': 'Đã bỏ {cells}: đề vẫn giải được bằng các kỹ thuật cho phép.',
     'dig.reject': 'Trả {cells} về chỗ cũ: {reason}.',
-    'dig.keep': 'Giữ lần bỏ {cells} vì làm đề khó nhất (điểm {score}).',
+    'dig.keep': 'Có thể bỏ {cells} (điểm {score}).',
     'dig.pass.end': 'Kết thúc lượt đào {pass}: còn {clues} số cho sẵn.',
     'dig.verify': 'Đang kiểm tra đề có đúng một lời giải.',
     'dig.verify.yes': 'Đã kiểm tra: đề có đúng một lời giải.',
@@ -496,6 +684,9 @@
     'tune.hit': 'Đạt mức độ: “{achieved}” (điểm {score}, dải từ {scoreMin} đến {scoreMax}).',
     'tune.miss': 'Chưa đúng mức độ: cần “{requested}”, ra “{achieved}” (điểm {score}). Thử lại (mẫu ' +
       '{sample}/{maxSamples}).',
+    'tune.shallow': 'Điểm {score} nằm trong dải của mức “{requested}” ({scoreMin} đến {scoreMax}), nhưng ' +
+      'đề không cần kỹ thuật nào của mức “{requested}”, nên chưa tính là đạt mức. Thử lại (mẫu ' +
+      '{sample}/{maxSamples}).',
     'tune.best': 'Hết lượt thử. Đề gần nhất là “{achieved}” (cần “{requested}”, điểm {score}).',
     'tune.final_one': 'Đề hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
     'tune.final_other': 'Đề hoàn chỉnh được hiển thị trên lưới (đổi {count} ô).',
@@ -522,6 +713,8 @@
   add({
     'difficulty.approximate': 'Trình sinh đề không đạt chính xác mức độ yêu cầu, nên đây là đề gần nhất mà ' +
       'nó tìm được.',
+    'difficulty.shallow': 'Đề nằm trong dải điểm của mức đã chọn nhưng không cần kỹ thuật nào thuộc tầng ' +
+      'của mức {level}.',
     'digger.unsoundTechnique': 'Một kỹ thuật giải đã cho ra đề không có lời giải duy nhất. Cách đào đơn ' +
       'giản và an toàn đã được dùng thay thế, nên độ khó có thể khác với điểm đánh giá.',
     'trace.downgraded': 'Bàn cờ quá lớn để phát lại từng bước đầy đủ, nên mức chi tiết đã được giảm xuống ' +

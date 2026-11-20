@@ -14,6 +14,14 @@
   var def = SG.variants.get('greaterThan');
 
   var LEVELS = ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1', 'hell2'];
+  /** The levels of the final qualification (docs/difficulty-rating/qualification.md): what the variant offers. */
+  var PUBLISHED = ['veryEasy', 'easy', 'hard', 'master', 'hell2'];
+  /**
+   * The levels with a public per-level registration below: the offered ones, with their global index in LEVELS.
+   * The fixed diagnostic corpus (`puzzleRun`, `allPuzzles`) keeps every level of LEVELS, the hidden ones included
+   * (MS18c): its cross-level assertions and its seeds are the original ones.
+   */
+  var OFFERED = LEVELS.filter(function (level) { return def.difficultySupport.indexOf(level) !== -1; });
   /** design.md 9.1, greaterThan row, p95 in ms. */
   var BUDGET_MS = { veryEasy: 300, easy: 700, normal: 700, hard: 6000, expert: 10000, master: 10000,
     nightmare: 10000, hell1: 10000, hell2: 10000 };
@@ -179,6 +187,19 @@
     }
   }
 
+  /**
+   * `fn` with `level` offered by Greater-Than for the length of the call, and the exact support array put back
+   * in `finally` (MS18c): the fixed diagnostic requests keep the levels that qualification hides, never
+   * normalized to another level and never advertised in a menu.
+   */
+  function asLevel(level, fn) {
+    return SG.fixtures.toolRecords.withRequestedLevel('greaterThan', level, fn).value;
+  }
+
+  function specOf(level, model) {
+    return asLevel(level, function () { return SG.difficulty.spec(level, model); });
+  }
+
   // Generated puzzles, shared by the suites below (generated once, on first use)
 
   function generate(level, seed, extra) {
@@ -187,7 +208,7 @@
       variantId: 'greaterThan', difficulty: level, seed: seed, trace: 'summary'
     }, extra);
     var t0 = now();
-    var result = SG.pipeline.run(cfg, function () { events++; });
+    var result = asLevel(level, function () { return SG.pipeline.run(cfg, function () { events++; }); });
     result.elapsedMs = now() - t0;
     result.eventCount = events;
     return result;
@@ -196,12 +217,12 @@
   var runCache = null;
   function puzzleRun() {
     if (runCache === null) {
-      runCache = {};
-      LEVELS.forEach(function (level, li) {
-        runCache[level] = [];
+      runCache = SG.test.lazyCorpus(LEVELS, function (level, li) {
+        var puzzles = [];
         for (var i = 0; i < countOf(level); i++) {
-          runCache[level].push(generate(level, 100 * (li + 1) + i));
+          puzzles.push(generate(level, 100 * (li + 1) + i));
         }
+        return puzzles;
       });
     }
     return runCache;
@@ -414,11 +435,11 @@
       return { model: model, state: state };
     }
 
-    it('are registered as the ladder says: group ineq, costs 12 and 22, orders 65 and 85, greaterThan only',
+    it('are registered as the ladder says: group ineq, costs 12 and 22, orders 46 and 85, greaterThan only',
       function () {
         expect(chain.group).toBe('ineq');
         expect(chain.baseCost).toBe(12);
-        expect(chain.order).toBe(65);
+        expect(chain.order).toBe(46);
         expect(forcing.group).toBe('ineq');
         expect(forcing.baseCost).toBe(22);
         expect(forcing.order).toBe(85);
@@ -439,7 +460,7 @@
       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.
       expect(SG.difficulty.spec('veryEasy', board()).allowedTechniques).not.toContain('ineqChain');
       expect(SG.difficulty.spec('easy', board()).allowedTechniques).toContain('ineqChain');
-      var onThis = SG.difficulty.spec('normal', board());
+      var onThis = specOf('normal', board());
       expect(onThis.allowedTechniques).toContain('ineqChain');
       expect(onThis.allowedTechniques).toContain('minMaxForcing');
     });
@@ -761,7 +782,7 @@
       it('the logical solver reaches the solution of every generated puzzle with the techniques of its ' +
         'level', function () {
         allPuzzles().forEach(function (p, i) {
-          var spec = SG.difficulty.spec(p.config.difficulty, p.model);
+          var spec = specOf(p.config.difficulty, p.model);
           var report = SG.logicalSolver.solve(p.model, p.givens, {
             allowedTechniques: spec.allowedTechniques, assumeUniqueness: false, collectSteps: false
           });
@@ -779,7 +800,7 @@
       expect(SG.variants.get('greaterThan')).toBe(def);
       expect(def.i18nKey).toBe('variant.greaterThan');
       expect(def.digits).toBe(9);
-      expect(def.difficultySupport).toEqual(LEVELS);
+      expect(def.difficultySupport).toEqual(PUBLISHED);
       expect(def.symbolModes).toContain(def.defaultSymbolMode);
       expect(typeof def.build).toBe('function');
       expect(typeof def.postGenerate).toBe('function');
@@ -801,12 +822,19 @@
       expect(typeof o.hintI18nKey).toBe('string');
     });
 
-    it('offers every level of the nine, hell2 included (measured by tests/qualify.js)', function () {
-      expect(def.difficultySupport).toEqual(LEVELS);
-      expectCode(function () {
-        SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hell', seed: 1 }, null);
-      }, 'difficulty.unknownLevel');
-    });
+    it('offers the levels of the final qualification and refuses the others (measured by tests/qualify.js)',
+      function () {
+        expect(def.difficultySupport).toEqual(PUBLISHED);
+        SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })
+          .forEach(function (level) {
+            expectCode(function () {
+              SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: 1 }, null);
+            }, 'difficulty.unsupportedLevel');
+          });
+        expectCode(function () {
+          SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hell', seed: 1 }, null);
+        }, 'difficulty.unknownLevel');
+      });
 
     it('builds the plain 9x9 board: 27 units like classic9, no signs, no clues (CV1)', function () {
       var m = board();
@@ -947,7 +975,8 @@
   });
 
   describe('greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7)', function () {
-    LEVELS.forEach(function (level) {
+    // Public per-level registrations: the published levels only (MS18c). The corpus behind them is the fixed one.
+    OFFERED.forEach(function (level) {
       describe(level + ': ' + countOf(level) + ' puzzles', function () {
         it('I1: exactly one solution; I2: givens are part of the solution; I3: it satisfies units and signs',
           function () {
@@ -1005,13 +1034,19 @@
               if (inUnit < spec.minCluesPerUnit) throw new Error('puzzle ' + i + ': a unit has ' + inUnit);
             });
             expect(p.config.difficulty).toBe(level);
-            if (p.rating.level === level) {
+            var again = SG.difficulty.rate(p.model, p.givens);
+            if (p.exact === true) {
               exact++;
+              expect(p.rating.level).toBe(level);
               expect(p.rating.score).toBeGreaterThanOrEqual(spec.min);
               expect(p.rating.score).toBeLessThan(spec.max);
+              expect(SG.difficulty.requiredOf(again, level, p.model).required).toBe(true);
               expect(p.warnings).toEqual([]);
+            } else {
+              expect(p.warnings).toContain('difficulty.approximate');
+              expect(p.warnings.indexOf('difficulty.shallow') !== -1).toBe(p.rating.level === level);
             }
-            expect(SG.difficulty.rate(p.model, p.givens).level).toBe(p.rating.level);
+            expect(again.level).toBe(p.rating.level);
             expect(p.rating.solved).toBe(true);
           });
           expect(exact / countOf(level)).toBeGreaterThanOrEqual(0.9);
@@ -1102,10 +1137,10 @@
               throw new Error('futoshiki ' + i + ': sign ' + s + ' is redundant');
             }
           }
-          var spec = SG.difficulty.spec(p.config.difficulty, p.model);
+          var spec = specOf(p.config.difficulty, p.model);
           expect(clueCount(p.givens)).toBeGreaterThanOrEqual(spec.minClues);
         });
-        var exact = futoshikiRun().filter(function (p) { return p.rating.level === p.config.difficulty; });
+        var exact = futoshikiRun().filter(function (p) { return p.exact === true; });
         expect(exact.length / futoshikiRun().length).toBeGreaterThanOrEqual(0.85);
         expect(across).toBeGreaterThan(0);
       });
@@ -1114,13 +1149,15 @@
   describe('greaterThan: the sign dig as a strategy (design.md 8.3 steps 3-5)', function () {
     function digFrom(seed, level, extra) {
       var g = allSignsModel(seed, false);
-      var spec = SG.difficulty.spec(level, g.model);
+      var spec = specOf(level, g.model);
       var events = [];
       var options = Object.assign({
         spec: spec, symmetry: 'rotational180', minClues: spec.minClues, minCluesPerUnit: spec.minCluesPerUnit,
         budget: null, emit: E.createEmitter('full', function (e) { events.push(e); })
       }, extra);
-      var dug = G.digSigns(g.model, g.solution, level, SG.rng.create(seed), options);
+      var dug = asLevel(level, function () {
+        return G.digSigns(g.model, g.solution, level, SG.rng.create(seed), options);
+      });
       return { g: g, dug: dug, events: events, spec: spec };
     }
 
@@ -1207,8 +1244,10 @@
 
     function trace(level, seed, trace) {
       var events = [];
-      var result = SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: seed, trace: trace },
-        function (e) { events.push(e); });
+      var result = asLevel(level, function () {
+        return SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: seed, trace: trace },
+          function (e) { events.push(e); });
+      });
       return { result: result, events: events };
     }
 

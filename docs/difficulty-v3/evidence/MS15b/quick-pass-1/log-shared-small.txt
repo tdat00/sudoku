@@ -1,0 +1,157 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1
+==== shard core-shared (2347 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-als,tech-basic,tech-cage,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (63 ms)
+ok   board-view: 37 passed  (59 ms)
+ok   constraints: 43 passed  (81 ms)
+ok   exchange: 20 passed  (228 ms)
+ok   harness: 25 passed  (2.32 s)
+ok   logical-solver: 100 passed  (351 ms)
+ok   model: 49 passed  (34 ms)
+ok   solver: 50 passed  (2.73 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-als: 111 passed  (8.17 s)
+ok   tech-basic: 167 passed  (1.85 s)
+ok   tech-cage: 33 passed  (28 ms)
+ok   tech-chain: 239 passed  (26.31 s)
+ok   tech-fish: 483 passed  (24.40 s)
+ok   tech-subset: 167 passed  (9.08 s)
+ok   tech-wing: 496 passed  (11.45 s)
+ok   techniques: 276 passed  (7.30 s)
+ok   wordbook: 7 passed  (9 ms)
+
+Suites: 18
+Tests:  2347 total, 2347 passed, 0 failed, 0 skipped
+Time:   94.47 s running tests, 94.85 s total
+Results: docs/difficulty-v3/evidence/MS15b/quick-pass-1/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL steps: 51 passed, 6 failed  (42.36 s)
+
+Failures:
+  FAIL steps > stepView: the tiers, the badge and the lines > marks 13 compact and 14 details jumps over the 14 goldens, and one first rated puzzle per view
+       AssertionError: expected {compact: 15, details: 15} to equal {compact: 12, details: 12}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:855:23)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       AssertionError: expected 3035 to be 2977
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:929:49
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:906:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1073:24
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1072:18
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1112:26
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1108:57)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the goldens whose chosen removal the limited check could not finish say so (Killer, Mega 16x16)
+       TypeError: Cannot read properties of null (reading 'chosen')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1294:47
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1291:58)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 7 in a cell
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1375:23
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1374:11
+
+Suites: 1
+Tests:  57 total, 51 passed, 6 failed, 0 skipped
+Time:   42.36 s running tests, 42.59 s total
+Results: docs/difficulty-v3/evidence/MS15b/quick-pass-1/generator-steps.json
+==== shard replay (158 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 148 passed, 10 failed  (41.35 s)
+
+Failures:
+  FAIL replay > replay: ratings > is unverified when the uniqueness count runs out of its guard, and rated with the default one
+       AssertionError: expected 2258 to be 2374
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:568:27)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G10, G12, G01)
+       TypeError: Cannot read properties of undefined (reading 'before')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1202:25
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1198:87)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: golden compact view and transitions > has 12 compact, 12 details and 14 distinct jump transitions in the 14 goldens
+       AssertionError: expected {compact: 15, details: 15} to equal {compact: 12, details: 12}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1224:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13 and G12 with a set rating)
+       AssertionError: expected Array(6)[3035, 2169, "forcingChain", "nishio", null, false] to equal Array(6)[2977, 2169, "forcingChain", "nishio", null, false]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1255:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL replay > replay: explaining the jumps > golden G06: the generator's choice, the first use and the restricted check
+       AssertionError: expected "combined" to be undefined
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1373:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1369:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > golden G13: the generator's choice, the first use and the restricted check
+       AssertionError: expected "combined" to be undefined
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1373:28
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1369:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > keeps the witness of the unfinished checks: move 70 of G14 has 10 candidates, 5 rejected, 4 unscored
+       AssertionError: expected 1480 to be null
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1445:44)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 12 compact and 12 details
+       AssertionError: expected {compact: 15, details: 15} to equal {compact: 12, details: 12}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1600:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R2C4 and the sign jumps of G11 and G12
+       TypeError: Cannot read properties of null (reading 'class')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1606:54)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+  FAIL replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G10, G12)
+       TypeError: Cannot read properties of null (reading 'class')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1622:22
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1616:32)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  158 total, 148 passed, 10 failed, 0 skipped
+Time:   41.35 s running tests, 41.59 s total
+Results: docs/difficulty-v3/evidence/MS15b/quick-pass-1/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS15b\quick-pass-1\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (30.55 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   30.55 s running tests, 30.77 s total
+Results: docs/difficulty-v3/evidence/MS15b/quick-pass-1/generator-mega.json
+shard core-shared: exit 0, 95.1 s
+shard steps: exit 1, 42.8 s
+shard replay: exit 1, 41.8 s
+shard mega: exit 0, 31.0 s
+FAILED: steps, replay
+exit=1 seconds=212.317

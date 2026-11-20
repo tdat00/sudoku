@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\time-calls.js 40 jigsaw9
+jigsaw9 40 states; ms {"legacyShort":3.5,"legacyLong":1.4,"newShort":40.5,"newLong":36.2} work {"newShort":318363,"newLong":314523,"legacyShort":9093,"legacyLong":5956}
+exit=0 seconds=0.317

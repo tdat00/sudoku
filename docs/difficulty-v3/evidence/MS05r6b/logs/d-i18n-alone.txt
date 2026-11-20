@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   i18n: 83 passed  (144 ms)
+
+Suites: 1
+Tests:  83 total, 83 passed, 0 failed, 0 skipped
+Time:   144 ms running tests, 322 ms total
+Results: docs/difficulty-v3/evidence/MS05r6b/quick/diag/i18n-alone.json

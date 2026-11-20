@@ -1,0 +1,28 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "hold-another-target-table",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in hold-another-target-table",
+  "startedAtMs": 1795102757585,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "the target table OTHER differs from TABLE"
+  ],
+  "heldAt": "binding",
+  "eligibleReAsk": false,
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 46000,
+      "systemMicros": 93000
+    }
+  },
+  "finishedAtMs": 1795102757638
+}

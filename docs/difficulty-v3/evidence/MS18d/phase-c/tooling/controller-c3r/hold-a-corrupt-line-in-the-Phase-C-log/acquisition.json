@@ -1,0 +1,68 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795101661884,
+  "startedAtMs": 1795101661965,
+  "lockAcquiredAtMs": 1795101661889,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [
+    "C: c.jsonl:2: not JSON"
+  ],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795101646384,
+    "lastCheckMs": 1795101661684,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 81,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795100762881,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 899084,
+  "reasons": [
+    "release-history-unproved"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 9536,
+    "task": "stand-in hold-a-corrupt-line-in-the-Phase-C-log",
+    "controllerPid": 32128,
+    "controllerParentPid": 9536,
+    "wrapperPid": 9536
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-a-corrupt-line-in-the-Phase-C-log\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-a-corrupt-line-in-the-Phase-C-log\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-52Sklx\\hold-a-corrupt-line-in-the-Phase-C-log\\logs\\c.jsonl",
+      "present": true
+    }
+  ]
+}

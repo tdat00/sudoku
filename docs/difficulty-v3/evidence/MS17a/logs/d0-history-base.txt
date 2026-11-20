@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=history
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   history: 15 passed  (2.40 s)
+
+Suites: 1
+Tests:  15 total, 15 passed, 0 failed, 0 skipped
+Time:   2.40 s running tests, 2.52 s total
+exit=0 seconds=2.637

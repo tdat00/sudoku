@@ -1,0 +1,41 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T20:59:21.054Z",
+  "finished": "2026-11-18T21:00:09.531Z",
+  "seconds": 48,
+  "cells": [
+    {
+      "variant": "killer",
+      "level": "expert",
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {"n":12,"hits":2,"rate":0.16666666666666666,"p50":13516.8718,"p95":34368.4147,"max":34368.4147,"verdict":"hidden","stopped":"time","errors":0,"approximate":10,"invalid":0},
+      "requests": [
+        {"key":"killer/expert","index":0,"seed":1314205603,"hit":false,"ms":6397.2021,"achieved":"expert","score":718,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":1,"seed":1297427984,"hit":false,"ms":13624.6983,"achieved":"expert","score":818,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":2,"seed":1347760841,"hit":false,"ms":25646.8095,"achieved":"expert","score":773,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":3,"seed":1330983222,"hit":false,"ms":13516.8718,"achieved":"expert","score":737,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":4,"seed":1381316079,"hit":true,"ms":1037.704,"achieved":"expert","score":987,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/expert","index":5,"seed":1364538460,"hit":true,"ms":8015.5536,"achieved":"expert","score":990,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"killer/expert","index":6,"seed":1414871317,"hit":false,"ms":34368.4147,"achieved":"expert","score":979,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":7,"seed":1398093698,"hit":false,"ms":17328.0148,"achieved":"expert","score":878,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":8,"seed":1448426555,"hit":false,"ms":10271.7029,"achieved":"expert","score":893,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":9,"seed":1431648936,"hit":false,"ms":13098.839,"achieved":"expert","score":807,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":10,"seed":3709312096,"hit":false,"ms":20176.8077,"achieved":"expert","score":747,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"killer/expert","index":11,"seed":3726089715,"hit":false,"ms":16635.8878,"achieved":"expert","score":976,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"killer":[]}
+}

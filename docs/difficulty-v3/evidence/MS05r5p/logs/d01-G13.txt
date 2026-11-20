@@ -1,0 +1,5 @@
+G13 diagnostic: outcome ok, exact false, required false, attempts 2, samples 24
+  generation 21.556 s, validation 0.001 s
+  ordinary samples 15.473 s (53 ratings), local continuation 6.066 s (512 ratings, 3407 proposals), other 0.008 s (0 ratings)
+record: ..\docs\difficulty-v3\evidence\MS05r5p\G13.json
+MS05r5p exit=0 seconds=22.022

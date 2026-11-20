@@ -1,0 +1,21 @@
+{
+ "engine": "tree",
+ "rows": [
+  {
+   "id": "G06",
+   "request": "jigsaw9 nightmare 42",
+   "equalsSaved": false,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": false,
+   "seconds": 7.7
+  },
+  {
+   "id": "G07",
+   "request": "jigsaw9 nightmare 3962167687",
+   "equalsSaved": true,
+   "equalsLedger": true,
+   "ledgerEqualsSaved": true,
+   "seconds": 10
+  }
+ ]
+}

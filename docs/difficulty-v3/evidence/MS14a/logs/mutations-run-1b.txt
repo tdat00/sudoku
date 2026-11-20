@@ -1,0 +1,49 @@
+$ node tests\artifacts\difficulty-v3\MS14a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS14a\mutations-1b.txt 46 91
+mutation 46 (O03 cells unsorted): DETECTED - 38 total, 31 passed, 7 failed, 0 skipped - 7 failing - 2.9 s
+mutation 47 (O04 digits unsorted): DETECTED - 38 total, 32 passed, 6 failed, 0 skipped - 6 failing - 2.5 s
+mutation 48 (O05 digits repeated): DETECTED - 38 total, 29 passed, 9 failed, 0 skipped - 9 failing - 2.5 s
+mutation 49 (O06 numbers sorted as text): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 2.4 s
+mutation 50 (O07 lines named by the regions): DETECTED - 38 total, 22 passed, 16 failed, 0 skipped - 16 failing - 1.9 s
+mutation 51 (O08 another step key): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 3.1 s
+mutation 52 (O09 another technique id): DETECTED - 38 total, 23 passed, 15 failed, 0 skipped - 15 failing - 2.5 s
+mutation 53 (O10 placements not empty): DETECTED - 38 total, 23 passed, 15 failed, 0 skipped - 15 failing - 2.5 s
+mutation 54 (O11 cells as numbers in the arguments): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 3.1 s
+mutation 55 (B01 limit allows one unit more): DETECTED - 38 total, 32 passed, 6 failed, 0 skipped - 6 failing - 5.3 s
+mutation 56 (B02 limit stops one unit early): DETECTED - 38 total, 32 passed, 6 failed, 0 skipped - 6 failing - 5.2 s
+mutation 57 (B03 default limit 49999): DETECTED - 38 total, 33 passed, 5 failed, 0 skipped - 5 failing - 5.2 s
+mutation 58 (B04 budget checked one unit early): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+mutation 59 (B05 budget checked one unit late): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+mutation 60 (B06 check every 255 units): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+mutation 61 (B07 check every 512 units): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+mutation 62 (B08 the check position is not remembered): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.2 s
+mutation 63 (B09 no check at entry): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.3 s
+mutation 64 (B10 every error swallowed): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 65 (B11 cancellation swallowed): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.3 s
+mutation 66 (B12 a spent budget propagates): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.3 s
+mutation 67 (B13 a spent limit is not reported): DETECTED - 38 total, 33 passed, 5 failed, 0 skipped - 5 failing - 5.2 s
+mutation 68 (B14 capHit inverted): DETECTED - 38 total, 11 passed, 27 failed, 0 skipped - 27 failing - 2.8 s
+mutation 69 (B15 capHit always work): DETECTED - 38 total, 13 passed, 25 failed, 0 skipped - 25 failing - 2.9 s
+mutation 70 (B16 retained is a list): DETECTED - 38 total, 30 passed, 8 failed, 0 skipped - 8 failing - 5.2 s
+mutation 71 (B17 work recorded one more): DETECTED - 38 total, 10 passed, 28 failed, 0 skipped - 28 failing - 2.8 s
+mutation 72 (B18 default limit recorded): DETECTED - 38 total, 31 passed, 7 failed, 0 skipped - 7 failing - 5.5 s
+mutation 73 (B19 fractional limit not floored): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+mutation 74 (B20 fractional limit rounded up): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+mutation 75 (B21 infinite or NaN limit accepted): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.5 s
+mutation 76 (B22 a limit of 0 rejected): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.4 s
+mutation 77 (B23 a limit of 0 ignored): DETECTED - 38 total, 36 passed, 2 failed, 0 skipped - 2 failing - 5.3 s
+mutation 78 (B24 options required): DETECTED - 38 total, 31 passed, 7 failed, 0 skipped - 7 failing - 5.1 s
+mutation 79 (B25 the counter outlives the call): DETECTED - 38 total, 9 passed, 29 failed, 0 skipped - 29 failing - 2.8 s
+mutation 80 (B26 unit tries not counted): DETECTED - 38 total, 15 passed, 23 failed, 0 skipped - 23 failing - 3.0 s
+mutation 81 (B27 digit tries not counted): DETECTED - 38 total, 16 passed, 22 failed, 0 skipped - 22 failing - 2.9 s
+mutation 82 (B28 rejected digits not counted): DETECTED - 38 total, 21 passed, 17 failed, 0 skipped - 17 failing - 3.1 s
+mutation 83 (B29 no record of a spent limit): DETECTED - 38 total, 33 passed, 5 failed, 0 skipped - 5 failing - 5.3 s
+mutation 84 (B30 another id in the record): DETECTED - 38 total, 30 passed, 8 failed, 0 skipped - 8 failing - 5.3 s
+mutation 85 (B31 the context options are required): DETECTED - 38 total, 37 passed, 1 failed, 0 skipped - 1 failing - 5.4 s
+mutation 86 (X01 the state is written): DETECTED - 38 total, 17 passed, 21 failed, 0 skipped - 21 failing - 2.5 s
+mutation 87 (X02 the placements array is shared between calls): DETECTED - 38 total, 35 passed, 3 failed, 0 skipped - 3 failing - 5.4 s
+mutation 88 (X03 the signature table is shared between calls): DETECTED - 38 total, 14 passed, 24 failed, 0 skipped - 24 failing - 2.1 s
+mutation 89 (X04 an answer is remembered per state object): DETECTED - 38 total, 25 passed, 13 failed, 0 skipped - 13 failing - 4.3 s
+mutation 90 (X05 the marks of the sides outlive the call): DETECTED - 38 total, 24 passed, 14 failed, 0 skipped - 14 failing - 3.9 s
+mutation 91 (X06 the cells of the Finding are the unit cells): DETECTED - 38 total, 23 passed, 15 failed, 0 skipped - 15 failing - 2.4 s
+detected 46 of 46, survivors 0, 191.0 s
+exit=0 seconds=191.120

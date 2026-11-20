@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=tech-als --filter=sue-de-coq: agreement
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+TALLY {"positions":482,"fired":80,"byPopulation":{"real fixtures after the basic techniques":4,"real fixtures through the locked techniques":8,"real fixtures through the triples":5,"real fixtures through the fish":4,"real fixtures where alsXz's predecessors are exhausted":1,"classic9 seeded (seed 4001)":4,"classic9 seeded (seed 4011)":5,"classic9 sweep states":2,"classic6":5,"classic4":2,"12 digits":4,"16 digits":3,"diagonal":3,"windows":3,"partial cage":2,"samurai":2,"samurai, denser":2,"jigsaw staggered":2,"jigsaw staggered (transposed)":4,"jigsaw wavy":3,"jigsaw wavy (transposed)":3,"jigsaw mixed":2,"jigsaw mixed (transposed)":2,"jigsaw crossed":2,"jigsaw crossed (transposed)":3},"eliminations":327,"zEmpty":41,"zNonEmpty":39,"twoCells":41,"threeCells":39,"properSubset":20,"wholeIntersection":60,"oneCellSides":43,"bigSides":13,"notTheMost":17,"multipleTargets":72,"cut":0,"recordQuota":1,"exact":138,"withoutAlsXz":0,"withAlsXz":80,"labels":{"col/box":21,"row/box":38,"row/region":10,"col/region":11},"regions":21}
+ok   tech-als: 26 passed  (6.03 s)
+
+Suites: 1
+Tests:  26 total, 26 passed, 0 failed, 0 skipped
+Time:   6.03 s running tests, 6.17 s total
+exit=0 seconds=6.301

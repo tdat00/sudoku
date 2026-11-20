@@ -1,0 +1,2 @@
+  butterfly/normal: seeds 144, 233, 377, 610, 987 (1.5 s)
+recorded 5 of 520 keys (butterfly/normal, seed indexes 10-14 (seeds 144, 233, 377, 610, 987)) in docs/difficulty-v3/evidence/MS05r6a/hashes/butterfly-normal-10.json; a ledger is one shard, merge them all with --hash-merge

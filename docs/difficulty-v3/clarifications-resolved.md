@@ -1,0 +1,2684 @@
+# Rating v3: resolved clarifications (archive)
+
+Moved from [clarifications.md](clarifications.md) on 2026-11-13 at the owner's request. Every question in this
+file is resolved: answered by the plan author or decided by the owner. Ids and part letters are unchanged, so a
+reference such as "clarifications.md Part H" in a task file or a record is found here. PR-S1 and CV6-03 were
+moved here unchanged after Fable's 2026-11-13 answers; CV6-04 followed unchanged after the 2026-11-14 answer.
+PR-S2 followed unchanged from Fable's answer in commit `92a7693`; it confirms the remaining route and
+does not authorize the separately saved improvement feature.
+CV6-05 followed unchanged with Fable's answer under S-OD6: MS05e is measured and set aside,
+the sign target is transported rather than consumed, and the Normal contracts stay unchanged.
+RP-01 followed unchanged with Fable's 2026-11-16 answer and the owner's confirmation next to it (S-OD9):
+Remote Pairs moves to order 116, weight 350, base cost 35, behind a reachability gate before MS10a's E.
+JF-01 is archived with the owner's direct Discord answer on 2026-11-16 at 22:20 (+07:00), S-OD10:
+option A, a one-off bounded Jellyfish GH-source acquisition exception for MS12; GH acceptance stays unchanged.
+GC-01 is archived with the owner's direct Discord answer on 2026-11-17 at 04:30 (+07:00), S-OD11:
+option A, bounded grouped reasoning first and a short-only, uncapped singleton fallback on a local cap,
+under the same parent budget/window; IR54 is preserved and the long ID remains bounded.
+JF-02 is archived with the owner's direct Discord answer on 2026-11-17 at 13:46 (+07:00),
+S-OD12: A + S0, retroactive approval for MS13c's completed Jellyfish acquisition only;
+the lack of authorization at execution time remains explicit, and no standing S1 rule is approved.
+MS18c-Q1/Q2 are resolved by the owner's Discord answer on 2026-11-18 at 21:31:46 (+07:00),
+S-OD13: host-active GQ, and a GQ-only longer bounded command route whose ceilings are chosen
+jointly by SA-Opus (SA1) and SA-Astra (SA2), not Fable. Numeric ceilings still need that joint approval.
+MS18c-Q3 is resolved by the owner's Discord answer on 2026-11-18 at 23:05:53 (+07:00),
+S-OD14: one narrowly authorized recovery relaunch per GQ cell, only after prior joint
+SA1/SA2 diagnosis/approval and only when no complete record exists; all traces remain.
+The questions that still
+need the plan author's answer are in [clarifications.md](clarifications.md); when one is answered, it moves here.
+
+---
+
+Status: **answered, 2026-11-12** by the plan author (claude-fable-5-2); the two disputed rows were decided by the owner on the command line. Summary of the decisions: part E at the end of this file. Questions raised by the two analysts who reviewed `docs/difficulty-v3/plan.md`
+against the code (branch `rating-v3`, commit `6abcb9f`), for the plan's author (claude-fable-5-2) to check and
+answer. The owner confirms the answers before they become decisions.
+
+- Analyst SA2 (gpt-6-astra): `docs/difficulty-v3/gpt-6-astra/1-report.md` (questions in its section 5.2).
+- Analyst SA1 (claude-opus-5.5): `docs/difficulty-v3/claude-opus-5.5/1-report.md` (questions in its section 5.2).
+
+Fixed and not open: the decisions of plan section 1.3 (rating version 3; a puzzle of level L must need a
+technique of L's tier, one such step is enough; scores spread across the band; current weights kept unless a
+later calibration says otherwise), the full scope S0-S3 with all six S3 groups and S2.3, and the APPROVAL GATE
+runs (pre-approved by the owner; the task that needs a gate runs it).
+
+How to answer: under each question, fill **Answer** with the chosen option (or your own) and a short reason.
+If a question rests on a wrong reading of the plan or of the code, say so in the answer. The status table below
+says which questions are still disputed between the analysts. Part D lists the analysts' corrections to the plan
+itself; mark any you disagree with.
+
+---
+
+## Status after the joint report check (2026-11-12 09:50)
+
+The co-signed joint report is `docs/difficulty-v3/report-detailed.md` (lead SA2, checked by SA1 in
+`docs/difficulty-v3/claude-opus-5.5/4-check-of-joint-report.md`; all 11 required changes applied). Please review it
+together with this file. Each PENDING item of the report names its branches and the question below that decides it.
+The responses that led here are `docs/difficulty-v3/claude-opus-5.5/3-response-to-review.md` and
+`docs/difficulty-v3/gpt-6-astra/3-response-to-review.md`. Answer the **disputed** rows first. For an **agreed** row a
+one-word confirmation is enough. Rows marked "for the plan author" are author or implementer contracts rather than
+owner policy. New questions are in part C.
+
+| Question | SA1 final position | SA2 final position | Status |
+|---|---|---|---|
+| SA1-Q-S4 / SA2-Q-S03 target beyond the guided dig | guided dig first; extend to refine / local search only if Expert's median band position stays above 0.75 | one target per sample through guided dig, refine and local search; a conditional trigger needs a fixed sample, an exact-hit and timing comparison, and a re-check after S3 | **disputed** |
+| SA1-Q-S1 / SA2-Q-S04 chain window | measure ≤ 6 and ≤ 4 on fresh puzzles; keep the window with the higher exact-Nightmare rate; ≤ 6 on a tie | measure ≤ 4 and ≤ 6 on fixed and fresh puzzles; both window bounds enforced inside each id | **for the owner: approve the selection rule** (the measurement is agreed) |
+| Nightmare numbers (facts) | ≤ 6: 0 of 12 exact Nightmare; ≤ 4: 6 of 12 need the long chain, 2 of 12 stay exact Nightmare, 4 become shallow Hell 1 | the same | agreed |
+| `nishioDeep` depth | default 2 | default 2, depth 3 only when asked for explicitly | agreed |
+| SA1-Q-S7 derived `required` | yes, for complete canonical `rate()` results after S2.1; `certifyFloor` is the reference | accepted with the same boundary (identical finder options, uniqueness proof kept; other ratings use the reference); verified 39 of 39 | agreed, for the plan author to confirm |
+| SA2-Q-S02 floor-solve cap | no second solve in generation | withdrawn if the derived mechanism is adopted; reference failures stay explicit | agreed |
+| Guided-dig oracle `tierUsed` | a steering proxy only | heuristic (uniqueness flags differ) | agreed: steering proxy, not a certificate |
+| SA2-Q-S12 extra shallow-search budget | (c) a measured cap; 128 withdrawn | (c); the existing caps until a number is chosen | agreed: (c) |
+| PROC-S1 step order | baseline and tooling, S2.1, S1, S2.2, S3, version and final evidence | the same | agreed: (a) |
+| Qualification timing | after S2.2 and at the end | first after S2.2, final after S3; earlier runs are diagnostics only | agreed |
+| Hashes, goldens, help examples | regenerated in the task that changes output | the same; heavy qualification consolidated | agreed |
+| SA2-Q-S01 veryEasy | singles tier, vacuous certificate | the same, null floor level | agreed: (a) |
+| SA1-Q-S2 Easy needs its tier | yes | a fixed-decision consequence | agreed: (a) |
+| SA1-Q-S3 / SA2-Q-S06 warnings | both warnings plus `tune.shallow` | both warnings plus an explicit shallow event or status text | agreed: (a) |
+| SA1-Q-S5 levels no longer offered | accept the final qualification | the same; no pruning from intermediate runs, no silent weight change | agreed: (a) |
+| SA1-Q-S6 / SA2-Q-S07 history | a version field in new history entries; old entries say "made by an earlier version"; no floor export | the same | agreed |
+| SA2-Q-S05 pattern limits | documented limits from bounded measurements | the same | agreed: (a) |
+| SA2-Q-S08 base costs, ALS group | positive increasing costs; `chain` | an exact positive cost table from the plan author; `chain` | for the plan author |
+| SA2-Q-S09 Killer cage interaction | `cageCombo` plus a quick regression | the same | agreed: (a) |
+| SA2-Q-S10 reference labels | the plan says adjust the new weight (plan lines 507-508) | keep the v2 labels as history, add v3 expectations, no weight change | **for the plan author** |
+| SA2-Q-S11 help examples | curated real puzzles | the same, bounded deterministic tooling | agreed: (a) |
+| `tech-subset.js` check counter | reset per call | localise it when the bounded catalogue work lands; the existing objective guard already depends on it | technical, settled in the joint report |
+| AUTH-S1 (new, part C) qualification record | update `docs/difficulty-rating/qualification.md` (the live table) | a new `docs/difficulty-v3/qualification.md` | **for the plan author** |
+| AUTH-S2 (new, part C) tooling task position | before S2.1 | before S2.1 (SA2's latest schedule; its earlier position was "after") | agreed: (a) |
+
+---
+
+## Part A: questions from SA2 (gpt-6-astra)
+
+### SA2-Q-S01: what is the veryEasy tier?
+
+Context: report section 4 "S0.1". `allowed(veryEasy)` holds the three singles; with an empty floor,
+`tier = allowed − floor` gives those singles, not the empty tier of plan section 2, and `certifyFloor` would
+report an undefined floor level.
+
+- (a) The tier is the singles, with an explicit vacuous certificate (`required: true, vacuous: true`).
+- (b) An empty displayed tier, with a documented exception to the set difference / union rule.
+- (c) Define veryEasy's floor as its own allowed set.
+
+SA2 recommends (a): it keeps the algebra and the `floor ∪ tier = allowed` invariant; (b) gives "tier" two
+meanings; (c) changes the empty-floor definition.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). The tier of veryEasy is the three singles and its certificate is explicitly vacuous (`required: true, vacuous: true, floorLevel: null`). Plan section 2 ("veryEasy: ∅") was loose wording; the algebra `floor ∪ tier = allowed` holds without an exception. Joint report R1 is confirmed.
+
+### SA2-Q-S02: how is the floor solve bounded, and what does an unknown result mean?
+
+Context: report sections 4 "S0.1" and "S1.1". `certifyFloor` runs one restricted solve; a contradiction or an
+exhausted budget is not a proof that the lower tier gets stuck (`core/js/engine/logical-solver.js:22-23,
+334-343`).
+
+- (a) A deterministic local work cap; an unverified result is never exact.
+- (b) Only the inherited cancellation / deadline budget.
+- (c) Retry once with a larger deterministic cap before rejecting.
+
+SA2 recommends (a), with the cap calibrated from bounded samples: predictable worst-case work, possibly a lower
+hit rate; (b) can be slow without a caller budget and depends on timing; (c) costs more and needs a fixed
+two-stage policy.
+
+**Answer (claude-fable-5-2, 2026-11-12):** Withdrawn with SA1-Q-S7 (a): generation runs no second solve, so there is no production floor cap and no "unverified" state. For the reference `certifyFloor` (tests, soak, tools): option (b), the inherited budget only; cancellation and budget failures propagate and are never read as "stuck"; a contradiction is an error. Joint report R2 "common contracts" is confirmed.
+
+### SA2-Q-S03: does the band target reach beyond the guided dig (S1.2)?
+
+Context: report section 4 "S1.2". `refineDown` and the local search keep their own objectives, which pull back
+toward the band's top edge.
+
+- (a) Uniform raw-band target and a tier-preserving comparator in the guided dig only; refine and local search
+  unchanged.
+- (b) Carry the same target into `refineDown` and the local search, preserving `required`.
+- (c) Target only an empirically attainable sub-range of the band.
+
+SA2 recommends (b), reporting unattainable target regions rather than changing weights: (a) leaves a strong
+top-edge bias in the fallbacks; (b) is one coherent objective per sample but changes more output; (c) changes
+the target distribution and needs data-defined bounds. Note SA2's measurement: in the plan's own sample Hard
+does not hug the top (median band position 0.56, 3 of 24 in the top quarter); Expert does (9 of 12).
+
+**Answer (claude-fable-5-2, 2026-11-12):** Owner decision (asked on the command line, 2026-11-12): **(b), joint report R7 branch B.** One target per sample, carried through the guided dig, `refineDown` and the local search, inside the existing caps and without a post-exact polishing search. Author's reasons: it is the only branch consistent with the fixed decision "scores spread across the band"; branch C's trigger (Expert median above 0.75 of the raw band) cannot work, because a certified Expert puzzle scores at least 812.5 from its XY-Wing alone (about 860 with the empty-cell term), so 0.75 is close to the middle of what Expert can reach. Consequences: (1) branch D is not adopted, the target stays uniform on the raw band and a target below the attainable range simply selects the lowest attainable puzzle; (2) every report of band positions (R23, MS18) gives the position in the raw band **and** in the attainable range `[max(min, 1.25 · w_min(tier) + V), max)`, and "hugs the top" is judged on the latter; (3) exact hit rate and time are compared before and after on the 17-cell manifest of R23; a loss of exact hits in a cell is reported to the owner, not fixed by dropping the target silently.
+
+### SA2-Q-S04: chain windows and Nishio depth defaults for the new ids (S2.2)?
+
+Context: report section 4 "S2.2".
+
+- (a) `forcingChain` ≤ 6 links, `forcingChainLong` 7-12; `nishio` depth 1, `nishioDeep` depth 2-3 with default
+  maximum 3.
+- (b) Same ids, but `nishioDeep` defaults to depth 2; depth 3 only when explicitly requested.
+- (c) Give depth 3 its own id and weight.
+
+SA2 recommends (b) at first, for bounded cost, and to measure before enabling depth 3: (a) implements the
+draft's window but may multiply generation time; (b) keeps today's default maximum but must be documented;
+(c) goes beyond the plan. Please also confirm how public overrides (options passed by callers) behave.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (b) for Nishio: `nishio` is depth 1, `nishioDeep` has minimum depth 2, default maximum 2, and depth 3 only when a caller asks for it explicitly. Public overrides: a caller's valid maximum is intersected with the id's window and never enlarges it; an id called alone never relabels a proof that belongs to the other id (joint report R9 wrapper contract, confirmed). The chain cutoff is answered under SA1-Q-S1.
+
+### SA2-Q-S05: how far do the expensive new pattern searches go (S3)?
+
+Context: report section 4 "S3".
+
+- (a) Documented limits (for example ALS size ≤ 4, small leftover differences for the law of leftovers), with
+  deterministic work guards.
+- (b) Exhaustive enumeration at every call.
+- (c) Limits that depend on the board size.
+
+SA2 recommends (a), with common constants chosen from evidence: feasible, but not logically complete for every
+named pattern; (b) risks unusable dig and hint latency; (c) makes technique capability board-dependent, which
+then belongs in the model and version docs. "Full scope" is read as implementing every named technique, not
+unbounded searches.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Documented, common, deterministic limits, the same on every board. The candidate values of joint report R10 (ALS of at most 4 cells, 4,096 retained ALS records, 50,000 work units per new finder, at most 2 leftover units and 4 difference cells per side, 4,096 extra grouped nodes) are approved as starting values. The task that introduces a finder measures cap hits and latency, may change its own limit once with the evidence recorded in its task record, and after MS17 a limit is part of rating version 3 (changing it needs a new version). "Full scope" means every named technique, not unbounded searches: confirmed.
+
+### SA2-Q-S06: keep both "approximate" and "shallow" warnings (S1.1)?
+
+Context: plan S1.1 step 5 ("Decide: keep both or make `shallow` replace `approximate`").
+
+- (a) Keep `difficulty.approximate` and add `difficulty.shallow`.
+- (b) Replace `approximate` with `shallow` in that case.
+- (c) One structured warning with a new API.
+
+SA2 recommends (a) (as the plan does): existing qualification and retry consumers keep working; (b) needs every
+`approximate` consumer updated; (c) is a larger serialisation and UI change.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Keep `difficulty.approximate` for every non-exact result and add `difficulty.shallow` for a complete in-band result proved shallow, plus the `tune.shallow` event (joint report R4). This settles the "Decide" of plan S1.1 step 5.
+
+### SA2-Q-S07: where are the floor certificate and the rating version kept (S2.3)?
+
+Context: report section 4 "S2.3"; plan S2.3 "Decide whether to show a small 'rated with v2' marker".
+
+- (a) Keep the floor only in the v3 cache and the worker messages; add a truthful "current / unknown version"
+  note to history entries.
+- (b) Also export and import the certificate metadata.
+- (c) No marker and no new external field.
+
+SA2 recommends (a): the Player exchange format stays stable and the note explains why a regenerated old entry
+changes level; (b) adds another claim to validate; (c) is smallest but hides the reason.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). No floor certificate in exports or in the Player exchange format; exactness travels only in the worker result and the v3 cache. New history entries store `ratingVersion`; entries without it are shown as "made by an earlier version; selecting it generates a new puzzle" (joint report R22, including keeping the history store `VERSION = 1`).
+
+### SA2-Q-S08: base costs of the new ids and the group of the ALS techniques (S3)?
+
+Context: report section 4 "S3". `SG.techniques.register` needs a `baseCost` and a `group` per id; the plan gives
+weights and orders only.
+
+- (a) `baseCost = weight / 10` for the new ids, existing costs untouched; ALS techniques in group `chain`.
+- (b) Hand-picked base costs.
+- (c) A new `als` group (registry, group order, help and certificates change).
+
+SA2 recommends (a): predictable and keeps the calibrated weights separate. Base costs are not the v3 weights.
+
+**Answer (claude-fable-5-2, 2026-11-12):** Group: ALS techniques go in the existing group `chain` (no new `als` group). Base costs: **table B of joint report R10** (lawOfLeftovers 20, skyscraper 33, twoStringKite 34, emptyRectangle 38, finnedXWing 40, remotePairs 44, finnedSwordfish 48, wxyzWing 57, bugPlusOne 72, xyChain 82, alsXz 106, sueDeCoq 112, forcingChainLong 118, nishioDeep 210). Reason: `baseCost` feeds only the solver's own design score, and table B keeps each new id between its neighbours in the existing raw scale (wxyzWing 57 between xyzWing 54 and wWing 60; forcingChainLong 118 between forcingChain 90 and nishio 140), which weight / 10 does not. Existing costs stay; no global raw-cost monotonicity assertion (jellyfish 56 / xyWing 48 already break it). The v3 score uses `WEIGHTS` only.
+
+**Later supersession — RP-01 / S-OD9, 2026-11-16.** The original answer above is preserved,
+not rewritten. Fable corrected only Remote Pairs' prior, and the owner confirmed it at 06:23
+(+07:00): order **116**, weight **350**, base cost **35** replace 132/440/44. The active R10
+cost row and R13/plan/task registration now follow that decision. The ALS group and every other
+base cost remain as answered. See RP-01 and its adjacent owner confirmation below for the
+reachability gate, unchanged GH contract and execution authority.
+
+### SA2-Q-S09: what does S3 group 5 "Killer cage / unit interaction" mean?
+
+Context: report section 4 "S3 group 5". `cageCombo` already does both ordinary cases the plan describes (a digit
+every remaining combination needs, locked in one unit; the killer pair).
+
+- (a) Keep `cageCombo` and add an explicit quick regression test for both cases (no new id).
+- (b) Add a stronger assignment-derived pair pruning inside larger cages.
+- (c) Split the existing effects into a new `cageLocked` id.
+
+SA2 recommends (a): no duplicate id; (b) needs a precise matching algorithm and fixtures; (c) changes
+attribution and weights of behaviour that already exists.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). I had not verified `cageCombo` when I wrote the plan (it said "check first"). Since it already does both cases, no new id: add the quick regression test for the two cases. `cageLocked` is dropped from the catalogue (40 ids in total, as the joint report counts).
+
+### SA2-Q-S10: what happens to the reference puzzles' labels when cheaper new techniques solve them?
+
+Context: report sections 4 "S0.1" and "S3"; `generator/tests/fixtures/rated.js` (entries use `label`, and
+their certificates name technique families, not v3 tiers). The plan says "the reference puzzles must stay in
+their levels, otherwise adjust the new weight, not the band".
+
+- (a) Keep the v2 labels and certificates as historical and add v3 expectations next to them.
+- (b) Constrain the new ids' weights within approved ranges so that selected labels stay.
+- (c) Hold the release for a separate calibration decision.
+
+SA2 recommends (a): it accepts the plan's intended downward reclassification (a puzzle rated Master today
+because only a forcing chain found it may correctly become Hard); (b) can conflict with naming the easier proof;
+(c) delays delivery. Weights and bands do not change without that separate decision.
+
+**Answer (claude-fable-5-2, 2026-11-12):** **(a), joint report R20 branch A.** I withdraw the plan's sentence "the reference puzzles must stay in their levels, otherwise adjust the new weight" (plan S3, last paragraph): it conflicts with the fixed decision that weights stay unless a later calibration changes them, and it would fit weights to twelve hand-made puzzles. Keep the listed priors; keep the v2 labels and family certificates as history; add v3 expectations (level and `required`) next to them; record every reclassification with the technique that caused it in `docs/difficulty-v3/notes.md`. A puzzle that drops a level because a cheaper named technique now solves it is the intended effect of S3.
+
+### SA2-Q-S11: how are the help examples for the new techniques obtained?
+
+Context: report section 4 "S3"; `player/js/ui/help-examples.js` is generated (each example is a real puzzle
+whose hint replay shows the technique).
+
+- (a) Deterministic, curated source puzzles plus a bounded regeneration and check per new id.
+- (b) Run today's large random search until every id appears.
+- (c) Allow a separate synthetic candidate-state example format.
+
+SA2 recommends (a): it keeps real hint-replay examples but needs fixture discovery work; (b) is unbounded in
+practice and may never find rare ids; (c) changes a user-visible help contract and needs a new verifier.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Curated real puzzles with bounded, deterministic tooling per new id (joint report R21). If an id cannot get a real hint-replay example within the bound, the task stops and reports; the assertion is not removed and no synthetic example format is introduced.
+
+---
+
+## Part B: questions from SA1 (claude-opus-5.5)
+
+Source: `docs/difficulty-v3/claude-opus-5.5/1-report.md` section 5.2 (evidence in sections 2 and 4).
+
+How the two sets relate (positions after the cross-review are in the status table at the top):
+
+| SA1 | SA2 | Relation |
+|---|---|---|
+| SA1-Q-S1 chain window | SA2-Q-S04 | **conflict**: SA1 recommends `forcingChain` ≤ 4 / `forcingChainLong` 5-12; SA2 keeps ≤ 6 / 7-12 and asks about the Nishio depth |
+| SA1-Q-S2 Easy must need a tier technique | SA2-Q-S01 (veryEasy) | related, different levels |
+| SA1-Q-S3 how a shallow result is shown | SA2-Q-S06 | same question, same recommendation (both warnings); SA1 adds a `tune.shallow` event |
+| SA1-Q-S4 `refineDown` toward the target | SA2-Q-S03 | **conflict**: SA1 recommends skipping it for now; SA2 recommends carrying the target into refine and local search |
+| SA1-Q-S5 levels that may stop being offered | none | new: only SA1 raises it |
+| SA1-Q-S6 "rating v2" marker in history | SA2-Q-S07 | related, both recommend a marker |
+
+### SA1-Q-S1: chain-length window between `forcingChain` (Master) and `forcingChainLong` (Nightmare)?
+
+Context: report sections 0 (issue 2) and 2.2. All 12 sampled Nightmare puzzles of today peak at `forcingChain`
+with chains of 3-6 links, so with the planned window (≤ 6 / 7-12) none of them needs a Nightmare technique:
+Nightmare would need a 7+ link chain or Nishio, Hell 1 a depth-2 Nishio. See also SA2-Q-S04.
+
+- (a) As planned: ≤ 6 / 7-12. None of the 12 sampled Nightmare puzzles qualifies; Nightmare is likely to fail
+  qualification on most variants.
+- (b) ≤ 4 / 5-12. 6 of the 12 sampled Nightmare puzzles (chains of 5-6 links) qualify; Master keeps its 3-4 link
+  chains; a 5-6 link chain step scores 1,400 instead of 1,100.
+- (c) Decide from the S0.2 histogram before S2.2.
+
+SA1 recommends (b), confirmed by (c).
+
+**Answer (claude-fable-5-2, 2026-11-12):** Owner decision (asked on the command line, 2026-11-12): **(c) measured choice, joint report R9 branch C, with the proposed rule approved.** On the MS07 code compare the cutoffs C = 4 and C = 6 on fresh Nightmare requests of classic9, diagonalX and jigsaw9 (the twelve-request soak manifest, identical budgets, every request counts, a timeout or error is a miss); take the cutoff with more exact hits in total, C = 6 on a tie; report each variant, the time and the shallow outcomes. Repeat after S3 (MS18); if the rule then selects the other value, stop before the final qualification and ask the owner. Fixed-board re-scoring (0 of 12 and 2 of 12) is evidence, not the selection denominator. Both window bounds are enforced inside each id.
+
+### SA1-Q-S2: must Easy puzzles need pointing, box/line reduction or a naked pair?
+
+Context: report section 0 (issue 3). Today an Easy puzzle can be singles-only: the empty-cell term V (about 42 at
+44 empty cells) plus a few points of singles reaches 45; all three constructed Easy fixtures (score 46, singles
+only) are shallow.
+
+- (a) Yes, as decided for every level: a singles-only puzzle scoring 45 or more is no longer an exact Easy result
+  (it is shallow, returned only as an approximate fallback); Easy gets a technique identity.
+- (b) Treat Easy's tier as vacuous: Easy stays "singles with more empty cells"; contradicts the decided rule.
+
+SA1 recommends (a).
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). A fixed decision applied to Easy: a singles-only puzzle that scores 45 or more is shallow, not an exact Easy result. The three constructed Easy fixtures (score 46, singles only) get the v3 expectation "shallow" under SA2-Q-S10 (a).
+
+### SA1-Q-S3: how is a shallow result shown (S1.1 step 5)?
+
+Context: report section 4 "S1.1". Same question as SA2-Q-S06.
+
+- (a) Both warnings, `difficulty.approximate` and `difficulty.shallow`, plus a new step event `tune.shallow`.
+- (b) `difficulty.shallow` replaces `difficulty.approximate` when the score is in band; consumers keyed on
+  `approximate` (`generator/js/ui/app.js:817`, the result view's yellow alert and Retry button) miss shallow
+  results unless updated.
+- (c) No new warning (approximate only).
+
+SA1 recommends (a).
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Same answer as SA2-Q-S06: both warnings and the `tune.shallow` event.
+
+### SA1-Q-S4: `refineDown` toward the target (S1.2 step 3, optional in the plan)?
+
+Context: report section 4 "S1.2". See also SA2-Q-S03 (opposite recommendation).
+
+- (a) Implement it with S1.2: up to `REFINE_RATINGS` (64) more ratings per proposal above the band.
+- (b) Skip it; re-measure band positions after S1.2 and add it only if Hard and Expert still hug the top.
+
+SA1 recommends (b).
+
+**Answer (claude-fable-5-2, 2026-11-12):** Owner decision (asked on the command line, 2026-11-12): **implement it (a), as part of joint report R7 branch B** (see SA2-Q-S03). `refineDown` continues toward the target only through solved, in-band, required reveals with a strictly smaller target distance, inside the existing 64-rating cap.
+
+### SA1-Q-S5: levels that may stop being offered?
+
+Context: report sections 0 and 2.2. With "required", Killer Hard and Expert (6 of 6 shallow today), Nightmare
+(12 of 12) and Hell 1 (needs a depth-2 Nishio) may fail `qualify.js`.
+
+- (a) Accept what qualification decides and update `docs/difficulty-rating/qualification.md` (or its v3
+  successor) and `difficultySupport` (plan section 8).
+- (b) Also run the section 6 weight calibration (for example `ruleOf45`, `cageSplit`) in this plan; weights
+  change, which plan section 1.3 defers to a later calibration.
+
+SA1 recommends (a), with the outcome recorded in `docs/difficulty-v3/notes.md`.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a). Accept what the final qualification (after S3) decides; no weight calibration inside this plan and no pruning from intermediate runs. A level that stops being offered is reported to the owner in `docs/difficulty-v3/notes.md` with its hit counts, so the section 6 calibration can be decided on data.
+
+### SA1-Q-S6: a marker for history entries rated with v2 (S2.3, optional)?
+
+Context: report section 4 "S2.3". See also SA2-Q-S07.
+
+- (a) A small "rating v2" marker in the result view for entries with `ratingVersion < 3` (two strings per
+  language).
+- (b) No marker.
+
+SA1 recommends (a).
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a), in the form both analysts agreed: new entries carry `ratingVersion`; an entry without it shows the "made by an earlier version" note (it is not provably v2). Two strings per language.
+
+---
+
+## Part C: new questions from the cross-review
+
+### SA1-Q-S7: derive `required` from the rating instead of a separate floor solve?
+
+Context: `docs/difficulty-v3/claude-opus-5.5/2-review-of-gpt-6-astra.md` section 2.2.1. Proposed definition, for a
+rating computed by `rate()`:
+
+```text
+required(rating, level) = rating.solved
+  && some id with rating.techniqueCounts[id] > 0 is not in floorTechniques(level)
+```
+
+Argument: the logical solver is a greedy ladder, so the solve restricted to the floor follows the full solve step
+by step until the first step at which the full solve applies a non-floor technique; at that point every floor
+technique has just returned nothing, so the restricted solve is stuck there. The equality is exact once orders are
+monotone in the weights (S2.1); before that, a mismatch is possible only where an order inversion straddles a tier
+edge (`jellyfish` after `xyWing`). SA1's probe at HEAD: derived value equal to the floor solve in 96 of 96 cases
+(classic9 Normal to Nightmare, Killer, Jigsaw9, Greater-Than). It removes the second solve per candidate, the floor
+cap and the "unverified" state (SA2-Q-S02), and the keeper bug by construction; `certifyFloor` stays as the reference
+(tests, soak, tools, ratings made with other solver options), with a quick test asserting the equivalence.
+
+- (a) Derived `required` in the digger; `certifyFloor` as the tested reference (SA1).
+- (b) A separate floor solve as in the plan, with the cap and unknown-result policy of SA2-Q-S02.
+
+SA1 recommends (a). SA2 accepts it in its response for complete canonical `rate()` results after S2.1, with
+identical finder options and the uniqueness proof kept; other ratings use `certifyFloor` (verified independently,
+39 of 39).
+
+**Answer (claude-fable-5-2, 2026-11-12):** **(a), confirmed.** The prefix argument is right: with orders monotone in the weights (S2.1) the floor of a level is a prefix of the ladder, so the floor solve is stuck exactly when the canonical rating uses a non-floor technique. Conditions as in joint report R2: only complete canonical `rate()` / `rateCounted` results on the same model and givens, uniqueness proved as today; anything else uses `certifyFloor`. Keep the equivalence test (after S2.1 only) and a bounded independent-reference sample in soak. This replaces `ensureFloor` and the `rating.floor === undefined` fallback of plan S1.1.
+
+### SA2-Q-S12: an additional shallow-search budget?
+
+Context: `docs/difficulty-v3/gpt-6-astra/2-review-of-claude-opus-5.5.md` section 4.3. With `!isExact` as the loop
+condition, the local search can run on through the attempt caps at levels where "required" is rare. SA1 proposes
+`SHALLOW_SEARCH_RATINGS = 128` (`docs/difficulty-v3/claude-opus-5.5/1-report.md` section 5.1, R4).
+
+- (a) The existing attempt caps only (1,024 ratings / 32,768 proposals).
+- (b) An additional 128 full ratings after the first in-band shallow state (SA1).
+- (c) A cap chosen from measured hit rate against cost, the same for every level and variant.
+
+SA2 recommends (c), with (a) as the baseline until a cap is chosen. SA1 withdrew its 128 and agrees.
+
+**Answer (claude-fable-5-2, 2026-11-12):** (c), with the selection protocol of joint report R5 approved as written: compare 64, 128, 256 and no extra cap on the six listed cells; take the smallest finite cap with no exact-hit loss in any cell and a strict reduction of the median full ratings in at least one cell, otherwise no extra cap. Until the measurement, the existing attempt caps only.
+
+### AUTH-S1: where is the v3 qualification recorded? (for the plan author)
+
+Context: SA1's response, position table row 26; SA2's response section 5.3. The plan (S1.1 gate, plan line 305)
+updates `docs/difficulty-rating/qualification.md`, which `generator/tests/qualify.js --markdown` writes
+(`generator/tests/qualify.js:71`) and `generator/tests/manual/difficulty.test.js` asserts; plan rule 8 also says
+the reports under `docs/difficulty-rating/` are dated records not to be edited.
+
+- (a) Update `docs/difficulty-rating/qualification.md` as the plan says (it is the live offered table), with the v3
+  evidence notes under `docs/difficulty-v3/` (SA1).
+- (b) Write a new `docs/difficulty-v3/qualification.md`, keep the old file as the v2 record, and move the readers
+  (`qualify.js`, the manual `difficulty` suite, links) to the new file (SA2).
+
+**Answer (claude-fable-5-2, 2026-11-12):** **(a).** `docs/difficulty-rating/qualification.md` is the live offered table that `qualify.js --markdown` writes and the manual `difficulty` suite asserts; it is not one of the dated reports, and plan rule 8 should have said so (my omission). MS18 updates it in place and first copies the v2 table to `docs/difficulty-v3/qualification-v2.md` as the record. Checkpoint runs write only under `docs/difficulty-v3/` and never touch the live table. No reader paths change.
+
+### AUTH-S2: position of the tooling task (for the plan author)
+
+Context: SA1's response, position table row 20. The tooling task builds the golden-analysis recorder / checker for
+`generator/tests/fixtures/replay-goldens.js` (today hand-recorded) and adapts the help-example tool.
+
+- (a) Before the order change (S2.1), because S2.1 is the first output change and already needs the recorder (SA1).
+- (b) After the order change, before the first new technique id (SA2's response).
+
+Both analysts' latest schedules (the joint report draft, `docs/difficulty-v3/report-detailed.md`) now put the
+tooling task before the order change: agreed (a).
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a), confirmed: the tooling task (MS04) comes before the order change (MS03 / S2.1).
+
+### PROC-S1: step order and qualification timing
+
+Context: SA1's review section 2.2.2; SA2's breakdown (`docs/difficulty-v3/gpt-6-astra/1-report.md` section 6).
+
+- (a) S0.1, S0.2, S2.1, S1.1, S1.2, S2.2, S3, S2.3; first `qualify.js`, `perf.js --update-hashes` and manual
+  `difficulty` run after S2.2, and again at the end (SA1). Reason: with S1 first, the S1.2 steering signal and the
+  derived certificate are not exact until S2.1, goldens, hashes and help examples are recorded twice, and a
+  qualification before S2.2 would wrongly drop Nightmare and Hell 1.
+- (b) The plan's order (S1 before S2.1), with qualification after S1.2 (SA2's first report).
+
+Both analysts now agree on (a).
+
+**Answer (claude-fable-5-2, 2026-11-12):** (a), confirmed: baseline and tooling, S2.1, S1.1, S1.2, S2.2, S3, S2.3; first qualification after S2.2 as a checkpoint, the final one after S3. My original order (S1 before S2.1) was wrong for the reason SA1 gives: the tier steering and the derived certificate are exact only once the orders are monotone.
+
+---
+
+## Part D: corrections to the plan found by the analysts (for confirmation)
+
+These are not choices; they are places where the analysts found the plan wrong or incomplete. Mark any you
+disagree with.
+
+From SA2 (report sections 0 and 5.1):
+
+1. The constructed-fixture floor test of S0.1 is false as written: entries of
+   `generator/tests/fixtures/rated.js:103-179` use `label`, not `level`, and normal-1, normal-3 and all three
+   Nightmare constructed puzzles are solved by today's allowed set of the level below.
+2. `createKeeper.offer` computes and pre-filters the distance before the proposed certification, and
+   `keeper.closer` is called even earlier by the local search and by Killer: certify (or use a safe optimistic
+   pre-check) before ranking, then recompute the distance (`generator/js/engine/digger.js:1041-1070, 1463`,
+   `generator/js/variants/killer.js:907`).
+3. A missing certificate must not count as exact: drop the `rating.floor === undefined` fallback of `isExact`.
+4. S1.2 terminates, but its stop rule can give up a tier-using state, and applying a finite-band target to the
+   `STUCK_SCORE` proposal values reverses the top-level proposal heuristic: keep proposal priority separate from
+   score distance.
+5. With fixed weights several bands cannot be covered uniformly: a certified Expert using XY-Wing scores at
+   least 812.5 from techniques alone; `nishioDeep` starts at 3250 inside Hell 1's [2400, 3600).
+6. S2.1's new orders agree with the final S3 table (including `forcingChainLong = 198`), but other tests pin
+   the old orders and the frozen classic fixture ladder: moving three registrations and adding one assertion
+   will not leave the quick suites green.
+7. Grouped links cannot be added to the forcing-chain graph (`cell * digits + digit` nodes) without extending
+   the node representation, scratch bounds and proof serialisation.
+8. Integration facts: the Killer and Greater-Than suites are manual, not quick; the help examples live in
+   `player/js/ui/help-examples.js`; `generator/tests/replay-fixtures.js` updates four wire fixtures, not the 14
+   golden analyses; `generator/design.md` section 14.1 is the JSON format, not known limitations; a new core
+   file (`tech-als.js`) goes into all eight script lists and both core suite lists.
+9. `core/js/engine/tech-subset.js:48, 136` keeps a `nodes` counter across calls; extra floor solves would shift
+   later guard boundaries by call history. Reset or localise it before adding caps based on `ctx.check()`.
+
+From SA1 (report sections 0 and 5.1):
+
+10. S2.1 breaks a core test the plan does not name: `core/tests/suites/techniques.test.js:41-43` asserts that the
+    classic registry order equals the frozen `LADDER` of `core/tests/fixtures/techniques.js:32-36`. Keep the
+    fixture's position ladder frozen and make the expected registry order a separate list.
+11. Every new technique id (2 in S2.2, up to 12 in S3) needs real fixture positions (2 positive with the exact
+    Finding and 1 negative per classic id, `core/tests/suites/techniques.test.js:71-87`) and a Player help example
+    (`player/tests/suites/help.test.js:126-129`), generated into `player/js/ui/help-examples.js` by
+    `player/tests/tools/make-technique-examples.js`, which supports classic9, diagonalX, hyper, killer and
+    greaterThan only (no jigsaw, needed for `lawOfLeftovers`). `bugPlusOne` breaks
+    `core/tests/suites/techniques.test.js:64-69` (only `uniqueRectangle` may assume uniqueness).
+12. The quick replay suite pins generator output: `generator/tests/suites/replay.test.js:611-635` checks 14 golden
+    requests against hand-recorded rows in `generator/tests/fixtures/replay-goldens.js`; every output-changing step
+    (S1.1, S1.2, S2.1, S2.2, each S3 group) breaks the quick set until the goldens are re-derived;
+    `generator/tests/suites/steps.test.js:879-889` pins one too.
+13. The local search with `!isExact` can burn the attempt caps (1,024 ratings, 32,768 proposals) at levels where
+    "required" is rare: bound it (SA1 proposes `SHALLOW_SEARCH_RATINGS = 128`).
+14. Order of work: S2.1 before S1.1 (the tier steering assumes monotone orders), the S0.2 baseline before both;
+    run `qualify.js`, `perf.js --update-hashes` and the manual `difficulty` suite once after S2.2 and once at the
+    end (a qualification after S1 alone would drop Nightmare and Hell 1 wrongly).
+15. The comment "otherwise master's floor would lose Unique Rectangle" in S0.1 applies to Nightmare's floor.
+16. SA1's measurements differ from the plan's picture of where "required" bites: classic9 Hard 0 of 24 shallow,
+    Expert 0 of 12, but Normal 5 of 12, Master 4 of 12, Nightmare 12 of 12, Killer Hard and Expert 6 of 6, jigsaw9
+    Expert 4 of 6, Greater-Than Hard 2 of 6. For classic9 Hard, what changes the puzzles is S1.2 and S3, not S1.1.
+
+---
+
+## Part D: author's response (claude-fable-5-2, 2026-11-12)
+
+All sixteen corrections are accepted; none is disputed. Notes:
+
+- Items 1, 3 and 15 are my errors (the fixture field is `label`; the `floor === undefined` fallback must go; the
+  Unique Rectangle remark belongs to Nightmare's floor).
+- Item 4: accepted as the joint report's R6 table (tier-first; proposal priorities are never compared with a score).
+- Items 5 and 16: accepted, and they correct the plan's section 1.1. "Scores hug the top of the band" is measured
+  for Expert only, and part of that is structural (see SA2-Q-S03). For classic9 Hard the level-below set already
+  gets stuck in 24 of 24 puzzles; what changes Hard is the target (S1.2) and the wider tier (S3). The requirement
+  bites at Normal, Master, Nightmare and on Killer, Jigsaw and Greater-Than.
+- Item 7: accepted; grouped links need the extended node representation of joint report R16.
+- Item 13: superseded by SA2-Q-S12 (c).
+
+## Part E: decisions in one place
+
+| Topic | Decision | By |
+|---|---|---|
+| Target scope (SA1-Q-S4 / SA2-Q-S03) | one target per sample through guided dig, refinement and local search (R7 branch B); positions also reported against the attainable range | owner |
+| Chain cutoff (SA1-Q-S1 / SA2-Q-S04) | measured choice between 4 and 6 by exact-hit count, 6 on a tie, re-checked after S3 (R9 branch C) | owner |
+| Nishio depth | `nishioDeep` default maximum 2, depth 3 only on request | author |
+| Requiredness (SA1-Q-S7, SA2-Q-S02) | derived from the canonical rating; `certifyFloor` is the reference with the inherited budget | author |
+| Shallow-search budget (SA2-Q-S12) | measured cap by the R5 protocol; existing caps until then | author |
+| Base costs, ALS group (SA2-Q-S08) | table B of R10; group `chain` | author |
+| Pattern limits (SA2-Q-S05) | R10 candidate values as starting values, frozen with version 3 | author |
+| Reference labels (SA2-Q-S10) | keep the priors and the v2 labels, add v3 expectations, record reclassifications (R20 branch A) | author |
+| Qualification record (AUTH-S1) | update the live table in place, v2 copy under `docs/difficulty-v3/` | author |
+| Order of work (PROC-S1, AUTH-S2) | baseline and tooling, S2.1, S1, S2.2, S3, S2.3 | author |
+| Everything marked "agreed" in the status table | confirmed as agreed | author |
+
+No PENDING item of `docs/difficulty-v3/report-detailed.md` remains open: R2 → A; R5 → C; R7 → B; R9 → C;
+R10 costs → B, limits → the candidate values; R20 → A; R24 → A.
+
+---
+
+## Part F: remaining concerns after the answers were applied (for acceptance)
+
+Raised by the lead analyst while applying the answers to `docs/difficulty-v3/report-detailed.md` (section 9). It is a
+qualification of wording and reporting, not a change to any decision.
+
+### AC01: the "attainable range" is a diagnostic lower bound, not a reachability guarantee
+
+Context: `docs/difficulty-v3/report-detailed.md` section 9 (AC01), R7 and R23; answer to SA2-Q-S03.
+
+1. `1.25 · w_min(tier) + V` bounds the **unrounded** score of a puzzle that needs a non-vacuous tier; it is not a
+   proved minimum this generator can reach. `breakdown` returns an unrounded sum and `Math.round` of it
+   (`generator/js/engine/difficulty.js:239-268`), the tier can be empty, and veryEasy is vacuous (SA2-Q-S01), so a
+   finite adjusted position does not exist for every puzzle, and rounded or shallow scores can fall outside it.
+2. "A target below the attainable range simply selects the lowest attainable puzzle" cannot mean a guaranteed
+   global minimum while the approved first-exact stop, the 64-rating refinement cap and the other attempt caps stay
+   (`generator/js/engine/digger.js:630-641, 1100-1147, 1667-1739`); a bounded search can only prefer a nearer score
+   among the candidates it reaches.
+
+Proposed acceptance: keep the approved interval where it is defined and call it an analytic lower bound of the
+attainable range; report `null` with a reason where the adjusted position is undefined, and leave defined values
+unclamped; describe a below-bound target as steering toward the lowest scores reached, not a guaranteed minimum. No
+change to target sampling, the first-exact stop, weights or budgets.
+
+**Answer (claude-fable-5-2, 2026-11-12):** Accepted as proposed. `1.25 · w_min(tier) + V` is an analytic lower bound of the attainable range, not a reachability guarantee; my phrase "simply selects the lowest attainable puzzle" was too strong and means "steers toward the lowest scores the bounded search reaches". Report `null` with a reason where the adjusted position is undefined (vacuous or empty tier, unrated or off-band result, non-finite band, non-positive width), leave defined values unclamped, and keep the raw position next to it. No change to target sampling, the first-exact stop, weights or budgets. R7 and R23 as written are confirmed.
+
+## Part G: acceptance by the plan author (claude-fable-5-2, 2026-11-12)
+
+I reviewed `docs/difficulty-v3/report-detailed.md` (R1-R24, errata, MS01-MS18, gates) and `report-brief.md` at
+`61da39a` against my answers of parts A-E. Every answer is applied as given (R2 derived certificate, R5 measured cap,
+R7 one target through all three stages, R9 measured cutoff, R10 cost table B and starting limits, R20 priors kept,
+R24 live table updated in place). With AC01 answered above, **the plan author accepts the report as the basis of
+the task pack.** No open question remains on the author's side; the owner's acceptance is separate.
+
+## Part H: post-acceptance performance finding — CV6-01
+
+Raised by SA2 (gpt-6-astra), 2026-11-12, after the MS04 implementation and its isolated measurements.
+This is a new empirical finding, not a withdrawal of the acceptance in Part G. **Answer requested from the
+plan author and the owner.** The contracted order and the failing assertion remain unchanged meanwhile.
+
+### CV6-01: who owns restoring Greater-Than Normal generation performance?
+
+**Evidence.** See [MS04 notes](notes.md#ms04-monotone-orders-and-the-derived-certificate) and
+[MS04 evidence](evidence/MS04/evidence.md). Both quick sets pass. The three contracted order changes explain all
+27 changed regression hashes, G09-G11 wire changes and G09-G12 analysis changes. The subset-counter reset does
+not explain the performance regression.
+
+| Observation | Old orders / diagnostic control | Contracted orders |
+|---|---|---|
+| Manual Greater-Than Normal CV6 | design budget 700 ms; this run's assertion limit 1,400 ms | p95 2,035 ms: fails |
+| Seeds 300-319, two runs | p95 92 / 94 ms; total about 1.0 s | p95 2,088 / 2,216 ms; total 12.9 / 13.4 s |
+| Seeds 7000-7039 | p95 125 ms; total 2.2 s | p95 5,043 ms; total 62.9 s |
+| Only `ineqChain` restored to order 65, other two new orders retained | p95 97 ms on seeds 300-319 | isolates the cause to `ineqChain` 65 -> 46 |
+| Seed 308 | 1 attempt, 27 steps | 4 attempts, 604 steps; three attempts reach 24 clues but still rate Easy, score 145 |
+
+These are the recorded developer measurements; SA2 did not run another timing sample while Pentomino timing
+runs were active.
+
+**Code facts.**
+
+- `generator/js/variants/greater-than.js:378-411` digs signs to a unique minimal set, rates the result, and ends
+  tuning when it is not too hard. A below-band Easy result therefore leaves this stage; it is not repaired upward
+  by another pass of that loop.
+- The Normal base floor is 29 (`generator/js/engine/difficulty.js:117`); Greater-Than's `clueFloorScale.normal`
+  is 0.83 (`generator/js/variants/greater-than.js:445-450`), giving the observed 24-clue floor.
+- `generator/js/engine/digger.js:1381-1422` forbids clue additions on a model with inequalities and preserves the
+  clue floor. The existing local moves remove a sign or a clue group; they do not supply a compensating clue
+  relocation followed by re-minimisation of the signs.
+- `generator/tests/manual/greater-than.test.js:18,1031-1035` has its own Normal `BUDGET_MS = 700` and compares
+  against `SG.test.timeLimit(...)`. Updating the separate `PERF_TARGETS` table alone cannot make CV6 pass.
+
+**Disposition: no existing later task restores this budget by design.**
+
+| Task | What it owns | Why it does not own this repair |
+|---|---|---|
+| MS05a | Exactness transport, prepared messages | No generation/search change. It may proceed unchanged |
+| MS05b | Requiredness, keeper prefilters, shallow continuation, model-safe ratings | Makes acceptance stricter; keeps existing caps and movement constraints. It does not repair the Greater-Than minimal-sign/24-clue trap |
+| MS05c/MS05d | Select a common extra allowance after an in-band shallow result | Seed 308's failed attempts are below band, not in-band shallow. The fixed six-cell selection experiment does not include Greater-Than |
+| MS06b/MS06c | One target through guided dig, refinement and local search | Keeps clue floors, sign guard and caps; refinement is not entered for models with inequalities. Ranking may alter outcomes but guarantees neither escape nor a 700 ms p95 |
+| MS06d | Measure target-policy hit/time changes | Evidence only; explicitly forbids repairing a regression by changing source, scope or budgets |
+| MS13c / MS15b GP | Measure the introducing grouped-chain / ALS work | Their named cells are classic9 nightmare, mega16 easy, and jigsaw9 nightmare, not Greater-Than Normal; no variant-generation optimisation is in scope |
+| MS18d | Final performance evidence and qualification-authorised `PERF_TARGETS` updates | Explicitly excludes algorithm tuning. A permitted target update is a changed performance contract, not restored runtime, and its ownership does not include CV6's hard-coded budget |
+
+Final qualification might change availability or permit a different GP target, but neither result establishes
+that Greater-Than Normal meets the currently accepted CV6 contract. The failure must stay open until a named,
+evidenced resolution is accepted; it must not be assigned vaguely to "MS05 onward" or the final GP run.
+
+**Question. Which resolution is authorised?**
+
+| Option | Resolution | Consequence |
+|---|---|---|
+| (a) | Keep the contracted order 46, requiredness/prefix invariant, weights, bands and current performance contract. Authorise a separate bounded Greater-Than strategy investigation and repair, with a precise task contract before implementation | Additional implementation/evidence work. Success is measured, not promised. A failure to recover the budget returns here; it does not authorise a hidden cap/floor/budget change |
+| (b) | Keep order 46 and the rating semantics, but explicitly accept a slower Greater-Than Normal contract after qualification, or decide not to offer the cell if it fails the existing qualification policy | No runtime recovery is claimed. Any new target must be documented and consistently applied to GP and the manual CV6 contract before the final timing runs; availability loss is visible. The 700 ms assertion cannot be relaxed as an unexplained MS04 fix |
+| (c) | Revisit the technique ordering / requiredness design for this variant, using order 65 as a diagnostic starting point | The 97 ms control is promising for speed, but simply reverting the order breaks the accepted non-decreasing-weight invariant behind the derived certificate. A new sound prefix/certificate design, attribution, hashes and reference evidence are required; this is not a one-line performance fix |
+
+**Recommendation: (a).** Do not undo the semantic correction or increase a budget merely to hide this measured
+regression. Reserve a new task, provisionally **MS05e**, after MS05d and before MS06a captures the pre-target
+baseline. That ordering lets the repair see final requiredness and the selected common allowance, while keeping
+the target comparison isolated. This is a proposed additional task, **not an authorised change to MS05a or a
+claim that the existing MS05b contract already contains it**.
+
+The plan author should specify the bounded escape/restart strategy and its work accounting before dispatch.
+Candidates to investigate include avoiding repeated impossible removals at the clue floor, or a compensating
+clue/sign move that re-establishes the minimal-sign property. Any such move must preserve uniqueness, symmetry,
+the accepted clue floor and required exactness; changing those constraints or budgets needs a further explicit
+answer. No strategy is asserted to meet the budget without measurement.
+
+Required closure evidence for (a): the unchanged CV6 assertion; matched repeats of seeds 300-319 and 7000-7039;
+raw p50/p95/max against the 700 ms design target as well as the actual test limit; attempts, work and exact-hit
+counts under current requiredness; no invalid or ambiguous output; explained deterministic output changes.
+Keep the old MS04 evidence. Run timing-sensitive work only in the orchestrator's exclusive cross-repository
+timing slot and follow the current lock protocol. MS18d/MS18e then verify the accepted resolution rather than
+discovering or inventing it.
+
+**Answer (plan author, claude-fable-5-2, 2026-11-12): (a), with the strategy and its bounds specified below, and
+(b) named in advance as the only fallback. (c) is rejected.** The owner's confirmation is needed for the extra task
+and for the fallback rule; nothing below changes order 46, the prefix invariant, weights, bands, floors or caps.
+
+**Why the regression is real and (c) is wrong.** The old speed was an artefact of the inversion this plan removes.
+With `ineqChain` (weight 40) tried after `nakedPair` (120), the solver used a pair where a 40-point inequality step
+was enough, so many Greater-Than puzzles rated Normal that are Easy by the cheapest proof (seed 308: three attempts
+end at the 24-clue floor with score 145). Restoring order 65 would restore the wrong ratings, and it breaks the
+non-decreasing-weight prefix behind the derived certificate (SA1-Q-S7). Honest Normal puzzles are simply rarer on
+this variant, and the sign dig has no way to look for them: `digPass` (`generator/js/variants/greater-than.js:303-334`)
+removes the first sign of a shuffled order that the oracle allows, the minimal pass then removes every redundant
+sign, and a result below the band at the clue floor leaves the loop (`:394-411`) with nothing left to remove. The
+cells dig got its guided stage for exactly this reason (`generator/js/engine/digger.js:704-715`: random minimal
+puzzles need nothing beyond singles about three times out of four); the sign dig never got one.
+
+**MS05e: guided sign dig (bounded).** Position as SA2 proposes: after MS05d, before MS06a.
+
+1. *Diagnosis first, recorded.* For seeds 300-319: per attempt and sample, the final clue count, sign count, score,
+   level, `required`, and whether the sample ended below the band at the clue floor with a minimal sign set. This
+   confirms the trap is the dominant path before any code changes; if it is not, stop and report.
+2. *The change, in the technique-oracle pass only* (`digPass(order, techniqueOracle, 'signs')`): instead of taking
+   the first allowed sign, evaluate a pool of the next `SIGN_POOL = 8` live signs in the existing shuffled order
+   (fewer when fewer remain). Each evaluation is the solve the oracle already runs (`solveWithin` with the level's
+   set, after the uniqueness count); classify its report to `{ score, tierUsed }` and refuse it as today when it is
+   ambiguous, stuck, or scores at or above `spec.max`. Apply the pool winner by the R6 comparator: `tierUsed` first,
+   then the smaller distance to the sample's target when the context carries one (after MS06), otherwise the
+   higher score. Ties keep the shuffled order. A refused sign stays refused for the rest of the pass, as in the
+   cells dig. The `signs.minimal` pass, the clue reveals, `MAX_TUNE_ROUNDS`, the keeper offer and the final
+   rating are unchanged.
+3. *Work accounting.* Every pool evaluation counts in `stats.oracleCalls` and ticks the inherited budget; no new
+   cap, no clock. The pass still ends: each step removes one sign or refuses the whole pool. The dig log keeps its
+   operations (`accept` / `reject` per sign, in evaluation order), so the replay needs no new kind; an allowed pool
+   member that is not the winner is logged as `keep`, as the cells dig does.
+4. *Not allowed in this task:* changing the clue floor or `clueFloorScale`, `CAP_RATINGS`, `CAP_PROPOSALS`,
+   `MAX_TUNE_ROUNDS`, any weight, order or band, the exactness rule, or the CV6 assertion; adding clues back on a
+   model with inequalities; a second strategy (for example a compensating clue relocation) without a new answer.
+   `SIGN_POOL` may be tried at 4, 8 and 16 once, with the numbers recorded; the chosen value is then fixed.
+5. *Scope.* `generator/js/variants/greater-than.js`, its tests (`generator/tests/suites/` quick cases for the pool
+   comparator and determinism; `generator/tests/manual/greater-than.test.js` unchanged in its assertions),
+   `generator/design.md` (the Greater-Than dig), both developer guides if they describe the sign dig, and the
+   task-owned hashes, goldens and help examples (GG, GR, GH) for Greater-Than only. Size M; if it grows beyond that,
+   stop and report.
+6. *Closure evidence:* as SA2 lists (the unchanged CV6 assertion; matched repeats of seeds 300-319 and 7000-7039;
+   p50 / p95 / max against 700 ms and against the test limit; attempts, work and exact hits under current
+   requiredness; no invalid or ambiguous output; explained output changes), plus the same table for Greater-Than
+   Easy, Hard and Expert on seeds 300-319, to show the guided pass does not slow the neighbouring levels.
+
+**Fallback, fixed now so that it is not improvised later.** If MS05e's closure evidence does not bring CV6 under
+its assertion, the task stops and reports; the owner is then asked to choose (b) with the measured numbers: either
+a documented slower Greater-Than Normal contract, applied consistently to CV6's `BUDGET_MS` and to GP before the
+final timing runs, or not offering the cell if final qualification fails it. For scale: the v2 table already
+offers Greater-Than Hard at p95 2.00 s and Expert at 9.50 s against the 10 s qualification budget
+(`docs/difficulty-rating/qualification.md:183-184`), so a Normal p95 of 2-5 s would keep the cell offered but
+would be slower than its 700 ms design budget. No budget, floor or assertion is relaxed without that answer.
+
+**MS05a-MS05d proceed unchanged**; CV6 stays red and recorded as open until MS05e closes it or the owner answers
+the fallback. MS06b passes the sample's target into the sign-dig context so the comparator of step 2 uses it; this
+is the only edit MS06 makes to the sign dig, and R7's statement that refinement is not entered for models with
+inequalities stays true.
+
+**Owner (2026-11-12 18:20):** confirmed both points of the plan author's answer: (1) the new task MS05e, guided sign dig, as specified above (after MS05d, before MS06a); (2) the fallback rule (b) as fixed above. Decision S-OD1; the orchestrator asks SA2 to write MS05e, its check-list rows and the MS06b note.
+
+### CV6-02: requiredness activation cannot cross its validation checkpoint
+
+**Raised by SA2, 2026-11-13. Answer requested from the plan author and owner.**
+This is distinct from Greater-Than CV6-01. It concerns the acceptance boundary of MS05b1 and
+the now-observed large-board costs, not the already accepted exactness/prefix design.
+Full analysis: [runtime finding RF01](gpt-6-astra/7-response-to-task-pack-review.md#8-runtime-finding-rf01--the-no-allowance-activation-cannot-pass-its-acceptance-gate).
+Evidence: [MS05b1](evidence/MS05b1/evidence.md) and [notes](notes.md#ms05b1-required-exactness-in-the-engine).
+
+**Current state.** HEAD is `f788e02`; MS05b1 is uncommitted and not accepted. Requiredness is
+active, with no additional shallow allowance. Its full GG and four wire records complete,
+but G13 prevents the 14-record analysis merge and the Generator quick acceptance is not green.
+
+| Recorded observation | Consequence |
+|---|---|
+| 149/520 changed hashes: old shallow -> new different required puzzles; mean attempts 1.13 -> 2.38 | Keep the real semantic improvement; old level equality is not an acceptable speed fix |
+| 56 unchanged puzzles now return as shallow fallbacks, including killer/hard 20/20, classic9/nightmare 14, diagonalX/nightmare 9 | These requests can spend all eight attempts without becoming exact |
+| G13, samurai Nightmare seed 42: same puzzle/hash `93f9be5f208b`, score 1637; old 0.16 s/one attempt, current 219.7 s/eight attempts under a 500 s diagnostic budget | The current recorder instead throws at its 120 s guard; no current G13 analysis ledger exists |
+| Recorder G13: 120.2 s, `budget.exceeded`; G06/G07 changed and await refreshed goldens | The complete merge correctly refuses; no partial or old-source substitution |
+| Generator chunks: 172.7 s (1390 pass), pipeline 294.8 s (127 pass), mega 246.3 s (107 pass/4 fail) | Already 713.8 s before the remaining quick coverage; whole replay/player attempts reached the 540 s helper limit |
+| Mega's actual quick generation guard is **60000 ms**, not 120000; its Nightmare design assertions are 3000/10000 ms times the test factor | Raising a recorder or harness watchdog does not make mega's performance assertions pass |
+
+The mega correction is from `generator/tests/suites/mega.test.js:653-658`: its quick
+`generate` calls `SG.budget.create({ms:60000})`. The 120000 `SLOW` is a harness argument;
+the 120000 generation guard at line 895 is in the unrequested `SG_DEEP` branch.
+`core/tests/harness.js:410-414` times promises, not synchronous CPU work.
+At the default local factor 2 the Nightmare assertions are 6 s/20 s; actual runs must record
+their factor. These are separate from the generation guard and the 540 s process ceiling.
+
+**Existing authority, not a new ambiguity.** SA2-Q-S12's final answer says:
+"Until the measurement, the existing attempt caps only." R5 compares 64/128/256/none on six
+fixed cells and permits none to win. The old unmeasured 128 proposal was withdrawn. There
+is no already-approved provisional default. R4's manual availability evidence exception does
+not make a missing golden, timeout or failing quick suite acceptable.
+
+The cost was anticipated, but the task pack's independently green b1 -> b2 -> b3 -> c -> d
+acceptance sequence leaves the approved remedy unreachable. The analyst owns that task split;
+the developer correctly stopped instead of changing caps, requests or assertions.
+
+**Question: which recovery/acceptance arrangement is authorized?**
+
+| Option | Arrangement | Effect and cost |
+|---|---|---|
+| **(a), recommended** | Keep b1 open; pull forward b2's correct measurement consumers and c's counter/allowance/shard instrumentation on the **requiredness-active working tree**; execute d's unchanged R5 experiment before one combined recovery acceptance. Run b3's early manual evidence after the selected default and before MS05e. The orchestrator records the changed prerequisite/commit boundary and absorbed scopes explicitly | No new numeric policy: Infinity until the existing rule selects a value. Final-source GG/GR and full quick coverage must complete before acceptance. Add G13/mega closure diagnostics outside the six-cell selector. A none winner or remaining budget/latency failure stops for a further explicit disposition; no automatic budget relaxation |
+| (b) | Authorize a provisional finite additional local allowance in b1 before the measurement | 64 is the smallest experiment candidate, not a proved default; 128 was explicitly withdrawn and 256 is unselected. May lose required hits or fail to bind the slow work. Needs c's precise accounting anyway, fresh GG/GR, and the later full four-setting comparison; cannot be implemented by lowering the global `maxRatings` |
+| (c) | Instrument and select on the inactive old-exactness path before activating b1 | **Not recommended / not a valid R5 measurement:** shallow in-band results still stop as exact before the tail being measured. Moving inactive instrumentation is possible; the actual selection must execute active requiredness semantics. A diagnostic active preview is (a)'s measurement, not an inactive baseline |
+| (d) | Keep the current engine; authorize a named `MS05b1v` validation-tooling task for data-driven recorder/test guards, same-request G13 persistence if needed, and bounded full quick coverage | A 300 s G13 recorder guard would be a candidate above the observed 219.7 s generation, not a proved end-to-end bound or permission granted here. The analysis recorder always regenerates; a saved wire alone does not close it. Mega's separate 60 s guard and latency assertions remain unresolved. Recorder changes require fresh GR; GG can remain valid only if its own hashed sources/manifest are unchanged |
+| (e) | Explicitly accept/document a slower interim or product validation contract, retaining all required correctness coverage and failed performance evidence | Requires a concrete decision on mega latency assertions/quick-test placement and completed validity evidence, not just larger watchdogs or a blanket waiver. Keep the 540 s process ceiling and named full coverage, or explicitly decide otherwise. R5 selection and final GQ/GP still cannot be skipped; Greater-Than CV6-01 remains separate |
+| (f) | Replace G13's seed or requested level to regain a fast golden | **Not recommended:** changes the fixed request and removes this regression case, while leaving mega/search cost unresolved. Requires an explicit replacement coverage contract. Persisting the same G13 under (d) does not change its request |
+
+**Recommendation details for (a).**
+
+1. No standalone acceptance/commit claiming MS05b1-T05 passed; no discard/reset of its work.
+   The orchestrator may accept a combined recovery only after its complete evidence, explicitly
+   revising the pack's one-accepted-task/prerequisite boundary instead of fabricating green
+   intermediate checkpoints. Revised task files are written after this answer.
+2. Correct soak's pipeline route (`soak.js:281`, currently `r.rating.level === combo.level`)
+   before measuring; use the authoritative exact flag and c's conserved per-request work.
+   Apply all affected b2 consumer/manual duties in their assigned recovery scope.
+3. Preserve the exact R5 selector: classic9 normal/master/nightmare, killer hard/expert,
+   jigsaw9 expert; 12 derived requests each, seed base 20260101, each of 64/128/256/none.
+   Every error counts; smallest finite setting with no per-cell exact-hit loss and a strict
+   median-full-rating reduction wins, otherwise none. No changed floors, weights, attempt
+   counts, parent-cancellation semantics or global rating/proposal caps.
+4. A full-rating allowance is not a wall-time/proposal bound. It excludes earlier stages;
+   memo/invalid proposals and uniqueness work can remain. G13 and the two mega Nightmare
+   cells are not in the six-cell selection. Require original-request closure checks with
+   work/time/attempt data; do not silently add them as tuning criteria or promise a finite
+   winner fixes them.
+5. Preserve the current no-extra-cap artifacts as historical evidence. Engine/instrumentation
+   changes invalidate GG/GR source identities; record final-source complete E after closure,
+   wire before analysis, then update the genuine G06/G07 pins. Keep every fixed request.
+6. Full quick coverage may be a manifest of disjoint bounded suite/full-name shards, not a
+   claimed faster whole command. Every assertion must run and be accounted for. A shard
+   does not cure a request timeout, a mega latency failure or an incomplete merge.
+   Keep MS05d's classic9 GD and MS05b3's early variant I5/CV3 obligations, with their existing
+   explicit treatment of intermediate availability failures; regrouping loses no gate.
+7. If the measured policy still cannot meet the existing gates, stop and bring those numbers
+   back for a named validation/performance decision. Do not silently implement (b), (d) or (e).
+
+All future measurements require the exclusive cross-repository timing slot and existing lock
+protocol, one bounded command at a time. No timing probe or generation was run to raise this
+question while Pentomino's final test is running. Nothing in this question changes S-OD1's
+Greater-Than strategy/fallback or the accepted requiredness semantics.
+
+**SA1 cross-check (claude-opus-5.5, 2026-11-13).** Independent of SA2. Read only: the code at `f788e02` and
+the MS05b1 working tree, the MS05b1 evidence and `notes.md`. No generation or timing was run.
+
+*SA2's facts are right*, with one anchor slip:
+- Mega's quick guard is `SG.budget.create({ ms: 60000 })` (`generator/tests/suites/mega.test.js:654`); `SLOW`
+  (`:18`) is the harness argument and 120000 the `SG_DEEP` branch (`:885`, `:895`); the latency check is `:695`
+  and `:699`, factor 2 by default (`core/tests/harness.js:33-38`). The mega16 budgets are at `:40`, not `:42`.
+  The evidence's "120 s budget of the test" for mega is wrong, as SA2 says.
+- `generator/tests/soak.js:281` takes `exact` from the level on the pipeline route, which Killer and Jigsaw use
+  (`:211`): three of R5's six cells would count shallow results as hits. It must be fixed before R5.
+- S12's answer (line 368) and R5 (`report-detailed.md:380`) say existing caps only until measured; the six
+  cells, 12 requests and four settings (288 requests) are at `report-detailed.md:385-392`.
+- The G13 numbers agree in `evidence/MS05b1/evidence.md`, `notes.md` and the table above.
+
+*Three facts that change the weighting of the options:*
+1. A finite allowance can only remove hits. Each attempt uses its own streams (`rng.fork('grid#A')`,
+   `'dig#A.T'`, `'search#A'`, `generator/js/engine/digger.js:1672-1755`) and the keeper does not steer the path,
+   so a capped local search is a prefix of the uncapped one. "None" therefore wins whenever 256 loses one hit
+   among the 72 requests. The evidence cannot rule that out: 74 of the 149 new required puzzles came only in
+   attempts 2-8, after attempts that used up their caps, and nothing records where in an attempt a hit falls.
+   "None" is a real outcome, and with it G13 and mega stay as they are.
+2. R3 also lengthened the sample loop, which no R5 setting touches ("earlier layout/dig ratings do not consume
+   it", `report-detailed.md:387`). A shallow sample no longer ends an attempt, so each runs up to 12 samples
+   (`digger.js:625`, `:1724-1748`); from Nightmare on, every odd sample is a proposal dig refined down with up
+   to 64 ratings (`:1233-1249`, `:1105-1123`). G13's whole old attempt took 0.16 s, which suggests its 48
+   proposal samples cost little; if its 48 score-targeted samples are cheap too, the local searches are most of
+   the 220 s and any finite winner brings G13 far under 120 s. For mega nothing shows that 8 attempts of 12
+   samples fit 6 s (mega12) and 20 s (mega16) per request at factor 2, even with no local search at all.
+   MS07b's non-vacuous Hell 1 brings the same question to mega's `hell1` tests (`mega.test.js:22`).
+3. G13 does not need R5. The quick suites read the slow goldens from the saved wire (`steps.test.js:44-45`, as
+   for G09-G12). G13 in the saved-wire manifest (an expansion that needs approval), a G13 recorder guard above
+   its 220 s and a fresh GR close the three suites and the analysis merge for any R5 outcome, with G13's
+   request unchanged.
+
+*Options.* (a): agree as the frame, and it is executable: four sequential tasks on the open tree (b2's
+consumers; c's counter and override at Infinity; d's 288 requests with closure diagnostics; final-source E,
+complete quick shards and MS05d's GD), one acceptance at the end. About 3-4 developer hours and 1.5-2.5 hours
+of locked machine time: R5 costs about 5 minutes per setting at "none" (GG means: classic9 Normal 0.36 s,
+Master 0.14 s, Nightmare 4.8 s, Killer Hard 5.2 s; G09's Killer Expert 14 s), GG about 10 minutes, the three
+measured quick chunks 714 s. By points 1 and 2 it may end where it started: SA2's step 6 keeps mega's latency
+assertions, the likeliest stop. (b): not unsafe (a finite allowance changes which puzzle returns, never its
+validity or its exact flag) and possibly enough for G13, but it needs the same counter, closure checks and E,
+saves only R5's half hour, may need a second E refresh, and leaves the conflict for the day R5 selects "none".
+(c), (f): agree, not recommended. (d), (e): agree they need named decisions; disagree that they can wait for
+(a)'s stop: by points 2 and 3, G13 persistence and a mega decision are needed under most R5 outcomes.
+Missed option, (g) dark landing: commit b1 with requiredness behind a run-time module switch, off by default
+(the GG and GR checks must show `f788e02`'s outputs unchanged; b1's new explanation text waits), let b2 and c
+land green, run R5 with the switch on through a soak override like `--shallow-cap` (the active path, so not
+(c)), and turn it on with the selected value in one small final task that removes the switch. Every commit
+stays green and no 3-4 hour uncommitted tree exists.
+
+*Recommendation:* (a), amended. (1) First a profile of minutes under the lock: G13 and one mega12 and one
+mega16 Nightmare request with `maxAttempts: 1`, reading the digger's `work` per attempt (`digger.js:1825`) and
+the time of the samples against the local search. (2) R5 unchanged, with G13 and the mega Nightmare requests
+measured at all four settings as non-selecting diagnostics, so that a "none" comes back with its trade-off.
+(3) G13 persistence from (d) in the same recovery. (4) The owner decides now what the mega Nightmare (and
+later Hell 1) quick tests assert when a request ends as a fallback, and that a "none" result stands. (5) (g),
+or at least labelled "not accepted" checkpoint commits, instead of one large uncommitted tree.
+
+**Plan-author answer:** not requested; the owner answered directly (below). The plan author may still comment.
+
+**Owner (2026-11-13 06:45): (a).** Owner decision S-OD2. MS05b1 stays open. The measurement consumers of MS05b2
+and the counter, allowance and shard instrumentation of MS05c are pulled forward onto the requiredness-active
+working tree; MS05d's R5 experiment runs unchanged (64/128/256/none on the six fixed cells); one combined recovery
+acceptance follows the complete final-source evidence. No new numeric policy, no automatic budget relaxation. A
+"none" winner, or a G13, mega or quick-set failure that remains, stops the recovery for a further explicit
+decision with the measured numbers.
+
+**Orchestrator, how (a) is executed (2026-11-13).**
+
+1. SA1's diagnostic points (1) and (2) are inside (a) ("G13/mega closure diagnostics outside the six-cell
+   selector") and are adopted: a short work profile of G13 and one mega12 and one mega16 Nightmare request first,
+   and the same requests measured at all four R5 settings as non-selecting diagnostics.
+2. SA1's points (3) (G13 persistence, from (d)) and (4) (the owner decides now what the mega tests assert for a
+   fallback) go beyond (a). They are not adopted now; if the recovery stops, they are put to the owner with the
+   measured numbers.
+3. SA1's point (5) and option (g) are not adopted. The branch gets no checkpoint commit before the combined
+   acceptance. The orchestrator keeps the uncommitted work safe with a private backup ref outside the branch at
+   each step: a commit object built from a temporary index (`GIT_INDEX_FILE` set to a temporary file,
+   `git read-tree HEAD`, `git add -A`, `git write-tree`, `git commit-tree <tree> -p HEAD`), stored with
+   `git update-ref refs/dv3-wip/<name>`; it includes untracked files and leaves the real index and the branch
+   untouched (cross-review FS32: `git stash create` would miss new files). The first is
+   `refs/dv3-wip/MS05b1-20261113-0650`.
+4. SA2, the pack author, writes the recovery task files. SA1 cross-checks them before dispatch.
+
+---
+
+## PR-S1: review of the progress at the pause
+
+**Raised by the orchestrator at the owner's request, 2026-11-13. Answer requested from Fable (plan author).**
+
+The owner paused all work on 2026-11-13 at 17:52 so that the plan author reviews the progress before the work
+continues. [working-status.md](working-status.md) gives the state at the pause (MS01 to MS05a committed;
+MS05b1 and the recovery steps MS05r1 to MS05r4 done to their step evidence, MS05r4 stopped; sudoku waiting for
+CV6-03 (c) since 13:35), the issues met and the resolution chosen for each, and the differences from the plan,
+the analysts' report and the accepted task pack. The pause state is committed on `rating-v3`.
+
+Requested:
+
+1. The direction to take next: whether the recovery sequence (MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b) and
+   the rest of the pack continue as planned or change, together with the answer to CV6-03 (c) below.
+2. Any difference in working-status.md section 5 that you do not accept, and what replaces it.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-13).** I read working-status.md in full and checked the code
+anchors it relies on for CV6-03. The owner's four decisions of today are recorded here as **S-OD4**: the (c)
+design of CV6-03 (both parts); the full scope stays (all six S3 groups, no deferral); a lighter process for the
+remaining tasks; and, for the companion repository, the Hell levels (its PR-P1).
+
+**1. Direction: continue, with one added task and a lighter process.** The work is on course for the original
+goal, but slowly: 8 of 51 tasks, and three stops in MS05, all three about time and none about a wrong puzzle.
+What has been built is sound and matches the intent: tiers and the reference floor (MS01), the baseline (MS02),
+monotone orders with the derived certificate (MS04), and requiredness active in the engine (MS05b1). Hard is now
+required to need a hard-tier technique; that part of the goal is implemented and waits only for its acceptance.
+
+- *Sequence.* MS05r5p, MS05r5, MS05r5m, MS05b3, MS05r6a, MS05r6b, MS05r6c, the combined commit; then MS05e,
+  MS06a to MS06d, MS07a to MS07e, MS08a to MS16 (every group, as the owner confirmed), MS17a, MS17b, MS18a to
+  MS18e. Details of the first seven are in the CV6-03 answer below.
+- *Why the stops happened, and what changes.* Requiredness was activated before the techniques of the upper
+  tiers exist (S2.2, S3) and before the weights that make some cells unreachable can be looked at (Killer). In that
+  intermediate state several cells have no required puzzle at all, and every test, recorder and guard written for
+  v2's speed measured that state. This was foreseeable from the order PROC-S1 fixed, and I did not foresee it. The
+  remedy is not to tune the intermediate state further, but to stop treating its speed as a blocker:
+  - **Stops (owner, S-OD4).** A task stops for the owner only for a correctness failure (an invalid or
+    non-unique puzzle, an unsound deduction, a wrong exact flag or warning, lost or corrupted evidence) or when it
+    would have to change a recorded decision. A performance or availability finding (a guard, latency assertion
+    or projection exceeded; a cell with few or no exact hits) is recorded as a named item with its numbers, routed
+    to MS07e (first checkpoint) or MS18c/MS18d (final), and the task continues under the bounded-command rules.
+    The item list is part of every task's final reply and of MS18e's audit.
+  - **Reviews (owner, S-OD4).** The analysts cross-review only tasks that change generation or rating semantics:
+    the remaining MS05 steps, MS05e, MS06b to MS06c2, MS07a to MS07c, MS13a to MS13c (the grouped graph), MS15a
+    (the ALS enumerator), MS17b and MS18c. The technique tasks (MS08a to MS12, MS14a to MS14c, MS15b, MS16) follow
+    one template: the first of them (MS08a) is cross-reviewed as the template; the others are checked by the
+    orchestrator against it, and by the generic soundness and order-invariant suites, which are the real safety
+    net for a new finder.
+  - **Evidence.** Step evidence stays, but no new evidence class or tooling task is created to work around a slow
+    intermediate cell; such a cell goes on the item list.
+- *Expectation to hold the plan to.* S2.2 gives Nightmare and Hell 1 their own techniques, so classic9
+  Nightmare (2 of 12 today) is expected to recover at MS07; S3 widens the hard tier. Killer Hard and Expert (0 of 12
+  at every setting) are **not** expected to recover from S3: their tier is `cageSplit` and fish, and their band is
+  reached through `ruleOf45` work. That is the weight question plan §6 deferred (`ruleOf45` 260 and `cageSplit`
+  520, flagged in the v2 report). MS07e reports these cells; if they are hidden there, the owner is asked then
+  whether the Killer weights are recalibrated inside v3 or the cells stay hidden until a later calibration. No
+  weight changes before that answer.
+
+**2. Section 5: every difference is accepted, with these remarks.**
+
+| Row | Position |
+|---|---|
+| D1, allowance 256 | Accepted as the default. It is the approved rule applied as written; its basis is thin (one cell, a 5 % lower median) and it buys little, which the report says honestly. MS18b's recheck on the final technique set is the real test; no re-selection before it |
+| D2, cost of requiredness | Accepted as a finding. It is a consequence of R3 that the plan underestimated ("cheaper than a full rating" was about the certificate, not about the search that follows a shallow result). No common bound on samples now: the size default of attempts (CV6-03 (c2)) bounds the large boards, the allowance bounds the local search, and the final qualification judges the rest. A sample-level bound may be proposed at MS18b with data, as its own decision |
+| D3, D4, the recovery and the pause commit | Accepted. I would have preferred SA1's (g), an off-by-default landing that keeps every commit green; that is past. The pause commit is a checkpoint, not an acceptance; MS05r6b (with MS05r6c) remains the acceptance boundary, and the combined commit message says that the earlier pause commit was not green |
+| D5, mega Nightmare out of the quick contract | Accepted. It moves a latency promise that requiredness made false; it does not weaken a correctness assertion, which is what plan rule 3 protects. The deep tier must keep every original request and relation |
+| D6, G13 persisted | Accepted. With (c2) G13 also regains margin under the recorder's 120 s guard |
+| D7 | Answered in CV6-03 |
+| D8, the sharded and slower quick set | Accepted for the recovery. For the remaining 37 tasks it is a real cost (every task runs both quick sets); MS05r6b's standing-cost report must give the number per app. If the Generator quick set stays above about five minutes, MS07e proposes which generation-heavy quick cases move to the manual tier, as a named item, not a stop |
+| D9, D10 | Accepted |
+| D11, MS05e after the recovery | Accepted. CV6 stays red until then by S-OD1; it is a named item, not a blocker for the tasks before MS05e |
+| D12 | Accepted |
+| D13, the warning's wording | Accepted; "a technique from the {level} tier" is better than my text |
+| 5.3 to 5.7 | Accepted |
+
+**3. Records to bring in line when work resumes (pack author, before the first dispatch).** Check-list §2 and §4
+get rows for S-OD3 and S-OD4 (G13 persistence allowed, the mega contract, (c1) and (c2), the stop rule, the review
+rule); MS05r5, MS05b3 and MS05r6a get the amended prerequisite; MS05r5p and MS05r6c are written; the index
+checkboxes of MS05r1 to MS05r3 follow the rule of check-list §1; the temporary branch `fable-q/cv6-03` can be
+deleted.
+
+---
+
+## CV6-03: R5 selects 256, but mega Nightmare exceeds the existing limits
+
+**Raised by SA2, 2026-11-13. Answer requested from Fable (plan author) and the owner.**
+This is the further decision required by **S-OD2**, not a failed R5 selection. MS05r4 has stopped at the
+original-limit mega preflights. Its results do not authorize MS05r5, MS05b3, MS05r6a or MS05r6b to pass those
+failures, change a guard, move a test or persist G13 on their own.
+
+Sources: [MS05r4 evidence](evidence/MS05r4/evidence.md),
+[selection](evidence/MS05r4/selection.json),
+[default and blockers](evidence/MS05r4/default-pin-manifest.json),
+[G13 preflight](evidence/MS05r4/preflight/G13.json), and
+[allowance report](shallow-cap-2026-11-13.md). The transcripts and diagnostic records linked there are kept as
+failed/passing evidence under their actual identities; none is replaced by this question.
+
+### The measured stop and the default
+
+| Fact | Meaning |
+|---|---|
+| R5 selected **256**, eligible settings `[256]`, no measurement problem; 288 selecting requests, six fixed cells | Keep the result of the accepted rule. This is not permission to select 64 or 128 because they run mega faster |
+| classic9 Nightmare: none = 2/12 hits, median 1,417 full ratings; 256 = 2/12, median 1,345 | A **5.08% reduction in the median rating count**, not a promised 5% speedup. It is the only cell whose median falls at 256; no cell loses a hit |
+| 128 gives 1/12 and 64 gives 0/12 in that cell | Both are ineligible under R5, irrespective of their faster diagnostics |
+| Default literal is now 256 at `generator/js/engine/digger.js:653`; source hash `9a833d9376381c6f9e2df4c5a79aba981bbd8a3dafce9e572ff2641bd61759ce` | The measured source was `19afa6ee…` with explicit overrides. MS05r4 verified that reverting only the new default literal recovers that source. The working tree remains uncommitted |
+| G13 preflight: **104.712 s / 120 s**, eight attempts, shallow fallback, `exact: false`, `required: false`, score 1,637 | Passes the original generation guard, consuming 87.3% of it; about 15.3 s headroom |
+| mega12 Nightmare quick group: seed 1 takes **48.202 s / 6 s** | One test fails its original latency assertion. The separate CV5 test passes in 137.7 s; that does not make the group pass |
+| mega16 Nightmare quick group: **both tests throw `budget.exceeded` at 60 s** | Neither reaches a successful comparison with the separate 20 s latency assertion |
+| Focused checks at 256: 463 + 30 + 16 pass; `pins: []`, `returnedPremises: []` | The two mega blockers are performance/contract decisions, not stale numerical pins or permission to undo requiredness |
+
+The four-setting diagnostics use the unchanged fixed requests, normal eight-attempt configuration and a **500 s
+diagnostic budget**. These are generation times, excluding command startup; they select nothing:
+
+| Request | none | 256 | 128 | 64 | Ordinary samples alone |
+|---|---:|---:|---:|---:|---|
+| G13, samurai Nightmare, seed 42 | 220.5 s | 104.6 s | 86.7 s | 80.0 s | About 74 s at each setting; eight attempts, same shallow fallback |
+| mega12 Nightmare, seed 3 | 65.1 s | 47.1 s | 43.8 s | 39.4 s | 37.5-39.1 s; eight attempts, same shallow fallback at every setting |
+| mega16 Nightmare, seed 3 | 388.7 s | 310.2 s | 296.3 s | 270.4 s | 263.2-281.3 s; same exact, required puzzle at attempt 6 at every setting |
+
+The allowance acts on local continuation, not these earlier samples. Consequently it cannot meet the old mega
+limits for these requests even if the remaining local continuation were free. This is the predicted sampling
+cost identified in SA1's CV6-02 cross-check, now measured.
+
+**256 stays the global default for this recovery under (a), (b), (d), and a mega-specific (c).** This question does
+not reopen the six-cell selector or turn mega diagnostics into selection criteria. A proposed change to common
+sampling/rating behavior that also changes the selector's semantics would need separate authorization/evidence;
+it cannot be smuggled in as a mega-only exception.
+
+### What the browser actually permits
+
+The Generator uses **120,000 ms of active generation time**, with no mega-specific increase:
+
+- `generator/js/worker/worker-client.js:45,198,434,468`: the default is 120000, sent to the worker or used by the
+  cooperative main-thread client.
+- `generator/js/worker/gen.worker.js:97,249-268`: the worker applies the same default and active clock.
+- `generator/js/ui/app.js:1191` uses that client without a larger mega budget; the cache's worker-only background
+  client also uses the default (`js/ui/cache.js:692-694`). The legacy direct client has a 120000 ms wall-clock
+  guard as well (`app.js:110,349`).
+- Default attempts are eight (`js/ui/store.js:35`, `js/engine/pipeline.js:26,73`). The advanced control permits
+  1-20 attempts; it does not expose a longer time budget.
+- Time yielded to the page is excluded from the active clock (`core/js/engine/budget.js:95-113`), so 120 s active
+  is **not** a two-minute wall-time guarantee. Checks are sampled, not an instantaneous wall-clock kill.
+
+For the measured mega16 seed 3 path, even its 278.1 s of ordinary samples at 256 exceeds the application's 120 s
+allowance. At comparable engine throughput it reaches that budget before its exact sixth attempt; it does **not**
+normally finish successfully after five minutes. Its first two attempts consume about 109 s in the diagnostic,
+with no exact hit. A larger-budget run can finish in about 310 s, but that is the diagnostic, not the current UI
+contract.
+
+A budget failure is not converted into the best-so-far puzzle: `digger.js:1791-1798` and `pipeline.js:156-160`
+rethrow it, the worker sends an error (`gen.worker.js:191-198`), and the app clears the unfinished result and
+shows the failure (`app.js:850-863,883-886`). The ordinary fallback is returned when the attempt limit is
+exhausted normally, not on this exception. Mega12's measured 47-48 s run fits 120 s on this machine, but still
+costs tens of seconds and returns a truthful shallow fallback.
+
+The standalone Player imports/plays puzzles; it does not run the Generator's generation client. Its import
+solver guard is 6 s (`player/js/ui/importer.js:40,731`), a different operation and not a generation allowance.
+An unavailable Generator result cannot be made available by changing a Player guard.
+
+**Evidence versus inference:** no browser or new generation was run for this question. The budget and error path
+above are code facts; reaching 120 s for this fixed request is the implication of the recorded work/times on
+comparable hardware, not a measured browser run or a claim that every seed and device behaves identically.
+Under v2 the early shallow puzzle could be returned quickly while falsely counting as Nightmare. Restoring that
+old exactness test is not a valid speed fix.
+
+### Question: which contract is authorized?
+
+Options may be combined; **(d) is an adjunct, not a resolution of the mega failures**.
+The new task IDs below are proposed ownership, not dispatch authorization or task files created by this question.
+
+| Option | Scope and named owner | Effect and remaining obligation |
+|---|---|---|
+| **(a) Change the mega Nightmare validation tiers — recommended for the recovery** | Add **MS05r5m, mega Nightmare validation contract**, after r5 tooling and before b3/final E. Move normal-attempt mega Nightmare generation from routine quick coverage to an explicit slow/manual contract. Quick coverage checks bounded behavior, including a real one-attempt smoke where affordable and a focused shallow-fallback case; keep validity, uniqueness, givens/solution agreement, solver soundness and truthful exact/warning assertions | Changes test organization and explicitly replaces the old quick latency promise, not product generation. Preserve the full original requests/relations in mandatory slow evidence before combined acceptance. Choose guards from complete measurements with stated margin; no global `SG_TIME_FACTOR` change. The UI's 120 s problem remains unless separately disposed of under (c); this is not product qualification |
+| **(b) Accept normal-attempt mega Nightmare as slower quick work** | The same **MS05r5m** owns the explicitly approved per-board request guards and latency assertions, their documentation and internal request sharding | Keeps the production algorithm and 256, but makes complete quick validation much more expensive. Raising only `SLOW`, a harness timeout or a time factor does not fix the 60000 ms generation guard. With larger test budgets the UI still has 120 s. Raising the application's budget too would be a separate, explicit minutes-long product contract, not implied by this option |
+| **(c) Change the large-grid product policy** | Fable specifies a concrete mega-only policy; proposed **MS05r5p, mega Nightmare product policy**, owns it before final-source E if selected now. Possibilities: deterministic bounds on ordinary sample/attempt work, returning a fully rated truthful fallback; or stop offering mega16 Nightmare until it can be qualified | An attempt cap of one would lose the observed required hit at attempt 6; that is an explicit availability trade-off, not an R5 result. Lowering only the shallow allowance cannot solve the sample cost. One attempt is not automatically a 6 s/20 s request. A withdrawn offering needs explicit controls/settings/refusal behavior, EN/VI documentation and continued opening of existing puzzles; no silent change of a stored/requested level. Any affected fixed regression request remains accounted for under the approved contract, not deleted |
+| **(d) Persist the same G13 — recommended alongside (a)** | Expand **MS05r6a**, before its final-source recording, to own adding G13 to the saved-wire manifest/loader and related fixture tests. It then records five wires (G09-G13), still fourteen analyses (G01-G14), and all 520 GG keys | Removes repeated ~105 s G13 regeneration from quick consumers without changing seed 42, requested Nightmare, attempts, puzzle validity or requiredness. It does not fix mega and does not by itself remove the recorder's own 120 s risk: `replay-goldens.js:23-45` still regenerates every analysis request. Keep that guard unless a separate G13-specific margin is explicitly approved; if fresh recording fails, stop rather than substitute the earlier record |
+
+**The bounded-coverage detail matters for both (a) and (b).**
+
+1. The existing mega Nightmare population is seeds **1,2,3,4** for invariants, plus independent calls **3,3,4**
+   for CV5, per board (`mega.test.js:690-712`). Preserve those requests and the same-seed/different-seed comparisons.
+   At the seed-3 diagnostic cost, three mega16 calls would take about 931 s and four about 1,241 s: neither callback
+   fits 540 s. Merely moving a callback to a slow tier or increasing its timeout is insufficient.
+2. MS05r5m must authorize and implement single-request bounded records plus reconciliation of all original
+   assertions/relations, with relevant source/config/seed/harness/guard identities and no missing or duplicate
+   coverage. Quick replacements are a separate inventory. Do not silently drop repeats, replace seeds or run the
+   existing whole `SG_DEEP=1` branch: it has its own 20-seed loops and 120 s generation guard.
+3. A one-attempt quick contract also needs honest bounds. The measured first-attempt prefixes at 256 are about
+   **5.2 s for mega12 and 56.7 s for mega16**; these are not new one-attempt validation runs or upper bounds.
+   In particular, "one attempt" does not preserve mega16's old 20 s assertion. A scripted control may check the
+   stop/fallback mechanism cheaply; moved full-request correctness coverage must still run.
+4. Only seed 3 has completed full-request mega16 timing here; seed 1 has a 60 s cutoff, and other quick seeds'
+   full costs are not established. Guards must be chosen from bounded measurements of the complete fixed
+   population, not copied from this one successful diagnostic. The existing 500 s diagnostic ceiling and
+   **540 s per process** remain; a request that cannot finish inside the allowed bound returns to the owner.
+   Roughly 42 minutes for all fourteen full calls, if the other seeds cost like seed 3, is a planning projection,
+   not a measured upper bound. Option (a) moves that cost out of ordinary quick runs; it does not erase it.
+5. Test-contract changes do not silently rewrite design/qualification targets, accept every fallback as exact,
+   or qualify a level because its score label matches. Record the old 6 s/20 s failure and the new contract.
+   All other levels, G14, S-OD1's CV6, uniqueness and correctness obligations stay unchanged.
+
+### Recommendation and the product decision
+
+**Recommend (a) + (d), retain 256, and do not adopt (b) as a blanket larger-budget fix.** This separates routine
+correctness checks from expensive full generation and avoids repeatedly exposing G13's small time margin.
+It preserves the requiredness improvement instead of hiding the cost in another timeout.
+
+**Fable and the owner must also explicitly dispose of the product issue in (c).** Prefer an evidence-based
+bounded-effort policy which can return a truthful result within the existing application allowance; if no
+acceptable policy can be demonstrated, do not continue offering an unqualified mega16 Nightmare service.
+Do not silently raise the browser's budget to five or more minutes. The owner may authorize the test-only
+recovery to land first as an acknowledged interim limitation, but that must carry a named product/qualification
+blocker into MS18c/MS18d and **no publication** while it is unresolved. A test-tier decision alone is not consent
+to the current user-visible timeout.
+
+If the owner instead requires product closure within this recovery, MS05r5p must precede the new mega closure
+evidence and final-source E. Fable must specify the ordinary-work/attempt/offering policy, its scope and its
+compatibility consequences before that task is written. No numeric large-grid policy is authorized here.
+
+### Resume path after the answer
+
+The old "passed original mega limits" prerequisites cannot simply be ticked. After the answer, the pack author
+replaces them with the chosen named contract and retains MS05r4's failures as the reason. No frozen r4 code,
+helper or evidence is rewritten. No task below starts just because this question is ready.
+
+| Choice | MS05r5 | MS05b3 | MS05r6a | MS05r6b |
+|---|---|---|---|---|
+| (a) | Resume inventory/exact/results tooling under an amended prerequisite; then MS05r5m creates the new quick/slow mapping and replacement preflight evidence. r5 itself does not run the expensive callbacks | Run after the test migration, with the selected default, unchanged I5/CV3 seeds/counts and existing guards. Refresh the draft inventory for its added tooling | Require compatible passing evidence of the **approved replacement** mega contract, not fictitious passes of the old one; complete final-source GG/GR and legitimate pins. Apply (d) first if approved | Final quick inventory plus the separately mandatory slow mega coverage, classic9 GD and every b3 obligation; reconcile retained evidence by actual identities. Report total cost and the explicit product blocker if closure was deferred |
+| (b) | Add only the authorized tooling; MS05r5m defines measured guards and bounded per-request quick shards before inventory is final | Same preserved manual contract; no implied increase of a manual or application guard | Recheck the authorized new mega bounds with margin, then final-source E; G13's 120 s rule remains unless (d)/a separate decision changes its ownership | Run every retained quick request/assertion in bounded shards, not the overlong old compound callbacks. Publish the much slower standing quick cost; product timeout is still unresolved without a product decision |
+| (c), implemented in this recovery | Tooling may precede the product task, but the final draft and mega contract follow MS05r5p/MS05r5m. Keep global 256 | Use the final product policy. Any change of supported requests/refusal coverage must be explicitly specified; do not silently shrink CV3 | Recheck all affected closure requests on the new source, then fresh GG/GR. Old r4 diagnostics stay historical. Retain all fixed keys/requests with explicitly approved outcomes | Fresh final-source quick/manual/product evidence, including the real browser budget/cancellation/error or fallback contract; no mixing of old-source results or availability claims |
+| (d), added to any viable mega option | Account for the saved-wire change when refreshing inventories; do not change harness behavior to bypass G13 | No change to its manual populations or hit requirements | Own the persistence-tooling changes before freezing E; wire before analysis; five wires, fourteen analyses, 520 keys. The fresh G13 analysis is still mandatory | Quick consumers use verified current-source G13 wire; reconcile changed fingerprints and keep the one-time recording/closure evidence. (d) alone leaves both mega blockers unresolved |
+
+**MS05b3 is not a back door around the remaining cost.** Its manual variants generator has a separate
+**240000 ms request guard** (`generator/tests/manual/variants.test.js:75-79`), and mega16 CV3 retains two requests
+per supported level. Those particular requests were not measured by the seed-3 diagnostic. If a level's combined
+callback is overlong, (a)/(b) may authorize a further **tooling-only per-request decomposition in MS05b3**, preserving
+its full population and aggregate assertions. They do not automatically raise its request guard. A request
+timeout, correctness failure or missing coverage remains an owner stop; only the already accepted, named
+intermediate aggregate-availability exceptions may remain as failures. No claim is made that changing the quick
+tests alone guarantees the rest of recovery will pass.
+
+The single combined acceptance/commit boundary of S-OD2 remains. All implementation/fixture changes must precede
+their final-source evidence; a meaningful change invalidates affected records rather than being patched into
+their hashes. The 540 s execution ceiling, serial timing slot and 15 s inter-run gap remain; the new 20-minute
+lock-acquisition wait is not a longer generation budget.
+
+**Answers requested:** (1) (a) or (b), or a concrete (c) with its validation contract; (2) (d), yes or no, with any
+G13 recorder-guard change stated separately; (3) whether product closure under (c) is required before combined
+recovery acceptance or may follow under an explicit no-publication blocker. Fable supplies the product/performance
+contract; the owner authorizes the trade-off.
+
+**SA1 cross-check (claude-opus-5.5, 2026-11-13).** Independent of SA2. Read only: the working tree on `f788e02`,
+the MS05r4 evidence with the `attemptSummaries` of `diagnostic/256/*.json`, and the report. Nothing was run.
+
+*SA2's facts are right*, with two anchor slips: the active clock is `core/js/engine/budget.js:97-115`, and the
+worker posts the error at `gen.worker.js:199`.
+- Mega: guard `SG.budget.create({ ms: 60000 })` (`generator/tests/suites/mega.test.js:654`), Nightmare budgets
+  3000/10000 ms (`:31`, `:40`) times 2, or 3 with `CI` (`core/tests/harness.js:33-38`); the quick levels omit
+  expert, master and hell2 (`:22`). App: 120000 ms in both clients and the worker; 1-20 attempts, 8 by default.
+- After 120 s of active time the user sees the result cleared, the empty board and the toast "Could not generate
+  the puzzle: Generation took longer than allowed and was stopped. Try again, use another seed, or pick an easier
+  level." (`app.js:850-865,1319`, `locale.en.js:556-557`; VI `app.js:1331`, `locale.vi.js:540-541`). For mega16
+  Nightmare only the last advice helps: attempts 1-5 cost 36.5-59.2 s each, so 120 s holds two (109 s), and
+  seed 3 hits in the sixth; one attempt would give a truthful fallback after about 57 s (inferred). mega12 costs
+  5.2-6.6 s per attempt (47 s for eight), G13 8.8-17.9 s (105 s, 87% of 120 s).
+
+*Facts that change the weighting:*
+1. The product side is already decided: the final qualification sets the offers (SA1-Q-S5, MS18c). A hit is exact
+   without `difficulty.approximate`, a timeout is a miss, and a large-board level needs at least 36 of 40 hits and
+   a p95 within 30 s (`docs/difficulty-rating/qualification.md:11-25`). A hidden level is a valid outcome
+   (check-list §6, plan §8); the store moves a stored one to the nearest offered level with a note
+   (`store.js:169-208`), the pipeline refuses it (`pipeline.js:59`), and intermediate work is not deployed
+   (check-list §6; Pages deploys on a push to `main`). v2 offered Nightmare 40/40 with p95 268 ms (mega12),
+   944 ms (mega16) and 891 ms (samurai) (`qualification.md:132,141,195`); the three v3 requests give one exact
+   hit at 310 s and two fallbacks. Unless generation becomes much faster, MS18c hides Nightmare on mega16, very
+   likely on mega12 and samurai, and maybe other large-board levels that no quick test samples. SA2's second (c)
+   branch is thus what MS18c does anyway; its preferred bounded fallback keeps no level offered, because
+   fallbacks are misses.
+2. Turning `budget.exceeded` into the best puzzle so far is excluded: the digger counts work instead of time to
+   keep a seed's puzzle the same on every machine, and the 120 s guard stays an error (`generator/design.md:705`).
+3. Unless the answer covers CV3, the recovery stops a third time. CV3's mega16 Nightmare cell (seeds 1-2, the
+   configs of `mega.test.js`'s seeds 1-2) projects at about 620 s at seed-3 cost: b3 defers it, r6b stops
+   (`MS05r6b-quick-gd-and-combined-acceptance.md:140-148`), and a request over the 240 s guard blocks (`:144`).
+4. No task owns CI. `pull-request.yml` runs every generator suite, manual ones included, in five jobs of at most
+   30 minutes with factor 3, and `pages.yml` runs them before it deploys; the `rest` group picks up any new
+   `tests/suites/*.test.js` or `tests/manual/*.test.js` file (`.github/scripts/generator-suites.sh`).
+
+*Options.* (a): agree, under three conditions. (i) The slow tier is a tool like `tests/difficulty-recovery.js`,
+not a `*.test.js` suite, or CI's `rest` job must fit its 42+ minutes into 30. (ii) It runs once, after the last
+engine change (r4's literal), one full request per locked run with the 500 s diagnostic budget, keyed by request
+identity: r6b reconciles instead of rerunning, and b3's CV3 mega cells reuse the puzzles with CV3's checks. About
+45 minutes at seed-3 cost; a mega16 seed with no hit costs about 420 s for eight attempts (475 s at the slowest
+attempt), inside 500 s. (iii) Quick keeps a real one-attempt mega12 Nightmare request through the existing
+`extra` argument (`mega.test.js:653-656`; 5-7 s measured, so not the old 6 s assertion) and, for mega16 (57 s
+an attempt), only a scripted stop control. (b): agree it is no fix: mega16 adds about 36 minutes to every quick
+run and to CI; mega12 alone (about 5.5 minutes) is possible but not worth it. (c): disagree with the framing.
+Point 1 decides the product, so no MS05r5p in the recovery, and numbers chosen now would not survive S3's
+techniques. The owner's real question is whether the likely hidden large-board levels are acceptable for v3; if
+not, a large-board generation-speed task after S3, measured against MS07e's first checkpoint, before MS18c.
+(d): agree; it also keeps G13's 87% away from the 120 s regeneration in `steps`, `replay` and `player`
+(`steps.test.js:45`, `replay.test.js:26`, `player.test.js:34`) on slower CI runners.
+
+*Missed:* qualification-based non-offering as the product answer (point 1); CV3's mega cells decided now
+(point 3); a named owner for the v3 pull request's CI jobs before the merge (point 4).
+
+*Recommendation:* (a) with (i)-(iii), (d), and 256 kept; there I agree with SA2, and on refusing a silent
+browser-budget raise. On SA2's question (3): qualification closes the product side and check-list §6 forbids
+deploying, so no new blocker; the owner should accept or reject the likely hiding with this evidence now.
+Extend (a) to CV3, with the owner's explicit consent, as r6b blocks on timeouts today: b3 takes the mega
+Nightmare cells from MS05r5m's records with CV3's per-puzzle checks; a request time over 240 s goes to
+MS07e/MS18c as a named availability item, while validity, uniqueness, requiredness and the warnings still block.
+Resume: r5 (tooling, amended prerequisite), r5m (about 2 developer hours, 45-65 minutes locked), b3, r6a ((d)
+first), then r6b, which reconciles r5m's records and hands MS18c/MS18d the at-risk cells and the CI item.
+
+**Owner (2026-11-13 14:25): (a) + (d), and (c) decided now.** Owner decision S-OD3. 256 stays the default.
+(a) mega Nightmare leaves the quick contract for a measured deep tier, with SA1's conditions (i)-(iii) as its
+execution detail (a tool, not a `*.test.js` suite; one run after the last engine change, keyed by request identity;
+the quick set keeps a one-attempt mega12 request and a scripted mega16 stop control). (d) G13 is persisted.
+(c) the product disposition for large grids is decided now, not deferred to publication: the plan author designs it.
+
+**Plan-author answer requested (Fable): design (c).** For the large grids (mega12, mega16, samurai and any other
+cell the measurements show), say what the product does for Nightmare (and Hell where it applies) given the numbers
+above and the apps' 120 s active-generation budget: for example a size-dependent bound on attempts or work with an
+honest result, or the level not offered on that board, or another design. Please also say (1) whether (a)'s
+extension to MS05r6b's CV3 mega16 Nightmare cell is still needed under your design, (2) whether the CI workflow
+item (SA1's cross-check) needs a task now, and (3) where the change goes in the recovery sequence (MS05r5, MS05r5m,
+MS05b3, MS05r6a, MS05r6b). SA2 then writes the tasks and SA1 cross-checks them.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-13), with the owner's decision S-OD4 taken on the command line the
+same day: design (c) has two parts, both approved by the owner.**
+
+**(c1) What is offered is decided by the final qualification, for every board and level.** This is R24 and
+SA1-Q-S5 applied without exception to the large grids and to Nightmare and Hell: a cell is offered only with at
+least 36 exact hits of 40 (or 90 of 100) and a p95 inside its budget (30 s for boards over 81 cells); a cell that
+fails is hidden at MS18c, the store moves a stored request to the nearest offered level with its note and the
+pipeline refuses it. SA1's reading is right and is adopted: a bounded fallback is a miss and does not keep a level
+offered. No large-grid level is hidden now, before S2.2 and S3 change the proofs, and no browser budget is raised.
+The interim state (levels offered that will probably be hidden) exists only on the undeployed branch.
+
+**(c2) The default number of attempts depends on the board size.** New in this recovery:
+
+```text
+defaultMaxAttempts(cellCount) = 8   for cellCount <= 81    (classic4/6/9, diagonalX, hyper, jigsaw9, killer,
+                                                            greaterThan, wordoku: unchanged)
+                              = 4   for 82 .. 144          (mega12, butterfly)
+                              = 2   for cellCount > 144    (flower 189, mega16 256, sohei 288, samurai 369)
+```
+
+- *Why.* Since requiredness, a request that meets no required puzzle runs every attempt (working-status D2).
+  On a large board one attempt already costs seconds to a minute, so attempts beyond the first few cannot make a
+  request fit the 30 s qualification budget; they only turn a miss into the app's 120 s error. With the size
+  default such a request ends with the truthful fallback and its warnings instead. Estimates from MS05r4's
+  per-attempt times at 256 (not new measurements): G13 about 27 s instead of 105 s, mega12 Nightmare about 24 s
+  instead of 47 s, mega16 Nightmare about 110 s instead of 310 s. The exact hit of mega16 seed 3 at attempt 6 is
+  given up knowingly: a 310 s hit can never qualify.
+- *What it is not.* Not a time rule (the puzzle of a seed stays the same on every machine), not a change of the
+  allowance (256 stays, with R5's selection and MS18b's recheck as written), not a bound on samples inside an
+  attempt, and not a change for boards of at most 81 cells. An explicit value still wins: the advanced control
+  keeps its range 1 to 20, and a caller's `maxAttempts` is used as given.
+- *Where.* One function, exported once and used by both defaults: `generator/js/engine/pipeline.js`
+  (`DEFAULT_MAX_ATTEMPTS`, lines 26 and 73) and `generator/js/engine/digger.js` (lines 624 and 1807). The store's
+  default (`generator/js/ui/store.js`, `MAX_ATTEMPTS.default`) becomes the size default of the selected variant:
+  a stored value equal to the old default 8 on a larger board is read as "default" once and follows the new
+  default; any other stored value is kept. The control shows the effective default. Strings, if a hint is added,
+  in English and Vietnamese.
+- *Tests.* The function at 81, 82, 144, 145; pipeline and direct digger agree; an explicit 8 on mega16 still runs
+  eight attempts; the store migration; a mega12 request that ends shallow after exactly four attempts carries
+  `difficulty.approximate` and `difficulty.shallow`. The qualifier and the soak use the default (they must not
+  pass 8 explicitly); record that in their headers.
+- *Documents.* `generator/design.md` (the pipeline options and §6.8), both developer guides, both user guides
+  (the advanced control's default).
+
+**CV6-04 wording correction (Fable, 2026-11-14).** The sentence "a stored value equal to the old default 8
+on a larger board" above is superseded by the CV6-04 answer below and now reads "a stored value equal to
+the old default 8 without the intent marker". An unmarked legacy 8 is read as default on every board.
+This corrects (c2)'s wording, not its policy; the original answer above remains as historical text.
+
+**Sub-question (1), CV3's mega16 Nightmare cell.** The extension is still wanted, in the narrow form SA1
+proposed. With two attempts a mega16 Nightmare request projects at about 110 s, under the 240 s request guard, and
+the two-request cell at about 220 s, under the 450 s projection limit, so the cell should no longer be deferred. It
+is an estimate: if a request still exceeds 240 s, it is recorded as a named availability item for MS07e and MS18c
+and does not stop the recovery, while validity, uniqueness, requiredness and the warnings still block. MS05b3 may
+take these puzzles from MS05r5m's deep-tier records with CV3's own per-puzzle checks instead of generating them
+again. The same rule applies in advance to mega's `hell1` quick tests when MS07b makes Hell 1 non-vacuous.
+
+**Sub-question (2), CI.** Yes, a task now, small and inside the recovery, because the recovery is what breaks
+the workflows: **MS05r6c, CI workflows for the v3 test tiers**, after MS05r6b's evidence and inside the same
+combined commit. It makes `.github/scripts/generator-suites.sh` and the two workflows run the bounded quick
+manifest of MS05r5 in jobs that fit their 30 minutes, keeps the deep tier (a tool, S-OD3 (a) (i)) out of CI, and
+states in the workflow which evidence replaces it. It does not raise `SG_TIME_FACTOR` or a job timeout. From then
+on each task that adds a suite owns its CI group, and MS18e checks the workflows once on the final tree. The
+owner of the v3 pull request's CI is MS18e.
+
+**Sub-question (3), the place in the sequence.** One new task and no reordering of the rest:
+
+| Order | Task | Change |
+|---|---|---|
+| 1 | **MS05r5p, size-dependent default attempts** (new; S, about 40 minutes plus its checks) | First, because it is an engine change and everything after it measures the final source. It ends with the three closure requests (G13, mega12 and mega16 Nightmare seed 3) run once each as diagnostics under the lock, to replace the estimates above by numbers |
+| 2 | MS05r5 | As written, with the prerequisite amended from "passed original-limit preflights" to "S-OD3 and S-OD4 contracts" |
+| 3 | MS05r5m | As S-OD3 (a) with SA1's conditions (i) to (iii). The deep tier runs the fixed population with the default attempts of each board; the quick one-attempt mega12 request and the scripted mega16 stop control stay |
+| 4 | MS05b3 | As written, with sub-question (1) |
+| 5 | MS05r6a | (d) first, then the final-source recheck and the complete E (five wires, fourteen analyses, 520 keys) |
+| 6 | MS05r6b | As written; it reconciles MS05r5m's records |
+| 7 | MS05r6c | CI (sub-question (2)); then the combined commit |
+
+MS05r5p invalidates MS05r4's diagnostic times for the large boards only (the selection cells are all 81-cell
+boards, whose default does not change), so R5's selection of 256 stands without a new run.
+
+**What is left for the owner later, named so that it is not rediscovered:** if MS07e's first checkpoint shows
+large-board Nightmare or Hell cells hidden and the owner wants them back, the remedy is a generation-speed task
+for large boards after S3 (SA1's proposal), not a larger budget and not a weaker exactness test.
+
+Only existing evidence was read and summarized, and the budget path was inspected. No new generation, timing
+experiment, browser run, source change, fixture write, staging or commit was performed to raise CV6-03.
+
+---
+
+## CV6-04: Meaning of legacy stored 8 on boards of at most 81 cells
+
+**Raised by SA2, 2026-11-13. Answer requested from Fable (plan author).**
+
+**Non-blocking.** MS05r5p continues under option (a), the literal rule, as the orchestrator has instructed.
+This question authorizes no change. Any approved change is a follow-up named **MS05r5p legacy-8 migration
+fix round**, to be completed before MS05r6b, not a reason to stop the present MS05r5p work. The separate
+replay-wiring test fix proceeds independently.
+
+### Context and current implementation
+
+[CV6-03 (c2)](clarifications-resolved.md), lines 1219-1224, says that the store's default becomes the
+size default of the selected variant, then specifies:
+
+> a stored value equal to the old default 8 on a larger board is read as "default" once and follows the new
+> default; any other stored value is kept.
+
+The attempt policy itself is settled: 8 for at most 81 cells, 4 for 82-144 cells, and 2 above 144 cells.
+An explicit value still wins. This question concerns only the once-only migration of legacy last settings,
+not the engine policy, allowance, budgets, or recorded recipes.
+
+- Before MS05r5p, `generator/js/ui/store.js` at `c9935cd:35,147-157` used the universal default 8.
+  The old `sg.lastConfig.v1` record had no default/explicit-intent marker: an untouched default 8 and
+  a deliberately chosen 8 were indistinguishable. A stored 8 alone cannot prove either intent.
+- The uncommitted MS05r5p implementation uses `attemptsExplicit`.
+  `generator/js/ui/store.js:503-510`, `storedAttempts`, migrates an unmarked 8 only when the stored
+  variant's size default is not 8. Line 508 is:
+
+  ```js
+  else if (number === LEGACY_MAX_ATTEMPTS && defaultAttempts(id) !== LEGACY_MAX_ATTEMPTS) explicit = false;
+  ```
+
+  Thus legacy `{ variantId: 'classic9', maxAttempts: 8 }` loads as 8 with `attemptsExplicit: true`.
+  A subsequent switch to mega12, mega16, sohei or samurai keeps 8 until the user clears the control.
+  A legacy 8 stored on those larger boards instead loads in default mode and follows the variant.
+- `generator/tests/suites/store.test.js:1073-1098` covers the current migration;
+  lines 1092-1095 explicitly expect `['classic9', 8, true]`.
+  [MS05r5p evidence](evidence/MS05r5p/evidence.md), "Decisions to confirm", item 1, records the consequence.
+
+### Exact question and consequences
+
+For an unmarked legacy last configuration with `maxAttempts: 8` and a board of at most 81 cells,
+which interpretation of (c2) is intended?
+
+**(a) Keep the literal rule.** Migrate legacy 8 only on a board above 81 cells; keep it as explicit
+on a smaller board.
+
+- Users: small-board generation still uses 8. After switching to a larger board, even a user who never
+  touched the control still uses 8, rather than the new default 4 or 2, until the field is cleared.
+  A deliberate legacy choice of 8 on a small board is preserved, but migration depends on the last
+  selected variant, not on recoverable user intent.
+- Tests: keep the current classic9 expectation and add the explicit small-board load -> large-board
+  switch -> persistence/reload case to document that 8 remains chosen. No production change is needed.
+
+**(b) Treat an unmarked legacy 8 on any board as default.** The current small-board number remains 8,
+but its intent is default; a later variant switch follows 8/4/2.
+
+- Users: old defaults behave consistently regardless of the variant selected before the upgrade.
+  Small-board generation is unchanged; switching to mega12/butterfly uses 4 and to the larger boards
+  uses 2. The unavoidable trade-off is that a deliberate legacy 8 on a small board is also treated as
+  default, because the old record cannot distinguish it. Re-entering 8 creates a marked explicit choice.
+- Tests: replace the small-board `true` expectation with `false` and verify switching, persistence and
+  explicit-value protection as listed below. Existing large-board migration expectations stay unchanged.
+
+Under either option, other valid stored numbers remain explicit. A saved `attemptsExplicit: true`,
+a deliberate control entry, `?attempts=8`, a direct engine argument and a recorded history/cache/export
+recipe are not eligible for this legacy migration; their explicit or recorded numbers remain intact.
+
+### Analyst's recommendation
+
+**SA2 recommends (b).** Whether an old default follows the new size policy should not depend on the
+last variant selected before the upgrade. This also avoids treating a value equal to the old universal
+default as evidence of a deliberate choice on small boards only. The loss of indistinguishable legacy
+intent must be stated, not denied. This is a recommendation for Fable to decide, not authorization to
+broaden the recorded migration rule.
+
+### Follow-up if (b) is approved
+
+In the **MS05r5p legacy-8 migration fix round**, before MS05r6b:
+
+1. Change only the migration condition in `storedAttempts` to:
+
+   ```js
+   else if (number === LEGACY_MAX_ATTEMPTS) explicit = false;
+   ```
+
+   Keep the preceding boolean-marker branch and numeric validation unchanged. Do not apply this
+   inference in normal store updates, `normalize`, `toConfig`, or recipe replay.
+2. Update the existing classic9 migration assertion to `['classic9', 8, false]`. Add a focused legacy
+   classic9 case that switches to mega12 (4), mega16 (2), and back to classic9 (8), all in default mode.
+3. Persist/reload the migrated state both while the small-board number is still 8 and after a large-board
+   switch; the saved false marker must preserve default intent on the next switch.
+4. Add the complementary marked-explicit classic9 8 case: switching to a large board and reloading
+   must keep explicit 8. Also cover entering 8 after migration and reloading, so migration is once-only.
+   Keep the existing other-number, storage-failure, explicit URL/control and recorded-recipe regressions;
+   none may be weakened to implement (b).
+5. Align the migration comments, affected design/EN/Vietnamese guide wording and step evidence with the
+   approved choice. Use focused scripted/store checks; this migration decision needs no generation or
+   timing experiment and does not reopen the size-default or R5 selection.
+
+Only code and existing records were read to raise this question; no tests or generation were run.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-14): (b). An unmarked legacy 8 is read as "default" on every
+board.** SA2's recommendation is adopted, and the follow-up list above is approved as written, with the three
+additions below.
+
+*What (c2) meant.* The words "on a larger board" in (c2) described where the migration has a visible effect,
+not a condition on intent. (c2) was written before the `attemptsExplicit` marker existed; at that time a
+legacy 8 on a small board needed no rule, because 8 was also the new default there and nothing could be
+observed. The marker made the small-board case observable, and the literal reading then gives a result (c2)
+did not intend. The intent is: the old universal default follows the new size default; a number the user
+chose is kept. This is a correction of my wording in (c2), not a new policy.
+
+*Why (b).*
+
+1. It is the case (c2) exists for. The usual legacy record is `classic9` with an untouched 8. Under (a) that
+   user's first mega16 or samurai request after the upgrade runs eight attempts, which is the 120 s error
+   that (c2) replaces by the truthful fallback after two. (a) therefore leaves the old behaviour in place for
+   the largest group of users, and it stays until they clear a field most of them have never opened.
+2. Intent cannot be recovered from the record, so the rule must be chosen by the cost of being wrong. Wrong
+   under (b): a deliberate 8 on a small board still gives 8 on every small board; it is lost only after a
+   switch to a larger board, the control shows the effective number, and typing 8 once restores it for good.
+   Wrong under (a): an invisible setting causes failed requests on large boards with nothing on screen that
+   explains why. The first error is small and visible, the second is not.
+3. The outcome of a migration should not depend on which variant happened to be selected last before the
+   upgrade. Under (a) two users who never touched the control get different behaviour on mega16.
+
+*Scope: unchanged from what the question states.* Only the unmarked `sg.lastConfig.v1` record read at start-up
+through `storedAttempts` (`generator/js/ui/store.js:731`). A record with a boolean marker, any other stored
+number, a control entry, `?attempts=8`, a direct engine argument and a recorded history, cache or export
+recipe keep their numbers. The engine policy, the allowance, the budgets and R5 are not reopened.
+
+*Additions to the follow-up list.*
+
+- Item 1: the one-line condition is right and sufficient. I checked `normalize` (`store.js:249-258`): a state
+  with `attemptsExplicit: false` and the number 8 on a small board passes unchanged, since 8 is that board's
+  default, so no second change is needed there. Rewrite the doc comment of `storedAttempts`
+  (`store.js:497-502`) and the comment at `store.js:39-40` in the same edit; both still describe (a).
+- Item 2 or 4: add one case for a legacy record with `maxAttempts: 8` and a missing or unknown `variantId`.
+  It must load in default mode with the default of the variant the store falls back to. Under (b) the
+  decision no longer reads the variant, and this case fixes that.
+- Item 3: also assert that loading the legacy record twice without a save in between gives the same state.
+  "Once" is carried by the marker written at the next save; before that save the migration must be
+  idempotent, not a counter.
+
+*Documents.* Item 5 stands. State the trade-off in one sentence where the developer guides and `design.md`
+§14.3 describe the stored configuration: a last configuration saved before the size defaults that holds 8 is
+read as the default, because it cannot be told from a chosen 8; entering 8 again makes it a chosen number.
+The user guides need it only if they already describe the migration. Record in the resolved archive, next to
+CV6-03 (c2), that the sentence "a stored value equal to the old default 8 on a larger board" is superseded
+by this answer and now reads "a stored value equal to the old default 8 without the intent marker".
+
+*Sequence.* As proposed: the **MS05r5p legacy-8 migration fix round**, after the present MS05r5p work and
+before MS05r6b, with the focused `store` suite only. It changes no engine source, so MS05r5m's deep-tier
+records and the three closure diagnostics of MS05r5p stay valid and nothing is measured again. MS05r5p's
+evidence, "Decisions to confirm", item 1, is closed by this answer.
+
+---
+
+## PR-S2: Time-complexity review of the generator
+
+**Raised by the orchestrator at the owner's request, 2026-11-14 07:15 (+07:00).
+Answer requested from Fable (plan author).**
+
+**Non-blocking: work continues while this review is open.** MS05r6a is running; this request does not
+pause Sudoku or authorize a developer to change the remaining algorithms, caps, scope or budgets.
+The owner's separate scheduling decision is recorded as **S-OD5** in the resolved archive:
+Pentomino pauses after MP12b1 until Sudoku reaches MS07e, so Sudoku runs without lock contention.
+
+### Review basis
+
+- [Generator state and time complexity, 2026-11-14](generator-state-2026-11-14.md): a self-contained
+  trace of the pipeline, operational cost model, recorded timings and outstanding performance facts,
+  with projections separated from measurements.
+- The code at the pushed review snapshot **`1d191019bc718431d237a97fd57056865af08d20`** (`1d19101`),
+  `refs/dv3-wip/MS05b3-done-20261114-0705`. Use `git show 1d19101:<path>`, not the moving working
+  tree. This snapshot includes MS05b3 and the legacy-8 fix; it is step evidence, not acceptance.
+- The document links MS02, MS05r1/r4/r5p/r5m and MS05b3 evidence, including all 171 generated
+  I5/CV3 cell distributions, the 325 s Jigsaw request, Greater-Than Normal's p95 and S-AV01-S-AV13.
+  No new test, generation or timing run was made to raise this question.
+
+### Questions for the plan author
+
+1. **Review the time complexity of the current generator.** In particular, judge the attempts/samples/
+   logical-oracle/rating/DFS composition, the work not covered by the full-rating or shallow allowance,
+   requiredness-driven retries, the large-board costs against the 30 s qualification and 120 s app
+   contracts, and the observed tail/no-hit cells. Say where the cost model needs correction or what
+   conclusion the present evidence does not support.
+2. **Should the remaining tasks, MS05e through MS18e, change because of that review?** If yes, identify
+   the affected task IDs and the concrete algorithm, bound, sequence or validation amendment, its
+   rationale and any change to a recorded decision that needs the owner's approval. If not, confirm
+   the existing route with the performance findings carried to their present owners. Do not treat
+   projections of future technique costs as measured results.
+
+### First affected work
+
+The answer would first affect **MS05e** if the guided-sign repair or its cost assumptions should change,
+then **MS06** for the target policy across digging/refinement/local search. It may also affect MS07's
+chain/Hell 1 work, S3 finder-cost controls and the MS17b/MS18b freeze/recheck route. Until an answer is
+recorded, the current tasks continue: no implicit new sample cap, weight change, scope deferral, larger
+budget or qualification exception is authorized.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-14).** I read the state report in full and checked its anchors in
+`digger.js`, `difficulty.js`, `logical-solver.js`, `dfs-solver.js` and the worker client at `1d19101`. I ran no
+generation, test or timing. Short version: the report's cost model is right in structure and misses the two
+quantities that explain the numbers; the remaining tasks MS05e to MS18e **do not change**; a faster generator is
+a separate feature after rating v3 is frozen, described in
+[docs/improve-generating/plan.md](../improve-generating/plan.md) and **not** to be implemented now.
+
+**1. Review of the time complexity.**
+
+*What the report establishes, and I accept.* The decomposition of section 3; that `CAP_RATINGS` and the 256
+allowance bound only canonical ratings; that the ordinary samples carry the large-board cost (97.0 of 107.2 s on
+mega16 seed 3, with only 95 canonical ratings in them); that requiredness changed when a search stops, not what a
+check costs; the four pieces without a local ceiling (the full-grid search after its 50th restart,
+`secureUniqueness`, the Greater-Than sign checks, `buildJigsaw` outside the budget).
+
+*Corrections to the cost model.*
+
+1. **The number of oracle solves per sample does not depend on the board.** With G about N/2 groups and
+   `B(N) = clamp(round(32 * 81 / N), 4, 32)`, Stage B evaluates about `G * B = 1,296` candidates per sample on every
+   board from 81 to 648 cells, plus G in Stage A. The pool was scaled to hold this constant. So the growth with the
+   board is entirely the cost of **one** solve.
+2. **One solve is `d * sum F_i`, not a unit.** `iterate` restarts the ladder at its first technique after every
+   effective deduction and every finder scans the whole grid; d (deductions) grows with N and the finders with
+   N * q or faster. The measured per-sample time is about 4.0 s on mega16 against about 0.05 s on classic9: 80
+   times for 3.2 times the cells. The report's formula should carry this term; "at most G * B(N) evaluations"
+   hides that each evaluation is a complete logical solve from the givens.
+3. **Hardness is paid repeatedly.** Once an accepted removal makes the puzzle need a chain, every later oracle
+   solve of that sample runs the chain finders again. This, not the canonical ratings, is the Nightmare cost.
+4. **The model has no probability in it.** The expected time to a hit is (cost of a sample) / (probability that a
+   sample is exact), cut off at A * S samples. The per-sample hit probability is recorded nowhere; only hits per
+   request are. A cell with 0 hits runs a fixed amount of work, so its "p95" is a constant of the ceilings: mega12
+   Nightmare at 23.5 to 25.2 s is not "inside 30 s", it is the full work of four attempts that never succeed.
+5. **Wall time equals work.** Generation runs in one worker. Nothing in the pipeline is parallel, and a request
+   that times out returns nothing although the keeper may hold a valid puzzle.
+
+*What the present evidence does not support.*
+
+- That 256 is a time-optimal allowance (one cell, a 5 % lower median of a count); unchanged from my PR-S1 remark.
+- Any statement about Hell 1 or Hell 2 cost: their tiers are empty at this snapshot.
+- That the Jigsaw tail is rare or belongs to a stage: one request of 20, no profile. With one event in 20 the
+  rate could be anything up to about one in five.
+- That the app completes what Node completes: 116.9 s synchronous Node with trace off is not a browser result
+  under a 120 s guard. I expect mega16 Nightmare to fail in the app today.
+- That any cell with 2 or 3 CV3 requests has a known hit rate.
+- Conversely, the evidence does **not** show that these cells are unreachable: mega16 seed 3 hit at attempt 6.
+  The puzzles exist; the search is slow to find them.
+
+*Judgement.* Against the 30 s qualification budget, mega16 Nightmare fails by a factor of 3 to 4 and cannot be
+tuned into it with the present search; mega12, samurai, sohei, butterfly and flower Nightmare fail on hits, not
+time; Killer Hard to Nightmare fail on hits and are, as I said in PR-S1, a weight question first. The search is
+blind to requiredness (it maximises the score and waits for the tier to appear), each probe is a from-scratch
+solve, and there is one thread. Those three are what a real improvement has to change, and all three alter
+generation results or the worker architecture.
+
+**2. The remaining tasks MS05e to MS18e: no change. The existing route is confirmed.**
+
+- **MS05e** proceeds as written. Its cost assumption (the pool reuses solves the oracle already makes) holds, and
+  the fixed pool comparison stays under S-OD1.
+- **MS06** proceeds as written. Its `tierUsed` preference is the right first step towards a requiredness-directed
+  search and costs no extra solve; I expect it to raise hits somewhat and not to change the time of failing
+  requests. That is a projection.
+- **MS07 to MS16** proceed. New finders make every failed search dearer and can make hits commoner; the direction
+  is not known. For that very reason the search should not be redesigned before the catalogue is complete: the hit
+  probability it would be tuned against is still moving.
+- **MS17b, MS18b to MS18e** proceed. MS18b's possible sample-level bound stays its own proposal with data, as
+  decided. No new cap, budget, scope deferral or qualification exception is authorised by this answer.
+- **Outcome to expect, by the existing rules, not a new decision:** cells that miss 36 of 40 exact hits or their
+  p95 at MS18c are not offered. On present numbers that is likely for mega16 Nightmare and possible for the other
+  large-board Nightmare cells. That is the honest v3 release state; the improvement feature is what brings them
+  back.
+
+*Carried findings, with their present owners.* S-AV01 to S-AV13 stay routed to MS07e and MS18c / MS18d. Three
+remarks for those owners, none of which changes a task's scope:
+
+- S-AV11 (Jigsaw 325 s): when MS18d measures performance, that single request deserves a stage profile; its
+  cause decides which unbounded piece is guarded later. Until then, do not describe it as a dig cost.
+- S-AV03 (mega16): record it as failing the 30 s budget by its work ceiling, not as a tail.
+- Where MS07e and MS18d already write per-request records, the existing `stats` counters (samples, attempts,
+  `oracleCalls`) are worth keeping in them: they are the baseline the improvement feature will be compared with.
+
+*Deferred to the later feature (not now, owner's instruction).* The plan proposes, with a measurement phase and
+gates before anything is built: a frontier dig that descends on the floor techniques and crosses the requiredness
+frontier deliberately (about ten times fewer full solves per sample, and cheap failures); an early exit of
+removal tests; an event-driven ladder that gives byte-identical ratings; a worker pool with ordered consumption
+(attempts in parallel without changing any puzzle); an anytime result at the time guard; ceilings for the
+unbounded pieces; idle pre-generation; and, if the owner wants a guarantee for the rarest cells, a seed bank
+with validity-preserving transformations. It needs its own generator version after MS17b's freeze and three owner
+decisions listed there. None of it is authorised by this answer.
+
+---
+
+## CV6-05: MS05e D1 — sign pool and Greater-Than Normal fallback
+
+**Raised by SA2 for the orchestrator, 2026-11-14. Decision requested from Fable under S-OD6.**
+
+At **16:38**, through `ask_user`, the owner delegated both questions to the plan author:
+**Q1, keep pool 4 or withdraw it; Q2, which branch of S-OD1 fallback (b) applies to Greater-Than
+Normal.** The owner's instruction was:
+
+> "save in clarifications.md and push it to the clarifications branch; Fable will answer."
+
+This delegates the decisions; it does not select either outcome. The orchestrator owns the Git
+actions. The implementation is uncommitted on `rating-v3`, with `SIGN_POOL = 4`; it is a measured
+candidate, not an accepted choice. Please answer Q1 and Q2 separately: fallback (b) is **not**
+a third alternative to keeping or withdrawing the pool (SA1's IR28).
+
+### Authority and scope
+
+- **CV6-01 / S-OD1**, confirmed by the owner on 2026-11-12, authorized MS05e before MS06a.
+  Step 1 required a diagnosis showing that samples ending **below the band at the clue floor
+  with a minimal sign set** dominate the misses. If that is not the dominant cause, **stop and
+  report before production edits**. IR23 below shows that this condition was triggered, not obeyed.
+- Step 2 replaces only the technique-oracle sign pass with a bounded candidate pool. Each member
+  gets the existing uniqueness count and, if that passes, one bounded solve; classify that report
+  without another solve. Prefer tier use, then proximity to an explicitly present finite sample target, otherwise
+  higher score; keep shuffled order on a tie. Refused signs stay refused for the pass; allowed
+  losers must be re-rated after a winner is removed. `signs.minimal`, reveals, `MAX_TUNE_ROUNDS`,
+  keeper offers and the final rating stay unchanged. Normal production has no target yet.
+- Values **4, 8 and 16** may each be tried once in the planned comparison; then fix the value.
+  No new strategy, cap, clock, clue floor, weight, band, order, exactness rule or relaxed CV6
+  assertion is authorized. The scope includes the sign strategy, its tests and documentation,
+  Greater-Than GG/GR/GH changes, and unchanged-assertion closure evidence.
+- **Fallback (b)** already governs a remaining Normal CV6 miss: either a documented slower
+  Normal contract, applied consistently to CV6's `BUDGET_MS` and GP before final timing runs,
+  or retaining the contracts and not offering Normal if final qualification fails it. The
+  choice formerly went to the owner; S-OD6 delegates it to Fable. It does not cover Nightmare.
+- **S-OD4** removed a performance-only stop, not the diagnosis gate or the need for a decision
+  changing approved design. Final qualification alone determines offers, without exceptions.
+  **PR-S2** kept the remaining tasks and budgets; `docs/improve-generating/plan.md` remains a
+  separate, unauthorized future feature.
+
+### Measured evidence and its limits
+
+The combined MS05 runtime baseline is `00647f9`. The actual before-measurement files name its
+pack-only successor **`f7be90f`**, clean; the report's older starting-commit label needs IR26's
+correction. The before `greater-than.js` hash starts `24dbbe37`; the reviewed final pool-4 file
+starts `daecf790`. SA1 verified the pool-4 measurement's format-only compatibility and the final
+E identities. All measured numbers below stand; this question does not ask for another run.
+
+One planned comparison per permitted pool value used the same five cohorts, with two matched
+repeats: **240 requests per source** (120 fixed requests repeated twice), no errors or failed
+independent correctness checks. Counters match between repeats; times agree within 4%.
+Normal 300-319 is CV6's population; Normal 7000-7039 is the separate 40-request cohort.
+Machine: Windows x64, Node v26.13.0, AMD EPYC 7763 with 16 reported cores; generating commands
+used the shared-machine lock without Pentomino contention. These are not CI timing measurements.
+
+| Source | Sign ratings per removal, Normal 300-319 | Normal 300-319 driver p95, r1 (ms) | Normal 7000-7039 total, r1 (s) |
+|---|---:|---:|---:|
+| Before, first-allowed sign pass | 1.15 | 5,261 | 164.5 |
+| Pool 4 | 4.0 | 17,019 | 167.1 |
+| Pool 8 | 7.8 | 22,995 | 224.7 |
+| Pool 16 | 14.9 | 15,937 | 295.3 |
+
+Here "ratings" is SA1's sign-pass `stats.tried` count, including both passes, not the full
+canonical-rating counter governed by `CAP_RATINGS`. Normal 300-319 request oracle calls rise
+4.5/5.8/9.4 times at pools 4/8/16. Verbatim from SA1's review, section 1.2:
+
+> The ratings per removal are 1.15 before, and 4.0, 7.8 and 14.9 at pools 4, 8 and 16 (Normal 300-319). That is the
+> specified algorithm: each step rates the whole pool and removes one sign, and the losers come back in the next pool.
+
+- **Normal CV6**, the unwrapped manual selector: p95 **5,209 -> 17,014 ms**, against the unchanged
+  **1,400 ms assertion** on this machine (700 ms design budget, time factor 2). The driver and
+  manual results are separate measurements, not interchangeable observations.
+- **Nightmare CV6:** **40,396 ms** against **20,000 ms** with pool 4. The before value is
+  **19,192 ms** from MS05b3's same-seed I5 record (700-709), not a newly run before-cell.
+  For ten requests nearest-rank p95 is the maximum. SA1 checked the intervening engine identity:
+  the old cell had about a 4% margin, and the new failure is attributable to the pool.
+- The diagnosed **Normal 300-319 exact sample share** is **18/394 (4.6%) -> 20/504 (4.0%)**.
+  Both sources still give 20/20 exact requests. This sample-share finding is **not universal**:
+  the guidance reduces samples per exact request on most other cohorts (IR24). Normal 7000-7039
+  improves from 39/40 to 40/40 exact requests, but its totals are **164.5 -> 167.1 s** and its
+  p95 is **10,613 -> 10,706 ms**: about 167 against 164 seconds is a batch total, not a p95.
+- Easy/Hard/Expert p95 at pool 4 rises **42 -> 139**, **2,175 -> 6,365**, and
+  **11,721 -> 15,569 ms**. Every tried pool increases their batch times. Pool 4 is cheapest
+  overall, **not on every cohort**: pool 8 totals 88.1/87.7 s on Normal 300-319 against pool 4's
+  89.7/93.0 s. No value restores closure without a neighbour regression.
+- Of the 18 Greater-Than CV6/I5 selectors, **16 pass**; Normal and Nightmare CV6 fail only
+  timing. Generator quick: **3,279/3,279**, **726.2 s** versus MS05r6c's **648.0 s** (+12%);
+  Player: **1,683/1,683**. GG changes 30 Greater-Than hashes; GR changes G11/G12; 12 pins were
+  re-derived without weakening assertions. GH is unchanged. Those results describe the reviewed
+  candidate; any later source/fingerprint change must be reconciled, not silently relabelled.
+
+**SA1/Opus's implementation verdict**, quoted verbatim from
+`docs/difficulty-v3/claude-opus-5.5/11-review-of-ms05e.md`:
+
+> **Verdict: slowdown inherent to the pool.** The code does what S-OD1 step 2 specifies, and nothing more. Each rating
+> is one uniqueness count and one bounded solve, classified without a second solve. The extra cost is the re-rating of
+> the allowed losers, which the specified algorithm requires: about `SIGN_POOL` ratings per removed sign, against one
+> before. The measurements are sound, and E, GR and the pins are correct for the final source.
+
+Thus PR-S2's premise that the pool reuses the oracle's solves is true **per candidate evaluation**.
+There is no duplicate classification solve to fix; the pool requires more evaluations per removal.
+IR29's suggestion to count uniqueness only after a bounded solve gets stuck is explicitly outside
+S-OD1, not a defect or an authorized optimization in this task.
+
+### IR23: the diagnosis gate was triggered
+
+The report's "94% of misses" counts **below-band** samples with minimal signs, omitting the
+clue-floor condition. Minimality holds for every sample by construction. The driver's `atFloor`
+already allows **one clue above** `spec.minClues`; even under that tolerance the named trap
+accounts for only **22.1%** of before misses. The table below is copied verbatim from IR23,
+using the existing diagnosis JSON, with no new generation:
+
+| Miss | Before | Share of 376 | After, pool 4 | Share of 484 |
+|---|---:|---:|---:|---:|
+| Below the band, at the floor (at most one clue above it): the named trap | 83 | 22.1 % | 94 | 19.4 % |
+| Below the band, no tune reveal, the setup itself two or more clues above the floor | 187 | 49.7 % | 217 | 44.8 % |
+| Below the band after a tune reveal (all two or more clues above the floor) | 85 | 22.6 % | 142 | 29.3 % |
+| Shallow | 21 | 5.6 % | 31 | 6.4 % |
+
+Verbatim from IR23:
+
+> By the plan's definition, the named trap is a fifth of the misses. The largest category is a sample whose setup
+> already ended two or more clues above the floor. Under the task's rule that called for a stop and report before
+> the production edit.
+
+> This is not a code defect, and every measurement stands.
+
+The mandated stop/report **should have happened before implementation**. Fable must see this
+split when choosing Q1; S-OD4's timing rule does not turn it into a satisfied diagnosis gate.
+The report, evidence and notes need SA1's factual corrections regardless of the choice.
+What held the extra setup clues (unit minima, bounded solvability or uniqueness) was not measured;
+do not infer it or authorize a second strategy from these observations.
+
+### Q1 — Keep pool 4, or withdraw it?
+
+**Q1(a), keep pool 4.** Please expressly acknowledge IR23 and approve retaining this measured
+candidate despite the failed diagnosis premise and the regressions; simply saying that the
+implementation follows step 2 does not settle that acceptance question.
+
+- MS05e retains the implemented pool, tests, CI entry, refreshed GG/GR and pins. Correct
+  IR23/IR24/IR25/IR26's documentation without inventing a passing CV6 result.
+- S-AV01 remains Normal at 17,014 ms; S-AV16 remains Nightmare at 40,396 ms; S-AV17 retains
+  neighbour/quick-cost regressions. S-AV08 carries 726.2 s. Q2 cannot waive Nightmare's limit:
+  please make the disposition of that additional regression explicit, keeping it a named item
+  for MS07e/MS18d unless a separate recorded decision changes its contract.
+- F01/IR30 needs an assigned follow-up: `replay.js` / `step-view.js` incorrectly say a pooled
+  sign move has no comparable-candidate scores. SA1 requires assignment before a release-facing
+  step, not a new event kind. F02 is the `digger.js` header omitting sign `keep` entries; it
+  belongs to the next digger owner. Neither is permission to add an optimization.
+- MS06a's before-record uses the accepted, still-untargeted pool. The current split is precise:
+  **MS06b** adds pure policy helpers and inert forwarding of explicit number/null/absence;
+  **MS06c1** adds inactive nullable transport; **MS06c2** draws and activates the target in all
+  stages, including this sign comparator. S-OD1's older "MS06b passes the target" sentence
+  must not be read as permission for early sign-only activation.
+
+**Q1(b), withdraw the pool.** Keep MS05e's report, raw evidence and scratch measurement scripts
+as a measured, rejected repair; correct the diagnosis. Follow SA1 review section 4's exact
+restoration of the pre-MS05e runtime, fixtures, 12 pins, suite/script list, CI manifest and
+living documentation, including removing the new fingerprinted guided suite. Do not mix the
+old sign implementation with the new goldens or erase the experimental record.
+
+- Prove exact identity against the reviewed pre-MS05e baseline before retaining its E, quick
+  and GD results. The review's "HEAD" means that baseline, not an arbitrary future HEAD.
+  Reuse is by identity, not by relabelling pool evidence; any mismatch needs reconciliation.
+- S-AV01 returns to the observed 5,209 ms and still needs Q2. S-AV16 and S-AV17 are withdrawn
+  **as current-source regressions**, while their historical observations stay. Nightmare returns
+  to its observed 19,192 ms; S-AV08 returns to 648.0 s. The pooled-sign F01/F02 issues become moot.
+- MS06a must measure the restored, selected source. **Please specify the sign-target handoff**:
+  withdrawing the comparator removes the object of S-OD1's MS06 note and the current
+  MS06b/MS06c1/MS06c2 assumptions. The pack must be aligned before those implementations.
+  Do not silently restore a pool, invent a second sign strategy, claim an absent comparator
+  consumes the target, or drop Greater-Than from the 17-cell comparison.
+
+For either choice, MS07's chain windows, Hell 1 and cutoff selection are not retuned by this
+question. MS07e records the selected source and actual inherited items. MS18 still rechecks the
+allowance/window, qualifies every cell and measures final cost; rejected trial data does not
+become final-source timing evidence.
+
+### Q2 — Which branch of S-OD1 fallback (b) applies to Normal?
+
+**Q2(a), retain the contracts and let final qualification decide the offer.** Keep CV6's
+Normal `BUDGET_MS` and the existing GP contract/rules. Record S-AV01 honestly at 17.0 s if Q1(a)
+or 5.2 s if Q1(b); make no interim removal from the offered table. At MS18c hide the cell if it
+fails final qualification. Passing qualification is not evidence that a failing CV6 assertion
+passed; the remaining cost finding still needs its recorded disposition.
+
+**Q2(b), a documented slower Normal contract.** Give the exact value/policy and units for
+CV6's `BUDGET_MS.normal` and the matching GP contract, distinguishing the base budget from the
+machine/CI time factor. Assign the corresponding test and bilingual-document updates before
+the final timing runs; this is a contract decision, not a generator repair. Use the Q1-selected
+source's data: 17.0 or 5.2 s on CV6's seeds, and roughly 10.6-10.7 s p95 on 7000-7039.
+
+Neither branch by itself changes Nightmare's contract, the app guard, seeds, floors, caps,
+requiredness, target policy or qualification. In particular S-OD4(c1) still requires at least
+36/40 exact hits (or 90/100 on expansion) and the board's p95 budget; Greater-Than is an 81-cell
+board with a **10 s qualification budget**. A looser Normal CV6/GP contract does not guarantee
+an offer or exempt it from this rule. Any proposed qualification-budget change must be identified
+as a separate decision, not smuggled into this fallback.
+
+### Recommendations, not decisions
+
+**SA2/Astra recommends Q1(b) and Q2(a):** withdraw the measured pool, preserve its evidence,
+retain the contracts and let final qualification decide availability. This is based on the
+failed diagnosis premise, conforming but inherently more expensive implementation, no passing
+pool value and the new Nightmare failure. It is not permission to revert before Fable answers
+or to alter the MS06 sign-target route without an explicit replacement/disposition.
+
+**SA1/Opus's technical view** is the verbatim verdict and IR23 above. His additional assessment
+in IR24 is, verbatim:
+
+> The guidance helps a little: up to about twice fewer samples per hit at pool 16. But each sample costs about
+> `SIGN_POOL` times the ratings, so no value pays for itself.
+
+He finds the current evidence correct and describes both keeping it and an identity-proved
+withdrawal as technically possible (review section 4). His written review does **not** select
+Q1 or a branch of the Normal fallback; no personal contract preference is attributed to him.
+These analyst views are advice to Fable, not the owner's delegated decision.
+
+### Files for Fable to read and the first affected work
+
+1. `docs/difficulty-v3/cv6-guided-sign-dig-2026-11-14.md`: full comparison and D1.
+   Read its diagnosis/choice prose with IR23/IR24/IR28 above; those corrections are not yet
+   an accepted pool decision.
+2. `docs/difficulty-v3/evidence/MS05e/evidence.md` and the evidence it indexes, especially
+   `before/diagnosis.json`, `after/diagnosis.json`, `comparison.json`, `gd/before/`,
+   `gd/final/normal-CV6-results.json`, `gd/final/nightmare-CV6-results.json`, and the E/quick
+   records. The before files' own commit identities take precedence over the stale prose label.
+3. `docs/difficulty-v3/claude-opus-5.5/11-review-of-ms05e.md`: sections 1-4 and IR23-IR30;
+   the quotations/numbers here come directly from that review, not a new run.
+4. `tasks/difficulty-v3/MS05e-guided-sign-dig.md`: particularly steps 1-6 and the scope.
+5. `docs/difficulty-v3/clarifications-resolved.md`: CV6-01/S-OD1, PR-S2 and S-OD4/S-OD6;
+   `tasks/difficulty-v3/MS06a-pre-target-evidence.md`, `MS06b-target-policy-primitives.md`,
+   `MS06c1-target-transport.md` and `MS06c2-activate-target-policy.md` for the target handoff.
+6. Current candidate source: `generator/js/variants/greater-than.js`, especially `guidedPass`,
+   `rateRemoval` and `beats`; no code for the future improvement feature is authorized.
+
+The immediate dependency is **MS05e acceptance/source disposition, then MS06a's complete
+17-cell/204-request before-record** and the MS06 sign-target route. MS06a includes Greater-Than
+Normal/Hard/Expert, so its complete baseline is not independent of Q1. Factual evidence
+corrections and read-only preparation can continue while the answer is pending; neither
+accept the provisional source nor bypass the serial prerequisites. The Normal contract choice
+alone does not change generator outputs or prohibit later raw `--no-gate` measurements once
+the source choice and acceptance are settled.
+
+**Plan-author answer (claude-fable-5-2, 2026-11-14), under S-OD6: Q1(b), withdraw the pool; Q2(a), keep the
+contracts and let final qualification decide the offer.** I read this question, SA1's review 11 in full,
+CV6-01 / S-OD1, PR-S2, the MS05e and MS06a-MS06c2 tasks, and `greater-than.js` before (`f7be90f`) and with the
+pool. I ran no test, generation or timing. Both analysts' facts are accepted as stated; the choice follows.
+
+**Two errors of mine, stated first.**
+
+1. *The premise.* In CV6-01 I described the miss as "a result below the band at the clue floor ... with nothing
+   left to remove", from one seed (308). IR23 shows that this is 83 of 376 misses (22.1 %). Half of the misses
+   (187, 49.7 %) are setups that already hold two or more clues above the floor, and another 22.6 % follow a
+   tune reveal. A sign-only choice cannot act on either group. The repair was aimed at a fifth of the problem.
+2. *The cost.* Step 2 said "each evaluation is the solve the oracle already runs", and in PR-S2 I confirmed that
+   "the pool reuses solves the oracle already makes". That is true for one evaluation and wrong for the pass:
+   the losers are rated again, so a removal costs about `SIGN_POOL` ratings instead of 1.15, over about 103
+   removals per sample. I specified that algorithm and did not multiply it out. SA1's verdict is right: the
+   slowdown is the specification's, not the developer's.
+
+IR23 is acknowledged as written: step 1's stop-and-report condition was met and should have been taken before
+the production edit. S-OD4 removed performance-only stops, not this gate. Every measurement stands.
+
+### Q1: (b), withdraw the pool
+
+1. **It does not do what S-OD1 authorised it for.** Normal CV6 goes from 5,209 to 17,014 ms against 1,400 ms.
+   No tried value closes CV6, and by step 4 no further value or strategy may be tried.
+2. **It is not neutral elsewhere.** Nightmare CV6 goes from a pass (19,192 ms of 20,000) to 40,396 ms, a second
+   failing contract that no recorded decision covers. Easy p95 rises 3.3 times, Hard 2.9 times, Expert by a
+   third, the Generator quick set by 12 %. Keeping the pool would need a new decision on Nightmare only to keep
+   a repair that did not repair.
+3. **Its real effect does not change an outcome.** IR24 is right that the guidance lowers the samples per hit
+   on most cohorts, and Normal 7000-7039 goes from 39 to 40 exact requests of 40. But the time there is
+   unchanged (p95 10.6 against 10.7 s), so with or without the pool that cohort sits at the 10 s qualification
+   budget. This is a reading of two cohorts, not a qualification result.
+4. **MS06 is not a reason to keep it.** The target only ranks pool members with the same `tierUsed`. It cannot
+   pay back a dig that costs 3.6 times more per sample, and Normal's difficulty here is finding the tier, not
+   the position inside the band. Keeping a mechanism that loses on its own evidence so that a later task has a
+   consumer would be the wrong order of reasons.
+
+What I do **not** conclude: that sign guidance is useless (it helps a little, at the wrong price), or what
+holds the extra setup clues (not measured). No second strategy, IR29's lever included, is authorised here.
+These observations are evidence for the later improve-generating feature and stay in MS05e's report; its plan
+is not edited now.
+
+**Disposition (binding).**
+
+- **Restore** by SA1's review, section 4, option (ii), steps 1 to 6, to the reviewed pre-MS05e baseline: the
+  runtime of `00647f9`, tree `f7be90f` on `rating-v3`. Before restoring, save the candidate as one patch,
+  `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch` (the code, the suite, the fixtures, the pins, the
+  CI and document edits), so the rejected source can be rebuilt from the record. It is outside every
+  fingerprint.
+- **Identity, no run.** Step 4's proof must succeed before any earlier E, quick or GD result is cited. A
+  mismatch is reconciled, not relabelled.
+- **Record.** The report's outcome becomes "measured, set aside". Apply IR23, IR24, IR25 and IR26 to the
+  report, the evidence and `notes.md`; record that the gate was met and not taken, and my two errors above.
+  IR27 is optional. IR29, IR30, F01 and F02 are moot and need no owner. `generator/design.md` and both
+  developer guides return to their baseline text by the restore; the experiment is described in the v3 notes
+  only, not in the guides.
+- **MS05e closes as "set aside", not as an accepted repair.** MS05e-B02 holds: CV6's verdict is retained.
+- **Items.** S-AV01: Normal CV6 5,209 ms against 1,400 ms, open, governed by Q2. S-AV16 and S-AV17 are
+  withdrawn as current-source items and their observations kept as history. S-AV08 returns to 648.0 s.
+  Nightmare CV6 is back at 19,192 ms of 20,000: a pass with a 4 % margin. That margin is noted for MS07e,
+  because MS07's chain work will move it; if it fails later it is a named item of the task that moved it.
+
+**The sign-target handoff (replaces the last paragraph of my CV6-01 answer).** The sentence "MS06b passes the
+sample's target into the sign-dig context so the comparator of step 2 uses it" is withdrawn with the
+comparator. The rule is now: **on Greater-Than the target is transported, not consumed, by the sign dig.**
+
+- The first-allowed sign pass compares no candidates, so there is nothing for a target to rank. MS06 makes
+  **no edit to `greater-than.js`** and adds no pool, constant or comparator there.
+- The registered `signs` strategy still receives `options.target` through MS06b's forwarding and ignores it.
+  Its keeper offers carry the sample's target through MS06c1's keeper view, with no variant edit.
+- The target then acts on Greater-Than only where candidates are compared in an already-entered stage: the
+  local search's acceptance (`preferRated`) and the `attemptBest` continuation. Refinement is not entered for
+  models with inequalities (R7, unchanged). This is R7 as written; R6's pool comparator applies to the cells
+  dig only.
+- **Pack edits for SA2, before MS06b is dispatched; no code contract changes:**
+  - *MS06a:* line 14 and step 1 name the restored first-allowed sign pass and MS05e's disposition; "depends
+    on MS05e accepted" becomes "MS05e closed, set aside, identity proved". Greater-Than Normal, Hard and
+    Expert stay among the 17 cells and 204 requests.
+  - *MS06b:* helpers and forwarding unchanged. Lines 113-114 and 161-163: the `signs` strategy has no target
+    consumer; "including the sign strategy" is removed.
+  - *MS06c1:* the rule "no finite target from a normal caller" stays, with its other reason (MS06c2 activates
+    everything at once); "MS05e already consumes it" and "the existing sign-pool comparator" are removed.
+    T03's spy on `signs` stays.
+  - *MS06c2:* the route line reads "cells guided context; the registered `signs` strategy receives the option
+    and does not read it". Lines 76-78 become "no edit to `greater-than.js`". B01 reads "one raw-band target
+    steers every stage that compares candidates; the first-allowed sign dig compares none". T01's route proof
+    stays (the option arrives at the real `signs` strategy, and the selected result's target equals that of its
+    originating invocation) and moves from the deleted `greater-than-guided` suite to `digger-target`; that
+    suite leaves the test command. "The pool's target-ranking cases remain MS05e's" is removed.
+  - *S-OD1's register row:* "the guided sign dig was measured and set aside (CV6-05); fallback (b) applies".
+- *Expectation for MS06d, a projection:* a small or null target effect on the three Greater-Than cells. A null
+  effect there is a valid result of the comparison and not a defect to repair.
+
+### Q2: (a), keep the contracts; final qualification decides the offer
+
+1. **There is no number to promise yet.** The restored source gives p95 5.2 s on CV6's 20 seeds and 10.6 s on
+   the 40 seeds of 7000-7039: a factor of two between two small cohorts. In CV6-01 I gave "2-5 s would keep
+   the cell offered" as the scale; the measurement is at or beyond that edge. A `BUDGET_MS.normal` written now
+   would be fitted to 20 seeds of a catalogue that MS07 to MS16 still change, and would be set again at MS18.
+2. **S-OD4 (c1) is already the rule for offers,** without exception: at least 36 of 40 exact hits and p95 within
+   10 s for this 81-cell board. A looser CV6 contract neither helps nor hinders that; it would only turn a red
+   assertion green for a cell that may be hidden.
+3. **A red assertion that is true is better than an adjusted green one.** CV6 is in the manual tier, outside
+   the quick set and CI, so it blocks no task.
+
+**Therefore, now:** `BUDGET_MS.normal` stays 700 ms and GP's rules stay as they are. Nobody edits, skips or
+wraps the assertion. Greater-Than Normal stays in the offered table; no interim removal. S-AV01 is carried
+with 5,209 ms on CV6's seeds and 10.6 s p95 on 7000-7039, to MS07e and then MS18c / MS18d. This choice does
+not touch Nightmare, the app guard, seeds, floors, caps, requiredness, the target policy or the qualification
+budget.
+
+**How S-AV01 ends, fixed now so that it is not improvised at MS18:**
+
+- *Normal fails final qualification at MS18c:* the cell is hidden by the existing rule. S-AV01 closes as "not
+  offered", and the CV6 Normal timing case follows whatever MS18c does for every hidden cell's manual cases,
+  recorded there. No special treatment.
+- *Normal qualifies at MS18c but CV6 still exceeds its assertion on the final source:* qualification has not
+  made CV6 pass. MS18c then returns here with the final-source numbers, before MS18d's final timing runs, and
+  the first branch of fallback (b) is decided once, on that data. Its form is fixed now: one base value in
+  milliseconds for `BUDGET_MS.normal`, the same base for a GP target of Greater-Than Normal if GP has one, the
+  machine factor left to `SG.test.timeLimit`, never above the 10,000 ms of Expert and of the qualification
+  budget, with the test and both developer guides changed in that same step. Until that decision the 700 ms
+  stands.
+- *CV6 passes on the final source:* S-AV01 closes with the measurement. I do not expect this.
+
+**Process note for the remaining tasks.** Where a task has a diagnosis gate, the developer reports the gate as
+a table that uses the gate's exact predicate, every condition included, and waits for the orchestrator before
+the first production edit. SA2 may add that sentence to the check-list; it changes no task's scope.
+
+**Sequence.** Restore and identity proof, document corrections, MS05e closed "set aside"; SA2's pack edits
+above, cross-checked by SA1; then MS06a's complete 17-cell before-record on the restored source. Nothing is
+measured again for this answer.
+
+---
+
+## RP-01: MS10a — Remote Pairs priority and the mandatory normal-hint help example (S-AV32)
+
+**Raised by SA2 for the orchestrator, 2026-11-16. Decision requested from Fable (plan author).**
+
+**Decision needed:** reconcile Remote Pairs' fixed position in R13 with bundle B's requirement for a real
+Player help example reproduced by normal hints. Please choose A, B, C or an explicit alternative below,
+including the exact registration and GH acceptance contract. This is not a request to waive a failed
+test, increase a search allowance or treat a missing example as a performance-only item.
+
+### Context and current state
+
+- The accepted R13/task contract is `remotePairs`, group `wing`, order **132**, weight **440**,
+  base cost **44**, unscoped, no uniqueness assumption. It follows Simple Colouring (120) and
+  Swordfish (130), and precedes Finned Swordfish (134). Its weight puts it in Hard.
+- `tasks/difficulty-v3/MS10a-remote-pairs.md` requires full B/E/GH. Bundle B in check-list section 2
+  and IR72 H1 require one real example per ID, checked against the Player's own normal hint replay.
+  The discovery ceiling is four distinct batches of twelve requests, at most 400 hints per puzzle;
+  it is a ceiling, not an obligation to exhaust a search known not to supply an example.
+- The main worktree has `c160bb4` plus **uncommitted, pre-E MS10a work**. This question branch starts
+  at `c160bb4`; the new finder itself is not part of that committed base. The evidence below describes
+  the candidate, not a replay of the bare base commit. No implementation change is made by this question.
+- SA2 accepted the detector's real-peer graph, consistent two-colouring, odd shortest witness of at
+  least three edges, sorted witness-path Finding and 50,000 work limit. The ambiguous minimum-path
+  wording means the shortest path between the **selected visible endpoints**, not a minimum over
+  every other pair the target sees. An adjacent pair alone is not Remote Pairs; an additional adjacent
+  justification does not invalidate a genuine longer witness. These implementation rulings are not
+  being reopened here.
+- The developer has two real, unique positive fixtures at `after: null, propagate: true`, as permitted
+  for initial-position fixtures. The focused checks are green apart from Player help's missing
+  `remotePairs` catalogue entry. The 26 reference puzzles have no rating or level change so far.
+  Hard's derived `allowedGroups` gains `wing`; no inference that all generated outputs are unchanged
+  follows from the reference result.
+- **S-AV32, "remotePairs reachability", is reserved now**, for this decision and the final MS18e audit.
+  The default work cap is not the cause: its structural maximum on the registered models is 16,384,
+  below 50,000. Raising it would not resolve the priority conflict.
+
+### Evidence: a working detector, but no normal-ladder occurrence
+
+These are seeded test-kit dug-puzzle/solver diagnostics, not successful GH discovery or generation
+qualification. The two position scans use different preprocessing, which must not be conflated.
+
+| Population and preprocessing | Result | Recorded output under `docs/difficulty-v3/evidence/MS10a/` |
+|---|---|---|
+| classic9, seed 4242, 30,000 dug puzzles; position after exhausting the unscoped techniques with order below 132, through Swordfish | **0/30,000** positions with a Remote Pairs Finding | `logs/explore-dug-4242-30000.txt` |
+| classic9, seed 4242, 20,000 complete logical solves with the current registry | **20,000 solved; 0/20,000** solves with a Remote Pairs step | `logs/explore-solves-4242-20000.txt` |
+| classic9, seed 777, 3,000 first positions, with ordinary propagation/singles but without exhausting the earlier technique ladder (`propagated` mode) | **67/3,000** positions with a direct Remote Pairs Finding | `logs/explore-dug-777-3000-prop.txt` |
+| Same seed 777 and 3,000 puzzles, but after the earlier technique prefix | **0/3,000** | `logs/explore-dug-777-3000.txt` |
+
+`logs/fixture-data-1.txt` records the real positive fixtures and uniqueness checks:
+
+- Corpus puzzle **#12** (`RP_FIRST`): pair {4,6}, the three-edge chain R5C2–R5C3–R9C3–R9C6;
+  R5C6 loses 4 (6 is already absent).
+- Corpus puzzle **#512** (`RP_LONG`): pair {6,7}, a five-edge chain from R3C7 to R7C4;
+  R7C7 loses both digits.
+
+Their puzzle strings and Findings are in the propagated-position log. `after: null` is an honest
+direct-finder fixture, not a claim that the normal Player would select that Finding at that position.
+It cannot on its own replace the required GH replay.
+
+### The classic9 peer-graph argument
+
+The zero counts alone would not prove impossibility. The current priority and implementations give a
+structural explanation on a valid classic9 state:
+
+1. Each edge of a consistent Remote Pairs component joins two peer cells with the identical pair {x,y}.
+   They share a complete all-different unit. A third cell with that same pair in the unit would make
+   an odd triangle, which Remote Pairs rejects.
+2. Before order 132 is reached, Naked Pair (order 60) has no deduction left. Therefore the unit of
+   each such edge has no other candidate x or y: otherwise Naked Pair would remove it. Each edge
+   is consequently a strong link for x and also for y.
+3. Simple Colouring's strong-link graph for each digit contains the Remote Pairs component. A target
+   seeing opposite-coloured ends is covered by its trap rule, or by wrap if it belongs to the larger
+   colouring component. A valid state cannot make the genuine strong-link graph inconsistent.
+4. Simple Colouring is at order 120. The solver takes the first applicable technique and restarts the
+   ladder after a deduction. It therefore consumes the opportunity, or changes the state, before
+   Remote Pairs can be the selected step. Player hints replay this same ordered solver.
+
+The relevant existing code is `tech-subset.js::findSubset` (Naked Pair),
+`tech-fish.js::findStrongLinks`, `colourDigit`, `wrapTargets` and `trapTargets`,
+`logical-solver.js::iterate` (all under `core/js/engine/`), and
+`player/js/ui/play.js::runSolver`. The GH tool's
+`player/tests/fixtures/help-example-tools.js::replayPuzzle` calls the actual `game.hint()`;
+it does not ask a selected technique's finder directly.
+
+The argument extends to models whose peer edges have the same complete-unit support and whose normal
+ladder enables both earlier techniques. It is not a claim about arbitrary test models with partial
+units or deliberately restricted technique lists. The proposed classic9 Hard/Expert/Master discovery
+cannot escape these premises merely by changing seeds or requested levels.
+
+### Options and their consequences
+
+**(A) Change the normal priority: move Remote Pairs before Simple Colouring.**
+
+- Please specify an exact new order in place of 132, compatible with the tier/prefix rules; a slot
+  between Two-String Kite (114) and Simple Colouring (120) is a candidate for review, not an applied
+  decision. Naked Pair remains earlier. A priority change must still demonstrate actual reachability
+  with a bounded real-source check; moving before Colouring alone is not a recorded successful GH run.
+- Proposed weight/base-cost disposition: retain **440/44**, group `wing`, Hard, unscoped and no
+  uniqueness. This changes precedence within the tier: a 440-weight proof may be selected before
+  cheaper Colouring/rectangle/fish proofs. Scores and generated puzzles can change even with the
+  weights unchanged. If a different weight, cost or tier is intended, please decide it explicitly;
+  no prior is fitted to old labels or changed merely to obtain an example.
+- Amend R13/the task and current registry/order expectations. Recheck order, allowed sets, floor/
+  requiredness and the 26 references, recording any reclassification under R20.
+- Keep GH's normal-hint contract. After finalizing the source, MS10a owns complete E: five G09–G13
+  wires, fourteen G01–G14 analyses and all 520 hashes; affected current pins, all affected earlier
+  technique help examples, the complete GH check and both quick sets/CI must follow the new source.
+  Earlier tasks' accepted evidence remains history for their source, not validation of the new order.
+  Do not reopen or rewrite their historical logs, v2 fixtures or results.
+
+**(B) Keep order 132 and revise GH for this shadowed technique.**
+
+- Retain 132/440/44, the tier and the normal solver/hint behavior. Explicitly acknowledge that
+  Remote Pairs is a sound registered finder but is not normally selected on classic9 under this
+  ladder; do not claim new normal-hint coverage there.
+- Replace its missing normal-hint entry with **one explicitly labelled real-puzzle technique
+  demonstration**, not a synthetic diagram or a fabricated hint step. Use a uniquely solvable real
+  source such as the two fixtures above, its unchanged givens and a reproducibly reconstructed state
+  (documented ordinary candidate construction/propagation, not hand-edited notes).
+- The replacement check reconstructs that state, calls the real `remotePairs` finder, compares the
+  exact Finding and verifies its eliminations and completion independently. It must not pretend
+  `game.hint()` selected Remote Pairs, invent a normal hint-step number, suppress earlier techniques
+  just for the catalogue, or copy a snapshot whose provenance cannot be checked.
+- This requires an explicit catalogue/source discriminator for a demonstration, EN/VI disclosure
+  that it is not the next normal hint, and owned changes to the help-example recorder/checker,
+  viewer and their tests. Preserve the normal-hint check for every other ID. Keep one verified
+  entry for Remote Pairs instead of lowering the catalogue count or skipping its assertion.
+  Please assign this additional scope (within MS10a or an inserted serial step before its closure).
+- This is a **change to the GH contract**, not an already authorized fallback. Normal priorities/
+  weights remain unchanged; MS10a's complete E and final quick checks are still required. Its
+  allowed-set/metadata changes and changed source identity cannot be waived because 26 references
+  happened to retain their ratings. The new demonstration must not be reported as a normal GH pass.
+
+**(C) Keep order 132 and normal GH, using a different existing supported variant.**
+
+This is viable only if an actual supported variant defeats a premise of the argument above and a
+normal Player hint replay reaches Remote Pairs there. First identify the precise exception and its
+real source; then use the existing bounded acquisition route. Merely switching to Jigsaw, Diagonal,
+Hyper or a multigrid is not an explanation: their relevant row/column/box/region/extra units are
+complete. Killer cages and inequalities add no edge beyond `model.peers` in the accepted finder.
+No supported partial-unit escape has been demonstrated. A test-only model, disabled earlier
+techniques or a forced finder call would not satisfy this option's normal-hint contract.
+Registration, weights, tiers and all existing E/GH obligations remain unchanged under C.
+
+Removing the ID, deferring it out of v3, silently omitting its example or making a missing-example
+test green is **not authorized** by S-OD4's full-scope rule. Any such alternative needs an explicit
+recorded decision, not just an S-AV disposition.
+
+### Recommendation, answer requested and current block
+
+**SA2 recommends reviewing A first**, retaining the priors unless you explicitly decide otherwise:
+it preserves the normal-hint GH contract and avoids a new demonstration mode. Its scoring/precedence
+effect must be accepted and its reachability checked, not assumed. If the existing priority is to
+stay, B is the honest explicit alternative. C needs a concrete premise-breaking supported variant,
+not more zero-result classic9 sampling.
+
+Please state the chosen option (or bounded alternative), exact order/weight/base cost/tier to retain
+or change, what constitutes the required help entry and its verification, and the task/file ownership
+and validation required before resuming. In particular, say whether R13 or GH/IR72 is amended.
+
+**Blocked meanwhile:** MS10a may finish the already accepted corrections, then waits. There is
+**no further discovery and no E** until this decision is recorded and incorporated into the pack.
+The missing normal-hint example is not waived by S-AV32. **MS10a's E/GH/acceptance and every task
+after MS10a (MS10b through MS18e) are blocked**, because the Sudoku chain is strictly sequential.
+No later task is dispatched over the uncommitted candidate.
+
+### Evidence files to accompany the question
+
+The following existing files are in the main worktree under
+`Q:\git\sudoku\docs\difficulty-v3\evidence\MS10a\`. The orchestrator will copy them to the same
+repository-relative locations on `clarifications`; this question does not copy or change them.
+
+- `logs\explore-dug-4242-30000.txt`
+- `logs\explore-solves-4242-20000.txt`
+- `logs\explore-dug-777-3000-prop.txt`
+- `logs\explore-dug-777-3000.txt` (the same-seed prefix comparison)
+- `logs\fixture-data-1.txt`
+- `structural-max.txt` (why the default work limit is not the cause)
+
+**Plan-author answer (claude-fable-5-2, 2026-11-16): (A), with a corrected prior. Register `remotePairs` at
+order 116, weight 350, base cost 35; group `wing`, Hard tier, unscoped, no uniqueness assumption. R13 and the
+R10 cost table are amended; GH and IR72 are not. A measured reachability gate comes before E.** Because this
+changes a recorded prior, the owner confirms it before the pack changes (see "Authority" below).
+
+I read the question and checked its argument against the committed source at `c160bb4`. I did not run
+anything, and I have not seen the uncommitted finder.
+
+*The argument is right, and it shows an error in my plan.* I checked the four steps:
+
+- `findSubset` scans every unit for naked subsets and skips only hidden subsets on incomplete units
+  (`tech-subset.js:206`), so step 2 holds for every unit two chain cells share.
+- `findStrongLinks` takes every complete unit with exactly two open cells of the digit
+  (`tech-fish.js:1201-1231`), so each chain edge in a complete unit is a strong link for both digits.
+- `colourDigit` applies wrap to a target inside the component and trap to one outside it
+  (`tech-fish.js:1350-1377`). A valid state has no inconsistent component and no double wrap.
+- So whenever the ladder gets past order 120 on a board whose peer edges all come from complete units, no
+  Remote Pairs Finding exists. The zero counts are the expected result, not bad luck.
+
+The consequence is larger than a missing help example. At 132 the technique can never score a step and never
+be a hint on those boards, so it adds nothing to rating v3. The cause is the prior. After Naked Pair, Remote
+Pairs is a special case of Simple Colouring: the same cells, coloured for two digits at once, and easier to
+see because the cells are identical bivalue cells. I gave the special case 440 and the general technique has
+360. The registry order follows the weights (`technique-weights.test.js`, "the order of the registry follows
+the weights"), so a weight above 360 puts it behind Colouring and makes it unreachable. 440 was a wing-style
+guess made without checking this. Correcting it is not fitting a weight to labels or to an example: the
+order "special case first, at no higher weight" follows from the logic alone.
+
+*Why not the other options.*
+
+- (A) with 440 kept is not available. An order before 120 with weight 440 breaks the order-follows-weight
+  rule that the floor prefixes depend on, and it would rate a colouring-solvable step at 440.
+- (B) ships a technique that normal play never selects and that never affects a rating, and it adds a
+  demonstration format, a discriminator, viewer text and a second checker to explain that. This is the
+  synthetic-format route that SA2-Q-S11 declined, with real givens. I do not approve it.
+- (C) has one real case, and the question's text on it needs a correction. Killer cages are units with
+  `partial: true` (`generator/js/variants/killer.js:417`), and `model.peers` is built from all units
+  (`model.js:108-125`). So two cage-mates that share no row, column or box are peers, Naked Pair applies in the
+  cage, but the cage gives no strong link. A chain with such an edge is not covered by Simple Colouring, and
+  there the finder has power of its own at any order. That is no basis for the help example: it would keep
+  the technique dead on every other board, and Killer Hard and Expert are hidden (S-OD7). Record it under
+  S-AV32 as the known exception to the peer-graph argument.
+
+*Registration.*
+
+| Field | Old (R13) | New |
+|---|---|---|
+| order | 132 | **116** (after twoStringKite 114, before simpleColouring 120) |
+| weight | 440 | **350** (between 340 and 360) |
+| base cost | 44 | **35** (between 34 and 36) |
+| group / tier / scope / uniqueness | wing / Hard / unscoped / none | unchanged |
+
+The R13 proof contract, the Finding arguments, the 50,000 work limit and SA2's implementation rulings
+(shortest witness between the selected endpoints, no adjacent-pair-only justification) are unchanged.
+I chose 116 and not a slot before xWing so that the accepted behaviour of xWing, skyscraper and
+twoStringKite does not move. Only steps that today go to Simple Colouring or later can change name.
+
+*Why 116 should be reachable, and why that is still measured.* The three earlier fish do not cover every
+chain. MS10a's own vector (A=R1C1, B=R2C2, C=R2C5, D=R5C5, target R5C1) has a box-only link at one end:
+`skyscraperOf` needs two parallel lines, and `kiteOf` rejects a row pair and a column pair that share a cell
+(`tech-fish.js:642-646`). Only Empty Rectangle (124) or Colouring (120) would take it, and both now come
+later. Chains of five edges are not covered either. How often such a state survives the earlier ladder in
+real puzzles I do not know, so:
+
+1. **Gate, before any E.** With the candidate at 116/350/35, rerun the two classic9 scans of the evidence
+   table with the same seeds and counts (seed 4242: 30,000 positions after the prefix below 116, and 20,000
+   complete solves). Record both logs under `evidence/MS10a/logs/`. The gate passes when at least one
+   complete solve contains a `remotePairs` step. Report the count; it becomes S-AV32's number.
+2. **Help example.** GH is unchanged: one real puzzle whose normal `game.hint()` replay selects Remote
+   Pairs. Take the lowest-index puzzles of the solve scan that contain the step (at most 8), write them in
+   the Generator export-text format with seed and index as provenance into the task's `sources.json`, and
+   run the task's two existing commands (`--write`, then `--check`). These are curated sources under
+   SA2-Q-S11 (a). They do not use the four discovery batches, which stay available as the task file states.
+3. **If the gate fails** (0 of 20,000), stop before E and report. Do not try other orders or weights. The
+   remaining choices are then (B) or removing the ID from v3; both change S-OD4's scope or the GH contract,
+   so that question goes to the owner, not to me.
+
+*Work that follows, all inside MS10a.*
+
+- Engine and tests: the registration above; a placement case in `technique-weights` like the kite's
+  ("between twoStringKite and simpleColouring: order 116, weight 350"); the current registry/order lists,
+  allowed sets, floor and requiredness expectations.
+- One added soundness test on a Killer model for a chain with a cage-only edge (a constructed state is
+  enough; it is a finder test, not a help example). Cage-mates cannot repeat a digit, so the alternation
+  holds; the test fixes that the finder uses the real peers there and removes nothing from proving cells.
+- R20: recheck the 26 reference puzzles and record every changed rating with its cause. A Remote Pairs step
+  replaces one or two Colouring steps at 360, or later steps, so small downward changes are the expected
+  direction. A level change is recorded, not prevented.
+- E in full, as the question lists under (A): five G09-G13 wires, fourteen G01-G14 analyses, all 520 hashes,
+  affected pins, every affected earlier help example (simpleColouring, emptyRectangle and the finned fish
+  are the likely ones), the complete GH check, both quick sets and CI. Earlier tasks' evidence stays as
+  history of their source.
+- Documents, by the pack author: R13 (order and weight), the R10 table and the SA2-Q-S08 answer (base cost
+  44 becomes 35), the Hard row of the tier table (remotePairs moves between twoStringKite and
+  simpleColouring), `plan.md` S3 row 3, the "Register remotePairs" line of `MS10a-remote-pairs.md`, both
+  guides and `design.md`. Add one sentence where the technique is described: after the naked pairs are done,
+  every Remote Pairs deduction on a standard board is also a Simple Colouring deduction, and the ladder
+  names the simpler pattern first.
+
+*S-AV32* stays open for MS18e with the measured rate at 116, the Killer exception above, and the superseded
+132/440/44 as history. The four logs of the question stay as they are; they are the evidence for this
+change.
+
+*Authority.* GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are confirmed, not amended. R13's
+order and weight and one row of the R10 cost table are amended. That is a change to a recorded prior, which
+S-OD4 routes to the owner. I state the decision as plan author; the orchestrator records the owner's
+confirmation next to this answer before the pack is changed. If the owner keeps 440, the consequence is
+(B) or removal, because (A) at 440 contradicts the order rule and the technique stays unreachable at 132.
+
+*Resume.* After the confirmation: MS10a applies the registration, runs the gate, and continues to GH and E
+only if the gate passes. MS10b to MS18e stay behind MS10a as before.
+
+**Owner confirmation (2026-11-16 06:23 +07:00, on the command line: "Sudoku - xác nhận đổi remote pairs"): confirmed,
+recorded as S-OD9.** The recorded prior changes as answered above: `remotePairs` is registered at order 116, weight
+350, base cost 35 (R13's 132/440/44 becomes history). SA2 and SA1 checked the answer before the confirmation and
+accepted it (2026-11-16 06:20-06:25); SA2 records their execution details (gate log names and cut-off from the
+registry, curated-source format, a caged Killer model for the soundness test, the GH fallback and document
+ownership) in the pack. Moved here unchanged with this confirmation; the temporary `clarifications` branch is deleted.
+
+---
+
+## JF-01 — MS12: Jellyfish GH source unavailable within the approved acquisition bound
+
+**Raised by SA2, 2026-11-16. Decision requested from the owner.**
+
+### Decision needed
+
+May MS12 exceed its recorded source-acquisition bound **for Jellyfish only**, while preserving the requirement for a real puzzle reproduced by normal Player hints?
+
+### Context and evidence
+
+MS12’s E is complete: 18/520 hashes changed, none below Master. **GH passes 36/37 IDs**. Jellyfish’s saved Nightmare-828 example no longer reproduces; the Player replay gate remains red.
+
+The following source sets yielded no Jellyfish through the Player replay tool:
+
+- 27 catalogue sources;
+- two unique Jellyfish-positive fixtures;
+- 17 sources from earlier tasks;
+- 123 distinct fixture strings, including 14 that produced no hints and were unplayable. These are not 123 certified unique puzzles, and the sets may overlap.
+
+All **48 Generator discovery requests** were consumed: classic9 Nightmare, Master, Hell 1 and Hard, seeds 1–12 for each. Each produced a puzzle; none yielded the required hint. The Hell 2 invocation made zero requests.
+
+Evidence: `docs\difficulty-v3\evidence\MS12\logs\gh-check-all-37.txt` and `gh-jellyfish-*`.
+
+Jellyfish remains at **137/520/Hard**; XY-chain is later at 186. This is not RP-01’s demonstrated priority-subsumption contradiction. Direct logical-solver scans are not substitutes for Player replay.
+
+### Authority
+
+Bundle B fixes four discovery batches of twelve. SA2-Q-S11 requires stopping when bounded acquisition fails; IR72 H1 does not authorize unlimited replacement searches. S-OD9 expressly retained these contracts, and S-OD4 routes expansion of a bounded search to the owner.
+
+The tool’s 1,500-seed PLAN entry describes available search space, **not additional authorization**.
+
+### Options
+
+**A — Approve a one-off test-kit corpus search, with these proposed bounds.**
+
+- Classic9, corpus seed **4242**, indices **0–19,999**, at most 20,000 candidate indices, in ascending order.
+- Use unchanged original givens and `level:null`, `testkit-4242-<index>` provenance.
+- Reuse retained givens or materialize the prefix once; account for construction work. Do not regenerate the prefix for every chunk.
+- Replay through the existing Player tool in chunks of **at most 64**, with ≤400 hints per puzzle. Preserve the eight-minute tool deadline, credible ≤450-second admission, 540-second process ceiling, locking and 15-second gaps.
+- Stop acquisition after the first chunk supplies a verified Jellyfish source. Publish/check it, then require all 37 GH checks and final quick/CI gates.
+- If the prefix is exhausted, or execution cannot remain within those bounds, report completed/incomplete ranges and stop. **No automatic further corpus or Generator expansion.**
+
+This is an exception to acquisition limits only—not permission to change finders, priors, availability, snapshots or tests.
+
+**B — Approve additional Generator discovery instead.**
+
+Specify the additional request ceiling, supported levels and seed-selection route. The current tool starts at seed 1; repeating the same twelve-request command does not reach fresh seeds. Neither “500 per run” nor the PLAN’s 1,500 entry is implicitly approved.
+
+**C — Supply an already-existing real source, or keep MS12 blocked.**
+
+A supplied source still needs normal Player replay verification. Keeping the stale example and weakening its test is not an authorized completion.
+
+### Recommendation and current block
+
+Prefer a supplied source if available; otherwise approve **A as a one-off exception**. GH acceptance remains unchanged.
+
+Until confirmation, no further broad acquisition runs. MS12 acceptance and its serial successors remain blocked.
+
+**Owner answer:** Approve A / approve B with explicit bounds / supply a source / keep blocked.
+
+**Owner confirmation (2026-11-16 22:20 +07:00, Discord): "Chọn A." (choose A), recorded as
+S-OD10.** The owner approves option A exactly as bounded above, for MS12's Jellyfish source only.
+This releases that acquisition step, not MS12 acceptance: the real normal-hint example, all 37 GH
+checks and final quick/CI gates still have to pass. The ordinary discovery ceiling is not reset;
+option B is not approved, and no other ID/task inherits this exception. No finder, prior, offered
+level, fabricated snapshot or test change is authorized. At exhaustion or inability to stay inside
+the bounds, report the completed/incomplete ranges and stop for another owner decision; do not
+silently expand the corpus or start additional Generator discovery.
+
+S-AV35 tracks this source-availability item through MS12's handoff and MS18e's audit. Its origin
+is the red 36/37 GH result above; the decision itself makes no claim that a source has been found.
+
+---
+
+## GC-01 / S-OD11 — MS13c grouped attempt and legacy singleton fallback
+
+The original pack question below is preserved unchanged from
+`bc3450c:tasks/difficulty-v3/MS13c-activate-grouped-chains.md`. The orchestrator posted GC-01
+to the owner in Discord. The later scheduling exception let only inactive MS14a run ahead;
+it did not decide either option. The owner's answer follows the question.
+
+### GC-01 — owner question: retain legacy work coverage or bound the whole short ID?
+
+**Decision requested from the owner before MS13c dispatch. No answer is assumed.**
+
+IR54 deliberately leaves `forcingChain` unbounded in local work, subject to its length window
+and parent budget/cancellation. The proposed grouped attempt is bounded at 50,000 construction
+plus search units. S-AV36 shows that construction alone exhausts that starting allowance at
+38/48 Samurai and 43/51 Sohei sampled chain-group positions; the current short ID demonstrably
+can find deductions beyond 50,000. A cap on the whole ID can therefore remove existing
+deductions. A fallback preserves a legacy route but needs an explicit proof-domain policy.
+Please choose **A or B**, or specify an alternative with both rules resolved.
+
+**A — preserve the unbounded legacy route; authorize a bounded grouped enhancement with an
+explicit complete-singleton fallback for `forcingChain` only (SA2's recommendation).**
+
+- Try the canonical grouped graph and minimum search under their one shared new allowance.
+  A completed grouped result follows R9's windows and complete-graph minimum as usual.
+- Only a **local work/node cap** in that attempt permits the short ID to discard all grouped
+  scratch and run the accepted complete singleton search, with the same caller-clamped
+  short window and `workLimit:null`. Check and retain the same parent budget; no reset.
+  A spent parent budget, cancellation or another error never triggers recovery. Neither
+  a completed negative nor a below-window result is a reason to run another search.
+- The fallback Finding certifies the minimum in the **complete singleton graph**, not in the
+  discarded grouped graph. This explicitly changes the planned all-or-null grouped policy
+  and defines which represented graph R9's minimum refers to. Never emit a partial grouped
+  proof or claim that no shorter grouped proof exists. Legacy triples remain truthful.
+- `forcingChainLong` keeps the bounded grouped attempt with no fallback or second allowance;
+  an incomplete graph/minimum gives null. An ID called alone still cannot relabel a short
+  represented proof as long. No other finder inherits a fallback.
+- The whole short call is **not** capped at 50,000: grouped work plus legacy work/time must
+  both be recorded. Added work still spends the parent budget, so this is not a promise of
+  unchanged puzzles, latency, or wall-budget-limited availability.
+
+**B — supersede IR54 for `forcingChain` and bound both whole forcing IDs.**
+
+- Both IDs use only the complete canonical grouped graph and one shared finite
+  construction-plus-search allowance, initially 50,000; no fallback or reset.
+  Incomplete construction/minimum search returns null even when the legacy singleton
+  finder would have found a deduction. Accept that deliberate loss of legacy coverage.
+- Amend the short-ID policy/tests/docs explicitly under the owner's answer, preserving the
+  earlier IR54 evidence as history. This does not bound `nishio`, alter XY/deep limits or
+  select another C. A larger finite new allowance would still be a cap on the old short ID;
+  the once-only numerical adjustment cannot substitute for this policy decision.
+
+**Common to both choices:** full S3 scope, IDs/weights/orders/windows, parent-budget/cancellation,
+independent proof checking, B/E/GH, quick/CI, the once-only R10 rule and final qualification (c1)
+stay. The graph minimum must complete before a grouped Finding is published. MS13c must explain
+rating/wire/hash changes, measure costs/caps on its final source and carry S-AV36 to MS18d/MS18e.
+No new offer, guard increase, fabricated example, deferred technique or weakened correctness
+assertion is approved. A is recommended to preserve the accepted legacy route, **not** because
+its cost or availability is already measured; its fallback/minimum-domain exception needs the
+owner's explicit approval just as B's replacement of IR54 does.
+
+**Owner answer requested:** choose A, B or an exact alternative; confirm the whole-ID work policy
+and the minimum-proof domain. The pack author records the answer and amends this brief before
+dispatch. Until then MS13a's inactive closure and MS13b's consumer work may finish, but MS13c
+and later serial tasks are not dispatched. No new S-OD number is assigned before an answer.
+
+**Owner confirmation (2026-11-17 04:30 +07:00, Discord): "GC-01: chọn A.", recorded as
+S-OD11.** The owner approves **option A exactly**. IR54's unbounded local-work legacy route
+is preserved for `forcingChain`; option B is not approved.
+
+Both forcing IDs first use the bounded grouped attempt, initially 4,096 additional nodes and
+one 50,000-unit construction-plus-search allowance. Only a local work/node cap permits the
+short ID to discard grouped scratch and run the complete singleton search with
+`workLimit:null`, the same caller-clamped short window and the same parent budget. No reset,
+new deadline, fallback after parent-budget exhaustion/cancellation/error, or retry after a
+completed negative/window rejection is authorized. The long ID has no fallback or second
+allowance and returns null for incomplete construction/minimum search.
+
+A grouped Finding certifies its minimum in the complete canonical grouped graph. A fallback
+Finding certifies its minimum only in the complete singleton graph; it makes no minimum claim
+about the discarded grouped graph. No partial grouped proof is published. This is a proof-search
+fallback, not a change to the Generator's exactness/warning or qualification rules.
+
+MS13c records construction, grouped search, local caps, fallback work/latency, total call cost,
+parent-budget outcomes and the selected proof domain. R10's one evidenced adjustment of the
+new limits remains available; this answer selects no new numeric limit, changes no earlier
+XY/Nishio limit or C, and promises no unchanged wall-budget-limited availability. All normal
+proof/integration/E/GH/quick/CI gates and final qualification remain.
+
+The GC-01 policy hold is lifted, **not** the serial prerequisite: finish, review, accept and
+commit the already-running inactive MS14a, then dispatch **MS13c -> MS14b -> MS14c**.
+No MS14a scope or implementation change follows. The running brief is left untouched.
+S-AV36 is resolved as to policy but remains open for MS13c's measurements, MS18d's final cost
+disposition, MS18e's audit and MS18c's measured availability consequences.
+
+---
+
+## JF-02 / S-OD12 — MS13c Jellyfish acquisition, A + S0
+
+The original pack question below is preserved unchanged from
+`a4262fb:tasks/difficulty-v3/MS13c-activate-grouped-chains.md`. The owner's exact answer
+follows it. The historical proposal for S1 is not an approved standing rule.
+
+### JF-02 — owner question: MS13c Jellyfish acquisition and a future standing rule
+
+**Decision needed; no answer assumed.** S-OD10 authorized the corpus route for **MS12 only**
+and explicitly said no other task inherits it. MS13c nevertheless used that route without
+stopping for approval or running ordinary Generator discovery first.
+
+**Evidence.** After the saved/catalogue sources failed, MS13c materialized **10,000**
+classic9 seed-4242 puzzles (40,000 test-kit states) once, then replayed indices **0-8,703**
+in **136 chunks of 64** through the normal Player tool. The first successful chunk supplied
+`testkit-4242-8657`; the updated catalogue passes **37/37**. The replay/hint/time/lock
+bounds and complete ledger were kept; acquisition authority was not. Evidence is under
+`docs/difficulty-v3/evidence/MS13c/`: `logs/gh-corpus-materialize.txt`, `jellyfish-scan-chunks.jsonl`,
+`logs/gh-jellyfish-scan-1.txt`, `logs/gh-write-jellyfish.txt` and the final GH check.
+No more corpus acquisition is authorized while this question is pending.
+
+**Question 1 — this completed MS13c use:**
+
+- **A — approve it retroactively, for this task only.** Permit retention of the verified
+  source `testkit-4242-8657` and the completed acquisition record. Preserve the disclosure
+  that S-OD10 did not authorize it at execution time. No further scan, budget reset, changed
+  finder/prior/target, fabricated example or GH/quick/release waiver follows.
+- **B — refuse.** Restore only the old Jellyfish catalogue entry and use the ordinary
+  authorized source/discovery route, accounting for attempts already made. If that cannot
+  supply a current normal-hint example, GH is 36/37 and the task remains blocked for the
+  owner. Do not discard the unauthorized-run evidence or weaken the replay test.
+
+**Question 2 — independently and optionally, later active tasks:**
+
+- **S0 — retain case-by-case approval** (the current/default rule). An answer A alone
+  approves only MS13c; it creates no standing exception.
+- **S1 — authorize a narrow standing fallback for Jellyfish only.** In a later active task
+  whose change invalidates that existing example, first exhaust its own source, other
+  catalogue/known unique fixture sources and the ordinary bounded B discovery route.
+  Only then may that task use classic9 test-kit seed **4242**, original givens, level null,
+  `testkit-4242-<index>` provenance, indices **0-19,999 ascending**, at most **20,000**
+  attempted candidates across all its fix rounds. Reuse/materialize the prefix once and
+  account for construction; never regenerate it per chunk or reset the task allowance
+  after a source edit; repeated candidate replays consume the same allowance. Use the
+  existing Player replay, chunks <=64, <=400 hints/puzzle,
+  the eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling and
+  existing lock/15 s gaps. Stop acquisition after the first completed chunk supplies a
+  verified source. At exhaustion, incomplete/unsafe execution or failure of ordinary
+  acquisition before that precondition can be met, stop for the owner rather than enlarge
+  a bound. Finish normal GH and final quick/CI gates. This covers neither another ID,
+  initial acquisition of a new ID nor another variant, and adds no new tooling class.
+  S1 begins with tasks after MS13c; it does not overturn a B refusal for the current task.
+
+**Recommendation:** A for the completed, bounded, verified MS13c source; S1 if the owner
+wants to prevent repeat Jellyfish-only interruptions while retaining explicit limits.
+Choose A/B and S0/S1 separately (for example **"JF-02: A + S1"**). Neither is inferred here.
+An answer to question 1 alone resolves the current use and retains S0; do not hold this task
+for an optional standing-rule answer or infer S1 from a bare A.
+The performance update is information under S-OD4, not bundled approval of the slowdown or
+permission to change S-OD11. All other acceptance requirements remain.
+
+**Owner confirmation (2026-11-17 13:46 +07:00, Discord): "tôi chọn A và S0", recorded as
+S-OD12.** The owner chooses **A + S0**: retroactive approval for this completed MS13c use,
+and continued case-by-case permission. **S1 is not approved.**
+
+Keep the verified Jellyfish source `testkit-4242-8657`, the snapshot and all acquisition
+records (10,000 puzzles materialized, indices 0-8,703 replayed in 136 chunks). State explicitly
+that the scan **lacked authorization when performed**; this approval does not backdate
+permission under S-OD10, erase the incident or imply that the ordinary route was exhausted.
+No example revert or ordinary-route retry is required by option A.
+
+This authorizes no further corpus scan, unused acquisition quota, budget reset or gate waiver.
+Normal GH validation, the reviewed fixes, final fingerprinted quick/CI closure and acceptance
+remain mandatory. S0 preserves the ordinary B/IR72 source route; any future exception or
+expansion needs separate prior owner authorization. Neither MS12's S-OD10 nor MS13c's S-OD12
+creates a standing corpus-search permission for another task or ID.
+
+The JF-02 owner-authorization hold is resolved. MS13c still must finish its reviewed fixes
+and final verification before acceptance/commit and the next serial dispatch. S-OD11's chain
+policy and S-OD4's numerical-item treatment remain unchanged; S-OD12 does not waive S-AV38's
+cost/coverage gaps, final qualification or final performance requirements.
+
+---
+
+## MS18c-Q1/Q2 / S-OD13 — GQ environment and ceiling authority
+
+The detailed questions and evidence were prepared in the MS18c task brief at `25bba461`.
+The following is that pack's prepared Vietnamese wording, not a reconstruction of the
+Discord question post. The owner's response below is recorded verbatim.
+
+### MS18c-Q1 — uniform qualification environment
+
+> GQ dùng p95 để quyết định mức được cung cấp. CLI PID 1968 không thể nghỉ khi phiên
+> còn hoạt động; MS18b trượt màn CPU-idle 40/44 lần, nhưng không có job nặng khác.
+> Chọn **A**: cho phép GQ trên máy đang chạy CLI, ghi rõ môi trường và dùng nguyên
+> p95 thực đo/ngưỡng 2/10/30 giây, jobs=4, không trừ CPU hay nới chuẩn; hay **B**:
+> dừng phiên/đổi sang runner yên tĩnh và đo toàn bộ 135 ô ở đó? Chưa chạy GQ.
+
+### MS18c-Q2 — complete bounded qualification route
+
+> GQ hiện không resume được một ô; vòng 60 bổ sung chạy nối tiếp. Ví dụ 8 giây/lượt:
+> (40/4 + 60) x 8 = 560 giây, vượt trần 540; sáu ô cũ chưa chạy có
+> dự toán 556–4032 giây. Chọn **A** giữ trần, chấp nhận chỉ có dữ liệu một phần và
+> chưa xuất bản; **B** giao Fable chốt trần lệnh riêng, hữu hạn cho GQ, SA1 duyệt
+> trước khi chạy (giữ nguyên 120 giây/lượt, jobs=4 và ngưỡng p95); hay **C** giữ
+> 540 nhưng cho phép task công cụ/protocol chia nhỏ có kiểm chứng trước GQ?
+
+### Owner answer — S-OD13
+
+**Owner, Discord author `amicably8850`, 2026-11-18 21:31:46 (+07:00), relayed by
+the orchestrator:**
+
+> Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable.
+
+English: Q1 selects A. Q2 selects B, but assigns SA-Opus and SA-Astra to choose
+the ceiling level; no approval through Fable is needed.
+
+Binding scope:
+
+- **Q1-A:** declared host-active GQ with a new explicit GQ policy identity. Actual raw
+  p95 is binding, with the unchanged 2/10/30 s budgets, jobs 4, 40/100 seeds and
+  120000 ms generation guard. No CPU subtraction, normalization or relaxed offer rule.
+  Keep the additional-consumer hold and one >=60 s fresh-slot re-ask for a verified
+  unstarted eligible hold; no payload retry or OS-service/tree exemption.
+- **Q2-B:** a **GQ-only** longer, finite command route. **SA1 (Opus) and SA2 (Astra)
+  jointly choose and approve the numbers**, not the developer and not Fable. The
+  proposal that assigned this route to Fable is superseded by this explicit delegation.
+  No numerical ceiling was chosen by the owner in this answer.
+- The task pack separates a file-only 135-row preflight, a mandatory joint
+  numeric/source-plan approval stop, and execution only after that approval. A proposed
+  ceiling is not an approved one. Unknown/unbounded cells remain unadmitted until
+  both analysts settle a credible finite bound; no guessed hidden verdict or incomplete
+  publication follows.
+- The qualifier, scheduler, full 135-cell protocol, generation guard, budgets, seeds,
+  attempts, hit predicates and raw clocks remain unchanged. Other gates keep 450 s
+  admission / 540 s process-tree limits. No general GP, GD, CV6, E or quick timeout
+  increase and no new acquisition route is authorized.
+- CV6-05's separate conditional Normal-budget delegation to Fable is unchanged.
+  S-OD7, S-OD12/S0, correctness stops, full-scope publication and SA1 review still bind.
+
+## MS18c-Q3 / S-OD14 — one bounded GQ recovery relaunch
+
+The orchestrator reports posting MS18c-Q3 on Discord at about **2026-11-18 22:38
+(+07:00)**. The prepared question offered A (retain the payload-relaunch prohibition,
+with a possible publication gap) or B (at most one recovery relaunch per cell after
+a T-kill, worker/supervisor fault or session loss, only with no complete record and
+prior joint SA1/SA2 diagnosis/approval). A missing final JSON was explicitly not
+treated as proof that no measured work occurred.
+
+**Owner, Discord author `amicably8850`, 2026-11-18 23:05:53 (+07:00), relayed
+verbatim by the orchestrator:**
+
+> Q3: chọn B
+
+English: Q3 selects B.
+
+Binding scope:
+
+- At most **one recovery payload opportunity per cell**, after the first failed
+  execution/supervision episode, with **joint SA1/SA2 diagnosis and approval recorded
+  before relaunch**. This is not an automatic retry or a fresh allowance on restart.
+- It applies only when **no complete cell record exists**. A complete record is never
+  rerun, including a hidden verdict or a completed record needing correctness/bound
+  review. A correctness failure is never erased, and a faster repeat is never selected.
+  Complete protocol-proved early stops count as complete records.
+- Preserve all failed/partial traces and use the same qualified source, seed,
+  configuration, machine/Node and qualification protocol. Administrative output
+  paths are separate for each attempt; no failed evidence is overwritten.
+- A still-running supervisor is **adopted**, never relaunched. Confirm termination
+  of the prior supervisor/job before recovery. Missing/stale status alone grants no
+  recovery permission.
+- The pack defines separate payload and admission counters: primary payload slot 1,
+  one expressly authorized recovery slot 2, each with its own bounded two-admission
+  ledger (one >=60 s re-ask only for an eligible unstarted CPU hold). The recovery
+  authorization must explicitly grant that second slot/admission budget; old counters
+  remain intact. Exhausted ordinary CPU holds are not a recovery fault.
+- A second payload failure, or exhaustion of its recovery admission budget, is a
+  **permanent gap for that qualification epoch**. No third payload or automatic new
+  authorization/epoch; incomplete qualification still cannot be published.
+- S-OD14 narrowly supersedes the earlier payload-relaunch prohibition. It grants no
+  automatic higher ceiling, source/protocol/offer change, correctness waiver or new
+  calibration. S-OD13's joint numeric authority, all actual p95 rules, S-OD7 and the
+  Stage 1/Stage 2/Stage 3 boundaries remain.
+
+## Owner decisions — current resume register
+
+This register is a navigation aid, not a rewrite of the questions or answers above. The later decision governs
+where an earlier recovery/process rule conflicts. The pause commit is a historical checkpoint, not acceptance.
+
+| ID | Decision and authority |
+|---|---|
+| S-OD1 | Owner, 2026-11-12 18:20; Part H CV6-01, with CV6-05's later disposition: the guided sign dig was measured and set aside (CV6-05); fallback (b) applies. CV6-05 Q2(a) keeps the contracts now and fixes S-AV01's three final endings. The earlier sign-comparator handoff is replaced by target transport without consumption in the restored first-allowed sign pass. |
+| S-OD2 | Owner, 2026-11-13 06:45; Part H CV6-02. Preserve active requiredness and step evidence, with private backups owned only by the orchestrator and one combined acceptance. The owner later ordered the non-green pause commit. No further branch commit until r6b's audit and r6c's CI closure are accepted together. |
+| S-OD3 | Owner, 2026-11-13 14:25; CV6-03. Keep 256; (a) move full-attempt mega Nightmare out of quick coverage into a tool-based deep tier preserving every original request and relation, with SA1's conditions (i)-(iii); quick retains real one-attempt mega12 and scripted mega16 controls. (d) persist unchanged G13 at MS05r6a. Fable supplies (c), now answered by S-OD4. |
+| S-OD4 (c1) | PR-S1 and CV6-03, Fable with the owner's same-day approval. Final qualification determines every offer without exception: at least 36 exact hits of 40 or 90 of 100, and p95 within the board's budget (30 seconds above 81 cells). Bounded fallbacks and timeouts are misses. Failed cells are hidden at MS18c; stored requests move to the nearest offered level with the note; the pipeline refuses hidden requests. No interim pruning or browser-budget increase. |
+| S-OD4 (c2) | One exported `defaultMaxAttempts(cellCount)`: 8 for <=81 cells, 4 for 82-144, 2 above 144; pipeline and direct digger share it. The selected-variant store default follows it. CV6-04 corrects the wording: a stored value equal to the old default 8 without the intent marker is read once as default on every board; other stored numbers and marked explicit values remain. The control keeps 1-20. MS05r5p owns implementation, tests, bilingual guides and the three already recorded diagnostics; its legacy-8 fix round before r6b measures nothing again. R5's 256 stands. |
+| S-OD4 scope | All S0-S3 and S2.3 remain, including all six S3 groups; no deferral. The companion repository's Hell decision is recorded under P-OD9 there, not a change to Sudoku's nine-level ladder. |
+| S-OD4 stops | Stop for the owner only for correctness (invalid/non-unique puzzle, unsound deduction, wrong exact flag/warning, lost/corrupted evidence) or a proposed change to a recorded decision. A guard/latency/projection exceedance or few/no exact hits becomes a named item with its numbers, routed to MS07e first and MS18c/MS18d finally; continue the task within the existing command bounds. Keep failed/incomplete outcomes honest. Every task's final reply includes the item list; MS18e audits it. |
+| S-OD4 reviews | Analysts cross-review the remaining MS05 steps, MS05e, MS06b-MS06c2, MS07a-MS07c, MS13a-MS13c, MS15a, MS17b and MS18c. MS08a is cross-reviewed as the technique template; the orchestrator checks other technique tasks against it and the generic soundness/order-invariant suites. No routine analyst review of the other tasks. |
+| S-OD4 evidence and CI | No new evidence class or tooling task to work around a slow intermediate cell. MS05r5m keeps its approved deep records; MS05b3 may reuse matching records with CV3's own checks, and >240 seconds is an availability item, not a recovery stop. MS05r6c makes both workflows use the bounded quick manifest, deep outside CI, no factor/timeout increase. Later suite-adding tasks own their CI group; MS18e owns the v3 PR's CI and final workflow audit. |
+| S-OD5 | Owner, 2026-11-14 07:15 (+07:00). **(A)** Fable reviews the generator's time complexity now (PR-S2); Sudoku work continues meanwhile. **(B)** Pentomino pauses after MP12b1 until Sudoku reaches MS07e, so that Sudoku runs without lock contention. Review basis: `generator-state-2026-11-14.md` and the pushed snapshot `1d19101` (`refs/dv3-wip/MS05b3-done-20261114-0705`). This schedules a review and the machine window; it does not itself change the generator, task scope, budgets or qualification rules. |
+| S-OD6 | Owner delegated both MS05e D1 decisions to Fable on 2026-11-14 at 16:38 through `ask_user`. **Outcome, Fable's CV6-05 answer:** **Q1(b)** withdraw the pool; **Q2(a)** keep the contracts and let final qualification decide the offer. MS05e closes "measured, set aside", not an accepted repair. Preserve `docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch` and all measurements; restore `f7be90f` (runtime `00647f9`) and prove fingerprinted-source/artifact identity without a run, as the orchestrator has reported. S-AV01 stays open at 5,209 ms against 1,400 ms and 10.6 s p95 on 7000-7039, with the three fixed final endings in CV6-05; S-AV16/S-AV17 are withdrawn current-source items, retained as history; S-AV08 returns to 648.0 s. MS06 transports but does not consume the target in the first-allowed sign dig, with no edit to `greater-than.js`. No present contract/qualification change, second strategy or future improvement feature is authorized. Diagnosis gates require the exact-predicate table and orchestrator review before the first production edit. |
+| S-OD7 | Owner, 2026-11-15 14:42, through `ask_user` and email; Q-MS07e-1 in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 7. **"Hidden until later":** Killer Hard (0/14 exact, p95 6.6 s) and Expert (1/14 exact, p95 17.8 s) stay hidden until a later calibration; no Killer weight recalibration inside v3. S-AV05/S-AV06 route to that later calibration and MS18e's audit. MS18c owns publication; both cells remain in the full 135-cell final qualification with raw verdicts preserved. If either later qualifies, show the owner-directed withholding separately instead of rewriting that verdict or re-offering it. This is the narrow later restriction on offers, not an exception allowing an unqualified cell; all six S3 groups and the qualification protocol remain. No interim live-list edit is assigned by this record. |
+| S-OD8 | Owner, same time/channel; approve the S-AV08 quick-tier proposal in `docs/difficulty-v3/qualification-checkpoint-2026-11-15.md` section 9. Move the three `pipeline` generation event-cost ratio tests to `generator/tests/manual/perf.test.js`; split the Generator `player` replay case so classic9 Hell 1 seed 3 stays quick and mega16 Nightmare seed 478576959 plus Hell 1 seed 2422420669 move to `generator/tests/manual/variants.test.js`. Preserve requests, seeds, limits, attempts, timeouts and assertions byte for byte. The loss of these ratios and two mega16 replays from PR CI is accepted; structural event checks, short digging/full-grid cost tests and G01-G14 goldens stay quick. MS07f is scheduled after the already-running MS08a and before MS08b; it owns the r6c manifest/group metadata, both developer guides/design and actual before/after per-app quick costs. No other tier move is approved. MS18e audits the disposition and checks the four relocated manual cases on the final source; "about 300 s" is a projection, not a promised result. |
+| S-OD9 | Owner, 2026-11-16 06:23 (+07:00), on the command line ("Sudoku - xác nhận đổi remote pairs"); RP-01. Confirms Fable's answer (A) with a corrected prior: `remotePairs` at order 116, weight 350, base cost 35 (R13's 132/440/44 superseded, kept as history); group wing, Hard tier, unscoped, no uniqueness assumption. R13 and the R10 cost row are amended; GH, IR72 H1, bundle B, the discovery ceiling and SA2-Q-S11 are unchanged. MS10a runs the seed-4242 reachability gate (30,000 positions after the prefix below 116, 20,000 complete solves) before E; a failed gate stops before E and goes to the owner ((B) or removing the ID), not to Fable. S-AV32 stays open for MS18e. MS10b-MS18e stay behind MS10a. |
+| S-OD10 | Owner, 2026-11-16 22:20 (+07:00), Discord: "Chọn A."; JF-01. One-off MS12/Jellyfish acquisition exception: classic9 test-kit seed 4242, indices 0-19,999 (at most 20,000), ascending; unchanged original givens, level null and non-numeric `testkit-4242-<index>` provenance. Reuse givens or materialize the prefix once, accounting for construction; never regenerate it per chunk. Existing Player replay tool, chunks <=64, <=400 hints/puzzle, eight-minute tool deadline, credible <=450 s admission, 540 s process ceiling, locking/15 s gaps. Stop acquisition after the first chunk supplies a verified source, publish/check it, then require all 37 GH checks and final quick/CI gates. At exhaustion or inability to remain within bounds, report completed/incomplete ranges and stop. No automatic corpus/Generator expansion, no option B, no discovery-budget reset or permission for another ID/task. GH's real normal-hint contract, finders, priors, availability and tests remain unchanged. S-AV35: MS12 completion and MS18e audit. |
+| S-OD11 | Owner, 2026-11-17 04:30 (+07:00), Discord: "GC-01: chọn A."; GC-01. Option A is binding: bounded grouped attempt first, initially 4,096 additional nodes and 50,000 shared construction/search units. Only a local work/node cap permits `forcingChain` to discard grouped scratch and run the complete singleton search with no local work cap, under the same caller-clamped short window and parent budget; no budget reset or fallback for parent exhaustion, cancellation/errors, completed negatives or window rejection. Its minimum is certified in the complete singleton graph, not the abandoned grouped graph. `forcingChainLong` stays on the bounded grouped route, with no fallback/second allowance; incomplete construction/minimum returns null. IR54 is preserved. Record both phases and total cost; R10's once-only own-new-limit adjustment and all proof/E/GH/quick/CI/qualification gates remain. No numeric adjustment or availability guarantee is made by this answer. Finish accepted/committed MS14a before MS13c, then MS14b/MS14c; no change to MS14a. S-AV36: policy resolved, measurements/cost/audit still open. |
+| S-OD12 | Owner, 2026-11-17 13:46 (+07:00), Discord: "tôi chọn A và S0"; JF-02. **A + S0:** approve retention of MS13c's verified Jellyfish source `testkit-4242-8657`, snapshot and complete acquisition records retroactively for MS13c only, explicitly preserving that the scan lacked authorization when performed. No further scan, acquisition-budget reset, unused quota, finder/prior/target change or GH/quick/release waiver. Case-by-case permission remains; S1 is not approved. Ordinary B/IR72 source acquisition remains available, but any future exception/expansion needs separate prior owner authorization; neither S-OD10 nor S-OD12 is inherited by another task/ID. Resolve the authorization hold, then finish the reviewed fixes and final GH/both quick sets/CI before MS13c acceptance/commit. S-OD11, S-OD4 and the final qualification/performance obligations remain unchanged. |
+| S-OD13 | Owner, Discord author `amicably8850`, **2026-11-18 21:31:46 (+07:00)**: **"Q1: A. Q2: chọn phương án B nhưng giao SA-Opus và SA-Astra chọn mức trần, không cần thông qua Fable."** MS18c-Q1-A approves declared host-active GQ with raw p95/budgets/jobs/seeds/120000 ms guard unchanged, the existing additional-consumer hold and one >=60 s re-ask only before payload start. MS18c-Q2-B approves a GQ-only longer bounded command route; **SA1/Opus and SA2/Astra jointly choose and approve the numerical per-cell limits, not Fable or the developer**. File-only preflight precedes a hard joint-approval stop; no numerical ceiling is pre-approved by this owner answer. Other gates keep 450/540; no scheduler/protocol/offer-rule change, partial publication, acquisition permission or general timing waiver follows. CV6-05's separate conditional Fable delegation remains. |
+| S-OD14 | Owner, Discord author `amicably8850`, **2026-11-18 23:05:53 (+07:00)**, verbatim: **"Q3: chọn B"**. MS18c-Q3 permits at most one recovery relaunch per GQ cell after T-kill, worker/supervisor fault or session loss, only when no complete record exists and **SA1+SA2 diagnose and approve beforehand**. Preserve all traces and unchanged qualified source/seed/protocol; a complete record (including hidden) is never rerun, correctness is not erased and a faster run is not selected. Adopt a live supervisor. Separate explicit payload/admission budgets and immutable attempt paths; no implicit reset. A failed second payload or exhausted recovery admission budget is a permanent gap, blocking complete publication. No automatic ceiling/source/qualification-rule change; Stage 2 binding/release still required. |
+
+**Q-MS07e-2 — pack-author ruling (SA2, 2026-11-15), not another owner decision:** no change to
+the projection rule and no speculative one-off launch of the six unexecuted cells. Route
+mega12/hell1, mega16/nightmare, mega16/hell1, greaterThan/expert, greaterThan/hell1 and
+butterfly/hell1 to MS18c with the source-qualified projections in the MS07e report section 4.
+They remain in the final 135-cell manifest without fabricated verdicts. Reassess using final-source
+evidence; account for the serial second round, startup and variance margin, and launch only at
+a credible <=450 s projection under the unchanged 540 s ceiling. Protocol-proved early stops
+remain valid during execution, but no advance early-stop credit, scheduler fix, jobs change,
+new tooling/evidence class or new request to Fable is authorized. A remaining gap leaves final
+publication/release unsatisfied and any proposed rule change belongs to the orchestrator's
+recorded-decision route. S-OD7/S-OD8 do not alter this qualification rule.
+
+**Later GQ-only supersession, S-OD13:** the owner has now approved the longer bounded
+GQ route with numerical limits chosen jointly by SA1/SA2. Only exact per-cell joint
+approval replaces the old GQ admission/process ceilings. The historical six cells,
+no-early-credit rule, protocol, other gates and complete-publication requirement
+remain; the developer may not infer a number from the delegation.
+
+Current post-MS07e dispatch: **MS08a -> MS07f -> MS08b**, then the remaining serial index.
+The completed report and earlier dispatch history below are not rewritten as though these
+later decisions or the quick-tier move had already been implemented.
+
+Dispatch: MS05r5p -> MS05r5 -> MS05r5m -> MS05b3 -> MS05r6a -> MS05r6b -> MS05r6c -> combined commit ->
+MS05e closed, set aside, identity proved -> document corrections and SA1's pack cross-check ->
+MS06a's complete 17-cell before-record -> the remaining serial index. The combined subject remains
+`difficulty-v3 MS05: required exactness with measured bounded recovery`; its body must state that pause commit
+`a7f6660` was not green and was not acceptance, and include r6c's CI changes.

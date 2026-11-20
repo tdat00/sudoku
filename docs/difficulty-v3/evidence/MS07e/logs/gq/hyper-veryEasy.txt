@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=hyper --level=veryEasy --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-veryEasy.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\hyper-veryEasy.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+hyper/veryEasy: 40/40 hits, p95 17 ms (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| hyper | veryEasy | 40 | 40 | 100 % | 3 ms | 17 ms | 18 ms | 10.0 s | offered |
+
+hyper: ["veryEasy"]
+exit=0 seconds=0.696

@@ -1,0 +1,6 @@
+{"at":"2026-11-18T21:12:01.510Z","t":0.1332044,"type":"launcher-start","who":"launcher","pid":33344,"node":"v26.13.0","cell":"greaterThan/expert","runId":"ms18c-20261118T211150104-29080","slot":1,"ordinal":1,"startSeconds":0.1326724}
+{"at":"2026-11-18T21:12:01.513Z","t":0.1352751,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8647389}
+{"at":"2026-11-18T21:12:08.565Z","t":7.1875093,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.187,"ready":false}
+{"at":"2026-11-18T21:12:08.572Z","t":7.1948909,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=greaterThan","--level=expert","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\greaterThan-expert\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\greaterThan-expert\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T21:12:08.595Z","t":7.2175689,"type":"qualifier-created","who":"launcher","pid":5180,"rSeconds":7.2153345}
+{"at":"2026-11-18T21:13:05.344Z","t":63.9661563,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":56.7507782,"eventFailures":0}

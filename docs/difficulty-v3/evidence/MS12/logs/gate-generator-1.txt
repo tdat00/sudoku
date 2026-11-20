@@ -1,0 +1,24 @@
+$ node tests\node-runner.js --suite=tech-chain,techniques,technique-weights,difficulty-floor,i18n,digger-target,tech-wing,pattern-cost-tools
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty-floor: 48 passed  (29.34 s)
+ok   digger-target: 75 passed  (1.74 s)
+ok   i18n: 86 passed  (148 ms)
+ok   pattern-cost-tools: 32 passed  (2.76 s)
+ok   tech-chain: 175 passed  (11.99 s)
+FAIL tech-wing: 495 passed, 1 failed  (11.13 s)
+ok   technique-weights: 15 passed  (3 ms)
+ok   techniques: 267 passed  (2.93 s)
+
+Failures:
+  FAIL tech-wing > bugPlusOne (R14): registration, the Finding and the guards > is the second technique of the group that relies on a unique solution, right after uniqueRectangle and before forcingChain
+       AssertionError: expected 27 to be 28
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-wing.test.js:5749:47)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 8
+Tests:  1194 total, 1193 passed, 1 failed, 0 skipped
+Time:   60.04 s running tests, 60.19 s total
+exit=1 seconds=60.318

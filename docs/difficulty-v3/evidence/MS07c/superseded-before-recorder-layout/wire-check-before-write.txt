@@ -1,0 +1,48 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS07c\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: 811 fields differ from replay-wire.js
+  model.units.length: saved 45, fresh 48
+  model.units[28].length: saved 3, fresh 2
+  model.units[28][1]: saved 10, fresh 3
+  model.units[29].length: saved 5, fresh 3
+  model.units[29][0]: saved 3, fresh 4
+  model.units[29][1]: saved 12, fresh 5
+  model.units[29][2]: saved 21, fresh 6
+  model.units[30].length: saved 6, fresh 4
+  model.units[30][0]: saved 4, fresh 7
+  model.units[30][1]: saved 5, fresh 8
+  model.units[30][2]: saved 6, fresh 16
+  model.units[30][3]: saved 13, fresh 17
+  model.units[31].length: saved 2, fresh 3
+  model.units[31][0]: saved 7, fresh 10
+  model.units[31][1]: saved 16, fresh 19
+  model.units[32].length: saved 6, fresh 3
+  model.units[32][0]: saved 8, fresh 11
+  model.units[32][1]: saved 17, fresh 12
+  model.units[32][2]: saved 24, fresh 13
+  model.units[33].length: saved 7, fresh 5
+  model.units[33][0]: saved 18, fresh 14
+  model.units[33][1]: saved 27, fresh 15
+  model.units[33][2]: saved 28, fresh 21
+  model.units[33][3]: saved 36, fresh 22
+  model.units[33][4]: saved 37, fresh 23
+  ... and 786 more
+G11: matches replay-wire.js
+G12: matches replay-wire.js
+G13: 13 fields differ from replay-wire.js
+  rating.score: saved 1637, fresh 2021
+  rating.rawScore: saved 1637, fresh 2021
+  rating.confidence: saved 0.30444444444444446, fresh 0.8422222222222222
+  rating.hardestTechnique: saved "forcingChain", fresh "forcingChainLong"
+  rating.techniqueCounts.forcingChain: saved 1, fresh undefined
+  rating.techniqueCounts.forcingChainLong: saved undefined, fresh 1
+  exact: saved false, fresh true
+  attempts: saved 2, fresh 1
+  warnings.length: saved 2, fresh 0
+  work.length: saved 2, fresh 1
+  work[0].ratings: saved 275, fresh 1
+  work[0].proposals: saved 1562, fresh 0
+  work[0].localSearches.length: saved 1, fresh 0
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.445

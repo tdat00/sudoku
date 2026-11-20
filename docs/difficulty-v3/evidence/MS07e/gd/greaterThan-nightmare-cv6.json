@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "9e39c6e85b802e7570774e2cdab2d2132aaaa952c0629b3f2d584eb864065a6c",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["greater-than"],"filter":"> nightmare: 10 puzzles > CV6:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 24308.9,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 24116.5,
+    "tests": [
+      {"suite":"greater-than","name":"CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms","fullName":"greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 10 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 10000 ms","status":"pass","ms":24115.62,"reason":"","error":null,"ordinal":91}
+    ],
+    "suites": [
+      {"name":"greater-than","total":1,"passed":1,"failed":0,"skipped":0,"ms":24116.385}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=greater-than","--filter=> nightmare: 10 puzzles > CV6:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS07e\\gd\\greaterThan-nightmare-cv6.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

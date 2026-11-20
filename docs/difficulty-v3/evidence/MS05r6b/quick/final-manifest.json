@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "kind": "final-quick-manifest",
+  "task": "MS05r6b",
+  "forTask": "MS05r6c",
+  "note": "Selectors are exact commands run from the app folder; full names are those of quick-manifest.json (expectedTestKeys). A shard is a whole-suite selector, so a CI group may use the same --suite lists. The executed outcome is from reconciled.json.",
+  "manifest": "docs/difficulty-v3/evidence/MS05r6b/quick/quick-manifest.json",
+  "reconciliation": "docs/difficulty-v3/evidence/MS05r6b/quick/reconciled.json",
+  "migration": "docs/difficulty-v3/evidence/MS05r6b/quick/inventory-migration.json",
+  "standingCost": "docs/difficulty-v3/evidence/MS05r6b/standing-quick-cost.json",
+  "inventoryMigration": {
+    "generator": {
+      "oldTests": 3207,
+      "finalTests": 3262,
+      "unchangedName": 3197,
+      "renamed": 10,
+      "added": 55
+    },
+    "player": {
+      "oldTests": 1683,
+      "finalTests": 1683
+    }
+  },
+  "apps": {
+    "generator": {
+      "sourceHash": "bee132a83a35925cd37e4c1681ba8395103455781167b3733d4667ae019ff568",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "inventory": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-inventory.json",
+      "verdict": "complete-with-failures",
+      "counts": {
+        "total": 3262,
+        "passed": 3261,
+        "failed": 1,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "core-shared",
+          "command": "node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook",
+          "suites": [
+            "bits",
+            "board-view",
+            "constraints",
+            "exchange",
+            "harness",
+            "logical-solver",
+            "model",
+            "solver",
+            "symbols",
+            "tech-basic",
+            "tech-chain",
+            "tech-fish",
+            "tech-subset",
+            "tech-wing",
+            "techniques",
+            "wordbook"
+          ],
+          "tests": 1143,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-core-shared.json",
+          "accepted": true,
+          "passed": 1143,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 24.867,
+          "projectionSeconds": 150
+        },
+        {
+          "id": "own-fast",
+          "command": "node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker",
+          "suites": [
+            "a11y",
+            "cache",
+            "controls",
+            "difficulty-diagnostics",
+            "difficulty-floor",
+            "digger",
+            "events",
+            "export",
+            "format",
+            "full-grid",
+            "help",
+            "history",
+            "i18n",
+            "manual-corpus",
+            "mega-contract",
+            "multigrid",
+            "perf-tooling",
+            "purity",
+            "recovery-profile",
+            "replay-recorders",
+            "result-view",
+            "rng",
+            "smoke",
+            "store",
+            "technique-weights",
+            "theme",
+            "ui-contract",
+            "variants-registry",
+            "worker"
+          ],
+          "tests": 1579,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-own-fast.json",
+          "accepted": true,
+          "passed": 1578,
+          "failed": 1,
+          "skipped": 0,
+          "processSeconds": 166.528,
+          "projectionSeconds": 240
+        },
+        {
+          "id": "pipeline",
+          "command": "node tests/node-runner.js --suite=pipeline",
+          "suites": [
+            "pipeline"
+          ],
+          "tests": 150,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-pipeline.json",
+          "accepted": true,
+          "passed": 150,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 296.2,
+          "projectionSeconds": 300
+        },
+        {
+          "id": "mega",
+          "command": "node tests/node-runner.js --suite=mega",
+          "suites": [
+            "mega"
+          ],
+          "tests": 111,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-mega.json",
+          "accepted": true,
+          "passed": 111,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 11.552,
+          "projectionSeconds": 250
+        },
+        {
+          "id": "steps",
+          "command": "node tests/node-runner.js --suite=steps",
+          "suites": [
+            "steps"
+          ],
+          "tests": 57,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-steps.json",
+          "accepted": true,
+          "passed": 57,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 11.717,
+          "projectionSeconds": 30
+        },
+        {
+          "id": "replay",
+          "command": "node tests/node-runner.js --suite=replay",
+          "suites": [
+            "replay"
+          ],
+          "tests": 153,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-replay.json",
+          "accepted": true,
+          "passed": 153,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 11.025,
+          "projectionSeconds": 30
+        },
+        {
+          "id": "player",
+          "command": "node tests/node-runner.js --suite=player",
+          "suites": [
+            "player"
+          ],
+          "tests": 69,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-player.json",
+          "accepted": true,
+          "passed": 69,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 139.515,
+          "projectionSeconds": 180
+        }
+      ],
+      "failed": [
+        "generator/i18n/9 i18n > i18n: locale fragments > has no key defined twice (base pack against fragments, or two fragments)"
+      ]
+    },
+    "player": {
+      "sourceHash": "1d0724c34f669fddf4b6d5f5739bb42cd2c9f41332202b60335fe890f02d1dfa",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "inventory": "docs/difficulty-v3/evidence/MS05r6b/quick/player-inventory.json",
+      "verdict": "complete-green",
+      "counts": {
+        "total": 1683,
+        "passed": 1683,
+        "failed": 0,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "all",
+          "command": "node tests/node-runner.js",
+          "suites": "all",
+          "tests": 1683,
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/player-all.json",
+          "accepted": true,
+          "passed": 1683,
+          "failed": 0,
+          "skipped": 0,
+          "processSeconds": 31.828,
+          "projectionSeconds": 60
+        }
+      ],
+      "failed": []
+    }
+  }
+}

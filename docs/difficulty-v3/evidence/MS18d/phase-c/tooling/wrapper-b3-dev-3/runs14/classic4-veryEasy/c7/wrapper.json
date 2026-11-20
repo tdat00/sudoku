@@ -1,0 +1,47 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in c7",
+  "runId": "c7",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-b3-dev-3/runs14/classic4-veryEasy/c7",
+  "requestedAt": "2026-11-19T21:36:15.701+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795098960296,
+    "lastCheckMs": 1795098975686,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": null,
+  "finished": "2026-11-19T21:36:15.797+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 1,
+    "cheapCheckMs": 0,
+    "ageMs": 11,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T21:36:15.797+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 3,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": "stand-in c7 command failed: 3",
+  "outcome": "stop",
+  "problems": [
+    "the helper exit code 3 differs from the controller's 0"
+  ]
+}

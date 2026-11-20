@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare >","exact":null,"count":8},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 95079.9,
+  "results": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 94836.1,
+    "tests": [
+      {"suite":"difficulty","name":"hits the requested level in at least 90 % of the puzzles","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > hits the requested level in at least 90 % of the puzzles","status":"pass","ms":92921.237,"reason":"","error":null,"ordinal":114},
+      {"suite":"difficulty","name":"I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)","status":"pass","ms":4.134,"reason":"","error":null,"ordinal":115},
+      {"suite":"difficulty","name":"I2, I3, I6: givens belong to the solution they determine; at least minClues","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I2, I3, I6: givens belong to the solution they determine; at least minClues","status":"pass","ms":6.226,"reason":"","error":null,"ordinal":116},
+      {"suite":"difficulty","name":"I5: every puzzle has a complete proof; an exact one has its score in the band","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I5: every puzzle has a complete proof; an exact one has its score in the band","status":"pass","ms":945.718,"reason":"","error":null,"ordinal":117},
+      {"suite":"difficulty","name":"stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)","status":"pass","ms":0.083,"reason":"","error":null,"ordinal":118},
+      {"suite":"difficulty","name":"I7: every deduction on the way to the solution is sound","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > I7: every deduction on the way to the solution is sound","status":"pass","ms":956.819,"reason":"","error":null,"ordinal":119},
+      {"suite":"difficulty","name":"has the pattern of empty cells that the default symmetry asks for (rotational 180)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > has the pattern of empty cells that the default symmetry asks for (rotational 180)","status":"pass","ms":0.541,"reason":"","error":null,"ordinal":120},
+      {"suite":"difficulty","name":"is generated well inside the budget of design.md section 9.1 (median time)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > is generated well inside the budget of design.md section 9.1 (median time)","status":"pass","ms":0.118,"reason":"","error":null,"ordinal":121}
+    ],
+    "suites": [
+      {"name":"difficulty","total":8,"passed":8,"failed":0,"skipped":0,"ms":94835.947}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare >","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\nightmare.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

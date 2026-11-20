@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS09b\fingerprint-now.js
+generator 8b0469f9037bdb70367204c30c96d2908c54552dcf78e45b5c4c4b6740a01f18
+player 8af4c43bac1fa70956d1c1b0d2c7739eb8a9e2d29bb806ee88a879d15a265cfe
+exit=0 seconds=0.255

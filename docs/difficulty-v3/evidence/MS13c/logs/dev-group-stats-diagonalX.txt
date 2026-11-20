@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS13c\group-stats.js diagonalX 300
+diagonalX 300 states, seed 77003
+   1 forcingChain contradiction len3 innerGroup {"index":233,"elim":[[13,5]],"plc":[],"problems":0}
+   1 forcingChain endpoints len3 endGroup {"index":234,"elim":[[28,5]],"plc":[],"problems":0}
+exit=0 seconds=0.626

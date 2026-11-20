@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS18d\phase-d\quick\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 59 passed  (44.56 s)
+
+Suites: 1
+Tests:  59 total, 59 passed, 0 failed, 0 skipped
+Time:   44.56 s running tests, 44.81 s total
+Results: docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-steps.json
+exit=0 seconds=45.062

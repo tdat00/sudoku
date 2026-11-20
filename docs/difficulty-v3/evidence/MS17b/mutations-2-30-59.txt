@@ -1,0 +1,59 @@
+mutation 30 (hardestTechnique is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 31 (hardestGroup is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 32 (solved is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 33 (empties is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 34 (techniqueCounts is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 35 (ratingVersion is not required to be own): DETECTED - 28 total, 27 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the write boundary refuses a result that is no record, has no usable model size or only inherits its rating
+mutation 36 (the version is compared loosely): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 37 (an older version is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 38 (a newer version is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 39 (the version is never compared): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 40 (the current version need only be an integer): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+mutation 41 (the current version may be zero): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+mutation 42 (the current version may be negative): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.8 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+mutation 43 (the level list is not required): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+mutation 44 (the level text check is dropped): NOT DETECTED, EQUIVALENT (LEVELS holds only strings, so indexOf of a non-string is -1 and the next test refuses it all the same) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.5 s
+mutation 45 (any level is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 46 (a score need only be finite): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 47 (a zero score is refused): DETECTED - 26 total, 25 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the bounds of a rating are inclusive, extra fields are ignored, any level may be a fallback
+mutation 48 (a negative score is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 49 (rawScore is compared loosely): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 50 (rawScore is not compared): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.1 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 51 (a confidence text is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 52 (a non-finite confidence is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 53 (a zero confidence is refused): DETECTED - 26 total, 25 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the bounds of a rating are inclusive, extra fields are ignored, any level may be a fallback
+mutation 54 (a negative confidence is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 55 (a confidence of one is refused): DETECTED - 26 total, 25 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the bounds of a rating are inclusive, extra fields are ignored, any level may be a fallback
+mutation 56 (a confidence above one is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 57 (one null hardest field is accepted): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 58 (the null pair test needs both): NOT DETECTED, EQUIVALENT (with one null the original refuses in the inner test and the mutant in the else branch (a null technique is no string, a null group is not the registered one); with both null both accept; with neither null both go to the else branch) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.3 s
+mutation 59 (an unknown hardest technique is accepted): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 10.0 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+detected 28 of 30, survivors 2, 315.7 s

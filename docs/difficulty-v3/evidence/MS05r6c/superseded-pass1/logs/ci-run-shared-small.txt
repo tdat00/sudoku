@@ -1,0 +1,56 @@
+==== shard core-shared (1143 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (61 ms)
+ok   board-view: 37 passed  (76 ms)
+ok   constraints: 43 passed  (76 ms)
+ok   exchange: 20 passed  (226 ms)
+ok   harness: 25 passed  (2.09 s)
+ok   logical-solver: 100 passed  (272 ms)
+ok   model: 49 passed  (36 ms)
+ok   solver: 50 passed  (2.68 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.84 s)
+ok   tech-chain: 62 passed  (6.44 s)
+ok   tech-fish: 106 passed  (6.39 s)
+ok   tech-subset: 100 passed  (884 ms)
+ok   tech-wing: 168 passed  (1.60 s)
+ok   techniques: 165 passed  (1.49 s)
+ok   wordbook: 7 passed  (8 ms)
+
+Suites: 16
+Tests:  1143 total, 1143 passed, 0 failed, 0 skipped
+Time:   24.18 s running tests, 24.40 s total
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (11.14 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   11.14 s running tests, 11.23 s total
+==== shard replay (153 tests): node tests/node-runner.js --suite=replay
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 153 passed  (10.68 s)
+
+Suites: 1
+Tests:  153 total, 153 passed, 0 failed, 0 skipped
+Time:   10.68 s running tests, 10.77 s total
+==== shard mega (111 tests): node tests/node-runner.js --suite=mega
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 111 passed  (11.06 s)
+
+Suites: 1
+Tests:  111 total, 111 passed, 0 failed, 0 skipped
+Time:   11.06 s running tests, 11.15 s total
+shard core-shared: exit 0, 24.5 s
+shard steps: exit 0, 11.3 s
+shard replay: exit 0, 10.9 s
+shard mega: exit 0, 11.3 s
+MS05r6c exit=0 seconds=59.307

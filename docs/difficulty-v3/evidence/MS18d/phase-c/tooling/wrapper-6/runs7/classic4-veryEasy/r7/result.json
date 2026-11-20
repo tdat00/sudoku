@@ -1,0 +1,27 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "r7",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in r7",
+  "startedAtMs": 1795092499333,
+  "outcome": "control-hold",
+  "payloadStarted": false,
+  "reasons": [
+    "release-gap-under-15s"
+  ],
+  "heldAt": "acquisition",
+  "controllerExit": 64,
+  "cpu": {
+    "controller": {
+      "userMicros": 0,
+      "systemMicros": 62000
+    }
+  },
+  "finishedAtMs": 1795092499360
+}

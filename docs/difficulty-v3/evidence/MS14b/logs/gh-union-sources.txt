@@ -1,0 +1,7 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=lawOfLeftovers --sources=tests\artifacts\difficulty-v3\MS14b\sources-union.json --max-puzzles=8 --max-hints=400 --record-sources=tests\artifacts\difficulty-v3\MS14b\sources-union-winner.json
+selected 1 technique ID(s); mode record
+replaying 2 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/2 jigsaw9 hard 1 -> 72 hint(s), solved; wanted found: lawOfLeftovers
+puzzle 2/2 jigsaw9 hard 5 -> 58 hint(s), solved; wanted found: lawOfLeftovers
+recorded 1 source(s) into player/tests/artifacts/difficulty-v3/MS14b/sources-union-winner.json
+exit=0 seconds=0.293

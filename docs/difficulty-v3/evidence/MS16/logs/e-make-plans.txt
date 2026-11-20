@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS16\make-plans.cjs
+wire 5 shards, projections 326 s (factor 3)
+analysis 14 shards, projections 566 s (factor 3)
+hashes 104 shards, projections 2222 s (factor 3)
+exit=0 seconds=0.100

@@ -1,0 +1,66 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": false,
+  "problems": [
+    "helper bytes differ from the manifest: generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+  ],
+  "head": {
+    "actual": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "descendant": true,
+    "diff": {
+      "paths": [],
+      "violations": []
+    },
+    "ok": true
+  },
+  "status": {
+    "rawText": [],
+    "rawClean": true,
+    "reviewedClean": true,
+    "entries": [],
+    "allowed": [],
+    "violations": []
+  },
+  "identities": {
+    "hashIdentity": "H",
+    "replayIdentity": "R",
+    "sources": "S"
+  },
+  "table": {
+    "sha256": "TABLE",
+    "expected": "TABLE"
+  },
+  "cell": {
+    "key": "classic4/veryEasy",
+    "target": 31,
+    "expected": 31
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-e1XEn4\\manifest\\bad-manifest.txt",
+    "entries": 1,
+    "mismatches": [
+      "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js"
+    ],
+    "missing": [],
+    "sha256": "9686e1c0fca8236c98f2e5572f07bfc80db7374cc07a86e6f31e6fe64e15e536"
+  }
+}

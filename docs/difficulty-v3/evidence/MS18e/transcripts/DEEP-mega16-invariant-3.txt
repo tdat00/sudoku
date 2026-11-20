@@ -1,0 +1,5 @@
+$ node tests\mega-contract.js --request=mega16-invariant-3 --record=..\docs\difficulty-v3\evidence\MS18e\deep\nightmare\mega16-invariant-3.json
+mega16-invariant-3: outcome ok, correctness pass, exact true, attempts 1 of 2, warnings none
+  generation 6.255 s, checks 0.078 s, guard margin 493.667 s of 500.000 s, allowance 256, level override mega16:nightmare
+record: docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-invariant-3.json
+exit=0 seconds=6.997

@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS15a\check-format.cjs
+checked 337 files, 0 with problems, 28 non-engine lines over 110
+E-hashed sources 68 of 68; of them modified or new: core/js/engine/tech-als.js
+exit=0 seconds=0.499

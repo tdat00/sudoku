@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "9ccd27a41e46fde07205f27c92e81ed6e0d6fce638a8713f2d705428635ced24",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:23:51.046Z",
+  "argv": ["--ids=G13","--record=..\\docs\\difficulty-v3\\evidence\\MS04\\analysis\\G13.json"],
+  "records": [
+    {"key":"G13","request":{"variantId":"samurai","difficulty":"nightmare","seed":"42"},"value":{"id":"G13","request":{"variantId":"samurai","difficulty":"nightmare","seed":"42"},"today":{"steps":14,"missing":1},"counts":{"compact":8,"details":134},"board":{"cells":369,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,47,"D/Dig",94,59,34,"nakedSingle","—","—","—"],[4,98,"D/Dig",195,69,10,"nakedSingle","—","—","—"],[5,113,"G/Choose",225,72,3,"hiddenSingleLine","—","—","N"],[6,114,"G/Choose",227,1483,1411,"forcingChain","Y","G2-R8C9","—"],[7,132,"G/Choose",263,1637,154,"forcingChain","—","—","—"],[8,132,"F/Final",263,1637,0,"forcingChain","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,44,45,46,47,48,48,49,50,50,51,52,52,53,53,54,54,55,55,56,56,57,57,58,58,58,59,59,59,60,60,60,61,61,61,62,62,62,62,63,63,63,63,64,64,64,64,65,65,65,65,65,66,66,66,66,66,66,67,67,67,67,67,67,68,68,68,68,68,68,68,69,69,69,69,69,69,69,69,70,70,70,70,71,71,71,71,71,71,71,72,72,72,1483,1483,1484,1484,1485,1618,1618,1618,1619,1619,1619,1620,1620,1620,1621,1621,1622,1623,1637,1637],"alive":null,"folds":[],"jumps":[{"step":6,"from":72,"to":1483,"before":{"P":1.5,"W":229.5,"R":2.725045,"V":67.924528,"E":225,"level":"easy"},"after":{"P":1100,"W":1332,"R":314.775919,"V":68.014981,"E":227,"level":"master"},"choice":{"chosen":null,"others":6,"nulls":0,"max":72,"at":229,"rated":7,"refused":0},"singles":[{"op":"remove","cell":"G2-R8C9","score":1483},{"op":"remove","cell":"G3-R2C1","score":72}],"cause":"single-culprit","frame":"G2-R8C9","firstUse":{"k":209,"n":228,"technique":"forcingChain"},"key":"technique.forcingChain.step.contradiction","effects":"remove candidate 1@G2-R1C2"}]},"ms":208,"overrides":[]}
+  ]
+}

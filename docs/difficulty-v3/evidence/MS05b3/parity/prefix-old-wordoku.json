@@ -1,0 +1,1062 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-prefix",
+  "task": "MS05b3",
+  "side": "old",
+  "key": "wordoku",
+  "suite": "wordoku",
+  "variantId": "wordoku",
+  "level": "veryEasy",
+  "node": "v26.13.0",
+  "requests": 20,
+  "stoppedBySentinel": true,
+  "seconds": 0.106,
+  "source": {
+    "file": "wordoku.test.js",
+    "sha256": "8389f6a47a7eea722ea31dc8466860b37e5cb4415d1eef13ad2dea3f7d43edb1"
+  },
+  "rows": [
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 100,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 100,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [8,5,0,0,9,7,0,0,6,0,0,0,1,8,0,2,9,0,9,0,1,3,0,5,7,0,0,2,0,0,5,0,0,6,0,7,0,3,0,7,0,8,0,5,0,5,0,7,0,0,9,0,0,4,0,0,9,8,0,2,4,0,1,0,8,5,0,7,3,0,0,0,7,0,0,9,1,0,0,8,3],
+      "solution": [8,5,4,2,9,7,3,1,6,6,7,3,1,8,4,2,9,5,9,2,1,3,6,5,7,4,8,2,9,8,5,4,1,6,3,7,4,3,6,7,2,8,1,5,9,5,1,7,6,3,9,8,2,4,3,6,9,8,5,2,4,7,1,1,8,5,4,7,3,9,6,2,7,4,2,9,1,6,5,8,3],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "9343f26f4e4bc57fc032bf40adfbc6409146e9b7e785b5a26163641ec9a93787",
+          "fixedCells": "95ddee1fd6ba13b115a4fe71a5f763b4906e5ceb6ccf32007a2fab7e9e1a2c81"
+        },
+        "digLog": "ce0acf09985e2e216bbb869d9e0044dbd2e678e592d4793125bdd0a74467dba1",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "867bbc0d466bcd3ba020aa16395a511a5b5379ff9448c974072fae44ddc7e644"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 101,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 101,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 40,
+          "hiddenSingleBox": 1
+        },
+        "ratingVersion": 2
+      },
+      "givens": [4,0,0,7,5,8,0,2,6,0,5,6,0,0,4,0,0,8,7,8,0,0,6,9,0,5,0,0,1,0,9,0,0,0,4,5,0,0,4,0,0,0,1,0,0,5,2,0,0,0,1,0,8,0,0,7,0,6,3,0,0,1,4,3,0,0,1,0,0,5,6,0,1,6,0,8,4,5,0,0,7],
+      "solution": [4,9,1,7,5,8,3,2,6,2,5,6,3,1,4,7,9,8,7,8,3,2,6,9,4,5,1,6,1,7,9,8,3,2,4,5,8,3,4,5,2,6,1,7,9,5,2,9,4,7,1,6,8,3,9,7,5,6,3,2,8,1,4,3,4,8,1,9,7,5,6,2,1,6,2,8,4,5,9,3,7],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "5548f2282c13e16b47e1f7923a58b3cb7cbf98cf4b0e0642fc6518c1cd973d14",
+          "fixedCells": "c4481aeb5786e8d272abf5cc325dafc6580a821c09bda4d7cd3531959a366934"
+        },
+        "digLog": "04d28fe6c246991ce999d5c63394c4359e2bcc425b2b81c16abb335ca16b1fd2",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "5526e7af198746909c109af75510ac0567987d1637c253df69da4fa847c59038"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 102,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "row"
+        }
+      },
+      "seed": 102,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,6,5,0,8,9,3,0,0,0,0,0,1,0,0,9,5,8,0,1,8,3,0,0,4,0,0,0,9,1,0,0,3,2,0,4,0,7,4,0,0,0,1,3,0,2,0,3,4,0,0,6,8,0,0,0,2,0,0,1,8,9,0,1,8,9,0,0,2,0,0,0,0,0,6,9,3,0,7,1,0],
+      "solution": [4,6,5,7,8,9,3,2,1,3,2,7,1,6,4,9,5,8,9,1,8,3,2,5,4,6,7,6,9,1,8,5,3,2,7,4,8,7,4,2,9,6,1,3,5,2,5,3,4,1,7,6,8,9,7,3,2,5,4,1,8,9,6,1,8,9,6,7,2,5,4,3,5,4,6,9,3,8,7,1,2],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "93821eab1a8f9410420c0b44c771a1bc0f8ce7baf1ed35523a66170715ee85eb",
+          "symbols": "4ddf06046aa267901893bf93c24d40cdc3495000ecd710d9328cd3931afc33a9",
+          "fixedCells": "118fedf93cf008b0339df90fa7ad95ffb1a406ca7054f0d6eb2ce7940562e912"
+        },
+        "digLog": "c1e15890c641228902cf9af62fe059a0a958e73717fd52ff24648d4c303ad188",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "30147622dd8acf9c902a849109814fb1fceb2919f3e6abfdc6a7a3bd53f52bf9"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 103,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "column"
+        }
+      },
+      "seed": 103,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [6,1,0,9,0,0,7,4,0,0,0,9,0,6,0,0,0,0,8,0,7,0,0,0,5,0,0,9,0,1,6,8,3,2,7,4,0,3,8,0,0,0,6,5,0,7,6,2,5,4,1,3,0,9,0,0,6,0,0,0,4,0,7,0,0,0,0,3,0,9,0,0,0,8,4,0,0,6,0,2,5],
+      "solution": [6,1,3,9,5,8,7,4,2,5,2,9,4,6,7,8,1,3,8,4,7,3,1,2,5,9,6,9,5,1,6,8,3,2,7,4,4,3,8,2,7,9,6,5,1,7,6,2,5,4,1,3,8,9,1,9,6,8,2,5,4,3,7,2,7,5,1,3,4,9,6,8,3,8,4,7,9,6,1,2,5],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3a1f225f10cde81da10137b2b76e2739972c7fcb25fa415222caf4351cb60a58",
+          "symbols": "a3eae8397cb7074ef0f5af01036a012febebfd4afe735fde27223b48d2b497b7",
+          "fixedCells": "29be16b4de0f6bba59f2e567e18f384897cf361fc7a5d08903156593acb99b6e"
+        },
+        "digLog": "30c2235552b990d9d74636906fe761b1ce930d4b7b75b8a25fb00b0d54d428e3",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "5d2dd5f14257946abef7673dddc50c022fc2f6f0a50ddabf220299a2ae514a59"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 104,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 104,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "hiddenSingleBox",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 40,
+        "techniqueCounts": {
+          "nakedSingle": 35,
+          "hiddenSingleBox": 5
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,6,4,0,5,3,0,0,0,2,9,0,0,0,0,7,0,4,3,0,7,2,0,9,0,0,0,6,5,9,4,2,0,0,0,3,0,3,8,0,6,0,2,7,0,7,0,0,0,3,8,4,9,6,0,0,0,8,0,4,3,0,9,9,0,3,0,0,0,0,5,7,0,0,0,3,9,0,6,4,0],
+      "solution": [1,6,4,7,5,3,9,2,8,2,9,5,1,8,6,7,3,4,3,8,7,2,4,9,5,6,1,6,5,9,4,2,7,1,8,3,4,3,8,9,6,1,2,7,5,7,1,2,5,3,8,4,9,6,5,2,6,8,7,4,3,1,9,9,4,3,6,1,2,8,5,7,8,7,1,3,9,5,6,4,2],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "f5b28f830a7e15b50433b314369f9b15ec86f890d2e4a274dae50023a30aa1ea",
+          "fixedCells": "49112a643a8343897528889db62b8db3bfcc282ec79bb90dc15ea6ef7d59d18e"
+        },
+        "digLog": "b11fa258d87260d508dd8ab658dafdc67e16deade91e89c2c2361b6143b34749",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "582caf5607be39eb2f10097400a5e9e70f3eca534d6516e7f6979aa157e734a6"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 105,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 105,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [6,5,0,3,7,0,0,0,0,0,0,0,0,0,2,0,5,3,3,4,0,0,9,0,8,1,7,9,0,0,7,3,6,0,8,5,0,0,7,0,0,0,3,0,0,5,6,0,8,2,1,0,0,4,2,7,6,0,8,0,0,4,1,8,1,0,2,0,0,0,0,0,0,0,0,0,5,7,0,6,8],
+      "solution": [6,5,1,3,7,8,4,9,2,7,9,8,4,1,2,6,5,3,3,4,2,6,9,5,8,1,7,9,2,4,7,3,6,1,8,5,1,8,7,5,4,9,3,2,6,5,6,3,8,2,1,9,7,4,2,7,6,9,8,3,5,4,1,8,1,5,2,6,4,7,3,9,4,3,9,1,5,7,2,6,8],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "bf3962c00716bba41e65ec9cf1d431bb710d6499e2a701ad1912a9b6459b5a14",
+          "fixedCells": "dbc326a39f4e50947fb779064ac72679e04b93d7ec900abb6d2e023d63e8666f"
+        },
+        "digLog": "44b6bfc3547805610213ee2698c65c898ec33087942e36f83ef9746a62496155",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "b8661a14ca0bbf0759079104a7cf6dcc74a70f7a7bb1deffff980c521ed821c0"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 106,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "row"
+        }
+      },
+      "seed": 106,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [5,6,0,0,8,0,0,9,1,1,2,0,5,0,9,6,0,0,9,0,0,0,0,6,0,0,0,3,0,5,9,0,8,0,0,6,0,8,4,1,0,5,9,3,0,2,0,0,7,0,3,5,0,8,0,0,0,2,0,0,0,0,9,0,0,9,8,0,7,0,2,4,4,3,0,0,9,0,0,5,7],
+      "solution": [5,6,3,4,8,2,7,9,1,1,2,8,5,7,9,6,4,3,9,4,7,3,1,6,2,8,5,3,1,5,9,2,8,4,7,6,7,8,4,1,6,5,9,3,2,2,9,6,7,4,3,5,1,8,8,7,1,2,5,4,3,6,9,6,5,9,8,3,7,1,2,4,4,3,2,6,9,1,8,5,7],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1165ffec39552fc3b56bd0940407ce065473780c4773bd38a15c0e5d1a5749d6",
+          "symbols": "9e94d03e16379be71b1c0af312317a4dd4147eebe4d1fad75401ded38ca11820",
+          "fixedCells": "bd78202fc87c8086e67f8d39fa8888ab40842782dc73ac684a9f17249bf2597e"
+        },
+        "digLog": "563201533ff2bdb3624a4314dfd5bb0e06913a32603fb75253e505ae94626480",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "24be79fbc9961d577bcda6d8cd09475585d0d85be93792773d5ec3d9b52efad4"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 107,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "column"
+        }
+      },
+      "seed": 107,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [5,7,0,4,0,1,8,6,0,1,0,9,5,7,0,0,0,0,0,2,0,0,0,0,1,5,7,8,0,0,0,0,0,7,0,6,9,6,0,1,0,7,0,4,2,7,0,1,0,0,0,0,0,5,3,1,4,0,0,0,0,9,0,0,0,0,0,4,3,5,0,1,0,5,7,9,0,8,0,3,4],
+      "solution": [5,7,3,4,2,1,8,6,9,1,8,9,5,7,6,4,2,3,4,2,6,8,3,9,1,5,7,8,4,2,3,9,5,7,1,6,9,6,5,1,8,7,3,4,2,7,3,1,2,6,4,9,8,5,3,1,4,7,5,2,6,9,8,2,9,8,6,4,3,5,7,1,6,5,7,9,1,8,2,3,4],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "a870a15e5b024b6ea62e6e2c85653cfb8d285c7afe8839e598a83b68a582a6d5",
+          "symbols": "9ecf5d842c616ed67f891e43680927e0307280e4a6302feee7253d3f43c0a621",
+          "fixedCells": "36eb2482764d86d28fbe5e3e3fce7e76c53650d7de3c6261280b9b1baceff2b8"
+        },
+        "digLog": "4134567049046fc4ed8ce766adcf3eb4b53a33365c3eac143e865c08cd2b89f5",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "12bf8d0ce6a44190c9834bbf113dcc6fa7c91d79b5bd6c82496ab423351aaefa"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 108,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 108,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,2,0,9,0,0,0,4,3,8,0,0,0,5,4,6,7,2,0,0,0,3,7,0,0,8,1,6,1,4,5,0,0,0,2,0,9,0,0,0,0,0,0,0,5,0,5,0,0,0,9,8,6,4,1,8,0,0,3,7,0,0,0,4,6,3,8,9,0,0,0,7,2,9,0,0,0,1,0,5,0],
+      "solution": [7,2,1,9,6,8,5,4,3,8,3,9,1,5,4,6,7,2,5,4,6,3,7,2,9,8,1,6,1,4,5,8,3,7,2,9,9,7,8,4,2,6,1,3,5,3,5,2,7,1,9,8,6,4,1,8,5,2,3,7,4,9,6,4,6,3,8,9,5,2,1,7,2,9,7,6,4,1,3,5,8],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "ea2882b057eac62bafc98dfd09a72dd3d49efa3c6edc664c2d30911c551bc0fa",
+          "fixedCells": "e288ef5dbc903550b7eeeb5d4baaa4599fe144fd437c17680441855cdfd8bd88"
+        },
+        "digLog": "36a660ebed823b9d3a0be0edc4305607770dd646ddb2366b2fa3e359025258de",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "c949291d1f9d57338b92bbb125d85c5d467110f0262c110761e38062b456f7db"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 109,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 109,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [8,6,0,0,5,0,2,0,0,0,5,4,6,2,8,0,0,3,3,0,0,9,0,0,0,0,6,0,0,0,1,9,2,0,7,5,0,1,7,0,0,0,3,2,0,6,2,0,4,3,7,0,0,0,5,0,0,0,0,9,0,0,2,2,0,0,5,4,1,8,3,0,0,0,3,0,8,0,0,5,9],
+      "solution": [8,6,9,7,5,3,2,4,1,1,5,4,6,2,8,7,9,3,3,7,2,9,1,4,5,8,6,4,3,8,1,9,2,6,7,5,9,1,7,8,6,5,3,2,4,6,2,5,4,3,7,9,1,8,5,8,1,3,7,9,4,6,2,2,9,6,5,4,1,8,3,7,7,4,3,2,8,6,1,5,9],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "7f5d4a83190c6cb3ee5dceeafa5e231fe19fd2638ded5baf0fcbd6013883eda7",
+          "fixedCells": "d1ba84cfc0d263f1185d92915dbe94c36ce331c5939e22d9404c4f7ff9b97dfc"
+        },
+        "digLog": "80e7fd10d327ebadd0fb791ec01f5a7f7b23f5912fec514125d5bf2c8db9070b",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "71fd93395785f409a04ecb09922f7e056f1aa21354404d2e21b03f63a08a702d"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 110,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "row"
+        }
+      },
+      "seed": 110,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,7,0,0,9,5,6,8,5,0,0,0,3,0,0,0,0,0,4,0,0,0,6,1,3,2,2,0,0,9,0,1,3,0,6,0,3,9,6,0,2,4,8,0,6,0,5,3,0,7,0,0,1,8,5,1,7,0,0,0,2,0,0,0,0,0,6,0,0,0,5,7,6,3,1,0,0,8,0,0],
+      "solution": [3,2,7,4,1,9,5,6,8,5,1,6,2,3,8,9,7,4,9,4,8,5,7,6,1,3,2,2,7,4,9,8,1,3,5,6,1,3,9,6,5,2,4,8,7,6,8,5,3,4,7,2,9,1,8,5,1,7,9,4,6,2,3,4,9,2,8,6,3,7,1,5,7,6,3,1,2,5,8,4,9],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "0d1655c0be263a44de3b5dea4336808db5cdc86e19b483cc3a8b62ba5a3f34ae",
+          "symbols": "d9b9f4e5108e3821f3c446102485cc20777a88df3708e5bd078e26f23367ecde",
+          "fixedCells": "f06e99633713bd0484997651b326f18b52c6da85e6cb16365e49ac16c400a64c"
+        },
+        "digLog": "addfd25f7259f3a2fb7246b1050fb2b702975ecdcbc58dd12ccfda63b0c4bdb0",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "38551d8d4ef84c8e1cf7c8454e73682998336e0eccea028e46f829639d96d226"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 111,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "column"
+        }
+      },
+      "seed": 111,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [4,6,5,0,0,9,0,0,1,9,8,1,0,6,0,3,0,0,0,0,0,5,0,1,0,0,0,6,0,9,0,7,0,5,3,2,0,2,0,3,0,5,0,4,0,5,4,3,0,2,0,8,0,7,0,0,0,9,0,7,0,0,0,0,0,8,0,1,0,7,6,5,1,0,0,6,0,0,9,2,8],
+      "solution": [4,6,5,8,3,9,2,7,1,9,8,1,7,6,2,3,5,4,7,3,2,5,4,1,6,8,9,6,1,9,4,7,8,5,3,2,8,2,7,3,9,5,1,4,6,5,4,3,1,2,6,8,9,7,2,5,6,9,8,7,4,1,3,3,9,8,2,1,4,7,6,5,1,7,4,6,5,3,9,2,8],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "f0cda77122f0bcf3413b3b9d6de44c281d340ed0076b1e07ff7194e7ec5ca385",
+          "symbols": "a0011fde26e40a94cf9d857618241de8b4e77888d71b6d4fa58847561c17831e",
+          "fixedCells": "0ad6dfc96e5b5eef3c9ae1b65adb3588583e2743bc2b22dca1e28d4f3cb299dc"
+        },
+        "digLog": "aca2a7aac47a6503975572f9ebfb25e7c2fbadfd3ddc88f378246c2553029a57",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "191552154355c6a7af4be41e6ce7114473a4f2b965c9e36cf97478d0073c47a7"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 112,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 112,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,3,2,0,4,9,7,0,0,2,6,9,7,8,3,1,0,0,0,9,0,0,3,0,0,2,0,3,7,4,0,0,0,0,0,2,0,5,0,0,0,7,0,9,0,0,0,0,0,7,6,5,0,3,0,0,6,0,0,5,0,0,0,8,2,5,3,1,4,6,0,0,6,1,7,0,9,2,0,0],
+      "solution": [8,1,3,2,5,4,9,7,6,4,2,6,9,7,8,3,1,5,7,5,9,1,6,3,8,4,2,6,3,7,4,9,5,1,2,8,2,4,5,8,1,6,7,3,9,1,9,8,3,2,7,6,5,4,3,7,4,6,8,2,5,9,1,9,8,2,5,3,1,4,6,7,5,6,1,7,4,9,2,8,3],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "43a93a07b33dd1061b1903f9782afde3b3c6753d8ce9e076d24545fa03e65435",
+          "fixedCells": "4a288e748f67d677afd7adb2561b0a1291234f1b6745b045fe13d2a0e45c68a4"
+        },
+        "digLog": "c7f8495df94094be324095e49c7c6da3946cfa1b1311a792a7a2c81d10dbb7ba",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "bb543d5bd813a6cd12dad82ea0705649ac6d4c2e987d747a3a9f7698635ab31e"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 113,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 113,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,0,3,6,0,7,8,5,1,0,0,0,0,0,3,0,0,0,3,6,0,0,8,0,0,4,6,2,9,0,4,5,0,0,0,8,5,3,7,0,6,9,4,2,0,0,0,2,9,0,5,6,8,3,0,0,5,0,0,4,7,0,0,0,7,0,0,0,0,0,3,4,1,5,0,3,7,0,0,0],
+      "solution": [2,9,4,3,6,1,7,8,5,1,7,8,4,5,2,3,9,6,5,3,6,9,7,8,2,1,4,6,2,9,8,4,5,1,3,7,8,5,3,7,1,6,9,4,2,7,4,1,2,9,3,5,6,8,3,6,2,5,8,9,4,7,1,9,8,7,1,2,4,6,5,3,4,1,5,6,3,7,8,2,9],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "15b9411cfcd8a6344349483a5796189e8542fbdd9794ee4913a23cba25236630",
+          "fixedCells": "321657898f1de7061e924640186d663081c3e220acc785d65bc22487760c9df6"
+        },
+        "digLog": "33bd6968fc6d9f43f4f112bfed34230c956f463c78ac63887471f98e4f914021",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "d7709ee0dd6d1561a35fb3f4528321d10a8fffabb7d9694c61ed31fa5b174c4e"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 114,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "row"
+        }
+      },
+      "seed": 114,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,1,0,0,9,7,2,0,0,0,0,0,3,0,0,9,0,2,0,7,6,5,0,0,3,0,6,0,9,5,1,0,8,0,7,4,5,0,7,0,2,0,1,3,1,0,3,0,9,4,5,0,2,0,4,0,0,7,5,6,0,9,0,1,0,0,2,0,0,0,0,0,8,5,3,0,0,2,0,0],
+      "solution": [5,3,1,4,8,9,7,2,6,8,6,4,2,3,7,1,9,5,2,9,7,6,5,1,4,3,8,6,2,9,5,1,3,8,4,7,4,5,8,7,6,2,9,1,3,1,7,3,8,9,4,5,6,2,3,4,2,1,7,5,6,8,9,7,1,6,9,2,8,3,5,4,9,8,5,3,4,6,2,7,1],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "1165ffec39552fc3b56bd0940407ce065473780c4773bd38a15c0e5d1a5749d6",
+          "symbols": "6cacd2093f649c2c9912c155b715cc0abd950942ee3f1faba65eea5b8da7d592",
+          "fixedCells": "21c077da9819fc10e9fd18f3c58ab63965b8cbefc48761347f4802ce49f876a3"
+        },
+        "digLog": "c4c1766358d4e61b288154d6c3b6d347b74738ab97e4d014599819a1a1c8e4e8",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "07dfbe2ae6e69f654f24f117fc88d2e3c1daa0f1a773b7d4cb96d1022ef78015"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 115,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "column"
+        }
+      },
+      "seed": 115,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [4,8,0,5,0,0,7,0,9,0,3,5,0,0,2,8,1,0,0,2,0,7,8,1,0,4,5,0,0,0,9,0,0,2,0,0,0,9,0,3,0,7,0,6,0,0,0,7,0,0,4,0,0,0,2,5,0,1,3,8,0,7,0,0,1,4,6,0,0,5,8,0,9,0,8,0,0,5,0,3,1],
+      "solution": [4,8,1,5,6,3,7,2,9,7,3,5,4,9,2,8,1,6,6,2,9,7,8,1,3,4,5,8,4,3,9,1,6,2,5,7,1,9,2,3,5,7,4,6,8,5,6,7,8,2,4,1,9,3,2,5,6,1,3,8,9,7,4,3,1,4,6,7,9,5,8,2,9,7,8,2,4,5,6,3,1],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "db6bf4b1c35d748fee3fdab84bbe47bff6f62b8e250172a6a604bbeb01c7d43d",
+          "symbols": "f41a361f885e55d66e40f795ed15c223678c9a1f8e6fba6be34455eedfacf133",
+          "fixedCells": "4295936da3397f6cfdd9662d81122855fb0ef06cac7b0ac4384a40cd4105ad9d"
+        },
+        "digLog": "a9847bb476dcc706b75051c92f126b4e8bdfaa570ab6f62dbb08c111bd6bf04c",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "af907dc2a4614b68546782a0a034cbff9ed02b94ca66c1470f601d72acbf52af"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 116,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 116,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [2,7,8,0,1,3,5,0,0,0,0,9,4,0,0,0,0,1,4,6,0,0,2,0,8,9,0,7,3,4,0,8,9,0,0,0,8,0,0,0,0,0,0,0,6,0,0,0,3,5,0,9,4,8,0,4,7,0,9,0,0,5,2,9,0,0,0,0,1,4,0,0,0,0,3,2,7,0,6,1,9],
+      "solution": [2,7,8,9,1,3,5,6,4,3,5,9,4,6,8,2,7,1,4,6,1,7,2,5,8,9,3,7,3,4,6,8,9,1,2,5,8,9,5,1,4,2,7,3,6,6,1,2,3,5,7,9,4,8,1,4,7,8,9,6,3,5,2,9,2,6,5,3,1,4,8,7,5,8,3,2,7,4,6,1,9],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "0743ba53d04798e2c1e1d8ea3da5bf2c200bce0a79fdce7e14b0ef43aa740c54",
+          "fixedCells": "02f6b62dc73df0e7576a8c06b7ad2a7582ebc89653ae099377acb169d2cd1336"
+        },
+        "digLog": "1ae35434078c5e8801a7b9b807e94cc00333d80358e17bef4dcd8f9014b9a592",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "c9eb8c6f9299c7213f2b02c9352dfec37edd443b8d7c887bd540d9297d2a8a08"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 117,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "diagonal"
+        }
+      },
+      "seed": 117,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [9,4,0,0,0,5,6,0,0,7,5,0,0,8,6,0,4,3,0,8,0,7,4,0,0,0,0,5,0,0,1,2,8,7,0,0,0,3,0,5,0,9,0,2,0,0,0,7,3,6,4,0,0,9,0,0,0,0,9,2,0,6,0,3,9,0,6,5,0,0,8,1,0,0,8,4,0,0,0,5,2],
+      "solution": [9,4,3,2,1,5,6,7,8,7,5,1,9,8,6,2,4,3,2,8,6,7,4,3,1,9,5,5,6,9,1,2,8,7,3,4,1,3,4,5,7,9,8,2,6,8,2,7,3,6,4,5,1,9,4,1,5,8,9,2,3,6,7,3,9,2,6,5,7,4,8,1,6,7,8,4,3,1,9,5,2],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "3aad1310df7f2b35dc68b9666689c1b602ba944cf5c37bb70fbbb4d6516de14b",
+          "symbols": "8a7361699e7d049a505a51041482ad5d27d60c1e5352c548ef75fbef83515bf7",
+          "fixedCells": "beaa039f2e7e022513ce902a181abc218aeb4d1ee03ed4e6d198e49d283f5fc6"
+        },
+        "digLog": "6517cbe5b07ae70638b4e164251fe7d95fa017a867da93d58068403e88b12ced",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "d14b03c13a67ff759c4320df767c6379412f76b23507fe16476b0cbed7cb201e"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 118,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "row"
+        }
+      },
+      "seed": 118,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,4,3,0,0,2,0,1,0,8,0,1,0,0,3,0,0,0,7,6,0,5,0,0,8,3,4,1,0,0,0,3,6,0,7,8,6,7,0,0,0,0,0,2,3,3,2,0,8,5,0,0,0,1,9,1,6,0,0,5,0,8,2,0,0,0,7,0,0,1,0,9,0,8,0,1,0,0,3,4,0],
+      "solution": [5,4,3,6,8,2,9,1,7,8,9,1,4,7,3,2,5,6,7,6,2,5,9,1,8,3,4,1,5,9,2,3,6,4,7,8,6,7,8,9,1,4,5,2,3,3,2,4,8,5,7,6,9,1,9,1,6,3,4,5,7,8,2,4,3,5,7,2,8,1,6,9,2,8,7,1,6,9,3,4,5],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "d42bd2a061df9771e292200be2370563010df5e91cb314da8f20ef675313dda9",
+          "symbols": "bf84407c456b92398577fb4dfd1458c2f833171941337a16b84533126160b149",
+          "fixedCells": "5910e689a53ef4e43d18bfb249309496548401a3c2cd92a322ab29c6f708800a"
+        },
+        "digLog": "2fb5c6fc52c0bfa0677ad7324deb4cf7748fe66cadfaeba8c3b442d08b8bfcea",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "666753c2fed7f4dcab9926648ff0664ec9ba5e770d504ef33a56c813f7831b24"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 119,
+        "trace": "summary",
+        "variantId": "wordoku",
+        "variantOptions": {
+          "placement": "column"
+        }
+      },
+      "seed": 119,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 43,
+        "rawScore": 43,
+        "confidence": 0.08888888888888889,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 41,
+        "techniqueCounts": {
+          "nakedSingle": 41
+        },
+        "ratingVersion": 2
+      },
+      "givens": [0,0,1,0,5,0,3,0,0,5,0,0,0,0,3,0,4,1,0,7,3,6,0,0,5,8,0,0,1,8,0,9,2,7,5,0,0,9,0,7,0,5,0,3,0,0,3,5,4,8,0,2,1,0,0,8,9,0,0,7,4,2,0,3,5,0,1,0,0,0,0,6,0,0,4,0,3,0,1,0,0],
+      "solution": [8,4,1,2,5,9,3,6,7,5,2,6,8,7,3,9,4,1,9,7,3,6,4,1,5,8,2,6,1,8,3,9,2,7,5,4,4,9,2,7,1,5,6,3,8,7,3,5,4,8,6,2,1,9,1,8,9,5,6,7,4,2,3,3,5,7,1,2,4,8,9,6,2,6,4,9,3,8,1,7,5],
+      "model": {
+        "variantId": "wordoku",
+        "cellCount": 81,
+        "digits": 9
+      },
+      "digests": {
+        "model": {
+          "units": "557a79b816379ab36b87e2c14124e635d4bd433c366cfbca847e98d59ecdbf8d",
+          "cellUnits": "bafd3880113fe906c4f1583acee3c01d470124f0d31d68f6f106fe59d325f6a1",
+          "peers": "79f593af5dbea1ca72f9ec8086aa3a31cea42e47065ebcfa22463c3d485a2905",
+          "unitMeta": "7d3cfd0d908af0e32b2f2116d4b551833ca0153b72390a9e1d10448c0f5c26c6",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "a870a15e5b024b6ea62e6e2c85653cfb8d285c7afe8839e598a83b68a582a6d5",
+          "symbols": "8b8187aaeff9d3c41302e7e88533a1f7c0ed4e8974f7973a4706ef5a258365de",
+          "fixedCells": "cd14e5f41d72e8342335c5cca910d54c1990ac68f40276d8e7e4c6b20d5e7da5"
+        },
+        "digLog": "0d1e29327b9cd611fc88289429bbf533bcd762bb5de49d4da8741fca0c00c2b9",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "13a112322db691e383dd6b482965dcaa856cebfdf01c7dc1a1bb79ebd98f3d5f"
+      }
+    }
+  ]
+}

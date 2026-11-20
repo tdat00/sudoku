@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS14b\run-mutations.cjs docs\difficulty-v3\evidence\MS14b\mutations-6.txt 70 85
+mutation 74 (H saved example: two cells of the map swapped (same region sizes)): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.4 s
+detected 1 of 1, survivors 0, 1.4 s
+exit=0 seconds=1.526

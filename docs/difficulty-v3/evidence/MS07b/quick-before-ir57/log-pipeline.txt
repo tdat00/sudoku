@@ -1,0 +1,13 @@
+$ node ..\.github\scripts\generator-quick.js run pipeline --results-dir=..\docs\difficulty-v3\evidence\MS07b\quick
+==== shard pipeline (154 tests): node tests/node-runner.js --suite=pipeline --results=..\docs\difficulty-v3\evidence\MS07b\quick\generator-pipeline.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   pipeline: 154 passed  (327.55 s)
+
+Suites: 1
+Tests:  154 total, 154 passed, 0 failed, 0 skipped
+Time:   327.55 s running tests, 327.76 s total
+Results: docs/difficulty-v3/evidence/MS07b/quick/generator-pipeline.json
+shard pipeline: exit 0, 328.0 s
+exit=0 seconds=328.346

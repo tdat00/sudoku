@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --filter=> variants: the normalised option schema > --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-option-schema.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 81 passed  (52 ms)
+
+Suites: 1
+Tests:  81 total, 81 passed, 0 failed, 0 skipped
+Time:   52 ms running tests, 303 ms total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-option-schema.json
+exit=0 seconds=0.536

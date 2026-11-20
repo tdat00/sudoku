@@ -1,0 +1,7 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=bugPlusOne --sources=tests\artifacts\difficulty-v3\MS11c\sources.json --max-puzzles=8 --max-hints=400 --check
+selected 1 technique ID(s); mode check
+replaying 1 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/1 classic9 Nightmare 4242 -> 57 hint(s), solved; wanted found: bugPlusOne
+bugPlusOne: has no example in help-examples.js (a new one)
+help-examples.js differs or lacks an example for 1 of the 1 selected ID(s)
+exit=1 seconds=0.185

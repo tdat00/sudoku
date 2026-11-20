@@ -1,0 +1,12 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   help: 30 passed  (3.78 s)
+ok   mega-contract: 37 passed  (1.65 s)
+ok   ui-contract: 67 passed  (351 ms)
+
+Suites: 3
+Tests:  134 total, 134 passed, 0 failed, 0 skipped
+Time:   5.78 s running tests, 5.96 s total
+Results: docs/difficulty-v3/evidence/MS05r5m/quick/mega-contract-ui-contract-help.json
+MS05r5m exit=0 seconds=6.157

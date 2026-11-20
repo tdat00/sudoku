@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS13c\fixture-scan.js dug
+DUG_24 {"open":43,"long":{"len":5,"kind":"contradiction","elim":[[14,3]],"plc":[],"v2":false},"short":null,"stop":null}
+DUG_379 "solved"
+DUG_155 {"open":44,"long":{"len":5,"kind":"contradiction","elim":[[6,7]],"plc":[],"v2":true},"short":null,"stop":null}
+exit=0 seconds=0.244

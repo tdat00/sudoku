@@ -1,0 +1,17 @@
+$ node tests\artifacts\difficulty-v3\MS13c\census-dump.js ..\docs\difficulty-v3\evidence\MS13c\census\positions
+classic4: 6 puzzles, 0 positions, outcomes solved,solved,solved,solved,solved,solved, 0.0 s (git:4aa3d11)
+classic6: 6 puzzles, 0 positions, outcomes solved,solved,solved,solved,solved,solved, 0.0 s (git:4aa3d11)
+classic9: 6 puzzles, 5 positions, outcomes solved,solved,solved,solved,solved,solved, 0.0 s (git:4aa3d11)
+mega12: 6 puzzles, 32 positions, outcomes solved,solved,solved,solved,solved,solved, 0.2 s (git:4aa3d11)
+mega16: 6 puzzles, 321 positions, outcomes solved,solved,solved,solved,solved,solved, 7.2 s (git:4aa3d11)
+diagonalX: 6 puzzles, 84 positions, outcomes solved,solved,solved,solved,solved,solved, 0.2 s (git:4aa3d11)
+hyper: 6 puzzles, 67 positions, outcomes solved,solved,solved,solved,solved,solved, 0.2 s (git:4aa3d11)
+jigsaw9: 6 puzzles, 26 positions, outcomes solved,solved,solved,solved,solved,solved, 0.1 s (git:4aa3d11)
+killer: 6 puzzles, 5 positions, outcomes solved,solved,solved,solved,solved,solved, 0.0 s (git:4aa3d11)
+greaterThan: 6 puzzles, 5 positions, outcomes solved,solved,solved,solved,solved,solved, 0.0 s (git:4aa3d11)
+samurai: 6 puzzles, 48 positions, outcomes solved,solved,solved,solved,solved,solved, 4.6 s (git:4aa3d11)
+sohei: 6 puzzles, 51 positions, outcomes solved,solved,solved,solved,solved,solved, 3.0 s (git:4aa3d11)
+butterfly: 6 puzzles, 15 positions, outcomes solved,solved,solved,solved,solved,solved, 0.1 s (git:4aa3d11)
+flower: 6 puzzles, 44 positions, outcomes solved,solved,solved,solved,solved,solved, 0.3 s (git:4aa3d11)
+wordoku: 6 puzzles, 0 positions, outcomes solved,solved,solved,solved,solved,solved, 0.0 s (git:4aa3d11)
+exit=0 seconds=16.344

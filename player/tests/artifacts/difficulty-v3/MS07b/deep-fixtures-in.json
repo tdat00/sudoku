@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "sources": {
+    "nishioDeep": [
+      {"variantId":"classic9","level":"Hell 2","seed":"escargot","text":"#1,Classic Sudoku 9x9,Hell 2,escargot\n1....7.9.\n.3..2...8\n..96..5..\n..53..9..\n.1..8...2\n6....4...\n3......1.\n.4......7\n..7...3.."},
+      {"variantId":"classic9","level":"Hell 2","seed":"worlds-hardest-2012","text":"#1,Classic Sudoku 9x9,Hell 2,worlds-hardest-2012\n8........\n..36.....\n.7..9.2..\n.5...7...\n....457..\n...1...3.\n..1....68\n..85...1.\n.9....4.."},
+      {"variantId":"classic9","level":"Hell 2","seed":"hard-platinum","text":"#1,Classic Sudoku 9x9,Hell 2,hard-platinum\n.......12\n........3\n..23..4..\n..18....5\n.6..7.8..\n.....9...\n..85.....\n9...4.5..\n47...6..."},
+      {"variantId":"classic9","level":"Hell 2","seed":"hard-nugget","text":"#1,Classic Sudoku 9x9,Hell 2,hard-nugget\n.......39\n.....1..5\n..3.5.8..\n..8.9...6\n.7...2...\n1..4.....\n..9.8..5.\n.2....6..\n4..7....."},
+      {"variantId":"classic9","level":"Hell 2","seed":"hard-b","text":"#1,Classic Sudoku 9x9,Hell 2,hard-b\n..53.....\n8......2.\n.7..1.5..\n4....53..\n.1..7...6\n..32...8.\n.6.5....9\n..4....3.\n.....97.."},
+      {"variantId":"classic9","level":"Hell 2","seed":"hard-c","text":"#1,Classic Sudoku 9x9,Hell 2,hard-c\n12.3....4\n35....1..\n..4......\n..54..2..\n6...7....\n.....8.9.\n..31..5..\n.....9.7.\n....6...8"}
+    ]
+  }
+}

@@ -1,0 +1,1343 @@
+{
+ "schema": 1,
+ "tool": "tests/artifacts/difficulty-v3/MS05e/measure-gt.js",
+ "task": "MS05e",
+ "mode": "measure",
+ "variant": "greaterThan",
+ "level": "normal",
+ "repeat": 1,
+ "from": 7020,
+ "count": 20,
+ "seeds": [
+  7020,
+  7021,
+  7022,
+  7023,
+  7024,
+  7025,
+  7026,
+  7027,
+  7028,
+  7029,
+  7030,
+  7031,
+  7032,
+  7033,
+  7034,
+  7035,
+  7036,
+  7037,
+  7038,
+  7039
+ ],
+ "complete": true,
+ "unstartedSeeds": [],
+ "source": {
+  "sourceHash": "5ee46afaee82d94ee64fb416139a777fbc0ce63f21b7a470bd2a4eadb64e42db",
+  "sourceFiles": 63,
+  "greaterThanHash": "97faf69e901d488d0b82ed6ab9a895990dd27cd969f70bcf962f0161a42714dd",
+  "diggerHash": "3be14d5e355a2ad3fdde408a0a4b3d83cee97c5a7f5a50bf1b57ee1a3cd768b7",
+  "toolHash": "2aaa6372543307fe5f043f617a86dceb2c122f2a97c8bf552f197b8a577a272e",
+  "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+  "dirty": true,
+  "dirtyFiles": [
+   " M generator/js/variants/greater-than.js",
+   " M generator/tests/suites/replay.test.js",
+   "?? generator/tests/suites/greater-than-guided.test.js"
+  ]
+ },
+ "node": "v26.13.0",
+ "machine": {
+  "platform": "win32",
+  "release": "10.0.26300",
+  "arch": "x64",
+  "cpuModel": "AMD EPYC 7763 64-Core Processor",
+  "cpus": 16,
+  "memoryGiB": 64
+ },
+ "lock": {
+  "file": "C:\\Users\\ledat\\AppData\\Local\\Temp\\dv3-sudoku.lock",
+  "content": "6284|MS05e|2026-11-14T06:53:42.6254599Z"
+ },
+ "argv": [
+  "--mode=measure",
+  "--level=normal",
+  "--from=7020",
+  "--count=20",
+  "--repeat=1",
+  "--json=..\\docs\\difficulty-v3\\evidence\\MS05e\\pool-16\\normal-7020-r1.json"
+ ],
+ "startedAt": "2026-11-14T06:53:43.162Z",
+ "config": {
+  "request": {
+   "variantId": "greaterThan",
+   "difficulty": "normal",
+   "seedLiteral": "from+i",
+   "trace": "summary"
+  },
+  "budget": "none (as CV6)",
+  "warmup": false,
+  "supportOverride": false,
+  "defaultMaxAttempts": 8,
+  "shallowSearchRatings": 256,
+  "capRatings": 1024,
+  "signPool": 16,
+  "spec": {
+   "min": 180,
+   "max": 400,
+   "minClues": 24,
+   "minCluesPerUnit": 1,
+   "tierTechniques": [
+    "hiddenPair",
+    "nakedTriple",
+    "minMaxForcing",
+    "hiddenTriple",
+    "nakedQuad",
+    "hiddenQuad"
+   ]
+  },
+  "instrumentation": "signs strategy wrapper: counters only"
+ },
+ "summary": {
+  "requests": 20,
+  "errors": 0,
+  "exactHits": 20,
+  "approximate": 0,
+  "elapsedMs": {
+   "p50": 7522.559,
+   "p95": 20913.696,
+   "max": 30206.95,
+   "total": 164138.198,
+   "mean": 8206.91
+  },
+  "elapsedMsOkOnly": {
+   "p50": 7522.559,
+   "p95": 20913.696
+  },
+  "attempts": 41,
+  "attemptsMax": 6,
+  "samplesDug": 370,
+  "oracleCalls": 568711,
+  "tried": 568239,
+  "fullRatings": 381,
+  "proposals": 688128,
+  "localSearches": 21,
+  "checksFailed": 0
+ },
+ "durationMs": 164266.081,
+ "requests": [
+  {
+   "seed": 7020,
+   "ok": true,
+   "elapsedMs": 12915.549,
+   "counters": {
+    "events": 605,
+    "samplesDug": 25,
+    "tried": 38337,
+    "accepted": 2570,
+    "rejected": 487,
+    "oracleCalls": 38369,
+    "digMs": 10026.383
+   },
+   "level": "normal",
+   "score": 290,
+   "exact": true,
+   "attempts": 3,
+   "clues": 24,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 14,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 2,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 2,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 1,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 28,
+    "proposals": 65536,
+    "localSearches": 2,
+    "shallowRatings": 2
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7021,
+   "ok": true,
+   "elapsedMs": 3379.445,
+   "counters": {
+    "events": 209,
+    "samplesDug": 9,
+    "tried": 13827,
+    "accepted": 932,
+    "rejected": 133,
+    "oracleCalls": 13839,
+    "digMs": 3376.426
+   },
+   "level": "normal",
+   "score": 315,
+   "exact": true,
+   "attempts": 1,
+   "clues": 26,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 9,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 9,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7022,
+   "ok": true,
+   "elapsedMs": 7843.125,
+   "counters": {
+    "events": 411,
+    "samplesDug": 18,
+    "tried": 27707,
+    "accepted": 1854,
+    "rejected": 262,
+    "oracleCalls": 27733,
+    "digMs": 6533.787
+   },
+   "level": "normal",
+   "score": 327,
+   "exact": true,
+   "attempts": 2,
+   "clues": 27,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 6,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 18,
+    "proposals": 32768,
+    "localSearches": 1,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7023,
+   "ok": true,
+   "elapsedMs": 14434.848,
+   "counters": {
+    "events": 728,
+    "samplesDug": 32,
+    "tried": 49107,
+    "accepted": 3315,
+    "rejected": 663,
+    "oracleCalls": 49144,
+    "digMs": 11742.825
+   },
+   "level": "normal",
+   "score": 320,
+   "exact": true,
+   "attempts": 3,
+   "clues": 29,
+   "signs": 3,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 8,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 32,
+    "proposals": 65536,
+    "localSearches": 2,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7024,
+   "ok": true,
+   "elapsedMs": 14862.069,
+   "counters": {
+    "events": 768,
+    "samplesDug": 34,
+    "tried": 52422,
+    "accepted": 3521,
+    "rejected": 515,
+    "oracleCalls": 52469,
+    "digMs": 12025.999
+   },
+   "level": "normal",
+   "score": 355,
+   "exact": true,
+   "attempts": 3,
+   "clues": 24,
+   "signs": 8,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 1,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 10,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 35,
+    "proposals": 65536,
+    "localSearches": 2,
+    "shallowRatings": 1
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7025,
+   "ok": true,
+   "elapsedMs": 1822.773,
+   "counters": {
+    "events": 125,
+    "samplesDug": 5,
+    "tried": 7561,
+    "accepted": 503,
+    "rejected": 74,
+    "oracleCalls": 7566,
+    "digMs": 1820.568
+   },
+   "level": "normal",
+   "score": 300,
+   "exact": true,
+   "attempts": 1,
+   "clues": 26,
+   "signs": 7,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 5,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 5,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7026,
+   "ok": true,
+   "elapsedMs": 2195.817,
+   "counters": {
+    "events": 140,
+    "samplesDug": 6,
+    "tried": 9246,
+    "accepted": 618,
+    "rejected": 87,
+    "oracleCalls": 9253,
+    "digMs": 2193.342
+   },
+   "level": "normal",
+   "score": 343,
+   "exact": true,
+   "attempts": 1,
+   "clues": 25,
+   "signs": 5,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 6,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 6,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7027,
+   "ok": true,
+   "elapsedMs": 2077.242,
+   "counters": {
+    "events": 139,
+    "samplesDug": 6,
+    "tried": 9224,
+    "accepted": 612,
+    "rejected": 111,
+    "oracleCalls": 9230,
+    "digMs": 2074.998
+   },
+   "level": "normal",
+   "score": 293,
+   "exact": true,
+   "attempts": 1,
+   "clues": 31,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 6,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 6,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7028,
+   "ok": true,
+   "elapsedMs": 7822.083,
+   "counters": {
+    "events": 384,
+    "samplesDug": 16,
+    "tried": 24351,
+    "accepted": 1637,
+    "rejected": 289,
+    "oracleCalls": 24373,
+    "digMs": 6036.195
+   },
+   "level": "normal",
+   "score": 350,
+   "exact": true,
+   "attempts": 2,
+   "clues": 24,
+   "signs": 7,
+   "warnings": [],
+   "hardest": "nakedTriple",
+   "work": [
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 4,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 16,
+    "proposals": 32768,
+    "localSearches": 1,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7029,
+   "ok": true,
+   "elapsedMs": 13800.59,
+   "counters": {
+    "events": 710,
+    "samplesDug": 31,
+    "tried": 47409,
+    "accepted": 3193,
+    "rejected": 570,
+    "oracleCalls": 47452,
+    "digMs": 11182.72
+   },
+   "level": "normal",
+   "score": 296,
+   "exact": true,
+   "attempts": 3,
+   "clues": 26,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 1,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 7,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 33,
+    "proposals": 65536,
+    "localSearches": 2,
+    "shallowRatings": 1
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7030,
+   "ok": true,
+   "elapsedMs": 695.381,
+   "counters": {
+    "events": 56,
+    "samplesDug": 2,
+    "tried": 3010,
+    "accepted": 203,
+    "rejected": 43,
+    "oracleCalls": 3014,
+    "digMs": 693.683
+   },
+   "level": "normal",
+   "score": 291,
+   "exact": true,
+   "attempts": 1,
+   "clues": 28,
+   "signs": 7,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 2,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 2,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7031,
+   "ok": true,
+   "elapsedMs": 2009.173,
+   "counters": {
+    "events": 133,
+    "samplesDug": 6,
+    "tried": 9163,
+    "accepted": 626,
+    "rejected": 121,
+    "oracleCalls": 9171,
+    "digMs": 2007.72
+   },
+   "level": "normal",
+   "score": 271,
+   "exact": true,
+   "attempts": 1,
+   "clues": 28,
+   "signs": 4,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 6,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 6,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7032,
+   "ok": true,
+   "elapsedMs": 9330.914,
+   "counters": {
+    "events": 499,
+    "samplesDug": 22,
+    "tried": 33634,
+    "accepted": 2265,
+    "rejected": 491,
+    "oracleCalls": 33658,
+    "digMs": 8085.747
+   },
+   "level": "normal",
+   "score": 300,
+   "exact": true,
+   "attempts": 2,
+   "clues": 28,
+   "signs": 4,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 10,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 23,
+    "proposals": 32768,
+    "localSearches": 1,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7033,
+   "ok": true,
+   "elapsedMs": 406.389,
+   "counters": {
+    "events": 37,
+    "samplesDug": 1,
+    "tried": 1526,
+    "accepted": 102,
+    "rejected": 12,
+    "oracleCalls": 1527,
+    "digMs": 404.897
+   },
+   "level": "normal",
+   "score": 297,
+   "exact": true,
+   "attempts": 1,
+   "clues": 27,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 1,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 1,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7034,
+   "ok": true,
+   "elapsedMs": 1168.749,
+   "counters": {
+    "events": 78,
+    "samplesDug": 3,
+    "tried": 4671,
+    "accepted": 314,
+    "rejected": 65,
+    "oracleCalls": 4676,
+    "digMs": 1167.711
+   },
+   "level": "normal",
+   "score": 328,
+   "exact": true,
+   "attempts": 1,
+   "clues": 32,
+   "signs": 5,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 3,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 3,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7035,
+   "ok": true,
+   "elapsedMs": 741.47,
+   "counters": {
+    "events": 58,
+    "samplesDug": 2,
+    "tried": 3025,
+    "accepted": 201,
+    "rejected": 30,
+    "oracleCalls": 3027,
+    "digMs": 740.552
+   },
+   "level": "normal",
+   "score": 308,
+   "exact": true,
+   "attempts": 1,
+   "clues": 27,
+   "signs": 9,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 2,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 2,
+    "proposals": 0,
+    "localSearches": 0,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7036,
+   "ok": true,
+   "elapsedMs": 20913.696,
+   "counters": {
+    "events": 1066,
+    "samplesDug": 47,
+    "tried": 72460,
+    "accepted": 4855,
+    "rejected": 671,
+    "oracleCalls": 72520,
+    "digMs": 16748.372
+   },
+   "level": "normal",
+   "score": 369,
+   "exact": true,
+   "attempts": 4,
+   "clues": 24,
+   "signs": 12,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 11,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 48,
+    "proposals": 98304,
+    "localSearches": 3,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7037,
+   "ok": true,
+   "elapsedMs": 7522.559,
+   "counters": {
+    "events": 393,
+    "samplesDug": 17,
+    "tried": 26019,
+    "accepted": 1739,
+    "rejected": 264,
+    "oracleCalls": 26038,
+    "digMs": 6112.938
+   },
+   "level": "normal",
+   "score": 341,
+   "exact": true,
+   "attempts": 2,
+   "clues": 26,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "nakedTriple",
+   "work": [
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 5,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 17,
+    "proposals": 32768,
+    "localSearches": 1,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7038,
+   "ok": true,
+   "elapsedMs": 30206.95,
+   "counters": {
+    "events": 1475,
+    "samplesDug": 64,
+    "tried": 98450,
+    "accepted": 6603,
+    "rejected": 1067,
+    "oracleCalls": 98531,
+    "digMs": 23089.293
+   },
+   "level": "normal",
+   "score": 305,
+   "exact": true,
+   "attempts": 6,
+   "clues": 25,
+   "signs": 7,
+   "warnings": [],
+   "hardest": "hiddenPair",
+   "work": [
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 12,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 0,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 1,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": 0,
+       "shallowRatings": 1,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 4,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 66,
+    "proposals": 163840,
+    "localSearches": 5,
+    "shallowRatings": 2
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  },
+  {
+   "seed": 7039,
+   "ok": true,
+   "elapsedMs": 9989.376,
+   "counters": {
+    "events": 543,
+    "samplesDug": 24,
+    "tried": 37090,
+    "accepted": 2497,
+    "rejected": 420,
+    "oracleCalls": 37121,
+    "digMs": 8794.201
+   },
+   "level": "normal",
+   "score": 334,
+   "exact": true,
+   "attempts": 2,
+   "clues": 26,
+   "signs": 6,
+   "warnings": [],
+   "hardest": "minMaxForcing",
+   "work": [
+    {
+     "ratings": 13,
+     "proposals": 32768,
+     "localSearches": [
+      {
+       "ratings": 1,
+       "proposals": 32768,
+       "firstShallowAt": null,
+       "shallowRatings": 0,
+       "capHit": "proposals"
+      }
+     ]
+    },
+    {
+     "ratings": 12,
+     "proposals": 0,
+     "localSearches": []
+    }
+   ],
+   "workTotals": {
+    "ratings": 25,
+    "proposals": 32768,
+    "localSearches": 1,
+    "shallowRatings": 0
+   },
+   "checks": {
+    "unique": true,
+    "solutionOk": true,
+    "symmetric": true,
+    "floorOk": true,
+    "minimal": true,
+    "requiredNow": true,
+    "ratingAgrees": true,
+    "exactAgrees": true,
+    "warningsAgree": true,
+    "allOk": true
+   }
+  }
+ ]
+}

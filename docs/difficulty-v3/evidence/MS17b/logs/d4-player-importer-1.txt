@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=importer,fixtures
+Sudoku Player tests  (node v26.13.0)
+Sources: 40 loaded, 0 listed but not present (--verbose lists them)
+
+ok   fixtures: 21 passed  (46 ms)
+ok   importer: 91 passed  (474 ms)
+
+Suites: 2
+Tests:  112 total, 112 passed, 0 failed, 0 skipped
+Time:   520 ms running tests, 598 ms total
+exit=0 seconds=0.724

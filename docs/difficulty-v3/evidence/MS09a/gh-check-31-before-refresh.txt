@@ -1,0 +1,69 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=nakedSingle,hiddenSingleBox,hiddenSingleLine,pointing,cageCombo,ineqChain,boxLine,nakedPair,hiddenPair,nakedTriple,minMaxForcing,hiddenTriple,ruleOf45,nakedQuad,hiddenQuad,xWing,skyscraper,twoStringKite,simpleColouring,emptyRectangle,swordfish,cageSplit,jellyfish,xyWing,xyzWing,wWing,uniqueRectangle,forcingChain,forcingChainLong,nishio,nishioDeep --max-puzzles=64 --max-hints=400 --check
+selected 31 technique ID(s); mode check
+replaying 27 puzzle(s) for 31 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/27 classic9 - - -> 47 hint(s), solved; wanted found: nakedSingle
+puzzle 2/27 classic9 - - -> 74 hint(s), solved; wanted found: hiddenSingleBox
+puzzle 3/27 classic9 - - -> 76 hint(s), solved; wanted found: hiddenSingleLine
+puzzle 4/27 classic9 - - -> 59 hint(s), solved; wanted found: pointing
+puzzle 5/27 killer - - -> 51 hint(s), solved; wanted found: cageCombo
+puzzle 6/27 greaterThan - - -> 67 hint(s), solved; wanted found: ineqChain
+puzzle 7/27 classic9 - - -> 62 hint(s), solved; wanted found: boxLine, skyscraper
+puzzle 8/27 classic9 - - -> 76 hint(s), solved; wanted found: nakedPair
+puzzle 9/27 classic9 - - -> 58 hint(s), solved; wanted found: hiddenPair
+puzzle 10/27 classic9 - - -> 67 hint(s), solved; wanted found: nakedTriple
+puzzle 11/27 greaterThan - - -> 58 hint(s), solved; wanted found: minMaxForcing
+puzzle 12/27 classic9 - - -> 61 hint(s), solved; wanted found: hiddenTriple
+puzzle 13/27 killer - - -> 148 hint(s), solved; wanted found: ruleOf45
+puzzle 14/27 classic9 - - -> 63 hint(s), solved; wanted found: nakedQuad
+puzzle 15/27 hyper - - -> 90 hint(s), solved; wanted found: hiddenQuad
+puzzle 16/27 classic9 - - -> 80 hint(s), solved; wanted found: xWing
+puzzle 17/27 classic9 - - -> 70 hint(s), solved; wanted found: twoStringKite, emptyRectangle
+puzzle 18/27 classic9 - - -> 77 hint(s), solved; wanted found: simpleColouring, forcingChain
+puzzle 19/27 classic9 - - -> 58 hint(s), solved; wanted found: swordfish
+puzzle 20/27 killer - - -> 157 hint(s), solved; wanted found: cageSplit
+puzzle 21/27 classic9 - - -> 80 hint(s), solved; wanted found: jellyfish
+puzzle 22/27 classic9 - - -> 74 hint(s), solved; wanted found: xyWing
+puzzle 23/27 classic9 - - -> 73 hint(s), solved; wanted found: xyzWing, wWing
+puzzle 24/27 classic9 - - -> 73 hint(s), solved; wanted found: uniqueRectangle
+puzzle 25/27 classic9 - - -> 61 hint(s), solved; wanted found: forcingChainLong
+puzzle 26/27 classic9 - - -> 70 hint(s), solved; wanted found: nishio
+puzzle 27/27 classic9 - - -> 113 hint(s), solved; wanted found: nishioDeep
+nakedSingle: matches help-examples.js
+hiddenSingleBox: 1 field(s) differ from help-examples.js
+  source.step: saved 50, fresh 52
+hiddenSingleLine: matches help-examples.js
+pointing: matches help-examples.js
+cageCombo: matches help-examples.js
+ineqChain: matches help-examples.js
+boxLine: matches help-examples.js
+nakedPair: matches help-examples.js
+hiddenPair: matches help-examples.js
+nakedTriple: matches help-examples.js
+minMaxForcing: matches help-examples.js
+hiddenTriple: matches help-examples.js
+ruleOf45: matches help-examples.js
+nakedQuad: matches help-examples.js
+hiddenQuad: matches help-examples.js
+xWing: matches help-examples.js
+skyscraper: matches help-examples.js
+twoStringKite: matches help-examples.js
+simpleColouring: matches help-examples.js
+emptyRectangle: matches help-examples.js
+swordfish: matches help-examples.js
+cageSplit: matches help-examples.js
+jellyfish: matches help-examples.js
+xyWing: matches help-examples.js
+xyzWing: 1 field(s) differ from help-examples.js
+  source.step: saved 32, fresh 33
+wWing: 1 field(s) differ from help-examples.js
+  source.step: saved 43, fresh 44
+uniqueRectangle: 1 field(s) differ from help-examples.js
+  source.step: saved 45, fresh 47
+forcingChain: 1 field(s) differ from help-examples.js
+  source.step: saved 48, fresh 49
+forcingChainLong: matches help-examples.js
+nishio: 1 field(s) differ from help-examples.js
+  source.step: saved 17, fresh 18
+nishioDeep: matches help-examples.js
+help-examples.js differs or lacks an example for 6 of the 31 selected ID(s)
+exit=1 seconds=1.899

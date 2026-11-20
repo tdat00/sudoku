@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS14b\mechanism-g.js --out=..\docs\difficulty-v3\evidence\MS14b\mechanism-g-tree.json --cross=..\docs\difficulty-v3\evidence\MS14b\mechanism-g-base.json
+G06 jigsaw9 nightmare 42: engine tree clues 22, own rating nightmare/2374 L1; the puzzle of git:7eddb15 (clues 24, same regions true) rated here nightmare/2361 L1
+G07 jigsaw9 nightmare 3962167687: engine tree clues 26, own rating nightmare/2184; the puzzle of git:7eddb15 (clues 26, same regions true) rated here nightmare/2184
+exit=0 seconds=17.437

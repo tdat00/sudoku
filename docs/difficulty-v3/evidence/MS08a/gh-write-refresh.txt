@@ -1,0 +1,9 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=pointing,simpleColouring,swordfish,xyWing --max-puzzles=16 --max-hints=400 --write
+selected 4 technique ID(s); mode write
+replaying 4 puzzle(s) for 4 ID(s) (--max-puzzles=16, --max-hints=400)
+puzzle 1/4 classic9 - - -> 59 hint(s), solved; wanted found: pointing
+puzzle 2/4 classic9 - - -> 65 hint(s), solved; wanted found: simpleColouring
+puzzle 3/4 classic9 - - -> 58 hint(s), solved; wanted found: swordfish
+puzzle 4/4 classic9 - - -> 74 hint(s), solved; wanted found: xyWing
+wrote player/js/ui/help-examples.js (29 examples; 4 selected: pointing, simpleColouring, swordfish, xyWing; the others kept)
+exit=0 seconds=0.275

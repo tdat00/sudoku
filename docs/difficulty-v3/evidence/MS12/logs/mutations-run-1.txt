@@ -1,0 +1,14 @@
+$ node tests\artifacts\difficulty-v3\MS12\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS12\mutations-1.txt 4 14
+mutation 4 (the same-digit test of the ends is skipped inside the search): NOT DETECTED (exit 0) - 68 total, 68 passed, 0 failed, 0 skipped - 0 failing, 0 of xyChain - 4.9 s
+mutation 5 (a proof may end in a lower cell than its start (the lower-end rule dropped)): NOT DETECTED (exit 0) - 68 total, 68 passed, 0 failed, 0 skipped - 0 failing, 0 of xyChain - 5.0 s
+mutation 6 (a proof may end in the cell it starts from): DETECTED - 68 total, 67 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 4.9 s
+mutation 7 (a start that is "true" is searched too in the restricted mode): DETECTED - 68 total, 59 passed, 9 failed, 0 skipped - 9 failing, 9 of xyChain - 5.1 s
+mutation 8 (a strong link from a cell with more than two candidates (the two highest)): DETECTED - 175 total, 73 passed, 102 failed, 0 skipped - 102 failing, 60 of xyChain - 3.4 s
+mutation 9 (the elimination rule sees one end only (a weak link to either end)): DETECTED - 175 total, 63 passed, 112 failed, 0 skipped - 112 failing, 47 of xyChain - 3.2 s
+mutation 10 (a solved cell is a weak neighbour): DETECTED - 175 total, 172 passed, 3 failed, 0 skipped - 3 failing, 3 of xyChain - 11.2 s
+mutation 11 (the scan keeps the last proof found, not the shortest (no narrowing of the limit)): DETECTED - 175 total, 116 passed, 59 failed, 0 skipped - 59 failing, 35 of xyChain - 22.8 s
+mutation 12 (the scan takes the starts in descending order (ties to the highest start)): DETECTED - 175 total, 121 passed, 54 failed, 0 skipped - 54 failing, 35 of xyChain - 8.8 s
+mutation 13 (the window of xyChain is 13 edges): DETECTED - 68 total, 65 passed, 3 failed, 0 skipped - 3 failing, 3 of xyChain - 4.8 s
+mutation 14 (the window of xyChain is 11 edges): DETECTED - 68 total, 67 passed, 1 failed, 0 skipped - 1 failing, 1 of xyChain - 4.9 s
+detected 9 of 11, 78.9 s
+exit=1 seconds=79.031

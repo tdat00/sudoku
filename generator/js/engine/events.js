@@ -322,6 +322,23 @@
     return ev;
   }
 
+  // The band verdicts of the tune step may carry `required` (true, false or null: the requiredness was not
+  // derived) and `target` (a finite number or null; left out when there is none).
+  const TUNE_VERDICT_KEYS = ['tune.hit', 'tune.miss', 'tune.shallow'];
+
+  function verdictArgProblems(args) {
+    const problems = [];
+    const has = function (name) { return Object.prototype.hasOwnProperty.call(args, name); };
+    if (has('required') && args.required !== true && args.required !== false && args.required !== null) {
+      problems.push('required must be true, false or null');
+    }
+    const finiteTarget = typeof args.target === 'number' && isFinite(args.target);
+    if (has('target') && args.target !== null && !finiteTarget) {
+      problems.push('target must be a finite number or null');
+    }
+    return problems;
+  }
+
   function eventProblems(event) {
     const problems = [];
     if (event === null || typeof event !== 'object') return ['event must be an object'];
@@ -342,6 +359,8 @@
     if (event.i18nArgs !== undefined && !(isPlainData(event.i18nArgs) && !Array.isArray(event.i18nArgs) &&
         event.i18nArgs !== null)) {
       problems.push('i18nArgs must be a plain object');
+    } else if (event.i18nArgs !== undefined && TUNE_VERDICT_KEYS.indexOf(event.i18nKey) !== -1) {
+      verdictArgProblems(event.i18nArgs).forEach(function (p) { problems.push(p); });
     }
     if (event.metrics !== undefined) {
       const m = event.metrics;
@@ -786,7 +805,10 @@
    *  - 5 dig: start, restore, pass.start, skip, try, accept, reject, keep, pass.end, verify, unsound, end,
    *    and `metric` events.
    *  - 6 rate: start, technique, result, end.
-   *  - 7 tune: start, hit, miss, best, final, end.
+   *  - 7 tune: start, hit, miss, shallow, best, final, end. `hit`, `miss` and `shallow` may carry `required`
+   *    (true, false or null for not derived) and `target` (a finite number or null; left out when there is
+   *    none). `shallow`, a complete in-band result that does not need the tier of its level, is prepared and
+   *    not emitted by the production digger yet.
    *  - run level: `retry.difficulty`, `done`, `error.<code>`, `trace.coalesced`.
    */
   const VOCABULARY = [
@@ -848,9 +870,13 @@
     entry('step', 'tune', 'start', 'tune.start', 'off',
       ['attempt', 'maxAttempts', 'sample', 'maxSamples', 'finalize']),
     entry('step', 'tune', 'progress', 'tune.hit', 'summary',
-      ['requested', 'achieved', 'score', 'scoreMin', 'scoreMax', 'hardestTechnique']),
+      ['requested', 'achieved', 'score', 'scoreMin', 'scoreMax', 'hardestTechnique', 'required', 'target']),
     entry('step', 'tune', 'progress', 'tune.miss', 'summary',
-      ['requested', 'achieved', 'score', 'scoreMin', 'scoreMax', 'sample', 'maxSamples']),
+      ['requested', 'achieved', 'score', 'scoreMin', 'scoreMax', 'sample', 'maxSamples', 'required',
+        'target']),
+    entry('step', 'tune', 'progress', 'tune.shallow', 'summary',
+      ['requested', 'achieved', 'score', 'scoreMin', 'scoreMax', 'sample', 'maxSamples', 'required',
+        'target']),
     entry('step', 'tune', 'progress', 'tune.best', 'summary', ['requested', 'achieved', 'score']),
     entry('micro', 'tune', 'progress', 'tune.final', 'full', ['count'], ['cells']),
     entry('step', 'tune', 'end', 'tune.end', 'off'),

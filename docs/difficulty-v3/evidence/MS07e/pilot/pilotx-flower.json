@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilotx-flower.json",
+    "--cells=flower/hell1:2@2",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T05:20:44.086Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "flower/hell1": {
+      "variant": "flower",
+      "level": "hell1",
+      "asked": 2,
+      "start": 2,
+      "requests": [
+        {
+          "index": 2,
+          "seed": 2553130139,
+          "hit": false,
+          "ms": 20901.1084,
+          "achieved": "hell1",
+          "score": 2901,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 3,
+          "seed": 2536352520,
+          "hit": false,
+          "ms": 24405.5285,
+          "achieved": "hell1",
+          "score": 3575,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 2,
+      "hits": 0,
+      "meanMs": 22653.318,
+      "maxMs": 24405.5285
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T05:21:29.398Z",
+  "seconds": 45.311
+}

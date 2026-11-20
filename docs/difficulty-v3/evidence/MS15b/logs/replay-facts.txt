@@ -1,0 +1,86 @@
+$ node tests\artifacts\difficulty-v3\MS15b\replay-facts.js
+== G01 classic9 expert (moves 28, compact steps 7, details steps 29)
+  jump compact step 4 25>26 total 47>593 change 546 ratio 12.6 newHardest true hardest hiddenSingleBox>twoStringKite cause single-culprit frame R2C4 culprit.other 47 choice guided | other view at the same end: details 47>593 tier jump change 546
+  jump details step 26 25>26 total 47>593 change 546 ratio 12.6 newHardest true hardest hiddenSingleBox>twoStringKite cause single-culprit frame R2C4 culprit.other 47 choice guided | other view at the same end: compact 47>593 tier jump change 546
+  witness move 20 at 21 span rated 1 refused 1 others 0 nulls 0
+  witness move 21 at 23 span rated 1 refused 1 others 0 nulls 0
+== G02 classic9 veryEasy (moves 22, compact steps 5, details steps 23)
+== G03 classic9 nightmare (moves 27, compact steps 6, details steps 28)
+  jump compact step 4 25>26 total 47>2227 change 2180 ratio 47.3 newHardest true hardest hiddenSingleBox>forcingChainLong cause together frame - choice guided | other view at the same end: details 47>2227 tier jump change 2180
+  jump details step 26 25>26 total 47>2227 change 2180 ratio 47.3 newHardest true hardest hiddenSingleBox>forcingChainLong cause together frame - choice guided | other view at the same end: compact 47>2227 tier jump change 2180
+  witness move 5 at 6 span rated 1 refused 1 others 0 nulls 0
+  witness move 18 at 20 span rated 1 refused 1 others 0 nulls 0
+  witness move 20 at 23 span rated 1 refused 1 others 0 nulls 0
+== G04 classic9 hell1 (moves 31, compact steps 9, details steps 32)
+  jump compact step 4 22>23 total 45>915 change 870 ratio 20.3 newHardest true hardest hiddenSingleBox>xyWing cause together frame - choice guided | other view at the same end: details 45>915 tier jump change 870
+  jump details step 23 22>23 total 45>915 change 870 ratio 20.3 newHardest true hardest hiddenSingleBox>xyWing cause together frame - choice guided | other view at the same end: compact 45>915 tier jump change 870
+== G05 classic9 hell1 (moves 28, compact steps 7, details steps 29)
+  jump compact step 3 22>23 total 44>550 change 506 ratio 12.5 newHardest true hardest nakedSingle>simpleColouring cause together frame - choice guided | other view at the same end: details 44>550 tier jump change 506
+  jump details step 23 22>23 total 44>550 change 506 ratio 12.5 newHardest true hardest nakedSingle>simpleColouring cause together frame - choice guided | other view at the same end: compact 44>550 tier jump change 506
+  witness move 27 at 67 span rated 2 refused 1 others 0 nulls 0
+== G06 jigsaw9 nightmare (moves 32, compact steps 8, details steps 33)
+  jump compact step 5 28>29 total 140>672 change 532 ratio 4.8 newHardest true hardest boxLine>finnedXWing cause single-culprit frame R4C7 culprit.other 143 choice guided | other view at the same end: details 140>672 tier jump change 532
+  jump compact step 6 29>31 total 672>2258 change 1586 ratio 3.3 newHardest true hardest finnedXWing>alsXz cause multi-move frame - choice combined | other view at the same end: details 2292>2258 tier null change -34
+  jump details step 29 28>29 total 140>672 change 532 ratio 4.8 newHardest true hardest boxLine>finnedXWing cause single-culprit frame R4C7 culprit.other 143 choice guided | other view at the same end: compact 140>672 tier jump change 532
+  jump details step 30 29>30 total 672>2292 change 1620 ratio 3.4 newHardest true hardest finnedXWing>alsXz cause together frame - choice guided | other view at the same end: none
+  unrecorded choice G06:7 kind combined
+== G07 jigsaw9 nightmare (moves 30, compact steps 9, details steps 31)
+  jump compact step 5 26>27 total 127>585 change 458 ratio 4.6 newHardest true hardest boxLine>skyscraper cause single-culprit frame R3C7 culprit.other 345 choice guided | other view at the same end: details 127>585 tier jump change 458
+  jump compact step 7 28>29 total 642>2260 change 1618 ratio 3.5 newHardest true hardest twoStringKite>alsXz cause together frame - choice guided | other view at the same end: details 642>2260 tier jump change 1618
+  jump details step 27 26>27 total 127>585 change 458 ratio 4.6 newHardest true hardest boxLine>skyscraper cause single-culprit frame R3C7 culprit.other 345 choice guided | other view at the same end: compact 127>585 tier jump change 458
+  jump details step 29 28>29 total 642>2260 change 1618 ratio 3.5 newHardest true hardest twoStringKite>alsXz cause together frame - choice guided | other view at the same end: compact 642>2260 tier jump change 1618
+  witness move 22 at 24 span rated 2 refused 2 others 0 nulls 0
+== G08 killer veryEasy (moves 22, compact steps 6, details steps 24)
+== G09 killer expert (moves 37, compact steps 9, details steps 39)
+  jump compact step 6 34>35 total 142>510 change 368 ratio 3.5 newHardest true hardest cageCombo>ruleOf45 cause single-culprit frame R8C5 culprit.other 139 choice guided | other view at the same end: details 142>510 tier jump change 368
+  jump details step 36 34>35 total 142>510 change 368 ratio 3.5 newHardest true hardest cageCombo>ruleOf45 cause single-culprit frame R8C5 culprit.other 139 choice guided | other view at the same end: compact 142>510 tier jump change 368
+== G10 killer nightmare (moves 43, compact steps 10, details steps 45)
+  jump compact step 5 31>32 total 140>527 change 387 ratio 3.7 newHardest true hardest cageCombo>ruleOf45 cause single-culprit frame R8C7 culprit.other 138 choice guided | other view at the same end: details 140>527 tier jump change 387
+  jump details step 33 31>32 total 140>527 change 387 ratio 3.7 newHardest true hardest cageCombo>ruleOf45 cause single-culprit frame R8C7 culprit.other 138 choice guided | other view at the same end: compact 140>527 tier jump change 387
+  witness move 37 at 218 span rated 5 refused 0 others 4 nulls 0
+  witness move 38 at 223 span rated 4 refused 0 others 0 nulls 3
+  witness move 39 at 227 span rated 3 refused 1 others 0 nulls 1
+== G11 greaterThan expert (moves 101, compact steps 7, details steps 103)
+  jump compact step 4 69>70 total 135>577 change 442 ratio 4.2 newHardest true hardest ineqChain>xWing cause single-sign frame s98(R8C7<R9C7) choice checked | other view at the same end: details 135>577 tier jump change 442
+  jump details step 71 69>70 total 135>577 change 442 ratio 4.2 newHardest true hardest ineqChain>xWing cause single-sign frame s98(R8C7<R9C7) choice checked | other view at the same end: compact 135>577 tier jump change 442
+  unrecorded choice G11:5 kind checked
+== G12 greaterThan hard (moves 109, compact steps 7, details steps 111)
+  jump compact step 4 99>107 total 133>513 change 380 ratio 3.8 newHardest true hardest ineqChain>xWing cause multi-move frame - choice combined | other view at the same end: details 2367>513 tier null change -1854
+  jump details step 101 99>100 total 133>3221 change 3088 ratio 24.2 newHardest true hardest ineqChain>nishio cause single-sign frame s34(R3C8<R3C7) choice checked | other view at the same end: none
+  unrecorded choice G12:5 kind combined
+== G13 samurai nightmare (moves 144, compact steps 8, details steps 145)
+  jump compact step 4 126>127 total 73>296 change 223 ratio 4 newHardest true hardest hiddenSingleLine>nakedPair cause mixed frame - choice guided | other view at the same end: details 73>296 tier jump change 223
+  jump compact step 6 128>143 total 394>1876 change 1482 ratio 4.7 newHardest true hardest nakedTriple>alsXz cause multi-move frame - choice combined | other view at the same end: details 2004>1876 tier null change -128
+  jump details step 127 126>127 total 73>296 change 223 ratio 4 newHardest true hardest hiddenSingleLine>nakedPair cause mixed frame - choice guided | other view at the same end: compact 73>296 tier jump change 223
+  jump details step 129 128>129 total 394>3610 change 3216 ratio 9.1 newHardest true hardest nakedTriple>nishio cause single-culprit frame G1-R5C9 culprit.other 2079 choice guided | other view at the same end: none
+  unrecorded choice G13:7 kind combined
+  witness move 44 at 45 span rated 1 refused 1 others 0 nulls 0
+  witness move 70 at 72 span rated 1 refused 1 others 0 nulls 0
+  witness move 83 at 86 span rated 1 refused 1 others 0 nulls 0
+  witness move 94 at 98 span rated 1 refused 1 others 0 nulls 0
+  witness move 96 at 101 span rated 1 refused 1 others 0 nulls 0
+  witness move 129 at 352 span rated 7 refused 1 others 5 nulls 0
+  witness move 130 at 360 span rated 7 refused 3 others 0 nulls 3
+  witness move 131 at 367 span rated 6 refused 1 others 0 nulls 4
+  witness move 132 at 372 span rated 4 refused 1 others 0 nulls 2
+  witness move 133 at 375 span rated 2 refused 0 others 0 nulls 1
+  witness move 134 at 377 span rated 1 refused 0 others 0 nulls 0
+== G14 mega16 hell2 (moves 80, compact steps 7, details steps 81)
+  jump compact step 3 68>69 total 65>1686 change 1621 ratio 25.9 newHardest true hardest hiddenSingleBox>xyChain cause single-culprit frame R8C4 culprit.other 65 choice guided | other view at the same end: details 65>1686 tier jump change 1621
+  jump details step 69 68>69 total 65>1686 change 1621 ratio 25.9 newHardest true hardest hiddenSingleBox>xyChain cause single-culprit frame R8C4 culprit.other 65 choice guided | other view at the same end: compact 65>1686 tier jump change 1621
+  witness move 62 at 64 span rated 2 refused 2 others 0 nulls 0
+  witness move 64 at 67 span rated 1 refused 1 others 0 nulls 0
+  witness move 65 at 69 span rated 1 refused 1 others 0 nulls 0
+  witness move 69 at 84 span rated 10 refused 3 others 6 nulls 0
+  witness move 70 at 95 span rated 10 refused 5 others 0 nulls 4
+  witness move 71 at 106 span rated 10 refused 2 others 0 nulls 7
+  witness move 72 at 117 span rated 10 refused 4 others 0 nulls 5
+  witness move 73 at 128 span rated 10 refused 3 others 0 nulls 6
+  witness move 74 at 139 span rated 10 refused 3 others 0 nulls 6
+  witness move 75 at 150 span rated 10 refused 8 others 0 nulls 1
+  witness move 76 at 161 span rated 10 refused 9 others 0 nulls 0
+  witness move 77 at 172 span rated 10 refused 7 others 0 nulls 2
+  witness move 78 at 176 span rated 3 refused 1 others 0 nulls 1
+  witness move 79 at 178 span rated 1 refused 0 others 0 nulls 0
+jump transitions {"compact":15,"details":15}, distinct 18
+exit=0 seconds=41.132

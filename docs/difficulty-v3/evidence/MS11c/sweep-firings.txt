@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS11c\sweep-firings.js
+4 digits: {"states":300,"firings":0,"placements":0,"eliminations":0,"byKind":{}}
+6 digits: {"states":200,"firings":3,"placements":3,"eliminations":0,"byKind":{"propagated":2,"pruned":1}}
+9 digits: {"states":300,"firings":0,"placements":0,"eliminations":0,"byKind":{}}
+12 digits: {"states":200,"firings":0,"placements":0,"eliminations":0,"byKind":{}}
+16 digits: {"states":8,"firings":0,"placements":0,"eliminations":0,"byKind":{}}
+classic9 seed 20260101 x 300: {"states":300,"firings":0,"placements":0,"eliminations":0,"byKind":{}}
+exit=0 seconds=1.168

@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1: line 596 has 111 characters; line 653 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1: line 1488 has 111 characters; line 1501 has 124 characters; line 1528 has 112 characters; line 1534 has 114 characters; line 1567 has 113 characters; line 1576 has 121 characters; ...
+checked 2153 files, 2 with problems
+exit=1 seconds=1.121

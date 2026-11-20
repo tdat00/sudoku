@@ -1,0 +1,13 @@
+$ node tests\node-runner.js --suite=help,i18n,format,ui-contract
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   format: 18 passed  (318 ms)
+ok   help: 30 passed  (5.40 s)
+ok   i18n: 94 passed  (204 ms)
+ok   ui-contract: 67 passed  (322 ms)
+
+Suites: 4
+Tests:  209 total, 209 passed, 0 failed, 0 skipped
+Time:   6.25 s running tests, 6.35 s total
+exit=0 seconds=6.461

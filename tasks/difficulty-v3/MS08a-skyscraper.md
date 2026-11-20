@@ -1,0 +1,159 @@
+# MS08a — Skyscraper
+
+| Header | Value |
+|---|---|
+| Depends on | MS07e accepted |
+| Size / active time | Medium; 40-55 minutes plus gates |
+| Owner / milestone | Shared fish / both apps; M8a |
+| Authority | R10/R11/R20/R21 |
+| Status | Not started |
+
+## Goal & business context
+
+Name a small single-digit proof instead of charging it as a generic chain. Keep every generated
+rating, hint, fixture and explanation consistent with the new cheaper finder.
+
+### Cross-reviewed technique-task template (S-OD4)
+
+MS08a is the analyst-reviewed template for MS08b-MS12, MS14a-MS14c, MS15b and MS16.
+The orchestrator checks each later task against this list rather than commissioning another
+routine analyst review. Inactive kernels/test-only tasks apply the relevant parts and prove
+no premature registration/output change; their later activation owns the remaining B/E/GH work.
+
+1. State the constructive proof and all scope/geometry/uniqueness preconditions; test near misses
+   and transposes independently, not only the emitted fixture's expected value.
+2. Keep the assigned ID/group/order/weight/base cost/window and the monotone floor/tier prefix.
+   Never fit priors to old labels or silently broaden the represented proof.
+3. Findings own exact nonempty placements/eliminations and cloned proof data; inputs stay unchanged.
+   Counters are per call, cancellation propagates, truncation cannot prove absence and limits follow R10.
+4. Preserve every generic seeded soundness state and minFirings; add real deterministic supplements,
+   not substitute them. Two real positive exact Findings plus a negative, independent completion
+   checks and actual uniqueness where required. Keep v2 labels/LADDER/after arrays historical.
+5. Complete both apps' EN/VI names/descriptions/actual subtype keys and a real Player example;
+   bounded source acquisition, source provenance and actual hint replay, no fabricated snapshot.
+6. Refresh affected current references with reasons. Owned E means **520 hashes, five G09-G13 wires,
+   fourteen analyses**, wire before analysis; GH refreshes all affected old IDs too. Record bounded
+   pattern cost, never add a flaky wall-time assertion to prove the new finder.
+7. Verify script/fixture/HTML lists, both app quick environments, current r5 bounded membership and
+   the suite's r6c CI group. Keep deep mega generation outside CI; only its named owner runs it.
+8. Apply S-OD4: correctness or changing a decision stops; performance/availability becomes a
+   named numerical item, continues through the existing bounds, and reaches MS18c/MS18d.
+   Full integration and all six S3 groups still remain; no missing proof/example is silently deferred.
+
+## Scope and repository rules
+
+In: skyscraper and full B integration. Out: other fish/chain patterns, weight fitting or offers.
+AGENTS/checklist; no Git/pack/log edits. Classic scripts, CRLF, both languages, task-owned E.
+
+## Inputs & context
+
+R11, verbatim:
+
+> Two disjoint complete parallel lines, exactly two candidates for d in each. One endpoint pair
+> shares an orthogonal line; the other endpoints differ. At least one of the latter is d.
+> Eliminate d from external candidates seeing both.
+
+Register `skyscraper`: group fish, order 112, weight 330, baseCost 33, unscoped, assumesUniqueness=false.
+Finding contract:
+
+```text
+{technique:'skyscraper',cells:number[],placements:[],eliminations:[cell,digit][],
+ i18nKey:'technique.skyscraper.step',i18nArgs:{digit,lines:string[],ends:string[]}}
+```
+
+Use actual peers and the fish module's safe line ownership tables, not row*9 arithmetic.
+Both row and column orientations; distinct four endpoints; do not turn an ordinary X-Wing into a
+skyscraper. Sort/deduplicate output and retain deterministic enumeration order.
+Limit 50000 tested combination extensions/call; parent check at entry/every 256, fresh counter.
+Emit MS07a pattern metrics. Exhaustion loses a deduction, never invents one.
+
+Geometry vector (unit test, not a substitute for real fixtures): digit 5 pairs
+R1{C2,C8}, R4{C2,C7}; target R2C7 sees the two non-aligned ends, so remove 5.
+Transpose it. Adding a third candidate to either base, partial bases, overlapping endpoints or a
+target missing one end must not authorize that elimination.
+Baseline anchors: `core/js/engine/tech-fish.js:56-125` (line ownership),
+`:281-305` (`function findFish`); fixture anchors verified at `c9935cd`:
+`core/tests/suites/techniques.test.js:91-107`, `has fixtures for exactly the techniques` and
+`has at least 2 positive and 1 negative fixture`.
+
+## Files to create/modify
+
+- `core/js/engine/tech-fish.js`, `core/tests/suites/tech-fish.test.js`.
+- Full B: current core fixtures/registry list, Generator weights/reference expectations, both apps'
+  locales/help/tests, real help catalogue, notes; E generated fixtures.
+- Generator design 6.6 and Player hint/technique design; both user/developer guides.
+
+## Implementation steps
+
+1. Build the restricted pattern over existing safe geometry; add cancellation/cap accounting.
+2. Add geometry negatives and two real exact-Finding positives plus a negative, explicit after arrays.
+3. Add registration/weight/EN+VI names/descriptions/step and real help source in the same change.
+4. Record any reference reclassification, bounded cost and E/GH; finish both quick sets.
+
+## Acceptance criteria — Business
+
+| ID | Criterion |
+|---|---|
+| MS08a-B01 | The named cheaper proof is real and explained in both apps/languages |
+| MS08a-B02 | No guessed label preservation or availability change |
+
+## Acceptance criteria — Technical
+
+| ID | Criterion |
+|---|---|
+| MS08a-T01 | Constructive proof, transpose, ownership/partial/near-miss tests pass |
+| MS08a-T02 | Full B, soundness against completions, immutable state and deterministic caps |
+| MS08a-T03 | E/GH/cost evidence and both quick sets pass |
+
+## Test plan and gates
+
+Generator: `node tests\node-runner.js --suite=tech-fish,techniques,technique-weights,difficulty-floor`.
+Player: `node tests\node-runner.js --suite=help,play,i18n`; then both quick sets.
+Complete E GG/GR under MS08a, beginning with:
+
+```powershell
+node tests\perf.js --hash-key=classic4/veryEasy --hash-from=0 --hash-count=5 --hash-record=..\docs\difficulty-v3\evidence\MS08a\hashes\classic4-veryEasy-00.json
+node tests\replay-goldens.js --ids=G01 --record=..\docs\difficulty-v3\evidence\MS08a\analysis\G01.json
+node tests\pattern-cost.js --ids=skyscraper --runs=20 --json=..\docs\difficulty-v3\evidence\MS08a\pattern-cost.json
+```
+
+Player GH, after B's bounded source acquisition:
+
+```powershell
+node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper --sources=tests\artifacts\difficulty-v3\MS08a\sources.json --max-puzzles=8 --max-hints=400 --write
+node tests\tools\make-technique-examples.js ..\generator --ids=skyscraper --sources=tests\artifacts\difficulty-v3\MS08a\sources.json --max-puzzles=8 --max-hints=400 --check
+```
+
+Prefer the existing simpleColouring source, then B's classic9 hard/expert bound. Jobs=1/no --jobs;
+E 10-90 minutes, cost 1-30 seconds, GH 1-120 seconds/curated run (discovery<=8 minutes).
+**Announce to the orchestrator before starting (pentomino runs in parallel on the same machine).**
+No process exceeds 540 seconds; own work-limit adjustment at most once with before/after evidence.
+
+## Definition of done & handoff
+
+Report exact proof/fields, fixtures, source/limit records, reclassifications and B/T evidence. No
+unfinished integration is deferred to MS08b; no commit/log edit.
+
+## Resume rules — S-OD4
+
+Review: analyst cross-review of this task and the template above. Correctness/evidence corruption or
+changing a recorded decision stops; performance/availability is a named numerical item for MS18c/MS18d.
+Continue within the existing bounds; no new slow-cell evidence class/tooling task or false pass.
+Use `Invoke-Dv3Node` for every possibly >10-second payload, <=540 s, and the current bounded quick
+manifest. Any added suite owns its r6c CI group/manifest entry. Return the inherited/new item list.
+
+## Execution log
+
+| Field | Value |
+|---|---|
+| Status | Accepted (SA1 review of the technique template: accept, IR67-IR72; one evidence-only fix IR68 applied; IR67 routed to MS07f) |
+| Start | 2026-11-15 14:18:29 (+07:00), base `7fe14fb` |
+| End | 2026-11-15 16:19:59 developer (final tree over `7ab77b1`, a pack-only commit that landed at 15:03); 16:25-16:42 SA1 review; 16:45-16:47 IR68 evidence fix; orchestrator commit |
+| Duration | 2 h 1 min developer + 2 min fix; about 17 min SA1 review |
+| Model | claude-sonnet-5.5 (developer); claude-opus-5.5 (SA1 review; orchestrator) |
+| Token usage | 411 model calls; 143,306,879 input tokens (142,057,403 cache reads); 372,573 output tokens |
+| AI credits | about 2,105 (developer) |
+| Verification | `skyscraper` in `core/js/engine/tech-fish.js` (fish group, order 112, weight 330, base cost 33, unscoped, `assumesUniqueness: false`), `WEIGHTS.skyscraper = 330` (between `xWing` and `simpleColouring`: Hard tier, Expert-and-above floor, no rule change). Proof: two whole-line-disjoint complete parallel lines with exactly two candidates and exactly one shared cover line; eliminations from cells seeing both free ends; two shared covers remain X-Wing. Limits: one unit per tested line pair, 50,000 per call (structural maximum 6,318 on Samurai, so never binding), parent budget at entry and every 256 units, spent limit gives `null`. `tech-fish` 106 -> 155 tests (R11 vector and transpose, near misses, limit/budget/cancellation, independent enumeration on nine board types); 10/10 mutations detected; generic soundness sweep. **E** (wires, analyses, hashes under IR12; recorded again after an engine comment re-wrap, reproduced exactly): 66 of 520 hashes changed, all at Hard or above in cells admitting the technique (recounted by SA1); wires G09, G11, G12 and analyses G01, G04, G06, G11, G12, G14 changed; four reference ratings changed (constructed-hard-1/2/3 560->475, 563->521, 554->515; constructed-nightmare-3 2,642->2,653), no level or `v3Expected` change; G01 is a different guide example (925, was 969). Help catalogue 29 examples (`skyscraper` new; five regenerated from their own sources, `xyzWing` from a new source), GH `--check` 29/29. Quick sets on the final tree: Generator 3,563/3,563 (699.8 s, sum of the four group walls), Player 1,807/1,807 (35.3 s wall); CI check passes. Orchestrator: locked focused re-run 470/470 (`tech-fish`, `techniques`, `technique-weights`, `help`, `i18n`); CI check |
+| Acceptance | MS08a-B01, B02, T01, T02, T03 pass. Evidence `docs/difficulty-v3/evidence/MS08a/evidence.md`; review `docs/difficulty-v3/claude-opus-5.5/18-review-of-ms08a.md` |
+| Issues & resolutions | SA1 rulings: pin refreshes in `cache`, `worker`, `pipeline`, Generator `player` and Player `help-example-tools` suites are in scope (recorded values, like-for-like matchers; the shallow-fallback specimen moved from seed 5 to the lowest qualifying seed 21); `generator-quick.json` information fields accepted; the manual `difficulty` suite edited but not run, accepted under the existing item; `lines`/`ends` reading correct; IR12 compounds correct. IR67 (stale quick-set totals in both developer guides and both designs) routed to MS07f with binding text; IR68 (base commit and timing conventions in `evidence.md`) fixed; IR69 whole-line disjointness accepted (never fires on Butterfly; never wrong). No named item; S-AV08 699.8 s / 35.3 s |
+| Handoff | **IR72 is the template checklist (A-J) for MS08b and every later technique task** (proof and geometry, registration and weight, limits and cost, fixtures and soundness, integration, mutations, E protocol, help examples, ownership of generated-output pins, run rules). MS07f inputs: baseline `quick-final-2` (Generator `519cd665…`, Player `222e69cf…`), 699.8 s / 35.3 s, Generator 3,563 and Player 1,807 tests (expected after the move 3,560; pipeline 151; Generator `player` 69; manual +4); re-project the three ratio tests and the two mega16 requests on this source |

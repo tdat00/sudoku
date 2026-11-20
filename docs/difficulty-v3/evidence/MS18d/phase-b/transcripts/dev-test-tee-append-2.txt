@@ -1,0 +1,11 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-tee-append.js
+ok   append-writer: CRLF only, trailing blanks dropped, a partial line is kept, create is exclusive
+ok   a command that runs: its first line is in the file BEFORE it ends, the final line is exit=0
+ok   a nonzero exit is returned as it is, stdout and stderr are both kept, nothing is retried
+ok   long output, blanks, a missing last line end, CRLF input and a split UTF-8 letter
+ok   the tee is killed mid-output: the bytes written so far stay and there is NO final line
+ok   the owned command is killed while the tee lives: the partial output stays, the final line is not a success
+ok   a command that cannot be started ends with spawn-error and 127, never with an exit line
+ok   usage errors and an existing transcript give code 2 and change nothing
+8 passed, 0 failed
+exit=0 seconds=3.704

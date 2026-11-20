@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega16.json",
+    "--cells=mega16/master:3,mega16/nightmare:1,mega16/hell1:1",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T04:40:38.132Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "mega16/master": {
+      "variant": "mega16",
+      "level": "master",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 2275840403,
+          "hit": true,
+          "ms": 450.6288,
+          "achieved": "master",
+          "score": 1331,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 2259062784,
+          "hit": true,
+          "ms": 174.9382,
+          "achieved": "master",
+          "score": 1346,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 2309395641,
+          "hit": true,
+          "ms": 1156.4216,
+          "achieved": "master",
+          "score": 1322,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 3,
+      "meanMs": 593.996,
+      "maxMs": 1156.4216
+    },
+    "mega16/nightmare": {
+      "variant": "mega16",
+      "level": "nightmare",
+      "asked": 1,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 2336516768,
+          "hit": true,
+          "ms": 4762.8118,
+          "achieved": "nightmare",
+          "score": 2205,
+          "solved": true,
+          "approximate": false,
+          "exact": true,
+          "valid": true
+        }
+      ],
+      "n": 1,
+      "hits": 1,
+      "meanMs": 4762.812,
+      "maxMs": 4762.8118
+    },
+    "mega16/hell1": {
+      "variant": "mega16",
+      "level": "hell1",
+      "asked": 1,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1595984747,
+          "hit": false,
+          "error": "budget.exceeded",
+          "ms": 120002.2526
+        }
+      ],
+      "n": 1,
+      "hits": 0,
+      "meanMs": 120002.253,
+      "maxMs": 120002.2526
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T04:42:44.690Z",
+  "seconds": 126.557
+}

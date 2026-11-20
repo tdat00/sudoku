@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "jigsaw9-hell2.i25.n25.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "jigsaw9",
+    "level": "hell2",
+    "targetMs": 10000
+  },
+  "task": "MS18d GP record jigsaw9-hell2.i25.n25 a1",
+  "startedAtMs": 1795109163743,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=50.043",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "jigsaw9-hell2.i25.n25",
+      "requests": 25,
+      "sha256": "b47e3e7b2a12e1554447dbf7ecaa6679abbc159b480e2f57f16c700447e60b88"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 34780,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=50.043",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 214,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 250000,
+      "systemMicros": 437000
+    },
+    "tee": {
+      "userMicros": 0,
+      "systemMicros": 78000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795109223740
+}

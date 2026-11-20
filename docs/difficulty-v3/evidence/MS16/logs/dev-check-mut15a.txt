@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS15a\check-mutations.cjs
+mutation 81 (W14 the last check is not remembered) edit 0: found more than once
+131 mutations, 1 with a bad fragment
+exit=1 seconds=0.095

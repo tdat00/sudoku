@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record wordoku-expert.i0.n50 a1",
+  "runId": "wordoku-expert.i0.n50.a1",
+  "cell": "wordoku/expert",
+  "payload": "gp-recorder",
+  "chunkId": "wordoku-expert.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-expert/wordoku-expert.i0.n50.a1",
+  "requestedAt": "2026-11-20T04:46:15.776+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795124760066,
+    "lastCheckMs": 1795124775602,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T04:46:15.905+07:00",
+  "finished": "2026-11-20T04:46:31.513+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3152,
+    "cheapCheckMs": 124,
+    "ageMs": 133,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T04:46:31.514+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

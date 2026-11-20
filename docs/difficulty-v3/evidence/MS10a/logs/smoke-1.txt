@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS10a\smoke.js
+{"technique":"remotePairs","cells":[0,10,13,40],"placements":[],"eliminations":[[4,2],[4,7],[36,2],[36,7]],"i18nKey":"technique.remotePairs.step","i18nArgs":{"digits":[2,7],"ends":["R1C1","R5C5"],"length":3}}
+[{"id":"remotePairs","work":12,"limit":50000,"capHit":null,"retained":null}]
+[["finnedXWing",126],["swordfish",130],["remotePairs",132],["finnedSwordfish",134],["cageSplit",135],["jellyfish",137]]
+exit=0 seconds=0.177

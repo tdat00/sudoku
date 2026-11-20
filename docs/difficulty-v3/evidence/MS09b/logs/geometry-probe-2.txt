@@ -1,0 +1,15 @@
+$ node tests\artifacts\difficulty-v3\MS09b\geometry-probe-2.js
+--- jigsaw
+JIG3: reference 1 removing row R3/R6/R9 on C2/C7/C8 fins R3C5 body 222 targets R2C7
+   finder {"args":{"digit":5,"bases":["R3","R6","R9"],"covers":["C2","C7","C8"],"fins":["R3C5"]},"el":["R2C7"],"cells":7} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+JIG3 transposed: reference 1 removing col C3/C6/C9 on R2/R7/R8 fins R5C3 body 222 targets R7C2
+   finder {"args":{"digit":5,"bases":["C3","C6","C9"],"covers":["R2","R7","R8"],"fins":["R5C3"]},"el":["R7C2"],"cells":7} work {"id":"finnedSwordfish","work":674,"limit":50000,"capHit":null,"retained":null}
+JIG3 second fin R3C2 (J5): reference 1 removing row R3/R6/R9 on C2/C7/C8 fins R3C5 body 322 targets R2C7
+   finder {"args":{"digit":5,"bases":["R3","R6","R9"],"covers":["C2","C7","C8"],"fins":["R3C5"]},"el":["R2C7"],"cells":8} work {"id":"finnedSwordfish","work":673,"limit":50000,"capHit":null,"retained":null}
+JIG3 cover cell outside the fin region R4C8 (J6): reference 0 removing
+   finder null work {"id":"finnedSwordfish","work":1346,"limit":50000,"capHit":null,"retained":null}
+--- 4 x 4
+SMALL: reference 1 removing row R1/R2/R3 on C1/C2/C3 fins R3C4 body 222 targets R4C3
+   finder {"args":{"digit":1,"bases":["R1","R2","R3"],"covers":["C1","C2","C3"],"fins":["R3C4"]},"el":["R4C3"],"cells":7} work {"id":"finnedSwordfish","work":1,"limit":50000,"capHit":null,"retained":null}
+--- samurai
+exit=4294967295 seconds=207.296

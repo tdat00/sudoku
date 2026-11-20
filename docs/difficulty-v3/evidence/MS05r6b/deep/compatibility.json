@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "kind": "deep-compatibility",
+  "task": "MS05r6b",
+  "rule": "B1 exact-diff exception, revalidated on the final tree",
+  "reconciliation": "docs/difficulty-v3/evidence/MS05r6b/deep/reconciled.json",
+  "records": "docs/difficulty-v3/evidence/MS05r5m/records",
+  "snapshotDiff": "docs/difficulty-v3/evidence/MS05r6b/deep/snapshot-diff.json",
+  "patches": "docs/difficulty-v3/evidence/MS05r6b/deep/diffs",
+  "rawIdentity": {
+    "sourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+    "toolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+    "node": "v26.13.0",
+    "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+    "allowance": 256,
+    "budgetMs": 500000,
+    "checksVersion": 1,
+    "currentMatches": {
+      "sourceHash": false,
+      "toolHash": true
+    }
+  },
+  "rawCurrentMatches": {
+    "sourceHash": false,
+    "toolHash": true
+  },
+  "currentIdentity": {
+    "sourceHash": "a073f9bdaac0a425d6e4af30643dab56d4c1ea2576aa151e79cc079f6be3cdb7",
+    "toolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8"
+  },
+  "earlierRevalidation": {
+    "evidence": "docs/difficulty-v3/evidence/MS05r6a/preflight/mega-reconciled.json",
+    "currentMatches": {
+      "sourceHash": false,
+      "toolHash": true
+    }
+  },
+  "producerSnapshot": {
+    "ref": "refs/dv3-wip/MS05r5m-done-20261114-0230",
+    "commit": "ad77fdf708fd8b7e41d2d8d0cbc66e53515ff3ba",
+    "tree": "522e3d92836d370950ca4050ed36810cbd01af00",
+    "recomputedSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+    "equalsRecordedHash": true
+  },
+  "changedSourceFiles": [
+    "generator/js/ui/store.js"
+  ],
+  "changedToolFiles": [],
+  "changedLoadSetFiles": [
+    "generator/js/ui/store.js",
+    "generator/tests/replay-fixtures.js"
+  ],
+  "unhashedSharedPaths": {
+    "loader": "generator/tests/replay-fixtures.js",
+    "functions": [
+      {
+        "function": "readSource",
+        "identical": true
+      },
+      {
+        "function": "sourceList",
+        "identical": true
+      },
+      {
+        "function": "loadFixtures",
+        "identical": true
+      },
+      {
+        "function": "inside",
+        "identical": true
+      },
+      {
+        "function": "gitState",
+        "identical": true
+      },
+      {
+        "function": "nodeEnv",
+        "identical": true
+      }
+    ],
+    "levelGuard": {
+      "path": "generator/tests/fixtures/tool-records.js",
+      "identical": true
+    },
+    "replayFixturesChange": "comments and the HEADER text of the wire fixture only (deep/diffs/generator__tests__replay-fixtures.js.patch)",
+    "nodeEvidence": "core/tests/node-evidence.js is byte-identical to the snapshot (not in the changed load set)"
+  },
+  "storePatch": {
+    "file": "docs/difficulty-v3/evidence/MS05r5p/legacy-8-fix/store-diff.patch",
+    "sameChangeLines": true,
+    "diff": "docs/difficulty-v3/evidence/MS05r6b/deep/diffs/generator__js__ui__store.js.patch"
+  },
+  "generationPathScan": {
+    "directories": [
+      "generator/js/engine",
+      "generator/js/variants",
+      "core/js"
+    ],
+    "filesScanned": 41,
+    "tokens": [
+      "storedAttempts",
+      "SG.store",
+      "localStorage"
+    ],
+    "hits": [],
+    "storedAttemptsCallsInStore": 2
+  },
+  "checks": {
+    "producerSnapshotBoundToRecordedHash": true,
+    "sourceListsEqual": true,
+    "changedSourceFilesAreOnlyStore": true,
+    "toolFilesUnchanged": true,
+    "toolHashMatches": true,
+    "sharedLoaderFunctionsIdentical": true,
+    "levelGuardIdentical": true,
+    "storePatchSameChangeLines": true,
+    "noGenerationPathReferenceToStore": true,
+    "completeAndSound": true,
+    "relationsAllPass": true,
+    "sameWorkingTreeHashAsMS05r6a": true
+  },
+  "proof": [
+    "Only generator/js/ui/store.js of the 63 SOURCE_FILES changed; it defines SG.store and runs no code at load, and storedAttempts (the changed condition) is called only by the store's own load.",
+    "The deep requests are built for SG.pipeline.run directly (the tool normalises each request itself); SG.pipeline, the engine, the variants and core/js do not mention SG.store, so no RNG, normalisation, default, allowance, generation, independent validation, recording or relation reads the changed code.",
+    "The tool files (tests/mega-contract.js, tests/fixtures/mega-contract.js), the level guard (tests/fixtures/tool-records.js) and the six loader functions are identical, so toolHash matches and the check, request and default identities are unchanged.",
+    "The 14 records keep their original producer, hash, timings and digests; the false sourceHash match is kept as the tool wrote it."
+  ],
+  "verdict": "retain by exact-diff compatibility; MS05r6b-MEGA-REFRESH not executed",
+  "megaRefresh": "not executed",
+  "coveredOccurrenceIds": [
+    "mega12-invariant-1",
+    "mega12-invariant-2",
+    "mega12-invariant-3",
+    "mega12-invariant-4",
+    "mega12-cv5-a",
+    "mega12-cv5-b",
+    "mega12-cv5-other",
+    "mega16-invariant-1",
+    "mega16-invariant-2",
+    "mega16-invariant-3",
+    "mega16-invariant-4",
+    "mega16-cv5-a",
+    "mega16-cv5-b",
+    "mega16-cv5-other"
+  ],
+  "coveredRelations": [
+    {
+      "id": "mega12-cv5-same-seed",
+      "verdict": "pass",
+      "original": true
+    },
+    {
+      "id": "mega12-cv5-other-seed",
+      "verdict": "pass",
+      "original": true
+    },
+    {
+      "id": "mega12-invariant-3-same-seed",
+      "verdict": "pass",
+      "original": false
+    },
+    {
+      "id": "mega16-cv5-same-seed",
+      "verdict": "pass",
+      "original": true
+    },
+    {
+      "id": "mega16-cv5-other-seed",
+      "verdict": "pass",
+      "original": true
+    },
+    {
+      "id": "mega16-invariant-3-same-seed",
+      "verdict": "pass",
+      "original": false
+    }
+  ]
+}

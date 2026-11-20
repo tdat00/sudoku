@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS11b\hash-cause.js --ledgers=..\docs\difficulty-v3\evidence\MS11b\hashes --json=..\docs\difficulty-v3\evidence\MS11b\hash-cause.json
+cells that admit uniqueRectangle (4): classic9/master, classic9/nightmare, diagonalX/nightmare, jigsaw9/master
+cells that do not (22): classic4/veryEasy, classic6/veryEasy, classic6/hard, classic9/veryEasy, classic9/easy, classic9/normal, classic9/hard, classic9/expert, mega12/normal, mega16/easy, diagonalX/easy, hyper/hard, jigsaw9/normal, killer/easy, killer/hard, greaterThan/normal, greaterThan/hard, samurai/easy, sohei/veryEasy, butterfly/normal, flower/normal, wordoku/normal
+classic9/master: 0 of 20 change with the technique (seeds )
+classic9/nightmare: 4 of 20 change with the technique (seeds 8, 13, 21, 610)
+diagonalX/nightmare: 1 of 20 change with the technique (seeds 21)
+jigsaw9/master: 0 of 20 change with the technique (seeds )
+keys examined 80; changed by the technique 5; changed in the ledgers 5; inconsistent 0 (70.7 s)
+exit=0 seconds=70.987

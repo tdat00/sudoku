@@ -1,0 +1,35 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in r2",
+  "runId": "r2",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-3/runs2/classic4-veryEasy/r2",
+  "requestedAt": "2026-11-19T15:48:26.230+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795078090729,
+    "lastCheckMs": 1795078106224,
+    "checks": 68,
+    "restartCount": 3,
+    "maxIntervalMs": 255
+  },
+  "startedAtFromChild": "2026-11-19T15:48:26.313+07:00",
+  "finished": "2026-11-19T15:48:27.651+07:00",
+  "releaseObservedAt": "2026-11-19T15:48:27.651+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "gp-success",
+  "problems": []
+}

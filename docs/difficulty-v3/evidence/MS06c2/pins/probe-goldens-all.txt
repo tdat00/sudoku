@@ -1,0 +1,281 @@
+== G01 {"variantId":"classic9","difficulty":"expert","seed":"3275974478"} score 969 expert log 87 target 983.9633787283674
+moves 28 runs [["solution",1],["random",22],["guided",5]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":17,"refused":5,"chosen":45,"others":11,"nulls":0,"max":45}
+  move 24 guided at 55 span {"rated":11,"refused":0,"chosen":46,"others":10,"nulls":0,"max":46}
+  move 25 guided at 66 span {"rated":10,"refused":0,"chosen":47,"others":9,"nulls":0,"max":47}
+  move 26 guided at 76 span {"rated":9,"refused":1,"chosen":235,"others":7,"nulls":0,"max":117}
+  move 27 guided at 84 span {"rated":7,"refused":4,"chosen":969,"others":2,"nulls":0,"max":252}
+stats {"positions":28,"fresh":26,"memo":1,"zero":1,"checks":"-"} compact 7 details 29 transitions 34
+compact scores [0,23,44,47,235,969,969] positions [0,7,22,25,26,27,27]
+compact audit []
+tiers [null,"first","newPeak",null,"jump","jump",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,7,"D/Dig",14,23,23,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,21,"hiddenSingleBox","—","—","N"],[4,25,"G/Choose",49,47,3,"hiddenSingleBox","—","—","—"],[5,26,"G/Choose",51,235,188,"hiddenPair","Y","R6C1","—"],[6,27,"G/Choose",53,969,734,"xyWing","Y","R8C6","—"],[7,27,"F/Final",53,969,0,"xyWing","—","—","—"]]
+golden jumps [[5,47,235],[6,235,969]] counts {"compact":7,"details":29}
+explain calls {"solve":8,"count":4}
+  compact jump k=4 25>26 totals 47>235 levels easy>normal ratio 5 newHardest true change 188
+    cause {"class":"single-culprit","culprit":{"cell":"R6C1","action":"remove","score":234,"otherScore":47},"singles":[["remove","R4C9",47],["remove","R6C1",234]],"changes":["remove:R4C9","remove:R6C1"],"largest":null,"frame":{"kind":"cell","cell":45,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":235,"at":76,"rated":9,"refused":1,"others":7,"nulls":0,"max":117}
+    proof {"restricted":"stuck","k":26,"n":52,"tech":"hiddenPair","key":"technique.hiddenPair.step","args":{"size":2,"unit":"R2","unitKind":"row","digits":[3,4],"cells":["R2C2","R2C3"]},"placements":0}
+    move removed ["R4C9","R6C1"] restored []
+  compact jump k=5 26>27 totals 235>969 levels normal>expert ratio 4.1 newHardest true change 734
+    cause {"class":"single-culprit","culprit":{"cell":"R8C6","action":"remove","score":968,"otherScore":235},"singles":[["remove","R2C4",235],["remove","R8C6",968]],"changes":["remove:R2C4","remove:R8C6"],"largest":null,"frame":{"kind":"cell","cell":68,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":969,"at":84,"rated":7,"refused":4,"others":2,"nulls":0,"max":252}
+    proof {"restricted":"stuck","k":33,"n":59,"tech":"xyWing","key":"technique.xyWing.step","args":{"pivot":"R1C5","pincer1":"R1C3","pincer2":"R5C5","digitX":5,"digitY":9,"digit":6},"placements":0}
+    move removed ["R2C4","R8C6"] restored []
+== G02 {"variantId":"classic9","difficulty":"veryEasy","seed":"1"} score 43 veryEasy log 23 target 20.51400881493464
+moves 22 runs [["solution",1],["random",21]]
+random cells removed 41
+stats {"positions":22,"fresh":20,"memo":1,"zero":1,"checks":"-"} compact 5 details 23 transitions 26
+compact scores [0,15,25,43,43] positions [0,4,8,21,21]
+compact audit []
+tiers [null,"first",null,null,null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,4,"D/Dig",8,15,15,"nakedSingle","—","—","F"],[3,8,"D/Dig",16,25,10,"nakedSingle","—","—","—"],[4,21,"D/Dig",41,43,18,"nakedSingle","—","—","—"],[5,21,"F/Final",41,43,0,"nakedSingle","—","—","—"]]
+golden jumps [] counts {"compact":5,"details":23}
+explain calls {"solve":0,"count":0}
+== G03 {"variantId":"classic9","difficulty":"nightmare","seed":"42"} score 1572 nightmare log 80 target 1511.5345513215289
+moves 28 runs [["solution",1],["random",22],["guided",5]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":18,"refused":6,"chosen":870,"others":11,"nulls":0,"max":45}
+  move 24 guided at 55 span {"rated":11,"refused":1,"chosen":1234,"others":9,"nulls":0,"max":941}
+  move 25 guided at 65 span {"rated":9,"refused":1,"chosen":null,"others":6,"nulls":1,"max":1249}
+  move 26 guided at 73 span {"rated":7,"refused":2,"chosen":null,"others":0,"nulls":4,"max":null}
+  move 27 guided at 78 span {"rated":4,"refused":2,"chosen":null,"others":0,"nulls":1,"max":null}
+stats {"positions":28,"fresh":26,"memo":1,"zero":1,"checks":"-"} compact 6 details 29 transitions 33
+compact scores [0,25,44,870,1572,1572] positions [0,8,22,23,27,27]
+compact audit []
+tiers [null,"first",null,"jump","newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,19,"nakedSingle","—","—","—"],[4,23,"G/Choose",45,870,826,"xyWing","Y","—","—"],[5,27,"G/Choose",53,1572,702,"forcingChain","—","—","N"],[6,27,"F/Final",53,1572,0,"forcingChain","—","—","—"]]
+golden jumps [[4,44,870]] counts {"compact":6,"details":29}
+explain calls {"solve":4,"count":2}
+  compact jump k=3 22>23 totals 44>870 levels veryEasy>expert ratio 19.7 newHardest true change 826
+    cause {"class":"together","culprit":null,"singles":[["remove","R2C3",45],["remove","R8C7",44]],"changes":["remove:R2C3","remove:R8C7"],"largest":null,"frame":null,"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":870,"at":43,"rated":18,"refused":6,"others":11,"nulls":0,"max":45}
+    proof {"restricted":"stuck","k":17,"n":47,"tech":"xyWing","key":"technique.xyWing.step","args":{"pivot":"R7C4","pincer1":"R7C8","pincer2":"R9C6","digitX":4,"digitY":7,"digit":9},"placements":0}
+    move removed ["R2C3","R8C7"] restored []
+== G04 {"variantId":"classic9","difficulty":"hell1","seed":"2400651925"} score 2916 hell1 log 83 target 3401.829543057829
+moves 28 runs [["solution",1],["random",22],["guided",5]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":18,"refused":4,"chosen":877,"others":13,"nulls":0,"max":46}
+  move 24 guided at 57 span {"rated":13,"refused":3,"chosen":878,"others":9,"nulls":0,"max":878}
+  move 25 guided at 67 span {"rated":9,"refused":1,"chosen":1336,"others":7,"nulls":0,"max":879}
+  move 26 guided at 75 span {"rated":7,"refused":2,"chosen":1337,"others":4,"nulls":0,"max":1337}
+  move 27 guided at 80 span {"rated":4,"refused":1,"chosen":2916,"others":2,"nulls":0,"max":1346}
+stats {"positions":28,"fresh":26,"memo":1,"zero":1,"checks":"-"} compact 7 details 29 transitions 34
+compact scores [0,27,44,877,1337,2916,2916] positions [0,9,22,23,26,27,27]
+compact audit [{"scope":"complete","ins":1,"rem":false}]
+tiers [null,"first",null,"jump","newPeak","newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,9,"D/Dig",18,27,27,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,17,"nakedSingle","—","—","—"],[4,23,"G/Choose",45,877,833,"xyWing","Y","R2C8","—"],[5,26,"G/Choose",51,1337,460,"wWing","—","—","N"],[6,27,"G/Choose",53,2916,1579,"nishio","—","—","N"],[7,27,"F/Final",53,2916,0,"nishio","—","—","—"]]
+golden jumps [[4,44,877]] counts {"compact":7,"details":29}
+explain calls {"solve":4,"count":2}
+  compact jump k=3 22>23 totals 44>877 levels veryEasy>expert ratio 19.9 newHardest true change 833
+    cause {"class":"single-culprit","culprit":{"cell":"R2C8","action":"remove","score":876,"otherScore":44},"singles":[["remove","R2C8",876],["remove","R8C2",44]],"changes":["remove:R2C8","remove:R8C2"],"largest":null,"frame":{"kind":"cell","cell":16,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":877,"at":43,"rated":18,"refused":4,"others":13,"nulls":0,"max":46}
+    proof {"restricted":"stuck","k":27,"n":48,"tech":"xyWing","key":"technique.xyWing.step","args":{"pivot":"R3C6","pincer1":"R9C6","pincer2":"R2C5","digitX":2,"digitY":6,"digit":5},"placements":0}
+    move removed ["R2C8","R8C2"] restored []
+== G05 {"variantId":"classic9","difficulty":"hell1","seed":"2299986211"} score 2942 hell1 log 68 target 3244.2311357706785
+moves 28 runs [["solution",1],["random",22],["guided",5]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":19,"refused":8,"chosen":550,"others":10,"nulls":0,"max":45}
+  move 24 guided at 54 span {"rated":10,"refused":4,"chosen":null,"others":4,"nulls":1,"max":552}
+  move 25 guided at 60 span {"rated":5,"refused":1,"chosen":null,"others":0,"nulls":3,"max":null}
+  move 26 guided at 64 span {"rated":3,"refused":0,"chosen":null,"others":0,"nulls":2,"max":null}
+  move 27 guided at 67 span {"rated":2,"refused":1,"chosen":null,"others":0,"nulls":0,"max":null}
+stats {"positions":28,"fresh":26,"memo":1,"zero":1,"checks":"-"} compact 7 details 29 transitions 34
+compact scores [0,26,44,550,1993,2942,2942] positions [0,9,22,23,24,27,27]
+compact audit []
+tiers [null,"first",null,"jump","jump","newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,9,"D/Dig",17,26,26,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,18,"nakedSingle","—","—","—"],[4,23,"G/Choose",45,550,506,"simpleColouring","Y","—","—"],[5,24,"G/Choose",47,1993,1443,"forcingChain","Y","R3C9","—"],[6,27,"G/Choose",53,2942,949,"nishio","—","—","N"],[7,27,"F/Final",53,2942,0,"nishio","—","—","—"]]
+golden jumps [[4,44,550],[5,550,1993]] counts {"compact":7,"details":29}
+explain calls {"solve":8,"count":4}
+  compact jump k=3 22>23 totals 44>550 levels veryEasy>hard ratio 12.5 newHardest true change 506
+    cause {"class":"together","culprit":null,"singles":[["remove","R2C6",44],["remove","R8C4",45]],"changes":["remove:R2C6","remove:R8C4"],"largest":null,"frame":null,"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":550,"at":43,"rated":19,"refused":8,"others":10,"nulls":0,"max":45}
+    proof {"restricted":"stuck","k":21,"n":51,"tech":"simpleColouring","key":"technique.simpleColouring.step","args":{"digit":7,"rule":"trap","colour1":["R2C9","R3C1","R4C8","R5C5"],"colour2":["R3C8","R4C4","R5C9","R8C5"]},"placements":0}
+    move removed ["R2C6","R8C4"] restored []
+  compact jump k=4 23>24 totals 550>1993 levels hard>nightmare ratio 3.6 newHardest true change 1443
+    cause {"class":"single-culprit","culprit":{"cell":"R3C9","action":"remove","score":1992,"otherScore":551},"singles":[["remove","R3C9",1992],["remove","R7C1",551]],"changes":["remove:R3C9","remove:R7C1"],"largest":null,"frame":{"kind":"cell","cell":26,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":null,"at":54,"rated":10,"refused":4,"others":4,"nulls":1,"max":552}
+    proof {"restricted":"stuck","k":15,"n":60,"tech":"forcingChain","key":"technique.forcingChain.step.endpoints","args":{"kind":"endpoints","length":3,"chains":[[[13,5,0],[67,5,1],[59,5,0],[60,5,1]]]},"placements":0}
+    move removed ["R3C9","R7C1"] restored []
+== G06 {"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"} score 2336 nightmare log 110 target 1509.6530959010124
+moves 29 runs [["solution",1],["random",22],["guided",6]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":19,"refused":3,"chosen":45,"others":15,"nulls":0,"max":45}
+  move 24 guided at 59 span {"rated":15,"refused":1,"chosen":46,"others":13,"nulls":0,"max":46}
+  move 25 guided at 73 span {"rated":13,"refused":1,"chosen":47,"others":11,"nulls":0,"max":47}
+  move 26 guided at 85 span {"rated":11,"refused":0,"chosen":106,"others":10,"nulls":0,"max":48}
+  move 27 guided at 96 span {"rated":10,"refused":0,"chosen":1697,"others":9,"nulls":0,"max":129}
+  move 28 guided at 106 span {"rated":9,"refused":5,"chosen":2336,"others":3,"nulls":0,"max":2348}
+stats {"positions":29,"fresh":27,"memo":1,"zero":1,"checks":"-"} compact 7 details 30 transitions 35
+compact scores [0,25,44,106,1697,2336,2336] positions [0,8,22,26,27,28,28]
+compact audit []
+tiers [null,"first",null,"newPeak","jump","newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,19,"nakedSingle","—","—","—"],[4,26,"G/Choose",51,106,62,"pointing","—","—","N"],[5,27,"G/Choose",53,1697,1591,"forcingChain","Y","R8C4","—"],[6,28,"G/Choose",55,2336,639,"nishio","—","—","N"],[7,28,"F/Final",55,2336,0,"nishio","—","—","—"]]
+golden jumps [[5,106,1697]] counts {"compact":7,"details":30}
+explain calls {"solve":4,"count":2}
+  compact jump k=4 26>27 totals 106>1697 levels easy>nightmare ratio 16 newHardest true change 1591
+    cause {"class":"single-culprit","culprit":{"cell":"R8C4","action":"remove","score":1697,"otherScore":107},"singles":[["remove","R2C6",107],["remove","R8C4",1697]],"changes":["remove:R2C6","remove:R8C4"],"largest":null,"frame":{"kind":"cell","cell":66,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":1697,"at":96,"rated":10,"refused":0,"others":9,"nulls":0,"max":129}
+    proof {"restricted":"stuck","k":24,"n":63,"tech":"forcingChain","key":"technique.forcingChain.step.endpoints","args":{"kind":"endpoints","length":3,"chains":[[[13,4,0],[23,4,1],[21,4,0],[31,4,1]]]},"placements":0}
+    move removed ["R2C6","R8C4"] restored []
+== G07 {"variantId":"jigsaw9","difficulty":"nightmare","seed":"3962167687"} score 2340 nightmare log 107 target 2361.4210105268285
+moves 32 runs [["solution",1],["random",22],["guided",7],["exchange",2]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":19,"refused":3,"chosen":45,"others":15,"nulls":0,"max":45}
+  move 24 guided at 59 span {"rated":15,"refused":0,"chosen":46,"others":14,"nulls":0,"max":46}
+  move 25 guided at 74 span {"rated":14,"refused":2,"chosen":47,"others":11,"nulls":0,"max":47}
+  move 26 guided at 86 span {"rated":11,"refused":2,"chosen":511,"others":8,"nulls":0,"max":48}
+  move 27 guided at 95 span {"rated":8,"refused":4,"chosen":null,"others":3,"nulls":0,"max":512}
+  move 28 guided at 99 span {"rated":3,"refused":1,"chosen":null,"others":0,"nulls":1,"max":null}
+  move 29 guided at 101 span {"rated":1,"refused":0,"chosen":null,"others":0,"nulls":0,"max":null}
+  move 30 exchange at 103 span {"rated":0,"refused":0,"chosen":null,"others":0,"nulls":0,"max":null}
+  move 31 exchange at 105 span {"rated":0,"refused":0,"chosen":null,"others":0,"nulls":0,"max":null}
+stats {"positions":32,"fresh":30,"memo":1,"zero":1,"checks":"-"} compact 9 details 33 transitions 40
+compact scores [0,26,44,47,511,1582,1589,2340,2340] positions [0,9,22,25,26,27,29,31,31]
+compact audit []
+tiers [null,"first",null,"newPeak","jump","jump",null,"newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,9,"D/Dig",17,26,26,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,18,"nakedSingle","—","—","—"],[4,25,"G/Choose",49,47,3,"hiddenSingleBox","—","—","N"],[5,26,"G/Choose",51,511,464,"simpleColouring","Y","R9C4","—"],[6,27,"G/Choose",53,1582,1071,"forcingChain","Y","R6C3","—"],[7,29,"G/Choose",57,1589,7,"forcingChain","—","—","—"],[8,31,"X/Adjust",57,2340,751,"
+golden jumps [[5,47,511],[6,511,1582]] counts {"compact":9,"details":33}
+explain calls {"solve":8,"count":4}
+  compact jump k=4 25>26 totals 47>511 levels easy>hard ratio 10.8 newHardest true change 464
+    cause {"class":"single-culprit","culprit":{"cell":"R9C4","action":"remove","score":510,"otherScore":47},"singles":[["remove","R1C6",47],["remove","R9C4",510]],"changes":["remove:R1C6","remove:R9C4"],"largest":null,"frame":{"kind":"cell","cell":75,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":511,"at":86,"rated":11,"refused":2,"others":8,"nulls":0,"max":48}
+    proof {"restricted":"stuck","k":28,"n":53,"tech":"simpleColouring","key":"technique.simpleColouring.step","args":{"digit":8,"rule":"trap","colour1":["R3C9","R7C8"],"colour2":["R6C9","R7C2"]},"placements":0}
+    move removed ["R1C6","R9C4"] restored []
+  compact jump k=5 26>27 totals 511>1582 levels hard>nightmare ratio 3 newHardest true change 1071
+    cause {"class":"single-culprit","culprit":{"cell":"R6C3","action":"remove","score":1582,"otherScore":512},"singles":[["remove","R4C7",512],["remove","R6C3",1582]],"changes":["remove:R4C7","remove:R6C3"],"largest":null,"frame":{"kind":"cell","cell":47,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":null,"at":95,"rated":8,"refused":4,"others":3,"nulls":0,"max":512}
+    proof {"restricted":"stuck","k":29,"n":66,"tech":"forcingChain","key":"technique.forcingChain.step.endpoints","args":{"kind":"endpoints","length":3,"chains":[[[10,4,0],[11,4,1],[47,4,0],[58,4,1]]]},"placements":0}
+    move removed ["R4C7","R6C3"] restored []
+== G08 {"variantId":"killer","difficulty":"veryEasy","seed":"1"} score 43 veryEasy log 23 target 20.51400881493464
+moves 22 runs [["solution",1],["random",21]]
+random cells removed 41
+stats {"positions":22,"fresh":20,"memo":1,"zero":1,"checks":"-"} compact 6 details 24 transitions 28
+compact scores [0,0,15,25,43,43] positions [0,0,4,8,21,21]
+compact audit []
+tiers [null,null,"first",null,null,null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Cag",0,0,0,"—","—","—","—"],[3,4,"D/Dig",8,15,15,"nakedSingle","—","—","F"],[4,8,"D/Dig",16,25,10,"nakedSingle","—","—","—"],[5,21,"D/Dig",41,43,18,"nakedSingle","—","—","—"],[6,21,"F/Final",41,43,0,"nakedSingle","—","—","—"]]
+golden jumps [] counts {"compact":6,"details":24}
+explain calls {"solve":0,"count":0}
+== G09 {"variantId":"killer","difficulty":"expert","seed":"3514204290"} score 968 expert log 190 target 825.5728618241847
+moves 39 runs [["solution",1],["random",22],["guided",16]]
+random cells removed 43
+  move 23 guided at 43 span {"rated":19,"refused":2,"chosen":106,"others":16,"nulls":0,"max":106}
+  move 24 guided at 60 span {"rated":16,"refused":0,"chosen":117,"others":15,"nulls":0,"max":113}
+  move 25 guided at 76 span {"rated":15,"refused":0,"chosen":121,"others":14,"nulls":0,"max":120}
+  move 26 guided at 91 span {"rated":14,"refused":0,"chosen":123,"others":13,"nulls":0,"max":123}
+  move 27 guided at 105 span {"rated":13,"refused":0,"chosen":127,"others":12,"nulls":0,"max":125}
+  move 28 guided at 118 span {"rated":12,"refused":0,"chosen":129,"others":11,"nulls":0,"max":128}
+  move 29 guided at 130 span {"rated":11,"refused":0,"chosen":130,"others":10,"nulls":0,"max":130}
+  move 30 guided at 141 span {"rated":10,"refused":0,"chosen":133,"others":9,"nulls":0,"max":132}
+  move 31 guided at 151 span {"rated":9,"refused":0,"chosen":134,"others":8,"nulls":0,"max":134}
+  move 32 guided at 160 span {"rated":8,"refused":0,"chosen":137,"others":7,"nulls":0,"max":137}
+  move 33 guided at 168 span {"rated":7,"refused":0,"chosen":139,"others":6,"nulls":0,"max":139}
+  move 34 guided at 175 span {"rated":6,"refused":1,"chosen":143,"others":4,"nulls":0,"max":141}
+  move 35 guided at 180 span {"rated":4,"refused":0,"chosen":144,"others":3,"nulls":0,"max":143}
+  move 36 guided at 184 span {"rated":3,"refused":0,"chosen":165,"others":2,"nulls":0,"max":144}
+  move 37 guided at 187 span {"rated":2,"refused":0,"chosen":562,"others":1,"nulls":0,"max":540}
+  move 38 guided at 189 span {"rated":1,"refused":0,"chosen":968,"others":0,"nulls":0,"max":null}
+stats {"positions":39,"fresh":37,"memo":1,"zero":1,"checks":"-"} compact 10 details 41 transitions 49
+compact scores [0,0,23,40,94,98,165,562,968,968] positions [0,0,7,18,19,22,36,37,38,38]
+compact audit []
+tiers [null,null,"first",null,"newPeak",null,"newPeak","jump","newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Cag",0,0,0,"—","—","—","—"],[3,7,"D/Dig",14,23,23,"nakedSingle","—","—","F"],[4,18,"D/Dig",36,40,17,"nakedSingle","—","—","—"],[5,19,"D/Dig",38,94,54,"cageCombo","—","—","N"],[6,22,"D/Dig",43,98,4,"cageCombo","—","—","—"],[7,36,"G/Choose",71,165,67,"boxLine","—","—","N"],[8,37,"G/Choose",73,562,397,"ruleOf45","Y","—","—"],[9,38,"G/Choose",75,968,406,"ca
+golden jumps [[8,165,562]] counts {"compact":10,"details":41}
+explain calls {"solve":4,"count":2}
+  compact jump k=7 36>37 totals 165>562 levels easy>hard ratio 3.4 newHardest true change 397
+    cause {"class":"mixed","culprit":null,"singles":[["remove","R3C5",524],["remove","R7C5",518]],"changes":["remove:R3C5","remove:R7C5"],"largest":{"cell":22,"action":"remove","score":524},"frame":null,"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":562,"at":187,"rated":2,"refused":0,"others":1,"nulls":0,"max":540}
+    proof {"restricted":"stuck","k":20,"n":110,"tech":"ruleOf45","key":"technique.ruleOf45.step","args":{"kind":"outie","units":["B3","B6"],"sum":16,"cells":["R3C6","R6C5","R6C6"],"rule":"outie"},"placements":0}
+    move removed ["R3C5","R7C5"] restored []
+== G10 {"variantId":"killer","difficulty":"nightmare","seed":"42"} score 2151 nightmare log 159 target 1960.0198163185269
+moves 38 runs [["solution",1],["random",22],["guided",15]]
+random cells removed 43
+  move 23 guided at 39 span {"rated":15,"refused":0,"chosen":103,"others":14,"nulls":0,"max":99}
+  move 24 guided at 54 span {"rated":14,"refused":0,"chosen":112,"others":13,"nulls":0,"max":110}
+  move 25 guided at 68 span {"rated":13,"refused":0,"chosen":118,"others":12,"nulls":0,"max":116}
+  move 26 guided at 81 span {"rated":12,"refused":0,"chosen":121,"others":11,"nulls":0,"max":118}
+  move 27 guided at 93 span {"rated":11,"refused":0,"chosen":126,"others":10,"nulls":0,"max":125}
+  move 28 guided at 104 span {"rated":10,"refused":0,"chosen":131,"others":9,"nulls":0,"max":130}
+  move 29 guided at 114 span {"rated":9,"refused":0,"chosen":133,"others":8,"nulls":0,"max":132}
+  move 30 guided at 123 span {"rated":8,"refused":0,"chosen":134,"others":7,"nulls":0,"max":134}
+  move 31 guided at 131 span {"rated":7,"refused":0,"chosen":136,"others":6,"nulls":0,"max":136}
+  move 32 guided at 138 span {"rated":6,"refused":0,"chosen":138,"others":5,"nulls":0,"max":136}
+  move 33 guided at 144 span {"rated":5,"refused":0,"chosen":138,"others":4,"nulls":0,"max":137}
+  move 34 guided at 149 span {"rated":4,"refused":0,"chosen":140,"others":3,"nulls":0,"max":139}
+  move 35 guided at 153 span {"rated":3,"refused":0,"chosen":144,"others":2,"nulls":0,"max":142}
+  move 36 guided at 156 span {"rated":2,"refused":0,"chosen":144,"others":1,"nulls":0,"max":142}
+  move 37 guided at 158 span {"rated":1,"refused":0,"chosen":null,"others":0,"nulls":0,"max":null}
+stats {"positions":38,"fresh":36,"memo":1,"zero":1,"checks":"-"} compact 8 details 40 transitions 46
+compact scores [0,0,25,44,112,144,2151,2151] positions [0,0,8,22,24,36,37,37]
+compact audit []
+tiers [null,null,"first",null,"newPeak",null,"jump",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Cag",0,0,0,"—","—","—","—"],[3,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[4,22,"D/Dig",43,44,19,"nakedSingle","—","—","—"],[5,24,"G/Choose",47,112,68,"cageCombo","—","—","N"],[6,36,"G/Choose",71,144,32,"cageCombo","—","—","—"],[7,37,"G/Choose",73,2151,2007,"forcingChain","Y","R3C8","—"],[8,37,"F/Final",73,2151,0,"forcingChain","—","—","—"]]
+golden jumps [[7,144,2151]] counts {"compact":8,"details":40}
+explain calls {"solve":4,"count":2}
+  compact jump k=6 36>37 totals 144>2151 levels easy>nightmare ratio 14.9 newHardest true change 2007
+    cause {"class":"single-culprit","culprit":{"cell":"R3C8","action":"remove","score":2093,"otherScore":146},"singles":[["remove","R3C8",2093],["remove","R7C2",146]],"changes":["remove:R3C8","remove:R7C2"],"largest":null,"frame":{"kind":"cell","cell":25,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":null,"at":158,"rated":1,"refused":0,"others":0,"nulls":0,"max":null}
+    proof {"restricted":"stuck","k":90,"n":145,"tech":"forcingChain","key":"technique.forcingChain.step.contradiction","args":{"kind":"contradiction","length":6,"chains":[[[64,9,1],[64,7,0],[63,7,1],[45,7,0],[45,6,1],[53,6,0],[71,6,1]],[[64,9,1],[68,9,0],[68,8,1],[65,8,0],[65,6,1],[71,6,0]]]},"placements":0}
+    move removed ["R3C8","R7C2"] restored []
+== G11 {"variantId":"greaterThan","difficulty":"expert","seed":"42"} score 957 expert log 220 target 778.7345429183915
+moves 112 runs [["solution",1],["clues",1],["sign",96],["reveal",1],["sign",2],["reveal",1],["sign",2],["reveal",2],["sign",2],["reveal",1],["sign",3]]
+random cells removed 0
+stats {"positions":112,"fresh":110,"memo":1,"zero":1,"checks":"-"} compact 6 details 114 transitions 118
+compact scores [0,0,119,119,957,957] positions [0,0,108,109,111,111]
+compact audit [{"scope":"complete","ins":0,"rem":true}]
+tiers [null,null,"first",null,"jump",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,108,"C+I+A+IM/Mixed",50,119,119,"ineqChain","—","—","F"],[4,109,"I/Signs",50,119,0,"ineqChain","—","—","—"],[5,111,"I/Signs",50,957,838,"xyWing","Y","—","—"],[6,111,"F/Final",50,957,0,"xyWing","—","—","—"]]
+golden jumps [[5,119,957]] counts {"compact":6,"details":114}
+explain calls {"solve":10,"count":0}
+  compact jump k=4 109>111 totals 119>957 levels easy>expert ratio 8 newHardest true change 838
+    cause {"class":"multi-move","culprit":null,"singles":[],"changes":[],"largest":null,"frame":null,"k":1,"n":2}
+    choice {"kind":"combined","count":2,"chosen":null,"at":null,"rated":null,"refused":null,"others":null,"nulls":null,"max":null}
+    proof {"restricted":"stuck","k":24,"n":60,"tech":"xyWing","key":"technique.xyWing.step","args":{"pivot":"R6C6","pincer1":"R6C2","pincer2":"R5C4","digitX":2,"digitY":4,"digit":5},"placements":0}
+    move removed [] restored []
+== G12 {"variantId":"greaterThan","difficulty":"hard","seed":"3115968914"} score 638 hard log 119 target 630.8390314923599
+moves 104 runs [["solution",1],["clues",1],["sign",102]]
+random cells removed 0
+stats {"positions":104,"fresh":102,"memo":1,"zero":1,"checks":"-"} compact 6 details 106 transitions 110
+compact scores [0,0,127,130,638,638] positions [0,0,22,92,103,103]
+compact audit [{"scope":"complete","ins":0,"rem":true}]
+tiers [null,null,"first",null,"jump",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,22,"C+I/Mixed",57,127,127,"ineqChain","—","—","F"],[4,92,"I/Signs",57,130,3,"ineqChain","—","—","—"],[5,103,"I/Signs",57,638,508,"simpleColouring","Y","—","—"],[6,103,"F/Final",57,638,0,"simpleColouring","—","—","—"]]
+golden jumps [[5,130,638]] counts {"compact":6,"details":106}
+explain calls {"solve":4,"count":0}
+  compact jump k=4 92>103 totals 130>638 levels easy>hard ratio 4.9 newHardest true change 508
+    cause {"class":"multi-move","culprit":null,"singles":[],"changes":[],"largest":null,"frame":null,"k":1,"n":11}
+    choice {"kind":"combined","count":11,"chosen":null,"at":null,"rated":null,"refused":null,"others":null,"nulls":null,"max":null}
+    proof {"restricted":"stuck","k":47,"n":75,"tech":"simpleColouring","key":"technique.simpleColouring.step","args":{"digit":4,"rule":"trap","colour1":["R1C1","R2C5","R6C3","R7C2"],"colour2":["R1C4","R2C2","R6C1","R8C5"]},"placements":0}
+    move removed [] restored []
+== G13 {"variantId":"samurai","difficulty":"nightmare","seed":"42"} score 1637 nightmare log 362 target 1960.0198163185269
+moves 133 runs [["solution",1],["random",98],["guided",34]]
+random cells removed 195
+stats {"positions":133,"fresh":131,"memo":1,"zero":1,"checks":"-"} compact 8 details 134 transitions 140
+compact scores [0,25,59,69,72,1483,1637,1637] positions [0,8,47,98,113,114,132,132]
+compact audit []
+tiers [null,"first",null,null,"newPeak","jump",null,null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,47,"D/Dig",94,59,34,"nakedSingle","—","—","—"],[4,98,"D/Dig",195,69,10,"nakedSingle","—","—","—"],[5,113,"G/Choose",225,72,3,"hiddenSingleLine","—","—","N"],[6,114,"G/Choose",227,1483,1411,"forcingChain","Y","G2-R8C9","—"],[7,132,"G/Choose",263,1637,154,"forcingChain","—","—","—"],[8,132,"F/Final",263,1637,0,"
+golden jumps [[6,72,1483]] counts {"compact":8,"details":134}
+explain calls {"solve":4,"count":2}
+  compact jump k=5 113>114 totals 72>1483 levels easy>master ratio 20.5 newHardest true change 1411
+    cause {"class":"single-culprit","culprit":{"cell":"G2-R8C9","action":"remove","score":1483,"otherScore":72},"singles":[["remove","G2-R8C9",1483],["remove","G3-R2C1",72]],"changes":["remove:G2-R8C9","remove:G3-R2C1"],"largest":null,"frame":{"kind":"cell","cell":152,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":null,"at":229,"rated":7,"refused":0,"others":6,"nulls":0,"max":72}
+    proof {"restricted":"stuck","k":209,"n":228,"tech":"forcingChain","key":"technique.forcingChain.step.contradiction","args":{"kind":"contradiction","length":5,"chains":[[[82,1,1],[82,8,0],[88,8,1],[88,4,0],[151,4,1],[151,7,0]],[[82,1,1],[109,1,0],[115,1,1],[115,7,0],[151,7,1]]]},"placements":0}
+    move removed ["G2-R8C9","G3-R2C1"] restored []
+== G14 {"variantId":"mega16","difficulty":"hell2","seed":"12"} score 4476 hell2 log 171 target null
+moves 78 runs [["solution",1],["random",68],["guided",9]]
+random cells removed 136
+stats {"positions":78,"fresh":76,"memo":1,"zero":1,"checks":"-"} compact 6 details 79 transitions 83
+compact scores [0,29,65,1646,4476,4476] positions [0,10,68,69,77,77]
+compact audit []
+tiers [null,"first","newPeak","jump","newPeak",null]
+golden rows [[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,10,"D/Dig",20,29,29,"nakedSingle","—","—","F"],[3,68,"D/Dig",136,65,36,"hiddenSingleBox","—","—","N"],[4,69,"G/Choose",138,1646,1581,"forcingChain","Y","R8C4","—"],[5,77,"G/Choose",154,4476,2830,"nishio","—","—","N"],[6,77,"F/Final",154,4476,0,"nishio","—","—","—"]]
+golden jumps [[4,65,1646]] counts {"compact":6,"details":79}
+explain calls {"solve":4,"count":2}
+  compact jump k=3 68>69 totals 65>1646 levels easy>nightmare ratio 25.3 newHardest true change 1581
+    cause {"class":"single-culprit","culprit":{"cell":"R8C4","action":"remove","score":1652,"otherScore":65},"singles":[["remove","R8C4",1652],["remove","R9C13",65]],"changes":["remove:R8C4","remove:R9C13"],"largest":null,"frame":{"kind":"cell","cell":115,"action":"remove"},"k":null,"n":null}
+    choice {"kind":"guided","count":null,"chosen":null,"at":84,"rated":10,"refused":3,"others":6,"nulls":0,"max":66}
+    proof {"restricted":"stuck","k":84,"n":146,"tech":"forcingChain","key":"technique.forcingChain.step.contradiction","args":{"kind":"contradiction","length":4,"chains":[[[205,12,1],[205,2,0],[195,2,1],[195,4,0],[243,4,1]],[[205,12,1],[253,12,0],[243,12,1],[243,4,0]]]},"placements":0}
+    move removed ["R8C4","R9C13"] restored []

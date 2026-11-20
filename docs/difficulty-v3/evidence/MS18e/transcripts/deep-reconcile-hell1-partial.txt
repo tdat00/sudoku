@@ -1,0 +1,13 @@
+$ node tests\mega-contract.js --reconcile=..\docs\difficulty-v3\evidence\MS18e\deep\hell1 --level=hell1 --json=..\docs\difficulty-v3\evidence\MS18e\preflight\deep-reconcile-hell1-partial.json
+reconcile: 14 requests, 7 records, complete false, evidence sound false, generation 7 produced, correctness incomplete, relations 3 pass / 0 fail / 3 unevaluated
+  mega12: 7 of 7 produced, exact 0, fallbacks 7 (shallow 7), unavailable 0, generation min 92.102 s median 99.364 s max 103.711 s, over 120 s: 0, over 30 s: 7, guard 160.000 s (margin 56.008 s)
+  mega16: 0 of 7 produced, exact 0, fallbacks 0 (shallow 0), unavailable 0, generation n/a, over 120 s: 0, over 30 s: 0, guard unavailable
+  PROBLEM mega16-hell1-invariant-1: missing: no record of this occurrence
+  PROBLEM mega16-hell1-invariant-2: missing: no record of this occurrence
+  PROBLEM mega16-hell1-invariant-3: missing: no record of this occurrence
+  PROBLEM mega16-hell1-invariant-4: missing: no record of this occurrence
+  PROBLEM mega16-hell1-cv5-a: missing: no record of this occurrence
+  PROBLEM mega16-hell1-cv5-b: missing: no record of this occurrence
+  PROBLEM mega16-hell1-cv5-other: missing: no record of this occurrence
+json: docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-hell1-partial.json
+exit=1 seconds=0.672

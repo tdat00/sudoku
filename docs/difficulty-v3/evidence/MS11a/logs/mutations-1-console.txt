@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS11a\mutations-1.txt 0 22
+mutation 0 (types 1 and 2 are not returned first (the second pass runs although the first found something)): DETECTED - 387 total, 338 passed, 49 failed, 0 skipped - 49 failing, 48 of uniqueRectangle - 9.6 s
+mutation 1 (a Finding of the first pass is replaced by nothing): DETECTED - 387 total, 336 passed, 51 failed, 0 skipped - 51 failing, 50 of uniqueRectangle - 9.5 s
+mutation 2 (the uniqueness assumption is not honoured before the second pass): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.1 s
+mutation 3 (type 4 is tried before type 3 on a rectangle): DETECTED - 387 total, 369 passed, 18 failed, 0 skipped - 18 failing, 18 of uniqueRectangle - 9.8 s
+mutation 4 (type 3 is never tried): DETECTED - 387 total, 342 passed, 45 failed, 0 skipped - 45 failing, 45 of uniqueRectangle - 9.6 s
+mutation 5 (a rectangle with one floor only is taken (exact 1 accepted)): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 24 of uniqueRectangle - 9.2 s
+mutation 6 (a rectangle with no floor is taken (exact 0 accepted)): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 24 of uniqueRectangle - 9.3 s
+mutation 7 (the extras are the digits that both roofs hold (an intersection, a fixed extra in both)): DETECTED - 387 total, 358 passed, 29 failed, 0 skipped - 29 failing, 28 of uniqueRectangle - 9.2 s
+mutation 8 (the extras still hold the pair of digits): DETECTED - 387 total, 342 passed, 45 failed, 0 skipped - 45 failing, 45 of uniqueRectangle - 9.6 s
+mutation 9 (the extras are those of the first roof only): DETECTED - 387 total, 363 passed, 24 failed, 0 skipped - 24 failing, 23 of uniqueRectangle - 9.4 s
+mutation 10 (the roofs are listed highest first): DETECTED - 387 total, 349 passed, 38 failed, 0 skipped - 38 failing, 38 of uniqueRectangle - 9.5 s
+mutation 11 (every unit of the first roof counts, not only those that hold both roofs): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 24 of uniqueRectangle - 9.3 s
+mutation 12 (the units of the roofs are found from the second roof first (the order of the units reversed)): DETECTED - 387 total, 370 passed, 17 failed, 0 skipped - 17 failing, 17 of uniqueRectangle - 9.6 s
+mutation 13 (five extras are searched (the bound off by one, upwards)): NOT DETECTED (exit 0) - 387 total, 387 passed, 0 failed, 0 skipped - 0 failing, 0 of uniqueRectangle - 10.2 s
+mutation 14 (four extras are not searched (the bound off by one, downwards)): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.1 s
+mutation 15 (type 3 needs a complete unit): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.1 s
+mutation 16 (type 4 is looked for in a partial unit too (the completeness test is dropped)): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+mutation 17 (type 4 is looked for only in partial units): DETECTED - 387 total, 354 passed, 33 failed, 0 skipped - 33 failing, 33 of uniqueRectangle - 9.8 s
+mutation 18 (a solved cell may be a real cell): DETECTED - 387 total, 385 passed, 2 failed, 0 skipped - 2 failing, 2 of uniqueRectangle - 10.4 s
+mutation 19 (an open cell without a candidate may be a real cell): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.2 s
+mutation 20 (the corners of the rectangle may be real cells): DETECTED - 387 total, 359 passed, 28 failed, 0 skipped - 28 failing, 27 of uniqueRectangle - 9.5 s
+mutation 21 (the roofs may be real cells (only the first two corners are left out)): DETECTED - 387 total, 364 passed, 23 failed, 0 skipped - 23 failing, 22 of uniqueRectangle - 9.5 s
+mutation 22 (a cell with one digit too many may be a real cell (the filter loosened)): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.3 s
+detected 22 of 23, 224.3 s
+exit=1 seconds=224.420

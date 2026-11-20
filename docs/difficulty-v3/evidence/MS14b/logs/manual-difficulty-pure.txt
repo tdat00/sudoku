@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS14b\manual-difficulty-pure.js
+weight table of the test equals SG.difficulty.WEIGHTS (38 entries, lawOfLeftovers 200): true
+allowed techniques follow the rule at every level of a boxGrid9 board: true
+no level of a boxGrid9 board allows lawOfLeftovers: true
+firsts per level hold: true
+exit=0 seconds=0.199

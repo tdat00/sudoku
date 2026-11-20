@@ -1,0 +1,19 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > --results=..\docs\difficulty-v3\evidence\MS17b\gd\cap.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL difficulty: 4 passed, 1 failed  (5.46 s)
+
+Failures:
+  FAIL difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) > runs out inside the downward refinement without passing the cap
+       Error: classic9 nightmare: no seed ran out of ratings inside refine
+       at exhaustedIn (Q:\git\sudoku\generator\tests\manual\difficulty.test.js:1575:13)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\manual\difficulty.test.js:1588:7)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  5 total, 4 passed, 1 failed, 0 skipped
+Time:   5.46 s running tests, 5.70 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/cap.json
+exit=1 seconds=5.938

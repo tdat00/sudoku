@@ -1,0 +1,6 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=uniqueRectangle --sources=tests\artifacts\difficulty-v3\MS11b\sources.json --max-puzzles=8 --max-hints=400 --write
+selected 1 technique ID(s); mode write
+replaying 1 puzzle(s) for 1 ID(s) (--max-puzzles=8, --max-hints=400)
+puzzle 1/1 classic9 Nightmare 70 -> 72 hint(s), solved; wanted found: uniqueRectangle
+wrote player/js/ui/help-examples.js (35 examples; 1 selected: uniqueRectangle; the others kept)
+exit=0 seconds=0.432

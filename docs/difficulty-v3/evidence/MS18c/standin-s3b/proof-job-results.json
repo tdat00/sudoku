@@ -1,0 +1,769 @@
+{
+  "schema": "MS18c-proof-job-v2",
+  "at": "2026-11-18T19:19:55.066Z",
+  "harnessShell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  "harnessPowerShell": "7.6.10",
+  "scenarios": [
+    {
+      "name": "normal",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 8.0,
+      "tSeconds": 60.0,
+      "options": [],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 10.345,
+      "harnessTimedOut": false,
+      "supervisorPid": 33772,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "standInResultFinal": "completed",
+      "wSeconds": "8.2870065",
+      "standInWriteFailures": "0",
+      "standInCallbackErrors": "0",
+      "standInWindowFault": "",
+      "journalEventTypes": [],
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 11,
+      "members": [
+        {
+          "pid": 1780,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 22908,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28884,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 29684,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31148,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 33608,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "33608": 0.016,
+        "1780": 0.019,
+        "22908": 0.019,
+        "31148": 0.019,
+        "29684": 0.019,
+        "28884": 0.019
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": null
+    },
+    {
+      "name": "normal-ps51",
+      "shell": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "mode": "direct",
+      "runSeconds": 8.0,
+      "tSeconds": 60.0,
+      "options": [],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 9.462,
+      "harnessTimedOut": false,
+      "supervisorPid": 31672,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "standInResultFinal": "completed",
+      "wSeconds": "8.2897096",
+      "standInWriteFailures": "0",
+      "standInCallbackErrors": "0",
+      "standInWindowFault": "",
+      "journalEventTypes": [],
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 11,
+      "members": [
+        {
+          "pid": 22564,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28888,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31692,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32660,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32676,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 33804,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "28888": 0.003,
+        "33804": 0.003,
+        "22564": 0.003,
+        "31692": 0.003,
+        "32660": 0.003,
+        "32676": 0.003
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": null
+    },
+    {
+      "name": "t-expiry",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 90.0,
+      "tSeconds": 12.0,
+      "options": [],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 13.789,
+      "harnessTimedOut": false,
+      "supervisorPid": 5504,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "tExpired",
+      "standInResultFinal": "tExpired",
+      "wSeconds": "12.2519055",
+      "standInWriteFailures": "0",
+      "standInCallbackErrors": "0",
+      "standInWindowFault": "",
+      "journalEventTypes": [],
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 11,
+      "members": [
+        {
+          "pid": 8632,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 22212,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27316,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 29448,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31784,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 33004,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "27316": 0.003,
+        "8632": 0.003,
+        "31784": 0.003,
+        "22212": 0.003,
+        "33004": 0.003,
+        "29448": 0.003
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": null
+    },
+    {
+      "name": "supervisor-loss",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 90.0,
+      "tSeconds": 120.0,
+      "options": [],
+      "supervisorKilledByHarness": true,
+      "supervisorKilledAtSeconds": 2.068,
+      "supervisorExitedAtSeconds": 2.098,
+      "harnessTimedOut": false,
+      "supervisorPid": 34416,
+      "supervisorExitCode": -1,
+      "supervisorInHostJob": "true",
+      "finalStatus": "",
+      "standInResultFinal": "",
+      "wSeconds": "",
+      "standInWriteFailures": "",
+      "standInCallbackErrors": "",
+      "standInWindowFault": "",
+      "journalEventTypes": [],
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 11,
+      "members": [
+        {
+          "pid": 4316,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 9152,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 16680,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 22076,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 30756,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 33692,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "4316": 0.002,
+        "16680": 0.002,
+        "33692": 0.002,
+        "22076": 0.002,
+        "9152": 0.002,
+        "30756": 0.002
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": true,
+      "privateLockContent": "34416|standin-supervisor-loss-20261118191848-34416|2026-11-18T19:18:48.347Z",
+      "journalHoldReleasedAt": null
+    },
+    {
+      "name": "full-chain",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "full-chain",
+      "runSeconds": 6.0,
+      "tSeconds": 120.0,
+      "options": [],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 15.066,
+      "harnessTimedOut": false,
+      "supervisorPid": 12096,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "standInResultFinal": "completed",
+      "wSeconds": "13.5004316",
+      "standInWriteFailures": "0",
+      "standInCallbackErrors": "0",
+      "standInWindowFault": "",
+      "journalEventTypes": [
+        "launch-intent",
+        "qualifier-created"
+      ],
+      "ownedProcessesObserved": 14,
+      "maxMembersInStatus": 13,
+      "members": [
+        {
+          "pid": 3340,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 4772,
+          "name": "powershell",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 7232,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 7396,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 19072,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 24404,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 25952,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28224,
+          "name": "powershell",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31284,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 31504,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32004,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32416,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 34152,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 34672,
+          "name": null,
+          "inHarnessOuterJob": null
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 8,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "4772": 0.006,
+        "7396": 0.006,
+        "28224": 0.006,
+        "24404": 0.006,
+        "31284": 0.006,
+        "31504": 0.006,
+        "25952": 0.006,
+        "3340": 0.006,
+        "7232": 0.006,
+        "32416": 0.006,
+        "19072": 0.006,
+        "32004": 0.006
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": null
+    },
+    {
+      "name": "beat-fault",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "direct",
+      "runSeconds": 8.0,
+      "tSeconds": 60.0,
+      "options": [
+        "beat-fault"
+      ],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 10.045,
+      "harnessTimedOut": false,
+      "supervisorPid": 18020,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "standInResultFinal": "completed",
+      "wSeconds": "8.2905922",
+      "standInWriteFailures": "0",
+      "standInCallbackErrors": "8",
+      "standInWindowFault": "",
+      "journalEventTypes": [],
+      "ownedProcessesObserved": 6,
+      "maxMembersInStatus": 12,
+      "members": [
+        {
+          "pid": 408,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 19692,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27232,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27328,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28400,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 33420,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 6,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "27232": 0.002,
+        "33420": 0.002,
+        "28400": 0.002,
+        "27328": 0.002,
+        "19692": 0.002,
+        "408": 0.002
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": null
+    },
+    {
+      "name": "held-readers",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "full-chain",
+      "runSeconds": 6.0,
+      "tSeconds": 120.0,
+      "options": [
+        "hold"
+      ],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 25.084,
+      "harnessTimedOut": false,
+      "supervisorPid": 34012,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "",
+      "finalStatus": "",
+      "standInResultFinal": "completed",
+      "wSeconds": "",
+      "standInWriteFailures": "24",
+      "standInCallbackErrors": "0",
+      "standInWindowFault": "",
+      "journalEventTypes": [
+        "launch-intent",
+        "qualifier-created"
+      ],
+      "ownedProcessesObserved": 14,
+      "maxMembersInStatus": 5,
+      "members": [
+        {
+          "pid": 1248,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 3588,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 5992,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 17244,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 21072,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 25800,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 26848,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27460,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 27536,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 27608,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 28944,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 31120,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 34256,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 34720,
+          "name": "node",
+          "inHarnessOuterJob": true
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 0,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "3588": 0.004,
+        "1248": 0.005,
+        "26848": 0.005,
+        "34720": 0.005,
+        "27460": 0.005
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": "2026-11-18T19:19:27.706Z"
+    },
+    {
+      "name": "status-reader",
+      "shell": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "mode": "full-chain",
+      "runSeconds": 6.0,
+      "tSeconds": 120.0,
+      "options": [
+        "status-reader"
+      ],
+      "supervisorKilledByHarness": false,
+      "supervisorKilledAtSeconds": null,
+      "supervisorExitedAtSeconds": 15.409,
+      "harnessTimedOut": false,
+      "supervisorPid": 9140,
+      "supervisorExitCode": 0,
+      "supervisorInHostJob": "true",
+      "finalStatus": "completed",
+      "standInResultFinal": "completed",
+      "wSeconds": "13.4784287",
+      "standInWriteFailures": "0",
+      "standInCallbackErrors": "0",
+      "standInWindowFault": "",
+      "journalEventTypes": [
+        "launch-intent",
+        "qualifier-created"
+      ],
+      "ownedProcessesObserved": 14,
+      "maxMembersInStatus": 13,
+      "members": [
+        {
+          "pid": 11388,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 13020,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 17600,
+          "name": "powershell",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 21772,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 21868,
+          "name": "powershell",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 23016,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 24560,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 25100,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28136,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28880,
+          "name": "node",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 28996,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 29660,
+          "name": "conhost",
+          "inHarnessOuterJob": true
+        },
+        {
+          "pid": 32292,
+          "name": null,
+          "inHarnessOuterJob": null
+        },
+        {
+          "pid": 32724,
+          "name": null,
+          "inHarnessOuterJob": null
+        }
+      ],
+      "innerJobMembershipSamplesTrue": 8,
+      "innerJobMembershipSamplesFalse": 0,
+      "allObservedInHarnessOuterJob": true,
+      "deathDelaysSecondsAfterSupervisorExit": {
+        "13020": 0.003,
+        "11388": 0.003,
+        "17600": 0.003,
+        "29660": 0.003,
+        "28996": 0.003,
+        "28880": 0.003,
+        "28136": 0.003,
+        "25100": 0.003,
+        "24560": 0.003,
+        "23016": 0.003,
+        "21868": 0.003,
+        "21772": 0.003
+      },
+      "stillAliveAfter15s": [],
+      "allGone": true,
+      "statusReaderRuns": [
+        {
+          "at": 1.86,
+          "text": "{ \"statusFile\": \"Q:\\\\git\\\\sudoku\\\\docs\\\\difficulty-v3\\\\evidence\\\\MS18c\\\\standin-s3b\\\\status-reader\\\\status.json\", \"verdict\": \"live-matching\", \"runId\": \"standin-status-reader-20261118191940-9140\", \"cell\": \"stand-in/none\", \"payloadSlot\": null, \"admissionOrdinal\": null, \"state\": \"waiting-lock\", \"finalStatus\": null, \"supervisor\": { \"pid\": 9140, \"recordedCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\", \"currentCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\" }, \"launcherAlive\": null, \"membersAlive\": [], \"heartbeatAt\": \"2026-11-18T19:19:41.059Z\", \"heartbeatAgeSeconds\": 0.3, \"tDeadline\": null, \"oDeadline\": null, \"manifestBlob\": null, \"note\": \"read-only; a live-matching supervisor is adopted by waiting on this status, never relaunched\" }",
+          "exit": 0
+        },
+        {
+          "at": 4.3,
+          "text": "{ \"statusFile\": \"Q:\\\\git\\\\sudoku\\\\docs\\\\difficulty-v3\\\\evidence\\\\MS18c\\\\standin-s3b\\\\status-reader\\\\status.json\", \"verdict\": \"live-matching\", \"runId\": \"standin-status-reader-20261118191940-9140\", \"cell\": \"stand-in/none\", \"payloadSlot\": null, \"admissionOrdinal\": null, \"state\": \"running\", \"finalStatus\": null, \"supervisor\": { \"pid\": 9140, \"recordedCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\", \"currentCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\" }, \"launcherAlive\": true, \"membersAlive\": [ 25100, 28996 ], \"heartbeatAt\": \"2026-11-18T19:19:42.591Z\", \"heartbeatAgeSeconds\": 1.1, \"tDeadline\": \"2026-11-18T19:21:41.1949839Z\", \"oDeadline\": null, \"manifestBlob\": null, \"note\": \"read-only; a live-matching supervisor is adopted by waiting on this status, never relaunched\" }",
+          "exit": 0
+        },
+        {
+          "at": 7.06,
+          "text": "{ \"statusFile\": \"Q:\\\\git\\\\sudoku\\\\docs\\\\difficulty-v3\\\\evidence\\\\MS18c\\\\standin-s3b\\\\status-reader\\\\status.json\", \"verdict\": \"live-matching\", \"runId\": \"standin-status-reader-20261118191940-9140\", \"cell\": \"stand-in/none\", \"payloadSlot\": null, \"admissionOrdinal\": null, \"state\": \"running\", \"finalStatus\": null, \"supervisor\": { \"pid\": 9140, \"recordedCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\", \"currentCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\" }, \"launcherAlive\": true, \"membersAlive\": [ 25100, 28996 ], \"heartbeatAt\": \"2026-11-18T19:19:45.685Z\", \"heartbeatAgeSeconds\": 0.7, \"tDeadline\": \"2026-11-18T19:21:41.1949839Z\", \"oDeadline\": null, \"manifestBlob\": null, \"note\": \"read-only; a live-matching supervisor is adopted by waiting on this status, never relaunched\" }",
+          "exit": 0
+        },
+        {
+          "at": 9.9,
+          "text": "{ \"statusFile\": \"Q:\\\\git\\\\sudoku\\\\docs\\\\difficulty-v3\\\\evidence\\\\MS18c\\\\standin-s3b\\\\status-reader\\\\status.json\", \"verdict\": \"live-matching\", \"runId\": \"standin-status-reader-20261118191940-9140\", \"cell\": \"stand-in/none\", \"payloadSlot\": null, \"admissionOrdinal\": null, \"state\": \"running\", \"finalStatus\": null, \"supervisor\": { \"pid\": 9140, \"recordedCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\", \"currentCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\" }, \"launcherAlive\": true, \"membersAlive\": [ 11388, 23016, 24560, 25100, 28136, 28880, 28996, 29660 ], \"heartbeatAt\": \"2026-11-18T19:19:48.802Z\", \"heartbeatAgeSeconds\": 0.4, \"tDeadline\": \"2026-11-18T19:21:41.1949839Z\", \"oDeadline\": null, \"manifestBlob\": null, \"note\": \"read-only; a live-matching supervisor is adopted by waiting on this status, never relaunched\" }",
+          "exit": 0
+        },
+        {
+          "at": 12.66,
+          "text": "{ \"statusFile\": \"Q:\\\\git\\\\sudoku\\\\docs\\\\difficulty-v3\\\\evidence\\\\MS18c\\\\standin-s3b\\\\status-reader\\\\status.json\", \"verdict\": \"live-matching\", \"runId\": \"standin-status-reader-20261118191940-9140\", \"cell\": \"stand-in/none\", \"payloadSlot\": null, \"admissionOrdinal\": null, \"state\": \"running\", \"finalStatus\": null, \"supervisor\": { \"pid\": 9140, \"recordedCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\", \"currentCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\" }, \"launcherAlive\": true, \"membersAlive\": [ 11388, 23016, 24560, 25100, 28136, 28880, 28996, 29660 ], \"heartbeatAt\": \"2026-11-18T19:19:50.861Z\", \"heartbeatAgeSeconds\": 1.1, \"tDeadline\": \"2026-11-18T19:21:41.1949839Z\", \"oDeadline\": null, \"manifestBlob\": null, \"note\": \"read-only; a live-matching supervisor is adopted by waiting on this status, never relaunched\" }",
+          "exit": 0
+        },
+        {
+          "at": 15.41,
+          "text": "{ \"statusFile\": \"Q:\\\\git\\\\sudoku\\\\docs\\\\difficulty-v3\\\\evidence\\\\MS18c\\\\standin-s3b\\\\status-reader\\\\status.json\", \"verdict\": \"live-matching\", \"runId\": \"standin-status-reader-20261118191940-9140\", \"cell\": \"stand-in/none\", \"payloadSlot\": null, \"admissionOrdinal\": null, \"state\": \"running\", \"finalStatus\": null, \"supervisor\": { \"pid\": 9140, \"recordedCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\", \"currentCreatedUtcMicros\": \"2026-11-18T19:19:39.633305Z\" }, \"launcherAlive\": false, \"membersAlive\": [], \"heartbeatAt\": \"2026-11-18T19:19:53.953Z\", \"heartbeatAgeSeconds\": 0.8, \"tDeadline\": \"2026-11-18T19:21:41.1949839Z\", \"oDeadline\": null, \"manifestBlob\": null, \"note\": \"read-only; a live-matching supervisor is adopted by waiting on this status, never relaunched\" }",
+          "exit": 0
+        }
+      ],
+      "privateLockLeftBehind": false,
+      "privateLockContent": null,
+      "journalHoldReleasedAt": null
+    }
+  ]
+}

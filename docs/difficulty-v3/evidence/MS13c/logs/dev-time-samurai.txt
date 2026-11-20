@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\time-calls.js 40 samurai
+samurai 40 states; ms {"legacyShort":3.9,"legacyLong":2.1,"newShort":61.3,"newLong":50.7} work {"newShort":1145413,"newLong":1119129,"legacyShort":30123,"legacyLong":10800}
+exit=0 seconds=0.664

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\check-format.js ..\docs\difficulty-v3\evidence\MS18d\format-check.txt
+generator/tests/artifacts/difficulty-v3/MS18d/project-gp.js: line 609 has 111 characters
+checked 20 files, 1 with problems
+exit=1 seconds=0.120

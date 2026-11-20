@@ -1,0 +1,361 @@
+{
+  "schema": 1,
+  "kind": "quick-coverage",
+  "manifest": "docs/difficulty-v3/evidence/MS05r6b/gd/gd-manifest.json",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/gd/difficulty-inventory.json",
+      "inventoryTests": 154,
+      "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+      "node": "v26.13.0",
+      "timeFactor": 2,
+      "verdict": "incomplete",
+      "counts": {
+        "total": 153,
+        "passed": 151,
+        "failed": 2,
+        "skipped": 0
+      },
+      "shards": [
+        {
+          "id": "classic9-nightmare",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-nightmare.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 7,
+          "failed": 1,
+          "skipped": 0,
+          "wallMs": 430327.5,
+          "resultsMs": 430141.7,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-veryEasy",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-veryEasy.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 281.5,
+          "resultsMs": 101.6,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-easy",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-easy.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 20923.2,
+          "resultsMs": 20741.7,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-normal",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-normal.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 7,
+          "failed": 1,
+          "skipped": 0,
+          "wallMs": 28028.7,
+          "resultsMs": 27848,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-hard",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-hard.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 2814.8,
+          "resultsMs": 2632.6,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-expert",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-expert.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 3458.7,
+          "resultsMs": 3277.9,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-master",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-master.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 9123,
+          "resultsMs": 8933.4,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "classic9-hell1",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/classic9-hell1.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 9736.8,
+          "resultsMs": 9551.3,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "levels",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/levels.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 193.9,
+          "resultsMs": 4.3,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "spec9",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/spec9.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 8,
+          "passed": 8,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 185.6,
+          "resultsMs": 4.4,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "spec-other",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/spec-other.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 201.2,
+          "resultsMs": 13.4,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "qualification",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/qualification.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 3554.9,
+          "resultsMs": 3364,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "clue-floor",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/clue-floor.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 9,
+          "passed": 9,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 210.9,
+          "resultsMs": 30.3,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "score-v2",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/score-v2.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 15,
+          "passed": 15,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 310.1,
+          "resultsMs": 127.7,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "score-table",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/score-table.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 4,
+          "passed": 4,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 213.1,
+          "resultsMs": 32.1,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "labelled",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/labelled.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 969.8,
+          "resultsMs": 786.5,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "removing",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/removing.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 2,
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 423,
+          "resultsMs": 243.6,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "oracle",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/oracle.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 875.7,
+          "resultsMs": 692,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "guarantees",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/guarantees.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 10,
+          "passed": 10,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 51947.1,
+          "resultsMs": 51762.9,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "cap",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/cap.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 5194.4,
+          "resultsMs": 5013.5,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "unreachable",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/unreachable.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 5,
+          "passed": 5,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 432.4,
+          "resultsMs": 246.4,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "safety",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/safety.json",
+          "accepted": true,
+          "reasons": [],
+          "tests": 3,
+          "passed": 3,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": 4858.5,
+          "resultsMs": 4680.2,
+          "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67"
+        },
+        {
+          "id": "confusion-matrix",
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/gd/confusion-matrix.json",
+          "accepted": false,
+          "reasons": [
+            "the result file is missing",
+            "generator/difficulty/130: expected but missing from the result"
+          ],
+          "tests": 0,
+          "passed": 0,
+          "failed": 0,
+          "skipped": 0,
+          "wallMs": null,
+          "resultsMs": null,
+          "sourceHash": null
+        }
+      ],
+      "coverage": {
+        "missing": [
+          {
+            "key": "generator/difficulty/130",
+            "fullName": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row"
+          }
+        ],
+        "duplicates": [],
+        "unexpected": []
+      },
+      "failed": [
+        {
+          "key": "generator/difficulty/114",
+          "shard": "classic9-nightmare",
+          "fullName": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare > hits the requested level in at least 90 % of the puzzles",
+          "error": {
+            "name": "AssertionError",
+            "message": "expected 21 to be >= 90",
+            "stack": "AssertionError: expected 21 to be >= 90\n    at api.<computed> [as toBeGreaterThanOrEqual] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\difficulty.test.js:1233:24)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"
+          }
+        },
+        {
+          "key": "generator/difficulty/82",
+          "shard": "classic9-normal",
+          "fullName": "difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > hits the requested level in at least 90 % of the puzzles",
+          "error": {
+            "name": "AssertionError",
+            "message": "expected 86 to be >= 90",
+            "stack": "AssertionError: expected 86 to be >= 90\n    at api.<computed> [as toBeGreaterThanOrEqual] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\difficulty.test.js:1233:24)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"
+          }
+        }
+      ],
+      "problems": [
+        "confusion-matrix: the result file is missing; generator/difficulty/130: expected but missing from the result"
+      ]
+    }
+  },
+  "rule": "accepted shards only; key = (app, suite, ordinal) with the full name; every inventory key once"
+}

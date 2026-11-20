@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-als --filter=als-xz
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-als: 51 passed, 1 failed  (4.01 s)
+
+Failures:
+  FAIL tech-als > als-xz: the one guard, the work limit and the record quota > has no work limit of its own for the pair phase: the guard is the one the enumeration used, never refilled
+       AssertionError: expected {id: "alsXz", work: 1134, limit: 1134, capHit: null, retained: 5} to equal {id: "alsXz", work: 1134, limit: 1134, capHit: null, retained: 14}
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:1868:31)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  52 total, 51 passed, 1 failed, 0 skipped
+Time:   4.01 s running tests, 4.15 s total
+exit=1 seconds=4.271

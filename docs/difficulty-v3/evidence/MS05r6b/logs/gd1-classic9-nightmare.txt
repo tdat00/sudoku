@@ -1,0 +1,4 @@
+plan: 1 item(s), projections sum 449.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 gd-classic9-nightmare exit=1 node=430.549s (projected 449 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/gd/classic9-nightmare.json
+compound complete: 1 item(s) in 430.553 s; next --from=1
+MS05r6b exit=0 seconds=430.651

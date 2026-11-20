@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-als
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-als: 57 passed, 1 failed  (4.46 s)
+
+Failures:
+  FAIL tech-als > als enumerator: what is an almost-locked set > takes four cells with five digits, and stops at four cells: five cells with six digits are not enumerated
+       AssertionError: expected Array(244)[{cells: Array(5)[0, 1, 2, 3, 4], digits: Array(6)[1, 2, 3, 4, 5, 6], occurrences: {1: Array(5), 2: Array(4), 3: Array(4), 4: Array(4), 5: Array(4), 6: Array(4)}}, {cells: Array(8)[0, 1, 2, 3, 4, 5, 6, 7], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(7), 3: Array(7), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(3), 8: Array(3), ...}}, {cells: Array(8)[0, 1, 2, 3, 4, 5, 6, 8], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(7), 3: Array(7), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(3), 8: Array(3), ...}}, {cells: Array(8)[0, 1, 2, 3, 4, 5, 7, 8], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(7), 3: Array(7), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(3), 8: Array(3), ...}}, {cells: Array(8)[0, 1, 2, 3, 4, 6, 7, 8], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(7), 3: Array(7), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(3), 8: Array(3), ...}}, {cells: Array(8)[0, 1, 2, 3, 5, 6, 7, 8], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(8), 3: Array(7), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(4), 8: Array(4), ...}}, {cells: Array(8)[0, 1, 2, 4, 5, 6, 7, 8], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(7), 3: Array(8), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(4), 8: Array(4), ...}}, {cells: Array(8)[0, 1, 2, 9, 10, 11, 18, 19], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(8), 3: Array(8), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(5), 8: Array(5), ...}}, {cells: Array(8)[0, 1, 2, 9, 10, 11, 18, 20], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(8), 3: Array(8), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(5), 8: Array(5), ...}}, {cells: Array(8)[0, 1, 2, 9, 10, 11, 19, 20], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(8), 3: Array(8), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(5), 8: Array(5), ...}}, {cells: Array(8)[0, 1, 2, 9, 10, 18, 19, 20], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(8), 3: Array(8), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(5), 8: Array(5), ...}}, {cells: Array(8)[0, 1, 2, 9, 11, 18, 19, 20], digits: Array(9)[1, 2, 3, 4, 5, 6, 7, 8, 9], occurrences: {1: Array(8), 2: Array(8), 3: Array(8), 4: Array(7), 5: Array(7), 6: Array(7), 7: Array(5), 8: Array(5), ...}}, ...] to equal Array(1)[{cells: Array(5)[0, 1, 2, 3, 4], digits: Array(6)[1, 2, 3, 4, 5, 6], occurrences: {1: Array(5), 2: Array(4), 3: Array(4), 4: Array(4), 5: Array(4), 6: Array(4)}}]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-als.test.js:452:35)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 1
+Tests:  58 total, 57 passed, 1 failed, 0 skipped
+Time:   4.46 s running tests, 4.58 s total
+exit=1 seconds=4.695

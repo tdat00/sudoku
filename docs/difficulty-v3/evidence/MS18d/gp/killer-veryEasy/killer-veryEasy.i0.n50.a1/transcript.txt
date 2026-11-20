@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=killer-veryEasy.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\killer-veryEasy\killer-veryEasy.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=killer-veryEasy.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=killer-veryEasy.i0.n50 bytes=21812 sha256=36ac3eecca7f37e1940e00c1c2de2b4c4100bd74cb1614d5bb59faf6675bdb55
+exit=0 seconds=0.316

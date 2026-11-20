@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS12\corpus-verify.js
+cache: seed 4242, 20000 puzzles from 0, 80000 constructed states; compared 27 entries of the earlier sources files (9 distinct indices: 14, 254, 1758, 1810, 2202, 2250, 3916, 3928, 4533): all identical
+exit=0 seconds=0.108

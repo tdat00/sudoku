@@ -1,0 +1,23 @@
+[
+  {
+    "label": "q-gen-steps",
+    "args": ["tests\\node-runner.js", "--suite=steps", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-steps.json"],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.5 s at fingerprint 00345dc1 (r6a, locked, whole suite; G13 is read from the saved wire), stated bound 30 s (2.6 times, for load and the start-up)",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-steps.json"
+  },
+  {
+    "label": "q-gen-replay",
+    "args": ["tests\\node-runner.js", "--suite=replay", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-replay.json"],
+    "projectionSeconds": 30,
+    "projectionBasis": "MEASURED 11.1 s at fingerprint 00345dc1 (r6a, locked, whole suite), stated bound 30 s (2.7 times)",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-replay.json"
+  },
+  {
+    "label": "q-gen-player",
+    "args": ["tests\\node-runner.js", "--suite=player", "--verbose", "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-player.json"],
+    "projectionSeconds": 180,
+    "projectionBasis": "MEASURED 139.1 s at fingerprint 00345dc1 (r6a, locked, whole suite; 138.8 s in c1), stated bound 180 s (1.3 times); the Generator's replay-player suite, its own projection and not the generic floor admits it",
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\quick\\generator-player.json"
+  }
+]

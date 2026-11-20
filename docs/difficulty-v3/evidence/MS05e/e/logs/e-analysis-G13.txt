@@ -1,0 +1,2 @@
+G13 samurai nightmare 42: 21.5 s
+recorded 1 of 14 keys (G13) in docs/difficulty-v3/evidence/MS05e/analysis/G13.json; a ledger is one shard, merge them all with --merge

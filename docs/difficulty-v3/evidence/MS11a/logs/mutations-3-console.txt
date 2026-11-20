@@ -1,0 +1,26 @@
+$ node tests\artifacts\difficulty-v3\MS11a\run-mutations.cjs ..\docs\difficulty-v3\evidence\MS11a\mutations-3.txt 46 68
+mutation 46 (only the first real cell is spared as a target): DETECTED - 387 total, 363 passed, 24 failed, 0 skipped - 24 failing, 24 of uniqueRectangle - 9.6 s
+mutation 47 (a target loses every digit of the subset, also those it does not have): DETECTED - 387 total, 364 passed, 23 failed, 0 skipped - 23 failing, 23 of uniqueRectangle - 9.5 s
+mutation 48 (a target loses the digits that it has outside the subset too): DETECTED - 387 total, 344 passed, 43 failed, 0 skipped - 43 failing, 43 of uniqueRectangle - 9.4 s
+mutation 49 (the eliminations are not sorted): DETECTED - 387 total, 386 passed, 1 failed, 0 skipped - 1 failing, 1 of uniqueRectangle - 10.5 s
+mutation 50 (the eliminations are sorted by cell, the digits highest first): DETECTED - 387 total, 356 passed, 31 failed, 0 skipped - 31 failing, 31 of uniqueRectangle - 10.7 s
+mutation 51 (the real cells are not in the cells of the Finding): DETECTED - 387 total, 355 passed, 32 failed, 0 skipped - 32 failing, 32 of uniqueRectangle - 9.9 s
+mutation 52 (the labels are not those of the real cells (the first roof repeated)): DETECTED - 387 total, 353 passed, 34 failed, 0 skipped - 34 failing, 34 of uniqueRectangle - 9.9 s
+mutation 53 (the digits of the pair and of the subset are swapped): DETECTED - 387 total, 355 passed, 32 failed, 0 skipped - 32 failing, 32 of uniqueRectangle - 9.8 s
+mutation 54 (the subset digits leave out the extras (the real cells only)): DETECTED - 387 total, 381 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 9.9 s
+mutation 55 (the roofs are swapped in the arguments): DETECTED - 387 total, 355 passed, 32 failed, 0 skipped - 32 failing, 32 of uniqueRectangle - 9.9 s
+mutation 56 (the unit is not the unit of the subset): DETECTED - 387 total, 360 passed, 27 failed, 0 skipped - 27 failing, 27 of uniqueRectangle - 9.8 s
+mutation 57 (a digit with three holders is a link (a third occurrence is not seen)): DETECTED - 387 total, 328 passed, 59 failed, 0 skipped - 59 failing, 58 of uniqueRectangle - 9.2 s
+mutation 58 (the holders are counted up to two only (a third occurrence is not seen)): DETECTED - 387 total, 328 passed, 59 failed, 0 skipped - 59 failing, 58 of uniqueRectangle - 9.5 s
+mutation 59 (the link digit is removed instead of the other digit): DETECTED - 387 total, 359 passed, 28 failed, 0 skipped - 28 failing, 28 of uniqueRectangle - 9.9 s
+mutation 60 (only the first roof loses the digit): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 9.8 s
+mutation 61 (the roofs lose the digit in the order of the second roof first): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 9.7 s
+mutation 62 (the digits are tried highest first): DETECTED - 387 total, 384 passed, 3 failed, 0 skipped - 3 failing, 3 of uniqueRectangle - 10.2 s
+mutation 63 (a tested digit counts no unit): DETECTED - 387 total, 381 passed, 6 failed, 0 skipped - 6 failing, 6 of uniqueRectangle - 10.4 s
+mutation 64 (a tested digit counts two units): DETECTED - 387 total, 382 passed, 5 failed, 0 skipped - 5 failing, 5 of uniqueRectangle - 10.1 s
+mutation 65 (the pair is replaced by the removed digit alone in the arguments): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 9.7 s
+mutation 66 (the cells of a type 4 Finding leave out the floors): DETECTED - 387 total, 362 passed, 25 failed, 0 skipped - 25 failing, 25 of uniqueRectangle - 9.6 s
+mutation 67 (a tested cell counts no unit): DETECTED - 387 total, 378 passed, 9 failed, 0 skipped - 9 failing, 9 of uniqueRectangle - 10.3 s
+mutation 68 (a tested cell counts two units): DETECTED - 387 total, 379 passed, 8 failed, 0 skipped - 8 failing, 8 of uniqueRectangle - 10.1 s
+detected 23 of 23, 227.6 s
+exit=0 seconds=227.710

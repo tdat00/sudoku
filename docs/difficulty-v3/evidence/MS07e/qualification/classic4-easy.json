@@ -1,0 +1,43 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"029720df77c6c12a","commit":"8b70875","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 2,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-15T06:09:57.645Z",
+  "finished": "2026-11-15T06:09:58.647Z",
+  "seconds": 1,
+  "cells": [
+    {
+      "variant": "classic4",
+      "level": "easy",
+      "cellCount": 16,
+      "budget": 2000,
+      "attempts": 8,
+      "summary": {"n":14,"hits":0,"rate":0,"p50":121.4547,"p95":176.0977,"max":176.0977,"verdict":"hidden","stopped":"misses","errors":0,"approximate":14,"invalid":0},
+      "requests": [
+        {"key":"classic4/easy","index":0,"seed":3716313332,"hit":false,"ms":176.0977,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":1,"seed":3733090951,"hit":false,"ms":175.2136,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":2,"seed":3749868570,"hit":false,"ms":171.9329,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":3,"seed":3766646189,"hit":false,"ms":174.9081,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":4,"seed":3649202856,"hit":false,"ms":120.7852,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":5,"seed":3665980475,"hit":false,"ms":115.9925,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":6,"seed":3682758094,"hit":false,"ms":128.8393,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":7,"seed":3699535713,"hit":false,"ms":115.826,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":8,"seed":3582092380,"hit":false,"ms":123.4753,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":9,"seed":3598869999,"hit":false,"ms":121.4547,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":10,"seed":4267349525,"hit":false,"ms":128.5956,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":11,"seed":4250571906,"hit":false,"ms":117.5701,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":12,"seed":4233794287,"hit":false,"ms":115.7901,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"classic4/easy","index":13,"seed":4217016668,"hit":false,"ms":109.2287,"achieved":"veryEasy","score":18,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"classic4":[]}
+}

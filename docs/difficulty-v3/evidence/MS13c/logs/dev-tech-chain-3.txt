@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped forcing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 18 passed, 2 failed  (5.67 s)
+
+Failures:
+  FAIL tech-chain > grouped forcing (R16, MS13c): proofs, ownership and the singleton rules > is the singleton search wherever no group is in the proof: byte for byte, and never longer with one
+       AssertionError: expected 25 to be >= 30
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5199:48)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on the node quota, and a quota of exactly the nodes is no cap
+       AssertionError: expected false to be true
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5424:89
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:5410:12)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  20 total, 18 passed, 2 failed, 0 skipped
+Time:   5.67 s running tests, 5.79 s total
+exit=1 seconds=5.891

@@ -2,10 +2,12 @@
  * Result panel `SG.resultView`: two cards (level reached with its score, number of clues) and a table of the
  * techniques used (uses, points per use and share of the score, each with a help icon that explains it). A
  * Wordoku result also gets a card with its key word and meaning while "Show the solution" is on. An
- * approximate result (warning `difficulty.approximate`) gets a yellow alert and a "Retry with a different
- * seed" button; other warnings are listed, translated; no warning, no UI. `viewModel(result)` is pure
- * (displayed values already formatted, plus the warning keys); `create(rootEl, options)` renders it into
- * `#result-root` and follows the language. Strings: `result.*` fragment at the bottom + base packs.
+ * approximate result (warning `difficulty.approximate`, or `difficulty.shallow`: in the requested score band
+ * but not needing a technique of that level) gets a yellow alert and one "Retry with a different seed"
+ * button; other warnings are listed, translated; no warning, no UI. `viewModel(result)` is pure
+ * (displayed values already formatted, plus the warning keys; `exact` is the flag of the result, never a
+ * comparison of level names); `create(rootEl, options)` renders it into `#result-root` and follows the
+ * language. Strings: `result.*` fragment at the bottom + base packs.
  */
 (function (root) {
   'use strict';
@@ -21,8 +23,11 @@
     o: 'result.word.pos.o'
   });
 
+  // Both warnings of a result that is not exact are of the kind `approximate`: they share the yellow alert
+  // and the Retry button (see `warningModels`).
   const WARNING_KINDS = Object.freeze({
     'difficulty.approximate': 'approximate',
+    'difficulty.shallow': 'approximate',
     'digger.unsoundTechnique': 'unsound',
     'trace.downgraded': 'downgraded'
   });
@@ -50,17 +55,28 @@
     return n;
   }
 
-  function warningModels(result) {
+  /**
+   * The warnings of a result, each once, with its kind and its translated text. `levelName` is the requested
+   * level already translated: it fills `{level}` of a warning that names it (`difficulty.shallow`), so the
+   * translator never gets a raw level id. `retry` marks the one warning that shows "Requested / Reached" and
+   * the Retry button, the first of the kind `approximate`: a result with both `difficulty.approximate` and
+   * `difficulty.shallow` still gets one button.
+   */
+  function warningModels(result, levelName) {
     const seen = {};
     const list = [];
+    let retryGiven = false;
     (Array.isArray(result.warnings) ? result.warnings : []).forEach(function (key) {
       if (typeof key !== 'string' || seen[key] === true) return;
       seen[key] = true;
       const kind = Object.prototype.hasOwnProperty.call(WARNING_KINDS, key) ? WARNING_KINDS[key] : 'other';
+      const retry = kind === 'approximate' && !retryGiven;
+      if (retry) retryGiven = true;
       list.push({
         key: key,
         kind: kind,
-        text: hasText(key) ? t(key) : t('result.warning.unknown', { code: key })
+        retry: retry,
+        text: hasText(key) ? t(key, { level: levelName }) : t('result.warning.unknown', { code: key })
       });
     });
     return list;
@@ -144,6 +160,7 @@
     const variantId = config.variantId || (result.model ? result.model.variantId : '');
     const requested = config.difficulty || rating.level || '';
     const achieved = rating.level || requested;
+    const requestedName = nameOf('difficulty.', requested);
     const clues = countClues(result.givens);
     const cells = result.model && result.model.cellCount > 0 ? result.model.cellCount
       : (result.givens ? result.givens.length : 0);
@@ -153,16 +170,18 @@
     const table = scoreTableOf(counts, rating);
     const techniques = techniqueRows(counts, table);
     const breakdown = scoreBreakdown(table, score);
-    const warnings = warningModels(result);
+    const warnings = warningModels(result, requestedName);
     const approximate = warnings.some(function (w) { return w.kind === 'approximate'; });
     return {
       variantId: variantId,
       variantName: nameOf('variant.', variantId),
       requested: requested,
-      requestedName: nameOf('difficulty.', requested),
+      requestedName: requestedName,
       achieved: achieved,
       achievedName: nameOf('difficulty.', achieved),
-      exact: requested === achieved,
+      // The flag of the result (`PuzzleResult.exact`), never a comparison of the two level names: a puzzle
+      // can be in the requested band and still not be exact.
+      exact: result.exact === true,
       clues: clues,
       cells: cells,
       cluesText: t('result.clues.of', { cells: formatNumber(cells) }),
@@ -249,7 +268,7 @@
     function warningBlock(vm) {
       return vm.warnings.map(function (w) {
         const body = [make(doc, 'p', { class: 'result__warning-text', text: w.text })];
-        if (w.kind === 'approximate') {
+        if (w.retry) {
           body.push(make(doc, 'p', {
             class: 'result__warning-detail',
             text: t('result.warning.approximate.levels', {

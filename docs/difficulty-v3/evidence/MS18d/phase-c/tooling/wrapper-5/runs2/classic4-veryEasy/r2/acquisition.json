@@ -1,0 +1,83 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795086783167,
+  "startedAtMs": 1795086783266,
+  "lockAcquiredAtMs": 1795086783176,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795086767643,
+    "lastCheckMs": 1795086783158,
+    "checks": 68,
+    "windowChecks": 62,
+    "maxIntervalMs": 256,
+    "windowSightings": 0,
+    "restarts": [
+      {
+        "atMs": 1795086766862,
+        "reason": "lock-present",
+        "shared": false,
+        "timing": true
+      },
+      {
+        "atMs": 1795086767133,
+        "reason": "lock-present",
+        "shared": false,
+        "timing": true
+      },
+      {
+        "atMs": 1795086767388,
+        "reason": "lock-present",
+        "shared": false,
+        "timing": true
+      }
+    ],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 99,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795084966030,
+    "label": "B",
+    "origin": "own"
+  },
+  "releaseGapMs": 1817236,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 27504,
+    "task": "stand-in r2",
+    "controllerPid": 24716,
+    "controllerParentPid": 27504,
+    "wrapperPid": 27504
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs2\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs2\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-pgUqDD\\logs2\\c.jsonl",
+      "present": false
+    }
+  ]
+}

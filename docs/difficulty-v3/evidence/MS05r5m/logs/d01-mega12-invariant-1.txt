@@ -1,0 +1,4 @@
+mega12-invariant-1: outcome ok, correctness pass, exact false, attempts 4 of 4, warnings difficulty.approximate,difficulty.shallow
+  generation 23.721 s, checks 0.012 s, guard margin 476.267 s of 500.000 s, allowance 256
+record: docs/difficulty-v3/evidence/MS05r5m/records/mega12-invariant-1.json
+MS05r5m exit=0 seconds=24.215

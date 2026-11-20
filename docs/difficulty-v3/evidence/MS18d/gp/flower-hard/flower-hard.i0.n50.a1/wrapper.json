@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record flower-hard.i0.n50 a1",
+  "runId": "flower-hard.i0.n50.a1",
+  "cell": "flower/hard",
+  "payload": "gp-recorder",
+  "chunkId": "flower-hard.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/flower-hard/flower-hard.i0.n50.a1",
+  "requestedAt": "2026-11-20T04:05:42.438+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795122326753,
+    "lastCheckMs": 1795122342263,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 264
+  },
+  "startedAtFromChild": "2026-11-20T04:05:42.578+07:00",
+  "finished": "2026-11-20T04:06:08.103+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3070,
+    "cheapCheckMs": 126,
+    "ageMs": 136,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T04:06:08.104+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

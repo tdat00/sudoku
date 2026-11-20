@@ -1,0 +1,1917 @@
+{
+  "schema": "ms18e-manual-hidden-requests-1",
+  "phase": "final",
+  "offeredLevels": {
+    "classic4": [
+      "veryEasy"
+    ],
+    "classic6": [
+      "veryEasy",
+      "hard"
+    ],
+    "classic9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare"
+    ],
+    "mega12": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "mega16": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "diagonalX": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "hyper": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "jigsaw9": [
+      "veryEasy",
+      "easy",
+      "normal",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "killer": [
+      "veryEasy",
+      "easy",
+      "normal"
+    ],
+    "greaterThan": [
+      "veryEasy",
+      "easy",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "samurai": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master"
+    ],
+    "sohei": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "hell2"
+    ],
+    "butterfly": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "expert",
+      "master",
+      "nightmare",
+      "hell2"
+    ],
+    "flower": [
+      "veryEasy",
+      "normal",
+      "hard",
+      "master",
+      "hell2"
+    ],
+    "wordoku": [
+      "veryEasy",
+      "easy",
+      "hard",
+      "expert",
+      "master",
+      "nightmare"
+    ]
+  },
+  "entryPoints": "/\\b(?:SG\\.)?pipeline\\.run\\(|\\b(?:SG\\.)?digger\\.(?:generate|digLevel)\\(|\\b(?:SG\\.)?difficulty\\.spec\\(|\\bD\\.spec\\(/",
+  "offeredCells": 79,
+  "files": [
+    {
+      "suite": "difficulty",
+      "bytes": 88055,
+      "lines": 1814,
+      "sha256": "a506f89d2c273441ea6ef76cf02dfae62192f614b1caa5f2115232be5fab30d9",
+      "sites": 61
+    },
+    {
+      "suite": "extra-regions",
+      "bytes": 45430,
+      "lines": 989,
+      "sha256": "2e7565427e854f2b4a254504b8c72c1f903d88f1b005d69ffd8a8aae2d5123e2",
+      "sites": 6
+    },
+    {
+      "suite": "greater-than",
+      "bytes": 74922,
+      "lines": 1596,
+      "sha256": "642c32abdf7a41a1ce36eae570f8330fdec88abe2de8deade1eb6bef1ece7cb4",
+      "sites": 12
+    },
+    {
+      "suite": "jigsaw",
+      "bytes": 48063,
+      "lines": 1085,
+      "sha256": "e31192a77593b9385d7e401f19e31c449389032e1251d4b2b5fc9f54aa81375c",
+      "sites": 7
+    },
+    {
+      "suite": "killer",
+      "bytes": 92814,
+      "lines": 1997,
+      "sha256": "1c5f466769f9e9aeba285e3ec381e9e244ef1a9fe9fd615779d723ddc64cda15",
+      "sites": 12
+    },
+    {
+      "suite": "perf",
+      "bytes": 12493,
+      "lines": 257,
+      "sha256": "88dfe3cdbb60dabbf968a7b992a98ce5684855ff2d12e8795c7eaab7440e6307",
+      "sites": 3
+    },
+    {
+      "suite": "variants",
+      "bytes": 39776,
+      "lines": 865,
+      "sha256": "68f9f9bad185fedc28bc51c2f0da1b813ef48143af52daf76a2f80eee83e7d25",
+      "sites": 8
+    },
+    {
+      "suite": "wordoku",
+      "bytes": 66657,
+      "lines": 1372,
+      "sha256": "6c76835dd247262152165ea24bc8c21f55d44dc7114f1abcc3eecf741169dfb7",
+      "sites": 7
+    }
+  ],
+  "totalSites": 116,
+  "classCounts": {
+    "offered-level": 52,
+    "refusal-expected": 12,
+    "unregistered-model": 17,
+    "temp-registered": 13,
+    "guarded": 20,
+    "manual-widened": 1,
+    "guarded-at-caller": 1
+  },
+  "unguardedHiddenHits": [],
+  "unclassified": [],
+  "staleRules": [],
+  "sites": [
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 50,
+      "snippet": "allowedTechniques: D.spec(level, model).allowedTechniques,",
+      "nth": 1,
+      "chain": [
+        "function solvesWithin"
+      ],
+      "near": "   */   function solvesWithin(model, givens, level, assumeUniqueness) {     return SG.logicalSolver.solve(model, givens, {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "OFFERED loop",
+      "why": "solvesWithin has one caller (the 1326 hit-rate check) inside the OFFERED.forEach of the classic9 batches"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 111,
+      "snippet": "expectCode(function () { D.spec('impossible', model9); }, 'difficulty.unknownLevel');",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: levels",
+        "it: lists the nine levels, easiest first, and rejects anything else"
+      ],
+      "near": "      ['impossible', 'hell', 'hell-1', 'hell3'].forEach(function (bad) {         expectCode(function () { D.levelIndex(bad); }, 'difficulty.unknownLevel');       });",
+      "class": "refusal-expected",
+      "level": "impossible",
+      "why": "unknownLevel is thrown by levelIndex"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 153,
+      "snippet": "var specs = LEVELS.map(function (level) { return D.spec(level, board9); });",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec(level, model) on a 9x9 board"
+      ],
+      "near": "  });    describe('difficulty: spec(level, model) on a 9x9 board', function () {",
+      "class": "unregistered-model",
+      "variant": "boxGrid/test-samurai",
+      "level": "every level",
+      "why": "boxGrid9/boxGrid6/boxGrid4/test-samurai are not registered variants"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 241,
+      "snippet": "expect(D.spec('veryEasy', board9).allowedTechniques).not.toContain('testKillerOnly');",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec(level, model) on a 9x9 board",
+        "it: never offers a technique that is scoped to another variant"
+      ],
+      "near": "      try {         withWeights({ testKillerOnly: 1 }, function () {           expect(temp.id).toBe('testKillerOnly');",
+      "class": "unregistered-model",
+      "variant": "boxGrid9",
+      "level": "literal",
+      "why": "boxGrid9 is not a registered variant"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 242,
+      "snippet": "expect(D.spec('hell2', board9).allowedTechniques).not.toContain('testKillerOnly');",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec(level, model) on a 9x9 board",
+        "it: never offers a technique that is scoped to another variant"
+      ],
+      "near": "        withWeights({ testKillerOnly: 1 }, function () {           expect(temp.id).toBe('testKillerOnly');           expect(D.spec('veryEasy', board9).allowedTechniques).not.toContain('testKillerOnly');",
+      "class": "unregistered-model",
+      "variant": "boxGrid9",
+      "level": "literal",
+      "why": "boxGrid9 is not a registered variant"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 253,
+      "snippet": "expect(D.spec(level, board6).minCluesPerUnit).toBeLessThanOrEqual(specs[i].minCluesPerUnit);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec(level, model) on a 9x9 board",
+        "it: asks for fewer clues per unit on boards with fewer digits, never for more"
+      ],
+      "near": "      expect(specs.map(function (s) { return s.minCluesPerUnit; })).toEqual([2, 2, 1, 1, 1, 0, 0, 0, 0]);       var board6 = SG.fixtures.models.boxGrid('boxGrid6', 2, 3);       LEVELS.forEach(function (level, i) {",
+      "class": "unregistered-model",
+      "variant": "boxGrid/test-samurai",
+      "level": "every level",
+      "why": "boxGrid9/boxGrid6/boxGrid4/test-samurai are not registered variants"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 266,
+      "snippet": "var base = D.spec(level, board9);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec on other boards, and difficultySupport",
+        "it: keeps the bands on every board and scales only the clue range by cellCount / 81"
+      ],
+      "near": "        var board = pair[0];         var scale = pair[1] / 81;         LEVELS.forEach(function (level) {",
+      "class": "unregistered-model",
+      "variant": "boxGrid/test-samurai",
+      "level": "every level",
+      "why": "boxGrid9/boxGrid6/boxGrid4/test-samurai are not registered variants"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 267,
+      "snippet": "var spec = D.spec(level, board);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec on other boards, and difficultySupport",
+        "it: keeps the bands on every board and scales only the clue range by cellCount / 81"
+      ],
+      "near": "        var scale = pair[1] / 81;         LEVELS.forEach(function (level) {           var base = D.spec(level, board9);",
+      "class": "unregistered-model",
+      "variant": "boxGrid/test-samurai",
+      "level": "every level",
+      "why": "boxGrid9/boxGrid6/boxGrid4/test-samurai are not registered variants"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 282,
+      "snippet": "expect(D.spec(level, model).level).toBe(level);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec on other boards, and difficultySupport",
+        "it: throws for a level the variant does not support"
+      ],
+      "near": "        [model4, model6, model9].forEach(function (model) {           var def = SG.variants.get(model.variantId);           if (def.difficultySupport.indexOf(level) !== -1) {",
+      "class": "offered-level",
+      "variant": "classic4/6/9",
+      "level": "offered only",
+      "why": "reached only when def.difficultySupport contains the level (the if above it)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 284,
+      "snippet": "expectCode(function () { D.spec(level, model); }, 'difficulty.unsupportedLevel');",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec on other boards, and difficultySupport",
+        "it: throws for a level the variant does not support"
+      ],
+      "near": "          if (def.difficultySupport.indexOf(level) !== -1) {             expect(D.spec(level, model).level).toBe(level);           } else {",
+      "class": "refusal-expected",
+      "variant": "classic4/6/9",
+      "level": "hidden",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 288,
+      "snippet": "expectCode(function () { D.spec('nightmare', model4); }, 'difficulty.unsupportedLevel');",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: spec on other boards, and difficultySupport",
+        "it: throws for a level the variant does not support"
+      ],
+      "near": "          }         });       });",
+      "class": "refusal-expected",
+      "variant": "classic4",
+      "level": "nightmare",
+      "why": "expects unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 490,
+      "snippet": "expect(D.spec(level, model).minClues).toBe(D.spec(level, board9).minClues);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: without a declaration the floor is the classic9 floor scaled by cellCount / 81"
+      ],
+      "near": "    it('without a declaration the floor is the classic9 floor scaled by cellCount / 81', function () {       withFloor(undefined, function (model) {         LEVELS.forEach(function (level) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 497,
+      "snippet": "var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a table gives absolute floors; a level that is missing has no floor (0)"
+      ],
+      "near": "     it('a table gives absolute floors; a level that is missing has no floor (0)', function () {       withFloor({ veryEasy: 33, hard: 7 }, function (model) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 500,
+      "snippet": "var spec = D.spec(level, model);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a table gives absolute floors; a level that is missing has no floor (0)"
+      ],
+      "near": "        var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });         expect(floors).toEqual([33, 0, 0, 7, 0, 0, 0, 0, 0]);         LEVELS.forEach(function (level) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 516,
+      "snippet": "var derived = D.spec(level, board9).minClues;",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a function gets (level, model, the derived floor) and may scale it; nonsense fal"
+      ],
+      "near": "          return derived * 0.5 + 0.9;         }, function (model) {           LEVELS.forEach(function (level) {",
+      "class": "unregistered-model",
+      "variant": "boxGrid/test-samurai",
+      "level": "every level",
+      "why": "boxGrid9/boxGrid6/boxGrid4/test-samurai are not registered variants"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 517,
+      "snippet": "var floor = D.spec(level, model).minClues;",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a function gets (level, model, the derived floor) and may scale it; nonsense fal"
+      ],
+      "near": "        }, function (model) {           LEVELS.forEach(function (level) {             var derived = D.spec(level, board9).minClues;",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 527,
+      "snippet": "expect(D.spec('easy', null).minClues).toBe(Math.max(1, Math.floor(34 * 1)));",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: spec(level, null) and boards of unregistered variants keep working"
+      ],
+      "near": "      });      it('spec(level, null) and boards of unregistered variants keep working', function () {",
+      "class": "unregistered-model",
+      "level": "easy",
+      "why": "a null model supports every level"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 528,
+      "snippet": "expect(D.spec('veryEasy', SG.fixtures.models.samurai()).minClues).toBe(Math.floor(40 * 369 / 81));",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: spec(level, null) and boards of unregistered variants keep working"
+      ],
+      "near": "     it('spec(level, null) and boards of unregistered variants keep working', function () {       expect(D.spec('easy', null).minClues).toBe(Math.max(1, Math.floor(34 * 1)));",
+      "class": "unregistered-model",
+      "variant": "test-samurai",
+      "level": "veryEasy",
+      "why": "test-samurai is not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 536,
+      "snippet": "expect(D.spec(level, killer).minClues).toBe(level === 'veryEasy' ? 40 : 0);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: Killer declares 40 clues for veryEasy and none for the levels above"
+      ],
+      "near": "      var def = SG.variants.get('killer');       var killer = def.build({}, SG.rng.create(1));       def.difficultySupport.forEach(function (level) {",
+      "class": "offered-level",
+      "variant": "killer",
+      "level": "offered loop",
+      "why": "inside def.difficultySupport.forEach of killer"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 551,
+      "snippet": "expect(D.spec(level, board).minClues).toBe(expected[level]);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: Greater-Than and the 9x9 hybrids keep the derived floor of veryEasy and easy and"
+      ],
+      "near": "        ids.forEach(function (id) {           var board = SG.variants.get(id).build({}, SG.rng.create(1));           SG.variants.get(id).difficultySupport.forEach(function (level) {",
+      "class": "offered-level",
+      "variant": "greaterThan/diagonalX/hyper/jigsaw9",
+      "level": "offered loop",
+      "why": "inside SG.variants.get(id).difficultySupport.forEach"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 558,
+      "snippet": "var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });",
+      "nth": 2,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a clueFloorScale multiplies the derived floor of its levels; a missing level kee"
+      ],
+      "near": "     it('a clueFloorScale multiplies the derived floor of its levels; a missing level keeps it', function () {       withFloor(undefined, function (model) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 561,
+      "snippet": "var spec = D.spec(level, model);",
+      "nth": 2,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a clueFloorScale multiplies the derived floor of its levels; a missing level kee"
+      ],
+      "near": "        var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });         expect(floors).toEqual([40, 34, 14, 25, 25, 22, 17, 17, 17]);         LEVELS.forEach(function (level) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 567,
+      "snippet": "expect(D.spec('hard', model).minClues).toBe(20);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a clueFloorScale multiplies the derived floor of its levels; a missing level kee"
+      ],
+      "near": "      }, { clueFloorScale: { normal: 0.5, easy: 1 } });       // 25 * 0.8 is 19.999999999999996 in floating point and must still give 20.       withFloor(undefined, function (model) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 568,
+      "snippet": "expect(D.spec('expert', model).minClues).toBe(25);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: a clueFloorScale multiplies the derived floor of its levels; a missing level kee"
+      ],
+      "near": "      // 25 * 0.8 is 19.999999999999996 in floating point and must still give 20.       withFloor(undefined, function (model) {         expect(D.spec('hard', model).minClues).toBe(20);",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 578,
+      "snippet": "expect(D.spec('normal', model).minClues).toBe(14);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: clueFloor sees the scaled floor as the derived one, and has the last word"
+      ],
+      "near": "        seen[level] = derived;         return level === 'hard' ? 3 : derived;       }, function (model) {",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 579,
+      "snippet": "expect(D.spec('hard', model).minClues).toBe(3);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: clueFloor sees the scaled floor as the derived one, and has the last word"
+      ],
+      "near": "        return level === 'hard' ? 3 : derived;       }, function (model) {         expect(D.spec('normal', model).minClues).toBe(14);",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 580,
+      "snippet": "expect(D.spec('veryEasy', model).minClues).toBe(40);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: the clue floor of a variant (clueFloor)",
+        "it: clueFloor sees the scaled floor as the derived one, and has the last word"
+      ],
+      "near": "      }, function (model) {         expect(D.spec('normal', model).minClues).toBe(14);         expect(D.spec('hard', model).minClues).toBe(3);",
+      "class": "temp-registered",
+      "variant": "floorProbe",
+      "level": "every level",
+      "why": "withFloor registers floorProbe with LEVELS.slice()"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 998,
+      "snippet": "return D.spec(LEVELS[i - 1], model9);",
+      "nth": 1,
+      "chain": [
+        "describe: difficulty: labelled puzzles (fixtures/rated.js)",
+        "it: v3 reference: the level is required (or vacuous) as expected, derived and by the"
+      ],
+      "near": "          var floor = D.floorTechniques(level, model9);           expect([entry.name, floor]).toEqual([entry.name,             i === 0 ? [] : SG.fixtures.toolRecords.withRequestedLevel('classic9', LEVELS[i - 1], function () {",
+      "class": "guarded",
+      "variant": "classic9",
+      "level": "hell1",
+      "why": "inside SG.fixtures.toolRecords.withRequestedLevel (MS18e-COMPAT-CLASSIC-HELL1-FLOOR)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1172,
+      "snippet": "allowedTechniques: D.spec('master', board9).allowedTechniques",
+      "nth": 1,
+      "chain": [
+        "describe: digger: technique-bounded oracle",
+        "it: digs less deep with fewer techniques: singles only never beats more techniques"
+      ],
+      "near": "        var narrow = SG.digger.dig(model9, s.solution, s.rng.fork('dig'), { allowedTechniques: SINGLES });         singles += narrow.clues;         var wide = SG.digger.dig(model9, s.solution, s.rng.fork('dig'), {",
+      "class": "unregistered-model",
+      "variant": "boxGrid9",
+      "level": "literal",
+      "why": "boxGrid9 is not a registered variant"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1180,
+      "snippet": "var allowed = D.spec('master', board9).allowedTechniques;",
+      "nth": 1,
+      "chain": [
+        "describe: digger: technique-bounded oracle",
+        "it: never uses a technique that assumes uniqueness: it is listed, but the oracle ski"
+      ],
+      "near": "    });      it('never uses a technique that assumes uniqueness: it is listed, but the oracle skips it', function () {",
+      "class": "unregistered-model",
+      "variant": "boxGrid9",
+      "level": "literal",
+      "why": "boxGrid9 is not a registered variant"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1259,
+      "snippet": "puzzles.push(SG.digger.generate(model9, level, rng, {}));",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time)",
+        "function batch"
+      ],
+      "near": "      for (var i = 0; i < countOf(level); i++) {         var rng = SG.rng.create(7000 + i);         var started = Date.now();",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "OFFERED loop",
+      "why": "batch(level) is called from the OFFERED.forEach batches and the confusion matrix (OFFERED too)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1267,
+      "snippet": "var spec = D.spec(level, model9);",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time)",
+        "function batch"
+      ],
+      "near": "    }      OFFERED.forEach(function (level) {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "OFFERED loop",
+      "why": "the OFFERED.forEach of the batches (or the difficultySupport.forEach of the minClues test)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1384,
+      "snippet": "var a = SG.digger.generate(model9, level, SG.rng.create(8100), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: I4: the same seed gives the same puzzle, another seed another one"
+      ],
+      "near": "  describe('digger.generate: guarantees', function () {     it('I4: the same seed gives the same puzzle, another seed another one', function () {       ['normal', 'hard', 'nightmare'].forEach(function (level) {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "normal, hard, nightmare",
+      "why": "the I4 test loops over three offered levels"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1385,
+      "snippet": "var b = SG.digger.generate(model9, level, SG.rng.create(8100), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: I4: the same seed gives the same puzzle, another seed another one"
+      ],
+      "near": "    it('I4: the same seed gives the same puzzle, another seed another one', function () {       ['normal', 'hard', 'nightmare'].forEach(function (level) {         var a = SG.digger.generate(model9, level, SG.rng.create(8100), {});",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "normal, hard, nightmare",
+      "why": "the I4 test loops over three offered levels"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1386,
+      "snippet": "var c = SG.digger.generate(model9, level, SG.rng.create(8101), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: I4: the same seed gives the same puzzle, another seed another one"
+      ],
+      "near": "      ['normal', 'hard', 'nightmare'].forEach(function (level) {         var a = SG.digger.generate(model9, level, SG.rng.create(8100), {});         var b = SG.digger.generate(model9, level, SG.rng.create(8100), {});",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "normal, hard, nightmare",
+      "why": "the I4 test loops over three offered levels"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1395,
+      "snippet": "var plain = SG.digger.generate(model9, 'hard', SG.rng.create(8200), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: is independent of the emit callback"
+      ],
+      "near": "    });      it('is independent of the emit callback', function () {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "hard / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1397,
+      "snippet": "var loud = SG.digger.generate(model9, 'hard', SG.rng.create(8200), { emit: function () { seen++; } });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: is independent of the emit callback"
+      ],
+      "near": "    it('is independent of the emit callback', function () {       var plain = SG.digger.generate(model9, 'hard', SG.rng.create(8200), {});       var seen = 0;",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "hard / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1403,
+      "snippet": "var p = SG.digger.generate(model9, 'normal', SG.rng.create(8300), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: returns the documented fields"
+      ],
+      "near": "    });      it('returns the documented fields', function () {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "hard / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1418,
+      "snippet": "var spec = D.spec(level, model9);",
+      "nth": 2,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: honours minClues and the unit floor of the spec on every level"
+      ],
+      "near": "     it('honours minClues and the unit floor of the spec on every level', function () {       SG.variants.get('classic9').difficultySupport.forEach(function (level) {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "OFFERED loop",
+      "why": "the OFFERED.forEach of the batches (or the difficultySupport.forEach of the minClues test)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1420,
+      "snippet": "var p = SG.digger.generate(model9, level, SG.rng.create(8400 + i), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: honours minClues and the unit floor of the spec on every level"
+      ],
+      "near": "      SG.variants.get('classic9').difficultySupport.forEach(function (level) {         var spec = D.spec(level, model9);         for (var i = 0; i < 3; i++) {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "difficultySupport loop",
+      "why": "inside classic9 difficultySupport.forEach"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1433,
+      "snippet": "var p = SG.digger.generate(model9, 'normal', SG.rng.create(8500), { symmetry: symmetry });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: works with other symmetries and with none"
+      ],
+      "near": "     it('works with other symmetries and with none', function () {       ['none', 'mirrorH', 'rotational90'].forEach(function (symmetry) {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "hard / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1448,
+      "snippet": "return SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: keeps the configured symmetry on the top tiers too (proposals and their refineme"
+      ],
+      "near": "      ['nightmare', 'hell1'].forEach(function (level) {         for (var i = 0; i < 3; i++) {           var p = SG.fixtures.toolRecords.withRequestedLevel('classic9', level, function () {",
+      "class": "guarded",
+      "variant": "classic9",
+      "level": "hell1",
+      "why": "inside SG.fixtures.toolRecords.withRequestedLevel (MS18e-COMPAT-CLASSIC-HELL1-SYMMETRY)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1460,
+      "snippet": "var puzzle = SG.digger.digLevel(model9, solution, 'easy', rng.fork('dig'), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: digLevel makes one attempt from a given solution and says whether it hit the lev"
+      ],
+      "near": "    it('digLevel makes one attempt from a given solution and says whether it hit the level', function () {       var rng = SG.rng.create(8600);       var solution = SG.fullGrid.generate(model9, rng.fork('grid'), null);",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / hard / veryEasy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1475,
+      "snippet": "var plain = SG.digger.digLevel(model9, solution, 'hard', rng.fork('dig2'), { guided: false });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: digLevel makes one attempt from a given solution and says whether it hit the lev"
+      ],
+      "near": "      expect(puzzle.removed).toBe(81 - puzzle.clues);       expect(Array.from(puzzle.solution)).toEqual(Array.from(solution));       // The stage B switch changes the way the puzzle is dug, not what a puzzle is.",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / hard / veryEasy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1476,
+      "snippet": "var guided = SG.digger.digLevel(model9, solution, 'hard', rng.fork('dig2'), { guided: true });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: digLevel makes one attempt from a given solution and says whether it hit the lev"
+      ],
+      "near": "      expect(Array.from(puzzle.solution)).toEqual(Array.from(solution));       // The stage B switch changes the way the puzzle is dug, not what a puzzle is.       var plain = SG.digger.digLevel(model9, solution, 'hard', rng.fork('dig2'), { guided: false });",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / hard / veryEasy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1487,
+      "snippet": "var p = SG.digger.generate(model, level, SG.rng.create(8700 + i), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: works on the smaller boards for the levels they support"
+      ],
+      "near": "        SG.variants.get(model.variantId).difficultySupport.forEach(function (level) {           var hits = 0;           for (var i = 0; i < 20; i++) {",
+      "class": "offered-level",
+      "variant": "classic4/classic6",
+      "level": "difficultySupport loop",
+      "why": "inside SG.variants.get(model.variantId).difficultySupport.forEach"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1497,
+      "snippet": "expectCode(function () { SG.digger.generate(model4, 'nightmare', SG.rng.create(1), {}); },",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: rejects a level the variant does not support and options that make no sense"
+      ],
+      "near": "    });      it('rejects a level the variant does not support and options that make no sense', function () {",
+      "class": "refusal-expected",
+      "variant": "classic4",
+      "level": "nightmare",
+      "why": "expects unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1499,
+      "snippet": "expectCode(function () { SG.digger.generate(model9, 'hell', SG.rng.create(1), {}); },",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: rejects a level the variant does not support and options that make no sense"
+      ],
+      "near": "    it('rejects a level the variant does not support and options that make no sense', function () {       expectCode(function () { SG.digger.generate(model4, 'nightmare', SG.rng.create(1), {}); },         'difficulty.unsupportedLevel');",
+      "class": "refusal-expected",
+      "variant": "classic9",
+      "level": "hell",
+      "why": "expects unknownLevel"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1503,
+      "snippet": "SG.digger.generate(model9, 'easy', SG.rng.create(1), { maxAttempts: bad });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: rejects a level the variant does not support and options that make no sense"
+      ],
+      "near": "        'difficulty.unknownLevel');       [0, -1, 1.5, 'x'].forEach(function (bad) {         expectCode(function () {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / hard",
+      "why": "offered (option checks, budget)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1506,
+      "snippet": "expectCode(function () { SG.digger.generate(model9, 'easy', SG.rng.create(1), { digTries: bad }); },",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: rejects a level the variant does not support and options that make no sense"
+      ],
+      "near": "          SG.digger.generate(model9, 'easy', SG.rng.create(1), { maxAttempts: bad });         },           'digger.invalidOption');",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / hard",
+      "why": "offered (option checks, budget)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1513,
+      "snippet": "SG.digger.generate(model9, 'hard', SG.rng.create(8800), { budget: SG.budget.create({ nodes: 30 }) });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: guarantees",
+        "it: propagates a budget that runs out instead of swallowing it"
+      ],
+      "near": "     it('propagates a budget that runs out instead of swallowing it', function () {       expectCode(function () {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "hard / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1540,
+      "snippet": "p = SG.digger.generate(model, level, SG.rng.create(seed), {",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+        "function capped"
+      ],
+      "near": "        var p = null;         var error = null;         try {",
+      "class": "manual-widened",
+      "variant": "any",
+      "level": "any",
+      "why": "capped() sets def.difficultySupport = LEVELS.slice() and restores it in finally (difficulty.test.js:1519-1550)"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1623,
+      "snippet": "var result = SG.digger.generate(board4, 'nightmare', SG.rng.create(9000), {",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: when the level cannot be reached",
+        "it: returns the closest completely rated puzzle with difficulty.approximate and does"
+      ],
+      "near": "    it('returns the closest completely rated puzzle with difficulty.approximate and does not throw',       function () {         var events = [];",
+      "class": "unregistered-model",
+      "variant": "boxGrid4/boxGrid6",
+      "level": "any",
+      "why": "fixture boards are not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1642,
+      "snippet": "var result = SG.digger.generate(board6, 'normal', SG.rng.create(9100), { maxAttempts: 2, digTries: 2 });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: when the level cannot be reached",
+        "it: prefers the closest result: a puzzle one level off beats one several levels off"
+      ],
+      "near": "     it('prefers the closest result: a puzzle one level off beats one several levels off', function () {       var board6 = SG.fixtures.models.boxGrid('boxGrid6', 2, 3);",
+      "class": "unregistered-model",
+      "variant": "boxGrid4/boxGrid6",
+      "level": "any",
+      "why": "fixture boards are not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1651,
+      "snippet": "var result = SG.digger.generate(board4, 'hard', SG.rng.create(9200), { maxAttempts: 2, digTries: 5 });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: when the level cannot be reached",
+        "it: stops after maxAttempts x digTries dig samples and never more"
+      ],
+      "near": "    });      it('stops after maxAttempts x digTries dig samples and never more', function () {",
+      "class": "unregistered-model",
+      "variant": "boxGrid4/boxGrid6",
+      "level": "any",
+      "why": "fixture boards are not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1657,
+      "snippet": "var pairs = SG.digger.generate(board4, 'hard', SG.rng.create(9210), { maxAttempts: 1 });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: when the level cannot be reached",
+        "it: tries more dig samples per grid when the symmetry digs in groups of four"
+      ],
+      "near": "    });      it('tries more dig samples per grid when the symmetry digs in groups of four', function () {",
+      "class": "unregistered-model",
+      "variant": "boxGrid4/boxGrid6",
+      "level": "any",
+      "why": "fixture boards are not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1658,
+      "snippet": "var fours = SG.digger.generate(board4, 'hard', SG.rng.create(9210),",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: when the level cannot be reached",
+        "it: tries more dig samples per grid when the symmetry digs in groups of four"
+      ],
+      "near": "     it('tries more dig samples per grid when the symmetry digs in groups of four', function () {       var pairs = SG.digger.generate(board4, 'hard', SG.rng.create(9210), { maxAttempts: 1 });",
+      "class": "unregistered-model",
+      "variant": "boxGrid4/boxGrid6",
+      "level": "any",
+      "why": "fixture boards are not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1673,
+      "snippet": "SG.digger.generate(board4, 'veryEasy', SG.rng.create(9300), { maxAttempts: 2, digTries: 2 });",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: when the level cannot be reached",
+        "it: throws digger.noRatedPuzzle when not one sample has a complete proof"
+      ],
+      "near": "      };       try {         expectCode(function () {",
+      "class": "unregistered-model",
+      "variant": "boxGrid4/boxGrid6",
+      "level": "any",
+      "why": "fixture boards are not registered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1723,
+      "snippet": "var p = SG.digger.generate(model9, 'veryEasy', SG.rng.create(9300 + i),",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: safety net against a technique bug (risk R3)",
+        "it: never returns an ambiguous puzzle, reports the bug and still delivers a unique p"
+      ],
+      "near": "      withGuesser(function () {         var unsound = 0;         for (var i = 0; i < 12; i++) {",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "veryEasy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1741,
+      "snippet": "var p = SG.digger.digLevel(model9, solution, 'veryEasy', rng.fork('dig'), {});",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: safety net against a technique bug (risk R3)",
+        "it: digLevel marks the puzzle it had to replace"
+      ],
+      "near": "        for (var i = 0; i < 12; i++) {           var rng = SG.rng.create(9400 + i);           var solution = SG.fullGrid.generate(model9, rng.fork('grid'), null);",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / hard / veryEasy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/difficulty.test.js",
+      "line": 1798,
+      "snippet": "return SG.pipeline.run(config);",
+      "nth": 1,
+      "chain": [
+        "describe: digger.generate: safety net against a technique bug (risk R3)",
+        "it: never returns an ambiguous candidate of a search either: the keeper counts befor"
+      ],
+      "near": "          var r = null;           try {             r = SG.fixtures.toolRecords.withRequestedLevel('killer', 'master', function () {",
+      "class": "guarded",
+      "variant": "killer",
+      "level": "master",
+      "why": "inside SG.fixtures.toolRecords.withRequestedLevel (the B1 fix)"
+    },
+    {
+      "file": "generator/tests/manual/extra-regions.test.js",
+      "line": 181,
+      "snippet": "return asLevel(variantId, level, function () { return SG.difficulty.spec(level, model); });",
+      "nth": 1,
+      "chain": [
+        "function specOf"
+      ],
+      "near": "  }    function specOf(variantId, level, model) {",
+      "class": "guarded",
+      "variant": "diagonalX/hyper",
+      "level": "any",
+      "why": "specOf() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/extra-regions.test.js",
+      "line": 187,
+      "snippet": "var result = asLevel(variantId, level, function () { return SG.pipeline.run(cfg, function () {}); });",
+      "nth": 1,
+      "chain": [
+        "function generate"
+      ],
+      "near": "  function generate(variantId, level, seed, extra) {     var cfg = Object.assign({ variantId: variantId, difficulty: level, seed: seed, trace: 'summary' }, extra);     var t0 = now();",
+      "class": "guarded",
+      "variant": "diagonalX/hyper/classic9",
+      "level": "any",
+      "why": "generate() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/extra-regions.test.js",
+      "line": 270,
+      "snippet": "SG.pipeline.run({ variantId: id, difficulty: level, seed: 1, trace: 'off' }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: extraRegions: variant definitions (design.md 5.3 / 13.8)",
+        "it: offers the levels of the final qualification and refuses the others (measured by"
+      ],
+      "near": "          SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })             .forEach(function (level) {               expectCode(function () {",
+      "class": "refusal-expected",
+      "variant": "diagonalX/hyper",
+      "level": "hidden levels",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/extra-regions.test.js",
+      "line": 558,
+      "snippet": "var spec = SG.difficulty.spec(level, p.model);",
+      "nth": 1,
+      "chain": [
+        "describe: extraRegions: puzzles at every level (CV3, CV4, CV6)",
+        "it: I5: every puzzle has a complete proof, and one that reached the level has its sc"
+      ],
+      "near": "            'band; I6: the clue count respects the spec', function () {             puzzleRun()[id][level].forEach(function (p, i) {               var tag = id + ' ' + level + ' #' + i;",
+      "class": "offered-level",
+      "variant": "diagonalX/hyper",
+      "level": "offeredOf(id) loop",
+      "why": "inside the offeredOf(id).forEach registrations"
+    },
+    {
+      "file": "generator/tests/manual/extra-regions.test.js",
+      "line": 755,
+      "snippet": "return SG.pipeline.run({",
+      "nth": 1,
+      "chain": [
+        "describe: extraRegions: the pipeline and its events",
+        "function run"
+      ],
+      "near": "    function run(cfg, level, seed, trace) {       var events = [];       var result = asLevel(cfg.variantId, level, function () {",
+      "class": "guarded",
+      "variant": "diagonalX/hyper",
+      "level": "any",
+      "why": "inside asLevel in run()"
+    },
+    {
+      "file": "generator/tests/manual/extra-regions.test.js",
+      "line": 795,
+      "snippet": "var silent = SG.pipeline.run({",
+      "nth": 1,
+      "chain": [
+        "describe: extraRegions: the pipeline and its events",
+        "function checkEvents"
+      ],
+      "near": "          expect(Array.from(r.givens)).toEqual(Array.from(base.givens));           expect(Array.from(r.solution)).toEqual(Array.from(base.solution));         });",
+      "class": "offered-level",
+      "variant": "diagonalX/hyper",
+      "level": "hard",
+      "why": "hard is offered"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 200,
+      "snippet": "return asLevel(level, function () { return SG.difficulty.spec(level, model); });",
+      "nth": 1,
+      "chain": [
+        "function specOf"
+      ],
+      "near": "  }    function specOf(level, model) {",
+      "class": "guarded",
+      "variant": "greaterThan",
+      "level": "any",
+      "why": "specOf() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 211,
+      "snippet": "var result = asLevel(level, function () { return SG.pipeline.run(cfg, function () { events++; }); });",
+      "nth": 1,
+      "chain": [
+        "function generate"
+      ],
+      "near": "      variantId: 'greaterThan', difficulty: level, seed: seed, trace: 'summary'     }, extra);     var t0 = now();",
+      "class": "guarded",
+      "variant": "greaterThan",
+      "level": "any",
+      "why": "generate() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 458,
+      "snippet": "var onClassic = SG.difficulty.spec('master', SG.variants.get('classic9').build({}, null));",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: techniques of the ineq group (I1 ineqChain, I2 minMaxForcing)",
+        "it: apply to greaterThan only: no other variant has them in its ladder"
+      ],
+      "near": "      expect(SG.techniques.appliesTo(chain, 'greaterThan')).toBe(true);       expect(SG.techniques.appliesTo(chain, 'classic9')).toBe(false);       expect(SG.techniques.appliesTo(forcing, 'killer')).toBe(false);",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "master",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 461,
+      "snippet": "expect(SG.difficulty.spec('veryEasy', board()).allowedTechniques).not.toContain('ineqChain');",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: techniques of the ineq group (I1 ineqChain, I2 minMaxForcing)",
+        "it: apply to greaterThan only: no other variant has them in its ladder"
+      ],
+      "near": "      var onClassic = SG.difficulty.spec('master', SG.variants.get('classic9').build({}, null));       expect(onClassic.allowedTechniques).not.toContain('ineqChain');       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.",
+      "class": "offered-level",
+      "variant": "greaterThan",
+      "level": "veryEasy / easy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 462,
+      "snippet": "expect(SG.difficulty.spec('easy', board()).allowedTechniques).toContain('ineqChain');",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: techniques of the ineq group (I1 ineqChain, I2 minMaxForcing)",
+        "it: apply to greaterThan only: no other variant has them in its ladder"
+      ],
+      "near": "      expect(onClassic.allowedTechniques).not.toContain('ineqChain');       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.       expect(SG.difficulty.spec('veryEasy', board()).allowedTechniques).not.toContain('ineqChain');",
+      "class": "offered-level",
+      "variant": "greaterThan",
+      "level": "veryEasy / easy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 831,
+      "snippet": "SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: 1 }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: variant definition and model (CV1, CV2)",
+        "it: offers the levels of the final qualification and refuses the others (measured by"
+      ],
+      "near": "        SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })           .forEach(function (level) {             expectCode(function () {",
+      "class": "refusal-expected",
+      "variant": "greaterThan",
+      "level": "hidden levels",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 835,
+      "snippet": "SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hell', seed: 1 }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: variant definition and model (CV1, CV2)",
+        "it: offers the levels of the final qualification and refuses the others (measured by"
+      ],
+      "near": "            }, 'difficulty.unsupportedLevel');           });         expectCode(function () {",
+      "class": "refusal-expected",
+      "variant": "greaterThan",
+      "level": "hell",
+      "why": "expects unknownLevel"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 1029,
+      "snippet": "var spec = SG.difficulty.spec(level, p.model);",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7)",
+        "it: I5: every puzzle has a complete proof, and one that reached the level has its sc"
+      ],
+      "near": "          'band; I6: at least minClues givens, every unit its minimum', function () {           var exact = 0;           puzzleRun()[level].forEach(function (p, i) {",
+      "class": "offered-level",
+      "variant": "greaterThan",
+      "level": "OFFERED loop",
+      "why": "inside OFFERED.forEach"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 1186,
+      "snippet": "var spec = SG.difficulty.spec('hard', g.model);",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: the sign dig as a strategy (design.md 8.3 steps 3-5)",
+        "it: does not change the model it is given, and gives the same puzzle for the same rn"
+      ],
+      "near": "    it('does not change the model it is given, and gives the same puzzle for the same rng', function () {       var g = allSignsModel(4, false);       var before = JSON.stringify(g.model.inequalities);",
+      "class": "offered-level",
+      "variant": "greaterThan",
+      "level": "hard",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 1248,
+      "snippet": "return SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: seed, trace: trace },",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: the pipeline and its events",
+        "function trace"
+      ],
+      "near": "    function trace(level, seed, trace) {       var events = [];       var result = asLevel(level, function () {",
+      "class": "guarded",
+      "variant": "greaterThan",
+      "level": "any",
+      "why": "trace() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 1355,
+      "snippet": "var r = SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hard', seed: 77, trace: verbosity },",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: the pipeline and its events",
+        "it: the result does not depend on the trace level or on a listening sink (I4)"
+      ],
+      "near": "    it('the result does not depend on the trace level or on a listening sink (I4)', function () {       var base = generate('hard', 77);       ['off', 'summary', 'full'].forEach(function (verbosity) {",
+      "class": "offered-level",
+      "variant": "greaterThan",
+      "level": "hard",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/greater-than.test.js",
+      "line": 1366,
+      "snippet": "var r = SG.pipeline.run(cfg, null);",
+      "nth": 1,
+      "chain": [
+        "describe: greaterThan: the pipeline and its events",
+        "it: works through the worker-style call too: a plain config object with variantOptio"
+      ],
+      "near": "      var cfg = JSON.parse(JSON.stringify({         variantId: 'greaterThan', difficulty: 'easy', seed: 5, variantOptions: { futoshiki: true }       }));",
+      "class": "offered-level",
+      "variant": "greaterThan",
+      "level": "easy",
+      "why": "cfg.difficulty is easy, offered"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 223,
+      "snippet": "SG.pipeline.run({ variantId: 'jigsaw9', difficulty: level, seed: 1, trace: 'off' }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: jigsaw9: variant definition (design.md 5.3 / 13.8)",
+        "it: is registered with the fields of the contract"
+      ],
+      "near": "      SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })         .forEach(function (level) {           expectCode(function () {",
+      "class": "refusal-expected",
+      "variant": "jigsaw9",
+      "level": "hidden levels",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 527,
+      "snippet": "var loose = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 0 } }, cfg), null);",
+      "nth": 1,
+      "chain": [
+        "describe: jigsaw9: compactness",
+        "it: the option travels through the pipeline: variantOptions.compactness shapes the l"
+      ],
+      "near": "      var high = [];       for (var seed = 1; seed <= 12; seed++) {         var cfg = { variantId: 'jigsaw9', difficulty: 'veryEasy', seed: seed, trace: 'off' };",
+      "class": "offered-level",
+      "variant": "jigsaw9",
+      "level": "veryEasy",
+      "why": "cfg.difficulty is veryEasy"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 528,
+      "snippet": "var round = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 1 } }, cfg), null);",
+      "nth": 1,
+      "chain": [
+        "describe: jigsaw9: compactness",
+        "it: the option travels through the pipeline: variantOptions.compactness shapes the l"
+      ],
+      "near": "      for (var seed = 1; seed <= 12; seed++) {         var cfg = { variantId: 'jigsaw9', difficulty: 'veryEasy', seed: seed, trace: 'off' };         var loose = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 0 } }, cfg), null);",
+      "class": "offered-level",
+      "variant": "jigsaw9",
+      "level": "veryEasy",
+      "why": "cfg.difficulty is veryEasy"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 537,
+      "snippet": "SG.pipeline.run({ variantId: 'jigsaw9', difficulty: 'easy', seed: 1, trace: 'off',",
+      "nth": 1,
+      "chain": [
+        "describe: jigsaw9: compactness",
+        "it: a bad compactness in the pipeline config is reported as pipeline.invalidOption"
+      ],
+      "near": "     it('a bad compactness in the pipeline config is reported as pipeline.invalidOption', function () {       expectCode(function () {",
+      "class": "offered-level",
+      "variant": "jigsaw9",
+      "level": "easy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 808,
+      "snippet": "return SG.pipeline.run(config, null);",
+      "nth": 1,
+      "chain": [
+        "function generatePuzzle"
+      ],
+      "near": "    var config = Object.assign({ variantId: 'jigsaw9', difficulty: level, seed: seed, trace: 'off' }, extra);     var started = now();     var result = SG.fixtures.toolRecords.withRequestedLevel('jigsaw9', level, function () {",
+      "class": "guarded",
+      "variant": "jigsaw9",
+      "level": "any",
+      "why": "generatePuzzle() through withRequestedLevel"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 859,
+      "snippet": "var spec = SG.difficulty.spec(level, p.model);",
+      "nth": 1,
+      "chain": [
+        "describe: jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7)",
+        "it: I5: every puzzle has a complete proof, and one that reached the level has its sc"
+      ],
+      "near": "          'band; I6: at least minClues givens', function () {           var exact = 0;           puzzleRun()[level].forEach(function (p, i) {",
+      "class": "offered-level",
+      "variant": "jigsaw9",
+      "level": "OFFERED loop",
+      "why": "inside OFFERED.forEach"
+    },
+    {
+      "file": "generator/tests/manual/jigsaw.test.js",
+      "line": 950,
+      "snippet": "var withSink = SG.pipeline.run(cfg, function () {});",
+      "nth": 1,
+      "chain": [
+        "describe: jigsaw9: same seed, same puzzle (CV5 / I4)",
+        "it: does not depend on the trace level or on a listening sink"
+      ],
+      "near": "      var base = generatePuzzle('hard', 77);       ['off', 'summary', 'full'].forEach(function (trace) {         var cfg = { variantId: 'jigsaw9', difficulty: 'hard', seed: 77, trace: trace };",
+      "class": "offered-level",
+      "variant": "jigsaw9",
+      "level": "hard",
+      "why": "hard is offered"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 66,
+      "snippet": "return SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: seed, trace: trace || 'off' },",
+      "nth": 1,
+      "chain": [
+        "function generate"
+      ],
+      "near": "   function generate(level, seed, trace, emit) {     return asLevel(level, function () {",
+      "class": "guarded",
+      "variant": "killer",
+      "level": "any",
+      "why": "generate() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 567,
+      "snippet": "var spec = SG.difficulty.spec('master', H.model('classic9'));",
+      "nth": 1,
+      "chain": [
+        "describe: killer: cage techniques (K1 cageCombo, K2 ruleOf45, K3 cageSplit)",
+        "it: never runs for another variant: a classic9 solve uses none of them"
+      ],
+      "near": "      var classic = H.model('classic9');       var report = SG.logicalSolver.solve(classic, H.parsePuzzle(classic, puzzle.puzzle), {});       IDS.forEach(function (id) { expect(report.techniqueCounts[id]).toBeUndefined(); });",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "master",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 570,
+      "snippet": "expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');",
+      "nth": 1,
+      "chain": [
+        "describe: killer: cage techniques (K1 cageCombo, K2 ruleOf45, K3 cageSplit)",
+        "it: never runs for another variant: a classic9 solve uses none of them"
+      ],
+      "near": "      var spec = SG.difficulty.spec('master', H.model('classic9'));       IDS.forEach(function (id) { expect(spec.allowedTechniques).not.toContain(id); });       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.",
+      "class": "offered-level",
+      "variant": "killer",
+      "level": "veryEasy / easy / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 571,
+      "snippet": "expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');",
+      "nth": 1,
+      "chain": [
+        "describe: killer: cage techniques (K1 cageCombo, K2 ruleOf45, K3 cageSplit)",
+        "it: never runs for another variant: a classic9 solve uses none of them"
+      ],
+      "near": "      IDS.forEach(function (id) { expect(spec.allowedTechniques).not.toContain(id); });       // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.       expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');",
+      "class": "offered-level",
+      "variant": "killer",
+      "level": "veryEasy / easy / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 572,
+      "snippet": "expect(SG.difficulty.spec('normal', board).allowedTechniques).toContain('ruleOf45');",
+      "nth": 1,
+      "chain": [
+        "describe: killer: cage techniques (K1 cageCombo, K2 ruleOf45, K3 cageSplit)",
+        "it: never runs for another variant: a classic9 solve uses none of them"
+      ],
+      "near": "      // Rating v2: a technique is allowed from the band whose maximum exceeds 1.25 x its weight.       expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');       expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');",
+      "class": "offered-level",
+      "variant": "killer",
+      "level": "veryEasy / easy / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 574,
+      "snippet": "expect(asLevel('hard', function () { return SG.difficulty.spec('hard', board); }).allowedTechniques)",
+      "nth": 1,
+      "chain": [
+        "describe: killer: cage techniques (K1 cageCombo, K2 ruleOf45, K3 cageSplit)",
+        "it: never runs for another variant: a classic9 solve uses none of them"
+      ],
+      "near": "      expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');       expect(SG.difficulty.spec('normal', board).allowedTechniques).toContain('ruleOf45');       // Killer no longer offers Hard (MS18c): the spec of the fixed level is read inside the guard",
+      "class": "guarded",
+      "variant": "killer",
+      "level": "hard",
+      "why": "through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 971,
+      "snippet": "var spec = asLevel(p.level, function () { return SG.difficulty.spec(p.level, p.result.model); });",
+      "nth": 1,
+      "chain": [
+        "describe: killer: soundness of the cage techniques (invariant I7)",
+        "it: rates with a hardest technique that belongs to the groups of the level (invarian"
+      ],
+      "near": "      function () {         corpus().forEach(function (p) {           var rating = p.result.rating;",
+      "class": "guarded",
+      "variant": "killer",
+      "level": "any",
+      "why": "through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 991,
+      "snippet": "try { SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: 1, trace: 'off' }, null); }",
+      "nth": 1,
+      "chain": [
+        "describe: killer: the variant and its board",
+        "it: is registered with the contract of design.md 5.3 and 13.8"
+      ],
+      "near": "      SG.difficulty.LEVELS.filter(function (level) { return PUBLISHED.indexOf(level) === -1; })         .forEach(function (level) {           var error = null;",
+      "class": "refusal-expected",
+      "variant": "killer",
+      "level": "hidden levels",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 1107,
+      "snippet": "var spec = SG.difficulty.spec(p.level, p.result.model);",
+      "nth": 1,
+      "chain": [
+        "describe: killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invari",
+        "it: I2, I3: the clues belong to the solution, and the solution satisfies every unit ",
+        "it: I5: every puzzle has a complete proof; one rated as requested has its score in t"
+      ],
+      "near": "              var hits = 0;               corpusOf(level).forEach(function (p) {                 var rating = p.result.rating;",
+      "class": "offered-level",
+      "variant": "killer",
+      "level": "OFFERED loop",
+      "why": "inside OFFERED.forEach"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 1197,
+      "snippet": "var r = SG.pipeline.run({ variantId: 'killer', difficulty: 'normal', seed: seed, trace: 'off',",
+      "nth": 1,
+      "chain": [
+        "describe: killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invari",
+        "it: honours the cage size option through variantOptions: larger cages mean fewer of ",
+        "function meanCages"
+      ],
+      "near": "        function meanCages(tilt) {           var total = 0;           for (var seed = 1; seed <= 8; seed++) {",
+      "class": "offered-level",
+      "variant": "killer",
+      "level": "normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 1737,
+      "snippet": "result = asLevel('master', function () { return SG.pipeline.run(config, null); });",
+      "nth": 1,
+      "chain": [
+        "describe: killer: the fallback is the closest completely rated candidate the run met",
+        "it: master, diagonal symmetry, two attempts (seed 61843): nothing it met and verifie"
+      ],
+      "near": "        };         var result;         try {",
+      "class": "guarded",
+      "variant": "killer",
+      "level": "master",
+      "why": "through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/killer.test.js",
+      "line": 1870,
+      "snippet": "return SG.pipeline.run({ variantId: 'killer', difficulty: 'hard', seed: 3, trace: 'off' },",
+      "nth": 1,
+      "chain": [
+        "describe: killer: events of the extraStructure step",
+        "it: stays quiet at trace off: only the step start and end of step 4 reach the sink"
+      ],
+      "near": "    it('stays quiet at trace off: only the step start and end of step 4 reach the sink', function () {       var events = [];       asLevel('hard', function () {",
+      "class": "guarded",
+      "variant": "killer",
+      "level": "hard",
+      "why": "inside asLevel('hard') in the same test"
+    },
+    {
+      "file": "generator/tests/manual/perf.test.js",
+      "line": 91,
+      "snippet": "return SG.pipeline.run({ variantId: variant, difficulty: level, seed: seed, trace: 'off' }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: regression: puzzles of fixed seeds are unchanged (hashes of tests/fixtures/regre",
+        "it: the hash covers the givens, the solution, the cages, the signs, the regions and ",
+        "function result"
+      ],
+      "near": "      it('the hash covers the givens, the solution, the cages, the signs, the regions and the symbols',         function () {           function result(variant, level, seed) {",
+      "class": "guarded-at-caller",
+      "variant": "greaterThan",
+      "level": "normal",
+      "why": "the one hidden caller, greaterThan/normal, is wrapped in withRequestedLevel (B1 fix)"
+    },
+    {
+      "file": "generator/tests/manual/perf.test.js",
+      "line": 240,
+      "snippet": "for (var s = 1; s <= 24; s++) SG.digger.generate(model9, 'easy', SG.rng.create(s), opts);",
+      "nth": 1,
+      "chain": [
+        "describe: instrumented generators: what the events cost",
+        "function generateWork"
+      ],
+      "near": "     function generateWork(emit) {       var opts = emit === undefined ? {} : { emit: emit };",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/perf.test.js",
+      "line": 241,
+      "snippet": "for (var m = 1; m <= 2; m++) SG.digger.generate(model9, 'normal', SG.rng.create(m), opts);",
+      "nth": 1,
+      "chain": [
+        "describe: instrumented generators: what the events cost",
+        "function generateWork"
+      ],
+      "near": "    function generateWork(emit) {       var opts = emit === undefined ? {} : { emit: emit };       for (var s = 1; s <= 24; s++) SG.digger.generate(model9, 'easy', SG.rng.create(s), opts);",
+      "class": "offered-level",
+      "variant": "classic9",
+      "level": "easy / normal",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 81,
+      "snippet": "var result = SG.pipeline.run({ variantId: def.id, difficulty: level, seed: seed, trace: 'off' }, null,",
+      "nth": 1,
+      "chain": [
+        "function generate"
+      ],
+      "near": "   function generate(def, level, seed) {     var started = now();",
+      "class": "offered-level",
+      "variant": "every variant",
+      "level": "def.difficultySupport",
+      "why": "generate() is called with levels of def.difficultySupport (lazyCorpus, checkDeterminism)"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 157,
+      "snippet": "var spec = SG.difficulty.spec(level, model);",
+      "nth": 1,
+      "chain": [
+        "function checkDefinition"
+      ],
+      "near": "      var supported = def.difficultySupport.indexOf(level) !== -1;       expect(SG.difficulty.isSupported(level, model)).toBe(supported);       if (!supported) return;",
+      "class": "offered-level",
+      "variant": "every variant",
+      "level": "supported only",
+      "why": "after \"if (!supported) return\""
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 237,
+      "snippet": "SG.pipeline.run({ variantId: def.id, difficulty: level, seed: 1, trace: 'off' }, null);",
+      "nth": 1,
+      "chain": [
+        "function checkUnsupportedLevels"
+      ],
+      "near": "    LEVELS.forEach(function (level) {       if (def.difficultySupport.indexOf(level) !== -1) return;       var thrown = thrownBy(function () {",
+      "class": "refusal-expected",
+      "variant": "every variant",
+      "level": "unsupported levels",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 250,
+      "snippet": "var spec = SG.difficulty.spec(level, result.model);",
+      "nth": 1,
+      "chain": [
+        "function checkSoundness"
+      ],
+      "near": "   /** I7: every deduction the oracle's techniques make on this puzzle agrees with the solution. */   function checkSoundness(result, level) {",
+      "class": "offered-level",
+      "variant": "every variant",
+      "level": "def.difficultySupport",
+      "why": "corpus levels of the definition"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 271,
+      "snippet": "var spec = SG.difficulty.spec(level, m);",
+      "nth": 1,
+      "chain": [
+        "function checkInvariants"
+      ],
+      "near": "        var r = p.result;         var m = r.model;         var where = def.id + ' ' + level + ' seed ' + p.seed;",
+      "class": "offered-level",
+      "variant": "every variant",
+      "level": "def.difficultySupport",
+      "why": "corpus levels of the definition"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 502,
+      "snippet": "expect(SG.difficulty.spec('veryEasy', model).minClues).toBe(3);",
+      "nth": 1,
+      "chain": [
+        "describe: variants: the sweep covers every registered variant",
+        "it: checks I6 against the clue floor the variant declares"
+      ],
+      "near": "        var report = sweepVariant(SG.variants.get('sweepFloor'), { only: ['CV0', 'CV4'] });         expect(report.failures).toEqual([]);         var model = def.build();",
+      "class": "temp-registered",
+      "variant": "sweepFloor",
+      "level": "veryEasy / easy",
+      "why": "fakeDef sweepFloor offers veryEasy and easy"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 503,
+      "snippet": "expect(SG.difficulty.spec('easy', model).minClues).toBe(2);",
+      "nth": 1,
+      "chain": [
+        "describe: variants: the sweep covers every registered variant",
+        "it: checks I6 against the clue floor the variant declares"
+      ],
+      "near": "        expect(report.failures).toEqual([]);         var model = def.build();         expect(SG.difficulty.spec('veryEasy', model).minClues).toBe(3);",
+      "class": "temp-registered",
+      "variant": "sweepFloor",
+      "level": "veryEasy / easy",
+      "why": "fakeDef sweepFloor offers veryEasy and easy"
+    },
+    {
+      "file": "generator/tests/manual/variants.test.js",
+      "line": 798,
+      "snippet": "return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: player: the replay steps of a result",
+        "function realResult"
+      ],
+      "near": "      var key = [variantId, difficulty, seed].join('/');       if (!resultCache[key]) {         resultCache[key] = SG.fixtures.toolRecords.withRequestedLevel(variantId, difficulty, function () {",
+      "class": "guarded",
+      "variant": "any",
+      "level": "any",
+      "why": "realResult() through withRequestedLevel"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 119,
+      "snippet": "var result = asLevel(level, function () { return SG.pipeline.run(cfg, function () { events++; }); });",
+      "nth": 1,
+      "chain": [
+        "function generate"
+      ],
+      "near": "    var events = 0;     var cfg = Object.assign({ variantId: 'wordoku', difficulty: level, seed: seed, trace: 'summary' }, extra);     var t0 = now();",
+      "class": "guarded",
+      "variant": "wordoku",
+      "level": "any",
+      "why": "generate() through asLevel"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 484,
+      "snippet": "SG.pipeline.run({ variantId: 'wordoku', difficulty: 'easy', seed: 1, trace: 'off',",
+      "nth": 1,
+      "chain": [
+        "describe: wordoku: variant options (placement, row or column number, language, own word)",
+        "it: the pipeline refuses a bad option before it generates anything"
+      ],
+      "near": "     it('the pipeline refuses a bad option before it generates anything', function () {       expectCode(function () {",
+      "class": "offered-level",
+      "variant": "wordoku",
+      "level": "easy",
+      "why": "offered"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 511,
+      "snippet": "SG.pipeline.run({ variantId: 'wordoku', difficulty: level, seed: 1, trace: 'off' }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: wordoku: variant definition and model (CV1, CV2)",
+        "it: refuses every level that the final qualification does not offer: normal, hell1 a"
+      ],
+      "near": "      expect(refused).toEqual(['normal', 'hell1', 'hell2']);       refused.forEach(function (level) {         expectCode(function () {",
+      "class": "refusal-expected",
+      "variant": "wordoku",
+      "level": "hidden levels",
+      "why": "expects difficulty.unsupportedLevel"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 784,
+      "snippet": "var spec = SG.difficulty.spec(level, p.model);",
+      "nth": 1,
+      "chain": [
+        "describe: wordoku: puzzles at every level (CV3, CV4: invariants I1-I7)",
+        "it: I5: every puzzle has a complete proof, and one that reached the level has its sc"
+      ],
+      "near": "          'band; I6: at least minClues givens, every unit its minimum', function () {           var exact = 0;           puzzleRun()[level].forEach(function (p, i) {",
+      "class": "offered-level",
+      "variant": "wordoku",
+      "level": "OFFERED loop",
+      "why": "inside OFFERED.forEach"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 927,
+      "snippet": "return SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: trace },",
+      "nth": 1,
+      "chain": [
+        "describe: wordoku: same seed, same puzzle (CV5 / I4)",
+        "it: the result does not depend on the trace level or on a listening sink"
+      ],
+      "near": "      var base = generate('normal', 31, { trace: 'summary' });       ['off', 'full'].forEach(function (trace) {         var other = asLevel('normal', function () {",
+      "class": "guarded",
+      "variant": "wordoku",
+      "level": "normal",
+      "why": "inside asLevel('normal')"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 934,
+      "snippet": "return SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);",
+      "nth": 1,
+      "chain": [
+        "describe: wordoku: same seed, same puzzle (CV5 / I4)",
+        "it: the result does not depend on the trace level or on a listening sink"
+      ],
+      "near": "        expect(equalArrays(base.solution, other.solution)).toBe(true);       });       var silent = asLevel('normal', function () {",
+      "class": "guarded",
+      "variant": "wordoku",
+      "level": "normal",
+      "why": "inside asLevel('normal')"
+    },
+    {
+      "file": "generator/tests/manual/wordoku.test.js",
+      "line": 953,
+      "snippet": "return SG.pipeline.run(Object.assign({ variantId: 'wordoku', difficulty: level, seed: seed,",
+      "nth": 1,
+      "chain": [
+        "describe: wordoku: the pipeline and its events",
+        "function trace"
+      ],
+      "near": "    function trace(level, seed, traceLevel, extra) {       var events = [];       var result = asLevel(level, function () {",
+      "class": "guarded",
+      "variant": "wordoku",
+      "level": "any",
+      "why": "trace() helper through asLevel"
+    }
+  ]
+}

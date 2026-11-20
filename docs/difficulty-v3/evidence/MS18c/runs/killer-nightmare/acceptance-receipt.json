@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "killer/nightmare",
+  "runId": "ms18c-20261118T210155421-21868",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-nightmare\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "3efadc13ad1432cca2962b69fb627b113c5a59c4e7c6982a66d8e0b1ba955917"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\killer-nightmare\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "124e029da8d6441afe39ddd7ec7cda937dd8b6c67738ed1fd0d84ae8c479dbe6"
+    }
+  },
+  "wSeconds": 88.7773015,
+  "rSeconds": 7.2377848,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.2377848,
+      "requests": 22,
+      "maxMs": 64771.7605,
+      "stopped": "time",
+      "secondRoundRan": false,
+      "slowTotal": 8,
+      "slowFirstRound": 8,
+      "qSeconds": 81.354,
+      "sSeconds": 80.82861349999999,
+      "sFirstRoundSeconds": 80.82861349999999,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5253865000000078,
+      "wSeconds": 88.7773015,
+      "wMinusQ": 7.423301499999987
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 22,
+    "hits": 18,
+    "rate": 0.8181818181818182,
+    "p50": 5735.0451,
+    "p95": 32738.6213,
+    "max": 64771.7605,
+    "verdict": "hidden",
+    "stopped": "time",
+    "errors": 0,
+    "approximate": 4,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\killer-nightmare.json",
+      "sha256": "3efadc13ad1432cca2962b69fb627b113c5a59c4e7c6982a66d8e0b1ba955917"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\killer-nightmare.md",
+      "sha256": "124e029da8d6441afe39ddd7ec7cda937dd8b6c67738ed1fd0d84ae8c479dbe6"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

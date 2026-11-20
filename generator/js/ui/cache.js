@@ -3,9 +3,10 @@
  *  - RESULT CACHE. Generation is deterministic, so a configuration with the same seed is served from
  *    `localStorage` at once (LRU of 20 puzzles).
  *  - REPLAY. Only the puzzle is stored, never the trace or the dig log: a served puzzle is regenerated from
- *    its seed in the background (an independent, worker-only client) and must come out equal (givens,
- *    solution, rating), else the entry is dropped and the puzzle generated again. Its trace and dig log then
- *    go to `SG.app.attachTrace`. Generating anything else cancels the regeneration (identity check). The
+ *    its seed in the background (an independent, worker-only client) and must come out equal (`sameResult`:
+ *    givens, solution, exactness, the whole standardized rating, the semantic model), else the entry is
+ *    dropped and the puzzle generated again. Its trace and dig log then go to `SG.app.attachTrace`.
+ *    Generating anything else cancels the regeneration (identity check). The
  *    regeneration is gated like the score tables (design.md 7.3): with a Web Worker it starts once the
  *    background client is confirmed to be one; on the main thread it waits for the user's press of "Prepare
  *    score tables" (the app event `'replay:consent'`) and then runs directly on the page's own client; a
@@ -22,7 +23,12 @@
  * is flagged `result.fromCache = true`. A puzzle `SG.app.showResult` puts on screen (an import) is never
  * cached, gets no regeneration and disarms the pre-generator until the next generation.
  * Storage never throws: blocked storage means an in-memory LRU, a full one evicts and retries, a corrupt
- * item or another schema version is purged; every change re-reads the stored list (several tabs).
+ * item or another schema version is purged (schema 3: rating v3; a schema-2 list is dropped, not migrated).
+ * Only a current canonical result enters: an own boolean `exact` and a complete rating of the current
+ * `SG.difficulty.RATING_VERSION` (`ratingProblem`), checked by `serialize` before `SG.pipeline.toWire` can
+ * coerce a missing flag and on the raw decoded wire before `SG.pipeline.fromWire` does; an unrated result
+ * is refused too. A shallow fallback (`exact: false`) is a valid entry; nothing is inferred or repaired.
+ * Every change re-reads the stored list (several tabs).
  *
  * API: init(app) -> boolean (idempotent; false when `app` has no `setClient`), configKey(config) -> ?string
  * (normalised: `trace` and option order ignored; a missing seed gives `*`, the key of the pool; null for an
@@ -43,8 +49,8 @@
 
   if (SG.cache && typeof SG.cache.createStore === 'function') return;
 
-  /** Schema version of the stored list; changing it purges every older cache. */
-  const SCHEMA_VERSION = 2;
+  /** Schema version of the stored list; changing it purges every older cache (3: rating v3, MS17b). */
+  const SCHEMA_VERSION = 3;
   const STORAGE_KEY = 'sg.cache.v1';
   const LIMIT = 20;
   const POOL_PER_CONFIG = 2;
@@ -200,12 +206,101 @@
     return h >>> 0;
   }
 
+  /** The ten fields of the rating that `SG.difficulty.classify` emits; a rating needs every one to enter. */
+  const RATING_FIELDS = Object.freeze(['level', 'score', 'rawScore', 'confidence', 'hardestTechnique',
+    'hardestGroup', 'solved', 'empties', 'techniqueCounts', 'ratingVersion']);
+
+  function hasOwn(object, name) {
+    return Object.prototype.hasOwnProperty.call(object, name);
+  }
+
+  function isRecord(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+  }
+
+  function registered(id) {
+    return Boolean(SG.techniques) && typeof SG.techniques.has === 'function' && SG.techniques.has(id);
+  }
+
+  /**
+   * The positive entries of a technique-count map as `[id, n]` pairs sorted by id, or null when it is not a
+   * valid map: a plain dictionary whose every own enumerable key is a registered technique id with a
+   * non-negative safe-integer count (a valid zero is dropped; the map itself is never changed).
+   */
+  function countsOf(counts) {
+    if (!isRecord(counts)) return null;
+    const proto = Object.getPrototypeOf(counts);
+    if (proto !== Object.prototype && proto !== null) return null;
+    const pairs = [];
+    const ids = Object.keys(counts);
+    for (let i = 0; i < ids.length; i++) {
+      const n = counts[ids[i]];
+      if (!registered(ids[i]) || typeof n !== 'number' || !Number.isSafeInteger(n) || n < 0) return null;
+      if (n > 0) pairs.push([ids[i], n]);
+    }
+    return pairs.sort(function (x, y) { return x[0] < y[0] ? -1 : (x[0] > y[0] ? 1 : 0); });
+  }
+
+  /**
+   * Why `rating` cannot enter the cache (null when it can): a complete rating of the current version, shape
+   * and local consistency only (nothing is rescored, derived or repaired). `cellCount` bounds `empties`.
+   */
+  function ratingProblem(rating, cellCount) {
+    if (!isRecord(rating)) return 'rating';
+    for (let i = 0; i < RATING_FIELDS.length; i++) {
+      if (!hasOwn(rating, RATING_FIELDS[i])) return 'rating.' + RATING_FIELDS[i];
+    }
+    const difficulty = SG.difficulty;
+    const current = difficulty ? difficulty.RATING_VERSION : undefined;
+    if (!Number.isSafeInteger(current) || current < 1 || rating.ratingVersion !== current) {
+      return 'rating.ratingVersion';
+    }
+    if (typeof rating.level !== 'string' || !Array.isArray(difficulty.LEVELS) ||
+        difficulty.LEVELS.indexOf(rating.level) === -1) {
+      return 'rating.level';
+    }
+    if (!Number.isInteger(rating.score) || rating.score < 0) return 'rating.score';
+    if (rating.rawScore !== rating.score) return 'rating.rawScore';
+    if (typeof rating.confidence !== 'number' || !isFinite(rating.confidence) || rating.confidence < 0 ||
+        rating.confidence > 1) {
+      return 'rating.confidence';
+    }
+    if (rating.hardestTechnique === null || rating.hardestGroup === null) {
+      if (rating.hardestTechnique !== null || rating.hardestGroup !== null) return 'rating.hardestTechnique';
+    } else if (typeof rating.hardestTechnique !== 'string' || !registered(rating.hardestTechnique) ||
+        rating.hardestGroup !== SG.techniques.get(rating.hardestTechnique).group) {
+      return 'rating.hardestTechnique';
+    }
+    if (rating.solved !== true) return 'rating.solved';
+    if (!Number.isInteger(cellCount) || cellCount < 1) return 'model.cellCount';
+    if (!Number.isInteger(rating.empties) || rating.empties < 0 || rating.empties > cellCount) {
+      return 'rating.empties';
+    }
+    if (countsOf(rating.techniqueCounts) === null) return 'rating.techniqueCounts';
+    return null;
+  }
+
+  /** Why the exactness flag or the rating of `holder` (a result or a decoded wire) cannot enter the cache. */
+  function classificationProblem(holder, rating, cellCount) {
+    if (!isRecord(holder) || !hasOwn(holder, 'exact') || typeof holder.exact !== 'boolean') return 'exact';
+    return ratingProblem(rating, cellCount);
+  }
+
+  function cellCountOf(model) {
+    return isRecord(model) ? model.cellCount : undefined;
+  }
+
   /**
    * A PuzzleResult as JSON-safe data (`SG.pipeline.toWire` with typed arrays wrapped) plus a checksum. Extra
    * fields (`fromCache`) and the dig log are not stored: the replay comes back from the regeneration
-   * ("REPLAY").
+   * ("REPLAY"). A result without an own boolean `exact` or with an incomplete or non-current rating (an
+   * unrated one included) is refused here, before `toWire` could turn the flag into a valid false:
+   * GenerationError 'unexpected'.
    */
   function serialize(result) {
+    if (!isRecord(result)) throw invalidData('result');
+    const problem = classificationProblem(result, result.rating, cellCountOf(result.model));
+    if (problem !== null) throw invalidData(problem);
     const wire = encode(SG.pipeline.toWire(result));
     delete wire.digLog;
     wire.sum = checksum(result.givens, result.solution);
@@ -238,11 +333,8 @@
     const report = SG.model.validate(model, { solve: false });
     if (!report.ok) throw invalidData('model');
     if (!SG.model.isSolution(model, result.solution)) throw invalidData('solution');
-    const rating = result.rating;
-    if (rating === null || typeof rating !== 'object' || !isFinite(rating.score) ||
-        typeof rating.level !== 'string') {
-      throw invalidData('rating');
-    }
+    const problem = classificationProblem(result, result.rating, n);
+    if (problem !== null) throw invalidData(problem);
     const cfg = result.config;
     if (cfg === null || typeof cfg !== 'object' || cfg.variantId !== model.variantId ||
         cfg.seed !== result.seed || !Array.isArray(result.warnings)) {
@@ -252,7 +344,9 @@
 
   /**
    * Rebuilds a PuzzleResult from `serialize` data (or its JSON text) and checks the model, solution, givens
-   * and checksum. `options.trace`: see `retrace`. Throws GenerationError 'unexpected' for data that is not a
+   * and checksum. The decoded wire needs an own boolean `exact` and a complete current rating BEFORE
+   * `SG.pipeline.fromWire` (which reads an absent flag as false); an old entry is refused, not read as
+   * "not exact". `options.trace`: see `retrace`. Throws GenerationError 'unexpected' for data that is not a
    * valid puzzle.
    */
   function deserialize(data, options) {
@@ -265,6 +359,8 @@
     if (wire === null || typeof wire !== 'object') throw invalidData('format');
     let result;
     try {
+      const problem = classificationProblem(wire, wire.rating, cellCountOf(wire.model));
+      if (problem !== null) throw invalidData(problem);
       result = SG.pipeline.fromWire(wire);
       verify(result, wire.sum);
     } catch (err) {
@@ -274,14 +370,157 @@
     return result;
   }
 
-  function sameResult(a, b) {
-    if (!a || !b || a.givens.length !== b.givens.length || a.solution.length !== b.solution.length) {
+  function listOf(value) {
+    const typed = ArrayBuffer.isView(value) && typeof value.length === 'number';
+    return Array.isArray(value) || typed ? Array.from(value) : null;
+  }
+
+  function sameValues(x, y) {
+    if (x === null || x === undefined || y === null || y === undefined || typeof x.length !== 'number' ||
+        x.length !== y.length) {
       return false;
     }
-    for (let i = 0; i < a.givens.length; i++) {
-      if (a.givens[i] !== b.givens[i] || a.solution[i] !== b.solution[i]) return false;
+    for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return false;
+    return true;
+  }
+
+  /** A membership list (cells of a unit, a cage or an overlay) as a sorted copy, or null when malformed. */
+  function cellsOf(value, n) {
+    const list = listOf(value);
+    if (list === null) return null;
+    for (let i = 0; i < list.length; i++) {
+      if (!Number.isInteger(list[i]) || list[i] < 0 || list[i] >= n) return null;
     }
-    return a.rating.level === b.rating.level && a.rating.score === b.rating.score;
+    return list.sort(function (x, y) { return x - y; });
+  }
+
+  /** A vector with one integer per cell, in cell order (never sorted), or null when malformed. */
+  function vectorOf(value, n) {
+    const list = listOf(value);
+    if (list === null || list.length !== n) return null;
+    for (let i = 0; i < n; i++) if (!Number.isInteger(list[i])) return null;
+    return list;
+  }
+
+  /** A list whose every item went through `convert`, in the given order, or null when any is malformed. */
+  function mapList(value, convert) {
+    const list = listOf(value);
+    if (list === null) return null;
+    const out = [];
+    for (let i = 0; i < list.length; i++) {
+      const item = convert(list[i]);
+      if (item === null) return null;
+      out.push(item);
+    }
+    return out;
+  }
+
+  function cageOf(cage, n) {
+    const cells = isRecord(cage) ? cellsOf(cage.cells, n) : null;
+    if (cells === null || typeof cage.sum !== 'number' || !isFinite(cage.sum) ||
+        typeof cage.distinct !== 'boolean') {
+      return null;
+    }
+    return { cells: cells, sum: cage.sum, distinct: cage.distinct };
+  }
+
+  function signOf(sign, n) {
+    const ok = isRecord(sign) && Number.isInteger(sign.a) && Number.isInteger(sign.b) &&
+      sign.a >= 0 && sign.a < n && sign.b >= 0 && sign.b < n;
+    return ok ? { a: sign.a, b: sign.b } : null;
+  }
+
+  function overlayOf(overlay, n) {
+    const cells = isRecord(overlay) ? cellsOf(overlay.cells, n) : null;
+    return cells === null || typeof overlay.kind !== 'string' ? null : { kind: overlay.kind, cells: cells };
+  }
+
+  function subGridOf(grid) {
+    const ok = isRecord(grid) && Number.isInteger(grid.gridIndex) && Number.isInteger(grid.originRow) &&
+      Number.isInteger(grid.originCol);
+    return ok ? { gridIndex: grid.gridIndex, originRow: grid.originRow, originCol: grid.originCol } : null;
+  }
+
+  /** The units with their relevant metadata (`kind`, `gridIndex`, `partial`; not the display `label`). */
+  function unitsOf(model, n) {
+    const cells = listOf(model.units);
+    const metas = listOf(model.unitMeta);
+    if (cells === null || metas === null || cells.length !== metas.length) return null;
+    const out = [];
+    for (let i = 0; i < cells.length; i++) {
+      const list = cellsOf(cells[i], n);
+      const meta = metas[i];
+      const ok = list !== null && isRecord(meta) && typeof meta.kind === 'string' &&
+        Number.isInteger(meta.gridIndex) && (meta.partial === undefined || typeof meta.partial === 'boolean');
+      if (!ok) return null;
+      out.push({ cells: list, kind: meta.kind, gridIndex: meta.gridIndex, partial: meta.partial === true });
+    }
+    return out;
+  }
+
+  /**
+   * The semantic model as comparable text, or null when it is malformed: variant, size, digits, fixed cells,
+   * the layout (rows, columns, cell rows/columns/regions, overlays, sub-grids), the units with their relevant
+   * metadata, the cages (cells, sum, `distinct`) and the directed inequalities. The outer order of every list
+   * is kept; only the membership lists inside a unit, cage or overlay are sorted (on copies). Not compared:
+   * the symbols (display), the unit labels and the derived `cellUnits` and `peers`.
+   */
+  function modelKey(model) {
+    if (!isRecord(model) || !isRecord(model.layout)) return null;
+    const n = model.cellCount;
+    const digits = model.digits;
+    if (typeof model.variantId !== 'string' || !Number.isInteger(n) || n < 1 || !Number.isInteger(digits) ||
+        digits < 1) {
+      return null;
+    }
+    const layout = model.layout;
+    const fixedCells = vectorOf(model.fixedCells, n);
+    const cellRow = vectorOf(layout.cellRow, n);
+    const cellCol = vectorOf(layout.cellCol, n);
+    const cellRegion = vectorOf(layout.cellRegion, n);
+    const overlays = mapList(layout.overlays, function (o) { return overlayOf(o, n); });
+    const subGrids = mapList(layout.subGrids, subGridOf);
+    const units = unitsOf(model, n);
+    const cages = mapList(model.cages, function (c) { return cageOf(c, n); });
+    const inequalities = mapList(model.inequalities, function (q) { return signOf(q, n); });
+    const sizes = Number.isInteger(layout.rows) && Number.isInteger(layout.cols);
+    if (!sizes || [fixedCells, cellRow, cellCol, cellRegion, overlays, subGrids, units, cages, inequalities]
+      .some(function (part) { return part === null; })) {
+      return null;
+    }
+    return stableStringify({ variantId: model.variantId, cellCount: n, digits: digits,
+      fixedCells: fixedCells, units: units, cages: cages, inequalities: inequalities,
+      layout: { rows: layout.rows, cols: layout.cols, cellRow: cellRow, cellCol: cellCol,
+        cellRegion: cellRegion, overlays: overlays, subGrids: subGrids } });
+  }
+
+  /**
+   * The exactness flag and the whole standardized rating of a result as comparable text, or null when either
+   * is not valid for the cache. The technique counts are compared by value: valid zeros dropped, keys sorted.
+   */
+  function classificationKey(result) {
+    if (classificationProblem(result, result.rating, cellCountOf(result.model)) !== null) return null;
+    const r = result.rating;
+    return stableStringify({ exact: result.exact, level: r.level, score: r.score, rawScore: r.rawScore,
+      confidence: r.confidence, hardestTechnique: r.hardestTechnique, hardestGroup: r.hardestGroup,
+      solved: r.solved, empties: r.empties, ratingVersion: r.ratingVersion,
+      counts: countsOf(r.techniqueCounts) });
+  }
+
+  /**
+   * Is the regenerated puzzle the one that was served? Same givens and solution, the same explicit exactness
+   * and standardized rating (including the version and the technique counts) and the same semantic model.
+   * Timings, attempts, work counters, warnings, target, trace, symbol display and extra rating fields are not
+   * compared. Missing or malformed data on either side is not equal; nothing is defaulted, and nothing is
+   * solved here.
+   */
+  function sameResult(a, b) {
+    if (!isRecord(a) || !isRecord(b)) return false;
+    if (!sameValues(a.givens, b.givens) || !sameValues(a.solution, b.solution)) return false;
+    const ratingA = classificationKey(a);
+    if (ratingA === null || ratingA !== classificationKey(b)) return false;
+    const modelA = modelKey(a.model);
+    return modelA !== null && modelA === modelKey(b.model);
   }
 
   function isQuota(err) {

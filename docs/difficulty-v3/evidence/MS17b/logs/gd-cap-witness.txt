@@ -1,0 +1,27 @@
+$ node tests\artifacts\difficulty-v3\MS17b\cap-diagnosis.cjs nightmare refine 3 24
+seed  1: ratings 3 [sample, search, search] achieved easy exact false
+seed  2: ratings 3 [sample, search, search] achieved easy exact false
+seed  3: ratings 3 [sample, search, search] achieved master exact false
+seed  4: ratings 3 [sample, search, search] achieved normal exact false
+seed  5: ratings 3 [sample, search, search] achieved hard exact false
+seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+seed  7: ratings 3 [sample, search, search] achieved master exact false
+seed  8: ratings 1 [sample] achieved nightmare exact true
+seed  9: ratings 3 [sample, search, search] achieved easy exact false
+seed 10: ratings 3 [sample, search, search] achieved easy exact false
+seed 11: ratings 3 [sample, search, search] achieved easy exact false
+seed 12: ratings 3 [sample, search, search] achieved hell1 exact false
+seed 13: ratings 3 [sample, search, search] achieved easy exact false
+seed 14: ratings 3 [sample, search, search] achieved nightmare exact false
+seed 15: ratings 3 [sample, search, search] achieved normal exact false
+seed 16: ratings 3 [sample, search, search] achieved master exact false
+seed 17: ratings 3 [sample, search, search] achieved master exact false
+seed 18: ratings 3 [sample, search, search] achieved easy exact false
+seed 19: ratings 3 [sample, refine, refine] achieved nightmare exact true  <- refine
+seed 20: ratings 3 [sample, search, search] achieved normal exact false
+seed 21: ratings 3 [sample, search, search] achieved master exact false
+seed 22: ratings 3 [sample, search, search] achieved hard exact false
+seed 23: ratings 3 [sample, search, search] achieved hard exact false
+seed 24: ratings 3 [sample, search, search] achieved easy exact false
+seeds 1..24 whose rating number 3 (the last one allowed by the cap) is made in refine at nightmare with maxRatings 3: 1
+exit=0 seconds=0.663

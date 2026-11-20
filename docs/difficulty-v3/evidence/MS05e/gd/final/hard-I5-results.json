@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "e6ba01d45657640021106bb97ef0d93267a9bb908f22f4703e691eec80f2e2aa",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["greater-than"],"filter":"> hard: 10 puzzles > I5:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 20664.5,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 20474.9,
+    "tests": [
+      {"suite":"greater-than","name":"I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum","fullName":"greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum","status":"pass","ms":20474.076,"reason":"","error":null,"ordinal":71}
+    ],
+    "suites": [
+      {"name":"greater-than","total":1,"passed":1,"failed":0,"skipped":0,"ms":20474.816}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=greater-than","--filter=> hard: 10 puzzles > I5:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05e\\gd\\final\\hard-I5-results.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

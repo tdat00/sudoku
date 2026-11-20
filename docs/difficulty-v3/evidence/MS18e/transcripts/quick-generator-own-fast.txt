@@ -1,0 +1,43 @@
+$ node tests\node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,pattern-cost-tools,perf-tooling,purity,qualification-records,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS18e\quick\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (82 ms)
+ok   cache: 119 passed  (17.22 s)
+(node:24180) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 52 passed  (137 ms)
+ok   difficulty-diagnostics: 94 passed  (15.36 s)
+ok   difficulty-floor: 48 passed  (31.09 s)
+ok   digger: 64 passed  (1.01 s)
+ok   events: 68 passed  (612 ms)
+ok   export: 79 passed  (7.12 s)
+ok   format: 18 passed  (217 ms)
+ok   full-grid: 42 passed  (2.52 s)
+ok   help: 30 passed  (5.64 s)
+ok   history: 30 passed  (1.88 s)
+ok   i18n: 97 passed  (1.62 s)
+ok   manual-corpus: 53 passed  (2.53 s)
+ok   mega-contract: 44 passed  (2.06 s)
+ok   multigrid: 184 passed  (29.11 s)
+ok   pattern-cost-tools: 44 passed  (5.70 s)
+ok   perf-tooling: 31 passed  (16.19 s)
+ok   purity: 42 passed  (32 ms)
+ok   qualification-records: 46 passed  (2.38 s)
+ok   recovery-profile: 28 passed  (676 ms)
+ok   replay-recorders: 39 passed  (19.82 s)
+ok   result-view: 22 passed  (2.98 s)
+ok   rng: 28 passed  (30 ms)
+ok   smoke: 44 passed  (5.17 s)
+ok   store: 91 passed  (118 ms)
+ok   technique-weights: 18 passed  (10 ms)
+ok   theme: 57 passed  (36 ms)
+ok   ui-contract: 68 passed  (384 ms)
+ok   variants-registry: 12 passed  (10 ms)
+ok   worker: 144 passed  (55.64 s)
+
+Suites: 31
+Tests:  1767 total, 1767 passed, 0 failed, 0 skipped
+Time:   227.39 s running tests, 227.84 s total
+Results: docs/difficulty-v3/evidence/MS18e/quick/generator-own-fast.json
+exit=0 seconds=228.118

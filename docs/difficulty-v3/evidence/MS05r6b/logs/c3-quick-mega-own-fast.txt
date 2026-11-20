@@ -1,0 +1,5 @@
+plan: 2 item(s), projections sum 490.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 q-gen-mega exit=0 node=11.552s (projected 250 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-mega.json
+#1 q-gen-own-fast exit=1 node=166.528s (projected 240 s, elapsed before 11.556 s): (Use `node --trace-warnings ...` to show where the warning was created)
+compound ends at #1: unexpected exit 1 (expected 0); nothing is retried; unstarted: none
+FAILED: MS05r6b command failed: 1

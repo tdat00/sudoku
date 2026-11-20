@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":null,"exact":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 181531.3,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 181292.3,
+    "tests": [
+      {"suite":"difficulty","name":"is a confusion matrix with its diagonal as the most common cell of every row","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row","status":"pass","ms":181291.584,"reason":"","error":null,"ordinal":122}
+    ],
+    "suites": [
+      {"name":"difficulty","total":1,"passed":1,"failed":0,"skipped":0,"ms":181292.276}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--exact=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\confusion-matrix.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,131 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-epoch2-proof.js --retained
+{
+  "pair": {
+    "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+    "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+  },
+  "retained": 22,
+  "requests": 950,
+  "cellsWithAChunk": 19,
+  "completeCells": 19,
+  "others": [
+    {
+      "runId": "mega16-easy.i0.n50.a1",
+      "status": "hold",
+      "problems": []
+    }
+  ],
+  "retainedSuccesses": [
+    {
+      "chunkId": "classic4-veryEasy.i0.n50",
+      "runId": "classic4-veryEasy.i0.n50.a1",
+      "ledgerSha256": "60ab03daa610d9e1488613c69731608cb1f3f2774cda683780a8c8ac520860ab"
+    },
+    {
+      "chunkId": "classic6-veryEasy.i0.n50",
+      "runId": "classic6-veryEasy.i0.n50.a1",
+      "ledgerSha256": "45ebf5eb50f15bee72a165f277d63225d59aad3ce31bb24fdb69f763ab62243d"
+    },
+    {
+      "chunkId": "classic6-hard.i0.n50",
+      "runId": "classic6-hard.i0.n50.a1",
+      "ledgerSha256": "ee226a9c5670f6d5640a87f2b7700acefb4041e51e47f8ef6f544082d6ed34fc"
+    },
+    {
+      "chunkId": "classic9-veryEasy.i0.n50",
+      "runId": "classic9-veryEasy.i0.n50.a1",
+      "ledgerSha256": "86dc8668c264d897a708700f40552764aa15ba711b2ecf01b763e162e5a3bb37"
+    },
+    {
+      "chunkId": "classic9-easy.i0.n50",
+      "runId": "classic9-easy.i0.n50.a1",
+      "ledgerSha256": "cbdb34252c342c864b6821cb93e3d42b6f20cb1b11ea9d3772326787b2d1cdf5"
+    },
+    {
+      "chunkId": "classic9-normal.i0.n50",
+      "runId": "classic9-normal.i0.n50.a1",
+      "ledgerSha256": "77b1bc6c993b8cfbafab0efaf35bbd1debd3b712545fd4b72a528f63b3ee17d2"
+    },
+    {
+      "chunkId": "classic9-hard.i0.n50",
+      "runId": "classic9-hard.i0.n50.a1",
+      "ledgerSha256": "51a240ddb6730bde648f30394f4ce030db5407534482929dcbd87b6bfb525e22"
+    },
+    {
+      "chunkId": "classic9-expert.i0.n50",
+      "runId": "classic9-expert.i0.n50.a1",
+      "ledgerSha256": "2e3e61d2784bce89178c598ca7a51ce721220cee2a9c55f3c149512a5d13b7ba"
+    },
+    {
+      "chunkId": "classic9-master.i0.n50",
+      "runId": "classic9-master.i0.n50.a1",
+      "ledgerSha256": "4c9de55665e52ff3cad6bab7a9f3e48f5218eeb1379e98bb39f3a4ddc3907dfb"
+    },
+    {
+      "chunkId": "classic9-nightmare.i0.n50",
+      "runId": "classic9-nightmare.i0.n50.a1",
+      "ledgerSha256": "1502c63f8eba1c758295453b84b461e57e9f4563850b1e74facbb9c6c95cdf6a"
+    },
+    {
+      "chunkId": "mega12-veryEasy.i0.n50",
+      "runId": "mega12-veryEasy.i0.n50.a1",
+      "ledgerSha256": "9f89f4d7c9c92d0fe2e51c19a207a2475c230bf4adb2b06a75956c7859591a24"
+    },
+    {
+      "chunkId": "mega12-easy.i0.n50",
+      "runId": "mega12-easy.i0.n50.a1",
+      "ledgerSha256": "cd2e8e82cd301bb435a1b1802f14c50e3351fe8c4871d6eebb4220c38738dcd0"
+    },
+    {
+      "chunkId": "mega12-normal.i0.n50",
+      "runId": "mega12-normal.i0.n50.a1",
+      "ledgerSha256": "3cac48c0c8271f00357216ec47fd1db00fd36e8056476d532c05b395007f601c"
+    },
+    {
+      "chunkId": "mega12-hard.i0.n50",
+      "runId": "mega12-hard.i0.n50.a1",
+      "ledgerSha256": "37680eff82bb7f3d88671bcfdb99ba4c9baad786812d8d9893b3f2083a42ac6b"
+    },
+    {
+      "chunkId": "mega12-expert.i0.n25",
+      "runId": "mega12-expert.i0.n25.a1",
+      "ledgerSha256": "1fe6b672ff6564482b8609ecc3cc7a531b4cf8c4ac2394d8a45eb48b7e0633ed"
+    },
+    {
+      "chunkId": "mega12-expert.i25.n25",
+      "runId": "mega12-expert.i25.n25.a1",
+      "ledgerSha256": "ce3cf46b2e312716ec861c2236ed445ad708bd0bbc57694b147616726f4158a8"
+    },
+    {
+      "chunkId": "mega12-master.i0.n50",
+      "runId": "mega12-master.i0.n50.a1",
+      "ledgerSha256": "e8ad4db3bbb25e64ad24779fb8f1aecefd42dedce499dbfd5b362fcaab94149d"
+    },
+    {
+      "chunkId": "mega12-nightmare.i0.n25",
+      "runId": "mega12-nightmare.i0.n25.a1",
+      "ledgerSha256": "fcdeb221b967c8c6b18c06bc09c32080920bc891ab1abe6053a2dc6cee00027b"
+    },
+    {
+      "chunkId": "mega12-nightmare.i25.n25",
+      "runId": "mega12-nightmare.i25.n25.a1",
+      "ledgerSha256": "5a5f6850a697c6abec77028dd75f1587f6e9ec7898e73a4a65cd763beb7ea48d"
+    },
+    {
+      "chunkId": "mega12-hell2.i0.n25",
+      "runId": "mega12-hell2.i0.n25.a1",
+      "ledgerSha256": "c529e38aa406f63e6b94c5acc47486a9ffd68eece21f0e034d9fb71198138675"
+    },
+    {
+      "chunkId": "mega12-hell2.i25.n25",
+      "runId": "mega12-hell2.i25.n25.a1",
+      "ledgerSha256": "6172bb4ff9b8c5705858a2991dfeab17872a820a57fb373cd72bfa0ceb5230c4"
+    },
+    {
+      "chunkId": "mega16-veryEasy.i0.n50",
+      "runId": "mega16-veryEasy.i0.n50.a1",
+      "ledgerSha256": "3bd6669a17ceeb6172229e1e1444c7e94e50fb49a9709ad00fb1cf68ce8d554f"
+    }
+  ]
+}
+exit=0 seconds=1.139

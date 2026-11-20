@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=samurai-master.i30.n5 --out=..\docs\difficulty-v3\evidence\MS18d\gp\samurai-master\samurai-master.i30.n5.a1\ledger.json
+ms18d-gp-recorder-start chunk=samurai-master.i30.n5 i0=30 n=5 seedBase=10030
+ms18d-gp-ledger-complete chunk=samurai-master.i30.n5 bytes=17841 sha256=bdaf7e051e103ef682b6816f8fd23cde26674f7cc96ee48dc9585ab18a30c746
+exit=0 seconds=3.227

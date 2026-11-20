@@ -1,0 +1,71 @@
+{
+  "schema": "ms18d-gp-epoch-3-transition-data-v1",
+  "previousHelperManifest": {
+    "file": "docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c2-sha256.txt",
+    "sha256": "bd6949efbef5aa7bc827324405faf5c3aa68ab248f09bba07daf1dc55504c0ae",
+    "entries": 53
+  },
+  "helperManifest": {
+    "file": "docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c3-sha256.txt",
+    "sha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d",
+    "entries": 55
+  },
+  "allowedHelperChanges": [
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js",
+      "class": "production",
+      "before": "d1bc5cdb16df2236af6932b142aaf3aacc868553184352c5be61cb87157f052c",
+      "after": "d72be73c970d65ed508c349ede8cde4bffd60dfe798dd974ec0deb05d7a2a162"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js",
+      "class": "production",
+      "before": "c82e8b752d13501df621c2be9fa768cb17f23db1188951da06b4b4b9afa43f73",
+      "after": "19104a1fe345e38247d90ea05531d0c0f8c40e72fe9d4d0b9e3ab29f888709e3"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/release-history.js",
+      "class": "production",
+      "before": "40754027bf5e0ac9bb8f2dbedabfa7f782c7c380d6b0bf52a7ca780b51fabbfa",
+      "after": "430166b6591612a608ef64d976f70a63d18befedb0e6fce19a40e241862179e5"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1",
+      "class": "production",
+      "before": "bcd1abaf2021d6ed1b639e7decc703ebffd35dcf1b4e38f48180e431032d16e9",
+      "after": "b8a421feba8054179589f387c7fa4fe707a9e65cdb5d8188ad50ac48b8151c86"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/standin-history.js",
+      "class": "test",
+      "before": null,
+      "after": "b0d1bb7198d5c4534e006c46f1e23f9152ed8f4bd8ae8becb60e1c4338f87d15"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-epoch3-proof.js",
+      "class": "test",
+      "before": null,
+      "after": "305ceeb16c3e6645953555a8127a7985f93ed267c765ad24d86f8026f65876ed"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-recorder-merge.js",
+      "class": "test",
+      "before": "e98b5d6d2f0e916331c44a2dd7650a50446759061eaeed8b18586357c2d82659",
+      "after": "0a6d3a8fa79e2623a4960aac23a913dcc752b699a70fd668187625b983b87669"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1",
+      "class": "test",
+      "before": "fa1a2a6eeb6df384695275b74b4cdbd87fa4ec83e86468c9b4fd42df01f7ee5b",
+      "after": "8262cb4be2b1c332377d7a07cc93cbcfb70180bf33732821e019e59735eb8c5f"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-units.js",
+      "class": "test",
+      "before": "499f57e63932b4f23d6770fb322b68467f95826bff582e0744d0cc9de593e940",
+      "after": "85a1bbdf4e476c4ccc504ac069dd91f228e3d7f3ba9a548795cd398f37fb0a66"
+    }
+  ],
+  "identicalEntries": 46,
+  "problems": []
+}

@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS13b\locale-delta.cjs docs\difficulty-v3\evidence\MS13b\locale-delta.md
+32 entries differ; every check passed
+exit=0 seconds=14.193

@@ -1,0 +1,38 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T21:49:16.789Z",
+  "finished": "2026-11-18T21:54:54.841Z",
+  "seconds": 338,
+  "cells": [
+    {
+      "variant": "sohei",
+      "level": "hell1",
+      "cellCount": 288,
+      "budget": 30000,
+      "attempts": 2,
+      "summary": {"n":9,"hits":0,"rate":0,"p50":120000.7977,"p95":120015.0996,"max":120015.0996,"verdict":"hidden","stopped":"time","errors":6,"approximate":3,"invalid":0},
+      "requests": [
+        {"key":"sohei/hell1","index":0,"seed":3898108038,"hit":false,"ms":119453.8576,"achieved":"hell1","score":3428,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/hell1","index":1,"seed":3914885657,"hit":false,"error":"budget.exceeded","ms":120007.7241},
+        {"key":"sohei/hell1","index":2,"seed":3864552800,"hit":false,"error":"budget.exceeded","ms":120015.0996},
+        {"key":"sohei/hell1","index":3,"seed":3881330419,"hit":false,"error":"budget.exceeded","ms":120000.3952},
+        {"key":"sohei/hell1","index":4,"seed":3965218514,"hit":false,"error":"budget.exceeded","ms":120000.7977},
+        {"key":"sohei/hell1","index":5,"seed":3981996133,"hit":false,"error":"budget.exceeded","ms":120013.3126},
+        {"key":"sohei/hell1","index":6,"seed":3931663276,"hit":false,"ms":97461.333,"achieved":"hell1","score":3466,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/hell1","index":7,"seed":3948440895,"hit":false,"ms":105589.5208,"achieved":"hell1","score":3540,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"sohei/hell1","index":8,"seed":4032328990,"hit":false,"error":"budget.exceeded","ms":120008.1786}
+      ]
+    }
+  ],
+  "support": {"sohei":[]}
+}

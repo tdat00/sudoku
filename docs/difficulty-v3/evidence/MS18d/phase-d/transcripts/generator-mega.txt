@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS18d\phase-d\quick\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (31.96 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   31.96 s running tests, 32.21 s total
+Results: docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-mega.json
+exit=0 seconds=32.471

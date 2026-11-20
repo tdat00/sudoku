@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record hyper-veryEasy.i0.n50 a1",
+  "runId": "hyper-veryEasy.i0.n50.a1",
+  "cell": "hyper/veryEasy",
+  "payload": "gp-recorder",
+  "chunkId": "hyper-veryEasy.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/hyper-veryEasy/hyper-veryEasy.i0.n50.a1",
+  "requestedAt": "2026-11-19T23:21:29.518+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795105273825,
+    "lastCheckMs": 1795105289350,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-19T23:21:29.643+07:00",
+  "finished": "2026-11-19T23:21:39.749+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2938,
+    "cheapCheckMs": 123,
+    "ageMs": 132,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:21:39.751+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

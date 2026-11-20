@@ -1,0 +1,12 @@
+Console output of the read-only verification of preflight/deep-hell1-commit-equivalence.json, run from PowerShell (git reads and file hashes only, no Node), copied here as the record. This is not a tee transcript.
+equivalence check at 2026-11-20T16:02:46.3632500+07:00 (PowerShell, git reads and file hashes only; no Node)
+PASS: changed list: 271 names in the file, 271 from git
+PASS: commit SHAs full
+PASS: source-scope diff empty (0 files)
+PASS: blobs: 70 loaded files equal at both commits and as recorded
+PASS: ordered SOURCE_FILES (64) equal at both commits and equal to the first 64 blob rows
+PASS: tree IDs: 9 listed; equal ones recomputed equal; generator differs as recorded
+PASS: records: 14 rows; file hash, id, commit and all other identity fields as recorded; only commit differs
+PASS: reconcile output: sha256, evidenceSound false, identity.commit null, one problem equal to the recorded text
+PASS: partial reconcile file hash
+RESULT: ALL PASS

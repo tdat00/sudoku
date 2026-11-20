@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: spec on other boards, and difficultySupport >","exact":null,"count":4},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 253.8,
+  "results": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 12.9,
+    "tests": [
+      {"suite":"difficulty","name":"keeps the bands on every board and scales only the clue range by cellCount / 81","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > keeps the bands on every board and scales only the clue range by cellCount / 81","status":"pass","ms":3.43,"reason":"","error":null,"ordinal":12},
+      {"suite":"difficulty","name":"throws for a level the variant does not support","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > throws for a level the variant does not support","status":"pass","ms":0.856,"reason":"","error":null,"ordinal":13},
+      {"suite":"difficulty","name":"isSupported follows the variant definition; unknown variants support every level","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > isSupported follows the variant definition; unknown variants support every level","status":"pass","ms":5.875,"reason":"","error":null,"ordinal":14},
+      {"suite":"difficulty","name":"offers in every variant exactly the levels the qualification published (docs/difficulty-rating/qualification.md)","fullName":"difficulty > difficulty: spec on other boards, and difficultySupport > offers in every variant exactly the levels the qualification published (docs/difficulty-rating/qualification.md)","status":"pass","ms":1.861,"reason":"","error":null,"ordinal":15}
+    ],
+    "suites": [
+      {"name":"difficulty","total":4,"passed":4,"failed":0,"skipped":0,"ms":12.741}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: spec on other boards, and difficultySupport >","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-03.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

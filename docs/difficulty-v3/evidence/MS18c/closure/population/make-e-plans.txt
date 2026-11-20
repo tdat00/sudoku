@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS18c\make-e-plans.cjs
+plan-wire.json 5 shards, projections 333 s (factor 3)
+plan-analysis.json 14 shards, projections 578 s (factor 3)
+plan-hashes.json 104 shards, projections 2283 s (factor 3)
+exit=0 seconds=0.099

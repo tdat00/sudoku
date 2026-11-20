@@ -1,0 +1,37 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in c6",
+  "runId": "c6",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-3/runs12/classic4-veryEasy/c6",
+  "requestedAt": "2026-11-19T15:48:42.706+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795078107303,
+    "lastCheckMs": 1795078122693,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": null,
+  "finished": "2026-11-19T15:48:42.805+07:00",
+  "releaseObservedAt": "2026-11-19T15:48:42.805+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 64,
+  "controllerOutcome": "control-hold",
+  "barrierVerdict": "clean",
+  "helperNote": "stand-in c6 command failed: 64",
+  "outcome": "stop",
+  "problems": [
+    "the controller outcome 'control-hold' with exit 64 is a stop"
+  ]
+}

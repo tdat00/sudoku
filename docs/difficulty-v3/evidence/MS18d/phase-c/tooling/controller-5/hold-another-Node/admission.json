@@ -1,0 +1,16 @@
+{
+  "schema": "ms18d-c-admission-1",
+  "acquisition": "proceed",
+  "binding": false,
+  "payloadChecks": true,
+  "finalLockRecheck": {
+    "stable": true,
+    "sharedPresent": true,
+    "timingPresent": false
+  },
+  "readiness": null,
+  "callToSpawnMs": 140,
+  "callToSpawnLimitMs": 60000,
+  "lateStart": false,
+  "decision": "hold"
+}

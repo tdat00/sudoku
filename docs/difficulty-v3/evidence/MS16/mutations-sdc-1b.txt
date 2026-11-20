@@ -1,0 +1,5 @@
+mutation 31 (G13 the cells of a box are not sorted): DETECTED by run 0 (generator tech-als ~sue-de-coq) - 62 total, 61 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 8.5 s
+    FAIL tech-als > sue-de-coq: ownership, immutability and no cache > does not depend on the order of the cells inside a unit: the same Finding and record when every unit lists its cells from the highest
+mutation 66 (V05 |C| below |I| + p + q is allowed): DETECTED by run 0 (generator tech-als ~sue-de-coq) - 12 total, 11 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.6 s
+    FAIL tech-als > sue-de-coq: the proof by hand > finds nothing when the digits of A and B overlap, when |C| is not |I| + p + q, when A or B is not inside C, or when the sets are in the wrong unit, in rows and in columns
+detected 2 of 2, survivors 0, 9.1 s

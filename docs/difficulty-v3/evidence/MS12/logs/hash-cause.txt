@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS12\hash-cause.js --ledgers=..\docs\difficulty-v3\evidence\MS12\hashes --json=..\docs\difficulty-v3\evidence\MS12\hash-cause.json
+cells that admit xyChain (4): classic9/master, classic9/nightmare, diagonalX/nightmare, jigsaw9/master
+cells that do not (22): classic4/veryEasy, classic6/veryEasy, classic6/hard, classic9/veryEasy, classic9/easy, classic9/normal, classic9/hard, classic9/expert, mega12/normal, mega16/easy, diagonalX/easy, hyper/hard, jigsaw9/normal, killer/easy, killer/hard, greaterThan/normal, greaterThan/hard, samurai/easy, sohei/veryEasy, butterfly/normal, flower/normal, wordoku/normal
+classic9/master: 2 of 20 change with the technique (seeds 144, 377)
+classic9/nightmare: 13 of 20 change with the technique (seeds 2, 8, 21, 55, 89, 144, 233, 377, 610, 987, 1597, 4181, 10946)
+diagonalX/nightmare: 3 of 20 change with the technique (seeds 2, 1597, 6765)
+jigsaw9/master: 0 of 20 change with the technique (seeds )
+keys examined 80; changed by the technique 18; changed in the ledgers 18; inconsistent 0 (88.3 s)
+exit=0 seconds=88.631

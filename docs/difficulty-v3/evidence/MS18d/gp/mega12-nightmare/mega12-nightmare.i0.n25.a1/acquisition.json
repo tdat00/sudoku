@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795088344405,
+  "startedAtMs": 1795088344534,
+  "lockAcquiredAtMs": 1795088344447,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795088328324,
+    "lastCheckMs": 1795088343855,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 271,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 129,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795088319409,
+    "label": "C",
+    "origin": "own"
+  },
+  "releaseGapMs": 25125,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 28196,
+    "task": "MS18d GP record mega12-nightmare.i0.n25 a1",
+    "controllerPid": 24048,
+    "controllerParentPid": 28196,
+    "wrapperPid": 28196
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-b\\lock-log.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\lock-log.jsonl",
+      "present": true
+    }
+  ]
+}

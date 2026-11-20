@@ -1,0 +1,9 @@
+$ node --version
+TASK MS18a selftest-q1
+STRICT SCREEN NOT READY: mean 0.549, max 0.870 busy cores of 16 (selftest-q1.json)
+POLICY MS18a-Q1-host-active ADMITTED: every admission condition of MS18a-Q1-host-active holds; the strict screen FAILED and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T17:59:03.643+07:00
+v26.13.0
+END 2026-11-18T17:59:03.730+07:00
+exit=0 seconds=0.087

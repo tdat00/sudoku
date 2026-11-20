@@ -1,0 +1,24 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS08a\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: 3 fields differ from replay-wire.js
+  work[4].ratings: saved 326, fresh 318
+  work[4].localSearches[0].ratings: saved 58, fresh 50
+  work[4].localSearches[0].shallowRatings: saved 58, fresh 50
+G10: matches replay-wire.js
+G11: 6 fields differ from replay-wire.js
+  work[0].ratings: saved 12, fresh 13
+  work[0].localSearches[0].ratings: saved 0, fresh 1
+  work[1].ratings: saved 14, fresh 13
+  work[1].localSearches[0].ratings: saved 2, fresh 1
+  work[3].ratings: saved 12, fresh 15
+  work[3].localSearches[0].ratings: saved 0, fresh 3
+G12: 6 fields differ from replay-wire.js
+  rating.score: saved 638, fresh 594
+  rating.rawScore: saved 638, fresh 594
+  rating.confidence: saved 0.41333333333333333, fresh 0.7066666666666667
+  rating.hardestTechnique: saved "simpleColouring", fresh "skyscraper"
+  rating.techniqueCounts.simpleColouring: saved 2, fresh undefined
+  rating.techniqueCounts.skyscraper: saved undefined, fresh 2
+G13: matches replay-wire.js
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.435

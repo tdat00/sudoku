@@ -1,0 +1,361 @@
+{
+  "schema": 1,
+  "kind": "ms07e-projection-pilot",
+  "task": "MS07e",
+  "argv": [
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic6.json",
+    "--cells=classic6/easy:3,classic6/normal:3,classic6/expert:3,classic6/master:3,classic6/nightmare:3,classic6/hell1:3,classic6/hell2:3",
+    "--budget-seconds=420"
+  ],
+  "startedAt": "2026-11-15T04:29:40.835Z",
+  "identity": {
+    "sourceHash": "09f91d6db3fa3373307fed4bf175e9d48ce6cf0c0b98eccec1386dda7cb35ed9",
+    "node": "v26.13.0",
+    "commit": "8b70875e1839d7f2753d20853a4a0c9226cf2035",
+    "dirty": false
+  },
+  "machine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "call": "SG.pipeline.run({ variantId, difficulty, seed, trace: \"off\" }, null, SG.budget.create({ ms: 120000 })), serial, one process; seed = FNV-1a(\"variant/level/index\") on 20260601 (qualify.js seedFor); no maxAttempts",
+  "budgetSeconds": 420,
+  "cells": {
+    "classic6/easy": {
+      "variant": "classic6",
+      "level": "easy",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1867380890,
+          "hit": false,
+          "ms": 297.9662,
+          "achieved": "veryEasy",
+          "score": 29,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1884158509,
+          "hit": false,
+          "ms": 237.8124,
+          "achieved": "veryEasy",
+          "score": 29,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 1833825652,
+          "hit": false,
+          "ms": 219.21,
+          "achieved": "veryEasy",
+          "score": 30,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 251.663,
+      "maxMs": 297.9662
+    },
+    "classic6/normal": {
+      "variant": "classic6",
+      "level": "normal",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 199095531,
+          "hit": false,
+          "ms": 243.5049,
+          "achieved": "veryEasy",
+          "score": 33,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 182317912,
+          "hit": false,
+          "ms": 224.9873,
+          "achieved": "easy",
+          "score": 84,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 232650769,
+          "hit": false,
+          "ms": 237.2977,
+          "achieved": "veryEasy",
+          "score": 33,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 235.263,
+      "maxMs": 243.5049
+    },
+    "classic6/expert": {
+      "variant": "classic6",
+      "level": "expert",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 2692331124,
+          "hit": false,
+          "ms": 246.4136,
+          "achieved": "hard",
+          "score": 484,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 2709108743,
+          "hit": false,
+          "ms": 257.5923,
+          "achieved": "hard",
+          "score": 572,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 2725886362,
+          "hit": false,
+          "ms": 233.715,
+          "achieved": "hard",
+          "score": 536,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 245.907,
+      "maxMs": 257.5923
+    },
+    "classic6/master": {
+      "variant": "classic6",
+      "level": "master",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 46785902,
+          "hit": false,
+          "ms": 392.9859,
+          "achieved": "hard",
+          "score": 485,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 63563521,
+          "hit": false,
+          "ms": 287.5028,
+          "achieved": "hard",
+          "score": 517,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 13230664,
+          "hit": false,
+          "ms": 345.5985,
+          "achieved": "hard",
+          "score": 537,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 342.029,
+      "maxMs": 392.9859
+    },
+    "classic6/nightmare": {
+      "variant": "classic6",
+      "level": "nightmare",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 2885218027,
+          "hit": false,
+          "ms": 463.9032,
+          "achieved": "master",
+          "score": 1325,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 2868440408,
+          "hit": false,
+          "ms": 617.1661,
+          "achieved": "nightmare",
+          "score": 1784,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 2918773265,
+          "hit": false,
+          "ms": 553.9286,
+          "achieved": "nightmare",
+          "score": 1649,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 544.999,
+      "maxMs": 617.1661
+    },
+    "classic6/hell1": {
+      "variant": "classic6",
+      "level": "hell1",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1102408640,
+          "hit": false,
+          "ms": 511.6464,
+          "achieved": "hard",
+          "score": 597,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1119186259,
+          "hit": false,
+          "ms": 553.8479,
+          "achieved": "nightmare",
+          "score": 1647,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 1135963878,
+          "hit": false,
+          "ms": 572.0595,
+          "achieved": "master",
+          "score": 1162,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 545.851,
+      "maxMs": 572.0595
+    },
+    "classic6/hell2": {
+      "variant": "classic6",
+      "level": "hell2",
+      "asked": 3,
+      "requests": [
+        {
+          "index": 0,
+          "seed": 1031520021,
+          "hit": false,
+          "ms": 571.4575,
+          "achieved": "nightmare",
+          "score": 1697,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 1,
+          "seed": 1014742402,
+          "hit": false,
+          "ms": 597.974,
+          "achieved": "expert",
+          "score": 909,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        },
+        {
+          "index": 2,
+          "seed": 997964783,
+          "hit": false,
+          "ms": 573.3646,
+          "achieved": "nightmare",
+          "score": 1883,
+          "solved": true,
+          "approximate": true,
+          "exact": false,
+          "valid": true
+        }
+      ],
+      "n": 3,
+      "hits": 0,
+      "meanMs": 580.932,
+      "maxMs": 597.974
+    }
+  },
+  "notReached": [],
+  "correctness": [],
+  "endedAt": "2026-11-15T04:29:49.082Z",
+  "seconds": 8.245
+}

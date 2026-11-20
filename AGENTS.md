@@ -8,18 +8,24 @@ This repository holds two static apps and the code they share (see [docs/archite
 - Run the **quick suites** of the app you changed, from its folder:
 
   ```bash
-  cd generator && node tests/node-runner.js            # about one minute
-  cd player    && node tests/node-runner.js            # about fifteen seconds
+  cd generator && node tests/node-runner.js            # the complete Generator quick set
+  cd player    && node tests/node-runner.js            # the complete Player quick set
   ```
 
   Both also run the shared suites of `core/tests/suites`, so a change in `core/` is covered by running either one
   (run both when you change `core/`, since each app plugs different boards into the shared suites).
+  A complete quick set is not necessarily one short command. Where a whole command cannot fit one bounded
+  invocation, the complete set is covered by disjoint shards (`--suite=<names>`, or a describe or full-name selector),
+  every test exactly once and none omitted, and what it costs is in
+  [docs/difficulty-v3/recovery-quick-cost.md](docs/difficulty-v3/recovery-quick-cost.md): a measurement of a named
+  source and machine, not a promise. Running a quick set shard by shard is still only the quick tier.
 - While working on something narrow, run just the suites that cover it:
   `node tests/node-runner.js --suite=<name>[,<name>]` (the file name without `.test.js`), optionally with
   `--filter=<text>`. Prefer this to the whole quick set.
 - **Do not run, and do not edit, the full or heavy tests unless you are asked to.** That means:
-  - `node tests/node-runner.js --all` and `--manual` in `generator/` (the 8 suites of `generator/tests/manual/`:
-    about eight minutes; CI runs `--all` before each deploy);
+  - `node tests/node-runner.js --all` and `--manual` in `generator/` (the 8 suites of `generator/tests/manual/`: the
+    heavy tier, far longer than the quick set; CI does not run it, see DEVELOPERGUIDE.md "Running the tests",
+    paragraph "Continuous integration");
   - `generator/tests/soak.js`, `perf.js` and `qualify.js`, and anything that updates the regression hashes
     (`--update-hashes`, `SG_UPDATE_HASHES`) or the qualification lists;
   - the browser scripts of the player (`player/tests/browser/*`, `run-all.js`) and `tests.html`;

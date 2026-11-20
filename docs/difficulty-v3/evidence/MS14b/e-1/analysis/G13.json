@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "f251ebd0d6b162a2b75632ce660458f36681b13a68d678e28677799bb77aedd5",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "7eddb15a3a9a34ec3dd3f391b6dab80d9af81060",
+  "dirty": true,
+  "generatedAt": "2026-11-17T08:23:57.006Z",
+  "argv": ["--ids=G13","--record=..\\docs\\difficulty-v3\\evidence\\MS14b\\analysis\\G13.json"],
+  "records": [
+    {"key":"G13","request":{"variantId":"samurai","difficulty":"nightmare","seed":"42"},"value":{"id":"G13","request":{"variantId":"samurai","difficulty":"nightmare","seed":"42"},"today":{"steps":14,"missing":1},"counts":{"compact":7,"details":154},"board":{"cells":369,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,98,"D/Dig",196,69,44,"nakedSingle","—","—","—"],[4,126,"G/Choose",251,73,4,"hiddenSingleLine","—","—","N"],[5,127,"G/Choose",253,1011,938,"xyWing","Y","G2-R3C2","—"],[6,152,"G+A/Mixed",231,2363,1352,"forcingChainLong","—","—","N"],[7,152,"F/Final",231,2363,0,"forcingChainLong","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,44,45,46,47,48,48,49,50,50,51,52,52,53,53,54,54,55,55,56,56,57,57,58,58,58,59,59,59,60,60,60,61,61,61,62,62,62,62,63,63,63,63,64,64,64,64,65,65,65,65,65,66,66,66,66,66,66,67,67,67,67,67,67,68,68,68,68,68,68,68,69,69,69,69,69,69,69,69,70,70,70,70,70,70,70,70,70,70,71,71,71,72,72,72,72,72,72,72,72,73,73,73,73,73,73,1011,2422,2422,2423,2423,2424,2615,2626,2626,2621,2437,2436,2426,2423,2423,2422,2422,2422,2421,2421,2421,2421,2367,2366,2364,2363,2363],"alive":null,"folds":[{"step":6,"peak":2626,"end":2363,"removed":14,"restored":36,"signs":0,"opening":false}],"jumps":[{"step":5,"from":73,"to":1011,"before":{"P":1.5,"W":254,"R":2.779581,"V":69.003436,"E":251,"level":"easy"},"after":{"P":650,"W":1605.75,"R":291.703029,"V":69.078498,"E":253,"level":"master"},"choice":{"chosen":1011,"others":4,"nulls":0,"max":73,"at":334,"rated":7,"refused":2},"singles":[{"op":"remove","cell":"G2-R3C2","score":1011},{"op":"remove","cell":"G3-R7C8","score":73}],"cause":"single-culprit","frame":"G2-R3C2","firstUse":{"k":221,"n":260,"technique":"xyWing"},"key":"technique.xyWing.step","effects":"remove candidate 7@G2-R6C6"}]},"ms":97045,"overrides":[]}
+  ]
+}

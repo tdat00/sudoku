@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-plan-parity",
+  "task": "MS05b3",
+  "node": "v26.13.0",
+  "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+  "scripted": true,
+  "generation": "none",
+  "suites": {
+    "killer": {
+      "suite": "killer",
+      "oldRequests": 120,
+      "keys": 9,
+      "aggregateEnumeration": 120,
+      "checks": {
+        "naturalOrderIdentical": true,
+        "naturalKeyedPlansIdentical": true,
+        "reverseKeyedPlansIdentical": true,
+        "reverseRequestCountIdentical": true,
+        "naturalAggregateIdentical": true,
+        "reverseAggregateIdentical": true,
+        "oneKeyOnlyOwnRequests": true,
+        "repeatedReadNoRequests": true
+      },
+      "isolation": {
+        "keys": 9,
+        "onlyOwnRequests": 9,
+        "repeatedReadNoRequests": 9,
+        "problems": []
+      }
+    },
+    "jigsaw": {
+      "suite": "jigsaw",
+      "oldRequests": 168,
+      "keys": 9,
+      "aggregateEnumeration": 168,
+      "checks": {
+        "naturalOrderIdentical": true,
+        "naturalKeyedPlansIdentical": true,
+        "reverseKeyedPlansIdentical": true,
+        "reverseRequestCountIdentical": true,
+        "naturalAggregateIdentical": true,
+        "reverseAggregateIdentical": true,
+        "oneKeyOnlyOwnRequests": true,
+        "repeatedReadNoRequests": true
+      },
+      "isolation": {
+        "keys": 9,
+        "onlyOwnRequests": 9,
+        "repeatedReadNoRequests": 9,
+        "problems": []
+      }
+    },
+    "greaterThan": {
+      "suite": "greaterThan",
+      "oldRequests": 120,
+      "keys": 9,
+      "aggregateEnumeration": 120,
+      "checks": {
+        "naturalOrderIdentical": true,
+        "naturalKeyedPlansIdentical": true,
+        "reverseKeyedPlansIdentical": true,
+        "reverseRequestCountIdentical": true,
+        "naturalAggregateIdentical": true,
+        "reverseAggregateIdentical": true,
+        "oneKeyOnlyOwnRequests": true,
+        "repeatedReadNoRequests": true
+      },
+      "isolation": {
+        "keys": 9,
+        "onlyOwnRequests": 9,
+        "repeatedReadNoRequests": 9,
+        "problems": []
+      }
+    },
+    "extraRegions": {
+      "suite": "extraRegions",
+      "oldRequests": 336,
+      "keys": 18,
+      "aggregateEnumeration": 336,
+      "checks": {
+        "naturalOrderIdentical": true,
+        "naturalKeyedPlansIdentical": true,
+        "reverseKeyedPlansIdentical": true,
+        "reverseRequestCountIdentical": true,
+        "naturalAggregateIdentical": true,
+        "reverseAggregateIdentical": true,
+        "oneKeyOnlyOwnRequests": true,
+        "repeatedReadNoRequests": true
+      },
+      "isolation": {
+        "keys": 18,
+        "onlyOwnRequests": 18,
+        "repeatedReadNoRequests": 18,
+        "problems": []
+      }
+    },
+    "wordoku": {
+      "suite": "wordoku",
+      "oldRequests": 160,
+      "keys": 8,
+      "aggregateEnumeration": 160,
+      "checks": {
+        "naturalOrderIdentical": true,
+        "naturalKeyedPlansIdentical": true,
+        "reverseKeyedPlansIdentical": true,
+        "reverseRequestCountIdentical": true,
+        "naturalAggregateIdentical": true,
+        "reverseAggregateIdentical": true,
+        "oneKeyOnlyOwnRequests": true,
+        "repeatedReadNoRequests": true
+      },
+      "isolation": {
+        "keys": 8,
+        "onlyOwnRequests": 8,
+        "repeatedReadNoRequests": 8,
+        "problems": []
+      }
+    },
+    "variants": {
+      "suite": "variants",
+      "oldRequests": 309,
+      "keys": 118,
+      "aggregateEnumeration": 309,
+      "checks": {
+        "naturalOrderIdentical": true,
+        "naturalKeyedPlansIdentical": true,
+        "reverseKeyedPlansIdentical": true,
+        "reverseRequestCountIdentical": true,
+        "naturalAggregateIdentical": true,
+        "reverseAggregateIdentical": true,
+        "oneKeyOnlyOwnRequests": true,
+        "repeatedReadNoRequests": true
+      },
+      "isolation": {
+        "keys": 118,
+        "onlyOwnRequests": 118,
+        "repeatedReadNoRequests": 118,
+        "problems": []
+      }
+    }
+  },
+  "identical": true
+}

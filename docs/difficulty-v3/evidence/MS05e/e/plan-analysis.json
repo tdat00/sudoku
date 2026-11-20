@@ -1,0 +1,142 @@
+[
+  {
+    "label": "e-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.639 s by MS05r6a (b2-analysis-G01, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.489 s by MS05r6a (b2-analysis-G02, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 6.221 s by MS05r6a (b2-analysis-G03, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.059 s by MS05r6a (b2-analysis-G04, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.993 s by MS05r6a (b2-analysis-G05, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 2.416 s by MS05r6a (b2-analysis-G06, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.508 s by MS05r6a (b2-analysis-G07, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 0.507 s by MS05r6a (b2-analysis-G08, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 42,
+    "projectionBasis": "MEASURED 13.844 s by MS05r6a (b2-analysis-G09, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 77,
+    "projectionBasis": "MEASURED 25.781 s by MS05r6a (b2-analysis-G10, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 25,
+    "projectionBasis": "MEASURED 8.336 s by MS05r6a (b2-analysis-G11, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 4.187 s by MS05r6a (b2-analysis-G12, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 67,
+    "projectionBasis": "MEASURED 22.225 s by MS05r6a (b2-analysis-G13, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  },
+  {
+    "label": "e-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 20,
+    "projectionBasis": "MEASURED 1.811 s by MS05r6a (b2-analysis-G14, locked, same code: this item generates no Greater-Than puzzle), stated bound 3 times, at least 20 s"
+  }
+]

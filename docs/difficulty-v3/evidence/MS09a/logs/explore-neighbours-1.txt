@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS09a\explore-neighbours.js
+X_WING_at_beforeXWing left 37 finned {"digit":3,"bases":["C1","C4"],"covers":["R2","R9"],"fins":["R7C1"]} ref 1 xWing R3/R8
+X_WING_at_belowER left 0 finned null ref 0 xWing null
+COLOURING_through_fin left 26 finned null ref 0 xWing null
+COLOURING_through_ER left 26 finned null ref 0 xWing null
+ER_GENERAL_belowER left 37 finned {"digit":1,"bases":["C4","C7"],"covers":["R6","R9"],"fins":["R8C4"]} ref 1 xWing null
+KITE_ONLY_belowKite left 44 finned null ref 0 xWing null
+SKY_ONLY_belowSky left 45 finned {"digit":5,"bases":["R3","R4"],"covers":["C1","C5"],"fins":["R3C2"]} ref 2 xWing null
+exit=0 seconds=0.219

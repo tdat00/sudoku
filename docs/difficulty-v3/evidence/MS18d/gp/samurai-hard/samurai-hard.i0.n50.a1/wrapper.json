@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record samurai-hard.i0.n50 a1",
+  "runId": "samurai-hard.i0.n50.a1",
+  "cell": "samurai/hard",
+  "payload": "gp-recorder",
+  "chunkId": "samurai-hard.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/samurai-hard/samurai-hard.i0.n50.a1",
+  "requestedAt": "2026-11-20T01:28:24.776+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795112889080,
+    "lastCheckMs": 1795112904603,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T01:28:24.904+07:00",
+  "finished": "2026-11-20T01:28:43.864+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3017,
+    "cheapCheckMs": 127,
+    "ageMs": 136,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T01:28:43.865+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

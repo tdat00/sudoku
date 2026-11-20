@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=flower --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\flower-normal.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+flower/normal: 40/40 hits, p95 812 ms (budget 30.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| flower | normal | 40 | 40 | 100 % | 135 ms | 812 ms | 1.61 s | 30.0 s | offered |
+
+flower: ["normal"]
+exit=0 seconds=3.423

@@ -1,0 +1,12 @@
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: 1 field differ from replay-wire.js
+  target: saved undefined, fresh null
+G10: 1 field differ from replay-wire.js
+  target: saved undefined, fresh null
+G11: 1 field differ from replay-wire.js
+  target: saved undefined, fresh null
+G12: 1 field differ from replay-wire.js
+  target: saved undefined, fresh null
+G13: 1 field differ from replay-wire.js
+  target: saved undefined, fresh null
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose

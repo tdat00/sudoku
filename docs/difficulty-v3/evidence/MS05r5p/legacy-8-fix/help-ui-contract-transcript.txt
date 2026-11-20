@@ -1,0 +1,173 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+help
+  ok   help > help: the variant registry > has a hand-written entry for every registered variant (1 ms)
+  ok   help > help: the variant registry > notices a variant without a help entry (an injected list with a fake variant) (0 ms)
+  ok   help > help: the variant registry > sees a variant that is registered later, as a generic entry until its help is written (0 ms)
+  ok   help > help: the variant registry > survives an odd definition without throwing (0 ms)
+  ok   help > help: the variant registry > has every key of every entry in both language packs (1 ms)
+  ok   help > help: the variant registry > follows the registry: options, levels, symbol sets and group are read, not copied (1 ms)
+  ok   help > help: the variant registry > draws a picture of every registered variant (40 ms)
+  ok   help > help: the variant registry > shows what is special: cages for Killer, signs for Greater-Than, the key word for Wordoku (2 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > lists the nine levels in order, each with the techniques that can first appear at it (3 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > lists every registered technique exactly once: by level, or under the variant it belongs to (0 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > lists a technique that is registered later, at the level where its points first fit (0 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > has the seven generation steps, in the pipeline order, with their texts (0 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > describes the shortcuts: keycaps for every row, a text in both languages (1 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > reuses the labels and hints of the controls, and has the replay instead of the speeds (0 ms)
+  ok   help > help: the ladder, the steps and the shortcuts > needs only keys that exist in both packs (own and foreign) (1 ms)
+  ok   help > help: the strings > has one fragment of help.* keys, with exactly the placeholders each text needs (2 ms)
+  ok   help > help: the strings > owns every key it uses and leaves no key unused (1 ms)
+  ok   help > help: the strings > writes natural Vietnamese: long texts carry diacritics and differ from the English (2 ms)
+  ok   help > help: the strings > renders every text in both languages without a placeholder left over (4 ms)
+  ok   help > help: the module hook > subscribes once to the action event, whatever the number of init calls (0 ms)
+  ok   help > help: the module hook > refuses something that is not the app, and does nothing without a DOM (0 ms)
+  ok   help > help: the user guide > exists as a user and a developer guide in English and Vietnamese, each with a Generator part in its menu, linked to each other and from README.md (11 ms)
+  ok   help > help: the user guide > mentions every registered variant id, with its digits, cell count and levels right (32 ms)
+  ok   help > help: the user guide > documents every URL parameter the page can write (8 ms)
+  ok   help > help: the user guide > lists every script of index.html, and every one of them is on disk (6 ms)
+  ok   help > help: the user guide > links only to places that exist: files, images (small PNGs), its own headings and those of the other guides (28 ms)
+  ok   help > help: the user guide > uses only real commands: the scripts exist and know every option it shows (37 ms)
+  ok   help > help: the user guide > names only APIs that exist (every SG.x.y it mentions resolves) (1 ms)
+  ok   help > help: the user guide > has a worked variant example that registers, validates and generates (3.55 s)
+  ok   help > help: the user guide > has a worked technique example that registers and solves soundly (35 ms)
+ok   help: 30 passed  (3.77 s)
+ui-contract
+  ok   ui-contract > ui contract: function surface > SG.i18n exports 11 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.exchange exports 8 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.store exports 10 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.controls exports 3 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.symbols exports 5 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.boardView exports 6 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.stepView exports 3 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.explainCard exports 2 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.player exports 8 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.resultView exports 2 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > SG.app exports 14 declared functions (0 ms)
+  ok   ui-contract > ui contract: function surface > the replay player instance has the declared interface (0 ms)
+  ok   ui-contract > ui contract: function surface > the main-thread client has the interface of the worker client (0 ms)
+  ok   ui-contract > ui contract: function surface > every function of SG.app is described in the JSDoc header of app.js (1 ms)
+  ok   ui-contract > ui contract: loads without a DOM > loads every source file, in the declared order, in a context that has no DOM globals (58 ms)
+  ok   ui-contract > ui contract: loads without a DOM > SG.app does nothing without a DOM: no start, no toast, no modal, generate resolves null (1 ms)
+  ok   ui-contract > ui contract: colour literal scanners > finds hex colours, colour functions and named colours in CSS, never in var() references (1 ms)
+  ok   ui-contract > ui contract: colour literal scanners > finds colour literals in JavaScript strings but ignores comments and plain words (3 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > has the stylesheets to check (0 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > ../core/css/base.css uses var(--sg-...) tokens only (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > ../core/css/board.css uses var(--sg-...) tokens only (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > css/components.css uses var(--sg-...) tokens only (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > css/help.css uses var(--sg-...) tokens only (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > css/layout.css uses var(--sg-...) tokens only (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > css/print.css uses var(--sg-...) tokens only (0 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > css/steps.css uses var(--sg-...) tokens only (0 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > ../core/js/ui/board-view.js contains no colour literal (6 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > ../core/js/ui/exchange.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > ../core/js/ui/symbols.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > ../core/js/ui/wordbook.js contains no colour literal (0 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/a11y.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/app.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/cache.js contains no colour literal (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/controls.js contains no colour literal (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/explain.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/export.js contains no colour literal (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/help.js contains no colour literal (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/history.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/i18n.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/locale.en.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/locale.shell.js contains no colour literal (0 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/locale.vi.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/player.js contains no colour literal (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/result-view.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/step-view.js contains no colour literal (2 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/store.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/ui/theme.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > js/worker/worker-client.js contains no colour literal (1 ms)
+  ok   ui-contract > ui contract: no colour literal outside css/tokens.css and css/tokens-board.css > index.html has no colour literal in a style attribute, a <style> block or a colour attribute (1 ms)
+  ok   ui-contract > ui contract: index.html > has every mount point of the contract and the language and theme buttons (7 ms)
+  ok   ui-contract > ui contract: index.html > starts with Generate and Generate random both enabled (the random one never waits for a first run) (5 ms)
+  ok   ui-contract > ui contract: index.html > has no hard-coded visible text: every text node, title and label is translated (6 ms)
+  ok   ui-contract > ui contract: index.html > the reader finds hard-coded text and untranslated labels (so the test above can fail) (1 ms)
+  ok   ui-contract > ui contract: index.html > lists the scripts in the order of SOURCE_FILES (tests/node-runner.js) (4 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > tests.html loads the same SOURCE_FILES as the Node runner, in the same order (1 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > js/worker/gen.worker.js imports the core, the variants and the word lists in the same order, no UI (2 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > every suite in tests/suites is listed in the SUITE_FILES of tests.html (1 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > every suite in tests/manual is listed in the MANUAL_SUITE_FILES of tests.html, and only there (1 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > the Pages workflow of the repository publishes this app and the code it shares (0 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > every suite in ../core/tests/suites is listed in the CORE_SUITE_FILES of tests.html (1 ms)
+  ok   ui-contract > ui contract: one list of source files everywhere > the list reader of this file notices a missing entry (0 ms)
+  ok   ui-contract > app: main-thread generation client > runs the pipeline and returns the same puzzle as a direct call, events in order (77 ms)
+  ok   ui-contract > app: main-thread generation client > cancel() before the run starts rejects with budget.cancelled and delivers nothing (0 ms)
+  ok   ui-contract > app: main-thread generation client > a newer generate() replaces the one that is still waiting (73 ms)
+  ok   ui-contract > app: main-thread generation client > a failing run delivers its error event and rejects with the GenerationError (78 ms)
+  ok   ui-contract > app: main-thread generation client > settings helpers: font sizes and the data-theme attribute (0 ms)
+  ok   ui-contract > app: main-thread generation client > events: on() returns an unsubscribe function and a throwing listener is isolated (0 ms)
+ok   ui-contract: 67 passed  (363 ms)
+
+Suites: 2
+Tests:  97 total, 97 passed, 0 failed, 0 skipped
+Time:   4.14 s running tests, 4.31 s total
+Results: docs/difficulty-v3/evidence/MS05r5p/legacy-8-fix/help-ui-contract.json
+MS05r5p exit=0 seconds=4.519

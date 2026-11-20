@@ -1,0 +1,9 @@
+$ node generator\tests\artifacts\difficulty-v3\MS13b\render-compare.cjs docs\difficulty-v3\evidence\MS13b\differential
+app generator, sources tree, calls 6370, with a Finding 2306, ratings 135 (6129 steps), texts 16870 (4604 with chains), engine sha256 8c0f69aa5c7c22acb3ec85be9af1907030916f97aa9c7d9450012a7e35b042e3, text sha256 a73f044d3c166ab5ee534a6e902d2cd6ea71fb6a9a413ffe9ed1f7f080a2039c
+app generator, sources git:7932132, calls 6370, with a Finding 2306, ratings 135 (6129 steps), texts 16870 (4604 with chains), engine sha256 8c0f69aa5c7c22acb3ec85be9af1907030916f97aa9c7d9450012a7e35b042e3, text sha256 3786599e91fc8ad1b43d39e57eddf7b6bc99e02a7b238c254f728b3de5828e20
+app generator, sources git:7932132 + the tree's language packs, calls 6370, with a Finding 2306, ratings 135 (6129 steps), texts 16870 (4604 with chains), engine sha256 8c0f69aa5c7c22acb3ec85be9af1907030916f97aa9c7d9450012a7e35b042e3, text sha256 a73f044d3c166ab5ee534a6e902d2cd6ea71fb6a9a413ffe9ed1f7f080a2039c
+app player, sources tree, calls 6370, with a Finding 2306, solver reports 135 (6129 steps), texts 16870 (4604 with chains), engine sha256 06c24afd647c1322ea3286b59ab16b1090d6c04176051bf5fa89f427d90fece3, text sha256 76159eb698c4bb09780bda81a20ffce9cc858483d85ae242360e02496e483d35
+app player, sources git:7932132, calls 6370, with a Finding 2306, solver reports 135 (6129 steps), texts 16870 (4604 with chains), engine sha256 06c24afd647c1322ea3286b59ab16b1090d6c04176051bf5fa89f427d90fece3, text sha256 6b7c5cdca5aa5b1d8d66c1bc45c6cf591e048ca882d3aa8a23e91af2a525546c
+app player, sources git:7932132 + the tree's language packs, calls 6370, with a Finding 2306, solver reports 135 (6129 steps), texts 16870 (4604 with chains), engine sha256 06c24afd647c1322ea3286b59ab16b1090d6c04176051bf5fa89f427d90fece3, text sha256 76159eb698c4bb09780bda81a20ffce9cc858483d85ae242360e02496e483d35
+differential: every check passed
+exit=0 seconds=33.671

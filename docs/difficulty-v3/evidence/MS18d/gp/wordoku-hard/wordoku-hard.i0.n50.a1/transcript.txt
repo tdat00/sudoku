@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --chunk=wordoku-hard.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\wordoku-hard\wordoku-hard.i0.n50.a1\ledger.json
+ms18d-gp-recorder-start chunk=wordoku-hard.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=wordoku-hard.i0.n50 bytes=21763 sha256=5050feca1eb86603901413d4b615a284350c536db82875fea2ad661b3bd6a72c
+exit=0 seconds=1.884

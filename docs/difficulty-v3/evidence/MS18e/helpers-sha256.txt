@@ -1,0 +1,6 @@
+65d81d150aaa31af983f0df783af6c7d20ee94bba3035f3506bc510a58969bcf  generator/tests/artifacts/difficulty-v3/MS18c/identities-now.cjs
+fc7298d3a6a9ee06600cd9f396618168d3b013f396122a1ce5f6515808c0951d  generator/tests/artifacts/difficulty-v3/MS18c/invoke-dv3node.ps1
+a8dd949d2264681679240998c5d941ae8af1822474e7cff47cf70517d0b3095b  generator/tests/artifacts/difficulty-v3/MS18d/phase-b/freeze-targets.js
+e4b95cb1898939c2eb46c9c68aec08364706847e7119714c5dc7fd0b3f095485  generator/tests/artifacts/difficulty-v3/MS18d/phase-c/tee-c.js
+512f33f92f2d700987e50dfdd566579f3671859e4a843ca1f95a3ef6c93b2c83  generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs
+700874ad508849a0f26bd6fca777626898fd70422324a52d7fab67d4f328aa8e  generator/tests/artifacts/difficulty-v3/MS18e/run-locked-e.ps1

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["replay"],"filter":null,"exact":"replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 10446.9,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 10277.9,
+    "tests": [
+      {"suite":"replay","name":"has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details","fullName":"replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details","status":"pass","ms":10277.4,"reason":"","error":null,"ordinal":143}
+    ],
+    "suites": [
+      {"name":"replay","total":1,"passed":1,"failed":0,"skipped":0,"ms":10277.691}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=replay","--exact=replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\pins\\exact\\replay-143.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

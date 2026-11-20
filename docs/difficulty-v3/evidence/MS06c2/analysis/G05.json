@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "2ffc4c83e1b04e0c310048af651a2bfb8a536edc40ee9d3c7a2b13dcc30624c8",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "9563c6316db5772a8e2029b04c14ec155532e5ad",
+  "dirty": true,
+  "generatedAt": "2026-11-14T16:31:09.998Z",
+  "argv": ["--ids=G05","--record=..\\docs\\difficulty-v3\\evidence\\MS06c2\\analysis\\G05.json"],
+  "records": [
+    {"key":"G05","request":{"variantId":"classic9","difficulty":"hell1","seed":"2299986211"},"value":{"id":"G05","request":{"variantId":"classic9","difficulty":"hell1","seed":"2299986211"},"today":{"steps":106,"missing":50},"counts":{"compact":7,"details":29},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,9,"D/Dig",17,26,26,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,18,"nakedSingle","—","—","—"],[4,23,"G/Choose",45,550,506,"simpleColouring","Y","—","—"],[5,24,"G/Choose",47,1993,1443,"forcingChain","Y","R3C9","—"],[6,27,"G/Choose",53,2942,949,"nishio","—","—","N"],[7,27,"F/Final",53,2942,0,"nishio","—","—","—"]],"details":[0,5,9,11,14,17,19,22,24,26,28,30,31,33,34,36,37,38,40,41,42,43,44,550,1993,1993,2207,2942,2942],"alive":null,"folds":[],"jumps":[{"step":4,"from":44,"to":550,"before":{"P":1,"W":43,"R":1.364858,"V":41.445783,"E":43,"level":"veryEasy"},"after":{"P":360,"W":766.25,"R":148.091246,"V":42.352941,"E":45,"level":"hard"},"choice":{"chosen":550,"others":10,"nulls":0,"max":45,"at":43,"rated":19,"refused":8},"singles":[{"op":"remove","cell":"R2C6","score":44},{"op":"remove","cell":"R8C4","score":45}],"cause":"together","frame":null,"firstUse":{"k":21,"n":51,"technique":"simpleColouring"},"key":"technique.simpleColouring.step","effects":"remove candidate 7@R8C1"},{"step":5,"from":550,"to":1993,"before":{"P":360,"W":766.25,"R":148.091246,"V":42.352941,"E":45,"level":"hard"},"after":{"P":1100,"W":8257.25,"R":849.359796,"V":43.218391,"E":47,"level":"nightmare"},"choice":{"chosen":null,"others":4,"nulls":1,"max":552,"at":54,"rated":10,"refused":4},"singles":[{"op":"remove","cell":"R3C9","score":1992},{"op":"remove","cell":"R7C1","score":551}],"cause":"single-culprit","frame":"R3C9","firstUse":{"k":15,"n":60,"technique":"forcingChain"},"key":"technique.forcingChain.step.endpoints","effects":"remove candidate 5@R2C7"}]},"ms":567,"overrides":[]}
+  ]
+}

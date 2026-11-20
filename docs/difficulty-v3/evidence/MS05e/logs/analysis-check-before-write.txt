@@ -1,0 +1,68 @@
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: matches replay-goldens.js
+G05: matches replay-goldens.js
+G06: matches replay-goldens.js
+G07: matches replay-goldens.js
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: 167 fields differ from replay-goldens.js
+  counts.compact: saved 6, fresh 7
+  counts.details: saved 114, fresh 110
+  board.signsTo: saved 3, fresh 4
+  rows.length: saved 6, fresh 7
+  rows[2][1]: saved 108, fresh 1
+  rows[2][2]: saved "C+I+A+IM/Mixed", fresh "C/Clues"
+  rows[2][3]: saved 50, fresh 57
+  rows[2][4]: saved 119, fresh 131
+  rows[2][5]: saved 119, fresh 131
+  rows[3][1]: saved 109, fresh 62
+  rows[3][3]: saved 50, fresh 57
+  rows[3][4]: saved 119, fresh 134
+  rows[3][5]: saved 0, fresh 3
+  rows[4][1]: saved 111, fresh 102
+  rows[4][3]: saved 50, fresh 57
+  rows[4][4]: saved 957, fresh 589
+  rows[4][5]: saved 838, fresh 455
+  rows[4][6]: saved "xyWing", fresh "simpleColouring"
+  rows[5][1]: saved 111, fresh 107
+  rows[5][2]: saved "F/Final", fresh "IM+A+I/Mixed"
+  rows[5][3]: saved 50, fresh 53
+  rows[5][4]: saved 957, fresh 963
+  rows[5][5]: saved 0, fresh 374
+  rows[5][9]: saved "—", fresh "N"
+  details.length: saved 114, fresh 110
+  ... and 142 more
+G12: 131 fields differ from replay-goldens.js
+  counts.details: saved 106, fresh 107
+  board.signsTo: saved 6, fresh 5
+  rows[2][1]: saved 22, fresh 1
+  rows[2][2]: saved "C+I/Mixed", fresh "C/Clues"
+  rows[2][4]: saved 127, fresh 129
+  rows[2][5]: saved 127, fresh 129
+  rows[3][1]: saved 92, fresh 93
+  rows[3][4]: saved 130, fresh 132
+  rows[4][1]: saved 103, fresh 104
+  rows[4][4]: saved 638, fresh 592
+  rows[4][5]: saved 508, fresh 460
+  rows[5][1]: saved 103, fresh 104
+  rows[5][4]: saved 638, fresh 592
+  details.length: saved 106, fresh 107
+  details[3]: saved 129, fresh 130
+  details[15]: saved 129, fresh 130
+  details[16]: saved 129, fresh 130
+  details[17]: saved 129, fresh 130
+  details[18]: saved 128, fresh 130
+  details[19]: saved 128, fresh 130
+  details[20]: saved 128, fresh 130
+  details[21]: saved 128, fresh 130
+  details[22]: saved 128, fresh 130
+  details[23]: saved 127, fresh 130
+  details[24]: saved 127, fresh 130
+  ... and 106 more
+G13: matches replay-goldens.js
+G14: matches replay-goldens.js
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose

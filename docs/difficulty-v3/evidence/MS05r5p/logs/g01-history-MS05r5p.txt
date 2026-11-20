@@ -1,0 +1,9 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   history: 4 passed  (26 ms)
+
+Suites: 1
+Tests:  4 total, 4 passed, 0 failed, 0 skipped
+Time:   26 ms running tests, 112 ms total
+MS05r5p exit=0 seconds=0.216

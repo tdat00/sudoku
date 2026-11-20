@@ -1,0 +1,3 @@
+mutation 53 (checker: extra edges of a graph are not counted): DETECTED - 35 total, 34 passed, 1 failed, 0 skipped - 1 failing - 2.5 s
+    FAIL tech-chain > grouped graph (R16, inactive): the independent checker on malformed nodes, graphs and proofs > flags every way a graph can differ from the canonical graph of its position
+detected 1 of 1, survivors 0, 2.5 s

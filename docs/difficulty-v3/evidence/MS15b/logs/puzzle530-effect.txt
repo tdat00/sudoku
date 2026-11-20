@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS15b\puzzle530-effect.js
+P530 C=6 with alsXz: status solved alsXz steps 1 open 0 forcingChainLong null record {"stop":null,"graph":"complete","minimum":"complete","capHit":null,"work":0}
+P530 C=6 without: status stuck alsXz steps 0 open 52 forcingChainLong null record {"stop":"search-work","graph":"complete","minimum":"incomplete","capHit":"work","work":50000}
+P24 C=4 with alsXz: status stuck alsXz steps 0 open 43 forcingChainLong 5 links record {"stop":null,"graph":"complete","minimum":"complete","capHit":null,"work":18101}
+P24 C=4 without: status stuck alsXz steps 0 open 43 forcingChainLong 5 links record {"stop":null,"graph":"complete","minimum":"complete","capHit":null,"work":18101}
+P24 C=6 with alsXz: status stuck alsXz steps 1 open 43 forcingChainLong 7 links record {"stop":null,"graph":"complete","minimum":"complete","capHit":null,"work":26553}
+P24 C=6 without: status stuck alsXz steps 0 open 43 forcingChainLong 7 links record {"stop":null,"graph":"complete","minimum":"complete","capHit":null,"work":26202}
+exit=0 seconds=0.516

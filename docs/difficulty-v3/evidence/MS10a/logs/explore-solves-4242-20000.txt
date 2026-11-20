@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS10a\explore-solves.js 4242 20000
+seed 4242 puzzles 20000 (from 0): solved 20000, with a remotePairs step 0, hardest techniques {"uniqueRectangle":227,"nakedSingle":5346,"forcingChain":1126,"xyWing":1053,"boxLine":450,"skyscraper":1234,"pointing":1887,"forcingChainLong":2240,"hiddenSingleLine":905,"nakedPair":785,"hiddenSingleBox":2458,"wWing":596,"twoStringKite":161,"hiddenPair":391,"nishio":649,"finnedXWing":76,"nakedQuad":3,"simpleColouring":64,"xyzWing":137,"nakedTriple":52,"finnedSwordfish":62,"xWing":38,"emptyRectangle":34,"hiddenTriple":19,"swordfish":5,"jellyfish":1,"hiddenQuad":1}, 29.8 s
+exit=0 seconds=44.698

@@ -1,0 +1,6 @@
+$ node tests\artifacts\difficulty-v3\MS09a\sweep-firings.js
+skyscraper firings 65 of 300 states
+twoStringKite firings 114 of 300 states
+emptyRectangle firings 144 of 300 states
+finnedXWing firings 259 of 300 states
+exit=0 seconds=0.376

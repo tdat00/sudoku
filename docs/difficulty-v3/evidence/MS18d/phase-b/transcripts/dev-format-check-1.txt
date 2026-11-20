@@ -1,0 +1,13 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\check-format.js ..\generator\design.md ..\DEVELOPERGUIDE.md ..\DEVELOPERGUIDE.vn.md tests\suites\mega.test.js tests\suites\multigrid.test.js tests\suites\manual-corpus.test.js tests\fixtures\perf-helper.js
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/append-writer.js: line 8 has 111 characters; line 13 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/check-format.js: line 4 has 112 characters; line 9 has 112 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/compare-listings.js: line 42 has 112 characters; line 95 has 112 characters; line 96 has 114 characters; line 150 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/freeze-targets.js: line 9 has 111 characters; line 14 has 111 characters; line 31 has 111 characters; line 52 has 114 characters; line 63 has 112 characters; line 67 has 125 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/run-locked.ps1: line 2 has 112 characters; line 3 has 112 characters; line 46 has 113 characters; line 79 has 118 characters; line 80 has 115 characters; line 109 has 111 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/tee-append.js: line 7 has 111 characters; line 21 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/test-freeze-targets.js: line 4 has 113 characters; line 39 has 117 characters; line 60 has 115 characters; line 65 has 113 characters; line 78 has 112 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/test-run-locked.js: line 7 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/test-run-locked.ps1: line 3 has 112 characters; line 36 has 115 characters; line 38 has 122 characters; line 55 has 126 characters; line 70 has 117 characters; line 77 has 122 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-b/test-tee-append.js: line 5 has 111 characters; line 109 has 116 characters; line 123 has 111 characters; line 132 has 113 characters; line 157 has 114 characters; line 177 has 111 characters
+checked 42 files, 10 with problems
+exit=1 seconds=0.159

@@ -1,0 +1,294 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "runId": "ms18c-20261118T220142782-32760",
+  "cell": "butterfly/nightmare",
+  "epoch": "MS18c-GQ-20261118-01",
+  "payloadSlot": 1,
+  "admissionOrdinal": 1,
+  "state": "finished",
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "inputs": {
+    "ratingVersion": 3,
+    "engineSources": "0ca29eaeebc295b6",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77"
+  },
+  "policy": "MS18c-GQ-host-active",
+  "method": "MS18c-GQ-structural-v1",
+  "supervisor": {
+    "pid": 32760,
+    "createdUtcMicros": "2026-11-18T22:01:42.011200Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x800;killOnClose=False;breakawayOk=True;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 27124,
+    "createdUtcMicros": "2026-11-18T22:01:54.228584Z"
+  },
+  "clocks": {
+    "oStart": "2026-11-18T22:01:42.779Z",
+    "oSeconds": 7200.0,
+    "oDeadline": "2026-11-19T00:01:42.7823818Z",
+    "T": 4500.0,
+    "tStart": "2026-11-18T22:01:54.212Z",
+    "tDeadline": "2026-11-18T23:16:54.2256761Z",
+    "rSeconds": 7.319355,
+    "wSeconds": 71.5892945,
+    "lockWaitedSeconds": 6.693,
+    "note": "T starts at the creation of the owned launcher after the lock acquisition and excludes that wait",
+    "elapsedSeconds": 61.476
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\status.json",
+    "supervisorLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\supervisor.log",
+    "preLog": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\pre-ms18c-20261118T220142782-32760.log",
+    "events": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\events.jsonl",
+    "readiness": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\readiness.json",
+    "stdout": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\stdout.txt",
+    "stderr": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\stderr.txt",
+    "qualifierJson": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\qualifier.json",
+    "qualifierMarkdown": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\payload-1\\admission-1\\qualifier.md",
+    "journal": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\journal.jsonl",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\acceptance-receipt.json"
+  },
+  "members": [
+    8916,
+    13952,
+    19360,
+    23220,
+    24112,
+    26124,
+    27124,
+    29180,
+    29252,
+    29288,
+    31788,
+    32468,
+    32976,
+    33236,
+    33932,
+    34516,
+    34812
+  ],
+  "membersSeen": [
+    {
+      "pid": 8916,
+      "createdUtcMicros": "2026-11-18T22:01:54.383061Z"
+    },
+    {
+      "pid": 13952,
+      "createdUtcMicros": "2026-11-18T22:02:02.060794Z"
+    },
+    {
+      "pid": 19360,
+      "createdUtcMicros": "2026-11-18T22:01:54.359463Z"
+    },
+    {
+      "pid": 23220,
+      "createdUtcMicros": "2026-11-18T22:01:54.252698Z"
+    },
+    {
+      "pid": 24112,
+      "createdUtcMicros": "2026-11-18T22:02:00.782488Z"
+    },
+    {
+      "pid": 26124,
+      "createdUtcMicros": "2026-11-18T22:02:01.533569Z"
+    },
+    {
+      "pid": 27124,
+      "createdUtcMicros": "2026-11-18T22:01:54.228584Z"
+    },
+    {
+      "pid": 29180,
+      "createdUtcMicros": "2026-11-18T22:02:02.085380Z"
+    },
+    {
+      "pid": 29252,
+      "createdUtcMicros": "2026-11-18T22:02:02.075016Z"
+    },
+    {
+      "pid": 29288,
+      "createdUtcMicros": "2026-11-18T22:01:55.047113Z"
+    },
+    {
+      "pid": 31788,
+      "createdUtcMicros": "2026-11-18T22:02:01.946804Z"
+    },
+    {
+      "pid": 32468,
+      "createdUtcMicros": "2026-11-18T22:01:55.070731Z"
+    },
+    {
+      "pid": 32976,
+      "createdUtcMicros": "2026-11-18T22:02:01.515951Z"
+    },
+    {
+      "pid": 33236,
+      "createdUtcMicros": "2026-11-18T22:02:01.876916Z"
+    },
+    {
+      "pid": 33932,
+      "createdUtcMicros": "2026-11-18T22:02:01.916657Z"
+    },
+    {
+      "pid": 34516,
+      "createdUtcMicros": "2026-11-18T22:02:02.098292Z"
+    },
+    {
+      "pid": 34812,
+      "createdUtcMicros": "2026-11-18T22:02:00.794978Z"
+    }
+  ],
+  "heartbeatAt": "2026-11-18T22:03:06.414Z",
+  "finalStatus": "record-accepted",
+  "exitCode": 0,
+  "activeProcesses": 8,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 27124,
+    "launcherCreated": "2026-11-18T22:01:54.228584Z",
+    "tStartIso": "2026-11-18T22:01:54.212Z",
+    "tStartTicks": 6340954607382,
+    "tStartNs": 634095460738200,
+    "createdAfterSeconds": 0.0330073,
+    "resumedAfterSeconds": 0.0375977,
+    "launcherExit": 0,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 71.5892945,
+    "launcherExitedAfterSeconds": 71.5858309,
+    "members": [
+      8916,
+      13952,
+      19360,
+      23220,
+      24112,
+      26124,
+      27124,
+      29180,
+      29252,
+      29288,
+      31788,
+      32468,
+      32976,
+      33236,
+      33932,
+      34516,
+      34812
+    ],
+    "membersDetail": [
+      {
+        "pid": 8916,
+        "createdUtcMicros": "2026-11-18T22:01:54.383061Z"
+      },
+      {
+        "pid": 13952,
+        "createdUtcMicros": "2026-11-18T22:02:02.060794Z"
+      },
+      {
+        "pid": 19360,
+        "createdUtcMicros": "2026-11-18T22:01:54.359463Z"
+      },
+      {
+        "pid": 23220,
+        "createdUtcMicros": "2026-11-18T22:01:54.252698Z"
+      },
+      {
+        "pid": 24112,
+        "createdUtcMicros": "2026-11-18T22:02:00.782488Z"
+      },
+      {
+        "pid": 26124,
+        "createdUtcMicros": "2026-11-18T22:02:01.533569Z"
+      },
+      {
+        "pid": 27124,
+        "createdUtcMicros": "2026-11-18T22:01:54.228584Z"
+      },
+      {
+        "pid": 29180,
+        "createdUtcMicros": "2026-11-18T22:02:02.085380Z"
+      },
+      {
+        "pid": 29252,
+        "createdUtcMicros": "2026-11-18T22:02:02.075016Z"
+      },
+      {
+        "pid": 29288,
+        "createdUtcMicros": "2026-11-18T22:01:55.047113Z"
+      },
+      {
+        "pid": 31788,
+        "createdUtcMicros": "2026-11-18T22:02:01.946804Z"
+      },
+      {
+        "pid": 32468,
+        "createdUtcMicros": "2026-11-18T22:01:55.070731Z"
+      },
+      {
+        "pid": 32976,
+        "createdUtcMicros": "2026-11-18T22:02:01.515951Z"
+      },
+      {
+        "pid": 33236,
+        "createdUtcMicros": "2026-11-18T22:02:01.876916Z"
+      },
+      {
+        "pid": 33932,
+        "createdUtcMicros": "2026-11-18T22:02:01.916657Z"
+      },
+      {
+        "pid": 34516,
+        "createdUtcMicros": "2026-11-18T22:02:02.098292Z"
+      },
+      {
+        "pid": 34812,
+        "createdUtcMicros": "2026-11-18T22:02:00.794978Z"
+      }
+    ],
+    "fault": null,
+    "callbackErrors": 0,
+    "lastCallbackError": null
+  },
+  "post": {
+    "ok": true,
+    "outcome": "record-accepted",
+    "verdict": "accepted",
+    "receipt": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-nightmare\\acceptance-receipt.json",
+    "monitor": {
+      "proceed": true,
+      "invalid": [],
+      "invalidTiming": [],
+      "breaches": [],
+      "metrics": {
+        "rSeconds": 7.319355,
+        "requests": 40,
+        "maxMs": 21241.2245,
+        "stopped": null,
+        "secondRoundRan": false,
+        "slowTotal": 0,
+        "slowFirstRound": 0,
+        "qSeconds": 64.076,
+        "sSeconds": 63.50076339999999,
+        "sFirstRoundSeconds": 63.50076339999999,
+        "sSecondRoundSeconds": 0,
+        "qMinusS": 0.5752366000000111,
+        "wSeconds": 71.5892945,
+        "wMinusQ": 7.513294499999989
+      }
+    }
+  },
+  "writeFailures": 0
+}

@@ -1,0 +1,5 @@
+$ node tests\mega-contract.js --request=mega16-cv5-b --record=..\docs\difficulty-v3\evidence\MS18e\deep\nightmare\mega16-cv5-b.json
+mega16-cv5-b: outcome ok, correctness pass, exact true, attempts 1 of 2, warnings none
+  generation 6.305 s, checks 0.074 s, guard margin 493.622 s of 500.000 s, allowance 256, level override mega16:nightmare
+record: docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega16-cv5-b.json
+exit=0 seconds=7.041

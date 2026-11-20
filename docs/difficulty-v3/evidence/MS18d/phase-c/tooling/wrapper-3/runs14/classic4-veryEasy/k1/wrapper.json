@@ -1,0 +1,38 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in k1",
+  "runId": "k1",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-3/runs14/classic4-veryEasy/k1",
+  "requestedAt": "2026-11-19T15:48:44.318+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795078108915,
+    "lastCheckMs": 1795078124305,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 260
+  },
+  "startedAtFromChild": "2026-11-19T15:48:44.401+07:00",
+  "finished": "2026-11-19T15:48:50.498+07:00",
+  "releaseObservedAt": "2026-11-19T15:48:50.499+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": null,
+  "controllerOutcome": null,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "stop",
+  "problems": [
+    "540-second limit reached; record the timeout",
+    "the controller wrote no result.json: the run is incomplete"
+  ]
+}

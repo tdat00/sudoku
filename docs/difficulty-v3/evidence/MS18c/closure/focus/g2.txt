@@ -1,0 +1,40 @@
+$ node tests\node-runner.js --suite=cache,controls,store,variants-registry,multigrid,recovery-profile,worker,digger-target --results=..\docs\difficulty-v3\evidence\MS18c\closure\focus\g2.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+FAIL cache: 116 passed, 3 failed  (14.68 s)
+(node:26284) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 52 passed  (129 ms)
+ok   digger-target: 75 passed  (1.98 s)
+ok   multigrid: 184 passed  (25.15 s)
+ok   recovery-profile: 27 passed  (548 ms)
+ok   store: 91 passed  (103 ms)
+ok   variants-registry: 12 passed  (8 ms)
+ok   worker: 144 passed  (52.04 s)
+
+Failures:
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+  FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+       GenerationError: difficulty.unsupportedLevel
+       at fail (Q:\git\sudoku\generator\js\engine\pipeline.js:32:12)
+       at normalizeConfig (Q:\git\sudoku\generator\js\engine\pipeline.js:67:13)
+       at configureStep (Q:\git\sudoku\generator\js\engine\pipeline.js:185:13)
+       at stage (Q:\git\sudoku\generator\js\engine\digger.js:122:22)
+
+Suites: 8
+Tests:  704 total, 701 passed, 3 failed, 0 skipped
+Time:   94.63 s running tests, 94.87 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/focus/g2.json
+exit=1 seconds=95.098

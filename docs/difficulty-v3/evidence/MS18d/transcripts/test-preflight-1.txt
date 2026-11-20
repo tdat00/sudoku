@@ -1,0 +1,43 @@
+$ node tests\artifacts\difficulty-v3\MS18d\test-preflight.js
+ok   a 40-request cell: mean, percentiles and the 50 * mean alert, unflagged and unadmitted
+FAIL a 100-request cell (second round) is accepted; any other count is not a complete round: AssertionError [ERR_ASSERTION]: /53 requests is not a complete round/
+    at invalid (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\test-preflight.js:127:10)
+    at Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\test-preflight.js:155:3
+    at test (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\test-preflight.js:27:5)
+    at Object.<anonymous> (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\test-preflight.js:149:1)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+ok   a 10,000 ms mean gives a 500 s alert and is flagged; the exit code of main is 1
+ok   exactly 450 s is not flagged; one tenth of a microsecond more on the mean is
+ok   times with more than four decimals use the float path and keep the strict boundary
+ok   the 50 * maximum is kept apart from the mean alert and never flags a cell
+ok   the sum of the alerts is the exact decimal sum, rounded to nine places
+ok   the mean of four-decimal times is the exact decimal quotient, not a float-sum artefact
+ok   every invalid or missing input is an InputError that names the problem
+ok   published count, target positions and the accepted hash are checked
+ok   ceil(3 * q) is exact for four-decimal times and the integer boundary
+ok   keep when q <= t (equality keeps); update when q > t, never below the old one here
+ok   the proposal is min(budget, max(predecessor, ceil(3q))): ceiling, floor and cap
+ok   a kept cell receives no cascade: the next level uses the kept target as its predecessor
+ok   a hidden level is never a candidate: the predecessor is the previous published level
+ok   the minimum successes use integer arithmetic: 72 of 79; 71 of 79 prints 90 % but fails
+ok   loadDeclarations loads engine files and perf-helper only, never perf.js, and calls no generator
+ok   the helper source never calls measure, the pipeline or a generator, and never requires perf.js
+ok   main exits 0, 1 or 2; the file is CRLF with the named keys and is written only on 0 and 1
+ok   main exits 2 for a missing file, broken JSON, an unknown argument, a path outside the repository
+ok   main is deterministic: the same input gives the same bytes
+ok   median: odd count, even count (mean of the middle two), empty
+ok   pair rules: strict needs every field but ms equal and an old time above zero; seeds must agree
+ok   a duplicated request and a shard whose bytes differ from the listed SHA-256 are invalid
+ok   real data: loading the declarations and building call no pipeline, digger or perf.js
+ok   real data: 79 published cells with 40 requests each, the 56 hidden ones absent
+ok   real data: the 17 proposals of the brief, 62 kept, no anomaly
+ok   real data: Sohei Hell 2 is the one flagged mean alert; the sum and the largest alerts match
+ok   real data: the inputs bind the accepted identities and the build is repeatable
+28 passed, 1 failed, 0 skipped
+FAILED: a 100-request cell (second round) is accepted; any other count is not a complete round
+exit=1 seconds=0.343

@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS11c\rate-positives.js
+BUG_LOW: clues 24, level master, score 1208, hardest bugPlusOne, bugPlusOne uses 1
+BUG_HIGH: clues 24, level master, score 1385, hardest bugPlusOne, bugPlusOne uses 1
+exit=0 seconds=0.202

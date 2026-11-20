@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record diagonalX-veryEasy.i0.n50 a1",
+  "runId": "diagonalX-veryEasy.i0.n50.a1",
+  "cell": "diagonalX/veryEasy",
+  "payload": "gp-recorder",
+  "chunkId": "diagonalX-veryEasy.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-veryEasy/diagonalX-veryEasy.i0.n50.a1",
+  "requestedAt": "2026-11-19T23:15:46.721+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795104931008,
+    "lastCheckMs": 1795104946551,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 286
+  },
+  "startedAtFromChild": "2026-11-19T23:15:46.848+07:00",
+  "finished": "2026-11-19T23:15:56.953+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2877,
+    "cheapCheckMs": 124,
+    "ageMs": 133,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:15:56.954+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

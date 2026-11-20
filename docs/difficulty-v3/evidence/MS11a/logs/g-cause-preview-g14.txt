@@ -1,0 +1,9 @@
+$ node tests\artifacts\difficulty-v3\MS11a\g-cause.js G14
+G14 mega16 hell2 seed 12: same puzzle with and without: true; positions 78 / 78 (10.4 s)
+  position 70: score without 1766, with 1887; hardest without forcingChain, with forcingChain; counts with minus without {"uniqueRectangle":2}
+  position 71: score without 2635, with 2666; hardest without forcingChainLong, with forcingChainLong; counts with minus without {"uniqueRectangle":1}
+  position 72: score without 3675, with 3688; hardest without nishio, with nishio; counts with minus without {"boxLine":-1,"uniqueRectangle":1}
+  position 73: score without 3894, with 3904; hardest without nishio, with nishio; counts with minus without {"uniqueRectangle":1}
+  position 77: score without 6473, with 6479; hardest without nishioDeep, with nishioDeep; counts with minus without {"uniqueRectangle":1}
+  positions that differ: 5
+exit=0 seconds=10.636

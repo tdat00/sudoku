@@ -1,0 +1,55 @@
+mutation 90 (a registry without has() is not guarded): DETECTED - 29 total, 28 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: the current version itself must be a positive safe integer and the level and technique registries present
+mutation 91 (nothing is registered): DETECTED - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL cache > cache: serialisation > round trip equals a fresh generation: classic9 hard
+mutation 92 (everything is registered): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 9.9 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T01: a rating needs its ten fields, the current version and local consistency to enter
+mutation 93 (the key drops exact): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 94 (the key drops level): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.2 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 95 (the key drops score): NOT DETECTED, EQUIVALENT (ratingProblem makes rawScore exactly equal to score and the key keeps rawScore, so two valid ratings with equal rawScores have equal scores (claimed after run 1, where this was the first survivor of that kind; the mutant that drops both is the last entry of the list)) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.4 s
+mutation 96 (the key drops rawScore): NOT DETECTED, EQUIVALENT (ratingProblem refuses any rating whose rawScore is not exactly its score, so two valid ratings with equal scores have equal rawScores) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.3 s
+mutation 97 (the key drops confidence): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 98 (the key drops hardestTechnique): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 99 (the key drops hardestGroup): NOT DETECTED, EQUIVALENT (ratingProblem binds the group to the registered group of the technique, which the key compares, so equal techniques have equal groups) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.4 s
+mutation 100 (the key drops solved): NOT DETECTED, EQUIVALENT (ratingProblem refuses any rating whose solved is not true, so every valid rating has the same value) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.4 s
+mutation 101 (the key drops empties): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 102 (the key drops the version): NOT DETECTED, EQUIVALENT (ratingProblem refuses any rating whose version is not the current one, so every valid rating has it) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.5 s
+mutation 103 (the key compares the raw counts): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 104 (the key drops the counts): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 105 (the key skips the validation): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 106 (the key refuses what is valid): DETECTED - 31 total, 30 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration that differs only in timing, display or representation is the same puzzle
+mutation 107 (sameResult takes anything for a record): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 108 (the givens are not compared): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 109 (the solution is not compared): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 110 (an invalid rating on both sides matches): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 111 (the ratings are not compared): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 112 (a malformed model on both sides matches): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 113 (the models are not compared): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 114 (a missing first list is not guarded): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 115 (a missing second list is not guarded): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 116 (a list without a length is equal to one): DETECTED - 34 total, 33 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: malformed model or count data never matches and never throws out of the comparison
+mutation 117 (lists of another length are compared by prefix): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 118 (list elements are not compared): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+mutation 119 (list elements are compared loosely): NOT DETECTED, EQUIVALENT (the lists hold numbers (typed arrays or arrays of integers), for which loose and strict equality coincide) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 15.7 s
+detected 24 of 30, survivors 6, 395.0 s

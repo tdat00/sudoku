@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+wordoku/hell2: 1/14 hits, p95 14.1 s (budget 10.0 s), hidden (stopped: time)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| wordoku | hell2 | 14 | 1 | 7 % | 10.3 s | 14.1 s | 14.1 s | 10.0 s | hidden (stopped: time) |
+
+wordoku: []

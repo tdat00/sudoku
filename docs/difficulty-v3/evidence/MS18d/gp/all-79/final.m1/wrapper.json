@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP merge all-79",
+  "runId": "final.m1",
+  "cell": "",
+  "payload": "gp-merge",
+  "chunkId": null,
+  "attempt": null,
+  "scope": "all-79",
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1",
+  "requestedAt": "2026-11-20T07:31:43.532+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795134687844,
+    "lastCheckMs": 1795134703358,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 269
+  },
+  "startedAtFromChild": "2026-11-20T07:31:43.665+07:00",
+  "finished": "2026-11-20T07:31:53.299+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2184,
+    "cheapCheckMs": 124,
+    "ageMs": 134,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T07:31:53.300+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

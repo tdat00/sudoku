@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=variants --exact=variants > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16) --results=..\docs\difficulty-v3\evidence\MS18c\closure\manual-variants\result-mega16-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   variants: 1 passed  (331.64 s)
+
+Suites: 1
+Tests:  1 total, 1 passed, 0 failed, 0 skipped
+Time:   331.65 s running tests, 331.90 s total
+Results: docs/difficulty-v3/evidence/MS18c/closure/manual-variants/result-mega16-replay.json
+exit=0 seconds=332.157

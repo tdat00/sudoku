@@ -1,0 +1,44 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 147 passed, 6 failed  (10.58 s)
+
+Failures:
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G06, G11, G12, G01)
+       TypeError: Cannot read properties of undefined (reading 'before')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1178:25
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1174:47)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: golden compact view and transitions > has 12 compact, 15 details and 18 distinct jump transitions in the 14 goldens
+       AssertionError: expected {compact: 13, details: 16} to equal {compact: 12, details: 15}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1199:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G11, G07)
+       AssertionError: expected Array(3)[1902, 2340, 438] to equal Array(3)[2515, 1938, -577]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1208:59
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1206:9)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+  FAIL replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 12 compact and 15 details
+       AssertionError: expected {compact: 13, details: 16} to equal {compact: 12, details: 15}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1515:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R4C6 and the four sign jumps of G11
+       TypeError: Cannot read properties of undefined (reading 'before')
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1521:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G06, G11, G12)
+       TypeError: Cannot read properties of null (reading 'class')
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1537:22
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1531:44)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  153 total, 147 passed, 6 failed, 0 skipped
+Time:   10.58 s running tests, 10.75 s total
+Results: docs/difficulty-v3/evidence/MS05r6a/pins/replay-run1.json

@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS07b\explain-hashes.js classic9/nightmare#2 classic9/nightmare#3 classic9/nightmare#6765 diagonalX/nightmare#89 diagonalX/nightmare#377 diagonalX/nightmare#610
+{"key":"classic9/nightmare#2","hash":"7c21f405e81ddad9","attempts":3,"score":2344,"hardest":"forcingChainLong","chainSteps":{"forcingChain":3,"forcingChainLong":1},"ms":2018}
+{"key":"classic9/nightmare#3","hash":"014f55fe64c7b982","attempts":5,"score":2186,"hardest":"forcingChainLong","chainSteps":{"forcingChain":2,"forcingChainLong":1},"ms":3324}
+{"key":"classic9/nightmare#6765","hash":"6609cbc059d1792c","attempts":5,"score":2207,"hardest":"forcingChainLong","chainSteps":{"forcingChain":3,"forcingChainLong":1},"ms":3738}
+{"key":"diagonalX/nightmare#89","hash":"2664a77a0835c0e6","attempts":3,"score":2337,"hardest":"forcingChainLong","chainSteps":{"forcingChain":1,"forcingChainLong":1},"ms":6540}
+{"key":"diagonalX/nightmare#377","hash":"a7dd044fac63df4b","attempts":4,"score":2378,"hardest":"nishio","chainSteps":{"nishio":1},"ms":8481}
+{"key":"diagonalX/nightmare#610","hash":"eab7817ac72f1b96","attempts":8,"score":2331,"hardest":"forcingChainLong","chainSteps":{"forcingChain":2,"forcingChainLong":1},"ms":17724}
+exit=0 seconds=42.006

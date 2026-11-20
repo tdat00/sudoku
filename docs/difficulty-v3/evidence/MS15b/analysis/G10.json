@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "e1278c0b4e6966996ac79648b2210dd87acf714de8c08f485e6aab680f11ed26",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "585c82a73a30b0c917e365f25dea1839cb31c8e8",
+  "dirty": true,
+  "generatedAt": "2026-11-17T18:32:33.721Z",
+  "argv": ["--ids=G10","--record=..\\docs\\difficulty-v3\\evidence\\MS15b\\analysis\\G10.json"],
+  "records": [
+    {"key":"G10","request":{"variantId":"killer","difficulty":"nightmare","seed":"42"},"value":{"id":"G10","request":{"variantId":"killer","difficulty":"nightmare","seed":"42"},"today":{"steps":28,"missing":5},"counts":{"compact":10,"details":45},"board":{"cells":81,"cages":21,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Cag",0,0,0,"—","—","—","—"],[3,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[4,22,"D/Dig",43,102,77,"cageCombo","—","—","N"],[5,31,"G/Choose",61,140,38,"cageCombo","—","—","—"],[6,32,"G/Choose",63,527,387,"ruleOf45","Y","R8C7","—"],[7,35,"G/Choose",69,567,40,"ruleOf45","—","—","—"],[8,36,"G/Choose",71,1480,913,"wxyzWing","—","—","N"],[9,42,"G+A/Mixed",72,2079,599,"alsXz","—","—","N"],[10,42,"F/Final",72,2079,0,"alsXz","—","—","—"]],"details":[0,0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,96,101,102,117,123,127,128,133,135,137,138,140,527,545,558,567,1480,2447,2488,3780,2899,2141,2079,2079],"alive":null,"folds":[{"step":9,"peak":3780,"end":2079,"removed":6,"restored":5,"signs":0,"opening":false}],"jumps":[{"step":6,"from":140,"to":527,"before":{"P":40,"W":1412.25,"R":51.82146,"V":48.316832,"E":61,"level":"easy"},"after":{"P":260,"W":2402,"R":218.135258,"V":48.932039,"E":63,"level":"hard"},"choice":{"chosen":527,"others":9,"nulls":0,"max":143,"at":178,"rated":10,"refused":0},"singles":[{"op":"remove","cell":"R2C3","score":138},{"op":"remove","cell":"R8C7","score":533}],"cause":"single-culprit","frame":"R8C7","firstUse":{"k":20,"n":94,"technique":"ruleOf45"},"key":"technique.ruleOf45.step","effects":"remove candidate 1@R1C8, 1@R1C9"}]},"ms":10475,"overrides":[]}
+  ]
+}

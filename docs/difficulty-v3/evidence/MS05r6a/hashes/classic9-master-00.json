@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "a675f650873c0b267928f59e9ad6cfd24a1992e81eec24ece2109ce04d252d9f",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+  "dirty": true,
+  "generatedAt": "2026-11-14T01:30:22.341Z",
+  "argv": ["--hash-key=classic9/master","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\hashes\\classic9-master-00.json"],
+  "records": [
+    {"key":"classic9/master#1","variant":"classic9","level":"master","seed":1,"hash":"c883035c9414b9f0","ms":469,"overrides":[]},
+    {"key":"classic9/master#2","variant":"classic9","level":"master","seed":2,"hash":"1e7617daded7a8a6","ms":157,"overrides":[]},
+    {"key":"classic9/master#3","variant":"classic9","level":"master","seed":3,"hash":"e5e8fccf8342a1db","ms":215,"overrides":[]},
+    {"key":"classic9/master#5","variant":"classic9","level":"master","seed":5,"hash":"0c4bb3da4f926356","ms":207,"overrides":[]},
+    {"key":"classic9/master#8","variant":"classic9","level":"master","seed":8,"hash":"0114fb0cf1cede10","ms":31,"overrides":[]}
+  ]
+}

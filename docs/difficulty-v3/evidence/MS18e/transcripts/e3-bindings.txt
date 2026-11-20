@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs bindings --ids-start docs/difficulty-v3/evidence/MS18e/transcripts/e3-identities-start.txt --ids-end docs/difficulty-v3/evidence/MS18e/transcripts/e3-identities-end.txt --ids-e2 docs/difficulty-v3/evidence/MS18e/transcripts/final-identities-v2.txt --recheck docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v3.json --recheck-prior docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v2.json --base 547168b4 --out docs/difficulty-v3/evidence/MS18e/audit/source-bindings.json
+bindings: ok (236 changed files since 547168b4, 0 fingerprint inputs)
+exit=0 seconds=0.732

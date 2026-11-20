@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+wordoku/normal: 35/46 hits, p95 904 ms (budget 10.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| wordoku | normal | 46 | 35 | 76 % | 377 ms | 904 ms | 1.33 s | 10.0 s | hidden (stopped: misses) |
+
+wordoku: []

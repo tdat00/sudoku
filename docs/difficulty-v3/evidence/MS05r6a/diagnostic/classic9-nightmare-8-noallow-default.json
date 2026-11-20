@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "kind": "ir10-diagnostic",
+  "task": "MS05r6a",
+  "request": {
+    "variant": "classic9",
+    "level": "nightmare",
+    "seed": 8
+  },
+  "config": {
+    "allowance": null,
+    "allowanceText": "none",
+    "maxAttempts": null,
+    "attempts": "default",
+    "cellCount": 81,
+    "sizeDefaultAttempts": 8,
+    "sourceAllowance": 256
+  },
+  "argv": [
+    "--key=classic9/nightmare",
+    "--seed=8",
+    "--allowance=none",
+    "--attempts=default",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\diagnostic\\classic9-nightmare-8-noallow-default.json"
+  ],
+  "node": "v26.13.0",
+  "startedAt": "2026-11-14T02:48:21.729Z",
+  "hash": "7c4a68aa064d1526",
+  "overrides": [],
+  "wallMs": 4449.559,
+  "result": {
+    "attempts": 7,
+    "exact": true,
+    "required": true,
+    "score": 2396,
+    "warnings": [],
+    "clues": 28,
+    "puzzleDigest": "b80d3181fcd58541b2e15cc612a045a263ef3b6a98ce15075788bedcdc6db13f"
+  },
+  "work": [
+    {
+      "ratings": 267,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 253,
+          "shallowRatings": 253,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 313,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 297,
+          "shallowRatings": 297,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 49,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 37,
+          "shallowRatings": 37,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 107,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 95,
+          "shallowRatings": 95,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 109,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 97,
+          "shallowRatings": 97,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 67,
+      "proposals": 32768,
+      "localSearches": [
+        {
+          "ratings": 55,
+          "shallowRatings": 55,
+          "shallowLimit": null,
+          "capHit": "proposals"
+        }
+      ]
+    },
+    {
+      "ratings": 538,
+      "proposals": 19707,
+      "localSearches": [
+        {
+          "ratings": 526,
+          "shallowRatings": 526,
+          "shallowLimit": null,
+          "capHit": null
+        }
+      ]
+    }
+  ]
+}

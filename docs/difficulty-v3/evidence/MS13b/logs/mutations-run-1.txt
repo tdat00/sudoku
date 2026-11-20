@@ -1,0 +1,50 @@
+$ node generator\tests\artifacts\difficulty-v3\MS13b\run-mutations.cjs docs\difficulty-v3\evidence\MS13b\mutations-1.txt
+mutation 0 (Generator formatChains: a node is read as a triple): DETECTED - 93 total, 87 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 1 (Player formatChains: a node is read as a triple): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 2 (Generator formatChains: a group reduced to its first member): DETECTED - 93 total, 88 passed, 5 failed, 0 skipped - 5 failing - 0.5 s
+mutation 3 (Player formatChains: a group reduced to its first member): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.7 s
+mutation 4 (Generator formatChains: a group reduced to its last member): DETECTED - 93 total, 88 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+mutation 5 (Player formatChains: a group reduced to its last member): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 6 (Generator formatChains: a false group joined by a disjunction): DETECTED - 93 total, 87 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 7 (Player formatChains: a false group joined by a disjunction): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 8 (Generator formatChains: a true group joined by a conjunction): DETECTED - 93 total, 88 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+mutation 9 (Player formatChains: a true group joined by a conjunction): DETECTED - 147 total, 143 passed, 4 failed, 0 skipped - 4 failing - 0.6 s
+mutation 10 (Generator formatChains: the two joins swapped): DETECTED - 93 total, 87 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 11 (Player formatChains: the two joins swapped): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 12 (Generator formatChains: no parentheses around a group): DETECTED - 93 total, 88 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+mutation 13 (Player formatChains: no parentheses around a group): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 14 (Generator formatChains: a one-cell node in parentheses): DETECTED - 93 total, 89 passed, 4 failed, 0 skipped - 4 failing - 0.4 s
+mutation 15 (Player formatChains: a one-cell node in parentheses): DETECTED - 147 total, 142 passed, 5 failed, 0 skipped - 5 failing - 0.6 s
+mutation 16 (Generator formatChains: the polarity of a node swapped): DETECTED - 93 total, 87 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 17 (Player formatChains: the polarity of a node swapped): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 18 (Generator formatChains: the digit of a node read as a triple): DETECTED - 93 total, 87 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 19 (Player formatChains: the digit of a node read as a triple): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 20 (Generator formatChains: a node always true): DETECTED - 93 total, 87 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 21 (Player formatChains: a node always true): DETECTED - 147 total, 141 passed, 6 failed, 0 skipped - 6 failing - 0.6 s
+mutation 22 (Generator formatChains: the polarity of a legacy triple swapped): DETECTED - 93 total, 89 passed, 4 failed, 0 skipped - 4 failing - 0.4 s
+mutation 23 (Player formatChains: the polarity of a legacy triple swapped): DETECTED - 147 total, 144 passed, 3 failed, 0 skipped - 3 failing - 0.6 s
+mutation 24 (Generator formatChains: a legacy triple read as a node): DETECTED - 93 total, 88 passed, 5 failed, 0 skipped - 5 failing - 0.4 s
+mutation 25 (Player formatChains: a legacy triple read as a node): DETECTED - 147 total, 143 passed, 4 failed, 0 skipped - 4 failing - 0.6 s
+mutation 26 (Generator formatChains: the label function not passed to a group member): DETECTED - 93 total, 90 passed, 3 failed, 0 skipped - 3 failing - 0.4 s
+mutation 27 (Player localizeStep: a node is not localized): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.5 s
+mutation 28 (Player localizeStep: the cells of a node are not labelled): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.5 s
+mutation 29 (Player localizeStep: the digit of a node is not written): DETECTED - 74 total, 69 passed, 5 failed, 0 skipped - 5 failing - 0.5 s
+mutation 30 (Player localizeStep: a group reduced to its first member): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.4 s
+mutation 31 (Player localizeStep: the input node is written): DETECTED - 74 total, 69 passed, 5 failed, 0 skipped - 5 failing - 0.5 s
+mutation 32 (Player localizeStep: the input cells are shared): NOT DETECTED (exit 0) - 74 total, 74 passed, 0 failed, 0 skipped - 0 failing - 0.5 s
+mutation 33 (Player localizeStep: a written label is asked for again): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+mutation 34 (Player localizeStep: a written symbol is written again): NOT DETECTED (exit 0) - 74 total, 74 passed, 0 failed, 0 skipped - 0 failing - 0.5 s
+mutation 35 (Player localizeStep: a step it does not know is returned itself): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+mutation 36 (Player localizeStep: the truth of a node is lost): DETECTED - 74 total, 68 passed, 6 failed, 0 skipped - 6 failing - 0.5 s
+mutation 37 (Player localizeStep: the symbol mode of a node ignored): DETECTED - 74 total, 72 passed, 2 failed, 0 skipped - 2 failing - 0.5 s
+mutation 38 (Player localizeStep: the symbol mode of a triple ignored): NOT DETECTED (exit 0) - 74 total, 74 passed, 0 failed, 0 skipped - 0 failing - 0.5 s
+mutation 39 (Player localizeStep: the cell of a triple not labelled): DETECTED - 74 total, 72 passed, 2 failed, 0 skipped - 2 failing - 0.4 s
+mutation 40 (Player localizeStep: a triple turned into a node): DETECTED - 74 total, 72 passed, 2 failed, 0 skipped - 2 failing - 0.5 s
+mutation 41 (Player localizeStep: only the first chain localized): DETECTED - 74 total, 72 passed, 2 failed, 0 skipped - 2 failing - 0.5 s
+mutation 42 (Player describeHint: the last cell of the Finding is not listed): DETECTED - 74 total, 73 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+mutation 43 (Generator le.en description: the true group example with a conjunction): DETECTED - 93 total, 92 passed, 1 failed, 0 skipped - 1 failing - 0.5 s
+mutation 44 (Player le.en description: the true group example with a conjunction): DETECTED - 73 total, 72 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+mutation 45 (Generator le.vi description: the true group example with a conjunction): DETECTED - 93 total, 92 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+mutation 46 (Player le.vi description: the true group example with a conjunction): DETECTED - 73 total, 72 passed, 1 failed, 0 skipped - 1 failing - 0.4 s
+detected 44 of 47, survivors 3, 23.1 s
+exit=0 seconds=23.170

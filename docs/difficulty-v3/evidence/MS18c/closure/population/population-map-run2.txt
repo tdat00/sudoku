@@ -1,0 +1,3 @@
+$ node ..\generator\tests\artifacts\difficulty-v3\MS18c\population-map.cjs
+population map: 111 removed public registrations, 17 added, 10 other removed; perf 79/39/17; toolHash 47110866ae0c -> c7e90ca9d081
+exit=0 seconds=9.561

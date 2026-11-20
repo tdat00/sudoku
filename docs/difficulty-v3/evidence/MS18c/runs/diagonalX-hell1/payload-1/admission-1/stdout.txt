@@ -1,0 +1,8 @@
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine ed2fe50c+changes sources 0ca29eaeebc295b6
+diagonalX/hell1: 0/9 hits, p95 101.0 s (budget 10.0 s), hidden (stopped: time)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| diagonalX | hell1 | 9 | 0 | 0 % | 89.2 s | 101.0 s | 101.0 s | 10.0 s | hidden (stopped: time) |
+
+diagonalX: []

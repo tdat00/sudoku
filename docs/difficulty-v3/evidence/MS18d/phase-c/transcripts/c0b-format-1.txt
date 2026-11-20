@@ -1,0 +1,39 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\check-format.js
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/attempts.js: line 5 has 112 characters; line 8 has 111 characters; line 104 has 116 characters; line 105 has 134 characters; line 108 has 117 characters; line 110 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/controller.js: line 48 has 112 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/ledger-schema.js: line 14 has 111 characters; line 42 has 114 characters; line 48 has 111 characters; line 49 has 114 characters; line 59 has 115 characters; line 68 has 111 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/make-chunk-manifest.js: line 9 has 111 characters; line 10 has 111 characters; line 151 has 112 characters; line 159 has 113 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js: line 109 has 111 characters; line 180 has 113 characters; line 186 has 115 characters; line 230 has 117 characters; line 251 has 114 characters; line 323 has 115 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js: line 5 has 112 characters; line 22 has 111 characters; line 48 has 113 characters; line 67 has 117 characters; line 88 has 113 characters; line 142 has 111 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/payload-gp.js: line 35 has 119 characters; line 55 has 112 characters; line 60 has 113 characters; line 114 has 113 characters; line 194 has 112 characters; line 222 has 112 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/payloads.js: line 76 has 111 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/plan-data.js: line 12 has 111 characters; line 125 has 111 characters; line 245 has 115 characters; line 281 has 111 characters; line 337 has 118 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1: line 189 has 116 characters; line 509 has 117 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/source-binding.js: line 196 has 112 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/standin-gp.js: line 6 has 112 characters; line 7 has 111 characters; line 45 has 111 characters; line 173 has 113 characters; line 186 has 111 characters; line 195 has 111 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/standin-world.js: line 6 has 111 characters; line 7 has 111 characters; line 10 has 113 characters; line 11 has 112 characters; line 41 has 113 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-controller.js: line 355 has 113 characters; line 405 has 114 characters; line 408 has 126 characters
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-plan.js: line 6 has 111 characters; line 114 has 113 characters; line 120 has 113 characters; line 131 has 115 characters; line 134 has 115 characters; line 182 has 111 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-recorder-merge.js: line 6 has 113 characters; line 78 has 116 characters; line 98 has 115 characters; line 103 has 118 characters; line 155 has 123 characters; line 169 has 118 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1: line 488 has 114 characters; line 497 has 114 characters; line 515 has 118 characters; line 520 has 126 characters; line 550 has 120 characters; line 569 has 113 characters; ...
+generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-units.js: line 480 has 115 characters; line 491 has 111 characters; line 580 has 111 characters; line 615 has 112 characters; line 862 has 118 characters
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs11/classic4-veryEasy/x10/marker.txt: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c1/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c1/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c3/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c3/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c4/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c4/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c6/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c6/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c7/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c7/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/classic4-veryEasy/c8/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/generic/c2/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/generic/c2/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/generic/c5/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs12/generic/c5/result.json: no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs13/classic4-veryEasy/o1/pids.jsonl: a line end that is not CRLF; no final newline
+docs/difficulty-v3/evidence/MS18d/phase-c/tooling/wrapper-1/runs13/classic4-veryEasy/o1/result.json: no final newline
+checked 660 files, 36 with problems
+exit=1 seconds=0.476

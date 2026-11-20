@@ -1,0 +1,43 @@
+{
+  "protocol": "docs/difficulty-rating/report-detailed.md section 6",
+  "seedBase": 20260601,
+  "machine": {"cpu":"AMD EPYC 7763 64-Core Processor","logicalProcessors":16,"memoryGb":64,"platform":"win32 10.0.26300","node":"v26.13.0","jobs":4},
+  "engine": {"sources":"0ca29eaeebc295b6","commit":"ed2fe50c","dirty":true},
+  "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+  "acceptance": "canonical-required-tier",
+  "ratingVersion": 3,
+  "probe": 0,
+  "earlyStop": true,
+  "guardMs": 120000,
+  "attemptPolicy": {"function":"SG.digger.defaultMaxAttempts","explicitMaxAttempts":false,"sources":{"js/engine/digger.js":"c9e58c58e7e295e1aa1df273f6920a7744e3aa4702eb233b4779be72fa5ef786","js/engine/pipeline.js":"b1a849d845f1494742bbf3ffba3be45b494e9620d9049b3326b3c4061a61fce1","js/variants/registry.js":"967402f0e9e2a8e6a5b9743eae93f8304798ac9a96d24c62e6093cdf1f3f241c"}},
+  "started": "2026-11-18T22:29:59.031Z",
+  "finished": "2026-11-18T22:30:42.150Z",
+  "seconds": 43,
+  "cells": [
+    {
+      "variant": "wordoku",
+      "level": "hell2",
+      "cellCount": 81,
+      "budget": 10000,
+      "attempts": 8,
+      "summary": {"n":14,"hits":1,"rate":0.07142857142857142,"p50":10317.0745,"p95":14082.5583,"max":14082.5583,"verdict":"hidden","stopped":"time","errors":0,"approximate":13,"invalid":0},
+      "requests": [
+        {"key":"wordoku/hell2","index":0,"seed":1829662094,"hit":false,"ms":11672.8432,"achieved":"hell1","score":3554,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":1,"seed":1846439713,"hit":false,"ms":11221.0545,"achieved":"hell1","score":3565,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":2,"seed":1796106856,"hit":false,"ms":14082.5583,"achieved":"hell1","score":3562,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":3,"seed":1812884475,"hit":false,"ms":10500.9202,"achieved":"hell1","score":3455,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":4,"seed":1896772570,"hit":false,"ms":11834.5802,"achieved":"hell1","score":3568,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":5,"seed":1913550189,"hit":false,"ms":9092.7833,"achieved":"hell1","score":3287,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":6,"seed":1863217332,"hit":false,"ms":7823.6265,"achieved":"hell1","score":3335,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":7,"seed":1879994951,"hit":false,"ms":9377.577,"achieved":"hell1","score":3445,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":8,"seed":1695441142,"hit":false,"ms":13535.0781,"achieved":"hell1","score":3466,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":9,"seed":1712218761,"hit":true,"ms":9980.4089,"achieved":"hell2","score":3613,"solved":true,"approximate":false,"exact":true,"valid":true},
+        {"key":"wordoku/hell2","index":10,"seed":1371068355,"hit":false,"ms":9830.7423,"achieved":"hell1","score":3332,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":11,"seed":1354290736,"hit":false,"ms":10317.0745,"achieved":"hell1","score":3308,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":12,"seed":1404623593,"hit":false,"ms":9887.6538,"achieved":"hell1","score":3465,"solved":true,"approximate":true,"exact":false,"valid":true},
+        {"key":"wordoku/hell2","index":13,"seed":1387845974,"hit":false,"ms":10376.8749,"achieved":"hell1","score":3533,"solved":true,"approximate":true,"exact":false,"valid":true}
+      ]
+    }
+  ],
+  "support": {"wordoku":[]}
+}

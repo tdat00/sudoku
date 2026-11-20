@@ -1,0 +1,82 @@
+{
+  "schema": "ms18e-items-patch-v1",
+  "revision": "Hell 1 reconcile ruled (a)+(c) (SA1 ruling 2026-11-20 15:57 +07:00, SA2 binding ruling matching): a commit-label-only split, verified file-only in preflight/deep-hell1-commit-equivalence.json; the raw strict reconcile result is retained. S-AV11 wording aligned with the open-performance-finding ruling. Applied after items-e4a-results.json.",
+  "inherited": {
+    "S-AV11": {
+      "status": "executed (required profile complete); open performance finding, future owner named",
+      "disposition": "E4a: one unchanged invocation of the guarded request (jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts) on the final source (engine sourceHash b8ec138d..., dirty false): the request returned, exact true, achieved expert, 5 attempts, 33 clues, no warnings, hrtime 342,091.5 ms (tee 342.803 s) against the historical 325.313 s of an older engine, so the delay reproduces. The pipeline's own seven timing fields (ms, summed over the 5 attempts): configure 0.759, buildModel 37.238, fullGrid 335,178.670 (98.0 %), extraStructure 0.317, dig 6,719.969 (2.0 %), rate 147.849, tune 0.396. The profile the owner released is complete; the finding is open: about 335 s of fullGrid time summed across 5 attempts, the slow attempt and the cause are unknown (the record does not say whether the cost falls in attempt 1, which is independent of the level), and whether the offered Jigsaw levels are affected is not established. No claim either way. Gate passed, host snapshots saved (raw context only). Not a GP cell; no target, offer or generator change. Future owner: later performance work outside MS18e.",
+      "evidence": ["profile/s-av11/record-1.json", "profile/s-av11/gate-1.txt", "profile/s-av11/host-before-1.json", "profile/s-av11/host-after-1.json", "transcripts/sav11-run-1.txt", "e4a-summary.md"]
+    },
+    "MS18d-DEEP-PUBLIC-REGISTRATIONS": {
+      "status": "closed-registration-evidence; live deep executed for all 28 occurrences",
+      "disposition": "E4a: the registration closure stands (quick inventory 4,807, SG_DEEP listing 4,835 to 4,828). Live deep evidence now exists for all 28 occurrences on the final source: Nightmare 14 of 14 (reconciled complete and sound) and Hell 1 14 of 14 (mega12 at E2, mega16 at E4a under owner decision A). Hell 1: complete, correct, source-compatible cohort; commit-only provenance difference verified separately (preflight/deep-hell1-commit-equivalence.json, ruled a+c). The raw strict reconcile is retained (exit 1, evidenceSound false, identity.commit null, one problem: mixed commit labels). Exact 0 of 14, the shallow fallbacks and the costs remain numerical findings.",
+      "evidence": ["preflight/deep-reconcile-nightmare.json", "preflight/deep-reconcile-hell1-v2.json", "preflight/deep-hell1-commit-equivalence.json", "preflight/deep-reconcile-hell1-partial.json", "e4a-summary.md"]
+    }
+  },
+  "replaceAdded": [
+    {
+      "id": "MS18e-DEEP-HELL1-14",
+      "title": "Final-source deep Hell 1: all 14 occurrences ran, 0 exact, shallow fallbacks; complete, correct, source-compatible cohort",
+      "status": "executed 14 of 14; complete and correct; commit-only provenance difference ruled (a)+(c); raw strict reconcile retained",
+      "covers": ["S-AV24", "S-AV25", "S-AV26"],
+      "source": "generator/tests/mega-contract.js Hell 1 half; mega12 records at E2 (commit 547168b4), mega16 records at E4a (commit 5f697ef9); full reconcile preflight/deep-reconcile-hell1-v2.json; equivalence record preflight/deep-hell1-commit-equivalence.json",
+      "population": "7 mega12 and 7 mega16 Hell 1 requests, one fresh process each, level override mega12:hell1 and mega16:hell1, default attempts 4 and 2, allowance 256, 500,000 ms shared budget",
+      "numbers": {
+        "records": 14, "exact": "0 of 14 (mega12 0 of 7, mega16 0 of 7), every record difficulty.approximate and difficulty.shallow",
+        "mega12": "generation 92.102 to 103.711 s (median 99.364 s), guard 160 s margin 56.008 s",
+        "mega16": "generation 319.837 to 359.556 s (median 333.628 s), 7 of 7 over 120 s, guard 500 s margin 140.265 s",
+        "reconcileRaw": { "exit": 1, "complete": true, "evidenceSound": false, "identityCommit": null, "correctness": "pass (14 passed)", "relations": "6 pass / 0 fail / 0 unevaluated", "soleProblem": "mixed identities, commit has 2 values (mega12 547168b4, mega16 5f697ef9)", "reconcileSha256": "fd567f18a551056efdf83c758e6c643b2ee465bcb47ef3d9c8514e9fb4a36357" },
+        "equivalence": "271 names changed between 547168b48d5eb7a9165432db87a227a9d1c4b068 and 5f697ef9aae3df7b2116834b6111931b27129dda, none under core/, player/ or generator/ outside generator/tests/artifacts; 70 loaded files (64 ordered SOURCE_FILES, runner, entry point, fixtures, loader, node-evidence.js) have equal blob IDs; the 14 records differ only in commit"
+      },
+      "limitations": "A ruling about this cohort and this reconcile only: no tool edit, no record edit, no re-run, no general rule that exit 1 is acceptable. Between the two commits .github changed in comments and in the quick-manifest timing metadata (measuredSeconds and provenance), none an input of the deep recipes. No MS07b record was used.",
+      "disposition": "Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained. Exact 0 of 14, the shallow fallbacks and the measured costs remain numerical findings (S-OD4), not correctness failures and not relabelled.",
+      "nextOwner": "none",
+      "evidence": ["preflight/deep-reconcile-hell1-v2.json", "preflight/deep-hell1-commit-equivalence.json", "transcripts/e4b-equivalence-check.txt", "preflight/deep-reconcile-hell1-partial.json", "deep/hell1/", "transcripts/deep-reconcile-hell1-v2.txt", "generator/tests/fixtures/mega-contract.js", "e4a-summary.md"]
+    },
+    {
+      "id": "MS18e-SAV11-PROFILE",
+      "title": "S-AV11 profile executed: jigsaw9 / Expert / seed 1111, 342.092 s; open performance finding",
+      "status": "executed (exit 0, record written, outcome returned); required profile complete; open performance finding, future owner named",
+      "covers": ["S-AV11"],
+      "source": "generator/tests/artifacts/difficulty-v3/MS18e/profile-s-av11.cjs (route accepted by SA1), owner decision A, run from the repository root through run-locked-e.ps1",
+      "population": "one guarded SG.pipeline.run request: jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts (cellCount 81), no budget, no override",
+      "numbers": {
+        "hrtimeMs": 342091.5386, "performanceNowMs": 342091.5259, "dateMs": 342093, "teeSeconds": 342.803, "historicalWholeRequestSeconds": 325.313,
+        "timingsMs": { "configure": 0.759, "buildModel": 37.2384, "fullGrid": 335178.6699, "extraStructure": 0.3173, "dig": 6719.9691, "rate": 147.8489, "tune": 0.3961 },
+        "timingsSumMs": 342085.1987, "outcome": "returned, exact true, achieved expert, score 979, solved, 5 attempts, 33 clues, no warnings",
+        "record": "sourceHash b8ec138d..., dirty false, commit 5f697ef9, sgTimeFactor 2, ownerDecision 1573242656648069141, timingKeysComplete true, support after the call veryEasy easy normal hard master hell2 (Expert absent)",
+        "hostContext": "gate pass 15:39:21 (absence 123 s); snapshots 344.152 s apart: host 1968 0.19 CPU-s/s, no other process except Idle at or above 0.5"
+      },
+      "limitations": "One request on one shared host; the Node child is not in either snapshot; the timings are summed over the 5 attempts, so the slow attempt is unknown (whether the cost falls in attempt 1, which is independent of the level, is not recorded); the pipeline's timing fields say where the time went, not why; S-OD15 readiness context is raw context only, not an admission decision.",
+      "disposition": "The delay reproduces on the current source (342.092 s against the historical 325.313 s). About 335 s of fullGrid time is summed across 5 attempts; the slow attempt and the cause are unknown, and whether the offered Jigsaw levels are affected is not established. No claim either way, no change, no waiver. The release profile is complete; the performance finding stays open for later performance work outside MS18e.",
+      "nextOwner": "later performance work (named future owner), outside MS18e",
+      "evidence": ["profile/s-av11/record-1.json", "profile/s-av11/gate-1.txt", "profile/s-av11/host-before-1.json", "profile/s-av11/host-after-1.json", "transcripts/sav11-run-1.txt", "e4a-summary.md"]
+    },
+    {
+      "id": "MS18e-ACCEPTANCE-STATE",
+      "title": "MS18e acceptance state: all assigned coverage complete; only the final matching-head CI remains",
+      "status": "open: the remote-CI gate only; no A/B/W decision outstanding",
+      "source": "SA2 binding findings 2026-11-20 14:16; owner decision A, message 1573242656648069141; Hell 1 ruling (a)+(c) of 2026-11-20 15:57",
+      "population": "E0-E4a stages; route A: one launch of each held row, plus the full 14-record Hell 1 reconcile",
+      "numbers": { "stagesCompleted": "E0, E1, E2, E3, E4a (held rows)", "heldRowsExecuted": 11, "reconcile": "run; raw exit 1 retained; ruled a commit-label-only split (a)+(c)" },
+      "limitations": "Green CI closes only the remote-CI gate. Acceptance does not authorize merge or deployment. The 563 excluded manual assertions remain explicitly unexecuted scope exclusions, never reported as passed. Not relabelled as passed: S-AV14, the Hell 1 availability and cost findings, the GP misses.",
+      "disposition": "The assigned coverage is complete: both quick sets, GD, I5, the 14 Nightmare and 14 Hell 1 deep occurrences, the three S-OD8 ratios, the S-AV11 profile and the check-only ledgers. No A, B or W decision is outstanding. The only remaining blocker is the final matching-head remote CI (eight jobs). Numerical findings stay listed as non-blocking: S-AV14, Hell 1 exactness and cost, the S-AV11 delay and the five GP misses.",
+      "nextOwner": "orchestrator (final matching-head CI)",
+      "evidence": ["audit/gates-v3.json", "audit/remote-ci.json", "preflight/deep-hell1-commit-equivalence.json"]
+    }
+  ],
+  "added": [
+    {
+      "id": "MS18e-HELL1-COMMIT-EQUIVALENCE",
+      "title": "Hell 1 reconcile ruling (a)+(c): commit-label-only split, file-only equivalence record",
+      "status": "ruled and recorded",
+      "source": "SA1 ruling 2026-11-20 15:57 (+07:00) relayed by the orchestrator; SA2's binding ruling matches (a)+(c); preflight/deep-hell1-commit-equivalence.json",
+      "population": "the 14 Hell 1 records (7 mega12 at commit 547168b48d5eb7a9165432db87a227a9d1c4b068, 7 mega16 at 5f697ef9aae3df7b2116834b6111931b27129dda)",
+      "numbers": { "changedNames": 271, "changedInSourceScope": 0, "loadedFilesEqual": "70 of 70 blob pairs", "recordsDifferingOnlyInCommit": 14, "tool": "mega-contract.js blob 3a068ef1663933e3d52ba8df0b6778c5fc807b8b, fixture b1b70636dca151e93152fcc8b8111807c38fef9f, both equal at both commits" },
+      "limitations": "Git reads only; a ruling about this cohort and reconcile, not a general rule that exit 1 is acceptable; between the commits .github changed in workflow comments and in the quick-manifest timing metadata (not deep-recipe inputs).",
+      "disposition": "Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained: exit 1, evidenceSound false, identity.commit null, the sole problem 'mixed identities: commit has 2 values'. No tool edit, no record edit, no re-run.",
+      "nextOwner": "none",
+      "evidence": ["preflight/deep-hell1-commit-equivalence.json", "transcripts/e4b-equivalence-check.txt", "preflight/deep-reconcile-hell1-v2.json"]
+    }
+  ]
+}

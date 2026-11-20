@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "9ccd27a41e46fde07205f27c92e81ed6e0d6fce638a8713f2d705428635ced24",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:23:36.765Z",
+  "argv": ["--ids=G11","--record=..\\docs\\difficulty-v3\\evidence\\MS04\\analysis\\G11.json"],
+  "records": [
+    {"key":"G11","request":{"variantId":"greaterThan","difficulty":"expert","seed":"42"},"value":{"id":"G11","request":{"variantId":"greaterThan","difficulty":"expert","seed":"42"},"today":{"steps":23,"missing":22},"counts":{"compact":6,"details":114},"board":{"cells":81,"cages":0,"signsFrom":108,"signsTo":3,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Sig",0,0,0,"—","—","—","—"],[3,108,"C+I+A+IM/Mixed",50,119,119,"ineqChain","—","—","F"],[4,109,"I/Signs",50,119,0,"ineqChain","—","—","—"],[5,111,"I/Signs",50,957,838,"xyWing","Y","—","—"],[6,111,"F/Final",50,957,0,"xyWing","—","—","—"]],"details":[0,0,137,137,137,137,137,137,137,137,137,137,137,137,137,136,136,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,137,137,137,137,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,140,1043,1043,1039,1039,1039,1036,1033,1033,1033,1033,1033,1033,1039,1046,1046,1046,1046,1046,1046,1046,1053,1056,1059,1056,1056,1119,1114,1112,1112,1109,1109,1109,1107,1104,1104,1104,1104,1109,1107,1032,548,548,1967,1264,123,976,1004,119,119,962,957,957],"alive":[108,108,6,5,3,3],"folds":[{"step":3,"peak":1967,"end":119,"removed":null,"restored":null,"signs":102,"opening":true},{"step":5,"peak":962,"end":957,"removed":0,"restored":0,"signs":2,"opening":false}],"jumps":[{"step":5,"from":119,"to":957,"before":{"P":40,"W":414,"R":35.046204,"V":44.444444,"E":50,"level":"easy"},"after":{"P":650,"W":1345,"R":262.905033,"V":44.444444,"E":50,"level":"expert"},"choice":null,"singles":[],"cause":"multi-move","frame":null,"firstUse":{"k":24,"n":60,"technique":"xyWing"},"key":"technique.xyWing.step","effects":"remove candidate 5@R5C1"}]},"ms":8123,"overrides":[]}
+  ]
+}

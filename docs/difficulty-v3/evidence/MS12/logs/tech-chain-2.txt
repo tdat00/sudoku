@@ -1,0 +1,18 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 125 passed, 1 failed  (7.29 s)
+
+Failures:
+  FAIL tech-chain > xyChain: registration and the shared builder (R15) > returns only the endpoints proof under the id it is given, whatever the position
+       AssertionError: expected "endpoints" to be "forced"
+       at Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2594:39
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:2588:17)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Suites: 1
+Tests:  126 total, 125 passed, 1 failed, 0 skipped
+Time:   7.29 s running tests, 7.39 s total
+exit=1 seconds=7.498

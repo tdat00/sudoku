@@ -1,0 +1,21 @@
+$ node ..\.github\scripts\generator-quick.js run replay-player --results-dir=..\docs\difficulty-v3\evidence\MS13c\quick-dev
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS13c\quick-dev\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 68 passed, 1 failed  (46.07 s)
+
+Failures:
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected 3226 to be 3149
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:708:65)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  69 total, 68 passed, 1 failed, 0 skipped
+Time:   46.07 s running tests, 46.32 s total
+Results: docs/difficulty-v3/evidence/MS13c/quick-dev/generator-player.json
+shard player: exit 1, 46.6 s
+FAILED: player
+exit=1 seconds=47.046

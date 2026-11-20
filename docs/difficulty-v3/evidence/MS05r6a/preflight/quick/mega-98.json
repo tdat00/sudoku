@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "00345dc1e924fc2cc3fe5657dff55ec53ba1080756033b2304cfb5e318f42347",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["mega"],"filter":null,"exact":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 202.5,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 28.2,
+    "tests": [
+      {"suite":"mega","name":"an explicit number of attempts wins over the size default","fullName":"mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default","status":"pass","ms":27.8,"reason":"","error":null,"ordinal":98}
+    ],
+    "suites": [
+      {"name":"mega","total":1,"passed":1,"failed":0,"skipped":0,"ms":27.992}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=mega","--exact=mega > mega puzzles > mega16 size-default controls (scripted, Expert tier): stop, fallback, cancellation > an explicit number of attempts wins over the size default","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6a\\preflight\\quick\\mega-98.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

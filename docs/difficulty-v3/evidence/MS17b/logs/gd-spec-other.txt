@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: spec on other boards, and difficultySupport > --results=..\docs\difficulty-v3\evidence\MS17b\gd\spec-other.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 4 passed  (13 ms)
+
+Suites: 1
+Tests:  4 total, 4 passed, 0 failed, 0 skipped
+Time:   13 ms running tests, 276 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/spec-other.json
+exit=0 seconds=0.509

@@ -1,0 +1,3 @@
+mutation 74 (H saved example: two cells of the map swapped (same region sizes)): DETECTED by run 0 (player help) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.4 s
+    FAIL help > help: an example for every technique > replaying the puzzle of an example with the hint code of the player gives the same hint
+detected 1 of 1, survivors 0, 1.4 s

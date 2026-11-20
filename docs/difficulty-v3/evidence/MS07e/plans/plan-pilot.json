@@ -1,0 +1,310 @@
+[
+  {
+    "id": "pilot-classic6",
+    "phase": "pilot",
+    "label": "projection pilot easy:3 normal:3 expert:3 master:3 nightmare:3 hell1:3 hell2:3 of classic6",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic6.json",
+      "--cells=classic6/easy:3,classic6/normal:3,classic6/expert:3,classic6/master:3,classic6/nightmare:3,classic6/hell1:3,classic6/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic6.txt",
+    "allowExit1": false,
+    "projectionSeconds": 25,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 9.9 s, + 3 s start-up, x 1.5 + 5 s = 25 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic6.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic6.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-classic9",
+    "phase": "pilot",
+    "label": "projection pilot hell1:2 hell2:2 of classic9",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic9.json",
+      "--cells=classic9/hell1:2,classic9/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic9.txt",
+    "allowExit1": false,
+    "projectionSeconds": 37,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 18.3 s, + 3 s start-up, x 1.5 + 5 s = 37 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-classic9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-classic9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-mega12",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:1 hell2:3 of mega12",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega12.json",
+      "--cells=mega12/nightmare:2,mega12/hell1:1,mega12/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega12.txt",
+    "allowExit1": false,
+    "projectionSeconds": 136,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 83.9 s, + 3 s start-up, x 1.5 + 5 s = 136 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega12.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega12.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-mega16",
+    "phase": "pilot",
+    "label": "projection pilot master:3 nightmare:1 hell1:1 of mega16",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega16.json",
+      "--cells=mega16/master:3,mega16/nightmare:1,mega16/hell1:1",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega16.txt",
+    "allowExit1": false,
+    "projectionSeconds": 345,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 223.6 s, + 3 s start-up, x 1.5 + 5 s = 345 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-mega16.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-mega16.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-diagonalX",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:3 of diagonalX",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-diagonalX.json",
+      "--cells=diagonalX/nightmare:2,diagonalX/hell1:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-diagonalX.txt",
+    "allowExit1": false,
+    "projectionSeconds": 33,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 15.1 s, + 3 s start-up, x 1.5 + 5 s = 33 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-diagonalX.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-diagonalX.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-hyper",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:3 hell1:3 hell2:3 of hyper",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-hyper.json",
+      "--cells=hyper/nightmare:3,hyper/hell1:3,hyper/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-hyper.txt",
+    "allowExit1": false,
+    "projectionSeconds": 19,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 6.3 s, + 3 s start-up, x 1.5 + 5 s = 19 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-hyper.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-hyper.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-jigsaw9",
+    "phase": "pilot",
+    "label": "projection pilot expert:2 nightmare:3 hell1:3 of jigsaw9",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-jigsaw9.json",
+      "--cells=jigsaw9/expert:2,jigsaw9/nightmare:3,jigsaw9/hell1:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-jigsaw9.txt",
+    "allowExit1": false,
+    "projectionSeconds": 34,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 15.8 s, + 3 s start-up, x 1.5 + 5 s = 34 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-jigsaw9.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-jigsaw9.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-killer",
+    "phase": "pilot",
+    "label": "projection pilot hard:2 expert:2 master:2 nightmare:2 hell1:2 hell2:3 of killer",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-killer.json",
+      "--cells=killer/hard:2,killer/expert:2,killer/master:2,killer/nightmare:2,killer/hell1:2,killer/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-killer.txt",
+    "allowExit1": false,
+    "projectionSeconds": 173,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 108.5 s, + 3 s start-up, x 1.5 + 5 s = 173 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-killer.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-killer.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-greaterThan",
+    "phase": "pilot",
+    "label": "projection pilot normal:3 hard:3 expert:2 master:3 nightmare:2 hell1:3 hell2:3 of greaterThan",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-greaterThan.json",
+      "--cells=greaterThan/normal:3,greaterThan/hard:3,greaterThan/expert:2,greaterThan/master:3,greaterThan/nightmare:2,greaterThan/hell1:3,greaterThan/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-greaterThan.txt",
+    "allowExit1": false,
+    "projectionSeconds": 89,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 52.6 s, + 3 s start-up, x 1.5 + 5 s = 89 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-greaterThan.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-greaterThan.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-samurai",
+    "phase": "pilot",
+    "label": "projection pilot normal:3 nightmare:2 hell1:2 hell2:2 of samurai",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-samurai.json",
+      "--cells=samurai/normal:3,samurai/nightmare:2,samurai/hell1:2,samurai/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-samurai.txt",
+    "allowExit1": false,
+    "projectionSeconds": 147,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 91.6 s, + 3 s start-up, x 1.5 + 5 s = 147 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-samurai.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-samurai.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-sohei",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:3 hell2:3 of sohei",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-sohei.json",
+      "--cells=sohei/nightmare:2,sohei/hell1:3,sohei/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-sohei.txt",
+    "allowExit1": false,
+    "projectionSeconds": 92,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 54.7 s, + 3 s start-up, x 1.5 + 5 s = 92 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-sohei.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-sohei.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-butterfly",
+    "phase": "pilot",
+    "label": "projection pilot easy:3 nightmare:1 hell1:3 hell2:3 of butterfly",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-butterfly.json",
+      "--cells=butterfly/easy:3,butterfly/nightmare:1,butterfly/hell1:3,butterfly/hell2:3",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-butterfly.txt",
+    "allowExit1": false,
+    "projectionSeconds": 78,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 45.2 s, + 3 s start-up, x 1.5 + 5 s = 78 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-butterfly.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-butterfly.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-flower",
+    "phase": "pilot",
+    "label": "projection pilot expert:3 master:3 nightmare:2 hell1:2 hell2:2 of flower",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-flower.json",
+      "--cells=flower/expert:3,flower/master:3,flower/nightmare:2,flower/hell1:2,flower/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-flower.txt",
+    "allowExit1": false,
+    "projectionSeconds": 136,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 83.9 s, + 3 s start-up, x 1.5 + 5 s = 136 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-flower.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-flower.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  },
+  {
+    "id": "pilot-wordoku",
+    "phase": "pilot",
+    "label": "projection pilot nightmare:2 hell1:3 hell2:2 of wordoku",
+    "args": [
+      "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS07e\\scripts\\pilot.cjs",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-wordoku.json",
+      "--cells=wordoku/nightmare:2,wordoku/hell1:3,wordoku/hell2:2",
+      "--budget-seconds=420"
+    ],
+    "tee": "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-wordoku.txt",
+    "allowExit1": false,
+    "projectionSeconds": 50,
+    "projectionBasis": "stale priors (MS05b3 / rating-v2 / MS07b-c): sum of requests x prior mean = 26.5 s, + 3 s start-up, x 1.5 + 5 s = 50 s",
+    "launch": true,
+    "reason": "",
+    "outputs": [
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot\\pilot-wordoku.json",
+      "..\\docs\\difficulty-v3\\evidence\\MS07e\\logs\\pilot-wordoku.txt"
+    ],
+    "failedDir": "..\\docs\\difficulty-v3\\evidence\\MS07e\\pilot-failed"
+  }
+]

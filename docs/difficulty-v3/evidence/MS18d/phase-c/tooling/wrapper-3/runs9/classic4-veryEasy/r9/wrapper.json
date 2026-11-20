@@ -1,0 +1,26 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "stand-in r9",
+  "runId": "r9",
+  "cell": "classic4/veryEasy",
+  "payload": "gp-cell",
+  "chunkId": null,
+  "attempt": null,
+  "scope": null,
+  "standin": true,
+  "runDir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\tooling\\wrapper-3\\runs9\\classic4-veryEasy\\r9",
+  "outcome": "control-hold",
+  "heldAt": "foreign-lock-watch",
+  "reasons": [
+    "a lock of another job did not leave a 15.3 s quiet window within the bounded wait"
+  ],
+  "watch": {
+    "startedAtMs": 1795078119043,
+    "lastCheckMs": null,
+    "checks": 9,
+    "restartCount": 9,
+    "giveUpSeconds": 2.0,
+    "gaveUp": true
+  },
+  "problems": []
+}

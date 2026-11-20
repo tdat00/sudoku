@@ -1,0 +1,10 @@
+$ node tests\node-runner.js --suite=tech-als --filter=sue-de-coq
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   tech-als: 62 passed  (8.26 s)
+
+Suites: 1
+Tests:  62 total, 62 passed, 0 failed, 0 skipped
+Time:   8.26 s running tests, 8.38 s total
+exit=0 seconds=8.503

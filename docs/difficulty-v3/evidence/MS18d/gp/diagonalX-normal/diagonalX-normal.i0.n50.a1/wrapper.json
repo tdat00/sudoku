@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record diagonalX-normal.i0.n50 a1",
+  "runId": "diagonalX-normal.i0.n50.a1",
+  "cell": "diagonalX/normal",
+  "payload": "gp-recorder",
+  "chunkId": "diagonalX-normal.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/diagonalX-normal/diagonalX-normal.i0.n50.a1",
+  "requestedAt": "2026-11-19T23:16:22.746+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795104967260,
+    "lastCheckMs": 1795104982567,
+    "checks": 61,
+    "restartCount": 0,
+    "maxIntervalMs": 271
+  },
+  "startedAtFromChild": "2026-11-19T23:16:22.877+07:00",
+  "finished": "2026-11-19T23:16:34.110+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2844,
+    "cheapCheckMs": 130,
+    "ageMs": 141,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-19T23:16:34.111+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

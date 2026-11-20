@@ -1,0 +1,25 @@
+MS18e identities after the E1 edits, captured 2026-11-20 11:35:01-11:35:23 (+07:00).
+Source: transcripts\final-identities.txt (unchanged MS18c\identities-now.cjs, locked, exit 0) and
+audit\targets-recheck-final.json (unchanged MS18d\phase-b\freeze-targets.js, locked, exit 0).
+HEAD b0a29ffd7e7bd45b962c4d3221e3ee1acb3b5859; the tree is dirty with the E1 edits listed in preflight\plan.json.
+
+                          before E1 (baseline-identities.txt)                               after E1
+Generator quick:          10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec  8863c705d5a0d4c3d0d10acd2ee5f5e35388acc3765fcefcafb3eb55aba5827b
+Player quick:             00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799  c4c6caec956bd8e7ff92a747a388b83e8f5b993f6c998cdf6e4c9706b8962669
+Generator with manual:    a818c0b9e0fdcbc8111ac75c365783859afd894c285bfbd8763cfe25d1cc6e3a  79f53764565993cfcd239aa7ab0c318c265044146019f044cd1bf2da7cd0f3a9
+Replay:                   1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc  1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc (unchanged)
+Hashes:                   344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1  344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1 (unchanged)
+Producer sources:         75b0955e3e356bd1                                                  75b0955e3e356bd1 (unchanged)
+Targets (table SHA-256):  3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a  3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a (unchanged)
+
+Why the three fingerprints moved (fingerprint inputs changed since the baseline, from the two inventories' file lists):
+  Generator quick and with-manual: USERGUIDE.md, USERGUIDE.vn.md and generator/design.md (E1 documents).
+  With-manual only: generator/tests/manual/difficulty.test.js and perf.test.js (the two B1 guards).
+  Player quick: USERGUIDE.md, USERGUIDE.vn.md and player/design.md.
+Not inputs, so no effect: player/tests/browser/help.js, .gitattributes, .github/scripts/*, the MS18e helper and evidence.
+
+The targets re-check after the last edit is byte-identical to the one before any edit (JSON SHA-256 starts 9EC4AC6E576C81C0):
+135 positions, 79 active, 56 absent, 62 retained, 17 updated, design equal to the frozen table with 17 bold cells, no problems.
+The registration inventories before and after E1 list the same 5,836 tests (suite, ordinal, full name, kind, skipped,
+timeout) in 63 suites; only the fingerprint differs. The quick sets are still 4,807 tests in 55 suites (Generator) and
+2,981 tests in 32 suites (Player): ci\check-after-e1\ and transcripts\ci-check-after-e1.txt.

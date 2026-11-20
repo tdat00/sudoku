@@ -99,6 +99,7 @@
         '../core/js/engine/tech-fish.js',
         '../core/js/engine/tech-wing.js',
         '../core/js/engine/tech-chain.js',
+        '../core/js/engine/tech-als.js',
         '../core/js/engine/tech-cage.js',
         '../core/js/engine/tech-ineq.js',
         '../core/js/engine/model-aids.js',
@@ -125,12 +126,17 @@
         'js/ui/app.js'
       ];
       var FIXTURE_FILES = [
+        '../core/tests/fixtures/chain-proofs.js',
         '../core/tests/fixtures/classic.js',
+        '../core/tests/fixtures/jigsaw-models.js',
+        '../core/tests/fixtures/jigsaw-techniques.js',
         '../core/tests/fixtures/techniques-helper.js',
         '../core/tests/fixtures/techniques.js',
         '../core/tests/fixtures/testkit.js',
         'tests/fixtures/rated.js',
-        'tests/fixtures/puzzle-documents.js'
+        'tests/fixtures/puzzle-documents.js',
+        'tests/fixtures/help-example-tools.js',
+        'tests/fixtures/jigsaw-help-source.js'
       ];
       var CORE_SUITE_FILES = [
         'bits',
@@ -142,7 +148,9 @@
         'model',
         'solver',
         'symbols',
+        'tech-als',
         'tech-basic',
+        'tech-cage',
         'tech-chain',
         'tech-fish',
         'tech-subset',
@@ -154,6 +162,7 @@
         'a11y',
         'app',
         'fixtures',
+        'help-example-tools',
         'help',
         'i18n',
         'importer',

@@ -1,0 +1,5 @@
+$ node tests/artifacts/difficulty-v3/MS07d/round2-workers.js   (fake workers, the real scheduler; no generation)
+{"jobs":1,"maxFirst":1,"maxSecond":1,"secondDispatched":60,"aliveAtSecondStart":1}
+{"jobs":2,"maxFirst":2,"maxSecond":1,"secondDispatched":60,"aliveAtSecondStart":2}
+{"jobs":4,"maxFirst":4,"maxSecond":1,"secondDispatched":60,"aliveAtSecondStart":1}
+{"jobs":8,"maxFirst":8,"maxSecond":1,"secondDispatched":60,"aliveAtSecondStart":6}

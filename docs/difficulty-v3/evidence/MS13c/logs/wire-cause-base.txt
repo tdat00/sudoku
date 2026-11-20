@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS13c\cause.js --kind=wire --ledgers=..\docs\difficulty-v3\evidence\MS13c\wire --json=..\docs\difficulty-v3\evidence\MS13c\wire-cause-base.json
+{"id":"G09","request":"killer expert 3514204290","equalsSaved":true,"equalsLedger":true,"ledgerEqualsSaved":true,"seconds":20.9}
+{"id":"G10","request":"killer nightmare 42","equalsSaved":true,"equalsLedger":false,"ledgerEqualsSaved":false,"seconds":25.4}
+{"id":"G11","request":"greaterThan expert 42","equalsSaved":true,"equalsLedger":true,"ledgerEqualsSaved":true,"seconds":16.6}
+{"id":"G12","request":"greaterThan hard 3115968914","equalsSaved":true,"equalsLedger":true,"ledgerEqualsSaved":true,"seconds":0.4}
+{"id":"G13","request":"samurai nightmare 42","equalsSaved":true,"equalsLedger":false,"ledgerEqualsSaved":false,"seconds":11}
+wires examined 5 (engine git:4aa3d11, 74.4 s); equal to the saved output 5, equal to the ledger 3, ledger differs from the saved 2
+exit=0 seconds=74.729

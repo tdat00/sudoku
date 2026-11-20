@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS10a\check-mutations.cjs
+mutation 40 (the observer record reports the default limit whatever the call used): found more than once
+53 mutations, 1 with a bad fragment
+exit=1 seconds=0.082

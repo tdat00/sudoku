@@ -23,7 +23,9 @@
   const STEPS = ['configure', 'buildModel', 'fullGrid', 'extraStructure', 'dig', 'rate', 'tune'];
 
   const DEFAULT_DIFFICULTY = 'normal';
-  const DEFAULT_MAX_ATTEMPTS = 8;
+  // The attempts of a board of at most `SG.digger.SMALL_BOARD_CELLS` cells, the reference of the size policy
+  // `SG.digger.defaultMaxAttempts`; a request without `maxAttempts` takes the number of its own board.
+  const DEFAULT_MAX_ATTEMPTS = SG.digger.defaultMaxAttempts(SG.digger.SMALL_BOARD_CELLS);
   const DEFAULT_TRACE = 'summary';
 
   function fail(code, args) {
@@ -39,11 +41,17 @@
     return x === Infinity ? null : x;
   }
 
+  /** A target as the result and the wire keep it: a finite number (zero included) or null, never a score. */
+  function nullableTarget(value) {
+    return Number.isFinite(value) ? value : null;
+  }
+
   // GenerateConfig: variantId, difficulty (default 'normal'; a level the variant supports), seed (default
   // random; uint32 once normalised), symbolMode (default: the variant's), symmetry (SG.symmetry.KINDS,
-  // default 'rotational180'), digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (default 8: full
-  // grids tried before settling for the closest puzzle), trace ('off' | 'summary' | 'full', default
-  // 'summary'), variantOptions (plain data for variant.build).
+  // default 'rotational180'), digOrder (SG.digger.ORDERS, default 'random'), maxAttempts (full grids tried
+  // before settling for the closest puzzle; default by the size of the board: 8 up to 81 cells, 4 up to 144,
+  // 2 above, see `SG.digger.defaultMaxAttempts`; an explicit whole number from 1 is used as given), trace
+  // ('off' | 'summary' | 'full', default 'summary'), variantOptions (plain data for variant.build).
 
   // Normalises and validates a configuration (defaults filled, seed fixed) into plain data that goes into
   // PuzzleResult.config and survives postMessage. Throws GenerationError ('variant.unknown',
@@ -70,7 +78,8 @@
     if (SG.digger.ORDERS.indexOf(digOrder) === -1) {
       throw fail('digger.invalidOption', { option: 'digOrder', value: String(digOrder) });
     }
-    const maxAttempts = config.maxAttempts !== undefined ? config.maxAttempts : DEFAULT_MAX_ATTEMPTS;
+    const maxAttempts = config.maxAttempts !== undefined ? config.maxAttempts
+      : SG.digger.defaultMaxAttempts(SG.variants.cellCountOf(def));
     if (!(Number.isInteger(maxAttempts) && maxAttempts >= 1)) {
       throw fail('digger.invalidOption', { option: 'maxAttempts', value: String(maxAttempts) });
     }
@@ -104,11 +113,21 @@
 
   // PuzzleResult: model (with the structure `postGenerate` added), givens (0 = empty; a subset of solution),
   // solution, rating (SG.difficulty.rate; rating.level is the achieved level, config.difficulty the requested
-  // one), seed, config (normalised; `trace` as applied), timings (ms per step id, all seven keys, summed over
+  // one), exact (boolean: the digger's verdict for the returned puzzle, the same as the `exact` of the `done`
+  // event; never inferred from the level names, and false when absent from a wire), seed, config
+  // (normalised; `trace` as applied), timings (ms per step id, all seven keys, summed over
   // attempts and samples), attempts (full grids generated), warnings (i18n keys: 'difficulty.approximate' =
   // closest puzzle returned, 'digger.unsoundTechnique', 'trace.downgraded'), digLog (dig log of
   // SG.digger.generate for the sample that became the puzzle; the UI builds its replay from it, whatever
-  // `config.trace` was).
+  // `config.trace` was), work (internal, not part of any exchange format or option: the counters of each
+  // attempt, `GeneratedPuzzle.work` of the digger, with its local searches; owned plain data, a copy on the
+  // wire, and absent, never zero, when the result comes from a wire or cache entry written before it
+  // existed), target (internal, not part of any exchange format: the target of the sample, search or kept
+  // candidate the result comes from, `GeneratedPuzzle.target` of the digger: a finite number, zero included,
+  // or null. A sample of a finite band draws its own target, so a normal result carries one; it is null for
+  // an open band, for a result that comes from a variant's structure search (which has none, even when the
+  // samples of the request had targets) and for a wire or cache entry written before the field. It crosses
+  // the wire as it is).
 
   // `emit` is a sink function, an `SG.events` emitter (which decides the verbosity) or null; a sink gets an
   // emitter with verbosity `config.trace`. At 'off' only step start/end, `done` and `error` events are sent.
@@ -236,17 +255,20 @@
       givens: puzzle.givens,
       solution: puzzle.solution,
       rating: puzzle.rating,
+      exact: puzzle.exact === true,
       seed: cfg.seed,
       config: cfg,
       timings: Object.assign({}, stage.timings),
       attempts: puzzle.attempts,
       warnings: warnings.concat(puzzle.warnings),
-      digLog: puzzle.log
+      digLog: puzzle.log,
+      work: puzzle.work,
+      target: nullableTarget(puzzle.target)
     };
     em.done({
       requested: cfg.difficulty,
       achieved: puzzle.achieved,
-      exact: puzzle.exact,
+      exact: result.exact,
       attempts: puzzle.attempts,
       clues: puzzle.clues,
       seed: cfg.seed,
@@ -285,23 +307,38 @@
     };
   }
 
+  // The owned copy of the work of a result or a wire (`SG.digger.copyWork`), or undefined when there is none
+  // or it is not of that shape: unavailable, never read as zero.
+  function workCopy(work) {
+    const copy = SG.digger.copyWork(work);
+    return copy === null ? undefined : copy;
+  }
+
   // The PuzzleResult as data that survives postMessage and nothing else: the model is reduced to what
   // `SG.model.create` needs (`cellUnits` and `peers` are derived and stay behind). Typed arrays are shared,
-  // not copied; the clone `postMessage` makes is the copy.
+  // not copied; the clone `postMessage` makes is the copy. `exact` is a strict boolean (a result without it
+  // is not exact); the wire version stays 1, because `fromWire` reads an absent flag as false. The internal
+  // `work` crosses as a fresh copy of its counters, and is left out when the result has none. `target` always
+  // crosses, a finite number (zero included) or null.
   function toWire(result) {
-    return {
+    const wire = {
       v: WIRE_VERSION,
       model: modelToWire(result.model),
       givens: result.givens,
       solution: result.solution,
       rating: result.rating,
+      exact: result.exact === true,
       seed: result.seed,
       config: result.config,
       timings: result.timings,
       attempts: result.attempts,
       warnings: result.warnings,
-      digLog: result.digLog
+      digLog: result.digLog,
+      target: nullableTarget(result.target)
     };
+    const work = workCopy(result.work);
+    if (work !== undefined) wire.work = work;
+    return wire;
   }
 
   // Rebuilds a PuzzleResult from `toWire` data on the receiving thread. The model is created anew with
@@ -309,7 +346,11 @@
   // for cages, `SG.ineq.ensureExtension` for signs): without them `SG.dfs` would ignore cage sums and signs
   // and count solutions of a different puzzle. Per-model side data the variants keep in WeakMaps (layout
   // report, sign scope, build notes) does not cross; the UI does not read it. Throws 'unexpected' for data of
-  // another wire version.
+  // another wire version. `exact` is true only for a wire that says `exact === true`: an absent or other
+  // value (a result cached before the flag existed) is false, never rebuilt from matching level names. `work`
+  // is a copy of the wire's, or undefined for a wire without it (or with a malformed one): never zero work.
+  // `target` is the wire's finite number, zero included, and null for an absent or any other value (a wire
+  // from before the field): never a midpoint of the band and never inferred from the score.
   function fromWire(wire) {
     if (wire === null || typeof wire !== 'object' || wire.v !== WIRE_VERSION || !wire.model) {
       throw fail('unexpected', { message: 'unsupported result format' });
@@ -322,12 +363,15 @@
       givens: wire.givens,
       solution: wire.solution,
       rating: wire.rating,
+      exact: wire.exact === true,
       seed: wire.seed,
       config: wire.config,
       timings: wire.timings,
       attempts: wire.attempts,
       warnings: wire.warnings,
-      digLog: Array.isArray(wire.digLog) ? wire.digLog : undefined
+      digLog: Array.isArray(wire.digLog) ? wire.digLog : undefined,
+      work: workCopy(wire.work),
+      target: nullableTarget(wire.target)
     };
   }
 

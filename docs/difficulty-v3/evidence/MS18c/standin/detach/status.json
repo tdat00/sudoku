@@ -1,0 +1,118 @@
+{
+  "schema": "MS18c-gq-status-v1",
+  "standIn": true,
+  "name": "detach",
+  "scenario": "direct",
+  "runId": "standin-detach-20261118181814-28064",
+  "cell": "stand-in/none",
+  "state": "finished",
+  "supervisor": {
+    "pid": 28064,
+    "createdUtcMicros": "2026-11-18T18:18:12.651582Z",
+    "source": "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+    "hostJob": {
+      "inJob": true,
+      "limits": "limitFlags=0x800;killOnClose=False;breakawayOk=True;silentBreakawayOk=False;activeProcessLimit=0"
+    },
+    "powershell": "7.6.10",
+    "exe": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+  },
+  "job": {
+    "unnamed": true,
+    "limits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "handleHeldBy": "this supervisor only"
+  },
+  "launcher": {
+    "pid": 3868,
+    "createdUtcMicros": "2026-11-18T18:18:14.587910Z",
+    "launchedSuspendedAssignedResumed": true
+  },
+  "clocks": {
+    "oStart": "2026-11-18T18:18:14.416Z",
+    "tStart": "2026-11-18T18:18:14.569Z",
+    "tDeadline": "2026-11-18T18:48:14.5789979Z",
+    "T": 1800.0,
+    "rSeconds": null,
+    "wSeconds": 1500.2762821,
+    "note": "T starts at the creation of the owned launcher and excludes the lock acquisition",
+    "elapsedSeconds": 1494.631
+  },
+  "lock": {
+    "mode": "private",
+    "own": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\detach\\own.lock",
+    "foreign": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\detach\\foreign.lock"
+  },
+  "outputs": {
+    "dir": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\detach",
+    "status": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\detach\\status.json",
+    "log": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\detach\\supervisor.log",
+    "members": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin\\detach\\members.json"
+  },
+  "members": [
+    3868,
+    7008,
+    13344,
+    13412,
+    14648,
+    25080
+  ],
+  "heartbeatAt": "2026-11-18T18:43:14.870Z",
+  "finalStatus": "completed",
+  "membership": [
+    {
+      "pid": 25080,
+      "name": "conhost",
+      "inThisJob": true
+    },
+    {
+      "pid": 3868,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 14648,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 13344,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 7008,
+      "name": "node",
+      "inThisJob": true
+    },
+    {
+      "pid": 13412,
+      "name": "node",
+      "inThisJob": true
+    }
+  ],
+  "activeProcesses": 6,
+  "window": {
+    "jobLimits": "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+    "launcherPid": 3868,
+    "launcherCreated": "2026-11-18T18:18:14.587910Z",
+    "tStartIso": "2026-11-18T18:18:14.569Z",
+    "tStartTicks": 6206757887942,
+    "tStartNs": 620675788794200,
+    "createdAfterSeconds": 0.0359589,
+    "resumedAfterSeconds": 0.0406667,
+    "launcherExit": 0,
+    "tExpired": false,
+    "leftover": false,
+    "stuck": false,
+    "wSeconds": 1500.2762821,
+    "launcherExitedAfterSeconds": 1500.2723139,
+    "members": [
+      3868,
+      7008,
+      13344,
+      13412,
+      14648,
+      25080
+    ]
+  }
+}

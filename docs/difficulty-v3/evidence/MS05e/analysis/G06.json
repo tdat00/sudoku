@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "f678cf42724ec083f4ecf436eb36c62ec761f6b6f7554c1173e2984b5c062c1e",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "f7be90f45e49e2362e43ddcc32a10722979db962",
+  "dirty": true,
+  "generatedAt": "2026-11-14T07:08:04.675Z",
+  "argv": ["--ids=G06","--record=..\\docs\\difficulty-v3\\evidence\\MS05e\\analysis\\G06.json"],
+  "records": [
+    {"key":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"value":{"id":"G06","request":{"variantId":"jigsaw9","difficulty":"nightmare","seed":"42"},"today":{"steps":16,"missing":2},"counts":{"compact":7,"details":30},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,8,"D/Dig",16,25,25,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,19,"nakedSingle","—","—","—"],[4,26,"G/Choose",51,106,62,"pointing","—","—","N"],[5,27,"G/Choose",53,1697,1591,"forcingChain","Y","R8C4","—"],[6,28,"G/Choose",55,2348,651,"nishio","—","—","N"],[7,28,"F/Final",55,2348,0,"nishio","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,41,42,43,44,45,46,47,106,1697,2348,2348],"alive":null,"folds":[],"jumps":[{"step":5,"from":106,"to":1697,"before":{"P":40,"W":135.5,"R":21.333991,"V":44.835165,"E":51,"level":"easy"},"after":{"P":1100,"W":3317.25,"R":551.552365,"V":45.591398,"E":53,"level":"nightmare"},"choice":{"chosen":1697,"others":9,"nulls":0,"max":129,"at":96,"rated":10,"refused":0},"singles":[{"op":"remove","cell":"R2C6","score":107},{"op":"remove","cell":"R8C4","score":1697}],"cause":"single-culprit","frame":"R8C4","firstUse":{"k":24,"n":63,"technique":"forcingChain"},"key":"technique.forcingChain.step.endpoints","effects":"remove candidate 4@R5C5, 4@R6C5, 4@R8C5, 4@R9C5"}]},"ms":1324,"overrides":[]}
+  ]
+}

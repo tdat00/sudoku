@@ -1,0 +1,9 @@
+Sudoku Generator performance  (node v26.13.0, AMD EPYC 7763 64-Core Processor, 50 runs per cell, trace summary, seed 7000)
+p95 target = design.md section 9.1; cells = variant x level the variant offers
+
+variant     level        target      p50      p95      max     mean   result
+butterfly   nightmare       8 s     6130    24335    33558     9419   ✗
+
+0 of 1 cells meet their p95 target (0 %, acceptance: at least 90 %)
+Misses:
+  butterfly/nightmare: p95 24335 ms against 8 s (x3.04), max 33558 ms

@@ -1,0 +1,6 @@
+plan: 3 item(s), projections sum 240.0 s, budget 450 s, generic floor 60 s (it never replaces an item projection)
+#0 q-gen-steps exit=0 node=11.717s (projected 30 s, elapsed before 0.002 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-steps.json
+#1 q-gen-replay exit=0 node=11.025s (projected 30 s, elapsed before 11.721 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-replay.json
+#2 q-gen-player exit=0 node=139.515s (projected 180 s, elapsed before 22.747 s): Results: docs/difficulty-v3/evidence/MS05r6b/quick/generator-player.json
+compound complete: 3 item(s) in 162.265 s; next --from=3
+MS05r6b exit=0 seconds=162.363

@@ -1,0 +1,8 @@
+$ node tests\pattern-cost.js --ids=bugPlusOne --runs=20 --json=..\docs\difficulty-v3\evidence\MS11c\pattern-cost.json
+pattern-cost: 4 of 4 cases x 20 runs (80 finds), complete true, found 2, none 2, outcome not the fixture's 0, capped 0, wall 0.031 s
+  bugPlusOne:positive:1 found, work 243 of 50000, ms p50 0.051 p95 0.115 max 0.355
+  bugPlusOne:positive:2 found, work 351 of 50000, ms p50 0.061 p95 0.090 max 0.107
+  bugPlusOne:negative:1 none, work 0 of 50000, ms p50 0.001 p95 0.001 max 0.003
+  bugPlusOne:negative:2 none, work 0 of 50000, ms p50 0.001 p95 0.001 max 0.003
+record: docs/difficulty-v3/evidence/MS11c/pattern-cost.json
+exit=0 seconds=0.571

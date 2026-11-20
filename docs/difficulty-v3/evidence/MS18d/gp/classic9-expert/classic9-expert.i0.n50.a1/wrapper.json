@@ -1,0 +1,36 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record classic9-expert.i0.n50 a1",
+  "runId": "classic9-expert.i0.n50.a1",
+  "cell": "classic9/expert",
+  "payload": "gp-recorder",
+  "chunkId": "classic9-expert.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1",
+  "requestedAt": "2026-11-19T18:30:45.794+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795087829692,
+    "lastCheckMs": 1795087845231,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 267
+  },
+  "startedAtFromChild": "2026-11-19T18:30:45.927+07:00",
+  "finished": "2026-11-19T18:31:02.108+07:00",
+  "releaseObservedAt": "2026-11-19T18:31:02.109+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

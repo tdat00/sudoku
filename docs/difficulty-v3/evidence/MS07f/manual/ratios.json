@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "6d2d588fb562b59da6417e56364bf90482cc59a875376fc8ae3d036a87876cb8",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["perf"],"filter":"> instrumented generators: what the events cost > generating puzzles:","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 288088.9,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 287890,
+    "tests": [
+      {"suite":"perf","name":"generating puzzles: verbosity 'off' costs less than 2%","fullName":"perf > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs less than 2%","status":"pass","ms":95838.305,"reason":"","error":null,"ordinal":48},
+      {"suite":"perf","name":"generating puzzles: verbosity 'summary' costs less than 10%","fullName":"perf > instrumented generators: what the events cost > generating puzzles: verbosity 'summary' costs less than 10%","status":"pass","ms":95161.176,"reason":"","error":null,"ordinal":49},
+      {"suite":"perf","name":"generating puzzles: verbosity 'full' costs less than 35%","fullName":"perf > instrumented generators: what the events cost > generating puzzles: verbosity 'full' costs less than 35%","status":"pass","ms":96889.76,"reason":"","error":null,"ordinal":50}
+    ],
+    "suites": [
+      {"name":"perf","total":3,"passed":3,"failed":0,"skipped":0,"ms":287889.888}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=perf","--filter=> instrumented generators: what the events cost > generating puzzles:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS07f\\manual\\ratios.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "flower-hell2.i0.n25.a1",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "flower",
+    "level": "hell2",
+    "targetMs": 20000
+  },
+  "task": "MS18d GP record flower-hell2.i0.n25 a1",
+  "startedAtMs": 1795122870398,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=82.732",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "flower-hell2.i0.n25",
+      "requests": 25,
+      "sha256": "ddaab49fb0b0cb9e0727f0ca47d1c0a9f1d419d7cf827d7913ab9605b2322030"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 12004,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=82.732",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 209,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 218000,
+      "systemMicros": 296000
+    },
+    "tee": {
+      "userMicros": 15000,
+      "systemMicros": 62000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795122962856
+}

@@ -1,0 +1,964 @@
+{
+  "schema": 1,
+  "admissionSeconds": 450,
+  "ceilingSeconds": 540,
+  "flatSeconds": 60,
+  "historicalFactor": 6,
+  "currentFactorLongRecord": 2,
+  "currentFactorPilot": 4,
+  "seed": 20260101,
+  "rule": "b = max(6 x MS06d slowest request, 2 or 4 x slowest retained later-source run); bound = b x units + 60 s; units = requests + requests whose absolute index is a multiple of 5 (I4 regeneration)",
+  "cells": [
+    {
+      "variant": "classic9",
+      "level": "normal",
+      "route": "direct",
+      "ms06dSlowestSeconds": 0.921,
+      "current": {
+        "ms": 1175,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 5.5,
+      "commands": 1
+    },
+    {
+      "variant": "classic9",
+      "level": "hard",
+      "route": "direct",
+      "ms06dSlowestSeconds": 0.054,
+      "current": {
+        "ms": 132,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 0.3,
+      "commands": 1
+    },
+    {
+      "variant": "classic9",
+      "level": "expert",
+      "route": "direct",
+      "ms06dSlowestSeconds": 0.137,
+      "current": {
+        "ms": 647,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 1.3,
+      "commands": 1
+    },
+    {
+      "variant": "classic9",
+      "level": "master",
+      "route": "direct",
+      "ms06dSlowestSeconds": 0.107,
+      "current": {
+        "ms": 408,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 0.8,
+      "commands": 1
+    },
+    {
+      "variant": "classic9",
+      "level": "nightmare",
+      "route": "direct",
+      "ms06dSlowestSeconds": 5.382,
+      "current": {
+        "ms": 5443,
+        "runs": 50,
+        "source": "MS13c gp-table.md, 50 runs, p95 4902 ms"
+      },
+      "perRequestSeconds": 32.3,
+      "commands": 2
+    },
+    {
+      "variant": "classic9",
+      "level": "hell1",
+      "route": "direct",
+      "ms06dSlowestSeconds": 1.273,
+      "current": {
+        "ms": 10494,
+        "runs": 2,
+        "source": "MS13c gp-table.md, two-run pilot (MS07b pilot 5354 ms)"
+      },
+      "perRequestSeconds": 42,
+      "commands": 2
+    },
+    {
+      "variant": "killer",
+      "level": "normal",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 1.07,
+      "current": null,
+      "perRequestSeconds": 6.4,
+      "commands": 1
+    },
+    {
+      "variant": "killer",
+      "level": "hard",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 6.047,
+      "current": {
+        "ms": 7406,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 36.3,
+      "commands": 2
+    },
+    {
+      "variant": "killer",
+      "level": "expert",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 15.793,
+      "current": null,
+      "perRequestSeconds": 94.8,
+      "commands": 4
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "normal",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 0.2,
+      "current": {
+        "ms": 149,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 1.2,
+      "commands": 1
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "hard",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 0.096,
+      "current": null,
+      "perRequestSeconds": 0.6,
+      "commands": 1
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "expert",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 2.621,
+      "current": null,
+      "perRequestSeconds": 15.7,
+      "commands": 1
+    },
+    {
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 3.436,
+      "current": {
+        "ms": 22283,
+        "runs": 2,
+        "source": "MS13c gp-table.md, two-run pilot (MS15b pilot 6854 ms)"
+      },
+      "perRequestSeconds": 89.1,
+      "commands": 4
+    },
+    {
+      "variant": "greaterThan",
+      "level": "normal",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 7.492,
+      "current": {
+        "ms": 10005,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 44.9,
+      "commands": 2
+    },
+    {
+      "variant": "greaterThan",
+      "level": "hard",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 4.139,
+      "current": {
+        "ms": 4925,
+        "runs": 20,
+        "source": "MS17b hash ledgers, 20 seeds, source 57c1b10"
+      },
+      "perRequestSeconds": 24.8,
+      "commands": 1
+    },
+    {
+      "variant": "greaterThan",
+      "level": "expert",
+      "route": "pipeline",
+      "ms06dSlowestSeconds": 15.228,
+      "current": null,
+      "perRequestSeconds": 91.4,
+      "commands": 4
+    },
+    {
+      "variant": "diagonalX",
+      "level": "nightmare",
+      "route": "direct",
+      "ms06dSlowestSeconds": 11.752,
+      "current": {
+        "ms": 25639,
+        "runs": 50,
+        "source": "MS13c gp-table.md, 50 runs, p95 16534 ms"
+      },
+      "perRequestSeconds": 70.5,
+      "commands": 3
+    }
+  ],
+  "entries": [
+    {
+      "id": "classic9-normal",
+      "variant": "classic9",
+      "level": "normal",
+      "route": "direct",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 5.5,
+      "boundSeconds": 143,
+      "json": "classic9-normal.json",
+      "log": "logs\\classic9-normal.txt",
+      "readiness": "readiness\\classic9-normal.json"
+    },
+    {
+      "id": "classic9-hard",
+      "variant": "classic9",
+      "level": "hard",
+      "route": "direct",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 0.3,
+      "boundSeconds": 65,
+      "json": "classic9-hard.json",
+      "log": "logs\\classic9-hard.txt",
+      "readiness": "readiness\\classic9-hard.json"
+    },
+    {
+      "id": "classic9-expert",
+      "variant": "classic9",
+      "level": "expert",
+      "route": "direct",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 1.3,
+      "boundSeconds": 80,
+      "json": "classic9-expert.json",
+      "log": "logs\\classic9-expert.txt",
+      "readiness": "readiness\\classic9-expert.json"
+    },
+    {
+      "id": "classic9-master",
+      "variant": "classic9",
+      "level": "master",
+      "route": "direct",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 0.8,
+      "boundSeconds": 73,
+      "json": "classic9-master.json",
+      "log": "logs\\classic9-master.txt",
+      "readiness": "readiness\\classic9-master.json"
+    },
+    {
+      "id": "classic9-nightmare-0-6",
+      "variant": "classic9",
+      "level": "nightmare",
+      "route": "direct",
+      "shard": true,
+      "from": 0,
+      "count": 6,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "units": 8,
+      "perRequestSeconds": 32.3,
+      "boundSeconds": 319,
+      "json": "shards\\classic9-nightmare-0-6.json",
+      "log": "logs\\classic9-nightmare-0-6.txt",
+      "readiness": "readiness\\classic9-nightmare-0-6.json"
+    },
+    {
+      "id": "classic9-nightmare-6-6",
+      "variant": "classic9",
+      "level": "nightmare",
+      "route": "direct",
+      "shard": true,
+      "from": 6,
+      "count": 6,
+      "requests": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 7,
+      "perRequestSeconds": 32.3,
+      "boundSeconds": 287,
+      "json": "shards\\classic9-nightmare-6-6.json",
+      "log": "logs\\classic9-nightmare-6-6.txt",
+      "readiness": "readiness\\classic9-nightmare-6-6.json"
+    },
+    {
+      "id": "classic9-hell1-0-6",
+      "variant": "classic9",
+      "level": "hell1",
+      "route": "direct",
+      "shard": true,
+      "from": 0,
+      "count": 6,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "units": 8,
+      "perRequestSeconds": 42,
+      "boundSeconds": 396,
+      "json": "shards\\classic9-hell1-0-6.json",
+      "log": "logs\\classic9-hell1-0-6.txt",
+      "readiness": "readiness\\classic9-hell1-0-6.json"
+    },
+    {
+      "id": "classic9-hell1-6-6",
+      "variant": "classic9",
+      "level": "hell1",
+      "route": "direct",
+      "shard": true,
+      "from": 6,
+      "count": 6,
+      "requests": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 7,
+      "perRequestSeconds": 42,
+      "boundSeconds": 354,
+      "json": "shards\\classic9-hell1-6-6.json",
+      "log": "logs\\classic9-hell1-6-6.txt",
+      "readiness": "readiness\\classic9-hell1-6-6.json"
+    },
+    {
+      "id": "killer-normal",
+      "variant": "killer",
+      "level": "normal",
+      "route": "pipeline",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 6.4,
+      "boundSeconds": 157,
+      "json": "killer-normal.json",
+      "log": "logs\\killer-normal.txt",
+      "readiness": "readiness\\killer-normal.json"
+    },
+    {
+      "id": "killer-hard-0-6",
+      "variant": "killer",
+      "level": "hard",
+      "route": "pipeline",
+      "shard": true,
+      "from": 0,
+      "count": 6,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "units": 8,
+      "perRequestSeconds": 36.3,
+      "boundSeconds": 351,
+      "json": "shards\\killer-hard-0-6.json",
+      "log": "logs\\killer-hard-0-6.txt",
+      "readiness": "readiness\\killer-hard-0-6.json"
+    },
+    {
+      "id": "killer-hard-6-6",
+      "variant": "killer",
+      "level": "hard",
+      "route": "pipeline",
+      "shard": true,
+      "from": 6,
+      "count": 6,
+      "requests": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 7,
+      "perRequestSeconds": 36.3,
+      "boundSeconds": 314,
+      "json": "shards\\killer-hard-6-6.json",
+      "log": "logs\\killer-hard-6-6.txt",
+      "readiness": "readiness\\killer-hard-6-6.json"
+    },
+    {
+      "id": "killer-expert-0-3",
+      "variant": "killer",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 0,
+      "count": 3,
+      "requests": [
+        0,
+        1,
+        2
+      ],
+      "units": 4,
+      "perRequestSeconds": 94.8,
+      "boundSeconds": 440,
+      "json": "shards\\killer-expert-0-3.json",
+      "log": "logs\\killer-expert-0-3.txt",
+      "readiness": "readiness\\killer-expert-0-3.json"
+    },
+    {
+      "id": "killer-expert-3-3",
+      "variant": "killer",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 3,
+      "count": 3,
+      "requests": [
+        3,
+        4,
+        5
+      ],
+      "units": 4,
+      "perRequestSeconds": 94.8,
+      "boundSeconds": 440,
+      "json": "shards\\killer-expert-3-3.json",
+      "log": "logs\\killer-expert-3-3.txt",
+      "readiness": "readiness\\killer-expert-3-3.json"
+    },
+    {
+      "id": "killer-expert-6-3",
+      "variant": "killer",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 6,
+      "count": 3,
+      "requests": [
+        6,
+        7,
+        8
+      ],
+      "units": 3,
+      "perRequestSeconds": 94.8,
+      "boundSeconds": 345,
+      "json": "shards\\killer-expert-6-3.json",
+      "log": "logs\\killer-expert-6-3.txt",
+      "readiness": "readiness\\killer-expert-6-3.json"
+    },
+    {
+      "id": "killer-expert-9-3",
+      "variant": "killer",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 9,
+      "count": 3,
+      "requests": [
+        9,
+        10,
+        11
+      ],
+      "units": 4,
+      "perRequestSeconds": 94.8,
+      "boundSeconds": 440,
+      "json": "shards\\killer-expert-9-3.json",
+      "log": "logs\\killer-expert-9-3.txt",
+      "readiness": "readiness\\killer-expert-9-3.json"
+    },
+    {
+      "id": "jigsaw9-normal",
+      "variant": "jigsaw9",
+      "level": "normal",
+      "route": "pipeline",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 1.2,
+      "boundSeconds": 78,
+      "json": "jigsaw9-normal.json",
+      "log": "logs\\jigsaw9-normal.txt",
+      "readiness": "readiness\\jigsaw9-normal.json"
+    },
+    {
+      "id": "jigsaw9-hard",
+      "variant": "jigsaw9",
+      "level": "hard",
+      "route": "pipeline",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 0.6,
+      "boundSeconds": 69,
+      "json": "jigsaw9-hard.json",
+      "log": "logs\\jigsaw9-hard.txt",
+      "readiness": "readiness\\jigsaw9-hard.json"
+    },
+    {
+      "id": "jigsaw9-expert",
+      "variant": "jigsaw9",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 15.7,
+      "boundSeconds": 296,
+      "json": "jigsaw9-expert.json",
+      "log": "logs\\jigsaw9-expert.txt",
+      "readiness": "readiness\\jigsaw9-expert.json"
+    },
+    {
+      "id": "jigsaw9-nightmare-0-3",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "route": "pipeline",
+      "shard": true,
+      "from": 0,
+      "count": 3,
+      "requests": [
+        0,
+        1,
+        2
+      ],
+      "units": 4,
+      "perRequestSeconds": 89.1,
+      "boundSeconds": 417,
+      "json": "shards\\jigsaw9-nightmare-0-3.json",
+      "log": "logs\\jigsaw9-nightmare-0-3.txt",
+      "readiness": "readiness\\jigsaw9-nightmare-0-3.json"
+    },
+    {
+      "id": "jigsaw9-nightmare-3-3",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "route": "pipeline",
+      "shard": true,
+      "from": 3,
+      "count": 3,
+      "requests": [
+        3,
+        4,
+        5
+      ],
+      "units": 4,
+      "perRequestSeconds": 89.1,
+      "boundSeconds": 417,
+      "json": "shards\\jigsaw9-nightmare-3-3.json",
+      "log": "logs\\jigsaw9-nightmare-3-3.txt",
+      "readiness": "readiness\\jigsaw9-nightmare-3-3.json"
+    },
+    {
+      "id": "jigsaw9-nightmare-6-3",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "route": "pipeline",
+      "shard": true,
+      "from": 6,
+      "count": 3,
+      "requests": [
+        6,
+        7,
+        8
+      ],
+      "units": 3,
+      "perRequestSeconds": 89.1,
+      "boundSeconds": 328,
+      "json": "shards\\jigsaw9-nightmare-6-3.json",
+      "log": "logs\\jigsaw9-nightmare-6-3.txt",
+      "readiness": "readiness\\jigsaw9-nightmare-6-3.json"
+    },
+    {
+      "id": "jigsaw9-nightmare-9-3",
+      "variant": "jigsaw9",
+      "level": "nightmare",
+      "route": "pipeline",
+      "shard": true,
+      "from": 9,
+      "count": 3,
+      "requests": [
+        9,
+        10,
+        11
+      ],
+      "units": 4,
+      "perRequestSeconds": 89.1,
+      "boundSeconds": 417,
+      "json": "shards\\jigsaw9-nightmare-9-3.json",
+      "log": "logs\\jigsaw9-nightmare-9-3.txt",
+      "readiness": "readiness\\jigsaw9-nightmare-9-3.json"
+    },
+    {
+      "id": "greaterThan-normal-0-6",
+      "variant": "greaterThan",
+      "level": "normal",
+      "route": "pipeline",
+      "shard": true,
+      "from": 0,
+      "count": 6,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "units": 8,
+      "perRequestSeconds": 44.9,
+      "boundSeconds": 420,
+      "json": "shards\\greaterThan-normal-0-6.json",
+      "log": "logs\\greaterThan-normal-0-6.txt",
+      "readiness": "readiness\\greaterThan-normal-0-6.json"
+    },
+    {
+      "id": "greaterThan-normal-6-6",
+      "variant": "greaterThan",
+      "level": "normal",
+      "route": "pipeline",
+      "shard": true,
+      "from": 6,
+      "count": 6,
+      "requests": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 7,
+      "perRequestSeconds": 44.9,
+      "boundSeconds": 375,
+      "json": "shards\\greaterThan-normal-6-6.json",
+      "log": "logs\\greaterThan-normal-6-6.txt",
+      "readiness": "readiness\\greaterThan-normal-6-6.json"
+    },
+    {
+      "id": "greaterThan-hard",
+      "variant": "greaterThan",
+      "level": "hard",
+      "route": "pipeline",
+      "shard": false,
+      "from": 0,
+      "count": 12,
+      "requests": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 15,
+      "perRequestSeconds": 24.8,
+      "boundSeconds": 433,
+      "json": "greaterThan-hard.json",
+      "log": "logs\\greaterThan-hard.txt",
+      "readiness": "readiness\\greaterThan-hard.json"
+    },
+    {
+      "id": "greaterThan-expert-0-3",
+      "variant": "greaterThan",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 0,
+      "count": 3,
+      "requests": [
+        0,
+        1,
+        2
+      ],
+      "units": 4,
+      "perRequestSeconds": 91.4,
+      "boundSeconds": 426,
+      "json": "shards\\greaterThan-expert-0-3.json",
+      "log": "logs\\greaterThan-expert-0-3.txt",
+      "readiness": "readiness\\greaterThan-expert-0-3.json"
+    },
+    {
+      "id": "greaterThan-expert-3-3",
+      "variant": "greaterThan",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 3,
+      "count": 3,
+      "requests": [
+        3,
+        4,
+        5
+      ],
+      "units": 4,
+      "perRequestSeconds": 91.4,
+      "boundSeconds": 426,
+      "json": "shards\\greaterThan-expert-3-3.json",
+      "log": "logs\\greaterThan-expert-3-3.txt",
+      "readiness": "readiness\\greaterThan-expert-3-3.json"
+    },
+    {
+      "id": "greaterThan-expert-6-3",
+      "variant": "greaterThan",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 6,
+      "count": 3,
+      "requests": [
+        6,
+        7,
+        8
+      ],
+      "units": 3,
+      "perRequestSeconds": 91.4,
+      "boundSeconds": 335,
+      "json": "shards\\greaterThan-expert-6-3.json",
+      "log": "logs\\greaterThan-expert-6-3.txt",
+      "readiness": "readiness\\greaterThan-expert-6-3.json"
+    },
+    {
+      "id": "greaterThan-expert-9-3",
+      "variant": "greaterThan",
+      "level": "expert",
+      "route": "pipeline",
+      "shard": true,
+      "from": 9,
+      "count": 3,
+      "requests": [
+        9,
+        10,
+        11
+      ],
+      "units": 4,
+      "perRequestSeconds": 91.4,
+      "boundSeconds": 426,
+      "json": "shards\\greaterThan-expert-9-3.json",
+      "log": "logs\\greaterThan-expert-9-3.txt",
+      "readiness": "readiness\\greaterThan-expert-9-3.json"
+    },
+    {
+      "id": "diagonalX-nightmare-0-4",
+      "variant": "diagonalX",
+      "level": "nightmare",
+      "route": "direct",
+      "shard": true,
+      "from": 0,
+      "count": 4,
+      "requests": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "units": 5,
+      "perRequestSeconds": 70.5,
+      "boundSeconds": 413,
+      "json": "shards\\diagonalX-nightmare-0-4.json",
+      "log": "logs\\diagonalX-nightmare-0-4.txt",
+      "readiness": "readiness\\diagonalX-nightmare-0-4.json"
+    },
+    {
+      "id": "diagonalX-nightmare-4-4",
+      "variant": "diagonalX",
+      "level": "nightmare",
+      "route": "direct",
+      "shard": true,
+      "from": 4,
+      "count": 4,
+      "requests": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "units": 5,
+      "perRequestSeconds": 70.5,
+      "boundSeconds": 413,
+      "json": "shards\\diagonalX-nightmare-4-4.json",
+      "log": "logs\\diagonalX-nightmare-4-4.txt",
+      "readiness": "readiness\\diagonalX-nightmare-4-4.json"
+    },
+    {
+      "id": "diagonalX-nightmare-8-4",
+      "variant": "diagonalX",
+      "level": "nightmare",
+      "route": "direct",
+      "shard": true,
+      "from": 8,
+      "count": 4,
+      "requests": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "units": 5,
+      "perRequestSeconds": 70.5,
+      "boundSeconds": 413,
+      "json": "shards\\diagonalX-nightmare-8-4.json",
+      "log": "logs\\diagonalX-nightmare-8-4.txt",
+      "readiness": "readiness\\diagonalX-nightmare-8-4.json"
+    }
+  ]
+}

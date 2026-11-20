@@ -1,0 +1,18 @@
+$ node tests\artifacts\difficulty-v3\MS08b\agreement-counts.js samurai,sohei,butterfly,flower,killer,greaterThan,wordoku 12
+fishTest12 seed 2026: {"states":60,"hits":28,"genMs":63,"findMs":5}
+fishTest16 seed 2026: {"states":32,"hits":18,"genMs":3580,"findMs":1}
+classic9 seed 777: {"states":400,"hits":131,"genMs":86,"findMs":4}
+classic9 seed 99: {"states":400,"hits":129,"genMs":82,"findMs":3}
+classic6 seed 777: {"states":400,"hits":122,"genMs":108,"findMs":1}
+classic4 seed 777: {"states":300,"hits":18,"genMs":29,"findMs":0}
+diagonalX seed 4242: {"states":120,"hits":25,"genMs":42,"findMs":1}
+hyper seed 4242: {"states":120,"hits":29,"genMs":35,"findMs":1}
+jigsaw9 seed 4242: {"states":120,"hits":0,"genMs":365,"findMs":1}
+samurai seed 4242: {"states":12,"hits":2,"genMs":84,"findMs":0}
+sohei seed 4242: {"states":12,"hits":4,"genMs":360,"findMs":1}
+butterfly seed 4242: {"states":12,"hits":0,"genMs":12,"findMs":1}
+flower seed 4242: {"states":12,"hits":0,"genMs":19,"findMs":0}
+killer seed 4242: {"states":12,"hits":4,"genMs":3,"findMs":0}
+greaterThan seed 4242: {"states":12,"hits":4,"genMs":4,"findMs":0}
+wordoku seed 4242: {"states":12,"hits":3,"genMs":2,"findMs":0}
+exit=0 seconds=5.101

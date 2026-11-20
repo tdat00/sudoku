@@ -1,0 +1,15 @@
+$ node tests\artifacts\difficulty-v3\MS10a\agreement-counts.js
+classic9 seed 777: 18 of 800 states, longest 3, {"propagated":5,"pruned":13}, 0.2 s
+classic9 seed 99: 28 of 800 states, longest 5, {"propagated":8,"pruned":17,"initial":3}, 0.2 s
+classic6 seed 777: 46 of 400 states, longest 5, {"propagated":17,"pruned":28,"initial":1}, 0.1 s
+classic4 seed 777: 1 of 400 states, longest 3, {"initial":1}, 0.0 s
+12 digits seed 2026: 1 of 120 states, longest 3, {"pruned":1}, 0.1 s
+16 digits seed 2026: 0 of 32 states, longest 0, {}, 3.3 s
+diagonalX seed 4242: 0 of 120 states, longest 0, {}, 0.0 s
+hyper seed 4242: 2 of 120 states, longest 3, {"initial":2}, 0.0 s
+jigsaw9 seed 4242: 1 of 120 states, longest 3, {"initial":1}, 0.3 s
+samurai seed 4242: 0 of 12 states, longest 0, {}, 0.1 s
+sohei seed 4242: 1 of 12 states, longest 3, {"initial":1}, 0.3 s
+flower seed 4242: 0 of 12 states, longest 0, {}, 0.0 s
+butterfly seed 4242: 0 of 12 states, longest 0, {}, 0.0 s
+exit=0 seconds=4.915

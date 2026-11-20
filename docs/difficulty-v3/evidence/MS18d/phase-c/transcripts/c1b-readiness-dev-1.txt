@@ -1,0 +1,82 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-readiness.js
+ok   journal: the committed first binding is in force; the tuple is derived and recorded
+ok   journal: the LAST entry is in force; the earlier entry stays in the chain with its tuple
+ok   journal: an empty journal means NO host binding is configured: a hold reason, no fall-back
+ok   journal: a line that is not JSON, not a binding, or not exactly the shape is never skipped
+ok   journal: ProcessName may be recorded as a diagnostic and never takes part in any match
+ok   journal: the evidence is committed, is JSON and is exactly the cited bytes (CRLF-agnostic)
+ok   journal: only the COMMITTED text counts: a journal that is not committed has no binding
+ok   journal: the version committed at the campaign base must remain an exact line prefix
+ok   journal: the digest of a journal does not depend on CRLF or LF line ends
+ok   rulings: an empty journal is valid; lines have exactly the F3 shape; repeats contradict
+ok   rulings: the version at the campaign base must remain an exact line prefix
+ok   journal: utcTicks7 keeps the 100 ns of the .NET start time and converts the zone to UTC
+ok   host: the exact instance verifies; the display name and the CIM name are never compared
+ok   host: a missing process is `absent`; no binding is `unbound`
+ok   host: every fact is compared on its own: a different one is a replaced instance
+ok   host: a fact the probe could not read (null) or an error is `unreadable`, never verified
+ok   host: the path compares without case (Windows), the times exactly, the names never
+ok   counters: five valid intervals give the busy cores of each; mean, max and ready
+ok   counters: busy cores sum over the logical processors, with no normalisation
+ok   ready: mean <= 0.5 and max <= 1.0 are inclusive, unrounded
+ok   counters: the interval clock must say 900..1600 ms (the bounds are valid, outside is not)
+ok   counters: a wrong processor count, a missing reading or a broken counter is invalid
+ok   consumers: a quiet table has none; every process of the table was observed
+ok   consumers: >= 0.5 CPU-s per elapsed second is a consumer, exactly 0.5 included, 0.4999 not
+ok   consumers: only the host itself, the idle process and this run's own ones are excluded
+ok   consumers: the host's descendants and other Copilot/OS processes are NOT exempt
+ok   consumers: a process is told apart by PID plus creation time: a reused PID is NEW
+ok   consumers: a process that appeared in the window is judged on its own life inside it
+ok   consumers: a short full-core burst of a NEW process is not diluted by the whole window
+ok   consumers: a new process lives at least one second: 0.3 s and 0.3 CPU-s is no consumer
+ok   consumers: one created before the first snapshot but missing from it counts from it
+ok   consumers: a process that vanished is recorded, never classified or invented
+ok   consumers: unknown data is invalid: no creation or CPU time, a CPU time going backwards
+ok   consumers: an unusable snapshot, or a window shorter than the intervals, is invalid
+ok   decision: a quiet run is ready, admitted, complete, not an eligible hold
+ok   decision: ready and admitted are apart: a busy host is admitted under A, not ready
+ok   decision: the other direction: ready does not admit when a consumer is present
+ok   decision: an additional consumer ONLY is an eligible re-ask (complete, not admitted)
+ok   decision: a mixed hold is never eligible: a consumer AND a replaced host
+ok   decision: a replaced, absent or half-replaced host holds without eligibility
+ok   decision: the tooling does not rebind: a replaced host is held again and again
+ok   decision: bad facts hold with no eligibility: counters, snapshot, host, timeout, policy
+ok   decision: both queries must be recorded
+ok   decision: the limits are the ones of the pack
+ok   runtime: readiness is required for every real recorder run and where asked
+ok   runtime: a REAL run takes the frozen probe and processor count and no fixture
+ok   runtime: a quiet stand-in run is admitted; wrapper, controller and probes are owned
+ok   runtime: an APPROVED rebinding (the last committed entry) is the binding in force
+ok   runtime: the former host is NOT exempt after a rebinding; the prior binding stays in the journal
+ok   runtime: an UNAPPROVED rebinding (not in the committed journal) changes nothing: held
+ok   runtime: an additional consumer, and only that, is an eligible hold
+ok   runtime: a query that fails or times out is a hold that is not an eligible re-ask
+ok   runtime: counters that cannot be read, or a readiness over 45 s, hold
+ok   runtime: an empty, invalid or missing host-binding journal holds: NO host binding, no fall-back
+ok   runtime: a policy other than A, a missing probe, an unusable processor count: holds
+ok   runtime: a ProcessName-only rename is no false hold; a restart or a reused PID holds
+ok   validator: a working tree with a valid binding is ok but is NOT authority
+ok   validator: an empty binding journal, a missing evidence file or a broken line is not ok
+ok   validator: a damaged rulings journal makes the result not ok
+ok   validator: exit 0 valid, 2 a problem; --report-only 0 with the verdict in the last line
+ok   validator: reads nothing but files; the paths are the pack files
+ok   controller: an admitted readiness: every record is written, the payload runs
+ok   controller: a busy host with no additional consumer is admitted under A (ready is false)
+ok   controller: an additional consumer is a hold with NO payload and an eligible re-ask
+ok   controller: the 0.5 CPU-s/s boundary: exactly 0.5 holds, 0.4999 proceeds
+ok   controller: a short full-core burst of a NEW process is an eligible consumer hold (R1)
+ok   controller: a replaced host holds with no payload, no eligibility and no rebinding
+ok   controller: a ProcessName-only rename is admitted and records the journal binding
+ok   controller: a restart or a reused PID (same PID, another creation time) holds, never eligible
+ok   controller: an approved rebinding is the binding in force; its journal prefix is recorded
+ok   controller: the former host after a rebinding, and a journal that rewrote B, both hold
+ok   controller: an empty, invalid or unevidenced host-binding journal holds: no host binding, no payload
+ok   controller: a consumer together with a replaced host is mixed: not eligible
+ok   controller: a failed or timed-out query is a hold, never idle, never eligible
+ok   controller: more than 45 s of readiness is a hold
+ok   controller: more than 60 s since the call holds rather than starting late (limit shortened)
+ok   controller: a real recorder run without a configured readiness is held, not started
+ok   controller: an earlier hold (source binding) means no sampling at all
+ok   controller: policy B (strict-quiet) is not built: a hold
+79 passed, 0 failed
+exit=0 seconds=14.238

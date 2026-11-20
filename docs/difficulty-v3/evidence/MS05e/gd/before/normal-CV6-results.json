@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "5d90ba04ed27a9ad89bd98e0197d65f42ee3e45a826ad471cd27b0a088bf07df",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["greater-than"],"filter":"> normal: 20 puzzles > CV6:","exact":null,"count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 38938.4,
+  "results": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 38765.5,
+    "tests": [
+      {"suite":"greater-than","name":"CV6: p95 of the generation time is within the design.md 9.1 budget of 700 ms","fullName":"greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > CV6: p95 of the generation time is within the design.md 9.1 budget of 700 ms","status":"fail","ms":38764.063,"reason":"","error":{"name":"AssertionError","message":"expected 5209.410699999993 to be < 1400","stack":"AssertionError: expected 5209.410699999993 to be < 1400\n    at api.<computed> [as toBeLessThan] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\greater-than.test.js:1041:45)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"},"ordinal":67}
+    ],
+    "suites": [
+      {"name":"greater-than","total":1,"passed":0,"failed":1,"skipped":0,"ms":38765.393}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=greater-than","--filter=> normal: 20 puzzles > CV6:","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05e\\gd\\before\\normal-CV6-results.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

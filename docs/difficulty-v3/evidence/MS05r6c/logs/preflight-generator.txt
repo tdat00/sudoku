@@ -1,0 +1,14 @@
+generator/core-shared: exit=0 seconds=0.412 Inventory: 1143 tests in 16 suites (0 skipped, 19 benchmarks), registration 0.3 s
+
+generator/steps: exit=0 seconds=0.285 Inventory: 57 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+
+generator/replay: exit=0 seconds=0.285 Inventory: 153 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+
+generator/mega: exit=0 seconds=0.282 Inventory: 111 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+
+generator/own-fast: exit=0 seconds=0.481 Inventory: 1579 tests in 29 suites (0 skipped, 4 benchmarks), registration 0.4 s
+
+generator/pipeline: exit=0 seconds=0.307 Inventory: 150 tests in 1 suites (0 skipped, 5 benchmarks), registration 0.2 s
+
+generator/player: exit=0 seconds=0.281 Inventory: 69 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+

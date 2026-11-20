@@ -1,0 +1,141 @@
+### bash -n generator-suites.sh
+
+exit=0 seconds=0.13
+
+### node --check helper and selftest
+
+exit=0 seconds=0.21
+
+### generator-suites.sh selftest
+50 checks, 0 failed
+exit=0 seconds=0.26
+
+### generator-suites.sh matrix
+{"include":[{"group":"shared-small","name":"shared and small suites"},{"group":"own-suites","name":"own suites"},{"group":"pipeline","name":"pipeline"},{"group":"replay-player","name":"replay player"}]}
+exit=0 seconds=0.26
+
+### generator-suites.sh list shared-small
+bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook,steps,replay,mega
+exit=0 seconds=0.26
+
+### generator-suites.sh run shared-small --dry-run
+would run in generator/: node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook  (1143 tests, bound 60 s)
+would run in generator/: node tests/node-runner.js --suite=steps  (57 tests, bound 30 s)
+would run in generator/: node tests/node-runner.js --suite=replay  (153 tests, bound 30 s)
+would run in generator/: node tests/node-runner.js --suite=mega  (111 tests, bound 30 s)
+dry run: shared-small projects 630 s of 1800 s; no test was run
+exit=0 seconds=1.48
+
+### generator-suites.sh list own-suites
+a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker
+exit=0 seconds=0.24
+
+### generator-suites.sh run own-suites --dry-run
+would run in generator/: node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker  (1579 tests, bound 220 s)
+dry run: own-suites projects 840 s of 1800 s; no test was run
+exit=0 seconds=0.71
+
+### generator-suites.sh list pipeline
+pipeline
+exit=0 seconds=0.24
+
+### generator-suites.sh run pipeline --dry-run
+would run in generator/: node tests/node-runner.js --suite=pipeline  (150 tests, bound 360 s)
+dry run: pipeline projects 1260 s of 1800 s; no test was run
+exit=0 seconds=0.53
+
+### generator-suites.sh list replay-player
+player
+exit=0 seconds=0.23
+
+### generator-suites.sh run replay-player --dry-run
+would run in generator/: node tests/node-runner.js --suite=player  (69 tests, bound 180 s)
+dry run: replay-player projects 720 s of 1800 s; no test was run
+exit=0 seconds=0.51
+
+### generator-suites.sh run nope --dry-run (unknown group)
+unknown group nope; groups: shared-small, own-suites, pipeline, replay-player
+exit=2 seconds=0.31
+
+### generator-suites.sh sweep (an old group name)
+usage: generator-suites.sh check [--keep=<dir>] | matrix | list <group> | run <group> [--dry-run] [--results-dir=<dir>] | selftest
+exit=2 seconds=0.26
+
+### generator-suites.sh (no argument)
+usage: generator-suites.sh check [--keep=<dir>] | matrix | list <group> | run <group> [--dry-run] [--results-dir=<dir>] | selftest
+exit=2 seconds=0.26
+
+### actionlint both workflows
+
+exit=0 seconds=0.13
+
+### PyYAML parse of both workflows
+.github/workflows/pages.yml parses; jobs: {'test-core': {'needs': None, 'timeout-minutes': 15}, 'plan-generator': {'needs': None, 'timeout-minutes': 10}, 'test-generator': {'needs': ['test-core', 'plan-generator'], 'timeout-minutes': 30}, 'test-player': {'needs': 'test-core', 'timeout-minutes': 15}, 'deploy': {'needs': ['test-generator', 'test-player'], 'timeout-minutes': None}}
+  triggers: {'push': {'branches': ['main']}, 'workflow_dispatch': None}
+  permissions: {'contents': 'read', 'pages': 'write', 'id-token': 'write'}
+.github/workflows/pull-request.yml parses; jobs: {'test-core': {'needs': None, 'timeout-minutes': 15}, 'plan-generator': {'needs': None, 'timeout-minutes': 10}, 'test-generator': {'needs': ['test-core', 'plan-generator'], 'timeout-minutes': 30}, 'test-player': {'needs': 'test-core', 'timeout-minutes': 15}, 'test-browser': {'needs': 'test-core', 'timeout-minutes': 30}}
+  triggers: {'pull_request': {'branches': ['main']}}
+  permissions: {'contents': 'read'}
+exit=0 seconds=0.89
+
+### format (check-list one-liner): AGENTS.md
+format OK
+exit=0 seconds=0.12
+
+### format (check-list one-liner): DEVELOPERGUIDE.md
+format OK
+exit=0 seconds=0.09
+
+### format (check-list one-liner): DEVELOPERGUIDE.vn.md
+format OK
+exit=0 seconds=0.09
+
+### format (check-list one-liner): generator/design.md
+format OK
+exit=0 seconds=0.1
+
+### format (check-list one-liner): .github/workflows/pages.yml
+format OK
+exit=0 seconds=0.1
+
+### format (check-list one-liner): .github/workflows/pull-request.yml
+format OK
+exit=0 seconds=0.09
+
+### format (check-list one-liner): .github/scripts/generator-quick.js
+[eval]:1
+const t=require('fs').readFileSync(process.argv[1],'utf8');if(t.charCodeAt(0)===65279||/(?<!\r)\n|\r(?!\n)|[ \t]+\r?$/m.test(t)||!t.endsWith('\r\n'))throw Error('Check BOM, CRLF, final newline and trailing whitespace');console.log('format OK')
+                                                                                                                                                     ^
+
+Error: Check BOM, CRLF, final newline and trailing whitespace
+    at [eval]:1:156
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:485:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:483:60)
+    at evalFunction (node:internal/process/execution:317:30)
+    at evalTypeScript (node:internal/process/execution:329:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v26.13.0
+exit=1 seconds=0.1
+
+### format (check-list one-liner): .github/scripts/generator-quick.selftest.js
+format OK
+exit=0 seconds=0.09
+
+### format (check-list one-liner): .github/scripts/generator-quick.json
+format OK
+exit=0 seconds=0.09
+
+### format (check-list one-liner): docs/difficulty-v3/evidence/MS05r6c/quick/shard-plan.json
+format OK
+exit=0 seconds=0.1
+
+### format of the LF exception: generator-suites.sh has no CR
+CR bytes=0 endsWithLF=False
+exit=0 seconds=0.06
+
+### format (check-list one-liner) rerun after the final newline was added: .github/scripts/generator-quick.js
+format OK
+exit=0

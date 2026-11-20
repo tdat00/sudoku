@@ -1,0 +1,5 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-greaterThan.json --cells=greaterThan/nightmare:2@2 --budget-seconds=420
+greaterThan/nightmare #2: 710.8 ms, hit true, achieved nightmare, exact true, approximate false
+greaterThan/nightmare #3: 717.7 ms, hit true, achieved nightmare, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-greaterThan.json (1.431 s)
+exit=0 seconds=1.952

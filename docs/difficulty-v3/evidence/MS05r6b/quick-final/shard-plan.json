@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "note": "The final quick shards of MS05r6b after the R6B-F01 fix (MS05r5p fix round: the private app copies of history.test.js and cache.test.js). Same disjoint shards as the first run (quick/shard-plan.json, now history), restated for the new Generator fingerprint. Inputs of manifest.js. The Player shard keeps the result of the first run: the Player fingerprint (1d0724c3) is unchanged, because no Generator test file is part of it. Projections (IR12) are finite and per item: a measurement of the first run at fingerprint bee132a8 (the same code; only history.test.js and cache.test.js differ) times a stated margin. projectionBasis starts with MEASURED.",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/quick-final/generator-inventory.json",
+      "shards": [
+        {
+          "id": "core-shared",
+          "args": ["tests/node-runner.js", "--suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook"],
+          "projectionSeconds": 60,
+          "projectionBasis": "MEASURED 24.867 s at fingerprint bee132a8 (first run of this task, locked; the 16 shared suites are unchanged), stated bound 60 s (2.4 times)"
+        },
+        {
+          "id": "own-fast",
+          "args": ["tests/node-runner.js", "--suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker"],
+          "projectionSeconds": 220,
+          "projectionBasis": "MEASURED 166.528 s at fingerprint bee132a8 (first run, locked; cache and history changed by two assertions per private app only), stated bound 220 s (1.3 times)"
+        },
+        {
+          "id": "pipeline",
+          "args": ["tests/node-runner.js", "--suite=pipeline"],
+          "projectionSeconds": 360,
+          "projectionBasis": "MEASURED 296.200 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 360 s (1.2 times)"
+        },
+        {
+          "id": "mega",
+          "args": ["tests/node-runner.js", "--suite=mega"],
+          "projectionSeconds": 30,
+          "projectionBasis": "MEASURED 11.552 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 30 s (2.6 times)"
+        },
+        {
+          "id": "steps",
+          "args": ["tests/node-runner.js", "--suite=steps"],
+          "projectionSeconds": 30,
+          "projectionBasis": "MEASURED 11.717 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 30 s (2.6 times)"
+        },
+        {
+          "id": "replay",
+          "args": ["tests/node-runner.js", "--suite=replay"],
+          "projectionSeconds": 30,
+          "projectionBasis": "MEASURED 11.025 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 30 s (2.7 times)"
+        },
+        {
+          "id": "player",
+          "args": ["tests/node-runner.js", "--suite=player"],
+          "projectionSeconds": 180,
+          "projectionBasis": "MEASURED 139.515 s at fingerprint bee132a8 (first run, locked; the suite is unchanged), stated bound 180 s (1.3 times); the Generator's replay-player suite, admitted by its own projection and not by the generic floor"
+        }
+      ]
+    },
+    "player": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r6b/quick-final/player-inventory.json",
+      "shards": [
+        {
+          "id": "all",
+          "args": ["tests/node-runner.js"],
+          "resultPath": "docs/difficulty-v3/evidence/MS05r6b/quick/player-all.json",
+          "projectionSeconds": 60,
+          "projectionBasis": "MEASURED 31.828 s at fingerprint 1d0724c3 (first run of this task, locked; the same Player fingerprint, so this retained result is the final one), stated bound 60 s"
+        }
+      ]
+    }
+  }
+}

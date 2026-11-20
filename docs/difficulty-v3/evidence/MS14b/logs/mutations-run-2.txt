@@ -1,0 +1,5 @@
+$ node generator\tests\artifacts\difficulty-v3\MS14b\run-mutations.cjs docs\difficulty-v3\evidence\MS14b\mutations-2.txt 0 45
+mutation 9 (R10 not registered twice: the guard dropped): DETECTED by run 0 (generator tech-subset ~law of leftovers) - 42 total, 41 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.5 s
+mutation 40 (A11 a second board accepted for the killer scope): DETECTED by run 0 (generator pattern-cost-tools) - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.8 s
+detected 2 of 2, survivors 0, 6.4 s
+exit=0 seconds=6.476

@@ -1,0 +1,3643 @@
+{
+  "schema": "ms18d-c-binding-1",
+  "ok": true,
+  "problems": [],
+  "head": {
+    "actual": "f7f56cbb499334a5dde03247f342a86a7a38cda2",
+    "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+    "descendant": true,
+    "diff": {
+      "paths": [
+        "tasks/difficulty-v3/MS18d-gp-campaign-base.jsonl"
+      ],
+      "violations": []
+    },
+    "ok": true
+  },
+  "status": {
+    "rawText": [
+      "M docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/acquisition.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/admission.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/attempts.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/binding.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/cleanup.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/journals.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/ledger.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/pids.jsonl",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/plan-check.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness-after.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness-before.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/request.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/result.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/stderr.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/stdout.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/transcript.txt",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/watch.json",
+      "?? docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/wrapper.json"
+    ],
+    "rawClean": false,
+    "reviewedClean": true,
+    "entries": [
+      {
+        "xy": " M",
+        "path": "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/acquisition.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/admission.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/attempts.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/binding.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/cleanup.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/journals.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/ledger.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/pids.jsonl",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/plan-check.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness-after.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness-before.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/request.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/result.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/stderr.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/stdout.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/transcript.txt",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/watch.json",
+        "from": null
+      },
+      {
+        "xy": "??",
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/wrapper.json",
+        "from": null
+      }
+    ],
+    "allowed": [
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl",
+        "xy": " M",
+        "why": "release ledger, committed bytes are an exact prefix"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic4-veryEasy/classic4-veryEasy.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-hard/classic6-hard.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic6-veryEasy/classic6-veryEasy.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-easy/classic9-easy.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-expert/classic9-expert.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-hard/classic9-hard.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-master/classic9-master.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-nightmare/classic9-nightmare.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-normal/classic9-normal.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/classic9-veryEasy/classic9-veryEasy.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-easy/mega12-easy.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i0.n25.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-expert/mega12-expert.i25.n25.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-hard/mega12-hard.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-master/mega12-master.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-normal/mega12-normal.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/acquisition.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/admission.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/attempts.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/binding.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/cleanup-wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/cleanup.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/journals.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/ledger.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/pids.jsonl",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/plan-check.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness-after.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness-before.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/readiness.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/request.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/result.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/stderr.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/stdout.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/transcript.txt",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/watch.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      },
+      {
+        "path": "docs/difficulty-v3/evidence/MS18d/gp/mega12-veryEasy/mega12-veryEasy.i0.n50.a1/wrapper.json",
+        "xy": "??",
+        "why": "new output of a declared run"
+      }
+    ],
+    "violations": []
+  },
+  "identities": {
+    "sources": "75b0955e3e356bd1",
+    "qualifierHash": "c0ef0d25f28518692bdccbde547814daf74f5834d35f9e117108d6321876fd77",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc"
+  },
+  "table": {
+    "sha256": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a",
+    "expected": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a"
+  },
+  "cell": {
+    "key": "mega12/master",
+    "target": 3000,
+    "expected": 3000
+  },
+  "node": {
+    "actual": "v26.13.0",
+    "expected": "v26.13.0"
+  },
+  "machine": {
+    "actual": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    },
+    "expected": {
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "logicalProcessors": 16,
+      "memoryGb": 64,
+      "platform": "win32 10.0.26300"
+    }
+  },
+  "helpers": {
+    "file": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\helpers-c1b-sha256.txt",
+    "entries": 52,
+    "mismatches": [],
+    "missing": [],
+    "sha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03"
+  }
+}

@@ -1,0 +1,419 @@
+{
+  "schema": 1,
+  "kind": "inventory-migration",
+  "task": "MS05r6b",
+  "files": {
+    "oldGenerator": "docs/difficulty-v3/evidence/MS05r5m/generator-inventory.json",
+    "oldPlayer": "docs/difficulty-v3/evidence/MS05r5m/player-inventory.json",
+    "finalGenerator": "docs/difficulty-v3/evidence/MS05r6b/quick/generator-inventory.json",
+    "finalPlayer": "docs/difficulty-v3/evidence/MS05r6b/quick/player-inventory.json",
+    "corpus": "docs/difficulty-v3/evidence/MS05b3/quick-additions.json",
+    "store": "docs/difficulty-v3/evidence/MS05r5p/legacy-8-fix/store-final.json",
+    "spies": "docs/difficulty-v3/evidence/MS05r6a/pins/g13-branch.json",
+    "preRename": "docs/difficulty-v3/evidence/MS05r6a/pins/replay-inventory.json",
+    "postRename": "docs/difficulty-v3/evidence/MS05r6a/pins/replay-inventory-final.json",
+    "resolved": "docs/difficulty-v3/evidence/MS05r6a/pins/resolved.json"
+  },
+  "exact": true,
+  "errors": [],
+  "generator": {
+    "oldTests": 3207,
+    "finalTests": 3262,
+    "identicalName": 3197,
+    "renamed": 10,
+    "added": 55,
+    "declaredCounts": {
+      "manualCorpus": 46,
+      "store": 6,
+      "spies": 3,
+      "renames": 10,
+      "ir13Renames": 7,
+      "a0Renames": 3
+    },
+    "additions": [
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/0",
+        "fullName": "manual-corpus > manual corpora: SG.test.lazyCorpus > lists its keys in order without building any of them"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/1",
+        "fullName": "manual-corpus > manual corpora: SG.test.lazyCorpus > builds a key once with its original index, whatever the order of the first reads"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/2",
+        "fullName": "manual-corpus > manual corpora: SG.test.lazyCorpus > returns the same array on every read"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/3",
+        "fullName": "manual-corpus > manual corpora: SG.test.lazyCorpus > builds every key when the whole corpus is read, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/4",
+        "fullName": "manual-corpus > manual corpora: SG.test.lazyCorpus > lets an error propagate unchanged and publishes nothing: the next read builds again"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/5",
+        "fullName": "manual-corpus > manual corpora: SG.test.lazyCorpus > refuses a key listed twice, a build function that is missing and a build that returns no array"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/6",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > killer > reads one key alone: only its own seeded requests, once"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/7",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > killer > the aggregate read alone builds every key, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/8",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > killer > reading the levels in their natural order makes the plan of the whole corpus, and the aggregate no request"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/9",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > killer > reading the levels in the reverse order gives the same plan per key and the same aggregate"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/10",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > jigsaw > reads one key alone: only its own seeded requests, once"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/11",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > jigsaw > the aggregate read alone builds every key, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/12",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > jigsaw > reading the levels in their natural order makes the plan of the whole corpus, and the aggregate no request"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/13",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > jigsaw > reading the levels in the reverse order gives the same plan per key and the same aggregate"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/14",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > greater-than > reads one key alone: only its own seeded requests, once"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/15",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > greater-than > the aggregate read alone builds every key, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/16",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > greater-than > reading the levels in their natural order makes the plan of the whole corpus, and the aggregate no request"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/17",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > greater-than > reading the levels in the reverse order gives the same plan per key and the same aggregate"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/18",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > extra-regions > reads one key alone: only its own seeded requests, once"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/19",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > extra-regions > the aggregate read alone builds every key, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/20",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > extra-regions > reading the levels in their natural order makes the plan of the whole corpus, and the aggregate no request"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/21",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > extra-regions > reading the levels in the reverse order gives the same plan per key and the same aggregate"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/22",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > wordoku > reads one key alone: only its own seeded requests, once"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/23",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > wordoku > the aggregate read alone builds every key, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/24",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > wordoku > reading the levels in their natural order makes the plan of the whole corpus, and the aggregate no request"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/25",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > wordoku > reading the levels in the reverse order gives the same plan per key and the same aggregate"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/26",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > variants (CV3) > reads one key alone: only its own seeded requests, once"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/27",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > variants (CV3) > the aggregate read alone builds every key, in the original order"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/28",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > variants (CV3) > reading the levels in their natural order makes the plan of the whole corpus, and the aggregate no request"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/29",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > variants (CV3) > reading the levels in the reverse order gives the same plan per key and the same aggregate"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/30",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > would notice a changed seed: the plan of a probe of greater-than with another seed formula differs"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/31",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > keeps one CV3 entry in CHECKS, the aggregate of the supported-level and refusal helpers"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/32",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > generates just the seeds 1..perLevel of one supported level, and none again on a second check"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/33",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > fills the remaining levels when the whole corpus is read, and returns every array"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/34",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > refuses the unsupported levels without any corpus: no supported puzzle is generated"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/35",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > checks every per-puzzle assertion before the aggregate \"none of N puzzles hit it\" failure"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/36",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > keeps the cache-before-floor-change regression: corpus() has generated everything first"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/37",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the variants sweep: CV3 per level, the refusals, the eager aggregate > still answers sweepVariant(def, { only: [\"CV3\"] }) with one verdict for all levels"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/38",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > killer: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/39",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > jigsaw: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/40",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > greater-than: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/41",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > wordoku: \"> <level>: <count> puzzles > I5:\" selects one test per level"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/42",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > extra-regions: \"> <variant> <level>: <count> puzzles > I5:\" selects one test per variant and level"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/43",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > the boundary prefix matters: \"easy: 20 puzzles > I5:\" also matches Very Easy, the prefixed form does not"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/44",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > killer keeps one corpus-wide CV6 test and no per-level CV6; its I5 is registered once per level"
+      },
+      {
+        "group": "MS05b3 manual-corpus",
+        "key": "generator/manual-corpus/45",
+        "fullName": "manual-corpus > manual corpora: the adapters of the manual suites, read in memory (Node only) > the selectors of the early gates pick exactly one test > variants: \"> variants: <id> > CV3 <level>:\" and \"CV3 unsupported:\" select one test each"
+      },
+      {
+        "group": "MS05r6a G13 saved-wire spy (player)",
+        "key": "generator/player/0",
+        "fullName": "player > player: the replay steps of a result > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)"
+      },
+      {
+        "group": "MS05r6a G13 saved-wire spy (replay)",
+        "key": "generator/replay/25",
+        "fullName": "replay > replay: golden details > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)"
+      },
+      {
+        "group": "MS05r6a G13 saved-wire spy (steps)",
+        "key": "generator/steps/0",
+        "fullName": "steps > stepView: the description of the step on show > reads G13 from the saved wire and never regenerates it (a spy on the pipeline)"
+      },
+      {
+        "group": "MS05r5p legacy-8 store cases",
+        "key": "generator/store/73",
+        "fullName": "store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: an unmarked legacy 8 on a small board is the default and follows every later switch"
+      },
+      {
+        "group": "MS05r5p legacy-8 store cases",
+        "key": "generator/store/74",
+        "fullName": "store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: the migrated state is saved with the default marker, before and after a large-board switch"
+      },
+      {
+        "group": "MS05r5p legacy-8 store cases",
+        "key": "generator/store/75",
+        "fullName": "store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: a marked explicit 8 on a small board stays chosen across a switch and a reload"
+      },
+      {
+        "group": "MS05r5p legacy-8 store cases",
+        "key": "generator/store/76",
+        "fullName": "store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: entering 8 after the migration is a chosen number that survives a reload"
+      },
+      {
+        "group": "MS05r5p legacy-8 store cases",
+        "key": "generator/store/77",
+        "fullName": "store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: a legacy 8 with a missing or unknown variant loads as the default of the fallback variant"
+      },
+      {
+        "group": "MS05r5p legacy-8 store cases",
+        "key": "generator/store/78",
+        "fullName": "store > store: the default attempts by board size and the intent of the number (MS05r5p) > MS05r5p-CV6-04: loading the same unmarked legacy record twice, with no save between, gives the same state"
+      }
+    ],
+    "renames": [
+      {
+        "group": "MS05r6a A0: replay-recorders (found by this migration, not in the IR13 list)",
+        "suite": "replay-recorders",
+        "oldKeyInR5m": "generator/replay-recorders/1",
+        "newKey": "generator/replay-recorders/1",
+        "oldName": "replay-recorders > replay recorders: the corpora > keeps the four wire requests G09-G12 of the old recorder and the saved data of exactly those",
+        "newName": "replay-recorders > replay recorders: the corpora > keeps the five wire requests G09-G13 (G13 saved since MS05r6a) and the saved data of exactly those"
+      },
+      {
+        "group": "MS05r6a A0: replay-recorders (found by this migration, not in the IR13 list)",
+        "suite": "replay-recorders",
+        "oldKeyInR5m": "generator/replay-recorders/16",
+        "newKey": "generator/replay-recorders/16",
+        "oldName": "replay-recorders > replay recorders: the projection of an analysis > projects the analysis of the saved results G09-G12 to exactly their golden records",
+        "newName": "replay-recorders > replay recorders: the projection of an analysis > projects the analysis of the saved results G09-G13 to exactly their golden records"
+      },
+      {
+        "group": "MS05r6a A0: replay-recorders (found by this migration, not in the IR13 list)",
+        "suite": "replay-recorders",
+        "oldKeyInR5m": "generator/replay-recorders/38",
+        "newKey": "generator/replay-recorders/38",
+        "oldName": "replay-recorders > replay recorders: the tools (Node only) > rebuilds the saved wire file byte for byte from its four records (wire)",
+        "newName": "replay-recorders > replay recorders: the tools (Node only) > rebuilds the saved wire file byte for byte from its five records (wire)"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "replay",
+        "oldKeyInR5m": "generator/replay/89",
+        "newKey": "generator/replay/90",
+        "oldName": "replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G06, G11, G12, G01)",
+        "newName": "replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G11, G12, G01)"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "replay",
+        "oldKeyInR5m": "generator/replay/90",
+        "newKey": "generator/replay/91",
+        "oldName": "replay > replay: golden compact view and transitions > has 12 compact, 15 details and 18 distinct jump transitions in the 14 goldens",
+        "newName": "replay > replay: golden compact view and transitions > has 13 compact, 16 details and 18 distinct jump transitions in the 14 goldens"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "replay",
+        "oldKeyInR5m": "generator/replay/91",
+        "newKey": "generator/replay/92",
+        "oldName": "replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G11, G07)",
+        "newName": "replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G11)"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "replay",
+        "oldKeyInR5m": "generator/replay/142",
+        "newKey": "generator/replay/143",
+        "oldName": "replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 12 compact and 15 details",
+        "newName": "replay > replay: explaining the jumps > has a cause, a choice and a proof for every jump of the goldens: 13 compact and 16 details"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "replay",
+        "oldKeyInR5m": "generator/replay/143",
+        "newKey": "generator/replay/144",
+        "oldName": "replay > replay: explaining the jumps > frames the details jumps too: G06 R4C6 and the four sign jumps of G11",
+        "newName": "replay > replay: explaining the jumps > frames the details jumps too: G06 R8C4 and the four sign jumps of G11"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "replay",
+        "oldKeyInR5m": "generator/replay/144",
+        "newKey": "generator/replay/145",
+        "oldName": "replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G06, G11, G12)",
+        "newName": "replay > replay: explaining the jumps > describes a jump over several moves by its first move with the new technique (G11, G12)"
+      },
+      {
+        "group": "IR13: steps and replay, MS05r6a pins",
+        "suite": "steps",
+        "oldKeyInR5m": "generator/steps/16",
+        "newKey": "generator/steps/17",
+        "oldName": "steps > stepView: the tiers, the badge and the lines > marks 12 compact and 15 details jumps over the 14 goldens, and one first rated puzzle per view",
+        "newName": "steps > stepView: the tiers, the badge and the lines > marks 13 compact and 16 details jumps over the 14 goldens, and one first rated puzzle per view"
+      }
+    ],
+    "ordinalShifts": {
+      "player": {
+        "moved": 68,
+        "total": 68
+      },
+      "replay": {
+        "moved": 127,
+        "total": 152
+      },
+      "steps": {
+        "moved": 56,
+        "total": 56
+      },
+      "store": {
+        "moved": 6,
+        "total": 79
+      }
+    }
+  },
+  "player": {
+    "oldTests": 1683,
+    "finalTests": 1683,
+    "identicalName": 1683,
+    "renamed": 0,
+    "added": 0,
+    "ordinalsUnchanged": true
+  }
+}

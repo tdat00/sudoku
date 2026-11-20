@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-chain
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 174 passed, 1 failed  (11.85 s)
+
+Failures:
+  FAIL tech-chain > xyChain: agreement with the enumeration and soundness > agrees on arbitrary positions of pairs, solved cells and wider cells, whether or not a solution exists
+       AssertionError: expected 2 to be >= 3
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3315:49)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  175 total, 174 passed, 1 failed, 0 skipped
+Time:   11.85 s running tests, 11.96 s total
+exit=1 seconds=12.082

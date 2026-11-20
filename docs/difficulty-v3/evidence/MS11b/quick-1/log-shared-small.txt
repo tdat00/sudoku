@@ -1,0 +1,74 @@
+$ node ..\.github\scripts\generator-quick.js run shared-small --results-dir=..\docs\difficulty-v3\evidence\MS11b\quick-1
+==== shard core-shared (1918 tests): node tests/node-runner.js --suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook --results=..\docs\difficulty-v3\evidence\MS11b\quick-1\generator-core-shared.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   bits: 32 passed  (61 ms)
+ok   board-view: 37 passed  (76 ms)
+ok   constraints: 43 passed  (79 ms)
+ok   exchange: 20 passed  (239 ms)
+ok   harness: 25 passed  (2.30 s)
+ok   logical-solver: 100 passed  (299 ms)
+ok   model: 49 passed  (35 ms)
+ok   solver: 50 passed  (2.68 s)
+ok   symbols: 12 passed  (2 ms)
+ok   tech-basic: 167 passed  (1.83 s)
+ok   tech-chain: 107 passed  (9.10 s)
+ok   tech-fish: 483 passed  (24.09 s)
+ok   tech-subset: 100 passed  (894 ms)
+ok   tech-wing: 435 passed  (11.14 s)
+ok   techniques: 251 passed  (3.48 s)
+ok   wordbook: 7 passed  (9 ms)
+
+Suites: 16
+Tests:  1918 total, 1918 passed, 0 failed, 0 skipped
+Time:   56.31 s running tests, 56.63 s total
+Results: docs/difficulty-v3/evidence/MS11b/quick-1/generator-core-shared.json
+==== shard steps (57 tests): node tests/node-runner.js --suite=steps --results=..\docs\difficulty-v3\evidence\MS11b\quick-1\generator-steps.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   steps: 57 passed  (24.34 s)
+
+Suites: 1
+Tests:  57 total, 57 passed, 0 failed, 0 skipped
+Time:   24.34 s running tests, 24.53 s total
+Results: docs/difficulty-v3/evidence/MS11b/quick-1/generator-steps.json
+==== shard replay (154 tests): node tests/node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS11b\quick-1\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL replay: 152 passed, 2 failed  (23.53 s)
+
+Failures:
+  FAIL replay > replay: ratings > rates a stuck board honestly: attempted counts and two solutions (Classic 9x9, section 2.3)
+       AssertionError: expected {nakedSingle: 3, hiddenSingleBox: 16, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1, wxyzWing: 1, ...} to equal {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1, wxyzWing: 1, ...}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:525:29)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > keeps the witness of the unfinished checks: move 76 of G14 has 16 candidates, 13 rejected, 2 unscored
+       AssertionError: expected 161 to be 167
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1421:20)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  154 total, 152 passed, 2 failed, 0 skipped
+Time:   23.53 s running tests, 23.72 s total
+Results: docs/difficulty-v3/evidence/MS11b/quick-1/generator-replay.json
+==== shard mega (108 tests): node tests/node-runner.js --suite=mega --results=..\docs\difficulty-v3\evidence\MS11b\quick-1\generator-mega.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   mega: 108 passed  (23.29 s)
+
+Suites: 1
+Tests:  108 total, 108 passed, 0 failed, 0 skipped
+Time:   23.29 s running tests, 23.50 s total
+Results: docs/difficulty-v3/evidence/MS11b/quick-1/generator-mega.json
+shard core-shared: exit 0, 56.9 s
+shard steps: exit 0, 24.7 s
+shard replay: exit 1, 23.9 s
+shard mega: exit 0, 23.7 s
+FAILED: replay
+exit=1 seconds=130.666

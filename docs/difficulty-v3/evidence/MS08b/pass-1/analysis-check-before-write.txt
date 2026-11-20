@@ -1,0 +1,58 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS08b\analysis --check
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: 14 fields differ from replay-goldens.js
+  rows[4][4]: saved 621, fresh 593
+  rows[4][5]: saved 574, fresh 546
+  rows[4][6]: saved "simpleColouring", fresh "twoStringKite"
+  rows[5][5]: saved 304, fresh 332
+  details[26]: saved 621, fresh 593
+  jumps[0].to: saved 621, fresh 593
+  jumps[0].after.P: saved 360, fresh 340
+  jumps[0].after.W: saved 1538.75, fresh 1518.75
+  jumps[0].after.R: saved 215.908304, fresh 208.311718
+  jumps[0].choice.chosen: saved 621, fresh 593
+  jumps[0].singles[0].score: saved 620, fresh 593
+  jumps[0].firstUse.technique: saved "simpleColouring", fresh "twoStringKite"
+  jumps[0].key: saved "technique.simpleColouring.step", fresh "technique.twoStringKite.step"
+  jumps[0].effects: saved "remove candidate 3@R1C9, 3@R2C8", fresh "remove candidate 3@R1C9"
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: matches replay-goldens.js
+G05: 9 fields differ from replay-goldens.js
+  rows[4][4]: saved 2497, fresh 2461
+  rows[4][5]: saved 2447, fresh 2411
+  rows[5][4]: saved 2497, fresh 2461
+  details[29]: saved 2497, fresh 2461
+  details[30]: saved 2497, fresh 2461
+  jumps[0].to: saved 2497, fresh 2461
+  jumps[0].after.W: saved 9794.25, fresh 9034.25
+  jumps[0].after.R: saved 1049.740699, fresh 1014.239861
+  jumps[0].choice.chosen: saved 2497, fresh 2461
+G06: matches replay-goldens.js
+G07: matches replay-goldens.js
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: 16 fields differ from replay-goldens.js
+  rows[4][4]: saved 957, fresh 994
+  rows[4][5]: saved 838, fresh 875
+  rows[5][4]: saved 957, fresh 994
+  details[87]: saved 1119, fresh 1137
+  details[88]: saved 1114, fresh 1132
+  details[101]: saved 1032, fresh 1059
+  details[111]: saved 962, fresh 998
+  details[112]: saved 957, fresh 994
+  details[113]: saved 957, fresh 994
+  folds[1].peak: saved 962, fresh 998
+  folds[1].end: saved 957, fresh 994
+  jumps[0].to: saved 957, fresh 994
+  jumps[0].after.W: saved 1345, fresh 1685
+  jumps[0].after.R: saved 262.905033, fresh 299.798026
+  jumps[0].firstUse.k: saved 24, fresh 25
+  jumps[0].firstUse.n: saved 60, fresh 61
+G12: matches replay-goldens.js
+G13: matches replay-goldens.js
+G14: 1 field differ from replay-goldens.js
+  details[71]: saved 2607, fresh 2606
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose
+exit=1 seconds=0.431

@@ -1,0 +1,54 @@
+$ node tests\artifacts\difficulty-v3\MS17b\cap-bisect.cjs 9156024b c928472a dadd747a ef95fc59 1d702a59 5d491301 8345e892 9d58d863 0e3a0c4a 8b26e831 d41a6ddc 5b94904e tree
+== 9156024b  (7.5 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== c928472a  (7.3 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== dadd747a  (7.4 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== ef95fc59  (7.4 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== 1d702a59  (7.4 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== 5d491301  (7.6 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== 8345e892  (7.4 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== 9d58d863  (7.4 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== 0e3a0c4a  (7.4 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 3 [sample, refine, refine] achieved nightmare exact false  <- refine
+   seeds 1..12 whose third rating is in refine at nightmare: 1
+== 8b26e831  (7.6 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 1 [sample] achieved nightmare exact true
+   seeds 1..12 whose third rating is in refine at nightmare: 0
+== d41a6ddc  (7.5 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 1 [sample] achieved nightmare exact true
+   seeds 1..12 whose third rating is in refine at nightmare: 0
+== 5b94904e  (7.6 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 1 [sample] achieved nightmare exact true
+   seeds 1..12 whose third rating is in refine at nightmare: 0
+== tree  (0.5 s, exit 0)
+   seed  6: ratings 3 [sample, refine, search] achieved nightmare exact false
+   seed  8: ratings 1 [sample] achieved nightmare exact true
+   seeds 1..12 whose third rating is in refine at nightmare: 0
+exit=0 seconds=90.049

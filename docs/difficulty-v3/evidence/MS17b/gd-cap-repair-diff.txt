@@ -1,0 +1,19 @@
+diff --git "a/docs\\difficulty-v3\\evidence\\MS17b\\gd\\before\\difficulty.test.js.pre-cap-repair" "b/generator\\tests\\manual\\difficulty.test.js"
+index a1ac8aa6..f5ae7221 100644
+--- "a/docs\\difficulty-v3\\evidence\\MS17b\\gd\\before\\difficulty.test.js.pre-cap-repair"
++++ "b/generator\\tests\\manual\\difficulty.test.js"
+@@ -1568,3 +1568,6 @@
+-    /** Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. */
+-    function exhaustedIn(variantId, level, maxRatings, phase, digTries) {
+-      for (var seed = 1; seed <= 12; seed++) {
++    /**
++     * Finds a seed whose cap runs out inside `phase`, checking the accounting of every seed tried. The search
++     * stops at the first match and tries seeds 1 to `lastSeed` (12 unless a caller says otherwise).
++     */
++    function exhaustedIn(variantId, level, maxRatings, phase, digTries, lastSeed) {
++      for (var seed = 1; seed <= (lastSeed || 12); seed++) {
+@@ -1588 +1591,3 @@
+-      exhaustedIn('classic9', 'nightmare', 3, 'refine', 1);
++      // Since MS15b (ALS-XZ) changed the dig path of seed 8, no seed of 1 to 12 qualifies; this call looks at
++      // seeds 1 to 24.
++      exhaustedIn('classic9', 'nightmare', 3, 'refine', 1, 24);

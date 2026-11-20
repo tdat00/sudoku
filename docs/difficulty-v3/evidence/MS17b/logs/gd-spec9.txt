@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > difficulty: spec(level, model) on a 9x9 board > --results=..\docs\difficulty-v3\evidence\MS17b\gd\spec9.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 8 passed  (4 ms)
+
+Suites: 1
+Tests:  8 total, 8 passed, 0 failed, 0 skipped
+Time:   4 ms running tests, 245 ms total
+Results: docs/difficulty-v3/evidence/MS17b/gd/spec9.json
+exit=0 seconds=0.480

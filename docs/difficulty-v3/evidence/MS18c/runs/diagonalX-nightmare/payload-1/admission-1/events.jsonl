@@ -1,0 +1,6 @@
+{"at":"2026-11-18T20:33:05.486Z","t":0.1415405,"type":"launcher-start","who":"launcher","pid":21016,"node":"v26.13.0","cell":"diagonalX/nightmare","runId":"ms18c-20261118T203259560-30960","slot":1,"ordinal":1,"startSeconds":0.1410152}
+{"at":"2026-11-18T20:33:05.489Z","t":0.1434757,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8565373}
+{"at":"2026-11-18T20:33:12.536Z","t":7.1912154,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.191,"ready":false}
+{"at":"2026-11-18T20:33:12.543Z","t":7.1975581,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=diagonalX","--level=nightmare","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-nightmare\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\diagonalX-nightmare\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T20:33:12.565Z","t":7.2192276,"type":"qualifier-created","who":"launcher","pid":30512,"rSeconds":7.2172745}
+{"at":"2026-11-18T20:33:35.833Z","t":30.4874609,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":23.2701534,"eventFailures":0}

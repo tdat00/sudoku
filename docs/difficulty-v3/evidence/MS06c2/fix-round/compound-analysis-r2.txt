@@ -1,0 +1,16 @@
+plan: 14 item(s), 14 with their own projection, sum 184.0 s
+#0 g-analysis-G01-r2 exit=0 node=0.870s: recorded 1 of 14 keys (G01) in docs/difficulty-v3/evidence/MS06c2/analysis/G01.json; a ledger is one shard, merge them all with --merge
+#1 g-analysis-G02-r2 exit=0 node=0.501s: recorded 1 of 14 keys (G02) in docs/difficulty-v3/evidence/MS06c2/analysis/G02.json; a ledger is one shard, merge them all with --merge
+#2 g-analysis-G03-r2 exit=0 node=5.703s: recorded 1 of 14 keys (G03) in docs/difficulty-v3/evidence/MS06c2/analysis/G03.json; a ledger is one shard, merge them all with --merge
+#3 g-analysis-G04-r2 exit=0 node=1.703s: recorded 1 of 14 keys (G04) in docs/difficulty-v3/evidence/MS06c2/analysis/G04.json; a ledger is one shard, merge them all with --merge
+#4 g-analysis-G05-r2 exit=0 node=1.042s: recorded 1 of 14 keys (G05) in docs/difficulty-v3/evidence/MS06c2/analysis/G05.json; a ledger is one shard, merge them all with --merge
+#5 g-analysis-G06-r2 exit=0 node=1.629s: recorded 1 of 14 keys (G06) in docs/difficulty-v3/evidence/MS06c2/analysis/G06.json; a ledger is one shard, merge them all with --merge
+#6 g-analysis-G07-r2 exit=0 node=1.373s: recorded 1 of 14 keys (G07) in docs/difficulty-v3/evidence/MS06c2/analysis/G07.json; a ledger is one shard, merge them all with --merge
+#7 g-analysis-G08-r2 exit=0 node=0.492s: recorded 1 of 14 keys (G08) in docs/difficulty-v3/evidence/MS06c2/analysis/G08.json; a ledger is one shard, merge them all with --merge
+#8 g-analysis-G09-r2 exit=0 node=13.649s: recorded 1 of 14 keys (G09) in docs/difficulty-v3/evidence/MS06c2/analysis/G09.json; a ledger is one shard, merge them all with --merge
+#9 g-analysis-G10-r2 exit=0 node=24.769s: recorded 1 of 14 keys (G10) in docs/difficulty-v3/evidence/MS06c2/analysis/G10.json; a ledger is one shard, merge them all with --merge
+#10 g-analysis-G11-r2 exit=0 node=8.363s: recorded 1 of 14 keys (G11) in docs/difficulty-v3/evidence/MS06c2/analysis/G11.json; a ledger is one shard, merge them all with --merge
+#11 g-analysis-G12-r2 exit=0 node=4.164s: recorded 1 of 14 keys (G12) in docs/difficulty-v3/evidence/MS06c2/analysis/G12.json; a ledger is one shard, merge them all with --merge
+#12 g-analysis-G13-r2 exit=0 node=19.505s: recorded 1 of 14 keys (G13) in docs/difficulty-v3/evidence/MS06c2/analysis/G13.json; a ledger is one shard, merge them all with --merge
+#13 g-analysis-G14-r2 exit=0 node=1.808s: recorded 1 of 14 keys (G14) in docs/difficulty-v3/evidence/MS06c2/analysis/G14.json; a ledger is one shard, merge them all with --merge
+compound complete: 14 shard(s) in 85.6 s; next --from=14

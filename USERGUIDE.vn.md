@@ -97,10 +97,14 @@ khoảng điểm chứa điểm đó ([design.md](generator/design.md) §6.6). B
 các kỹ thuật hợp với khoảng điểm của mức đã chọn (*oracle bị giới hạn theo kỹ thuật*, [design.md](generator/design.md)
 §6.8), và chỉ trả về đề có lời giải logic trọn vẹn. Cùng seed và cùng tùy chọn luôn cho ra cùng một đề.
 
-**Tương thích với cách tính điểm v2.** "Cùng seed cho cùng đề" chỉ đúng trong cùng một phiên bản tính điểm/trình
-sinh đề. Phiên bản này đổi cách tính điểm và cách tạo đề (rating v2), nên một liên kết hay một mục lịch sử do
-phiên bản cũ tạo ra có thể tạo lại thành một đề khác, và điểm đã lưu trong lịch sử không được tính lại (những gì
+**Tương thích giữa các phiên bản tính điểm.** "Cùng seed cho cùng đề" chỉ đúng trong cùng một phiên bản tính điểm/trình
+sinh đề. Phiên bản này đổi ý nghĩa của một mức và cách tạo đề (rating v3), nên một liên kết hay một mục lịch sử do
+phiên bản cũ tạo ra có thể tạo lại thành một đề khác, các đề mà phiên bản cũ đã lưu trong bộ nhớ đệm bị bỏ một lần,
+và điểm đã lưu trong lịch sử không được tính lại (những gì
 thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập trình viên](DEVELOPERGUIDE.vn.md#bộ-nhớ-đệm-và-tạo-sẵn-đề)).
+Lịch sử chỉ giữ công thức (seed và tùy chọn), không giữ đề: mục không ghi phiên bản tính điểm nào đã tạo ra nó, hoặc do
+một phiên bản cũ hơn tạo, có ghi chú "Do phiên bản cũ hơn tạo", vì chọn nó sẽ tạo lại công thức bằng mô hình tính điểm
+hiện tại.
 
 ## Tính năng của trình sinh đề
 
@@ -108,8 +112,9 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   vùng (Windoku); Ghép hình (Jigsaw); Sát thủ (Killer); So sánh (Greater-Than); Samurai, Sohei, Cánh bướm và
   Bông hoa (các lưới chồng nhau); Sudoku Chữ (Wordoku).
 - **Chín mức độ khó** — rất dễ, dễ, trung bình, khó, chuyên gia, bậc thầy, ác mộng, địa ngục 1 và địa ngục 2 —
-  tính điểm từ 21 kỹ thuật giải của con người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ
-  thuật về lồng và 2 kỹ thuật về dấu so sánh; mỗi biến thể chỉ có các mức mà nó đạt được một cách ổn định.
+  tính điểm từ 40 kỹ thuật giải của con người (34 kỹ thuật cổ điển: số đơn, ứng viên bị khóa, tập con, cá, cánh,
+  chuỗi; 1 kỹ thuật cho Jigsaw, 3 kỹ thuật về lồng và 2 kỹ thuật về dấu so sánh); mỗi biến thể chỉ có các mức mà
+  nó đạt được một cách ổn định.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
   bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước), với hai chế độ xem của cùng những thay đổi đó: mặc
   định là một số bước được chọn để điểm tăng đều và không bao giờ giảm, hoặc, với **Hiện từng thay đổi**, mọi thay
@@ -134,12 +139,14 @@ thay đổi trong dữ liệu đã lưu nằm trong [hướng dẫn cho lập tr
   được phân bổ cho nó, rồi các ô trống, và dòng Tổng bằng đúng điểm của đề; thẻ Các bước tạo đề cho bảng tương tự
   ở mọi bước, nên ở bước cuối dòng Tổng của nó là điểm của thẻ Tóm tắt.
 - **Danh sách các đề đã tạo** — mỗi đề bạn tạo được lưu trong trình duyệt (tối đa 100, mới nhất ở trên) và hiện
-  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (cùng seed cho cùng đề trong
-  cùng một phiên bản trình sinh đề), xóa từng đề, hoặc xóa cả danh sách.
+  ở bên trái dưới dạng "biến thể" và "mức: điểm, seed"; bấm vào một đề để mở lại (đề được tạo lại từ seed và tùy
+  chọn của nó bằng mô hình tính điểm hiện tại; mục do một phiên bản cũ hơn tạo, hoặc không ghi lại phiên bản đã tạo
+  ra nó, ghi "Do phiên bản cũ hơn tạo" và có thể cho ra một đề khác), xóa từng đề, hoặc xóa cả danh sách.
 - **Giao diện song ngữ** (Anh / Việt), đổi ngay không cần tải lại trang; mọi chuỗi chữ, kể cả tên kỹ thuật giải
   và luật của từng biến thể, đều có cả hai ngôn ngữ.
-- **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu hoặc, khi
-  không đạt được, đề gần nhất kèm thông báo rõ ràng.
+- **Kết quả được đảm bảo** — đúng một lời giải (do một bộ giải riêng kiểm tra), đúng mức độ yêu cầu (điểm nằm
+  trong dải của mức và cần một kỹ thuật thuộc tầng của mức đó) hoặc, khi không đạt được, đề tốt nhất kèm thông báo
+  rõ ràng.
 - **In / PDF** — hộp thoại In đề in các đề bạn tick trong danh sách đã lưu (lúc đầu là đề đang hiển thị), 1, 2
   hoặc 4 đề mỗi trang (mặc định 4), có thể kèm lời giải ở các trang riêng; chọn "Lưu dưới
   dạng PDF" trong hộp thoại in để có tệp PDF (đồ họa vector nên nét kẻ luôn sắc).
@@ -162,19 +169,19 @@ Các biến thể (cột `id` là giá trị của tham số URL `v`):
 |------|----------|-----------:|-----:|------------|
 | `classic4` | Sudoku Cổ điển 4×4 | 4 | 16 | veryEasy |
 | `classic6` | Sudoku Cổ điển 6×6 | 6 | 36 | veryEasy, hard |
-| `classic9` | Sudoku Cổ điển 9×9 | 9 | 81 | veryEasy–hell1 |
-| `mega12` | Sudoku Khổng lồ 12×12 | 12 | 144 | veryEasy–hell2 |
-| `mega16` | Sudoku Quái vật 16×16 | 16 | 256 | veryEasy–hell2 |
-| `diagonalX` | Sudoku Đường chéo (X) | 9 | 81 | veryEasy–hell2 |
-| `hyper` | Sudoku Siêu vùng (Windoku) | 9 | 81 | veryEasy–hell2 |
-| `jigsaw9` | Sudoku Ghép hình | 9 | 81 | veryEasy–hell2 |
-| `killer` | Sudoku Sát thủ | 9 | 81 | veryEasy–hell2 |
-| `greaterThan` | Sudoku So sánh | 9 | 81 | veryEasy–hell2 |
-| `samurai` | Sudoku Samurai | 9 | 369 | veryEasy–hell2 |
-| `sohei` | Sudoku Sohei | 9 | 288 | veryEasy–hell2 |
-| `butterfly` | Sudoku Cánh bướm | 9 | 144 | veryEasy–hell2 |
-| `flower` | Sudoku Bông hoa | 9 | 189 | veryEasy–hell2 |
-| `wordoku` | Sudoku Chữ (Wordoku) | 9 | 81 | veryEasy–hell1 |
+| `classic9` | Sudoku Cổ điển 9×9 | 9 | 81 | veryEasy–nightmare |
+| `mega12` | Sudoku Khổng lồ 12×12 | 12 | 144 | veryEasy–nightmare, hell2 |
+| `mega16` | Sudoku Quái vật 16×16 | 16 | 256 | veryEasy–hard, master, hell2 |
+| `diagonalX` | Sudoku Đường chéo (X) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `hyper` | Sudoku Siêu vùng (Windoku) | 9 | 81 | veryEasy, normal–hard, master–nightmare, hell2 |
+| `jigsaw9` | Sudoku Ghép hình | 9 | 81 | veryEasy–hard, master, hell2 |
+| `killer` | Sudoku Sát thủ | 9 | 81 | veryEasy–normal |
+| `greaterThan` | Sudoku So sánh | 9 | 81 | veryEasy–easy, hard, master, hell2 |
+| `samurai` | Sudoku Samurai | 9 | 369 | veryEasy, normal–master |
+| `sohei` | Sudoku Sohei | 9 | 288 | veryEasy, normal–master, hell2 |
+| `butterfly` | Sudoku Cánh bướm | 9 | 144 | veryEasy, normal–nightmare, hell2 |
+| `flower` | Sudoku Bông hoa | 9 | 189 | veryEasy, normal–hard, master, hell2 |
+| `wordoku` | Sudoku Chữ (Wordoku) | 9 | 81 | veryEasy–easy, hard–nightmare |
 
 ## Ảnh chụp màn hình
 
@@ -213,13 +220,19 @@ Thanh địa chỉ luôn giữ trạng thái của trang, nên một liên kết
 | `sym` | `sym=mirrorH` | Kiểu đối xứng của các ô cho sẵn: `none`, `rotational180` (mặc định), `rotational90`, `mirrorH`, `mirrorV`, `mirrorBoth`, `diagonal`, `antiDiagonal`. |
 | `mode` | `mode=letters` | Bộ ký hiệu: `digits`, `letters`, `colors`, `shapes`, `word` (chỉ Sudoku Chữ). Mặc định: của biến thể. |
 | `order` | `order=snake` | Thứ tự thử bỏ số: `random` (mặc định), `rowByRow`, `snake`, `spiral`, `jumpOne`. |
-| `attempts` | `attempts=12` | Số lưới đầy đủ được thử trước khi chấp nhận đề gần nhất, 1–20. Mặc định 8. |
+| `attempts` | `attempts=12` | Số lưới đầy đủ được thử trước khi chấp nhận đề gần nhất, 1–20. Khi không có, số này theo cỡ bàn: 8 đến 81 ô, 4 đến 144 ô (Sudoku Khổng lồ 12×12, Cánh bướm), 2 với bàn lớn hơn (Bông hoa, Sohei, Samurai, Quái vật 16×16). Liên kết có `attempts` giữ đúng số đó, kể cả khi bằng mặc định. |
 | `sol` | `sol=1` | Hiện lời giải cạnh đề. |
 | `o.<id>` | `o.cageSize=2` | Một tùy chọn của biến thể đang chọn, ví dụ `o.compactness=0.8` (jigsaw9), `o.futoshiki=1` (greaterThan), `o.placement=row` (wordoku). |
 | `lang` | `lang=vi` | Ngôn ngữ: `en` hoặc `vi`. Mặc định: lựa chọn đã lưu, rồi ngôn ngữ của trình duyệt. |
 | `auto` | `auto=1` | Tạo đề ngay khi trang tải xong (liên kết có `seed` thì tự tạo đề cả khi không có tham số này). |
 
-`?v=classic9&d=master&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Các thiết lập còn được lưu trong
+`?v=classic9&d=master&seed=42&lang=vi&auto=1` luôn cho ra cùng một đề. Tùy chọn **Số lần thử tối đa** (Tùy chọn nâng
+cao) chính là số `attempts`. Khi bạn chưa nhập số, nó theo bàn cờ bạn chọn; số bạn nhập được giữ cho mọi bàn, trên
+thanh địa chỉ và sau khi tải lại, còn xóa trống ô thì nó lại theo bàn cờ. Một đề được mở lại từ danh sách lịch sử,
+dựng lại từ bản sao trong cache hoặc xuất lại sẽ được tạo với đúng số lần thử lúc nó được làm ra, nên một đề cũ của
+bàn lớn đã làm với 8 lần thử sẽ lại được làm với 8, và ô khi đó hiện số ấy như số do bạn chọn. Các thiết lập do phiên
+bản cũ lưu mà giữ số 8 được hiểu là dùng mặc định vì không thể phân biệt với số 8 do người dùng chủ động chọn; nhập
+lại 8 sẽ giữ số đó như một lựa chọn tường minh, cho mọi bàn. Các thiết lập còn được lưu trong
 `localStorage` của trình duyệt, không bao giờ gửi đi đâu: `sg.prefs.v1` (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển
 động, ký hiệu hỗ trợ người mù màu), `sg.lastConfig.v1` (các tùy chọn gần nhất), `sg.cache.v1` (tối đa 20 đề vừa
 tạo, để cùng một đề mở ra ngay), `sg.history.v1` (danh sách các đề đã tạo ở bên trái, tối đa 100). Liên kết có nêu
@@ -262,13 +275,26 @@ thông báo cảnh báo rằng một số ứng dụng và máy chủ cắt bớ
 - **Độ khó là một ước lượng**: trọng số của các kỹ thuật và khoảng điểm của các mức được chọn từ các phép đo trên
   đề do máy tạo, chưa phải từ thử nghiệm với người giải thật ([chi tiết](DEVELOPERGUIDE.vn.md#hạn-chế-kỹ-thuật-đã-biết)).
   Tổ hợp khó đạt (đối xứng chặt kèm mức rất cao) sẽ trả về đề gần nhất kèm thông báo thay vì đúng mức.
-- **Không phải mức nào cũng có ở mọi nơi**: Sudoku Cổ điển 4×4 chỉ có mức rất dễ và Cổ điển 6×6 có rất dễ và
-  khó; Sudoku Cổ điển 9×9 và Sudoku Chữ dừng ở mức địa ngục 1; mọi biến thể khác có đủ chín mức. Các mức mà một biến thể cung cấp
-  là những mức nó vượt qua trong bước kiểm định ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)).
-- **Các mức khó nhất chậm nhất**: các tổ hợp chậm nhất là So sánh và Sát thủ từ mức chuyên gia trở lên và các mức
-  địa ngục của bàn cờ lớn, với phân vị 95 đến khoảng 9,5 giây (So sánh chuyên gia; Sát thủ chuyên gia và ác mộng
-  8–9 giây; Quái vật 16×16 và Samurai địa ngục 2 khoảng 6–7 giây) và có yêu cầu đơn lẻ đến khoảng 13 giây; phần lớn
-  các tổ hợp khác mất chưa tới một giây.
+- **Bàn lớn dừng sớm hơn**: một yêu cầu cho bàn lớn mặc định chỉ thử ít lưới hơn (4 cho Sudoku Khổng lồ 12×12 và Cánh
+  bướm, 2 cho Bông hoa, Sohei, Samurai và Quái vật 16×16, so với 8 của các bàn còn lại), vì một lần thử trên bàn như
+  vậy có thể mất từ vài giây đến khoảng một phút còn trang dừng một lần tạo đề sau 120 giây. Khi không lưới nào trong
+  số đó đạt đúng mức yêu cầu, bạn nhận được đề gần nhất kèm thông báo: đề vẫn hợp lệ và có một lời giải duy nhất,
+  nhưng mức của nó có thể khác, thường gặp nhất ở các mức khó nhất. Mức nào được cung cấp trên bàn lớn do bước kiểm
+  định quyết định, không phải do mặc định này; bạn có thể tăng số lần thử trong tùy chọn nâng cao, đổi lại phải chờ
+  lâu hơn.
+- **Không phải mức nào cũng có ở mọi nơi**: chỉ có các mức trong bảng trên, 79 trong 135 tổ hợp biến thể và mức.
+  Sudoku Cổ điển 4×4 chỉ có mức rất dễ và Cổ điển 6×6 có rất dễ và khó; Sát thủ có từ rất dễ đến trung bình, và
+  không biến thể nào có đủ chín mức. Một mức chỉ được cung cấp khi nó vượt qua bước kiểm định
+  ([docs/difficulty-rating/qualification.md](docs/difficulty-rating/qualification.md)); mức khó và chuyên gia của
+  Sát thủ còn bị giữ lại có chủ ý (quyết định S-OD7) cho đến khi hiệu chuẩn lại, bất kể kết quả của một lần kiểm
+  định sau. Một thiết lập đã lưu hoặc một liên kết nêu một mức mà biến thể không còn cung cấp sẽ được chuyển sang
+  mức gần nhất mà nó có (mức dễ hơn nếu hai mức cách đều) và trang có thông báo.
+- **Các mức khó nhất chậm nhất**: trong 79 mức được cung cấp, 49 mức có phân vị 95 dưới một giây. Chậm nhất là các
+  mức địa ngục và ác mộng của bàn cờ lớn: Sohei địa ngục 2 (phân vị 95 là 27 giây), Quái vật 16×16 địa ngục 2
+  (25 giây), Cánh bướm ác mộng (16 giây) và địa ngục 2 (11 giây), rồi Khổng lồ 12×12 địa ngục 2, Bông hoa địa
+  ngục 2, So sánh địa ngục 2 và Siêu vùng ác mộng (8,5 đến 9,5 giây). Có yêu cầu đơn lẻ mất đến 67 giây (Samurai
+  bậc thầy); trang dừng một lần tạo đề sau 120 giây. Các thời gian này lấy từ lần kiểm định cuối cùng, chạy trên
+  máy đang bận (không phải máy hoàn toàn yên tĩnh); qualification.md liệt kê đủ.
 - **Sudoku Chữ tiếng Việt**: từ chín chữ cái khác nhau rất hiếm trong tiếng Việt nên danh sách ngắn; khi quá ngắn
   thì dùng danh sách tiếng Anh và có thông báo.
 - **Cài đặt**: công tắc tắt việc tạo sẵn đề ở nền không được nhớ giữa các lần truy cập.
@@ -321,8 +347,10 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
 - Chọn ô bằng chuột, cảm ứng hay bàn phím (mũi tên, Home / End, Page Up / Down); gõ ký hiệu hoặc dùng bàn phím
   số trên màn hình; ghi chú (`N`); xóa; hoàn tác / làm lại (`Ctrl+Z`, `Ctrl+Y`).
 - Kiểm tra lỗi: tắt, vi phạm luật (trùng số, tổng lồng, dấu so sánh) hoặc mọi ô sai ngay khi gõ.
-- **Gợi ý** ba bước (kỹ thuật và nơi cần nhìn, các ô, nước đi), luôn đúng và nêu tên một trong 26 kỹ thuật, kèm
-  tên và mô tả đã dịch.
+- **Gợi ý** ba bước (kỹ thuật và nơi cần nhìn, các ô, nước đi), luôn đúng và nêu tên một trong 40 kỹ thuật, kèm
+  tên và mô tả đã dịch. Nếu một bước trong chuỗi biểu diễn một nhóm ô, bước đó được viết trong ngoặc:
+  `(R1C1=5 ∨ R1C2=5)` nghĩa là có ít nhất một trong các ô ấy chứa số 5, `(R1C1≠5 ∧ R1C2≠5)` nghĩa là không ô nào
+  chứa số 5; nhóm đúng không cho biết ô nào chứa số.
 - Kiểu ký hiệu: chữ số, chữ cái, màu (luôn kèm hình), hình dạng và chữ của từ khóa; đề Sudoku Chữ giải xong sẽ hiện từ
   khóa và, nếu sách từ có sẵn trong trình chơi biết từ đó, cả nghĩa của từ.
 - Đồng hồ tạm dừng khi bạn rời tab, nhận biết hoàn thành và hiện một ô.
@@ -337,7 +365,7 @@ chú, hoàn tác / làm lại chính xác, kiểm tra lỗi, gợi ý nêu tên 
   màn hình nhỏ, bộ công cụ và bàn phím số được ghim ở đáy màn hình và các nút chỉ còn biểu tượng.
 - Cài đặt (ngôn ngữ, giao diện, cỡ chữ, giảm chuyển động, ký hiệu trên màu, cách kiểm tra lỗi, ghi chú, tọa
   độ), và **trang hướng dẫn** (`help.html`, nút Trợ giúp mở ở tab mới): những điều cơ bản, cách hoạt động của
-  gợi ý, các kỹ thuật giải đề khó kèm một ví dụ thật cho từng kỹ thuật trong 26 kỹ thuật, và các phím tắt.
+  gợi ý, các kỹ thuật giải đề khó kèm một ví dụ thật cho từng kỹ thuật trong 40 kỹ thuật, và các phím tắt.
 - Dễ tiếp cận: liên kết bỏ qua, lưới ARIA với nhãn ô đọc được, thông báo trực tiếp, tiêu điểm được giữ trong
   hộp thoại, độ tương phản được kiểm tra từ các token thiết kế, hỗ trợ chế độ màu bắt buộc và giảm chuyển động.
 

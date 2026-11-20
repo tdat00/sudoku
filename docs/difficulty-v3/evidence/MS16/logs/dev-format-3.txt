@@ -1,0 +1,7 @@
+$ node tests\artifacts\difficulty-v3\MS16\check-format.cjs
+FAIL core/tests/fixtures/techniques.js: line 1097 is 111
+FAIL core/tests/suites/tech-als.test.js: line 3475 is 112
+FAIL generator/tests/suites/technique-weights.test.js: line 328 is 111
+checked 56 files, 3 with problems
+E-hashed sources 68 of 68; of them modified or new: core/js/engine/tech-als.js, generator/js/engine/difficulty.js, generator/js/ui/locale.en.js, generator/js/ui/locale.vi.js
+exit=1 seconds=2.290

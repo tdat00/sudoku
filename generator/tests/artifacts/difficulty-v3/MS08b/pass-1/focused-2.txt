@@ -1,0 +1,17 @@
+$ node tests\node-runner.js --suite=tech-fish
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-fish: 216 passed, 1 failed  (7.66 s)
+
+Failures:
+  FAIL tech-fish > twoStringKite (R11): work limit, budget and cancellation > counts one unit per tested pair of a row and a column, from a fresh counter on every call
+       AssertionError: expected 2 to be 4
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:2272:34)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  217 total, 216 passed, 1 failed, 0 skipped
+Time:   7.66 s running tests, 7.76 s total
+exit=1 seconds=7.859

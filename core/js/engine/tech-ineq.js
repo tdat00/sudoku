@@ -1,6 +1,6 @@
 /**
  * Inequality rules of Greater-Than Sudoku: the propagation extension and the two human techniques of the
- * `ineq` group: `ineqChain` (baseCost 12, order 65: bounds travelling along a chain a < b < c < ...) and
+ * `ineq` group: `ineqChain` (baseCost 12, order 46: bounds travelling along a chain a < b < c < ...) and
  * `minMaxForcing` (22, 85: signs combined with all-different units; a cell above k cells of one unit is at
  * least k + 1, below k cells at most D - k).
  *
@@ -473,7 +473,7 @@
     id: 'ineqChain',
     group: 'ineq',
     baseCost: 12,
-    order: 65,
+    order: 46,
     i18nKey: 'technique.ineqChain',
     variantScope: ['greaterThan'],
     find: findChain

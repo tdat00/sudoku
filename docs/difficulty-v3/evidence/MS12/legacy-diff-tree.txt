@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS12\legacy-diff.js
+engine: tree, calls 3682, with a Finding 1305, sha256 b5458dd3484951418407082b4bee8980f20d78a5dbcee4c131b6468bcf06007e
+exit=0 seconds=0.324

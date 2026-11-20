@@ -1,0 +1,19 @@
+$ node tests\artifacts\difficulty-v3\MS09b\check-mutations.cjs
+Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS09b\mutations.cjs:129
+    from: 'return findBounded('finnedSwordfish', scanFinnedSwordfish, model, state, ctx,\r\n      FINNED_SWORDFISH_WORK_LIMIT);',
+                               ^^^^^^^^^^^^^^^
+
+SyntaxError: Unexpected identifier 'finnedSwordfish'
+    at wrapSafe (node:internal/modules/cjs/loader:1900:18)
+    at Module._compile (node:internal/modules/cjs/loader:1942:20)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.require (node:internal/modules/cjs/loader:1713:12)
+    at require (node:internal/modules/helpers:318:16)
+    at Object.<anonymous> (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS09b\check-mutations.cjs:5:19)
+    at Module._compile (node:internal/modules/cjs/loader:1968:14)
+
+Node.js v26.13.0
+exit=1 seconds=0.084

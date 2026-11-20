@@ -1,0 +1,11 @@
+$ node tests\pattern-cost.js --ids=lawOfLeftovers --runs=20 --json=..\docs\difficulty-v3\evidence\MS14b\pattern-cost.json
+pattern-cost: 7 of 7 cases x 20 runs (140 finds), complete true, found 4, none 3, outcome not the fixture's 0, capped 0, wall 0.091 s
+  lawOfLeftovers:positive:1 found, work 1336 of 50000, ms p50 0.127 p95 0.896 max 2.053
+  lawOfLeftovers:positive:2 found, work 1429 of 50000, ms p50 0.148 p95 0.251 max 0.280
+  lawOfLeftovers:positive:3 found, work 278 of 50000, ms p50 0.093 p95 0.293 max 0.655
+  lawOfLeftovers:positive:4 found, work 1901 of 50000, ms p50 0.409 p95 0.616 max 1.189
+  lawOfLeftovers:negative:1 none, work 5395 of 50000, ms p50 0.830 p95 1.186 max 1.227
+  lawOfLeftovers:negative:2 none, work 5401 of 50000, ms p50 0.870 p95 1.435 max 1.541
+  lawOfLeftovers:negative:3 none, work 3436 of 50000, ms p50 0.665 p95 1.046 max 1.138
+record: docs/difficulty-v3/evidence/MS14b/pattern-cost.json
+exit=0 seconds=0.719

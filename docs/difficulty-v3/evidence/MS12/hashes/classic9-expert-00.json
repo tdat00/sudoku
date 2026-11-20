@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "bd7819402f1581b95e62152a57f5c5bad59c110888ca2bca234147c4e09cfb58",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "64a7cd665201245178c6062df2499cad0d51b5a5",
+  "dirty": true,
+  "generatedAt": "2026-11-16T14:15:44.684Z",
+  "argv": ["--hash-key=classic9/expert","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS12\\hashes\\classic9-expert-00.json"],
+  "records": [
+    {"key":"classic9/expert#1","variant":"classic9","level":"expert","seed":1,"hash":"ae1ff214cc133948","ms":181,"overrides":[]},
+    {"key":"classic9/expert#2","variant":"classic9","level":"expert","seed":2,"hash":"63335b832060f687","ms":292,"overrides":[]},
+    {"key":"classic9/expert#3","variant":"classic9","level":"expert","seed":3,"hash":"c9d05e1ca3693320","ms":20,"overrides":[]},
+    {"key":"classic9/expert#5","variant":"classic9","level":"expert","seed":5,"hash":"bd4993516e41b57d","ms":49,"overrides":[]},
+    {"key":"classic9/expert#8","variant":"classic9","level":"expert","seed":8,"hash":"dbbfb715c1d1ee99","ms":100,"overrides":[]}
+  ]
+}

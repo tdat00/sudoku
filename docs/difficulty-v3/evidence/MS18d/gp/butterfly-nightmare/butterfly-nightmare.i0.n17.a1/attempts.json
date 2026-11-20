@@ -1,0 +1,19 @@
+{
+  "schema": "ms18d-c-attempts-1",
+  "chunkId": "butterfly-nightmare.i0.n17",
+  "runs": [],
+  "admissions": 0,
+  "payloads": 0,
+  "problems": [],
+  "reasons": [],
+  "ruling": null,
+  "rulingsJournal": {
+    "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+    "commit": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+    "baseCommit": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+    "entryCount": 3,
+    "sha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614",
+    "baseSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "decision": "allow"
+}

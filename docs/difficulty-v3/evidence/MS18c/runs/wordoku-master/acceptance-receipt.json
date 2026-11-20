@@ -1,0 +1,74 @@
+{
+  "schema": "MS18c-gq-acceptance-receipt-v1",
+  "epoch": "MS18c-GQ-20261118-01",
+  "cell": "wordoku/master",
+  "runId": "ms18c-20261118T222737267-33148",
+  "slot": 1,
+  "ordinal": 1,
+  "manifestBlob": "e9c3c2410fcf7aced811e11868c0f26004951b85",
+  "head": "ed2fe50c3d87c79d78fb1108e6fd12aed07b7a89",
+  "original": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-master\\payload-1\\admission-1\\qualifier.json",
+      "sha256": "62e1e99924cf7c3dfeffcb320e5267c72d4ee21b0966d0c93af85f7a57e1a110"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\wordoku-master\\payload-1\\admission-1\\qualifier.md",
+      "sha256": "1fefcad8e4a7e781a2b411e24bd790612756ace35083d90f6cd46e166c12b33a"
+    }
+  },
+  "wSeconds": 9.7204923,
+  "rSeconds": 7.3006981,
+  "launcherExit": 0,
+  "tExpired": false,
+  "leftover": false,
+  "fault": false,
+  "supervisorLost": false,
+  "monitor": {
+    "proceed": true,
+    "invalid": [],
+    "invalidTiming": [],
+    "breaches": [],
+    "metrics": {
+      "rSeconds": 7.3006981,
+      "requests": 40,
+      "maxMs": 437.3951,
+      "stopped": null,
+      "secondRoundRan": false,
+      "slowTotal": 0,
+      "slowFirstRound": 0,
+      "qSeconds": 2.225,
+      "sSeconds": 1.6783764,
+      "sFirstRoundSeconds": 1.6783764,
+      "sSecondRoundSeconds": 0,
+      "qMinusS": 0.5466235999999999,
+      "wSeconds": 9.7204923,
+      "wMinusQ": 7.4954922999999996
+    }
+  },
+  "verdict": "accepted",
+  "summary": {
+    "n": 40,
+    "hits": 40,
+    "rate": 1,
+    "p50": 142.325,
+    "p95": 344.9143,
+    "max": 437.3951,
+    "verdict": "offered",
+    "stopped": null,
+    "errors": 0,
+    "approximate": 0,
+    "invalid": 0
+  },
+  "canonical": {
+    "json": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\wordoku-master.json",
+      "sha256": "62e1e99924cf7c3dfeffcb320e5267c72d4ee21b0966d0c93af85f7a57e1a110"
+    },
+    "markdown": {
+      "path": "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\qualification\\wordoku-master.md",
+      "sha256": "1fefcad8e4a7e781a2b411e24bd790612756ace35083d90f6cd46e166c12b33a"
+    }
+  },
+  "note": "a complete record is retained and never rerun; a review verdict stops GQ for joint review"
+}

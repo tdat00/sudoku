@@ -1,0 +1,3 @@
+G13 closure: ok in 21.872 s of the 120 s guard; attempts 2, score 1637, exact false, required false, warnings [difficulty.approximate, difficulty.shallow]
+record: ..\docs\difficulty-v3\evidence\MS05r6a\preflight\G13.json
+MS05r6a exit=0 seconds=22.352

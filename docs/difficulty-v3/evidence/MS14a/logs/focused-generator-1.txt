@@ -1,0 +1,13 @@
+$ node tests\node-runner.js --suite=tech-subset,techniques,ui-contract,purity
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   purity: 41 passed  (28 ms)
+ok   tech-subset: 140 passed  (6.10 s)
+ok   techniques: 267 passed  (3.13 s)
+ok   ui-contract: 67 passed  (361 ms)
+
+Suites: 4
+Tests:  515 total, 515 passed, 0 failed, 0 skipped
+Time:   9.62 s running tests, 9.73 s total
+exit=0 seconds=9.847

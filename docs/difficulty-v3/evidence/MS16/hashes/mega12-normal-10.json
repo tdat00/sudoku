@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "8740fd9e8ed34fe1d80fada564b59b5467d75f8f61be0d2c14abae92320dfb4e",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "248c697079beafd4aa9d20ab82305902382a2f28",
+  "dirty": true,
+  "generatedAt": "2026-11-18T00:33:36.920Z",
+  "argv": ["--hash-key=mega12/normal","--hash-from=10","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS16\\hashes\\mega12-normal-10.json"],
+  "records": [
+    {"key":"mega12/normal#144","variant":"mega12","level":"normal","seed":144,"hash":"ecd8bfc5dcb94cf9","ms":33,"overrides":[]},
+    {"key":"mega12/normal#233","variant":"mega12","level":"normal","seed":233,"hash":"6232cbc9ca4931bd","ms":13,"overrides":[]},
+    {"key":"mega12/normal#377","variant":"mega12","level":"normal","seed":377,"hash":"e17baeb9ba36830d","ms":25,"overrides":[]},
+    {"key":"mega12/normal#610","variant":"mega12","level":"normal","seed":610,"hash":"6712ad085f3d73dc","ms":10,"overrides":[]},
+    {"key":"mega12/normal#987","variant":"mega12","level":"normal","seed":987,"hash":"460aa705440e6769","ms":19,"overrides":[]}
+  ]
+}

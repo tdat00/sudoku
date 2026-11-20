@@ -1,0 +1,282 @@
+{
+  "schema": "ms18d-operator-records-v1",
+  "label": "operational record, not authority",
+  "recordedBy": "orchestrator",
+  "recordedAt": "2026-11-20T08:34:38+07:00",
+  "purpose": "Byte-exact copies of the orchestrator-side runner/gate scripts and logs used in the MS18d C2 campaign (SA1 Phase D condition B2). Authority stays with the committed C log, run folders, base records and rulings.",
+  "files": [
+    {
+      "name": "gp-results.jsonl",
+      "source": "session-state files/gp-results.jsonl",
+      "sourceSha256": "7ec45a4ed8b075e0258c9bca3d8dc4db2dd53a9f3ffc1390e8cb9b9b718b71ad",
+      "bytes": 53775,
+      "lastWrite": "2026-11-20T07:29:49+07:00",
+      "created": "2026-11-19T18:27:24+07:00",
+      "role": "runner attempt log: one line per runner-launched attempt (chunks 1-114 and the three a3s); code = runner exit, line = recorder result line; no gate waits or exit-6 gate pauses",
+      "committedSha256": "7ec45a4ed8b075e0258c9bca3d8dc4db2dd53a9f3ffc1390e8cb9b9b718b71ad",
+      "committedBytes": 53775
+    },
+    {
+      "name": "a3-pre-mega16.txt",
+      "source": "session-state files/a3-pre-mega16.txt",
+      "sourceSha256": "7dade40705de8e53c4871d805aca89cfce9dc0e80753a8dcc088e67f9e69690b",
+      "bytes": 4947,
+      "lastWrite": "2026-11-20T07:15:20+07:00",
+      "created": "2026-11-20T07:15:14+07:00",
+      "role": "saved pre-launch check output (-ChecksOnly) for mega16-easy a3, 07:15",
+      "committedSha256": "7dade40705de8e53c4871d805aca89cfce9dc0e80753a8dcc088e67f9e69690b",
+      "committedBytes": 4947
+    },
+    {
+      "name": "a3-hyper.txt",
+      "source": "session-state files/a3-hyper.txt",
+      "sourceSha256": "17e2d7af558b270d93a1f60df29443398dc0043477a94599a67235e70be4c1db",
+      "bytes": 5507,
+      "lastWrite": "2026-11-20T07:24:47+07:00",
+      "created": "2026-11-20T07:22:05+07:00",
+      "role": "saved full output of the hyper-hard a3 run (pre-checks, gate, attempt 3)",
+      "committedSha256": "17e2d7af558b270d93a1f60df29443398dc0043477a94599a67235e70be4c1db",
+      "committedBytes": 5507
+    },
+    {
+      "name": "a3-butterfly.txt",
+      "source": "session-state files/a3-butterfly.txt",
+      "sourceSha256": "246aef10dc58f98001fb8383d0b7f148c5802580356804d3ded8bbf7c14e704f",
+      "bytes": 5642,
+      "lastWrite": "2026-11-20T07:29:49+07:00",
+      "created": "2026-11-20T07:24:56+07:00",
+      "role": "saved full output of the butterfly-master a3 run (pre-checks, gate, attempt 3)",
+      "committedSha256": "246aef10dc58f98001fb8383d0b7f148c5802580356804d3ded8bbf7c14e704f",
+      "committedBytes": 5642
+    },
+    {
+      "name": "gp-gate.ps1",
+      "source": "session-state files/gp-gate.ps1",
+      "sourceSha256": "9c6927ea59fddc1da92a595eee7b05be30293e3914d7a93886f971accdd61eca",
+      "bytes": 2941,
+      "lastWrite": "2026-11-19T23:28:55+07:00",
+      "created": "2026-11-19T23:28:55+07:00",
+      "role": "first outer gate prototype (Intune lineage + EventLog/Dnscache); dry-tested only, ran no real chunk",
+      "committedSha256": "9c6927ea59fddc1da92a595eee7b05be30293e3914d7a93886f971accdd61eca",
+      "committedBytes": 2941
+    },
+    {
+      "name": "gp-gate2.ps1",
+      "source": "session-state files/gp-gate2.ps1",
+      "sourceSha256": "148aa69da30f91a2246ef1e066f1447541668b415e29c0a0505fc3585c6bd3be",
+      "bytes": 6630,
+      "lastWrite": "2026-11-20T00:54:40+07:00",
+      "created": "2026-11-19T23:43:00+07:00",
+      "role": "outer gate used for chunks 42-97; final (00:54) version with SenseIR descendants; the 23:43 version used for chunks 42-57 was edited in place and not retained",
+      "committedSha256": "148aa69da30f91a2246ef1e066f1447541668b415e29c0a0505fc3585c6bd3be",
+      "committedBytes": 6630
+    },
+    {
+      "name": "gp-gate3.ps1",
+      "source": "session-state files/gp-gate3.ps1",
+      "sourceSha256": "ba6aa9dc09bfae1a437021cbfc4a5fd856c5d31bb3bb5cf33738840e08700564",
+      "bytes": 8213,
+      "lastWrite": "2026-11-20T03:28:37+07:00",
+      "created": "2026-11-20T03:24:07+07:00",
+      "role": "wide stability gate (55c4e867) used for chunks 98-114 and the three a3s",
+      "committedSha256": "ba6aa9dc09bfae1a437021cbfc4a5fd856c5d31bb3bb5cf33738840e08700564",
+      "committedBytes": 8213
+    },
+    {
+      "name": "gp-gate-log.jsonl",
+      "source": "session-state files/gp-gate-log.jsonl",
+      "sourceSha256": "84b59f70429e3c64b7048752dc554e1caca132f2a123e1f77ff0b58892f8607c",
+      "bytes": 144,
+      "lastWrite": "2026-11-19T23:29:12+07:00",
+      "created": "2026-11-19T23:29:12+07:00",
+      "role": "gate log written only by gp-gate.ps1; its single line is the 23:29 dry test",
+      "committedSha256": "84b59f70429e3c64b7048752dc554e1caca132f2a123e1f77ff0b58892f8607c",
+      "committedBytes": 144
+    },
+    {
+      "name": "gp-next.ps1",
+      "source": "session-state files/gp-next.ps1",
+      "sourceSha256": "cf4c808cef9acdcb34299afbf7dd4818ed59d192707609e5c25c0c29cbfdae75",
+      "bytes": 2073,
+      "lastWrite": "2026-11-19T22:59:29+07:00",
+      "created": "2026-11-19T18:27:19+07:00",
+      "role": "runner for chunks 1-23 (B1); file rewritten 22:59 (used for chunk 24 a1 under B3); earlier version not retained",
+      "committedSha256": "cf4c808cef9acdcb34299afbf7dd4818ed59d192707609e5c25c0c29cbfdae75",
+      "committedBytes": 2073
+    },
+    {
+      "name": "gp-next2.ps1",
+      "source": "session-state files/gp-next2.ps1",
+      "sourceSha256": "5c7c759117fc6d63b27b6a055170a07c10c3711f8f564df5d2128833cfc061e9",
+      "bytes": 2625,
+      "lastWrite": "2026-11-19T23:04:23+07:00",
+      "created": "2026-11-19T23:04:23+07:00",
+      "role": "runner for chunks 25-41 (B3), no outer gate, automatic 65 s re-ask",
+      "committedSha256": "5c7c759117fc6d63b27b6a055170a07c10c3711f8f564df5d2128833cfc061e9",
+      "committedBytes": 2625
+    },
+    {
+      "name": "gp-next3.ps1",
+      "source": "session-state files/gp-next3.ps1",
+      "sourceSha256": "89ec30671abe3582202da632355ffb1951d36930bc0a53db9a31206297a8a187",
+      "bytes": 3569,
+      "lastWrite": "2026-11-20T03:32:26+07:00",
+      "created": "2026-11-19T23:48:13+07:00",
+      "role": "runner for chunks 42-114 (B3) with the outer gate; edited in place 03:32 to call gp-gate3.ps1; earlier version (calling gp-gate2.ps1) not retained",
+      "committedSha256": "89ec30671abe3582202da632355ffb1951d36930bc0a53db9a31206297a8a187",
+      "committedBytes": 3569
+    },
+    {
+      "name": "gp-a3.ps1",
+      "source": "session-state files/gp-a3.ps1",
+      "sourceSha256": "2a13efe164f207f84aa26b5b6977f0438524abffa99e8bb68f91848d068bbc47",
+      "bytes": 2890,
+      "lastWrite": "2026-11-20T07:15:05+07:00",
+      "created": "2026-11-20T06:31:08+07:00",
+      "role": "a3 driver: locked node pre-checks, gp-a3-pre.ps1, gp-gate3.ps1, attempt 3; no re-ask",
+      "committedSha256": "2a13efe164f207f84aa26b5b6977f0438524abffa99e8bb68f91848d068bbc47",
+      "committedBytes": 2890
+    },
+    {
+      "name": "gp-a3-pre.ps1",
+      "source": "session-state files/gp-a3-pre.ps1",
+      "sourceSha256": "5b505611c9ac22159ef1ee4c859012c5556b1bd15427f9d3113874bbc8281ea9",
+      "bytes": 2096,
+      "lastWrite": "2026-11-20T07:15:05+07:00",
+      "created": "2026-11-20T07:15:05+07:00",
+      "role": "SA1 PowerShell pre-gate checks for each a3 (head/history/status/manifest/line)",
+      "committedSha256": "5b505611c9ac22159ef1ee4c859012c5556b1bd15427f9d3113874bbc8281ea9",
+      "committedBytes": 2096
+    },
+    {
+      "name": "gp-chunk.ps1",
+      "source": "session-state files/gp-chunk.ps1",
+      "sourceSha256": "85726b6145b27841803520bb40b8482a7f10801ee7e031f5d27e112ce8b4ab84",
+      "bytes": 1321,
+      "lastWrite": "2026-11-20T06:31:08+07:00",
+      "created": "2026-11-19T18:19:45+07:00",
+      "role": "single-attempt driver calling Invoke-RecorderLocked; edited 06:31 to accept attempt 3 (ValidateSet 1,2 -> 1,2,3)",
+      "committedSha256": "85726b6145b27841803520bb40b8482a7f10801ee7e031f5d27e112ce8b4ab84",
+      "committedBytes": 1321
+    },
+    {
+      "name": "gp-final-merge.ps1",
+      "source": "session-state files/gp-final-merge.ps1",
+      "sourceSha256": "ec1e061a986d2bbc0221964c789c091e55d72d2b5b1d938d2c0b72ce9b010877",
+      "bytes": 1240,
+      "lastWrite": "2026-11-20T07:30:57+07:00",
+      "created": "2026-11-20T07:30:57+07:00",
+      "role": "driver of the single all-79 final.m1 merge (Invoke-MergeLocked) under B4/H4",
+      "committedSha256": "ec1e061a986d2bbc0221964c789c091e55d72d2b5b1d938d2c0b72ce9b010877",
+      "committedBytes": 1240
+    },
+    {
+      "name": "merge-pre.ps1",
+      "source": "session-state files/merge-pre.ps1",
+      "sourceSha256": "4ace5982885205eb7bfaa76167e8e5b3a7cdfcea1ac584fd6f9f32b2cc62ead7",
+      "bytes": 1356,
+      "lastWrite": "2026-11-20T07:31:13+07:00",
+      "created": "2026-11-20T07:31:13+07:00",
+      "role": "standalone pre-lock checks run before final.m1 (head/history/status/manifest/line)",
+      "note": "session file had LF line endings; committed copy normalized to CRLF so it survives a core.autocrlf checkout",
+      "committedSha256": "f8b9dfbaaa9a9f47563af82bf76faff5aa22e991f8733c095790e51c96cad972",
+      "committedBytes": 1375
+    }
+  ],
+  "gateVersions": {
+    "provenance": "reconstructed from file creation/last-write times and shell order; only the final version of each in-place-edited script is retained",
+    "ranges": [
+      {
+        "chunks": "1-41",
+        "gate": null,
+        "runner": "gp-next.ps1 (chunks 1-23 B1; chunk 24 a1 B3) and gp-next2.ps1 (chunks 25-41 B3, automatic 65 s re-ask)"
+      },
+      {
+        "chunks": "42-57",
+        "gateRuling": "b0c0bfac752248c4223f633f2ed55bd67f6f6cdc",
+        "script": "gp-gate2.ps1 (23:43 version: Intune lineage + EventLog/Dnscache; not retained)",
+        "runner": "gp-next3.ps1 (pre-03:32 version; not retained)"
+      },
+      {
+        "chunks": "58-97",
+        "gateRuling": "2a5cb26ab37c91e1127310dbd348c2ca17533289",
+        "script": "gp-gate2.ps1 (00:54 version, retained: + SenseIR descendants)",
+        "runner": "gp-next3.ps1 (pre-03:32 version; not retained)"
+      },
+      {
+        "chunks": "98-114 and the three a3s",
+        "gateRuling": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+        "script": "gp-gate3.ps1 (retained)",
+        "runner": "gp-next3.ps1 (03:32 version, retained) and gp-a3.ps1"
+      }
+    ],
+    "notes": [
+      "gp-gate.ps1 (23:28) was dry-tested only and ran no real chunk",
+      "the 65 s automatic re-ask came from gp-next2.ps1 (chunk 41 hyper-hard a2); a 300 s cooldown replaced it in gp-next3.ps1"
+    ]
+  },
+  "manualLaunches": [
+    {
+      "cLogLine": 24,
+      "run": "mega16-easy.i0.n50.a2",
+      "base": "B1 a2e6423a52a89dd36ee646aa14706dd2369e087f",
+      "how": "direct gp-chunk.ps1 call after a manual 58 s sleep (shell 13290); pre-window-hold"
+    },
+    {
+      "cLogLine": 25,
+      "run": "mega16-easy.i0.n50.a2",
+      "base": "B2 b6de2c46e73581f54e61f1ece92a360dd9879736",
+      "how": "direct gp-chunk.ps1 call with helpers-c2 (shell 13413); control-hold at acquisition"
+    },
+    {
+      "cLogLine": 27,
+      "run": "mega16-normal.i0.n50.a2",
+      "base": "B3 8e95cb14aad100a6d219af072bbdf3dc227273d1",
+      "how": "direct gp-chunk.ps1 call with helpers-c3 (shell 13580); success"
+    }
+  ],
+  "a3Gates": [
+    {
+      "run": "mega16-easy.i0.n50.a3",
+      "waitS": 325,
+      "resets": 3,
+      "samples": 59,
+      "absenceS": 123,
+      "pass": "07:21:19",
+      "source": "copied by hand from shell output; no saved file",
+      "note": "Intune/SenseIR powershell PID 18320 seen 07:17:52"
+    },
+    {
+      "run": "hyper-hard.i0.n50.a3",
+      "waitS": 124,
+      "resets": 0,
+      "samples": 23,
+      "absenceS": 123,
+      "pass": "07:24:16",
+      "source": "a3-hyper.txt"
+    },
+    {
+      "run": "butterfly-master.i0.n50.a3",
+      "waitS": 247,
+      "resets": 5,
+      "samples": 45,
+      "absenceS": 123,
+      "pass": "07:29:09",
+      "source": "a3-butterfly.txt",
+      "note": "SenseIR powershell PID 26156 seen 07:25:43"
+    }
+  ],
+  "unknownNotRecorded": [
+    "per-chunk outer-gate waits, reset counts and samples for chunks 42-114 (printed to the console only; shell output no longer retrievable)",
+    "any 30-minute outer-gate expiries and exit-6 gate pauses for chunks 42-114",
+    "gp-gate2.ps1 23:43 version and gp-next3.ps1 pre-03:32 version (edited in place)"
+  ],
+  "reconciliation": {
+    "by": "SA1 (read-only), confirmed by the orchestrator",
+    "result": "the 121 gp-results.jsonl lines match 121 of the 124 recorder rows of the C log exactly; the three without a line are C-log L24, L25 and L27 (manualLaunches)",
+    "fields": {
+      "code": "the runner's own exit; 0 on all 121 lines, including holds",
+      "seconds": "the runner's enclosing clock, not the recorder-process duration; source of the a3 figures 31.1 / 30.4 / 39.5 s"
+    }
+  }
+}

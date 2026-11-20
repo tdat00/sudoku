@@ -1,0 +1,9 @@
+$ node tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS10b\hashes --update-hashes
+merged 104 ledgers: all 520 keys exactly once, recorded from the current sources
+CHANGED classic9/master: seeds 1, 2, 3, 5, 13, 89, 233, 377, 610, 1597, 2584, 4181, 6765
+CHANGED classic9/nightmare: seeds 5, 8, 13, 55, 144, 4181
+CHANGED diagonalX/nightmare: seeds 1, 2, 21, 377, 610, 987, 6765
+CHANGED jigsaw9/master: seeds 1, 5, 8, 13, 55, 144, 610, 987, 1597, 4181
+36 of 520 hashes differ from the current fixture
+wrote generator/tests/fixtures/regression.js: 26 combinations x 20 seeds (merged ledgers, nothing generated)
+exit=0 seconds=0.583

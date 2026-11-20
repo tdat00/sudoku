@@ -1,0 +1,66 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795077725013,
+  "startedAtMs": 1795077725100,
+  "lockAcquiredAtMs": 1795077725018,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795077709513,
+    "lastCheckMs": 1795077724813,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 87,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795077720012,
+    "label": "coord",
+    "origin": "coordinator"
+  },
+  "releaseGapMs": 5088,
+  "reasons": [
+    "release-gap-under-15s"
+  ],
+  "decision": "hold",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 29016,
+    "task": "stand-in hold-another-job-s-release-5-s-before-with-an-old-own",
+    "controllerPid": 10964,
+    "controllerParentPid": 29016,
+    "wrapperPid": 29016
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-another-job-s-release-5-s-before-with-an-old-own\\logs\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-another-job-s-release-5-s-before-with-an-old-own\\logs\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "coord",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ctl-dndcTM\\hold-another-job-s-release-5-s-before-with-an-old-own\\logs\\coord.jsonl",
+      "present": true
+    }
+  ]
+}

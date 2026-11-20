@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=wordoku --level=normal --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-normal.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\wordoku-normal.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+wordoku/normal: 35/46 hits, p95 814 ms (budget 10.0 s), hidden (stopped: misses)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| wordoku | normal | 46 | 35 | 76 % | 328 ms | 814 ms | 1.10 s | 10.0 s | hidden (stopped: misses) |
+
+wordoku: []
+exit=0 seconds=6.727

@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "tool": "guard-probe",
+  "argv": [
+    "--variant=jigsaw9",
+    "--level=nightmare",
+    "--count=12",
+    "--seed=20260101",
+    "--no-gate",
+    "--chain-window=4",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07c\\4\\jigsaw9-nightmare.json"
+  ],
+  "exitCode": 0,
+  "solves": 7382,
+  "guardRefusals": 0,
+  "requestCalls": 15,
+  "requestsWithGuardRefusals": 0,
+  "instrumented": [
+    "solve",
+    "generate",
+    "run"
+  ],
+  "problems": [],
+  "calls": [
+    {
+      "route": "pipeline.run",
+      "solves": 498,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 498,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 477,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 334,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 114,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 331,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 677,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 677,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 687,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 1411,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 552,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 430,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 225,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 225,
+      "guardRefusals": 0
+    },
+    {
+      "route": "pipeline.run",
+      "solves": 208,
+      "guardRefusals": 0
+    }
+  ]
+}

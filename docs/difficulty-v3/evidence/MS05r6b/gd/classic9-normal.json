@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"time) > normal >","exact":null,"count":8},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 28028.7,
+  "results": {
+    "total": 8,
+    "passed": 7,
+    "failed": 1,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 27848,
+    "tests": [
+      {"suite":"difficulty","name":"hits the requested level in at least 90 % of the puzzles","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > hits the requested level in at least 90 % of the puzzles","status":"fail","ms":27813.637,"reason":"","error":{"name":"AssertionError","message":"expected 86 to be >= 90","stack":"AssertionError: expected 86 to be >= 90\n    at api.<computed> [as toBeGreaterThanOrEqual] (<repo>\\core\\tests\\harness.js:286:17)\n    at Object.<anonymous> (<repo>\\generator\\tests\\manual\\difficulty.test.js:1233:24)\n    at invoke (<repo>\\core\\tests\\harness.js:416:18)\n    at runTest (<repo>\\core\\tests\\harness.js:457:18)\n    at Object.run (<repo>\\core\\tests\\harness.js:621:27)\n    at main (<repo>\\generator\\tests\\node-runner.js:356:33)\n    at Object.<anonymous> (<repo>\\generator\\tests\\node-runner.js:409:1)\n    at Module._compile (node:internal/modules/cjs/loader:1968:14)\n    at Object..js (node:internal/modules/cjs/loader:2108:10)\n    at Module.load (node:internal/modules/cjs/loader:1690:32)"},"ordinal":82},
+      {"suite":"difficulty","name":"I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I1: every puzzle has exactly one solution (checked with the DFS, not the oracle)","status":"pass","ms":3.462,"reason":"","error":null,"ordinal":83},
+      {"suite":"difficulty","name":"I2, I3, I6: givens belong to the solution they determine; at least minClues","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I2, I3, I6: givens belong to the solution they determine; at least minClues","status":"pass","ms":5.465,"reason":"","error":null,"ordinal":84},
+      {"suite":"difficulty","name":"I5: every puzzle has a complete proof; an exact one has its score in the band","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I5: every puzzle has a complete proof; an exact one has its score in the band","status":"pass","ms":9.213,"reason":"","error":null,"ordinal":85},
+      {"suite":"difficulty","name":"stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > stays within the technique set of the level below nightmare (the proof uses the allowed techniques only)","status":"pass","ms":5.877,"reason":"","error":null,"ordinal":86},
+      {"suite":"difficulty","name":"I7: every deduction on the way to the solution is sound","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > I7: every deduction on the way to the solution is sound","status":"pass","ms":8.484,"reason":"","error":null,"ordinal":87},
+      {"suite":"difficulty","name":"has the pattern of empty cells that the default symmetry asks for (rotational 180)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > has the pattern of empty cells that the default symmetry asks for (rotational 180)","status":"pass","ms":0.307,"reason":"","error":null,"ordinal":88},
+      {"suite":"difficulty","name":"is generated well inside the budget of design.md section 9.1 (median time)","fullName":"difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal > is generated well inside the budget of design.md section 9.1 (median time)","status":"pass","ms":0.094,"reason":"","error":null,"ordinal":89}
+    ],
+    "suites": [
+      {"name":"difficulty","total":8,"passed":7,"failed":1,"skipped":0,"ms":27847.891}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=time) > normal >","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-normal.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

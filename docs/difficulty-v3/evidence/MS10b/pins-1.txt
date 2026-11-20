@@ -1,0 +1,97 @@
+$ node tests\node-runner.js --suite=replay,steps,player,pipeline,cache,worker
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (10.37 s)
+ok   pipeline: 151 passed  (36.40 s)
+(node:1844) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL player: 67 passed, 2 failed  (32.55 s)
+FAIL replay: 145 passed, 9 failed  (22.24 s)
+FAIL steps: 52 passed, 5 failed  (22.60 s)
+ok   worker: 144 passed  (44.06 s)
+
+Failures:
+  FAIL player > player: the replay steps of a result > one complete move per details step: no position shows half of an exchange
+       AssertionError: expected 32 to be 30
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:479:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected 3149 to be 3173
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:708:65)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: the moves of the example (Classic 9x9 Expert, seed 3275974478) > has an exchange in G04: 29 positions with 6 guided moves and 1 exchange, removing 2 and restoring 2
+       AssertionError: expected length 31 of Array(31)[{index: 0, kind: "solution", phase: "start", pass: null, from: -1, to: -1, at: -1, removed: Array(0)[], ...}, {index: 1, kind: "random", phase: "random", pass: "random", from: 1, to: 1, at: 1, removed: Array(2)[22, 58], ...}, {index: 2, kind: "random", phase: "random", pass: "random", from: 2, to: 2, at: 2, removed: Array(2)[38, 42], ...}, {index: 3, kind: "random", phase: "random", pass: "random", from: 3, to: 3, at: 3, removed: Array(2)[6, 74], ...}, {index: 4, kind: "random", phase: "random", pass: "random", from: 4, to: 4, at: 4, removed: Array(2)[26, 54], ...}, {index: 5, kind: "random", phase: "random", pass: "random", from: 5, to: 5, at: 5, removed: Array(2)[21, 59], ...}, {index: 6, kind: "random", phase: "random", pass: "random", from: 6, to: 6, at: 6, removed: Array(2)[14, 66], ...}, {index: 7, kind: "random", phase: "random", pass: "random", from: 7, to: 7, at: 7, removed: Array(2)[8, 72], ...}, {index: 8, kind: "random", phase: "random", pass: "random", from: 8, to: 8, at: 8, removed: Array(2)[19, 61], ...}, {index: 9, kind: "random", phase: "random", pass: "random", from: 9, to: 9, at: 9, removed: Array(2)[7, 73], ...}, {index: 10, kind: "random", phase: "random", pass: "random", from: 10, to: 10, at: 10, removed: Array(2)[9, 71], ...}, {index: 11, kind: "random", phase: "random", pass: "random", from: 11, to: 11, at: 11, removed: Array(2)[3, 77], ...}, ...] to be 29
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:179:23)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: the moves of the example (Classic 9x9 Expert, seed 3275974478) > never shows half of an exchange: the board with only the removal is no position (G04)
+       AssertionError: expected 2 to be 1
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:231:25)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > rates a stuck board honestly: attempted counts and two solutions (Classic 9x9, section 2.3)
+       AssertionError: expected {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1, wxyzWing: 1, ...} to equal {nakedSingle: 2, hiddenSingleBox: 15, pointing: 6, boxLine: 1, nakedPair: 2, hiddenPair: 2, finnedXWing: 1, wWing: 2, ...}
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:521:29)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: ratings > has no position of Classic 9x9 Hell 1 (seed 2400651925) with the unsafe board of section 2.2
+       AssertionError: expected length 31 of Array(31)["279381465485967132136542978952718346318694257764253891627839514843175629591426783", "279381465485967132136502978952718346318694257764253891627809514843175629591426783", "279381465485967132136502978952718346310694057764253891627809514843175629591426783", "279381065485967132136502978952718346310694057764253891627809514843175629590426783", "279381065485967132136502970952718346310694057764253891027809514843175629590426783", "279381065485967132136002970952718346310694057764253891027800514843175629590426783", "279381065485960132136002970952718346310694057764253891027800514843075629590426783", "279381060485960132136002970952718346310694057764253891027800514843075629090426783", "279381060485960132106002970952718346310694057764253891027800504843075629090426783", "279381000485960132106002970952718346310694057764253891027800504843075629000426783", "279381000085960132106002970952718346310694057764253891027800504843075620000426783", "279081000085960132106002970952718346310694057764253891027800504843075620000420783", ...] to be 29
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:532:22)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > golden G04 compact rows, counts and invariants
+       AssertionError: expected length 1 of Array(1)[{from: 27, to: 30, scope: "complete", inserted: Array(1)[28], remaining: false}] to be 0
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1090:25)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G07, G12, G01)
+       AssertionError: expected Array(2)[3245, 2268] to equal Array(2)[3215, 2268]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1198:61
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1193:87)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G12)
+       AssertionError: expected Array(2)["nakedSingle", "nakedSingle"] to equal Array(2)["hiddenSingleBox", "nakedSingle"]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1229:53
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1226:9)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > keeps the witness of the unfinished checks: move 76 of G14 has 16 candidates, 13 rejected, 2 unscored
+       AssertionError: expected 2015 to be null
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1407:71)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: explaining the jumps > frames the details jumps too: G06 R4C6 and the sign jumps of G11 and G12
+       AssertionError: expected Array(3)[138, 1293, "single-culprit"] to equal Array(3)[138, 2072, "single-culprit"]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1567:62)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       AssertionError: expected null to match /^The generator's solution now uses .* \(weight [\d.,]+\) as its hardest technique, instead of /
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:910:27
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:902:7)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       AssertionError: expected "Removing each clue alone gives 50 and 50; removing the whole group gives 2,536." to be "Removing each clue alone gives 50 and 50; removing the whole group gives 2,501."
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1066:10)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the callout of a score jump > a jump over several moves says in which complete change the new technique first appears
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1097:26
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1093:81)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the goldens whose chosen removal the limited check could not finish say so (Samurai, Mega 16x16)
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1277:23
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1274:37)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 1 in a cell
+       TypeError: Cannot read properties of undefined (reading 'table')
+       at textOfStep (Q:\git\sudoku\generator\tests\suites\steps.test.js:66:27)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1358:23
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1357:11
+
+Suites: 6
+Tests:  681 total, 665 passed, 16 failed, 0 skipped
+Time:   168.22 s running tests, 168.36 s total
+exit=1 seconds=168.521

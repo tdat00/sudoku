@@ -1,0 +1,22 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-greaterThan.json --cells=greaterThan/normal:3,greaterThan/hard:3,greaterThan/expert:2,greaterThan/master:3,greaterThan/nightmare:2,greaterThan/hell1:3,greaterThan/hell2:3 --budget-seconds=420
+greaterThan/normal #0: 7038.2 ms, hit true, achieved normal, exact true, approximate false
+greaterThan/normal #1: 135.3 ms, hit true, achieved normal, exact true, approximate false
+greaterThan/normal #2: 24.2 ms, hit true, achieved normal, exact true, approximate false
+greaterThan/hard #0: 1944.1 ms, hit true, achieved hard, exact true, approximate false
+greaterThan/hard #1: 2046.6 ms, hit true, achieved hard, exact true, approximate false
+greaterThan/hard #2: 2062.4 ms, hit true, achieved hard, exact true, approximate false
+greaterThan/expert #0: 2371.2 ms, hit true, achieved expert, exact true, approximate false
+greaterThan/expert #1: 14976.4 ms, hit false, achieved expert, exact false, approximate true
+greaterThan/master #0: 360.5 ms, hit true, achieved master, exact true, approximate false
+greaterThan/master #1: 149.9 ms, hit true, achieved master, exact true, approximate false
+greaterThan/master #2: 47.4 ms, hit true, achieved master, exact true, approximate false
+greaterThan/nightmare #0: 1768.9 ms, hit true, achieved nightmare, exact true, approximate false
+greaterThan/nightmare #1: 6835.0 ms, hit true, achieved nightmare, exact true, approximate false
+greaterThan/hell1 #0: 34388.1 ms, hit false, achieved hell1, exact false, approximate true
+greaterThan/hell1 #1: 38392.0 ms, hit false, achieved hell1, exact false, approximate true
+greaterThan/hell1 #2: 40046.6 ms, hit false, achieved hell1, exact false, approximate true
+greaterThan/hell2 #0: 1053.3 ms, hit true, achieved hell2, exact true, approximate false
+greaterThan/hell2 #1: 1384.9 ms, hit true, achieved hell2, exact true, approximate false
+greaterThan/hell2 #2: 4031.9 ms, hit true, achieved hell2, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-greaterThan.json (159.073 s)
+exit=0 seconds=159.581

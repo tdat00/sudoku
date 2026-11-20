@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js extract --transcript=docs\difficulty-v3\evidence\MS18d\phase-d\transcripts\identities-final.txt --out=docs\difficulty-v3\evidence\MS18d\phase-d\identities-final.txt
+ms18d-closeout extract: ok (5 lines)
+exit=0 seconds=0.106

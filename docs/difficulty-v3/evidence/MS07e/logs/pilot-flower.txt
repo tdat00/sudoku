@@ -1,0 +1,15 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-flower.json --cells=flower/expert:3,flower/master:3,flower/nightmare:2,flower/hell1:2,flower/hell2:2 --budget-seconds=420
+flower/expert #0: 1035.3 ms, hit true, achieved expert, exact true, approximate false
+flower/expert #1: 1101.1 ms, hit true, achieved expert, exact true, approximate false
+flower/expert #2: 2364.2 ms, hit false, achieved expert, exact false, approximate true
+flower/master #0: 1156.4 ms, hit true, achieved master, exact true, approximate false
+flower/master #1: 191.4 ms, hit true, achieved master, exact true, approximate false
+flower/master #2: 139.5 ms, hit true, achieved master, exact true, approximate false
+flower/nightmare #0: 3757.0 ms, hit true, achieved nightmare, exact true, approximate false
+flower/nightmare #1: 3275.2 ms, hit true, achieved nightmare, exact true, approximate false
+flower/hell1 #0: 26172.8 ms, hit false, achieved hell1, exact false, approximate true
+flower/hell1 #1: 23088.2 ms, hit false, achieved hell1, exact false, approximate true
+flower/hell2 #0: 1552.2 ms, hit true, achieved hell2, exact true, approximate false
+flower/hell2 #1: 4547.0 ms, hit true, achieved hell2, exact true, approximate false
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilot-flower.json (68.389 s)
+exit=0 seconds=68.880

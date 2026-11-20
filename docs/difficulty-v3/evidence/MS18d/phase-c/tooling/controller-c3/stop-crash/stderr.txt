@@ -1,0 +1,10 @@
+Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\fake-gp.js:66
+  setTimeout(() => { throw new Error('stand-in generation error'); }, 30);
+                     ^
+
+Error: stand-in generation error
+    at Timeout._onTimeout (Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\fake-gp.js:66:28)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+
+Node.js v26.13.0

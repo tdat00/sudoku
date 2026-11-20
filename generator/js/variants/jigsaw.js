@@ -723,8 +723,7 @@
     i18nKey: 'variant.jigsaw9',
     group: 'regions',
     digits: SIZE,
-    difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'expert', 'master', 'nightmare', 'hell1',
-      'hell2'],
+    difficultySupport: ['veryEasy', 'easy', 'normal', 'hard', 'master', 'hell2'],
     // The classic9 floors (29 / 25 / 22) kept the dig from reaching normal; 83 % / 80 % / 80 % of them
     // (24 / 20 / 17) do not. Same calibration as extra-regions.js; expert takes the factor of hard.
     clueFloorScale: Object.freeze({ normal: 0.83, hard: 0.8, expert: 0.8, master: 0.8 }),

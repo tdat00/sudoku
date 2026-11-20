@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record jigsaw9-hell2.i25.n25 a1",
+  "runId": "jigsaw9-hell2.i25.n25.a1",
+  "cell": "jigsaw9/hell2",
+  "payload": "gp-recorder",
+  "chunkId": "jigsaw9-hell2.i25.n25",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/jigsaw9-hell2/jigsaw9-hell2.i25.n25.a1",
+  "requestedAt": "2026-11-20T00:26:03.609+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795109147894,
+    "lastCheckMs": 1795109163430,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T00:26:03.743+07:00",
+  "finished": "2026-11-20T00:27:03.773+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 2956,
+    "cheapCheckMs": 128,
+    "ageMs": 138,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T00:27:03.774+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

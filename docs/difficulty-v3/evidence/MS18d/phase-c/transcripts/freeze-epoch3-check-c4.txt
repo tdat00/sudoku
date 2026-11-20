@@ -1,0 +1,53 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-epoch3-proof.js --check --b3=8e95cb14aad100a6d219af072bbdf3dc227273d1 --h3=docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c3-sha256.txt
+{
+  "ok": true,
+  "dryRun": false,
+  "pairs": [
+    {
+      "id": 1,
+      "base": "a2e6423a52a89dd36ee646aa14706dd2369e087f",
+      "helperManifestSha256": "5feeb42f31148b086105ac8579d7c3dbfab14193d460fa8a5a0bc05ce95def03",
+      "plan": {
+        "file": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json",
+        "planRel": "docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json",
+        "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+        "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+      }
+    },
+    {
+      "id": 2,
+      "base": "b6de2c46e73581f54e61f1ece92a360dd9879736",
+      "helperManifestSha256": "bd6949efbef5aa7bc827324405faf5c3aa68ab248f09bba07daf1dc55504c0ae",
+      "plan": {
+        "file": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json",
+        "planRel": "docs\\difficulty-v3\\evidence\\MS18d\\phase-c\\gp-chunk-manifest.json",
+        "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+        "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+      }
+    },
+    {
+      "id": 3,
+      "base": "8e95cb14aad100a6d219af072bbdf3dc227273d1",
+      "helperManifestSha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d",
+      "plan": {
+        "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+        "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f"
+      }
+    }
+  ],
+  "records": [
+    {
+      "epoch": 2,
+      "file": "tasks/difficulty-v3/MS18d-gp-campaign-base-2.jsonl",
+      "sha256": "0e4ab066776509f32a4d99a88e57b1be56c80ff3b3a1625c868730bf0173d478"
+    },
+    {
+      "epoch": 3,
+      "file": "tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl",
+      "sha256": "11fc3447753c11073093feb8e9c0901a8d4bf602f94ee774fc48dd3c4fc3baa4"
+    }
+  ],
+  "retainedSuccesses": 22,
+  "retainedMatchTheRunFolders": true
+}
+exit=0 seconds=5.524

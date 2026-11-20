@@ -1,0 +1,20 @@
+$ node tests\artifacts\difficulty-v3\MS14b\pick-fixtures.js boxes 1 boxes 2 boxes 3
+== boxes seed 1: clues 24, solutions 1 / 1, open 0
+   puzzle  3.7...2.9....25.8.2..8..4..9......63..1.7....63..8.......3.....748...........26..
+   T puzzle 3.29.6.7......3.4.7...1..8...8...3...2..78....5......22.4.....6.8.6.....9..3.....
+   A null (work 3436, cap null)
+   B null (work 3436, cap null)
+   dual n/a; after the technique itself: nothing
+== boxes seed 2: clues 23, solutions 1 / 1, open 36
+   puzzle  ....96...........589..2.3....5.....27....35...2..7..69...8.1.........6.13.7.4....
+   T puzzle ..8.7...3..9..2......5....7......8..9.2..7..46...3.1....3.5..6......6....5.2.9.1.
+   A null (work 3436, cap null)
+   B null (work 3436, cap null)
+   dual n/a; after the technique itself: nothing
+== boxes seed 3: clues 25, solutions 1 / 1, open 37
+   puzzle  3....7...........8...8256..5.7..6......4.......9.8..232...13..6.9.6....5..3.7.1..
+   T puzzle 3..5..2.........9....7.9..3..8.4..6...2..81.77.56..3....6.....1.....2....8...365.
+   A null (work 3436, cap null)
+   B null (work 3436, cap null)
+   dual n/a; after the technique itself: nothing
+exit=0 seconds=0.244

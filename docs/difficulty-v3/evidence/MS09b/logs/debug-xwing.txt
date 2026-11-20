@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS09b\debug-xwing.js
+{"technique":"finnedXWing","cells":[1,7,28,34,35],"placements":[],"eliminations":[[43,5]],"i18nKey":"technique.finnedXWing.step","i18nArgs":{"digit":5,"bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C9"]}}
+{"kind":"row","bases":["R1","R4"],"covers":["C2","C8"],"fins":["R4C9"],"targets":["R5C8"]}
+exit=0 seconds=0.174

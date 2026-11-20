@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-freeze-targets.js
+ok   a target is read exactly to the millisecond: seconds with up to three decimals, never rounded
+ok   the table of design.md is read per variant and level, with the bold cells and the dashes
+ok   a budget literal is evaluated as data only
+ok   retained budgets: only offered levels are compared; the larger of two rows; the mega table
+ok   the pairs as the documents write them: thousands with a comma in English and a dot in Vietnamese
+5 passed, 0 failed
+exit=0 seconds=0.112

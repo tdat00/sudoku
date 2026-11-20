@@ -1,0 +1,174 @@
+{
+    "schema":  "MS18c-gq-status-v1",
+    "standIn":  true,
+    "name":  "normal-ps51",
+    "scenario":  "direct",
+    "runId":  "standin-normal-ps51-20261118191824-31672",
+    "cell":  "stand-in/none",
+    "state":  "finished",
+    "supervisor":  {
+                       "pid":  31672,
+                       "createdUtcMicros":  "2026-11-18T19:18:23.618888Z",
+                       "source":  "CIM Win32_Process.CreationDate, UTC, truncated to microseconds",
+                       "hostJob":  {
+                                       "inJob":  true,
+                                       "limits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0"
+                                   },
+                       "powershell":  "5.1.26100.9711",
+                       "exe":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+                   },
+    "job":  {
+                "unnamed":  true,
+                "limits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+                "handleHeldBy":  "this supervisor only"
+            },
+    "launcher":  {
+                     "pid":  22564,
+                     "createdUtcMicros":  "2026-11-18T19:18:24.752545Z",
+                     "launchedSuspendedAssignedResumed":  true
+                 },
+    "clocks":  {
+                   "oStart":  "2026-11-18T19:18:24.504Z",
+                   "tStart":  "2026-11-18T19:18:24.733Z",
+                   "tDeadline":  "2026-11-18T19:19:24.7497599Z",
+                   "T":  60,
+                   "rSeconds":  null,
+                   "wSeconds":  8.2897096,
+                   "note":  "T starts at the creation of the owned launcher and excludes the lock acquisition",
+                   "elapsedSeconds":  7.744
+               },
+    "lock":  {
+                 "mode":  "private",
+                 "own":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\normal-ps51\\own.lock",
+                 "foreign":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\normal-ps51\\foreign.lock"
+             },
+    "outputs":  {
+                    "dir":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\normal-ps51",
+                    "status":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\normal-ps51\\status.json",
+                    "log":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\normal-ps51\\supervisor.log",
+                    "members":  "Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18c\\standin-s3b\\normal-ps51\\members.json"
+                },
+    "members":  [
+                    22564,
+                    28888,
+                    31692,
+                    32660,
+                    32676,
+                    33804
+                ],
+    "membersSeen":  [
+                        {
+                            "pid":  22564,
+                            "createdUtcMicros":  "2026-11-18T19:18:24.752545Z"
+                        },
+                        {
+                            "pid":  28888,
+                            "createdUtcMicros":  "2026-11-18T19:18:24.877255Z"
+                        },
+                        {
+                            "pid":  31692,
+                            "createdUtcMicros":  "2026-11-18T19:18:24.778319Z"
+                        },
+                        {
+                            "pid":  32660,
+                            "createdUtcMicros":  "2026-11-18T19:18:24.914772Z"
+                        },
+                        {
+                            "pid":  32676,
+                            "createdUtcMicros":  "2026-11-18T19:18:24.903476Z"
+                        },
+                        {
+                            "pid":  33804,
+                            "createdUtcMicros":  "2026-11-18T19:18:24.893136Z"
+                        }
+                    ],
+    "heartbeatAt":  "2026-11-18T19:18:33.056Z",
+    "finalStatus":  "completed",
+    "membership":  [
+                       {
+                           "pid":  31692,
+                           "name":  "conhost",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  22564,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  28888,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  33804,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  32676,
+                           "name":  "node",
+                           "inThisJob":  true
+                       },
+                       {
+                           "pid":  32660,
+                           "name":  "node",
+                           "inThisJob":  true
+                       }
+                   ],
+    "activeProcesses":  6,
+    "window":  {
+                   "jobLimits":  "limitFlags=0x2000;killOnClose=True;breakawayOk=False;silentBreakawayOk=False;activeProcessLimit=0",
+                   "launcherPid":  22564,
+                   "launcherCreated":  "2026-11-18T19:18:24.752545Z",
+                   "tStartIso":  "2026-11-18T19:18:24.733Z",
+                   "tStartTicks":  6242859602586,
+                   "tStartNs":  624285960258600,
+                   "createdAfterSeconds":  0.0369592,
+                   "resumedAfterSeconds":  0.043204,
+                   "launcherExit":  0,
+                   "tExpired":  false,
+                   "leftover":  false,
+                   "stuck":  false,
+                   "wSeconds":  8.2897096,
+                   "launcherExitedAfterSeconds":  8.2841224,
+                   "members":  [
+                                   22564,
+                                   28888,
+                                   31692,
+                                   32660,
+                                   32676,
+                                   33804
+                               ],
+                   "membersDetail":  [
+                                         {
+                                             "pid":  22564,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.752545Z"
+                                         },
+                                         {
+                                             "pid":  28888,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.877255Z"
+                                         },
+                                         {
+                                             "pid":  31692,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.778319Z"
+                                         },
+                                         {
+                                             "pid":  32660,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.914772Z"
+                                         },
+                                         {
+                                             "pid":  32676,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.903476Z"
+                                         },
+                                         {
+                                             "pid":  33804,
+                                             "createdUtcMicros":  "2026-11-18T19:18:24.893136Z"
+                                         }
+                                     ],
+                   "fault":  null,
+                   "callbackErrors":  0,
+                   "lastCallbackError":  null
+               },
+    "writeFailures":  0
+}

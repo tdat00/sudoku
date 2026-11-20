@@ -1,0 +1,2 @@
+G03 classic9 nightmare 42: 5.8 s
+recorded 1 of 14 keys (G03) in docs/difficulty-v3/evidence/MS05e/analysis/G03.json; a ledger is one shard, merge them all with --merge

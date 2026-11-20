@@ -1,0 +1,44 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\test-run-locked.js
+line one
+line two
+ok exit=0 seconds=0.294
+LOCKED ok: exit=0 elapsed=0.347s gap=s complete=True
+ok   success: exit 0, complete transcript, one log record, the isolated lock is released
+before the failure
+an error line
+fail exit=3 seconds=0.252
+LOCKED fail: exit=3 elapsed=0.268s gap=0.105s complete=True ERROR fail command failed: 3
+ok   a nonzero exit throws after it is logged: the caller does not continue, nothing is retried
+before the failure
+an error line
+fail1 exit=1 seconds=0.237
+LOCKED fail1: exit=1 elapsed=0.242s gap=0.022s complete=True
+line one
+line two
+ok-not-expected exit=0 seconds=0.305
+LOCKED ok-not-expected: exit=0 elapsed=0.31s gap=0.009s complete=True ERROR exit code 0, expected 1
+ok   -Expect lists the accepted exit codes, and a success that is not expected also throws
+nospawn exit=127 seconds=0.103
+LOCKED nospawn: exit=127 elapsed=0.11s gap=0.016s complete=False ERROR nospawn command failed: 127
+ok   a command that cannot start: spawn-error, exit 127, incomplete, the call throws
+line before the hang, grandchild started
+LOCKED limit: exit= elapsed=4.257s gap=0.019s complete=False ERROR 540-second limit reached; record the timeout
+ok   the 4 s limit (the 540 s path): partial output kept, no completion line, tree gone, lock released
+line one
+line two
+gap exit=0 seconds=0.305
+LOCKED gap: exit=0 elapsed=0.31s gap=15.302s complete=True
+ok   the 15 s gap is measured from the latest release of EITHER lock log, and the actual gap is logged
+ok   an existing transcript stops the call before the lock and the run
+ok   a stale-looking shared lock is reported and NOT deleted; a live one is reported alive
+line one
+line two
+notee exit=0 seconds=0.206
+LOCKED notee: exit=0 elapsed=0.21s gap=10.755s complete=
+before the failure
+an error line
+notee-fail exit=4 seconds=0.15
+LOCKED notee-fail: exit=4 elapsed=0.154s gap=0.005s complete= ERROR notee-fail command failed: 4
+ok   without a tee (-NoTee) the exit code is still checked and logged
+9 passed, 0 failed
+exit=0 seconds=17.610

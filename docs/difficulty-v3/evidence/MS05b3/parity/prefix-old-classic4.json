@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "kind": "manual-corpus-prefix",
+  "task": "MS05b3",
+  "side": "old",
+  "key": "classic4",
+  "suite": "variants",
+  "variantId": "classic4",
+  "level": "veryEasy",
+  "node": "v26.13.0",
+  "requests": 3,
+  "stoppedBySentinel": true,
+  "seconds": 0.02,
+  "source": {
+    "file": "variants.test.js",
+    "sha256": "8521a0ccc3876e5650652f68ec8ae50f676e85322a2cf0291c7f178323c16899"
+  },
+  "rows": [
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 1,
+        "trace": "off",
+        "variantId": "classic4"
+      },
+      "seed": 1,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 15,
+        "rawScore": 15,
+        "confidence": 1,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 8,
+        "techniqueCounts": {
+          "nakedSingle": 8
+        },
+        "ratingVersion": 2
+      },
+      "givens": [3,0,1,0,2,0,0,4,4,0,0,1,0,2,0,3],
+      "solution": [3,4,1,2,2,1,3,4,4,3,2,1,1,2,4,3],
+      "model": {
+        "variantId": "classic4",
+        "cellCount": 16,
+        "digits": 4
+      },
+      "digests": {
+        "model": {
+          "units": "4a16eb510ea1ecdcc2bfca5ab45e316c1945404a9b7a7d105958b1f003b1f46f",
+          "cellUnits": "b518e77f4d280a2c76142c4994646fef2ae2ade84acc816a37bc51f149861c2f",
+          "peers": "82dc5f5a5fca85dc9a08dea9785c61609bc90656c0bb7098ee1f0186648c50f8",
+          "unitMeta": "5f06a1900f882f4237ceb239b3028b6773b9a2bb74036603cf497d6b360dbb1f",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "6e1c7409e3faf0649d7bdad95766a5f750b190bcd8f76721cbad0179119d437a",
+          "symbols": "3991d590b6e21e0ae4052f76e0811a52b91b51d30df0fbdd33169a25bd474cd7",
+          "fixedCells": "a32873aef211111c5d5ae73fc4bb7db14385bcb5fc632cfb5473b5a1a2fe7367"
+        },
+        "digLog": "9f727fb7110dec910f982400c4fc05c7eba47f60534496a1882becdbaa03adc1",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "c8665be5b43783cbff04460c94048eb24614a1d9fe2549e448396d112e3b746b"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 2,
+        "trace": "off",
+        "variantId": "classic4"
+      },
+      "seed": 2,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 15,
+        "rawScore": 15,
+        "confidence": 1,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 8,
+        "techniqueCounts": {
+          "nakedSingle": 8
+        },
+        "ratingVersion": 2
+      },
+      "givens": [1,0,0,3,2,3,0,0,0,0,3,2,3,0,0,1],
+      "solution": [1,4,2,3,2,3,1,4,4,1,3,2,3,2,4,1],
+      "model": {
+        "variantId": "classic4",
+        "cellCount": 16,
+        "digits": 4
+      },
+      "digests": {
+        "model": {
+          "units": "4a16eb510ea1ecdcc2bfca5ab45e316c1945404a9b7a7d105958b1f003b1f46f",
+          "cellUnits": "b518e77f4d280a2c76142c4994646fef2ae2ade84acc816a37bc51f149861c2f",
+          "peers": "82dc5f5a5fca85dc9a08dea9785c61609bc90656c0bb7098ee1f0186648c50f8",
+          "unitMeta": "5f06a1900f882f4237ceb239b3028b6773b9a2bb74036603cf497d6b360dbb1f",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "6e1c7409e3faf0649d7bdad95766a5f750b190bcd8f76721cbad0179119d437a",
+          "symbols": "3991d590b6e21e0ae4052f76e0811a52b91b51d30df0fbdd33169a25bd474cd7",
+          "fixedCells": "a32873aef211111c5d5ae73fc4bb7db14385bcb5fc632cfb5473b5a1a2fe7367"
+        },
+        "digLog": "fd1f16f4a4b69d0aae74e4978efa3cb017a2cc4961f9c82fd830dc1863e44115",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "723c4b799bd712ab94ab9197b539b439b3fe00b9a2bd4872b2896e457578ad38"
+      }
+    },
+    {
+      "config": {
+        "difficulty": "veryEasy",
+        "seed": 3,
+        "trace": "off",
+        "variantId": "classic4"
+      },
+      "seed": 3,
+      "attempts": 1,
+      "exact": true,
+      "warnings": [],
+      "rating": {
+        "level": "veryEasy",
+        "score": 15,
+        "rawScore": 15,
+        "confidence": 1,
+        "hardestTechnique": "nakedSingle",
+        "hardestGroup": "basic",
+        "solved": true,
+        "empties": 8,
+        "techniqueCounts": {
+          "nakedSingle": 8
+        },
+        "ratingVersion": 2
+      },
+      "givens": [4,0,3,0,0,0,1,4,3,4,0,0,0,2,0,3],
+      "solution": [4,1,3,2,2,3,1,4,3,4,2,1,1,2,4,3],
+      "model": {
+        "variantId": "classic4",
+        "cellCount": 16,
+        "digits": 4
+      },
+      "digests": {
+        "model": {
+          "units": "4a16eb510ea1ecdcc2bfca5ab45e316c1945404a9b7a7d105958b1f003b1f46f",
+          "cellUnits": "b518e77f4d280a2c76142c4994646fef2ae2ade84acc816a37bc51f149861c2f",
+          "peers": "82dc5f5a5fca85dc9a08dea9785c61609bc90656c0bb7098ee1f0186648c50f8",
+          "unitMeta": "5f06a1900f882f4237ceb239b3028b6773b9a2bb74036603cf497d6b360dbb1f",
+          "cages": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "inequalities": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "layout": "6e1c7409e3faf0649d7bdad95766a5f750b190bcd8f76721cbad0179119d437a",
+          "symbols": "3991d590b6e21e0ae4052f76e0811a52b91b51d30df0fbdd33169a25bd474cd7",
+          "fixedCells": "a32873aef211111c5d5ae73fc4bb7db14385bcb5fc632cfb5473b5a1a2fe7367"
+        },
+        "digLog": "b2f173f3752386a062ec590b458c370a39492c0ab8af77c20d2590c4cd2ddd5c",
+        "work": "9ecf1369f610bb5959a093c5fb5ef215c97dad9a2d7f77026f0c227e5b715471",
+        "full": "5519d5373faf336ddd7e746291afe06159b97c017fbbcd0ec34f20252aa90ec8"
+      }
+    }
+  ]
+}

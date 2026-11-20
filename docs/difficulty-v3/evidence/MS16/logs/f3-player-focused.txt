@@ -1,0 +1,16 @@
+$ node tests\node-runner.js --suite=tech-als,help,help-example-tools,play,i18n,techniques,ui-contract
+Sudoku Player tests  (node v26.13.0)
+Sources: 40 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-als: 174 passed  (16.30 s)
+ok   techniques: 284 passed  (6.80 s)
+ok   help-example-tools: 51 passed  (5.49 s)
+ok   help: 28 passed  (6.29 s)
+ok   i18n: 77 passed  (220 ms)
+ok   play: 75 passed  (507 ms)
+ok   ui-contract: 63 passed  (161 ms)
+
+Suites: 7
+Tests:  752 total, 752 passed, 0 failed, 0 skipped
+Time:   35.77 s running tests, 35.87 s total
+exit=0 seconds=35.987

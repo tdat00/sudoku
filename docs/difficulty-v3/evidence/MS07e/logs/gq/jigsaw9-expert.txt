@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=jigsaw9 --level=expert --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-expert.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\jigsaw9-expert.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+jigsaw9/expert: 38/40 hits, p95 2.29 s (budget 10.0 s), offered
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| jigsaw9 | expert | 40 | 38 | 95 % | 542 ms | 2.29 s | 2.63 s | 10.0 s | offered |
+
+jigsaw9: ["expert"]
+exit=0 seconds=9.794

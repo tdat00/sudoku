@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-analysis-G01 0.902 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-analysis-G02 0.512 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 17,
+    "projectionBasis": "MS06c2 g-analysis-G03 5.735 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-analysis-G04 1.723 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-analysis-G05 1.082 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-analysis-G06 1.671 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 8,
+    "projectionBasis": "MS06c2 g-analysis-G07 1.397 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 7,
+    "projectionBasis": "MS06c2 g-analysis-G08 0.509 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 33,
+    "projectionBasis": "MS06c2 g-analysis-G09 13.857 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 55,
+    "projectionBasis": "MS06c2 g-analysis-G10 24.997 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS06c2 g-analysis-G11 8.552 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 14,
+    "projectionBasis": "MS06c2 g-analysis-G12 4.218 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 45,
+    "projectionBasis": "MS06c2 g-analysis-G13 19.648 s before the chain windows; 2 x + 5 s"
+  },
+  {
+    "label": "g-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS07b\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS06c2 g-analysis-G14 1.86 s before the chain windows; 2 x + 5 s"
+  }
+]

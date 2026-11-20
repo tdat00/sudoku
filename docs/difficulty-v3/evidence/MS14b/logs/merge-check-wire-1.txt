@@ -1,0 +1,9 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS14b\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: matches replay-wire.js
+G11: matches replay-wire.js
+G12: matches replay-wire.js
+G13: matches replay-wire.js
+replay-wire.js is up to date
+exit=0 seconds=0.490

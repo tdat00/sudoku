@@ -1,0 +1,147 @@
+{
+  "clean": true,
+  "head": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+  "slot": "butterfly-master.i0.n50.a3",
+  "slotDeclared": true,
+  "exception": "MS18d-Q4-A",
+  "history": {
+    "problems": [],
+    "releases": 171,
+    "latest": {
+      "label": "C",
+      "line": 123,
+      "atMs": 1795134286883
+    },
+    "skippedPreWindowLines": {
+      "C": [
+        24
+      ]
+    }
+  },
+  "attempts": {
+    "decision": "allow",
+    "reasons": [],
+    "problems": [],
+    "admissions": 2,
+    "payloads": 0,
+    "runs": [
+      {
+        "runId": "butterfly-master.i0.n50.a1",
+        "admitted": false,
+        "payloadStarted": false,
+        "eligibleReAsk": true,
+        "outcome": "control-hold"
+      },
+      {
+        "runId": "butterfly-master.i0.n50.a2",
+        "admitted": false,
+        "payloadStarted": false,
+        "eligibleReAsk": true,
+        "outcome": "control-hold"
+      }
+    ],
+    "ruling": null,
+    "rulingsJournal": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+      "baseCommit": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+      "entryCount": 3,
+      "sha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614",
+      "baseSha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614"
+    }
+  },
+  "note": "read-only dry run; F4/F2, the readiness and the status checks of the wrapper stay in force",
+  "ok": true
+}
+a3-pre-history-butterfly-master.i0.n50 exit=0 seconds=0.525
+{
+  "schema": "ms18d-c-validate-journals-1",
+  "authority": true,
+  "repo": "Q:\\git\\sudoku",
+  "head": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+  "base": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+  "hostBinding": {
+    "ok": true,
+    "configured": true,
+    "bindingId": "host-b1",
+    "entryCount": 1,
+    "tuple": {
+      "bindingId": "host-b1",
+      "pid": 1968,
+      "parentPid": 18780,
+      "netStartUtc": "2026-11-13T12:26:33.6916441Z",
+      "cimCreationUtc": "2026-11-13T12:26:33.691644Z",
+      "exePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+    },
+    "reference": {
+      "bindingId": "host-b1",
+      "host": {
+        "pid": 1968,
+        "dotNetStartTime": "2026-11-13T19:26:33.6916441+07:00",
+        "cimCreationDateUtcMicroseconds": "2026-11-13T12:26:33.691644Z",
+        "parentPid": 18780,
+        "executablePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe"
+      },
+      "ref": "Initial binding of the already-approved host tuple (pack 9828457a MS18d-c1-readiness-and-rulings.md \"Host-binding journal\": existing tuple approved by the pack and SA1 review of 56b97b26); fresh matching observation by the orchestrator",
+      "journal": {
+        "path": "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl",
+        "commit": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+        "baseCommit": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+        "entryCount": 1,
+        "sha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705",
+        "baseSha256": "eaa3fe68466e22b02f5b88a6e86bfe5be74af9c2ac2e324c4638189adefdb705"
+      },
+      "evidence": {
+        "file": "tasks/difficulty-v3/MS18d-gp-host-evidence/host-b1.json",
+        "sha256": "8e98bcb569a1243ddc44017bb6c34f1dd31091302dcb80e9d4220061aaf4d15c",
+        "verified": true
+      }
+    },
+    "problems": []
+  },
+  "rulings": {
+    "ok": true,
+    "entryCount": 3,
+    "reference": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "553ef96466bbeeb664e738dc4ddc8dce9afa5245",
+      "baseCommit": "6e60b06c7d1af482ecafe28ce2fb35a03c2a54be",
+      "entryCount": 3,
+      "sha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614",
+      "baseSha256": "05bdb1d163d983367736e72533f17158b6e4c8bb73cc6d27460cdaaca168f614"
+    },
+    "problems": []
+  },
+  "live": {
+    "checked": true,
+    "verified": true,
+    "kind": "verified",
+    "problems": [],
+    "facts": {
+      "found": true,
+      "pid": 1968,
+      "parentPid": 18780,
+      "name": "copilot.exe",
+      "exePath": "C:\\Users\\ledat\\AppData\\Local\\Microsoft\\WinGet\\Links\\copilot.exe",
+      "netStartUtc": "2026-11-13T12:26:33.6916441Z",
+      "cimCreationUtc": "2026-11-13T12:26:33.691644Z",
+      "displayName": "copilot.exe.old-25148-1794809773310",
+      "error": null
+    }
+  }
+}
+VALIDATE-JOURNALS ok=true authority=true hostBinding=host-b1 rulings=3 live=true
+a3-pre-journals-butterfly-master.i0.n50 exit=0 seconds=1.828
+A3-PRE head problems=0
+A3-PRE history problems=0
+A3-PRE status problems=0
+A3-PRE manifest problems=0
+A3-PRE line/attempt checks ok
+A3-PRE OK butterfly-master.i0.n50 exception=MS18d-Q4-A plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest-a3-v2.json
+GP-A3 prechecks ok chunk=butterfly-master.i0.n50
+GATE intune 07:25:43 powershell.exe(26156)<-SenseIR.exe
+GATE pass label=butterfly-master.i0.n50.a3 at=07:29:09 absence=123s serviceWindow=128s/23 intervals samples=45 resets=5
+GATE waited 247 s code=0
+LOCKED-C MS18d GP record butterfly-master.i0.n50 a3: outcome=success exit=0 barrier=clean
+GP-CHUNK-RESULT {"chunk":"butterfly-master.i0.n50","attempt":3,"outcome":"success","exit":0,"runDir":"Q:\\git\\sudoku\\docs\\difficulty-v3\\evidence\\MS18d\\gp\\butterfly-master\\butterfly-master.i0.n50.a3","eligibleReAsk":false,"start":"2026-11-20T07:29:10.3705554+07:00","end":"2026-11-20T07:29:49.8599826+07:00","seconds":39.5}
+GP-A3 ok butterfly-master.i0.n50

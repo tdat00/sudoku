@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "f7d569e64c9a6272f386acb17f144dd345f49e94573cf75df70c69635c895729",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "f788e02616e7968143030700205d9a8ab843904c",
+  "dirty": true,
+  "generatedAt": "2026-11-12T16:08:19.144Z",
+  "argv": ["--ids=G09","--record=..\\docs\\difficulty-v3\\evidence\\MS05b1\\analysis-N\\G09.json"],
+  "records": [
+    {"key":"G09","request":{"variantId":"killer","difficulty":"expert","seed":"3514204290"},"value":{"id":"G09","request":{"variantId":"killer","difficulty":"expert","seed":"3514204290"},"today":{"steps":24,"missing":2},"counts":{"compact":10,"details":41},"board":{"cells":81,"cages":17,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,0,"S/Cag",0,0,0,"—","—","—","—"],[3,7,"D/Dig",14,23,23,"nakedSingle","—","—","F"],[4,18,"D/Dig",36,40,17,"nakedSingle","—","—","—"],[5,19,"D/Dig",38,94,54,"cageCombo","—","—","N"],[6,22,"D/Dig",43,98,4,"cageCombo","—","—","—"],[7,36,"G/Choose",71,165,67,"boxLine","—","—","N"],[8,37,"G/Choose",73,562,397,"ruleOf45","Y","—","—"],[9,38,"G/Choose",75,968,406,"cageSplit","—","—","N"],[10,38,"F/Final",75,968,0,"cageSplit","—","—","—"]],"details":[0,0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,94,96,97,98,106,117,121,123,127,129,130,133,134,137,139,143,144,165,562,968,968],"alive":null,"folds":[],"jumps":[{"step":8,"from":165,"to":562,"before":{"P":50,"W":1673.75,"R":63.843483,"V":51.171171,"E":71,"level":"easy"},"after":{"P":260,"W":3497.25,"R":250.451083,"V":51.681416,"E":73,"level":"hard"},"choice":{"chosen":562,"others":1,"nulls":0,"max":540,"at":187,"rated":2,"refused":0},"singles":[{"op":"remove","cell":"R3C5","score":524},{"op":"remove","cell":"R7C5","score":518}],"cause":"mixed","frame":null,"firstUse":{"k":20,"n":110,"technique":"ruleOf45"},"key":"technique.ruleOf45.step","effects":"remove candidate 5@R6C5, 6@R6C5, 8@R6C5"}]},"ms":13451,"overrides":[]}
+  ]
+}

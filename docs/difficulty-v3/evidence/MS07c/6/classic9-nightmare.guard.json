@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "tool": "guard-probe",
+  "argv": [
+    "--variant=classic9",
+    "--level=nightmare",
+    "--count=12",
+    "--seed=20260101",
+    "--no-gate",
+    "--chain-window=6",
+    "--json=..\\docs\\difficulty-v3\\evidence\\MS07c\\6\\classic9-nightmare.json"
+  ],
+  "exitCode": 0,
+  "solves": 80006,
+  "guardRefusals": 0,
+  "requestCalls": 15,
+  "requestsWithGuardRefusals": 0,
+  "instrumented": [
+    "solve",
+    "generate",
+    "run"
+  ],
+  "problems": [],
+  "calls": [
+    {
+      "route": "digger.generate",
+      "solves": 659,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 659,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6379,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 798,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6358,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6679,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6597,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6597,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6076,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6607,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6603,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6665,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6448,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6448,
+      "guardRefusals": 0
+    },
+    {
+      "route": "digger.generate",
+      "solves": 6405,
+      "guardRefusals": 0
+    }
+  ]
+}

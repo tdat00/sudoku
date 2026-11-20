@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > qualification: tests/qualify.js counts every request","exact":null,"count":6},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 3595.4,
+  "results": {
+    "total": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 3335.1,
+    "tests": [
+      {"suite":"difficulty","name":"never offers a level on an incomplete round (39 or 99 outcomes)","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > never offers a level on an incomplete round (39 or 99 outcomes)","status":"pass","ms":4.354,"reason":"","error":null,"ordinal":16},
+      {"suite":"difficulty","name":"publishes a complete first round: 40 outcomes, offered","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > publishes a complete first round: 40 outcomes, offered","status":"pass","ms":308.865,"reason":"","error":null,"ordinal":17},
+      {"suite":"difficulty","name":"decides a borderline level on exactly 100 outcomes","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > decides a borderline level on exactly 100 outcomes","status":"pass","ms":1588.194,"reason":"","error":null,"ordinal":18},
+      {"suite":"difficulty","name":"fails the run when a worker dies on the last request of the first round","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run when a worker dies on the last request of the first round","status":"pass","ms":605.627,"reason":"","error":null,"ordinal":19},
+      {"suite":"difficulty","name":"fails the run when a worker dies on the last request of the second round","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run when a worker dies on the last request of the second round","status":"pass","ms":652.486,"reason":"","error":null,"ordinal":20},
+      {"suite":"difficulty","name":"fails the run on a clean exit with a request in flight, an IPC error or a stray answer","fullName":"difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) > fails the run on a clean exit with a request in flight, an IPC error or a stray answer","status":"pass","ms":174.788,"reason":"","error":null,"ordinal":21}
+    ],
+    "suites": [
+      {"name":"difficulty","total":6,"passed":6,"failed":0,"skipped":0,"ms":3334.878}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > qualification: tests/qualify.js counts every request","--results=..\\docs\\difficulty-v3\\evidence\\MS17b\\gd\\qualification.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

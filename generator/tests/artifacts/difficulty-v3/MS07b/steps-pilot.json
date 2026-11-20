@@ -1,0 +1,10 @@
+[
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\hell1-pilot.txt",
+    "args": ["tests\\soak.js", "--variant=classic9", "--level=hell1", "--from=0", "--count=2", "--total-count=2", "--seed=20260101", "--no-gate", "--json=..\\docs\\difficulty-v3\\evidence\\MS07b\\hell1-pilot.json"]
+  },
+  {
+    "out": "..\\docs\\difficulty-v3\\evidence\\MS07b\\transcripts\\hash-explain-new.txt",
+    "args": ["tests\\artifacts\\difficulty-v3\\MS07b\\explain-hashes.js", "classic9/nightmare#2", "classic9/nightmare#3", "classic9/nightmare#6765", "diagonalX/nightmare#89", "diagonalX/nightmare#377", "diagonalX/nightmare#610"]
+  }
+]

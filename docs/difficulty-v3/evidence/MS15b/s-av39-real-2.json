@@ -1,0 +1,742 @@
+{
+ "part": "real",
+ "node": "v26.13.0",
+ "source": "tree, production limits {\"cells\":4,\"records\":4096,\"work\":50000}",
+ "liftedDiagnostic": {
+  "workLimit": 20000000,
+  "limits": {
+   "records": 100000
+  }
+ },
+ "puzzles": 58,
+ "puzzlesRun": 58,
+ "stopped": null,
+ "withCalls": 15,
+ "summary": {
+  "calls": 254,
+  "caps": {
+   "none": 251,
+   "records": 0,
+   "work": 3
+  },
+  "found": 20,
+  "work": {
+   "min": 1586,
+   "median": 4447,
+   "p95": 30122,
+   "max": 50000
+  },
+  "retained": {
+   "min": 14,
+   "median": 58,
+   "p95": 177,
+   "max": 229
+  },
+  "ms": {
+   "min": 0.043,
+   "median": 0.386,
+   "p95": 3.313,
+   "max": 7.887
+  },
+  "cappedWithNoFindingButLiftedFinds": 0,
+  "lifted": {
+   "cappedStill": 0,
+   "findingDiffers": 0,
+   "ms": {
+    "min": 0.043,
+    "median": 0.349,
+    "p95": 2.892,
+    "max": 6.46
+   },
+   "work": {
+    "min": 1586,
+    "median": 4447,
+    "p95": 30122,
+    "max": 63271
+   }
+  },
+  "w100k": {
+   "capped": 0,
+   "findingDiffers": 0,
+   "ms": {
+    "min": 0.041,
+    "median": 0.333,
+    "p95": 3.02,
+    "max": 5.89
+   }
+  },
+  "w200k": {
+   "capped": 0,
+   "findingDiffers": 0,
+   "ms": {
+    "min": 0.041,
+    "median": 0.355,
+    "p95": 3,
+    "max": 5.69
+   }
+  }
+ },
+ "perPuzzle": [
+  {
+   "source": "help example nakedSingle",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 2.001,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example hiddenSingleBox",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 53.567,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example hiddenSingleLine",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 52.933,
+   "alsXzCalls": 1,
+   "found": 1,
+   "capped": [],
+   "workMax": 16626,
+   "msMax": 5.763
+  },
+  {
+   "source": "help example pointing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.397,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example boxLine",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.464,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example nakedPair",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 10.992,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example hiddenPair",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.915,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example nakedTriple",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 304.062,
+   "alsXzCalls": 24,
+   "found": 1,
+   "capped": [],
+   "workMax": 26483,
+   "msMax": 4.336
+  },
+  {
+   "source": "help example hiddenTriple",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.875,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example nakedQuad",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.772,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example hiddenQuad",
+   "variant": "hyper",
+   "solveStatus": "solved",
+   "solveMs": 7.709,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example xWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 229.978,
+   "alsXzCalls": 10,
+   "found": 4,
+   "capped": [
+    {
+     "capHit": "work",
+     "work": 50000,
+     "liftedWork": 50158,
+     "liftedCapHit": null,
+     "liftedFound": false
+    },
+    {
+     "capHit": "work",
+     "work": 50000,
+     "liftedWork": 52575,
+     "liftedCapHit": null,
+     "liftedFound": false
+    },
+    {
+     "capHit": "work",
+     "work": 50000,
+     "liftedWork": 63271,
+     "liftedCapHit": null,
+     "liftedFound": false
+    }
+   ],
+   "workMax": 50000,
+   "msMax": 7.887
+  },
+  {
+   "source": "help example twoStringKite",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 19.033,
+   "alsXzCalls": 1,
+   "found": 0,
+   "capped": [],
+   "workMax": 24613,
+   "msMax": 2.573
+  },
+  {
+   "source": "help example simpleColouring",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 12.072,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example swordfish",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 1.81,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example finnedSwordfish",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 3.545,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example jellyfish",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 3.866,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example xyWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 7.861,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example xyzWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 9.441,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example wWing",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 10.069,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "help example bugPlusOne",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.865,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture wikipedia-example",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.064,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture classic-easy",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.089,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture classic-easy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.038,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture classic-medium",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.056,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture worlds-hardest-2012",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 179.246,
+   "alsXzCalls": 28,
+   "found": 1,
+   "capped": [],
+   "workMax": 18487,
+   "msMax": 1.743
+  },
+  {
+   "source": "rated fixture platinum-blonde",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 323.181,
+   "alsXzCalls": 30,
+   "found": 1,
+   "capped": [],
+   "workMax": 18363,
+   "msMax": 1.932
+  },
+  {
+   "source": "rated fixture golden-nugget",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 195.898,
+   "alsXzCalls": 34,
+   "found": 2,
+   "capped": [],
+   "workMax": 16388,
+   "msMax": 1.326
+  },
+  {
+   "source": "rated fixture constructed-veryEasy-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.088,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-veryEasy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.037,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-veryEasy-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.034,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-easy-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.032,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-easy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.087,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-easy-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.065,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-normal-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.168,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-normal-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.087,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-normal-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.061,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-hard-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.109,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-hard-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.149,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-hard-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.145,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-expert-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.529,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-expert-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.779,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-expert-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.26,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "rated fixture constructed-nightmare-1",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 28.474,
+   "alsXzCalls": 1,
+   "found": 0,
+   "capped": [],
+   "workMax": 30122,
+   "msMax": 2.687
+  },
+  {
+   "source": "rated fixture constructed-nightmare-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 101.403,
+   "alsXzCalls": 5,
+   "found": 1,
+   "capped": [],
+   "workMax": 34340,
+   "msMax": 3.697
+  },
+  {
+   "source": "rated fixture constructed-nightmare-3",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 45.339,
+   "alsXzCalls": 3,
+   "found": 0,
+   "capped": [],
+   "workMax": 29234,
+   "msMax": 2.234
+  },
+  {
+   "source": "classic fixture wikipedia-example",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.092,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture worlds-hardest-2012",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 170.78,
+   "alsXzCalls": 28,
+   "found": 1,
+   "capped": [],
+   "workMax": 18487,
+   "msMax": 1.83
+  },
+  {
+   "source": "classic fixture classic-easy",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.089,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture classic-medium",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.046,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture classic-easy-2",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.032,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture hard-17-clues",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.047,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture hard-17-clues-b",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.064,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture hard-platinum",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 314.543,
+   "alsXzCalls": 30,
+   "found": 1,
+   "capped": [],
+   "workMax": 18363,
+   "msMax": 2.511
+  },
+  {
+   "source": "classic fixture hard-nugget",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 194.595,
+   "alsXzCalls": 34,
+   "found": 2,
+   "capped": [],
+   "workMax": 16388,
+   "msMax": 1.298
+  },
+  {
+   "source": "classic fixture hard-a",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 0.171,
+   "alsXzCalls": 0,
+   "found": 0,
+   "capped": [],
+   "workMax": null,
+   "msMax": null
+  },
+  {
+   "source": "classic fixture hard-b",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 213.832,
+   "alsXzCalls": 21,
+   "found": 5,
+   "capped": [],
+   "workMax": 40264,
+   "msMax": 3.947
+  },
+  {
+   "source": "classic fixture hard-c",
+   "variant": "classic9",
+   "solveStatus": "solved",
+   "solveMs": 28.832,
+   "alsXzCalls": 4,
+   "found": 0,
+   "capped": [],
+   "workMax": 5915,
+   "msMax": 0.508
+  }
+ ],
+ "liftedSkipped": 0
+}

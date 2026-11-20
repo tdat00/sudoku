@@ -1,0 +1,78 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS12\analysis --check
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: 62 fields differ from replay-goldens.js
+  counts.details: saved 29, fresh 34
+  rows[2][1]: saved 22, fresh 21
+  rows[2][3]: saved 43, fresh 42
+  rows[2][4]: saved 44, fresh 43
+  rows[2][5]: saved 19, fresh 18
+  rows[3][1]: saved 23, fresh 22
+  rows[3][3]: saved 45, fresh 44
+  rows[3][4]: saved 870, fresh 45
+  rows[3][5]: saved 826, fresh 2
+  rows[3][6]: saved "xyWing", fresh "hiddenSingleBox"
+  rows[3][7]: saved "Y", fresh "—"
+  rows[3][9]: saved "—", fresh "N"
+  rows[4][1]: saved 27, fresh 32
+  rows[4][2]: saved "G/Choose", fresh "G+A/Mixed"
+  rows[4][3]: saved 53, fresh 40
+  rows[4][4]: saved 2049, fresh 2393
+  rows[4][5]: saved 1179, fresh 2348
+  rows[4][7]: saved "—", fresh "Y"
+  rows[4][9]: saved "N", fresh "—"
+  rows[5][1]: saved 27, fresh 32
+  rows[5][3]: saved 53, fresh 40
+  rows[5][4]: saved 2049, fresh 2393
+  details.length: saved 29, fresh 34
+  details[10]: saved 28, fresh 29
+  details[11]: saved 30, fresh 31
+  ... and 37 more
+G04: 4 fields differ from replay-goldens.js
+  rows[6][4]: saved 1953, fresh 1948
+  rows[6][5]: saved 1033, fresh 1028
+  rows[7][5]: saved 1118, fresh 1123
+  details[28]: saved 1953, fresh 1948
+G05: matches replay-goldens.js
+G06: matches replay-goldens.js
+G07: matches replay-goldens.js
+G08: matches replay-goldens.js
+G09: matches replay-goldens.js
+G10: matches replay-goldens.js
+G11: matches replay-goldens.js
+G12: matches replay-goldens.js
+G13: 11 fields differ from replay-goldens.js
+  counts.details: saved 124, fresh 128
+  rows[5][1]: saved 122, fresh 126
+  rows[5][3]: saved 243, fresh 251
+  rows[5][4]: saved 2015, fresh 2347
+  rows[5][5]: saved 1001, fresh 1333
+  rows[6][1]: saved 122, fresh 126
+  rows[6][3]: saved 243, fresh 251
+  rows[6][4]: saved 2015, fresh 2347
+  details.length: saved 124, fresh 128
+  details[122]: saved 2015, fresh 1502
+  details[123]: saved 2015, fresh 1503
+G14: 19 fields differ from replay-goldens.js
+  rows[3][4]: saved 1824, fresh 1686
+  rows[3][5]: saved 1759, fresh 1621
+  rows[3][6]: saved "forcingChain", fresh "xyChain"
+  rows[4][1]: saved 73, fresh 72
+  rows[4][3]: saved 146, fresh 144
+  rows[4][4]: saved 3466, fresh 3237
+  rows[4][5]: saved 1642, fresh 1551
+  rows[5][5]: saved 3082, fresh 3311
+  details[69]: saved 1824, fresh 1686
+  details[70]: saved 1825, fresh 1686
+  details[71]: saved 2013, fresh 2049
+  jumps[0].to: saved 1824, fresh 1686
+  jumps[0].after.P: saved 1100, fresh 1000
+  jumps[0].after.W: saved 4739, fresh 4639.25
+  jumps[0].after.R: saved 662.259892, fresh 623.875826
+  jumps[0].singles[0].score: saved 1623, fresh 1494
+  jumps[0].firstUse.technique: saved "forcingChain", fresh "xyChain"
+  jumps[0].key: saved "technique.forcingChain.step.contradiction", fresh "technique.xyChain.step"
+  jumps[0].effects: saved "remove candidate 12@R13C14", fresh "remove candidate 12@R16C4"
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose
+exit=1 seconds=0.451

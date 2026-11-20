@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=tech-chain --filter=grouped graph
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-chain: 36 passed, 2 failed  (1.76 s)
+
+Failures:
+  FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > groups come from complete boxes and regions with complete lines only: a partial cage, a window and a diagonal make none, but windows and diagonals still link
+       AssertionError: expected Array(3)["a third occurrence in the window", "checker strong", true] to equal Array(3)["a third occurrence in the window", "checker strong", false]
+       at links (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3718:74)
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3834:9)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL tech-chain > grouped graph (R16, inactive): the edge obligations of the brief, one vector at a time > different digits link only as the singletons of one cell: weak always, strong for a bivalue cell
+       AssertionError: expected Array(8)["the graph is not complete", "capHit is work", "there are 0 nodes, the position has 1187", "node 0 is null, expected {cells:[0],digit:3}", "node 1 is null, expected {cells:[0],digit:5}", "node 2 is null, expected {cells:[1],digit:3}", "node 3 is null, expected {cells:[1],digit:5}", "node 4 is null, expected {cells:[1],digit:7}"] to equal Array(0)[]
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-chain.test.js:3867:54)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  38 total, 36 passed, 2 failed, 0 skipped
+Time:   1.76 s running tests, 1.88 s total
+exit=1 seconds=1.989

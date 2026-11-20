@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS10a\explore-dug.js 777 100
+seed 777 puzzles 100 (from 0): 0 positions with a remote pair, 0.1 s
+exit=0 seconds=0.324

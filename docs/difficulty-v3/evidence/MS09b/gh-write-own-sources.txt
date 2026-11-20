@@ -1,0 +1,7 @@
+$ node tests\tools\make-technique-examples.js ..\generator --ids=simpleColouring,nishioDeep --max-puzzles=64 --max-hints=400 --write
+selected 2 technique ID(s); mode write
+replaying 2 puzzle(s) for 2 ID(s) (--max-puzzles=64, --max-hints=400)
+puzzle 1/2 classic9 - - -> 77 hint(s), solved; wanted found: simpleColouring
+puzzle 2/2 classic9 - - -> 111 hint(s), solved; wanted found: nishioDeep
+wrote player/js/ui/help-examples.js (33 examples; 2 selected: simpleColouring, nishioDeep; the others kept)
+exit=0 seconds=0.796

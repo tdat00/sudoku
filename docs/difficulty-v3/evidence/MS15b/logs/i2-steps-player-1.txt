@@ -1,0 +1,19 @@
+$ node tests\node-runner.js --suite=steps,player
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   player: 69 passed  (56.28 s)
+FAIL steps: 57 passed, 1 failed  (41.28 s)
+
+Failures:
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the goldens whose chosen removal the limited check could not finish say so (Killer, Mega 16x16)
+       TypeError: Cannot read properties of null (reading 'chosen')
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1301:47
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1298:58)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:357:19)
+
+Suites: 2
+Tests:  127 total, 126 passed, 1 failed, 0 skipped
+Time:   97.56 s running tests, 97.68 s total
+exit=1 seconds=97.805

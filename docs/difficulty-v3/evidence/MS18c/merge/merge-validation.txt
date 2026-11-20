@@ -1,0 +1,11 @@
+NOTE requests 4313, exact hits 3783, approximate 503, errors 27 {"mega16/hell1":9,"greaterThan/hell1":2,"samurai/nightmare":1,"samurai/hell1":9,"sohei/hell1":6}, max error ms 120051.7349
+NOTE R max 7.8444534, min W-Q-R 0.17954890000000123, Q-S max 1.073156200000012
+NOTE W-Q 7.384470799999999..8.034013000000002, W max 368.08897 (samurai/hell1), W sum 6760.2761409999985, second rounds hyper/expert 53; flower/nightmare 50; wordoku/normal 46
+NOTE SA2 reviewed-set digest 00d611b7760cdbe435cf74c76420a49aa527c90d32c4daf496fcb02b195d308a
+NOTE v2 offers 118 -> removed 39: classic9/hell1, mega12/hell1, mega16/expert, mega16/nightmare, mega16/hell1, diagonalX/easy, diagonalX/expert, diagonalX/hell1, hyper/easy, hyper/expert, hyper/hell1, jigsaw9/expert, jigsaw9/nightmare, jigsaw9/hell1, killer/hard, killer/expert, killer/master, killer/nightmare, killer/hell1, killer/hell2, greaterThan/normal, greaterThan/expert, greaterThan/nightmare, greaterThan/hell1, samurai/easy, samurai/nightmare, samurai/hell1, samurai/hell2, sohei/easy, sohei/nightmare, sohei/hell1, butterfly/easy, butterfly/hell1, flower/easy, flower/expert, flower/nightmare, flower/hell1, wordoku/normal, wordoku/hell1
+NOTE killer/hard: n 14, hits 0, p95 6887.1679 ms, hidden (stopped: misses)
+NOTE killer/expert: n 12, hits 2, p95 34368.4147 ms, hidden (stopped: time)
+NOTE greaterThan/normal: n 40, hits 40, p95 10192.4051 ms, hidden (stopped: null)
+NOTE diagonalX/expert: n 40, hits 37, p95 11795.9214 ms, hidden (stopped: null)
+OK: no problem in 135 cells
+MS18c-merge-check exit=0 seconds=0.538

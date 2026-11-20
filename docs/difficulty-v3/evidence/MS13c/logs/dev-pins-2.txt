@@ -1,0 +1,24 @@
+$ node tests\node-runner.js --suite=steps,replay,player
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   player: 69 passed  (45.42 s)
+ok   replay: 158 passed  (33.05 s)
+FAIL steps: 55 passed, 2 failed  (33.60 s)
+
+Failures:
+  FAIL steps > stepView: the callout of a score jump > names the cause of a move per class, on the goldens
+       AssertionError: expected "Removing the clue at G2-R3C2 alone gives 1,011; removing the clue at G3-R7C8 alone gives 73." to be "Removing the clue at G2-R6C2 alone gives 1,014; removing the clue at G3-R4C8 alone gives 72."
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1090:10)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: "Why?" lines: the choice, the proof and the effects > the first deductions of the goldens: Killer candidate 7 in a cell, a placement, candidate 2 in a cell
+       AssertionError: expected Array(13)["P, peak technique weight: 1.5 → 650 (+648.5)", "W, weighted sum of technique uses: 254 → 1,605.75", "R = 0.25 × P × log₂(1 + W ÷ P): 2.78 → 291.7 (+288.92)", "E, number of empty cells: 251 → 253", "V = 80 × E ÷ (E + 40): 69 → 69.08 (+0.08)", "Score = V + P + R, rounded: 73 → 1,011 (+938)", "Level: Easy → Master", "The log records 7 candidates before this accepted removal, with 2 rejected; the other 4 candidates with completed sco...", "In a separate check, this solver stopped before completing the board using only techniques with weights below 650.", "First use in the generator's solution: logical deduction 221 of 260.", "XY-Wing: the pivot G2-R5C7 holds 3 or 4; the pincer G2-R5C5 holds 3 or 7; the pincer G2-R6C9 holds 4 or 7. Whichever ...", "In that deduction, candidate 7 is removed from G2-R6C6.", ...] to contain "In that deduction, candidate 2 is removed from G2-R5C5."
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1382:25
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:1380:11
+       at withLabels (Q:\git\sudoku\generator\tests\suites\steps.test.js:58:14)
+
+Suites: 3
+Tests:  284 total, 282 passed, 2 failed, 0 skipped
+Time:   112.08 s running tests, 112.19 s total
+exit=1 seconds=112.328

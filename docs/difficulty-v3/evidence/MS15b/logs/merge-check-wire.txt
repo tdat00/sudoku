@@ -1,0 +1,61 @@
+$ node tests\replay-fixtures.js --merge=..\docs\difficulty-v3\evidence\MS15b\wire --check
+merged 5 ledgers: all 5 keys exactly once, recorded from the current sources
+G09: matches replay-wire.js
+G10: 697 fields differ from replay-wire.js
+  givens[2]: saved 2, fresh 0
+  givens[8]: saved 0, fresh 8
+  givens[14]: saved 5, fresh 0
+  givens[20]: saved 5, fresh 0
+  givens[25]: saved 6, fresh 0
+  givens[26]: saved 4, fresh 0
+  givens[32]: saved 3, fresh 0
+  givens[34]: saved 1, fresh 0
+  givens[35]: saved 7, fresh 0
+  givens[36]: saved 3, fresh 0
+  givens[37]: saved 0, fresh 1
+  givens[39]: saved 5, fresh 0
+  givens[40]: saved 0, fresh 8
+  givens[41]: saved 2, fresh 0
+  givens[43]: saved 0, fresh 4
+  givens[44]: saved 6, fresh 0
+  givens[45]: saved 9, fresh 0
+  givens[46]: saved 2, fresh 0
+  givens[48]: saved 1, fresh 0
+  givens[54]: saved 6, fresh 0
+  givens[55]: saved 8, fresh 0
+  givens[60]: saved 4, fresh 0
+  givens[66]: saved 6, fresh 0
+  givens[72]: saved 0, fresh 5
+  givens[78]: saved 6, fresh 0
+  ... and 672 more
+G11: matches replay-wire.js
+G12: matches replay-wire.js
+G13: 1691 fields differ from replay-wire.js
+  givens[0]: saved 7, fresh 2
+  givens[1]: saved 9, fresh 0
+  givens[2]: saved 0, fresh 4
+  givens[5]: saved 4, fresh 1
+  givens[6]: saved 0, fresh 7
+  givens[7]: saved 8, fresh 5
+  givens[9]: saved 6, fresh 7
+  givens[12]: saved 3, fresh 0
+  givens[13]: saved 0, fresh 6
+  givens[15]: saved 0, fresh 3
+  givens[18]: saved 4, fresh 0
+  givens[21]: saved 1, fresh 0
+  givens[22]: saved 9, fresh 7
+  givens[23]: saved 0, fresh 5
+  givens[24]: saved 7, fresh 0
+  givens[25]: saved 6, fresh 1
+  givens[27]: saved 8, fresh 0
+  givens[28]: saved 0, fresh 3
+  givens[29]: saved 0, fresh 9
+  givens[30]: saved 5, fresh 0
+  givens[31]: saved 1, fresh 0
+  givens[33]: saved 6, fresh 0
+  givens[34]: saved 0, fresh 2
+  givens[36]: saved 3, fresh 1
+  givens[41]: saved 0, fresh 2
+  ... and 1666 more
+replay-wire.js differs; regenerate it with node tests/replay-fixtures.js --write only if the generator changed on purpose
+exit=1 seconds=0.463

@@ -1,0 +1,24 @@
+$ node tests\mega-contract.js --list --level=nightmare
+mega Nightmare deep tier: 14 requests, manifest 758f5b0a1706..., budget 500000 ms, trace off, default attempts
+  mega12-invariant-1  mega12 nightmare seed 1  attempts 4  (was: mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 1)
+  mega12-invariant-2  mega12 nightmare seed 2  attempts 4  (was: mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 2)
+  mega12-invariant-3  mega12 nightmare seed 3  attempts 4  (was: mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 3)
+  mega12-invariant-4  mega12 nightmare seed 4  attempts 4  (was: mega12 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 4)
+  mega12-cv5-a  mega12 nightmare seed 3  attempts 4  (was: mega12 nightmare: the same seed gives the same puzzle (CV5), first seed-3 call (a))
+  mega12-cv5-b  mega12 nightmare seed 3  attempts 4  (was: mega12 nightmare: the same seed gives the same puzzle (CV5), second seed-3 call (c))
+  mega12-cv5-other  mega12 nightmare seed 4  attempts 4  (was: mega12 nightmare: the same seed gives the same puzzle (CV5), seed-4 call (other))
+  mega16-invariant-1  mega16 nightmare seed 1  attempts 2  (was: mega16 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 1)
+  mega16-invariant-2  mega16 nightmare seed 2  attempts 2  (was: mega16 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 2)
+  mega16-invariant-3  mega16 nightmare seed 3  attempts 2  (was: mega16 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 3)
+  mega16-invariant-4  mega16 nightmare seed 4  attempts 2  (was: mega16 nightmare: 4 puzzles are unique, valid and inside the 9.1 time budget, seed 4)
+  mega16-cv5-a  mega16 nightmare seed 3  attempts 2  (was: mega16 nightmare: the same seed gives the same puzzle (CV5), first seed-3 call (a))
+  mega16-cv5-b  mega16 nightmare seed 3  attempts 2  (was: mega16 nightmare: the same seed gives the same puzzle (CV5), second seed-3 call (c))
+  mega16-cv5-other  mega16 nightmare seed 4  attempts 2  (was: mega16 nightmare: the same seed gives the same puzzle (CV5), seed-4 call (other))
+relations:
+  mega12-cv5-same-seed  mega12-cv5-a vs mega12-cv5-b: givens, solution, score equal
+  mega12-cv5-other-seed  mega12-cv5-other vs mega12-cv5-a: the solution differs
+  mega12-invariant-3-same-seed  mega12-invariant-3 vs mega12-cv5-a: givens, solution, score equal  (extra, not an original relation)
+  mega16-cv5-same-seed  mega16-cv5-a vs mega16-cv5-b: givens, solution, score equal
+  mega16-cv5-other-seed  mega16-cv5-other vs mega16-cv5-a: the solution differs
+  mega16-invariant-3-same-seed  mega16-invariant-3 vs mega16-cv5-a: givens, solution, score equal  (extra, not an original relation)
+exit=0 seconds=0.099

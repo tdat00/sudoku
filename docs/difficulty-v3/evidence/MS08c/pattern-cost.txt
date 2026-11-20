@@ -1,0 +1,9 @@
+$ node tests\pattern-cost.js --ids=emptyRectangle --runs=20 --json=..\docs\difficulty-v3\evidence\MS08c\pattern-cost.json
+pattern-cost: 5 of 5 cases x 20 runs (100 finds), complete true, found 2, none 3, outcome not the fixture's 0, capped 0, wall 0.019 s
+  emptyRectangle:positive:1 found, work 22 of 50000, ms p50 0.071 p95 0.144 max 0.854
+  emptyRectangle:positive:2 found, work 63 of 50000, ms p50 0.022 p95 0.064 max 0.217
+  emptyRectangle:negative:1 none, work 102 of 50000, ms p50 0.028 p95 0.079 max 0.086
+  emptyRectangle:negative:2 none, work 46 of 50000, ms p50 0.026 p95 0.051 max 0.210
+  emptyRectangle:negative:3 none, work 20 of 50000, ms p50 0.015 p95 0.025 max 0.037
+record: docs/difficulty-v3/evidence/MS08c/pattern-cost.json
+exit=0 seconds=0.538

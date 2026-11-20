@@ -1,0 +1,5 @@
+$ node tests\artifacts\difficulty-v3\MS13c\census-run.js ..\docs\difficulty-v3\evidence\MS13c\census\tree ..\docs\difficulty-v3\evidence\MS13c\census\positions samurai,sohei,flower
+== samurai 7.5 s: base-ladder 48, activation-ladder 55, wire 3
+== sohei 5.7 s: base-ladder 51, activation-ladder 40
+== flower 2.6 s: base-ladder 44, activation-ladder 39
+exit=0 seconds=15.923

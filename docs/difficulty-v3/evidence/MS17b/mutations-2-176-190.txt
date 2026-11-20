@@ -1,0 +1,30 @@
+mutation 176 (the key drops the variant): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 16.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 177 (the key drops the cell count): NOT DETECTED, EQUIVALENT (cellCount is the common length of the compared vectors (vectorOf checks it strictly), so two models with equal vectors have equal cell counts) - 119 total, 119 passed, 0 failed, 0 skipped - 0 failing - 17.5 s
+mutation 178 (the key drops the digits): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 15.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 179 (the key drops the fixed cells): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 14.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 180 (the key drops the units): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 181 (the key drops the cages): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.6 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 182 (the key drops the signs): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 183 (the key drops the row count): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 184 (the key drops the column count): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 185 (the key drops the cell rows): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 186 (the key drops the cell columns): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 187 (the key drops the regions): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 188 (the key drops the overlays): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.4 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 189 (the key drops the sub-grids): DETECTED - 33 total, 32 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.5 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with a changed semantic model is stale, whatever solution fits both
+mutation 190 (the key drops score and rawScore): DETECTED - 32 total, 31 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.3 s
+    FAIL cache > cache: version 3 and the complete classification (MS17b) > MS17b-T02: a regeneration with another exactness or rating field is stale, a well-typed one included
+detected 14 of 15, survivors 1, 212.2 s

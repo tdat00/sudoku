@@ -1,0 +1,6 @@
+$ node tests\mega-contract.js --reconcile=..\docs\difficulty-v3\evidence\MS18e\deep\nightmare --level=nightmare --json=..\docs\difficulty-v3\evidence\MS18e\preflight\deep-reconcile-nightmare.json
+reconcile: 14 requests, 14 records, complete true, evidence sound true, generation 14 produced, correctness pass, relations 6 pass / 0 fail / 0 unevaluated
+  mega12: 7 of 7 produced, exact 7, fallbacks 0 (shallow 0), unavailable 0, generation min 1.651 s median 2.192 s max 2.548 s, over 120 s: 0, over 30 s: 0, guard 5.000 s (margin 2.402 s)
+  mega16: 7 of 7 produced, exact 7, fallbacks 0 (shallow 0), unavailable 0, generation min 5.513 s median 6.305 s max 22.806 s, over 120 s: 0, over 30 s: 0, guard 35.000 s (margin 12.113 s)
+json: docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-nightmare.json
+exit=0 seconds=0.696

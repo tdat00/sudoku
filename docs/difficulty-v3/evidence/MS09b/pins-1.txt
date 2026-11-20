@@ -1,0 +1,37 @@
+$ node tests\node-runner.js --suite=replay,steps,player,pipeline,cache,worker
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   cache: 106 passed  (10.03 s)
+ok   pipeline: 151 passed  (33.74 s)
+(node:13912) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   player: 69 passed  (31.05 s)
+FAIL replay: 152 passed, 2 failed  (21.20 s)
+FAIL steps: 56 passed, 1 failed  (21.72 s)
+ok   worker: 144 passed  (45.42 s)
+
+Failures:
+  FAIL replay > replay: golden compact view and transitions > has the same end position as a jump in one view and not in the other (G07, G12, G01)
+       AssertionError: expected Array(3)[141, 2268, "jump"] to equal Array(3)[141, 2310, "jump"]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1197:75
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1193:87)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL replay > replay: golden compact view and transitions > labels a new hardest technique also at a flat or lower score (details: G13, G12)
+       AssertionError: expected Array(3)[3042, 2701, -341] to equal Array(3)[3042, 2686, -356]
+       at Q:\git\sudoku\generator\tests\suites\replay.test.js:1228:59
+       at Array.forEach (<anonymous>)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\replay.test.js:1226:9)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL steps > stepView: the tiers, the badge and the lines > also tells a new hardest technique when the score is flat or falls (details view)
+       AssertionError: expected 2701 to be 2686
+       at Q:\git\sudoku\generator\tests\suites\steps.test.js:915:48
+       at inLocale (Q:\git\sudoku\generator\tests\suites\steps.test.js:102:14)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:902:7)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 6
+Tests:  681 total, 678 passed, 3 failed, 0 skipped
+Time:   163.17 s running tests, 163.30 s total
+exit=1 seconds=163.418

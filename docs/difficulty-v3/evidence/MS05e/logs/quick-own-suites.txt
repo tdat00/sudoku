@@ -1,0 +1,53 @@
+==== shard own-fast (1579 tests): node tests/node-runner.js --suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,manual-corpus,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-own-fast.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   a11y: 31 passed  (74 ms)
+ok   cache: 105 passed  (9.05 s)
+(node:9264) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok   controls: 46 passed  (93 ms)
+ok   difficulty-diagnostics: 82 passed  (10.94 s)
+ok   difficulty-floor: 48 passed  (63.03 s)
+ok   digger: 64 passed  (936 ms)
+ok   events: 68 passed  (552 ms)
+ok   export: 78 passed  (5.64 s)
+ok   format: 18 passed  (376 ms)
+ok   full-grid: 42 passed  (2.43 s)
+ok   help: 30 passed  (3.73 s)
+ok   history: 15 passed  (1.32 s)
+ok   i18n: 83 passed  (878 ms)
+ok   manual-corpus: 46 passed  (2.20 s)
+ok   mega-contract: 37 passed  (1.65 s)
+ok   multigrid: 184 passed  (15.63 s)
+ok   perf-tooling: 31 passed  (11.08 s)
+ok   purity: 41 passed  (23 ms)
+ok   recovery-profile: 27 passed  (510 ms)
+ok   replay-recorders: 39 passed  (7.43 s)
+ok   result-view: 22 passed  (7.94 s)
+ok   rng: 28 passed  (28 ms)
+ok   smoke: 44 passed  (10.43 s)
+ok   store: 85 passed  (101 ms)
+ok   technique-weights: 6 passed  (1 ms)
+ok   theme: 57 passed  (31 ms)
+ok   ui-contract: 67 passed  (321 ms)
+ok   variants-registry: 12 passed  (10 ms)
+ok   worker: 143 passed  (53.06 s)
+
+Suites: 29
+Tests:  1579 total, 1579 passed, 0 failed, 0 skipped
+Time:   209.51 s running tests, 209.87 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-own-fast.json
+==== shard greater-than-guided (15 tests): node tests/node-runner.js --suite=greater-than-guided --results=..\docs\difficulty-v3\evidence\MS05e\quick\generator-greater-than-guided.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+ok   greater-than-guided: 15 passed  (846 ms)
+
+Suites: 1
+Tests:  15 total, 15 passed, 0 failed, 0 skipped
+Time:   846 ms running tests, 1.02 s total
+Results: docs/difficulty-v3/evidence/MS05e/quick/generator-greater-than-guided.json
+shard own-fast: exit 0, 210.1 s
+shard greater-than-guided: exit 0, 1.2 s
+MS05e exit=0 seconds=212.217

@@ -1,0 +1,2869 @@
+{
+  "schema": 1,
+  "complete": true,
+  "meta": {
+    "acceptance": "canonical-required-tier",
+    "sourceHash": "19afa6eea0af8042cafd10cca6e22587b7238233b89c8e6f2ac46192086f4a2e",
+    "sourceFiles": 63,
+    "toolHash": "da295e75f43dcd8cd5b66e0f566892b14036ea2ce9297b29a848abcb9c98bc72",
+    "commit": "f788e02616e7968143030700205d9a8ab843904c",
+    "dirty": true,
+    "dirtyFiles": [
+      " M DEVELOPERGUIDE.md",
+      " M DEVELOPERGUIDE.vn.md",
+      " M USERGUIDE.md",
+      " M USERGUIDE.vn.md",
+      " M docs/difficulty-v3/clarifications.md",
+      " M docs/difficulty-v3/claude-opus-5.5/6-review-of-task-pack.md",
+      " M docs/difficulty-v3/notes.md",
+      " M generator/design.md",
+      " M generator/js/engine/digger.js",
+      " M generator/js/engine/explain-data.js",
+      " M generator/js/engine/pipeline.js",
+      " M generator/js/ui/locale.en.js",
+      " M generator/js/ui/locale.vi.js",
+      " M generator/js/variants/killer.js",
+      " M generator/tests.html",
+      " M generator/tests/fixtures/difficulty-diagnostics.js",
+      " M generator/tests/fixtures/regression.js",
+      " M generator/tests/fixtures/replay-wire.js",
+      " M generator/tests/manual/difficulty.test.js",
+      " M generator/tests/manual/extra-regions.test.js",
+      " M generator/tests/manual/greater-than.test.js",
+      " M generator/tests/manual/jigsaw.test.js",
+      " M generator/tests/manual/killer.test.js",
+      " M generator/tests/manual/variants.test.js",
+      " M generator/tests/manual/wordoku.test.js",
+      " M generator/tests/qualify.js",
+      " M generator/tests/soak.js",
+      " M generator/tests/suites/cache.test.js",
+      " M generator/tests/suites/difficulty-diagnostics.test.js",
+      " M generator/tests/suites/difficulty-floor.test.js",
+      " M generator/tests/suites/events.test.js",
+      " M generator/tests/suites/i18n.test.js",
+      " M generator/tests/suites/pipeline.test.js",
+      " M generator/tests/suites/result-view.test.js",
+      " M generator/tests/suites/worker.test.js",
+      " D tasks/difficulty-v3/MS05b-required-keeper-and-search.md",
+      " M tasks/difficulty-v3/MS05c-shallow-budget-instrumentation.md",
+      " M tasks/difficulty-v3/MS05d-select-shallow-budget.md",
+      " M tasks/difficulty-v3/MS06a-pre-target-evidence.md",
+      " M tasks/difficulty-v3/MS06b-target-policy-primitives.md",
+      " D tasks/difficulty-v3/MS06c-target-through-all-stages.md",
+      " M tasks/difficulty-v3/MS06d-target-comparison.md",
+      " M tasks/difficulty-v3/MS07a-window-kernels-and-pattern-metrics.md",
+      " M tasks/difficulty-v3/MS07b-register-chain-windows.md",
+      " M tasks/difficulty-v3/MS07c-select-chain-cutoff.md",
+      " M tasks/difficulty-v3/MS07d-qualification-record-merger.md",
+      " M tasks/difficulty-v3/MS07e-first-qualification.md",
+      " M tasks/difficulty-v3/MS08a-skyscraper.md",
+      " M tasks/difficulty-v3/MS08b-two-string-kite.md",
+      " M tasks/difficulty-v3/MS08c-empty-rectangle.md"
+    ],
+    "startedAt": "2026-11-13T05:55:20.960Z",
+    "node": "v26.13.0",
+    "machine": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "cpuModel": "AMD EPYC 7763 64-Core Processor",
+      "cpus": 16,
+      "memoryGiB": 64
+    },
+    "argv": [
+      "--variant=killer",
+      "--level=expert",
+      "--count=12",
+      "--seed=20260101",
+      "--no-gate",
+      "--shallow-cap=64",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS05r4\\selection\\64\\killer-expert.json"
+    ],
+    "seedBase": 20260101,
+    "shallowCap": "64",
+    "shallowSearchRatings": 64,
+    "manifest": {
+      "requests": 12,
+      "logicalRequests": 12,
+      "shard": null,
+      "cells": [
+        {
+          "variant": "killer",
+          "level": "expert",
+          "requests": 12,
+          "from": 0,
+          "logicalTotal": 12,
+          "referenceIndexes": [
+            0,
+            11
+          ],
+          "route": "pipeline",
+          "unsupported": false
+        }
+      ],
+      "count": 12,
+      "perCombo": 0,
+      "quick": false,
+      "includeUnsupported": false,
+      "weights": null,
+      "bands": null,
+      "gate": false,
+      "ratingVersion": 2,
+      "referenceBudgetMs": 120000
+    }
+  },
+  "rows": [
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 0,
+      "tag": "killer:expert:0",
+      "pipelineSeed": 605397093,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 841,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 58,
+        "hiddenSingleBox": 11,
+        "hiddenSingleLine": 3,
+        "pointing": 14,
+        "cageCombo": 36,
+        "boxLine": 8,
+        "nakedPair": 2,
+        "hiddenPair": 1,
+        "ruleOf45": 22,
+        "simpleColouring": 2
+      },
+      "empties": 81,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": false,
+      "referenceStatus": "ok",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.47,
+        "adjusted": -0.18704303563165203,
+        "lower": 866.0537190082645,
+        "reason": null,
+        "inputs": {
+          "score": 841,
+          "V": 53.553719008264466,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 9641.509,
+      "diagnosticMs": 5.388,
+      "fullRatings": 2259,
+      "ratingCalls": 2259,
+      "proposals": 231321,
+      "localRatings": 386,
+      "shallowRatings": 164,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 7
+      },
+      "work": [
+        {
+          "ratings": 219,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 32427,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 332,
+          "proposals": 1945,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 602,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32055,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31754,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 334,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 66,
+              "proposals": 31870,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31877,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32000,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 146,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 36,
+              "proposals": 32451,
+              "firstShallowAt": 0,
+              "shallowRatings": 36,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "a781537919469547",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 1,
+      "tag": "killer:expert:1",
+      "pipelineSeed": 588619474,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 796,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 46,
+        "hiddenSingleBox": 11,
+        "hiddenSingleLine": 6,
+        "pointing": 18,
+        "cageCombo": 35,
+        "boxLine": 2,
+        "ruleOf45": 15,
+        "simpleColouring": 1
+      },
+      "empties": 75,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.32,
+        "adjusted": -0.5074698795180722,
+        "lower": 864.6739130434783,
+        "reason": null,
+        "inputs": {
+          "score": 796,
+          "V": 52.17391304347826,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 7988.737,
+      "diagnosticMs": 1.643,
+      "fullRatings": 2218,
+      "ratingCalls": 2218,
+      "proposals": 262144,
+      "localRatings": 329,
+      "shallowRatings": 38,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 8
+      },
+      "work": [
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31325,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32287,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32000,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31730,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 321,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 53,
+              "proposals": 31682,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 51,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 38,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32040,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 31869,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "4747be69a8a3ab14",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 2,
+      "tag": "killer:expert:2",
+      "pipelineSeed": 571841855,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 772,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 50,
+        "hiddenSingleBox": 11,
+        "hiddenSingleLine": 2,
+        "pointing": 10,
+        "cageCombo": 22,
+        "boxLine": 5,
+        "nakedPair": 3,
+        "ruleOf45": 12,
+        "simpleColouring": 1
+      },
+      "empties": 72,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.24,
+        "adjusted": -0.6755905511811026,
+        "lower": 863.9285714285714,
+        "reason": null,
+        "inputs": {
+          "score": 772,
+          "V": 51.42857142857143,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 15699.937,
+      "diagnosticMs": 1.082,
+      "fullRatings": 2014,
+      "ratingCalls": 2014,
+      "proposals": 230233,
+      "localRatings": 375,
+      "shallowRatings": 103,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 7
+      },
+      "work": [
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32100,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31712,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 307,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 39,
+              "proposals": 31591,
+              "firstShallowAt": 0,
+              "shallowRatings": 39,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32134,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 84,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 71,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 31999,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 82,
+          "proposals": 857,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 843,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32117,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "3f93958f7ec9d18e",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 3,
+      "tag": "killer:expert:3",
+      "pipelineSeed": 555064236,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 994,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 54,
+        "hiddenSingleBox": 13,
+        "hiddenSingleLine": 1,
+        "pointing": 8,
+        "cageCombo": 25,
+        "boxLine": 1,
+        "ruleOf45": 8,
+        "simpleColouring": 1,
+        "cageSplit": 1
+      },
+      "empties": 75,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.98,
+        "adjusted": 0.9556626506024096,
+        "lower": 864.6739130434783,
+        "reason": null,
+        "inputs": {
+          "score": 994,
+          "V": 52.17391304347826,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 9689.554,
+      "diagnosticMs": 1.1,
+      "fullRatings": 1878,
+      "ratingCalls": 1878,
+      "proposals": 262144,
+      "localRatings": 428,
+      "shallowRatings": 98,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 8
+      },
+      "work": [
+        {
+          "ratings": 329,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 61,
+              "proposals": 31948,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 351,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 83,
+              "proposals": 31821,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 73,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 60,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 304,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 36,
+              "proposals": 31554,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 122,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 32492,
+              "firstShallowAt": 0,
+              "shallowRatings": 38,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32184,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 337,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 69,
+              "proposals": 31598,
+              "firstShallowAt": 9,
+              "shallowRatings": 60,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 53,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 40,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "cfa232e0d141f419",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 4,
+      "tag": "killer:expert:4",
+      "pipelineSeed": 538286617,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 929,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 59,
+        "hiddenSingleBox": 7,
+        "hiddenSingleLine": 1,
+        "pointing": 8,
+        "cageCombo": 22,
+        "boxLine": 3,
+        "ruleOf45": 4,
+        "cageSplit": 1
+      },
+      "empties": 73,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.7633333333333333,
+        "adjusted": 0.4772438507900308,
+        "lower": 864.1814159292036,
+        "reason": null,
+        "inputs": {
+          "score": 929,
+          "V": 51.68141592920354,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 9190.509,
+      "diagnosticMs": 0.768,
+      "fullRatings": 2465,
+      "ratingCalls": 2465,
+      "proposals": 230858,
+      "localRatings": 362,
+      "shallowRatings": 191,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 7
+      },
+      "work": [
+        {
+          "ratings": 332,
+          "proposals": 1482,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 598,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 310,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 42,
+              "proposals": 31465,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32128,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 322,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 54,
+              "proposals": 31293,
+              "firstShallowAt": 0,
+              "shallowRatings": 54,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32030,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 315,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 47,
+              "proposals": 31450,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 306,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 31615,
+              "firstShallowAt": 0,
+              "shallowRatings": 38,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 262,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 35,
+              "proposals": 31916,
+              "firstShallowAt": 0,
+              "shallowRatings": 35,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "ecefbf4d5397e4f6",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 5,
+      "tag": "killer:expert:5",
+      "pipelineSeed": 521508998,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 780,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 48,
+        "hiddenSingleBox": 9,
+        "hiddenSingleLine": 8,
+        "pointing": 9,
+        "cageCombo": 52,
+        "boxLine": 2,
+        "hiddenPair": 1,
+        "ruleOf45": 10,
+        "simpleColouring": 1
+      },
+      "empties": 81,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.26666666666666666,
+        "adjusted": -0.642449483263921,
+        "lower": 866.0537190082645,
+        "reason": null,
+        "inputs": {
+          "score": 780,
+          "V": 53.553719008264466,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 10362.499,
+      "diagnosticMs": 1.174,
+      "fullRatings": 1509,
+      "ratingCalls": 1509,
+      "proposals": 231536,
+      "localRatings": 387,
+      "shallowRatings": 197,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 7
+      },
+      "work": [
+        {
+          "ratings": 67,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 42,
+              "proposals": 32742,
+              "firstShallowAt": 0,
+              "shallowRatings": 42,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 315,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 47,
+              "proposals": 32069,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 254,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 51,
+              "proposals": 32230,
+              "firstShallowAt": 0,
+              "shallowRatings": 51,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 331,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 63,
+              "proposals": 31265,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 52,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 39,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 53,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 40,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 40,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32078,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 128,
+          "proposals": 2160,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 1995,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "6e8828ef35aca297",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 6,
+      "tag": "killer:expert:6",
+      "pipelineSeed": 504731379,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 742,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 48,
+        "hiddenSingleBox": 11,
+        "hiddenSingleLine": 8,
+        "pointing": 3,
+        "cageCombo": 34,
+        "boxLine": 2,
+        "hiddenPair": 2,
+        "nakedTriple": 2,
+        "ruleOf45": 6,
+        "simpleColouring": 1
+      },
+      "empties": 73,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.14,
+        "adjusted": -0.8995927675517191,
+        "lower": 864.1814159292036,
+        "reason": null,
+        "inputs": {
+          "score": 742,
+          "V": 51.68141592920354,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 9243.192,
+      "diagnosticMs": 1.072,
+      "fullRatings": 2384,
+      "ratingCalls": 2384,
+      "proposals": 201208,
+      "localRatings": 516,
+      "shallowRatings": 175,
+      "capHits": {
+        "shallow": 2,
+        "ratings": 0,
+        "proposals": 6
+      },
+      "work": [
+        {
+          "ratings": 332,
+          "proposals": 2476,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 1520,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 328,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 60,
+              "proposals": 31945,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 31470,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 294,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 47,
+              "proposals": 32036,
+              "firstShallowAt": 0,
+              "shallowRatings": 47,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 409,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 141,
+              "proposals": 31482,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 332,
+          "proposals": 2124,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 512,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 328,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 60,
+              "proposals": 31660,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 52,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 39,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "c33aaf0687393d10",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 7,
+      "tag": "killer:expert:7",
+      "pipelineSeed": 487953760,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 783,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 56,
+        "hiddenSingleBox": 12,
+        "hiddenSingleLine": 4,
+        "pointing": 7,
+        "cageCombo": 52,
+        "boxLine": 2,
+        "nakedPair": 1,
+        "ruleOf45": 30,
+        "xWing": 1
+      },
+      "empties": 81,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.27666666666666667,
+        "adjusted": -0.6200524448557767,
+        "lower": 866.0537190082645,
+        "reason": null,
+        "inputs": {
+          "score": 783,
+          "V": 53.553719008264466,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 8094.333,
+      "diagnosticMs": 2.446,
+      "fullRatings": 2034,
+      "ratingCalls": 2034,
+      "proposals": 262144,
+      "localRatings": 413,
+      "shallowRatings": 151,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 8
+      },
+      "work": [
+        {
+          "ratings": 104,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 59,
+              "proposals": 32707,
+              "firstShallowAt": 0,
+              "shallowRatings": 59,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 359,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 91,
+              "proposals": 31840,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 317,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 49,
+              "proposals": 31710,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31865,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 312,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 44,
+              "proposals": 31578,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32051,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 252,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 43,
+              "proposals": 32070,
+              "firstShallowAt": 0,
+              "shallowRatings": 43,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 76,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 49,
+              "proposals": 32735,
+              "firstShallowAt": 0,
+              "shallowRatings": 49,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "f9cdbedc6d9950be",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 8,
+      "tag": "killer:expert:8",
+      "pipelineSeed": 739618045,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 733,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 58,
+        "hiddenSingleBox": 9,
+        "hiddenSingleLine": 1,
+        "pointing": 12,
+        "cageCombo": 23,
+        "boxLine": 8,
+        "nakedPair": 1,
+        "hiddenPair": 1,
+        "nakedTriple": 1,
+        "ruleOf45": 2,
+        "simpleColouring": 3
+      },
+      "empties": 73,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.11,
+        "adjusted": -0.9658576315360814,
+        "lower": 864.1814159292036,
+        "reason": null,
+        "inputs": {
+          "score": 733,
+          "V": 51.68141592920354,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 6557.351,
+      "diagnosticMs": 0.93,
+      "fullRatings": 1803,
+      "ratingCalls": 1803,
+      "proposals": 262144,
+      "localRatings": 424,
+      "shallowRatings": 37,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 8
+      },
+      "work": [
+        {
+          "ratings": 53,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 40,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 74,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 61,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 381,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 113,
+              "proposals": 31631,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31625,
+              "firstShallowAt": 0,
+              "shallowRatings": 37,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 318,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 50,
+              "proposals": 31810,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 306,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 31891,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 60,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 47,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 306,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 31896,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "0e4e1bfa70c0a626",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 9,
+      "tag": "killer:expert:9",
+      "pipelineSeed": 722840426,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 749,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 56,
+        "hiddenSingleBox": 9,
+        "pointing": 10,
+        "cageCombo": 28,
+        "boxLine": 7,
+        "nakedPair": 1,
+        "ruleOf45": 8,
+        "simpleColouring": 1
+      },
+      "empties": 71,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.16333333333333333,
+        "adjusted": -0.8411366264662152,
+        "lower": 863.6711711711712,
+        "reason": null,
+        "inputs": {
+          "score": 749,
+          "V": 51.171171171171174,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 12251.152,
+      "diagnosticMs": 0.922,
+      "fullRatings": 2238,
+      "ratingCalls": 2238,
+      "proposals": 231454,
+      "localRatings": 349,
+      "shallowRatings": 152,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 7
+      },
+      "work": [
+        {
+          "ratings": 306,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 31863,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 332,
+          "proposals": 2078,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 758,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32144,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32129,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31713,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 53,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 40,
+              "proposals": 32768,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 313,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 45,
+              "proposals": 31125,
+              "firstShallowAt": 0,
+              "shallowRatings": 45,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 311,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 43,
+              "proposals": 31710,
+              "firstShallowAt": 0,
+              "shallowRatings": 43,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "0508681aae6f1a16",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 10,
+      "tag": "killer:expert:10",
+      "pipelineSeed": 487136710,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 702,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 53,
+        "hiddenSingleBox": 6,
+        "hiddenSingleLine": 4,
+        "pointing": 7,
+        "cageCombo": 24,
+        "boxLine": 5,
+        "nakedPair": 1,
+        "nakedTriple": 1,
+        "ruleOf45": 12,
+        "xWing": 1
+      },
+      "empties": 71,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.006666666666666667,
+        "adjusted": -1.185891293573435,
+        "lower": 863.6711711711712,
+        "reason": null,
+        "inputs": {
+          "score": 702,
+          "V": 51.171171171171174,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 9202.371,
+      "diagnosticMs": 1.052,
+      "fullRatings": 2536,
+      "ratingCalls": 2536,
+      "proposals": 231555,
+      "localRatings": 392,
+      "shallowRatings": 133,
+      "capHits": {
+        "shallow": 1,
+        "ratings": 0,
+        "proposals": 7
+      },
+      "work": [
+        {
+          "ratings": 316,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 48,
+              "proposals": 31670,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31673,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 317,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 49,
+              "proposals": 31867,
+              "firstShallowAt": 17,
+              "shallowRatings": 32,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 332,
+          "proposals": 2179,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 64,
+              "proposals": 899,
+              "firstShallowAt": 0,
+              "shallowRatings": 64,
+              "shallowLimit": 64,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 314,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 46,
+              "proposals": 32049,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 31711,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 338,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 70,
+              "proposals": 31504,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 305,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 37,
+              "proposals": 31947,
+              "firstShallowAt": 0,
+              "shallowRatings": 37,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "ebc9737dc73ab8d0",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "killer",
+      "requested": "expert",
+      "index": 11,
+      "tag": "killer:expert:11",
+      "pipelineSeed": 503914329,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "expert",
+      "solved": true,
+      "score": 731,
+      "ratingVersion": 2,
+      "techniqueCounts": {
+        "nakedSingle": 49,
+        "hiddenSingleBox": 10,
+        "hiddenSingleLine": 4,
+        "pointing": 13,
+        "cageCombo": 25,
+        "boxLine": 5,
+        "nakedPair": 2,
+        "hiddenPair": 1,
+        "ruleOf45": 5,
+        "simpleColouring": 1
+      },
+      "empties": 70,
+      "scoreHit": true,
+      "generationExact": false,
+      "qualifiedHit": false,
+      "required": false,
+      "referenceRequired": false,
+      "referenceStatus": "ok",
+      "referenceError": null,
+      "shallow": true,
+      "position": {
+        "raw": 0.10333333333333333,
+        "adjusted": -0.9693843594009979,
+        "lower": 863.4090909090909,
+        "reason": null,
+        "inputs": {
+          "score": 731,
+          "V": 50.90909090909091,
+          "min": 700,
+          "max": 1000,
+          "wMin": 650,
+          "tierSize": 2,
+          "vacuous": false
+        }
+      },
+      "generationMs": 11623.406,
+      "diagnosticMs": 1.64,
+      "fullRatings": 2357,
+      "ratingCalls": 2357,
+      "proposals": 262144,
+      "localRatings": 390,
+      "shallowRatings": 71,
+      "capHits": {
+        "shallow": 0,
+        "ratings": 0,
+        "proposals": 8
+      },
+      "work": [
+        {
+          "ratings": 363,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 95,
+              "proposals": 31445,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 126,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 35,
+              "proposals": 32515,
+              "firstShallowAt": 0,
+              "shallowRatings": 35,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 31895,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 331,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 63,
+              "proposals": 31525,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 306,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 38,
+              "proposals": 31904,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32093,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 304,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 36,
+              "proposals": 31640,
+              "firstShallowAt": 0,
+              "shallowRatings": 36,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 309,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 41,
+              "proposals": 32110,
+              "firstShallowAt": null,
+              "shallowRatings": 0,
+              "shallowLimit": 64,
+              "capHit": "proposals"
+            }
+          ]
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [],
+      "nishioDepths": [],
+      "target": null,
+      "puzzleHash": "c6f70994f98f1ffd",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    }
+  ],
+  "summary": {
+    "all": {
+      "requests": 12,
+      "matrix": {
+        "expert": {
+          "expert": 12
+        }
+      },
+      "errors": 0,
+      "unrated": 0,
+      "inBand": 12,
+      "oldHits": {
+        "count": 0,
+        "denominator": 12,
+        "share": 0
+      },
+      "qualifiedHits": {
+        "count": 0,
+        "denominator": 12,
+        "share": 0
+      },
+      "exactDisagreements": 0,
+      "shallow": {
+        "count": 12,
+        "denominator": 12,
+        "checked": 12,
+        "share": 1
+      },
+      "references": {
+        "ok": 2,
+        "vacuous": 0,
+        "error": 0,
+        "skipped": 0,
+        "notSelected": 10,
+        "notRun": 0
+      },
+      "pathChecks": {
+        "ok": 12,
+        "mismatch": 0,
+        "error": 0,
+        "notRun": 0
+      },
+      "work": {
+        "checks": {
+          "ok": 12,
+          "mismatch": 0,
+          "unavailable": 0
+        },
+        "capHits": {
+          "shallow": 8,
+          "ratings": 0,
+          "proposals": 88
+        },
+        "fullRatings": {
+          "n": 12,
+          "deciles": [
+            1509,
+            1803,
+            1878,
+            2014,
+            2034,
+            2238,
+            2259,
+            2357,
+            2384,
+            2465,
+            2536
+          ],
+          "upperMedian": 2238
+        }
+      },
+      "peaks": {
+        "simpleColouring": 8,
+        "cageSplit": 2,
+        "xWing": 2
+      },
+      "cohorts": {
+        "exact": {
+          "n": 0,
+          "peaks": {},
+          "raw": {
+            "n": 0,
+            "deciles": null,
+            "upperMedian": null
+          },
+          "adjusted": {
+            "n": 0,
+            "deciles": null,
+            "upperMedian": null
+          },
+          "nullReasons": {}
+        },
+        "inBand": {
+          "n": 12,
+          "peaks": {
+            "simpleColouring": 8,
+            "cageSplit": 2,
+            "xWing": 2
+          },
+          "raw": {
+            "n": 12,
+            "deciles": [
+              0.006666666666666667,
+              0.10333333333333333,
+              0.11,
+              0.14,
+              0.16333333333333333,
+              0.26666666666666666,
+              0.27666666666666667,
+              0.32,
+              0.47,
+              0.7633333333333333,
+              0.98
+            ],
+            "upperMedian": 0.26666666666666666
+          },
+          "adjusted": {
+            "n": 12,
+            "deciles": [
+              -1.185891293573435,
+              -0.9693843594009979,
+              -0.9658576315360814,
+              -0.8995927675517191,
+              -0.8411366264662152,
+              -0.642449483263921,
+              -0.6200524448557767,
+              -0.5074698795180722,
+              -0.18704303563165203,
+              0.4772438507900308,
+              0.9556626506024096
+            ],
+            "upperMedian": -0.642449483263921
+          },
+          "nullReasons": {}
+        }
+      },
+      "chains": {
+        "measured": 12,
+        "forcingChain": {
+          "puzzles": 0,
+          "steps": 0,
+          "stepHistogram": {},
+          "maxHistogram": {}
+        },
+        "nishio": {
+          "puzzles": 0,
+          "steps": 0,
+          "stepHistogram": {},
+          "maxHistogram": {}
+        }
+      }
+    },
+    "cells": {
+      "killer/expert": {
+        "requests": 12,
+        "matrix": {
+          "expert": {
+            "expert": 12
+          }
+        },
+        "errors": 0,
+        "unrated": 0,
+        "inBand": 12,
+        "oldHits": {
+          "count": 0,
+          "denominator": 12,
+          "share": 0
+        },
+        "qualifiedHits": {
+          "count": 0,
+          "denominator": 12,
+          "share": 0
+        },
+        "exactDisagreements": 0,
+        "shallow": {
+          "count": 12,
+          "denominator": 12,
+          "checked": 12,
+          "share": 1
+        },
+        "references": {
+          "ok": 2,
+          "vacuous": 0,
+          "error": 0,
+          "skipped": 0,
+          "notSelected": 10,
+          "notRun": 0
+        },
+        "pathChecks": {
+          "ok": 12,
+          "mismatch": 0,
+          "error": 0,
+          "notRun": 0
+        },
+        "work": {
+          "checks": {
+            "ok": 12,
+            "mismatch": 0,
+            "unavailable": 0
+          },
+          "capHits": {
+            "shallow": 8,
+            "ratings": 0,
+            "proposals": 88
+          },
+          "fullRatings": {
+            "n": 12,
+            "deciles": [
+              1509,
+              1803,
+              1878,
+              2014,
+              2034,
+              2238,
+              2259,
+              2357,
+              2384,
+              2465,
+              2536
+            ],
+            "upperMedian": 2238
+          }
+        },
+        "peaks": {
+          "simpleColouring": 8,
+          "cageSplit": 2,
+          "xWing": 2
+        },
+        "cohorts": {
+          "exact": {
+            "n": 0,
+            "peaks": {},
+            "raw": {
+              "n": 0,
+              "deciles": null,
+              "upperMedian": null
+            },
+            "adjusted": {
+              "n": 0,
+              "deciles": null,
+              "upperMedian": null
+            },
+            "nullReasons": {}
+          },
+          "inBand": {
+            "n": 12,
+            "peaks": {
+              "simpleColouring": 8,
+              "cageSplit": 2,
+              "xWing": 2
+            },
+            "raw": {
+              "n": 12,
+              "deciles": [
+                0.006666666666666667,
+                0.10333333333333333,
+                0.11,
+                0.14,
+                0.16333333333333333,
+                0.26666666666666666,
+                0.27666666666666667,
+                0.32,
+                0.47,
+                0.7633333333333333,
+                0.98
+              ],
+              "upperMedian": 0.26666666666666666
+            },
+            "adjusted": {
+              "n": 12,
+              "deciles": [
+                -1.185891293573435,
+                -0.9693843594009979,
+                -0.9658576315360814,
+                -0.8995927675517191,
+                -0.8411366264662152,
+                -0.642449483263921,
+                -0.6200524448557767,
+                -0.5074698795180722,
+                -0.18704303563165203,
+                0.4772438507900308,
+                0.9556626506024096
+              ],
+              "upperMedian": -0.642449483263921
+            },
+            "nullReasons": {}
+          }
+        },
+        "chains": {
+          "measured": 12,
+          "forcingChain": {
+            "puzzles": 0,
+            "steps": 0,
+            "stepHistogram": {},
+            "maxHistogram": {}
+          },
+          "nishio": {
+            "puzzles": 0,
+            "steps": 0,
+            "stepHistogram": {},
+            "maxHistogram": {}
+          }
+        }
+      }
+    },
+    "checks": {
+      "invariantViolations": {
+        "I1": 0,
+        "I2": 0,
+        "I3": 0,
+        "I4": 0,
+        "I5": 0,
+        "I6": 0,
+        "I7": 0
+      },
+      "requestErrors": 0,
+      "checkErrors": [],
+      "referenceErrors": 0,
+      "pathErrors": 0,
+      "pathMismatches": 0,
+      "workUnavailable": 0,
+      "failed": false,
+      "result": "PASS"
+    }
+  }
+}

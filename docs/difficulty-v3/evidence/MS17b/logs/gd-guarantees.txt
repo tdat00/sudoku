@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=difficulty --filter=difficulty > digger.generate: guarantees > --results=..\docs\difficulty-v3\evidence\MS17b\gd\guarantees.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   difficulty: 10 passed  (86.59 s)
+
+Suites: 1
+Tests:  10 total, 10 passed, 0 failed, 0 skipped
+Time:   86.59 s running tests, 86.84 s total
+Results: docs/difficulty-v3/evidence/MS17b/gd/guarantees.json
+exit=0 seconds=87.088

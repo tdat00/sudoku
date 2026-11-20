@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=diagonalX --level=hell1 --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hell1.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\diagonalX-hell1.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+diagonalX/hell1: 0/9 hits, p95 25.9 s (budget 10.0 s), hidden (stopped: time)
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| diagonalX | hell1 | 9 | 0 | 0 % | 23.8 s | 25.9 s | 25.9 s | 10.0 s | hidden (stopped: time) |
+
+diagonalX: []
+exit=0 seconds=69.387

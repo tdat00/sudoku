@@ -1,0 +1,99 @@
+$ node tests\artifacts\difficulty-v3\MS13c\survivor-all.cjs 48 45 47 50 42
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m48.js for S04 contradiction and forced swapped
+== mutation 48 on pruned:classic9:0.03:0.3 3000 1
+DIFF pruned:classic9:0.03:0.3 index 80 forcingChain
+  registered: {"technique":"forcingChain","cells":[46,50,30,35,51],"placements":[],"eliminations":[[46,3]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[46,3,1],[50,3,0],[30,3,1],[35,3,0]],[[46,3,1],[51,3,0],[35,3,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[46,50,30,35,51],"placements":[[46,3]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[46,3,1],[50,3,0],[30,3,1],[35,3,0]],[[46,3,1],[51,3,0],[35,3,1]]]}}
+DIFF pruned:classic9:0.03:0.3 index 608 forcingChain
+  registered: {"technique":"forcingChain","cells":[36,72,78,51,46],"placements":[[36,8]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[36,8,0],[72,8,1],[78,8,0],[51,8,1]],[[36,8,0],[46,8,1],[51,8,0]]]}}
+  mutated:    {"technique":"forcingChain","cells":[36,72,78,51,46],"placements":[],"eliminations":[[36,8]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[36,8,0],[72,8,1],[78,8,0],[51,8,1]],[[36,8,0],[46,8,1],[51,8,0]]]}}
+DIFF pruned:classic9:0.03:0.3 index 2583 forcingChain
+  registered: {"technique":"forcingChain","cells":[32,40,68,76,77],"placements":[],"eliminations":[[76,2]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":4,"chains":[[{"cells":[76],"digit":2,"truth":1},{"cells":[76],"digit":7,"truth":0},{"cells":[68,77],"digit":7,"truth":1},{"cells":[32],"digit":7,"truth":0},{"cells":[32],"digit":8,"truth":1}],[{"cells":[76],"digit":2,"truth":1},{"cells":[76],"digit":8,"truth":0},{"cells":[40],"digit":8,"truth":1},{"cells":[32],"digit":8,"truth":0}]]}}
+  mutated:    {"technique":"forcingChain","cells":[32,40,68,76,77],"placements":[[76,2]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"proofVersion":2,"kind":"forced","length":4,"chains":[[{"cells":[76],"digit":2,"truth":1},{"cells":[76],"digit":7,"truth":0},{"cells":[68,77],"digit":7,"truth":1},{"cells":[32],"digit":7,"truth":0},{"cells":[32],"digit":8,"truth":1}],[{"cells":[76],"digit":2,"truth":1},{"cells":[76],"digit":8,"truth":0},{"cells":[40],"digit":8,"truth":1},{"cells":[32],"digit":8,"truth":0}]]}}
+6000 calls, 3 differ
+== mutation 48 on pruned:classic9:0.1:0.5 3000 2
+DIFF pruned:classic9:0.1:0.5 index 2523 forcingChain
+  registered: {"technique":"forcingChain","cells":[0,1,4,7,8,18,20,24,25,26],"placements":[],"eliminations":[[4,9]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":3,"chains":[[{"cells":[4],"digit":9,"truth":1},{"cells":[0,1],"digit":9,"truth":0},{"cells":[18,20],"digit":9,"truth":1},{"cells":[24,25,26],"digit":9,"truth":0}],[{"cells":[4],"digit":9,"truth":1},{"cells":[7,8],"digit":9,"truth":0},{"cells":[24,25,26],"digit":9,"truth":1}]]}}
+  mutated:    {"technique":"forcingChain","cells":[0,1,4,7,8,18,20,24,25,26],"placements":[[4,9]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"proofVersion":2,"kind":"forced","length":3,"chains":[[{"cells":[4],"digit":9,"truth":1},{"cells":[0,1],"digit":9,"truth":0},{"cells":[18,20],"digit":9,"truth":1},{"cells":[24,25,26],"digit":9,"truth":0}],[{"cells":[4],"digit":9,"truth":1},{"cells":[7,8],"digit":9,"truth":0},{"cells":[24,25,26],"digit":9,"truth":1}]]}}
+DIFF pruned:classic9:0.1:0.5 index 2878 forcingChain
+  registered: {"technique":"forcingChain","cells":[7,12,16,17,21,22,23,24,26],"placements":[],"eliminations":[[7,3]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":3,"chains":[[{"cells":[7],"digit":3,"truth":1},{"cells":[16,17],"digit":3,"truth":0},{"cells":[12],"digit":3,"truth":1},{"cells":[21,22,23],"digit":3,"truth":0}],[{"cells":[7],"digit":3,"truth":1},{"cells":[24,26],"digit":3,"truth":0},{"cells":[21,22,23],"digit":3,"truth":1}]]}}
+  mutated:    {"technique":"forcingChain","cells":[7,12,16,17,21,22,23,24,26],"placements":[[7,3]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"proofVersion":2,"kind":"forced","length":3,"chains":[[{"cells":[7],"digit":3,"truth":1},{"cells":[16,17],"digit":3,"truth":0},{"cells":[12],"digit":3,"truth":1},{"cells":[21,22,23],"digit":3,"truth":0}],[{"cells":[7],"digit":3,"truth":1},{"cells":[24,26],"digit":3,"truth":0},{"cells":[21,22,23],"digit":3,"truth":1}]]}}
+6000 calls, 2 differ
+== mutation 48 on pruned:jigsaw9:0.03:0.3 1500 3
+DIFF pruned:jigsaw9:0.03:0.3 index 775 forcingChain
+  registered: {"technique":"forcingChain","cells":[5,12,57,58,59,66],"placements":[[5,9]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"proofVersion":2,"kind":"forced","length":3,"chains":[[{"cells":[5],"digit":9,"truth":0},{"cells":[59],"digit":9,"truth":1},{"cells":[58],"digit":9,"truth":0},{"cells":[57,66],"digit":9,"truth":1}],[{"cells":[5],"digit":9,"truth":0},{"cells":[12],"digit":9,"truth":1},{"cells":[57,66],"digit":9,"truth":0}]]}}
+  mutated:    {"technique":"forcingChain","cells":[5,12,57,58,59,66],"placements":[],"eliminations":[[5,9]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"proofVersion":2,"kind":"contradiction","length":3,"chains":[[{"cells":[5],"digit":9,"truth":0},{"cells":[59],"digit":9,"truth":1},{"cells":[58],"digit":9,"truth":0},{"cells":[57,66],"digit":9,"truth":1}],[{"cells":[5],"digit":9,"truth":0},{"cells":[12],"digit":9,"truth":1},{"cells":[57,66],"digit":9,"truth":0}]]}}
+DIFF pruned:jigsaw9:0.03:0.3 index 870 forcingChain
+  registered: {"technique":"forcingChain","cells":[14,22,19,30,32],"placements":[],"eliminations":[[14,2]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[14,2,1],[22,2,0],[19,2,1],[30,2,0]],[[14,2,1],[32,2,0],[30,2,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[14,22,19,30,32],"placements":[[14,2]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[14,2,1],[22,2,0],[19,2,1],[30,2,0]],[[14,2,1],[32,2,0],[30,2,1]]]}}
+DIFF pruned:jigsaw9:0.03:0.3 index 1021 forcingChain
+  registered: {"technique":"forcingChain","cells":[1,7,34,49,45],"placements":[],"eliminations":[[1,8]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[1,8,1],[7,8,0],[34,8,1],[49,8,0]],[[1,8,1],[45,8,0],[49,8,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[1,7,34,49,45],"placements":[[1,8]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[1,8,1],[7,8,0],[34,8,1],[49,8,0]],[[1,8,1],[45,8,0],[49,8,1]]]}}
+3000 calls, 3 differ
+== mutation 48 on pruned:diagonalX:0.03:0.3 1500 4
+DIFF pruned:diagonalX:0.03:0.3 index 126 forcingChainLong
+  registered: {"technique":"forcingChainLong","cells":[0,2,7,15,78,74,54,9,11],"placements":[[0,2]],"eliminations":[],"i18nKey":"technique.forcingChainLong.step.forced","i18nArgs":{"kind":"forced","length":7,"chains":[[[0,2,0],[2,2,1],[2,4,0],[7,4,1],[15,4,0],[78,4,1],[78,1,0],[74,1,1]],[[0,2,0],[54,2,1],[54,8,0],[9,8,1],[11,8,0],[11,1,1],[74,1,0]]]}}
+  mutated:    {"technique":"forcingChainLong","cells":[0,2,7,15,78,74,54,9,11],"placements":[],"eliminations":[[0,2]],"i18nKey":"technique.forcingChainLong.step.contradiction","i18nArgs":{"kind":"contradiction","length":7,"chains":[[[0,2,0],[2,2,1],[2,4,0],[7,4,1],[15,4,0],[78,4,1],[78,1,0],[74,1,1]],[[0,2,0],[54,2,1],[54,8,0],[9,8,1],[11,8,0],[11,1,1],[74,1,0]]]}}
+DIFF pruned:diagonalX:0.03:0.3 index 274 forcingChain
+  registered: {"technique":"forcingChain","cells":[3,39,32,59,66],"placements":[],"eliminations":[[3,7]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[3,7,1],[39,7,0],[32,7,1],[59,7,0]],[[3,7,1],[66,7,0],[59,7,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[3,39,32,59,66],"placements":[[3,7]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[3,7,1],[39,7,0],[32,7,1],[59,7,0]],[[3,7,1],[66,7,0],[59,7,1]]]}}
+DIFF pruned:diagonalX:0.03:0.3 index 396 forcingChain
+  registered: {"technique":"forcingChain","cells":[8,64,65,56],"placements":[[8,1]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":4,"chains":[[[8,1,0],[8,2,1],[64,2,0],[65,2,1],[65,4,0]],[[8,1,0],[56,1,1],[56,4,0],[65,4,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[8,64,65,56],"placements":[],"eliminations":[[8,1]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":4,"chains":[[[8,1,0],[8,2,1],[64,2,0],[65,2,1],[65,4,0]],[[8,1,0],[56,1,1],[56,4,0],[65,4,1]]]}}
+3000 calls, 4 differ
+== mutation 48 on pruned:classic6:0.05:0.5 2000 5
+DIFF pruned:classic6:0.05:0.5 index 106 forcingChain
+  registered: {"technique":"forcingChain","cells":[11,17,21,23,29],"placements":[],"eliminations":[[11,4]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":4,"chains":[[[11,4,1],[17,4,0],[21,4,1],[21,2,0],[23,2,1]],[[11,4,1],[29,4,0],[29,2,1],[23,2,0]]]}}
+  mutated:    {"technique":"forcingChain","cells":[11,17,21,23,29],"placements":[[11,4]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":4,"chains":[[[11,4,1],[17,4,0],[21,4,1],[21,2,0],[23,2,1]],[[11,4,1],[29,4,0],[29,2,1],[23,2,0]]]}}
+DIFF pruned:classic6:0.05:0.5 index 200 forcingChain
+  registered: {"technique":"forcingChain","cells":[24,25,19,14,26],"placements":[],"eliminations":[[24,6]],"i18nKey":"technique.forcingChain.step.contradiction","i18nArgs":{"kind":"contradiction","length":3,"chains":[[[24,6,1],[25,6,0],[19,6,1],[14,6,0]],[[24,6,1],[26,6,0],[14,6,1]]]}}
+  mutated:    {"technique":"forcingChain","cells":[24,25,19,14,26],"placements":[[24,6]],"eliminations":[],"i18nKey":"technique.forcingChain.step.forced","i18nArgs":{"kind":"forced","length":3,"chains":[[[24,6,1],[25,6,0],[19,6,1],[14,6,0]],[[24,6,1],[26,6,0],[14,6,1]]]}}
+DIFF pruned:classic6:0.05:0.5 index 414 forcingChainLong
+  registered: {"technique":"forcingChainLong","cells":[14,15,33,31,20,19],"placements":[[14,6]],"eliminations":[],"i18nKey":"technique.forcingChainLong.step.forced","i18nArgs":{"kind":"forced","length":5,"chains":[[[14,6,0],[15,6,1],[15,2,0],[33,2,1],[31,2,0],[31,1,1]],[[14,6,0],[20,6,1],[20,1,0],[19,1,1],[31,1,0]]]}}
+  mutated:    {"technique":"forcingChainLong","cells":[14,15,33,31,20,19],"placements":[],"eliminations":[[14,6]],"i18nKey":"technique.forcingChainLong.step.contradiction","i18nArgs":{"kind":"contradiction","length":5,"chains":[[[14,6,0],[15,6,1],[15,2,0],[33,2,1],[31,2,0],[31,1,1]],[[14,6,0],[20,6,1],[20,1,0],[19,1,1],[31,1,0]]]}}
+4000 calls, 10 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m45.js for S01 every start a singleton
+== mutation 45 on pruned:classic9:0.03:0.3 3000 1
+6000 calls, 0 differ
+== mutation 45 on pruned:classic9:0.1:0.5 3000 2
+6000 calls, 0 differ
+== mutation 45 on pruned:jigsaw9:0.03:0.3 1500 3
+3000 calls, 0 differ
+== mutation 45 on pruned:diagonalX:0.03:0.3 1500 4
+3000 calls, 0 differ
+== mutation 45 on pruned:classic6:0.05:0.5 2000 5
+4000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m47.js for S03 polarity proofs from a group start
+== mutation 47 on pruned:classic9:0.03:0.3 3000 1
+6000 calls, 0 differ
+== mutation 47 on pruned:classic9:0.1:0.5 3000 2
+6000 calls, 0 differ
+== mutation 47 on pruned:jigsaw9:0.03:0.3 1500 3
+3000 calls, 0 differ
+== mutation 47 on pruned:diagonalX:0.03:0.3 1500 4
+3000 calls, 0 differ
+== mutation 47 on pruned:classic6:0.05:0.5 2000 5
+4000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m50.js for S06 an endpoint at the start node itself
+== mutation 50 on pruned:classic9:0.03:0.3 3000 1
+6000 calls, 0 differ
+== mutation 50 on pruned:classic9:0.1:0.5 3000 2
+6000 calls, 0 differ
+== mutation 50 on pruned:jigsaw9:0.03:0.3 1500 3
+3000 calls, 0 differ
+== mutation 50 on pruned:diagonalX:0.03:0.3 1500 4
+3000 calls, 0 differ
+== mutation 50 on pruned:classic6:0.05:0.5 2000 5
+4000 calls, 0 differ
+wrote Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS13c\scan\m42.js for P09 the endpoint eliminations unsorted
+== mutation 42 on pruned:classic9:0.03:0.3 3000 1
+6000 calls, 0 differ
+== mutation 42 on pruned:classic9:0.1:0.5 3000 2
+6000 calls, 0 differ
+== mutation 42 on pruned:jigsaw9:0.03:0.3 1500 3
+3000 calls, 0 differ
+== mutation 42 on pruned:diagonalX:0.03:0.3 1500 4
+3000 calls, 0 differ
+== mutation 42 on pruned:classic6:0.05:0.5 2000 5
+4000 calls, 0 differ
+exit=0 seconds=195.850

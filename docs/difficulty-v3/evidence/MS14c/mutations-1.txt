@@ -1,0 +1,69 @@
+mutation 0 (P01 pointing never fires): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 1 (P02 pointing needs three places): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 2 (P03 pointing for exactly two places): DETECTED by run 0 (generator tech-cage) - 4 total, 3 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > the places share only row 1 when the third cell can hold the digit: the box keeps it [rows]
+mutation 3 (P04 only the first common unit): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 4 (P05 the last unit of the first place skipped): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 5 (P06 the first unit of the first place skipped): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 6 (P07 the last place ignored when units are compared): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 7 (P08 one place too few passed on): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 8 (P09 every unit of the first place counts): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 9 (P10 the cage cells are not spared): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 10 (P11 a cell without the digit is listed): DETECTED by run 0 (generator tech-cage) - 8 total, 7 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > an L-shaped cage across two boxes locks the digit to its row only [rows]
+mutation 11 (P12 a solved cell is not spared): NOT DETECTED, EQUIVALENT (a solved cell x holding the digit d in a unit that also holds the cage places of d cannot exist in a state built by assign (it removes d from every peer of x, and the places are cells of that unit with d still a candidate); a solved cell holding another digit has no candidate d, so the candidate guard that follows keeps it out. No consistent state reaches the guard.) - 29 total, 29 passed, 0 failed, 0 skipped - 0 failing - 0.4 s
+mutation 12 (P13 an elimination listed twice): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 13 (P14 the wrong digit): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 14 (N01 a digit that some surviving set has is needed): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 15 (N02 only the first surviving set decides): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 16 (N03 only the last surviving set decides): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 17 (N04 no digit is ever needed): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 18 (S01 the candidates of the cage do not limit the sets): DETECTED by run 0 (generator tech-cage) - 6 total, 5 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > the 1 is locked again once the only set without it no longer fits the candidates [rows]
+mutation 19 (S02 a digit already placed in the cage is not excluded): NOT DETECTED, EQUIVALENT (unreachable through cageCombo: a placed cell keeps only its own digit, assign removes that digit from the open cells that are its peers, and the cage extension (and the scan of a state propagated by it) removes it from every other open cell of the cage; so no open cell can hold a placed digit and a set containing it cannot satisfy ((cm & ~unionMask) === 0) together with the other open cells needing a digit of the set. Checked on the unpropagated state in the next mutation row.) - 29 total, 29 passed, 0 failed, 0 skipped - 0 failing - 0.3 s
+mutation 20 (S03 a set need not give every open cell a digit): NOT DETECTED - 29 total, 29 passed, 0 failed, 0 skipped - 0 failing - 0.3 s
+mutation 21 (S04 the placed digits are not subtracted from the sum): DETECTED by run 0 (generator tech-cage) - 12 total, 11 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a cage with a placed cell leaves its open cells a pair, locked to their row [rows]
+mutation 22 (S05 a placed digit may be in the sets (forbidden mask 0)): NOT DETECTED - 29 total, 29 passed, 0 failed, 0 skipped - 0 failing - 0.3 s
+mutation 23 (S06 the digits of the cage are the last set only): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 24 (S07 an empty Finding is returned): DETECTED by run 0 (generator tech-cage) - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: near misses lock nothing > a digit missing from one of the surviving sets is not locked (cage 9: {1,2,6} {1,3,5} {2,3,4}) [rows]
+mutation 25 (S08 the last cage is not scanned): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 26 (F01 the cells are the open cells): DETECTED by run 0 (generator tech-cage) - 12 total, 11 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a cage with a placed cell leaves its open cells a pair, locked to their row [rows]
+mutation 27 (F02 the size is the number of open cells): DETECTED by run 0 (generator tech-cage) - 12 total, 11 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a cage with a placed cell leaves its open cells a pair, locked to their row [rows]
+mutation 28 (F03 the digits are the forced digits): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 29 (F04 the sum is what is left): DETECTED by run 0 (generator tech-cage) - 12 total, 11 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a cage with a placed cell leaves its open cells a pair, locked to their row [rows]
+mutation 30 (F05 the technique is reported as cageSplit): DETECTED by run 0 (generator tech-cage) - 2 total, 1 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: a required digit locked to a unit leaves the rest of the unit > a 1 in every set whose places R1C2 and R1C3 share row 1 and box 1 leaves both [rows]
+mutation 31 (R01 a cageLocked technique shares the finder): DETECTED by run 0 (generator tech-cage) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: cageCombo is the one technique of both interactions > the cage group is cageCombo, ruleOf45 and cageSplit: no separate cageLocked or pointing technique
+mutation 32 (R02 cageCombo registered as cageLocked): DETECTED by run 0 (generator tech-cage) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: cageCombo is the one technique of both interactions > the cage group is cageCombo, ruleOf45 and cageSplit: no separate cageLocked or pointing technique
+mutation 33 (R03 the cage group renamed): DETECTED by run 0 (generator tech-cage) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: cageCombo is the one technique of both interactions > the cage group is cageCombo, ruleOf45 and cageSplit: no separate cageLocked or pointing technique
+mutation 34 (R04 the scope is every variant): DETECTED by run 0 (generator tech-cage) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: cageCombo is the one technique of both interactions > the cage group is cageCombo, ruleOf45 and cageSplit: no separate cageLocked or pointing technique
+mutation 35 (R05 the scope is another variant): DETECTED by run 0 (generator tech-cage) - 1 total, 0 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-cage > tech-cage: cageCombo is the one technique of both interactions > the cage group is cageCombo, ruleOf45 and cageSplit: no separate cageLocked or pointing technique
+detected 32 of 36, survivors 4, 11.0 s

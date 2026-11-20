@@ -1,0 +1,104 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing
+  loaded  ../core/js/engine/ns.js
+  loaded  ../core/js/engine/errors.js
+  loaded  ../core/js/engine/bits.js
+  loaded  ../core/js/engine/budget.js
+  loaded  js/engine/rng.js
+  loaded  ../core/js/engine/model.js
+  loaded  ../core/js/engine/constraints.js
+  loaded  ../core/js/engine/combo-table.js
+  loaded  ../core/js/engine/dfs-solver.js
+  loaded  ../core/js/engine/techniques.js
+  loaded  ../core/js/engine/logical-solver.js
+  loaded  ../core/js/engine/tech-basic.js
+  loaded  ../core/js/engine/tech-subset.js
+  loaded  ../core/js/engine/tech-fish.js
+  loaded  ../core/js/engine/tech-wing.js
+  loaded  ../core/js/engine/tech-chain.js
+  loaded  ../core/js/engine/tech-cage.js
+  loaded  ../core/js/engine/tech-ineq.js
+  loaded  ../core/js/engine/classic-model.js
+  loaded  ../core/js/engine/model-aids.js
+  loaded  js/engine/difficulty.js
+  loaded  js/engine/full-grid.js
+  loaded  js/engine/symmetry.js
+  loaded  js/engine/digger.js
+  loaded  js/engine/events.js
+  loaded  js/engine/explain-data.js
+  loaded  js/engine/pipeline.js
+  loaded  js/engine/replay.js
+  loaded  js/variants/registry.js
+  loaded  js/variants/classic.js
+  loaded  js/variants/mega.js
+  loaded  js/variants/extra-regions.js
+  loaded  js/variants/jigsaw.js
+  loaded  js/variants/killer.js
+  loaded  js/variants/greater-than.js
+  loaded  js/variants/multigrid.js
+  loaded  js/variants/wordoku.js
+  loaded  assets/wordlists/isograms.en.js
+  loaded  assets/wordlists/isograms.vi.js
+  loaded  js/worker/worker-client.js
+  loaded  ../core/js/ui/exchange.js
+  loaded  js/ui/i18n.js
+  loaded  js/ui/locale.en.js
+  loaded  js/ui/locale.vi.js
+  loaded  js/ui/locale.shell.js
+  loaded  ../core/js/ui/symbols.js
+  loaded  ../core/js/ui/board-view.js
+  loaded  js/ui/store.js
+  loaded  js/ui/controls.js
+  loaded  js/ui/step-view.js
+  loaded  js/ui/explain.js
+  loaded  js/ui/player.js
+  loaded  ../core/assets/wordbook/words.vi.js
+  loaded  ../core/assets/wordbook/words.en.js
+  loaded  ../core/js/ui/wordbook.js
+  loaded  js/ui/result-view.js
+  loaded  js/ui/cache.js
+  loaded  js/ui/history.js
+  loaded  js/ui/export.js
+  loaded  js/ui/a11y.js
+  loaded  js/ui/theme.js
+  loaded  js/ui/help.js
+  loaded  js/ui/app.js
+
+pipeline
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the keeper: quality 0 for a required rating, 0.5 for a shallow one, else the distance > MS05b1-T01: each strict improvement replaces, in reverse order none does, the winner is returned (4 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the keeper: quality 0 for a required rating, 0.5 for a shallow one, else the distance > MS05b1-T01: a shallow rating after a required one is no gain; an equal quality keeps the first (6 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the keeper: quality 0 for a required rating, 0.5 for a shallow one, else the distance > MS05b1-T01: closer(rating, model) is the question offer asks, and it needs the candidate model (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the keeper: quality 0 for a required rating, 0.5 for a shallow one, else the distance > MS05b1-T01: a count of 2 or an unprovable (null) count never stores; a proof contradicted marks unsound (4 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the keeper: quality 0 for a required rating, 0.5 for a shallow one, else the distance > MS05b1-T01: a cancellation during the count propagates and stores nothing (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: the same rating is required for one model and shallow for another (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: a sample is exact for the model it was dug on, not for the requested one (2 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: a safety-net replacement is rated again, the rating of the strategy is not reused (5 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: removing a sign starts a new memo, so the same clues are rated again for the new signs (43 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: Killer asks closer about the layout it rated and offers that layout (538 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > every rating and prefilter is made for the actual model > MS05b1-T02: Greater-Than offers the thinned model with the rating it made for it (31 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: sampling stops at the first exact sample; a shallow sample does not block it (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: of two shallow samples the first is the result; no search finds a strictly better one (3 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: an exact keeper ends the sampling and the attempt: no other sample, no search (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: a required neighbour with a lower score is kept; the search ends with no further proposal (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: shallow neighbours are followed until a required one: its rating is the last (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: of equal quality the first puzzle in the band stays; later states of the search do not replace it (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > MS05b1-T03: the old caps still bound a search that never finds a required neighbour (3 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > a candidate above the band is refined downward first > MS05b1-T03: refined to a required rating: returned at once, nothing else is rated or proposed (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > a candidate above the band is refined downward first > MS05b1-T03: refined to a shallow rating inside the band: the search goes on from the refined puzzle (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > a candidate above the band is refined downward first > MS05b1-T03: a refinement that stays above the band is returned: no proposal is made (2 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > a candidate above the band is refined downward first > MS05b1-T03: a refinement that stays incomplete is returned: no proposal is made (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the first exact result ends the search: samples, local search, refinement and attempts > a candidate above the band is refined downward first > MS05b1-T03: a refinement that stays below the band is returned: no proposal is made (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: a required rating inside the band is tune.hit with required true (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: a shallow rating inside the band is tune.shallow with required false (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: every other sample is tune.miss with required null, a solved one off the band included (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: no event carries a target: nothing draws one yet (1 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: Very Easy stays vacuous: a real puzzle is a hit with required true (2 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: a real board that cannot reach the level misses with required null, never true (47 ms)
+  ok   pipeline > digger: exactness needs the tier of the level (MS05b1) > the tune verdicts, the events and the warnings > MS05b1-T04: a real complete result inside the band that needs no Nightmare technique is shallow (702 ms)
+ok   pipeline: 30 passed  (1.41 s)
+
+Suites: 1
+Tests:  30 total, 30 passed, 0 failed, 0 skipped
+Time:   1.41 s running tests, 1.53 s total
+MS05r4 exit=0 seconds=1.653
+runlog: focused-pipeline-MS05b1 exit=0 node=1.653 wall=106.948

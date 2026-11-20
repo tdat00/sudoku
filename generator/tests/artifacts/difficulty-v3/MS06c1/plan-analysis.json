@@ -1,0 +1,142 @@
+[
+  {
+    "label": "g-analysis-G01",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G01",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G01.json"
+    ],
+    "projectionSeconds": 3,
+    "projectionBasis": "MS05r6a b2-analysis-G01 0.639 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G02",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G02",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G02.json"
+    ],
+    "projectionSeconds": 3,
+    "projectionBasis": "MS05r6a b2-analysis-G02 0.489 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G03",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G03",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G03.json"
+    ],
+    "projectionSeconds": 12,
+    "projectionBasis": "MS05r6a b2-analysis-G03 6.221 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G04",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G04",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G04.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS05r6a b2-analysis-G04 1.059 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G05",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G05",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G05.json"
+    ],
+    "projectionSeconds": 4,
+    "projectionBasis": "MS05r6a b2-analysis-G05 0.993 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G06",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G06",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G06.json"
+    ],
+    "projectionSeconds": 6,
+    "projectionBasis": "MS05r6a b2-analysis-G06 2.416 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G07",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G07",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G07.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS05r6a b2-analysis-G07 1.508 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G08",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G08",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G08.json"
+    ],
+    "projectionSeconds": 3,
+    "projectionBasis": "MS05r6a b2-analysis-G08 0.507 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G09",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G09",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G09.json"
+    ],
+    "projectionSeconds": 23,
+    "projectionBasis": "MS05r6a b2-analysis-G09 13.844 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G10",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G10",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G10.json"
+    ],
+    "projectionSeconds": 41,
+    "projectionBasis": "MS05r6a b2-analysis-G10 25.781 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G11",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G11",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G11.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MS05r6a b2-analysis-G11 8.336 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G12",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G12",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G12.json"
+    ],
+    "projectionSeconds": 9,
+    "projectionBasis": "MS05r6a b2-analysis-G12 4.187 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G13",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G13",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G13.json"
+    ],
+    "projectionSeconds": 36,
+    "projectionBasis": "MS05r6a b2-analysis-G13 22.225 s on the combined source; 1.5 x + 2 s"
+  },
+  {
+    "label": "g-analysis-G14",
+    "args": [
+      "tests\\replay-goldens.js",
+      "--ids=G14",
+      "--record=..\\docs\\difficulty-v3\\evidence\\MS06c1\\analysis\\G14.json"
+    ],
+    "projectionSeconds": 5,
+    "projectionBasis": "MS05r6a b2-analysis-G14 1.811 s on the combined source; 1.5 x + 2 s"
+  }
+]

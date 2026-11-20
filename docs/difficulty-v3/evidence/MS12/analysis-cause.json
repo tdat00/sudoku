@@ -1,0 +1,130 @@
+{
+ "rows": [
+  {
+   "id": "G01",
+   "request": "classic9 expert 3275974478",
+   "admitsXyChain": false,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 0.4
+  },
+  {
+   "id": "G02",
+   "request": "classic9 veryEasy 1",
+   "admitsXyChain": false,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 0
+  },
+  {
+   "id": "G03",
+   "request": "classic9 nightmare 42",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": false,
+   "changedInLedger": true,
+   "seconds": 0.2
+  },
+  {
+   "id": "G04",
+   "request": "classic9 hell1 2400651925",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": false,
+   "changedInLedger": true,
+   "seconds": 8
+  },
+  {
+   "id": "G05",
+   "request": "classic9 hell1 2299986211",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 8.7
+  },
+  {
+   "id": "G06",
+   "request": "jigsaw9 nightmare 42",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 0.1
+  },
+  {
+   "id": "G07",
+   "request": "jigsaw9 nightmare 3962167687",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 0.2
+  },
+  {
+   "id": "G08",
+   "request": "killer veryEasy 1",
+   "admitsXyChain": false,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 0
+  },
+  {
+   "id": "G09",
+   "request": "killer expert 3514204290",
+   "admitsXyChain": false,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 20.6
+  },
+  {
+   "id": "G10",
+   "request": "killer nightmare 42",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 25.5
+  },
+  {
+   "id": "G11",
+   "request": "greaterThan expert 42",
+   "admitsXyChain": false,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 16
+  },
+  {
+   "id": "G12",
+   "request": "greaterThan hard 3115968914",
+   "admitsXyChain": false,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": true,
+   "changedInLedger": false,
+   "seconds": 0.6
+  },
+  {
+   "id": "G13",
+   "request": "samurai nightmare 42",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": false,
+   "changedInLedger": true,
+   "seconds": 12.6
+  },
+  {
+   "id": "G14",
+   "request": "mega16 hell2 12",
+   "admitsXyChain": true,
+   "withoutEqualsSaved": true,
+   "ledgerEqualsSaved": false,
+   "changedInLedger": true,
+   "seconds": 5.7
+  }
+ ]
+}

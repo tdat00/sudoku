@@ -3,7 +3,12 @@
  * `sg.history.v1`, newest first, at most 100) and shown in the left panel (`#history-root`). An entry holds
  * what the list and the export picker show (variant, level, seed, clues, score) and the configuration that
  * rebuilds the puzzle; its `id` (`keyOf`) is derived from those fields when the list is read, not stored.
- * Picking one regenerates it (same seed, same puzzle; the result cache serves it at once when it can).
+ * An entry may also hold `ratingVersion`, the `rating.ratingVersion` of the result it was made from (a
+ * positive integer, never the current version; it is display data, not part of the key or of the recipe). The
+ * panel says "made by an earlier version" for an entry without it or with a smaller one than the current
+ * `SG.difficulty.RATING_VERSION`, because no puzzle is stored, only its recipe.
+ * Picking one regenerates it from its recipe with the current rating model (the result cache serves it at
+ * once when it holds a compatible one); an entry made by an earlier version may give another puzzle.
  * `entryOf`, `keyOf` and `createList` are pure data/storage (no DOM; storage access is guarded, memory-only
  * when blocked). `init(app)` fills the panel and follows the app's 'result' and 'locale' events; `destroy()`
  * undoes it. Loads in Node: the DOM and `localStorage` are touched only inside functions.
@@ -19,10 +24,15 @@
   const VERSION = 1;
   const LIMIT = 100;
   const STORED_FIELDS = Object.freeze(['variantId', 'requested', 'level', 'seed', 'clues', 'score',
-    'symbolMode', 'symmetry', 'digOrder', 'maxAttempts', 'variantOptions']);
+    'symbolMode', 'symmetry', 'digOrder', 'maxAttempts', 'variantOptions', 'ratingVersion']);
 
   function isNum(x) {
     return typeof x === 'number' && isFinite(x);
+  }
+
+  // A rating version is a positive integer; anything else is no marker (it is never coerced or rounded).
+  function isVersion(x) {
+    return Number.isInteger(x) && x > 0;
   }
 
   function countClues(givens) {
@@ -64,7 +74,7 @@
     const rating = result.rating || {};
     const requested = typeof config.difficulty === 'string' ? config.difficulty : rating.level;
     if (typeof requested !== 'string') return null;
-    return withId({
+    const entry = {
       variantId: config.variantId,
       requested: requested,
       level: typeof rating.level === 'string' ? rating.level : requested,
@@ -76,7 +86,10 @@
       digOrder: config.digOrder,
       maxAttempts: config.maxAttempts,
       variantOptions: plainOptions(config.variantOptions)
-    });
+    };
+    // The producer as the result states it: a missing or malformed version stays missing, never today's.
+    if (isVersion(rating.ratingVersion)) entry.ratingVersion = rating.ratingVersion;
+    return withId(entry);
   }
 
   function idOf(e) {
@@ -88,11 +101,13 @@
     return Object.assign({ id: idOf(e) }, e);
   }
 
-  // What is written: the entry without its `id` (derived when read); older `at` and `cells` fields go too.
+  // What is written: the entry without its `id` (derived when read); older `at` and `cells` fields go too,
+  // and a rating version that is not a positive integer (the recipe stays).
   function storedEntry(e) {
     const out = {};
     STORED_FIELDS.forEach(function (name) {
-      if (e[name] !== undefined) out[name] = e[name];
+      if (e[name] === undefined || (name === 'ratingVersion' && !isVersion(e[name]))) return;
+      out[name] = e[name];
     });
     return out;
   }
@@ -303,6 +318,14 @@
       ];
     }
 
+    // Only the recipe is stored: an entry without a version, or with one below the current model's, was made
+    // by an earlier version. An equal or higher version, or one that cannot be compared, gets no note.
+    function madeEarlier(entry) {
+      if (entry.ratingVersion === undefined) return true;
+      const current = SG.difficulty ? SG.difficulty.RATING_VERSION : undefined;
+      return isVersion(current) && entry.ratingVersion < current;
+    }
+
     function open(entry) {
       opening = entry.id;
       const run = app.generate(overridesOf(entry));
@@ -313,14 +336,20 @@
 
     function item(entry) {
       const name = title(entry);
+      const earlier = madeEarlier(entry);
+      const lines = [
+        make(doc, 'span', { class: 'history-item__title', text: nameOf('variant.', entry.variantId) }),
+        make(doc, 'span', { class: 'history-item__meta' }, metaNodes(entry))
+      ];
+      if (earlier) {
+        lines.push(make(doc, 'span', { class: 'history-item__meta history-item__note', 'data-role': 'earlier',
+          text: t('history.item.earlier') }));
+      }
       const main = make(doc, 'button', {
         type: 'button', class: 'history-item__open', 'data-role': 'open',
         'aria-current': entry.id === currentId ? 'true' : null,
-        title: t('history.open.title')
-      }, [
-        make(doc, 'span', { class: 'history-item__title', text: nameOf('variant.', entry.variantId) }),
-        make(doc, 'span', { class: 'history-item__meta' }, metaNodes(entry))
-      ]);
+        title: t(earlier ? 'history.item.earlier.title' : 'history.open.title')
+      }, lines);
       main.addEventListener('click', function () { open(entry); });
       const remove = make(doc, 'button', {
         type: 'button', class: 'btn btn--ghost btn--icon btn--sm history-item__remove', 'data-role': 'remove',
@@ -433,6 +462,11 @@
       'history.clear.title': 'Remove every puzzle from the list',
       'history.cleared': 'The list of puzzles was cleared.',
       'history.open.title': 'Generate this puzzle again',
+      'history.item.earlier': 'Made by an earlier version; selecting this entry regenerates the puzzle ' +
+        'using the current rating model.',
+      'history.item.earlier.title': 'History stores the seed and settings, not the puzzle. Regeneration ' +
+        'uses the current rating model, so the puzzle, difficulty level or score may change. A compatible ' +
+        'cached result may be reused.',
       'history.item.title': '{variant} - {level}',
       'history.item.meta': ': score {score}, seed {seed}',
       'history.remove': 'Remove \u201c{name}\u201d from the list'
@@ -444,6 +478,11 @@
       'history.clear.title': 'Xóa mọi đề khỏi danh sách',
       'history.cleared': 'Đã xóa danh sách các đề.',
       'history.open.title': 'Tạo lại đề này',
+      'history.item.earlier': 'Do phiên bản cũ hơn tạo; chọn mục này sẽ tạo lại đề bằng mô hình tính điểm ' +
+        'hiện tại.',
+      'history.item.earlier.title': 'Lịch sử lưu seed và các tùy chọn, không lưu đề. Khi tạo lại, đề, ' +
+        'mức độ khó hoặc điểm có thể thay đổi theo mô hình tính điểm hiện tại. Có thể dùng lại kết quả ' +
+        'trong bộ nhớ đệm nếu còn phù hợp.',
       'history.item.title': '{variant} - {level}',
       'history.item.meta': ': điểm {score}, seed {seed}',
       'history.remove': 'Xóa \u201c{name}\u201d khỏi danh sách'

@@ -1,0 +1,32 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\test-epoch4-proof.js --delta --v1=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json --v2=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest-a3-v2.json
+{
+  "schema": "ms18d-gp-v2-delta-proof-v1",
+  "ok": true,
+  "problems": [],
+  "subset": [
+    "MS18d-Q2-A",
+    "MS18d-Q3-A",
+    "MS18d-Q4-A"
+  ],
+  "m": 3,
+  "declined": [],
+  "unresolved": [],
+  "ownerCommit": "f2f345a1d1748e041ca296ad898adcbfa971b837",
+  "v1": {
+    "rawSha256": "a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5",
+    "manifestSha256": "b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f",
+    "runSlots": 229
+  },
+  "v2": {
+    "rawSha256": "989799e62fe2b8864da2de1bedc35264fb717f84b004689f6de941e03d747125",
+    "manifestSha256": "7d63342a0ffb1a3a6794959276ba4a5aa2ef116f8f6ef154b9888220f0b7dd69",
+    "runSlots": 232,
+    "requests": 3950,
+    "cells": 79
+  },
+  "expected": {
+    "runSlots": 232,
+    "requests": 3950
+  }
+}
+exit=0 seconds=0.267

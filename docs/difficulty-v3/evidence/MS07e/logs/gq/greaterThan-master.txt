@@ -1,0 +1,10 @@
+$ node tests\qualify.js --variant=greaterThan --level=master --jobs=4 --json=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-master.json --markdown=..\docs\difficulty-v3\evidence\MS07e\qualification\greaterThan-master.md
+qualify: 1 levels, 4 jobs, AMD EPYC 7763 64-Core Processor, Node v26.13.0, engine 8b70875+changes sources 029720df77c6c12a
+greaterThan/master: 40/40 hits, p95 14.5 s (budget 10.0 s), hidden
+
+| variant | level | n | hits | rate | p50 | p95 | max | budget | verdict |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| greaterThan | master | 40 | 40 | 100 % | 744 ms | 14.5 s | 18.6 s | 10.0 s | hidden |
+
+greaterThan: []
+exit=0 seconds=35.245

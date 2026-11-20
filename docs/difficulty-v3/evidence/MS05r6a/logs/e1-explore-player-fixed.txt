@@ -1,0 +1,2 @@
+wrote ..\docs\difficulty-v3\evidence\MS05r6a\pins\explore-player-fixed.json: 11 requests, 0 reveal-fold step(s)
+MS05r6a exit=0 seconds=5.6

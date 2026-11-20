@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "regression-hashes",
+  "sourceHash": "e02692af7d4acb24d9406c7e6376fcd7519dc2204189b81319f20d0564f0eaf5",
+  "manifestHash": "b022818aa3fb6736595d5280e80e9e3320e0fca83c1658e18ea8fcacef094304",
+  "node": "v26.13.0",
+  "commit": "c8f0006a2bf537769f156cc0f00f7c6af9546230",
+  "dirty": true,
+  "generatedAt": "2026-11-16T02:28:06.631Z",
+  "argv": ["--hash-key=wordoku/normal","--hash-from=0","--hash-count=5","--hash-record=..\\docs\\difficulty-v3\\evidence\\MS10b\\hashes\\wordoku-normal-00.json"],
+  "records": [
+    {"key":"wordoku/normal#1","variant":"wordoku","level":"normal","seed":1,"hash":"106d019f85ac4e3b","ms":478,"overrides":[]},
+    {"key":"wordoku/normal#2","variant":"wordoku","level":"normal","seed":2,"hash":"84c18ad36aa77cf7","ms":7,"overrides":[]},
+    {"key":"wordoku/normal#3","variant":"wordoku","level":"normal","seed":3,"hash":"b759edc0722cbfe4","ms":483,"overrides":[]},
+    {"key":"wordoku/normal#5","variant":"wordoku","level":"normal","seed":5,"hash":"cdb6125093a657cc","ms":450,"overrides":[]},
+    {"key":"wordoku/normal#8","variant":"wordoku","level":"normal","seed":8,"hash":"3749ae2311557287","ms":333,"overrides":[]}
+  ]
+}

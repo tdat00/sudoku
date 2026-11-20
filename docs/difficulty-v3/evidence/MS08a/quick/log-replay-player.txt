@@ -1,0 +1,52 @@
+$ node ..\.github\scripts\generator-quick.js run replay-player --results-dir=..\docs\difficulty-v3\evidence\MS08a\quick
+==== shard player (69 tests): node tests/node-runner.js --suite=player --results=..\docs\difficulty-v3\evidence\MS08a\quick\generator-player.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 62 passed, 7 failed  (141.31 s)
+
+Failures:
+  FAIL player > player: the replay steps of a result > a guided step takes its rated and refused counts from the spans of its moves, in move order
+       AssertionError: expected Array(2)[6, 4] to equal Array(2)[9, 1]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:355:52)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the replay steps of a result > one complete move per details step: no position shows half of an exchange
+       AssertionError: expected 30 to be 29
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:479:28)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: texts of the steps > the seven compact steps of the example read as specified, in English and Vietnamese
+       AssertionError: expected Array(2)["Choosing clues to remove", "Across 3 accepted removals, compare 33 possible removals (8 rejected); the removed clues are at R1C5, R9C5, R3C4, R7C..."] to equal Array(2)["Choosing clues to remove", "Across 3 accepted removals, compare 38 possible removals (5 rejected); the removed clues are at R2C7, R8C3, R3C1, R7C..."]
+       at Q:\git\sudoku\generator\tests\suites\player.test.js:667:59
+       at Array.forEach (<anonymous>)
+       at Q:\git\sudoku\generator\tests\suites\player.test.js:666:19
+       at inLocale (Q:\git\sudoku\generator\tests\suites\player.test.js:82:14)
+  FAIL player > player: texts of the steps > tells what a compact step folds: the inner peak (above the level with clues restored, or plain) and nothing for a step that folds nothing
+       AssertionError: expected 1964 to be 1967
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:706:65)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the table models > example: start at 0, zero for the solution, scored with change and before, final at the end
+       AssertionError: expected Array(3)["scored", 621, 574] to equal Array(3)["scored", 235, 188]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:840:53)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > example: compact step 5 frames R6C1 as the cause, keeps R4C9 as removed, and the board gets the frame
+       AssertionError: expected Array(3)[Array(1)[12], Array(1)[68], Array(0)[]] to equal Array(3)[Array(1)[45], Array(1)[35], Array(0)[]]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:925:89)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > frames exactly the jumps that one clue or one sign causes (the 14 goldens, both views)
+       AssertionError: expected 29 to be 31
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1006:21)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  69 total, 62 passed, 7 failed, 0 skipped
+Time:   141.31 s running tests, 141.50 s total
+Results: docs/difficulty-v3/evidence/MS08a/quick/generator-player.json
+shard player: exit 1, 141.7 s
+FAILED: player
+exit=1 seconds=142.095

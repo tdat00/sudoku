@@ -1,0 +1,34 @@
+inventory after the #15 repair 154, after the #21 repair 154, equal name for name and order: true
+ 1 classic9-nightmare   selects  8 (planned 8) same names
+ 2 classic9-hell1       selects  8 (planned 8) same names
+ 3 classic9-veryEasy    selects  8 (planned 8) same names
+ 4 classic9-easy        selects  8 (planned 8) same names
+ 5 classic9-normal      selects  8 (planned 8) same names
+ 6 classic9-hard        selects  8 (planned 8) same names
+ 7 classic9-expert      selects  8 (planned 8) same names
+ 8 classic9-master      selects  8 (planned 8) same names
+ 9 confusion-matrix     selects  1 (planned 1) same names
+10 levels               selects  4 (planned 4) same names
+11 spec9                selects  8 (planned 8) same names
+12 spec-other           selects  4 (planned 4) same names
+13 qualification        selects  6 (planned 6) same names
+14 clue-floor           selects  9 (planned 9) same names
+15 score-v3             selects 15 (planned 15) same names
+16 score-table          selects  4 (planned 4) same names
+17 labelled             selects  7 (planned 7) same names
+18 removing             selects  2 (planned 2) same names
+19 oracle               selects  7 (planned 7) same names
+20 guarantees           selects 10 (planned 10) same names
+21 cap                  selects  5 (planned 5) same names
+22 unreachable          selects  5 (planned 5) same names
+23 safety               selects  3 (planned 3) same names
+helper lines 1568-1579, the refinement test lines 1590-1594
+  hunk @@ -1568,3 +1568,6 @@: new lines 1568-1573 inside the helper or the one test
+  hunk @@ -1588 +1591,3 @@: new lines 1591-1593 inside the helper or the one test
+2 hunk(s), 9 line(s) added, 4 removed
+call sites now:
+  exhaustedIn('classic9', 'nightmare', 3, 'refine', 1, 24);
+  var run = exhaustedIn('classic9', 'hard', 3, 'search', 1);
+  exhaustedIn('greaterThan', 'hard', 2, 'signs');
+  exhaustedIn('killer', 'expert', 6, 'cages');
+exactly the ruled call sites (only the first has the sixth argument 24): true

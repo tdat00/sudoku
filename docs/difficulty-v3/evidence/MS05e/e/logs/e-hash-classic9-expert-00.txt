@@ -1,0 +1,2 @@
+  classic9/expert: seeds 1, 2, 3, 5, 8 (0.4 s)
+recorded 5 of 520 keys (classic9/expert, seed indexes 0-4 (seeds 1, 2, 3, 5, 8)) in docs/difficulty-v3/evidence/MS05e/hashes/classic9-expert-00.json; a ledger is one shard, merge them all with --hash-merge

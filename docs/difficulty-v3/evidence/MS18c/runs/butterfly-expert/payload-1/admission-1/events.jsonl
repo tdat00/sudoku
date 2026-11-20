@@ -1,0 +1,6 @@
+{"at":"2026-11-18T22:00:40.912Z","t":0.1396619,"type":"launcher-start","who":"launcher","pid":25552,"node":"v26.13.0","cell":"butterfly/expert","runId":"ms18c-20261118T220030018-30572","slot":1,"ordinal":1,"startSeconds":0.1391148}
+{"at":"2026-11-18T22:00:40.915Z","t":0.1417849,"type":"readiness-start","who":"launcher","capSeconds":45,"remaining":44.8582313}
+{"at":"2026-11-18T22:00:48.055Z","t":7.2816576,"type":"readiness-end","who":"launcher","admitted":true,"eligible":false,"kind":null,"readinessSeconds":7.281,"ready":false}
+{"at":"2026-11-18T22:00:48.061Z","t":7.2883849,"type":"launch-intent","who":"launcher","slot":1,"ordinal":1,"argv":["tests\\qualify.js","--variant=butterfly","--level=expert","--jobs=4","--json=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-expert\\payload-1\\admission-1\\qualifier.json","--markdown=..\\docs\\difficulty-v3\\evidence\\MS18c\\runs\\butterfly-expert\\payload-1\\admission-1\\qualifier.md"]}
+{"at":"2026-11-18T22:00:48.083Z","t":7.3097235,"type":"qualifier-created","who":"launcher","pid":32612,"rSeconds":7.3075265}
+{"at":"2026-11-18T22:01:03.521Z","t":22.748366,"type":"qualifier-exit","who":"launcher","code":0,"signal":null,"seconds":15.4408048,"eventFailures":0}

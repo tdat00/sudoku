@@ -1,0 +1,21 @@
+$ node tests\node-runner.js --list-tests
+Missing value for --list-tests
+
+Usage: node tests/node-runner.js [options]
+
+Without options only the quick suites of tests/suites run.
+
+  --all                    run the quick suites and the manual (heavy) ones of tests/manual
+  --manual                 run only the manual (heavy) suites
+  --suite=<name>[,<name>]  run only these suites, quick or manual (file name without ".test.js")
+  --filter=<text>          run only tests whose full name contains <text> (case-insensitive)
+  --exact=<full name>      run only tests whose full name ("suite > describe > test") is exactly this
+                           (case-sensitive, every test of that name); not with --filter
+  --list-tests=<file.json> write the inventory of the selected tests (no test, hook or benchmark runs; the
+                           suites still register as for a run); a new project-relative path in the repository
+  --results=<file.json>    run, then also write the result of every selected test there (same path rules);
+                           not with --list-tests
+  --bail                   stop after the first failing test
+  --verbose                print every test, skipped source files and benchmark timings
+  --help                   show this help
+exit=1 seconds=0.090

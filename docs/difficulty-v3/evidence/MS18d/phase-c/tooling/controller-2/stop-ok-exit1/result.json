@@ -1,0 +1,98 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "stop-ok-exit1",
+  "standin": true,
+  "profile": "gp-cell",
+  "cell": {
+    "variant": "classic4",
+    "level": "veryEasy",
+    "targetMs": 31
+  },
+  "task": "stand-in stop-ok-exit1",
+  "startedAtMs": 1795077717176,
+  "outcome": "stop",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-cell",
+    "outcome": "stop",
+    "complete": false,
+    "controllerExit": 65,
+    "kinds": [
+      "contradiction"
+    ],
+    "problems": [
+      "ok and 1 of 1 with the exit code 1"
+    ],
+    "header": {
+      "node": "v26.13.0",
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "runs": 50,
+      "warmup": 0,
+      "seed": 7000
+    },
+    "row": {
+      "variant": "classic4",
+      "level": "veryEasy",
+      "target": "31 ms",
+      "p50": "7.75",
+      "p95": "15.5",
+      "max": "24.8",
+      "mean": "10.3",
+      "mark": "ok"
+    },
+    "summary": {
+      "met": 1,
+      "cells": 1,
+      "percent": "100"
+    },
+    "miss": null,
+    "cli": {
+      "exit": 1,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=1 seconds=0.136",
+      "exit": 1
+    }
+  },
+  "cli": {
+    "exit": 1,
+    "signal": null
+  },
+  "tee": {
+    "pid": 12532,
+    "processExit": 1,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=1 seconds=0.136",
+    "exit": 1
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 424,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 15000,
+      "systemMicros": 93000
+    },
+    "tee": {
+      "userMicros": 46000,
+      "systemMicros": 109000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 65,
+  "finishedAtMs": 1795077718629
+}

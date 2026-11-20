@@ -1,0 +1,4 @@
+$ node Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18d\phase-b\fake-child.js ok
+line one
+line two
+exit=0 seconds=1.292

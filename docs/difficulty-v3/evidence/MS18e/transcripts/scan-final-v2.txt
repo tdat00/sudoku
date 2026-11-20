@@ -1,0 +1,17 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs scan --phase final --out docs\difficulty-v3\evidence\MS18e\audit\manual-hidden-requests-final-v2.json
+Q:\git\sudoku\generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs:892
+  const normal = rows.filter((r) => r.id === 'GD-normal')[0];
+        ^
+
+SyntaxError: Identifier 'normal' has already been declared
+    at wrapSafe (node:internal/modules/cjs/loader:1900:18)
+    at Module._compile (node:internal/modules/cjs/loader:1942:20)
+    at Object..js (node:internal/modules/cjs/loader:2108:10)
+    at Module.load (node:internal/modules/cjs/loader:1690:32)
+    at Module._load (node:internal/modules/cjs/loader:1480:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v26.13.0
+exit=1 seconds=0.082

@@ -1,0 +1,64 @@
+{
+  "schema": "ms18d-c-acquisition-1",
+  "thresholds": {
+    "lateStartMs": 2000,
+    "releaseGapMs": 15000
+  },
+  "requestedAtMs": 1795092520598,
+  "startedAtMs": 1795092520676,
+  "lockAcquiredAtMs": 1795092520603,
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "historyProblems": [],
+  "watch": {
+    "schema": "ms18d-c-watch-1",
+    "firstCheckMs": 1795092505194,
+    "lastCheckMs": 1795092520584,
+    "checks": 62,
+    "windowChecks": 62,
+    "maxIntervalMs": 260,
+    "windowSightings": 0,
+    "restarts": [],
+    "gaveUp": false,
+    "ok": true
+  },
+  "busyAtRequest": false,
+  "startDelayMs": 78,
+  "late": false,
+  "latestRelease": {
+    "atMs": 1795090720543,
+    "label": "B",
+    "origin": "own"
+  },
+  "releaseGapMs": 1800133,
+  "reasons": [],
+  "decision": "proceed",
+  "lockAtStart": {
+    "sharedPresent": true,
+    "timingPresent": false,
+    "ownerPid": 30860,
+    "task": "stand-in l2",
+    "controllerPid": 20316,
+    "controllerParentPid": 30860,
+    "wrapperPid": 30860
+  },
+  "historyFiles": [
+    {
+      "label": "A",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-FYL1zE\\logs18\\a.jsonl",
+      "present": true
+    },
+    {
+      "label": "B",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-FYL1zE\\logs18\\b.jsonl",
+      "present": true
+    },
+    {
+      "label": "C",
+      "file": "Q:\\git\\sudoku\\.scratch-ms18d-c-ps-FYL1zE\\logs18\\c.jsonl",
+      "present": false
+    }
+  ]
+}

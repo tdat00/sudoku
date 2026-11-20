@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > difficulty: spec(level, model) on a 9x9 board","exact":null,"count":8},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 185.6,
+  "results": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 4.4,
+    "tests": [
+      {"suite":"difficulty","name":"returns the fields of design.md section 13.7","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > returns the fields of design.md section 13.7","status":"pass","ms":1.316,"reason":"","error":null,"ordinal":4},
+      {"suite":"difficulty","name":"has the bands of the table, not scaled","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > has the bands of the table, not scaled","status":"pass","ms":0.195,"reason":"","error":null,"ordinal":5},
+      {"suite":"difficulty","name":"keeps the clue ranges of section 5.7 (expert as hard, the hell levels as nightmare)","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > keeps the clue ranges of section 5.7 (expert as hard, the hell levels as nightmare)","status":"pass","ms":0.287,"reason":"","error":null,"ordinal":6},
+      {"suite":"difficulty","name":"allows exactly the techniques with 1.25 x weight below the band maximum, in ladder order","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > allows exactly the techniques with 1.25 x weight below the band maximum, in ladder order","status":"pass","ms":0.771,"reason":"","error":null,"ordinal":7},
+      {"suite":"difficulty","name":"derives the allowed groups from the allowed techniques; no group owns a level","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > derives the allowed groups from the allowed techniques; no group owns a level","status":"pass","ms":0.252,"reason":"","error":null,"ordinal":8},
+      {"suite":"difficulty","name":"uses the technique oracle at every level and the proposal dig from nightmare on","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > uses the technique oracle at every level and the proposal dig from nightmare on","status":"pass","ms":0.088,"reason":"","error":null,"ordinal":9},
+      {"suite":"difficulty","name":"never offers a technique that is scoped to another variant","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > never offers a technique that is scoped to another variant","status":"pass","ms":0.265,"reason":"","error":null,"ordinal":10},
+      {"suite":"difficulty","name":"asks for fewer clues per unit on boards with fewer digits, never for more","fullName":"difficulty > difficulty: spec(level, model) on a 9x9 board > asks for fewer clues per unit on boards with fewer digits, never for more","status":"pass","ms":0.369,"reason":"","error":null,"ordinal":11}
+    ],
+    "suites": [
+      {"name":"difficulty","total":8,"passed":8,"failed":0,"skipped":0,"ms":4.278}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > difficulty: spec(level, model) on a 9x9 board","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\spec9.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

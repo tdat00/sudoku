@@ -1,0 +1,125 @@
+$ node tests\replay-goldens.js --merge=..\docs\difficulty-v3\evidence\MS09a\analysis --check
+merged 14 ledgers: all 14 keys exactly once, recorded from the current sources
+G01: matches replay-goldens.js
+G02: matches replay-goldens.js
+G03: matches replay-goldens.js
+G04: 5 fields differ from replay-goldens.js
+  rows[6][4]: saved 2427, fresh 2403
+  rows[6][5]: saved 1507, fresh 1483
+  rows[7][4]: saved 2427, fresh 2403
+  details[28]: saved 2427, fresh 2403
+  details[29]: saved 2427, fresh 2403
+G05: 11 fields differ from replay-goldens.js
+  rows[4][4]: saved 2461, fresh 2501
+  rows[4][5]: saved 2411, fresh 2451
+  rows[5][4]: saved 2461, fresh 2501
+  details[29]: saved 2461, fresh 2501
+  details[30]: saved 2461, fresh 2501
+  jumps[0].to: saved 2461, fresh 2501
+  jumps[0].after.W: saved 9034.25, fresh 9894.25
+  jumps[0].after.R: saved 1014.239861, fresh 1054.231409
+  jumps[0].choice.chosen: saved 2461, fresh 2501
+  jumps[0].firstUse.k: saved 14, fresh 17
+  jumps[0].firstUse.n: saved 77, fresh 79
+G06: 70 fields differ from replay-goldens.js
+  counts.details: saved 32, fresh 33
+  rows[2][6]: saved "hiddenSingleBox", fresh "nakedSingle"
+  rows[2][9]: saved "N", fresh "—"
+  rows[3][1]: saved 26, fresh 27
+  rows[3][3]: saved 51, fresh 53
+  rows[3][4]: saved 48, fresh 49
+  rows[3][5]: saved 4, fresh 5
+  rows[3][9]: saved "—", fresh "N"
+  rows[4][1]: saved 27, fresh 28
+  rows[4][3]: saved 53, fresh 55
+  rows[4][4]: saved 492, fresh 138
+  rows[4][5]: saved 444, fresh 89
+  rows[4][6]: saved "skyscraper", fresh "boxLine"
+  rows[4][7]: saved "Y", fresh "—"
+  rows[4][8]: saved "R5C9", fresh "—"
+  rows[4][9]: saved "—", fresh "N"
+  rows[5][4]: saved 710, fresh 2072
+  rows[5][5]: saved 218, fresh 1934
+  rows[5][6]: saved "simpleColouring", fresh "forcingChainLong"
+  rows[5][7]: saved "—", fresh "Y"
+  rows[5][8]: saved "—", fresh "R4C6"
+  rows[5][9]: saved "N", fresh "—"
+  rows[6][1]: saved 30, fresh 31
+  rows[6][2]: saved "G/Choose", fresh "G+A/Mixed"
+  rows[6][3]: saved 59, fresh 57
+  ... and 45 more
+G07: matches replay-goldens.js
+G08: matches replay-goldens.js
+G09: 80 fields differ from replay-goldens.js
+  counts.compact: saved 10, fresh 9
+  counts.details: saved 41, fresh 39
+  rows.length: saved 10, fresh 9
+  rows[3][1]: saved 18, fresh 21
+  rows[3][3]: saved 36, fresh 42
+  rows[3][4]: saved 40, fresh 43
+  rows[3][5]: saved 17, fresh 20
+  rows[4][1]: saved 19, fresh 22
+  rows[4][3]: saved 38, fresh 43
+  rows[4][4]: saved 94, fresh 98
+  rows[4][5]: saved 54, fresh 55
+  rows[5][1]: saved 22, fresh 34
+  rows[5][2]: saved "D/Dig", fresh "G/Choose"
+  rows[5][3]: saved 43, fresh 67
+  rows[5][4]: saved 98, fresh 142
+  rows[5][5]: saved 4, fresh 44
+  rows[6][1]: saved 36, fresh 35
+  rows[6][3]: saved 71, fresh 69
+  rows[6][4]: saved 165, fresh 510
+  rows[6][5]: saved 67, fresh 368
+  rows[6][6]: saved "boxLine", fresh "ruleOf45"
+  rows[6][7]: saved "—", fresh "Y"
+  rows[6][8]: saved "—", fresh "R8C5"
+  rows[6][9]: saved "N", fresh "—"
+  rows[7][1]: saved 37, fresh 36
+  ... and 55 more
+G10: matches replay-goldens.js
+G11: 170 fields differ from replay-goldens.js
+  counts.compact: saved 8, fresh 7
+  counts.details: saved 110, fresh 103
+  board.signsTo: saved 4, fresh 9
+  rows.length: saved 8, fresh 7
+  rows[2][1]: saved 49, fresh 1
+  rows[2][2]: saved "C+I/Mixed", fresh "C/Clues"
+  rows[2][3]: saved 57, fresh 58
+  rows[2][4]: saved 129, fresh 133
+  rows[2][5]: saved 129, fresh 133
+  rows[3][1]: saved 65, fresh 69
+  rows[3][3]: saved 57, fresh 58
+  rows[3][4]: saved 133, fresh 135
+  rows[3][5]: saved 4, fresh 2
+  rows[4][1]: saved 100, fresh 70
+  rows[4][3]: saved 57, fresh 58
+  rows[4][4]: saved 549, fresh 577
+  rows[4][5]: saved 416, fresh 442
+  rows[4][6]: saved "skyscraper", fresh "xWing"
+  rows[4][8]: saved "—", fresh "s98(R8C7<R9C7)"
+  rows[5][1]: saved 102, fresh 100
+  rows[5][3]: saved 57, fresh 58
+  rows[5][4]: saved 549, fresh 740
+  rows[5][5]: saved 0, fresh 163
+  rows[5][6]: saved "skyscraper", fresh "finnedXWing"
+  rows[5][9]: saved "—", fresh "N"
+  ... and 145 more
+G12: 4 fields differ from replay-goldens.js
+  details[101]: saved 3171, fresh 3173
+  details[102]: saved 3026, fresh 3041
+  details[103]: saved 3026, fresh 3042
+  folds[2].peak: saved 3171, fresh 3173
+G13: matches replay-goldens.js
+G14: 9 fields differ from replay-goldens.js
+  rows[4][4]: saved 3663, fresh 3669
+  rows[4][5]: saved 1978, fresh 1984
+  rows[5][4]: saved 6420, fresh 6422
+  rows[5][5]: saved 2757, fresh 2753
+  rows[6][5]: saved 50, fresh 48
+  details[72]: saved 3663, fresh 3669
+  details[74]: saved 4263, fresh 4265
+  details[75]: saved 4414, fresh 4418
+  details[76]: saved 6420, fresh 6422
+replay-goldens.js differs; regenerate it with node tests/replay-goldens.js --write only if the generator changed on purpose
+exit=1 seconds=0.432

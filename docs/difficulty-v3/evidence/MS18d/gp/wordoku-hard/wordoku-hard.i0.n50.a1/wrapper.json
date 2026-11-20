@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record wordoku-hard.i0.n50 a1",
+  "runId": "wordoku-hard.i0.n50.a1",
+  "cell": "wordoku/hard",
+  "payload": "gp-recorder",
+  "chunkId": "wordoku-hard.i0.n50",
+  "attempt": 1,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-hard/wordoku-hard.i0.n50.a1",
+  "requestedAt": "2026-11-20T04:43:32.556+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795124596864,
+    "lastCheckMs": 1795124612375,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 265
+  },
+  "startedAtFromChild": "2026-11-20T04:43:32.690+07:00",
+  "finished": "2026-11-20T04:43:44.356+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3116,
+    "cheapCheckMs": 128,
+    "ageMs": 138,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T04:43:44.357+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

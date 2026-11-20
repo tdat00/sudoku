@@ -1,0 +1,8 @@
+$ node tests\artifacts\difficulty-v3\MS12\wire-cause.js --ledgers=..\docs\difficulty-v3\evidence\MS12\wire --json=..\docs\difficulty-v3\evidence\MS12\wire-cause.json
+{"id":"G09","request":"killer expert 3514204290","admitsXyChain":false,"withoutEqualsSaved":true,"ledgerEqualsSaved":true,"changedInLedger":false,"seconds":20.5}
+{"id":"G10","request":"killer nightmare 42","admitsXyChain":true,"withoutEqualsSaved":true,"ledgerEqualsSaved":true,"changedInLedger":false,"seconds":25.1}
+{"id":"G11","request":"greaterThan expert 42","admitsXyChain":false,"withoutEqualsSaved":true,"ledgerEqualsSaved":true,"changedInLedger":false,"seconds":16}
+{"id":"G12","request":"greaterThan hard 3115968914","admitsXyChain":false,"withoutEqualsSaved":true,"ledgerEqualsSaved":true,"changedInLedger":false,"seconds":0.4}
+{"id":"G13","request":"samurai nightmare 42","admitsXyChain":true,"withoutEqualsSaved":true,"ledgerEqualsSaved":false,"changedInLedger":true,"seconds":12.2}
+wires examined 5; changed in the ledgers 1; without xyChain not equal to the saved wire 0
+exit=0 seconds=74.386

@@ -1,0 +1,22 @@
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL player: 0 passed, 1 failed  (898 ms)
+FAIL steps: 0 passed, 1 failed  (810 ms)
+
+Failures:
+  FAIL player > player: the frame of the one clue or sign that causes a score jump > a restored culprit is framed as causeRestore and leaves the revealed clues; an unavailable cause has no frame, and the removed cells stay as they were
+       AssertionError: expected Array(2)[38, 42] to equal Array(1)[42]
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\player.test.js:1037:37)
+       at main (Q:\git\sudoku\generator\tests\node-runner.js:356:33)
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\node-runner.js:409:1)
+       at Module._compile (node:internal/modules/cjs/loader:1968:14)
+  FAIL steps > stepView: the callout, the badge and the legend on the page > a restored culprit gets the restore legend and the restore sentence, never the removal legend
+       AssertionError: expected Array(2)[38, 42] to contain 13
+       at Object.<anonymous> (Q:\git\sudoku\generator\tests\suites\steps.test.js:1553:35)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 2
+Tests:  2 total, 0 passed, 2 failed, 0 skipped
+Time:   1.71 s running tests, 1.80 s total

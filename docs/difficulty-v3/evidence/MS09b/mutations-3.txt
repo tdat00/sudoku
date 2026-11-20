@@ -1,0 +1,105 @@
+mutation 35 (the covers are listed in reverse unit order): DETECTED - 480 total, 421 passed, 59 failed, 0 skipped - 59 failing, 59 of the finned fish - 16.3 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): geometry > needs candidates with a single row and a single column: an extra line through a base line, a cover or a fin spoils the pattern, and an extra line elsewhere does not
+mutation 36 (the base lines are listed in reverse unit order): DETECTED - 480 total, 420 passed, 60 failed, 0 skipped - 60 failing, 60 of the finned fish - 16.3 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): geometry > needs candidates with a single row and a single column: an extra line through a base line, a cover or a fin spoils the pattern, and an extra line elsewhere does not
+mutation 37 (the technique id of the Finding is always finnedXWing): DETECTED - 480 total, 439 passed, 41 failed, 0 skipped - 41 failing, 37 of the finned fish - 15.8 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > finds the vector of a finned Swordfish, with the fin of one line and a target in its box
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > agrees with the enumeration at n = 3 and stays sound on classic9 (seed 777)
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > agrees with the enumeration at n = 3 and stays sound on classic6 (seed 777)
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > agrees with the enumeration at n = 3 and stays sound on classic4 (seed 777)
+    FAIL tech-fish > finnedSwordfish (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedSwordfish (R12): geometry > finds the transposed vector, with the columns C1, C4 and C7 as the base lines
+mutation 38 (the i18n key of the Finding is always the finned X-Wing key): DETECTED - 480 total, 464 passed, 16 failed, 0 skipped - 16 failing, 16 of the finned fish - 19.3 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > finds the vector of a finned Swordfish, with the fin of one line and a target in its box
+    FAIL tech-fish > finnedSwordfish (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > finds a finned Swordfish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > finds a finned Swordfish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > finds a finned Swordfish exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > finnedSwordfish (R12): agreement with an independent enumeration, whole and by searched prefix > finds a finned Swordfish exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+mutation 39 (only the first combination of covers is tried): DETECTED - 480 total, 431 passed, 49 failed, 0 skipped - 49 failing, 49 of the finned fish - 13.2 s
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): geometry > hands out its own data: changing a Finding changes neither the next call nor the state
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the transposed real position 2 with the transposed eliminations
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > answers the same after a call that ended at its limit or with a finding (no marks are left behind)
+mutation 40 (only the first combination of base lines is tried): DETECTED - 480 total, 426 passed, 54 failed, 0 skipped - 54 failing, 54 of the finned fish - 12.0 s
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the exact Finding of real position 1, sound against an independent completion
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the transposed real position 1 with the transposed eliminations
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the transposed real position 2 with the transposed eliminations
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > has no finned fish and costs no work on a board without boxes (a Latin square), unlike the same board with them
+mutation 41 (only columns are tried as base lines): DETECTED - 480 total, 405 passed, 75 failed, 0 skipped - 75 failing, 75 of the finned fish - 13.9 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): geometry > needs complete units: an incomplete base line, cover or fin box gives nothing
+mutation 42 (only rows are tried as base lines): DETECTED - 480 total, 426 passed, 54 failed, 0 skipped - 54 failing, 54 of the finned fish - 14.0 s
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-fish > finnedXWing (R12): work limit, budget and cancellation > counts one unit per tested combination of base lines, from a fresh counter on every call
+mutation 43 (the marks of the chosen base lines are not cleared): DETECTED - 480 total, 400 passed, 80 failed, 0 skipped - 80 failing, 80 of the finned fish - 15.3 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 44 (the marks of the chosen covers are not cleared): DETECTED - 480 total, 370 passed, 110 failed, 0 skipped - 110 failing, 108 of the finned fish - 13.3 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 45 (the marks of the targets are not cleared): DETECTED - 480 total, 390 passed, 90 failed, 0 skipped - 90 failing, 80 of the finned fish - 13.5 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 46 (the marks of the cover pool are not cleared): DETECTED - 480 total, 395 passed, 85 failed, 0 skipped - 85 failing, 85 of the finned fish - 12.1 s
+    FAIL tech-fish > finnedXWing (R12): geometry > removes the digit from the cover cell that sees the fin (the vector of R12)
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the transposed vector, with the columns C1 and C4 as the base lines
+    FAIL tech-fish > finnedXWing (R12): geometry > is symmetrical on the six cells of the vector: the columns give a second pattern, rows come first
+    FAIL tech-fish > finnedXWing (R12): geometry > finds the sashimi, with the apparent corner R4C2 missing, as listed and transposed
+    FAIL tech-fish > finnedXWing (R12): geometry > names every fin of a base line when they share a box (R4C7 and R4C9), and every target that sees them all
+    FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+mutation 47 (the cover pool is not in unit order (the insertion sort is dropped)): DETECTED - 480 total, 446 passed, 34 failed, 0 skipped - 34 failing, 34 of the finned fish - 16.6 s
+    FAIL tech-fish > finnedXWing (R12): real positions > finds the exact Finding of real position 2, sound against an independent completion
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic9 (seed 99)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic6 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > finds a finned fish exactly when one exists and removes exactly its candidates on classic4 (seed 777)
+    FAIL tech-fish > finnedXWing (R12): agreement with an independent enumeration > agrees on 12 digits (box shapes of 3 x 4 and 4 x 4, no 9 x 9 arithmetic)
+mutation 48 (the size option of the shared enumeration is not validated): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.2 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > takes a size of 2 or 3 and a work limit like the other seams, and rejects anything else
+mutation 49 (the shared enumeration takes size 2 for the finned Swordfish and the other way round): DETECTED - 480 total, 472 passed, 8 failed, 0 skipped - 8 failing, 8 of the finned fish - 20.2 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > takes a size of 2 or 3 and a work limit like the other seams, and rejects anything else
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > has the default limit of each size from its own constant: the registered finders and the seams
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > is the registered finder at n = 2: the same Finding and the same work on every state
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > finds the vector of a finned Swordfish, with the fin of one line and a target in its box
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > agrees with the enumeration at n = 3 and stays sound on classic9 (seed 777)
+mutation 51 (the registered finnedSwordfish uses the finned X-Wing limit (the two limits are tied)): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.2 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+mutation 52 (the size 3 seam uses the finned X-Wing limit by default (the two limits are tied)): DETECTED - 480 total, 479 passed, 1 failed, 0 skipped - 1 failing, 1 of the finned fish - 21.2 s
+    FAIL tech-fish > finned fish (R12): the shared enumeration at n = 3, its seam and its own work limit > keeps the two limits independent: another n = 2 literal leaves n = 3 alone, and the other way round (Node only)
+detected 17 of 17, 275.4 s

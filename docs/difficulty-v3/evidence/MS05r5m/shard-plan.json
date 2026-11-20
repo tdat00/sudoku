@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "note": "Draft plan of the disjoint quick-test shards, refreshed by MS05r5m after the mega Nightmare replacement (the plan of MS05r5, evidence/MS05r5/shard-plan.json, is unchanged history). Inputs of manifest.js. A selector is one command: the node runner with --suite=<names> only, or with no option for the whole app. projectionBasis starts with MEASURED (this tree), STALE (measured on an earlier tree, so only an indication) or UNMEASURED (no valid measurement; a ceiling from earlier evidence). No projection is a result: MS05r6b measures every shard, and MS05b3 and MS05r6a refresh the plan first. Changes against MS05r5: the new quick suite mega-contract is in own-fast; the mega shard lost the four full-attempt Nightmare tests and gained one real one-attempt mega12 test and three scripted mega16 controls.",
+  "apps": {
+    "generator": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r5m/generator-inventory.json",
+      "shards": [
+        {
+          "id": "core-shared",
+          "args": ["tests/node-runner.js", "--suite=bits,board-view,constraints,exchange,harness,logical-solver,model,solver,symbols,tech-basic,tech-chain,tech-fish,tech-subset,tech-wing,techniques,wordbook"],
+          "projectionSeconds": 150,
+          "projectionBasis": "UNMEASURED: the 16 shared suites in the Generator environment; no per-suite time exists. Ceiling: the whole Generator quick set took 111 to 112 s at the baseline (report 2.1), shared suites included, plus 40 s for the v3 additions (harness +12 tests, MS01 to MS05a tests)"
+        },
+        {
+          "id": "own-fast",
+          "args": ["tests/node-runner.js", "--suite=a11y,cache,controls,difficulty-diagnostics,difficulty-floor,digger,events,export,format,full-grid,help,history,i18n,mega-contract,multigrid,perf-tooling,purity,recovery-profile,replay-recorders,result-view,rng,smoke,store,technique-weights,theme,ui-contract,variants-registry,worker"],
+          "projectionSeconds": 190,
+          "projectionBasis": "STALE and MEASURED parts: 172.7 s for the first 26 of these suites at MS05b1 (default 8 attempts everywhere, so large-board generation then cost at least as much as now); on this tree digger 1.0 s, difficulty-diagnostics 11.1 s, difficulty-floor 24.6 s, worker 44.1 s, cache 9 s, help 3.8 s, ui-contract 0.35 s, recovery-profile 0.7 s, store 0.13 s, controls 0.14 s (r3, r4, r5p logs), mega-contract 1.7 s (r5m, 37 tests on a small real board); plus about 15 s for the tests the later tasks added"
+        },
+        {
+          "id": "pipeline",
+          "args": ["tests/node-runner.js", "--suite=pipeline"],
+          "projectionSeconds": 300,
+          "projectionBasis": "STALE: 294.8 s for 127 tests at MS05b1 (the suite now has 150; the 23 added tests were measured at under 4 s together: MS05b1- 1.4 s, allowance 1.6 s, MS05r5p- 0.1 s). Large-board cases cost less since r5p (default 4 or 2 attempts)"
+        },
+        {
+          "id": "mega",
+          "args": ["tests/node-runner.js", "--suite=mega"],
+          "projectionSeconds": 250,
+          "projectionBasis": "STALE ceiling kept: 246.3 s for the whole suite at MS05b1 (107 passed, 4 failed at their budgets), which included the four full-attempt Nightmare tests that r5m removed. Replacements measured by r5m: the real one-attempt mega12 request 5.2 s (three runs) and the three scripted mega16 controls 0.1 s together. The other 107 tests are unchanged, mega12 and mega16 hell1 among them (MS07b owns those); the shard is not measured again here"
+        },
+        {
+          "id": "steps",
+          "args": ["tests/node-runner.js", "--suite=steps"],
+          "projectionSeconds": 250,
+          "projectionBasis": "UNMEASURED: at MS05b1 three G13 tests of 120 s each made the suite exceed one 540 s command. G13 now regenerates in 21.6 s (r5p) once per process (the suite's own cache); the other goldens are generated or read from the saved wires. A ceiling, not a measurement"
+        },
+        {
+          "id": "replay",
+          "args": ["tests/node-runner.js", "--suite=replay"],
+          "projectionSeconds": 300,
+          "projectionBasis": "UNMEASURED: the whole suite reached 540 s at MS05b1 through G13 failures of 120 s each. Now G13 regenerates in 21.6 s once per process (cache: built[id] of the suite). The recorder check of the 13 other goldens took 80.1 s at MS05b1 (generation and analysis, the same code path); the analysis of G13 was never measured. A ceiling, not a measurement"
+        },
+        {
+          "id": "player",
+          "args": ["tests/node-runner.js", "--suite=player"],
+          "projectionSeconds": 300,
+          "projectionBasis": "UNMEASURED: the Generator's own player suite (the replay player) reached 540 s whole at MS05b1 through G13 failures of 120 s each. G13 now regenerates in 21.6 s once per process (resultCache of the suite). A ceiling, not a measurement"
+        }
+      ]
+    },
+    "player": {
+      "inventoryPath": "docs/difficulty-v3/evidence/MS05r5m/player-inventory.json",
+      "shards": [
+        {
+          "id": "all",
+          "args": ["tests/node-runner.js"],
+          "projectionSeconds": 60,
+          "projectionBasis": "STALE: 29.3 s for the 30 suites at MS05b1 (25 to 30 s at the baseline); doubled for the tests added since. The Player app has no isolated suite; its 16 shared suites run here once, in the Player environment"
+        }
+      ]
+    }
+  }
+}

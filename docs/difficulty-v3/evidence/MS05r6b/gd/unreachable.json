@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d33389ac1bb5e8e8e81f9fedf6ee5074fd9222f364116e06a2a8abf2d7491b67",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: when the level cannot be reached","exact":null,"count":5},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 432.4,
+  "results": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 246.4,
+    "tests": [
+      {"suite":"difficulty","name":"returns the closest completely rated puzzle with difficulty.approximate and does not throw","fullName":"difficulty > digger.generate: when the level cannot be reached > returns the closest completely rated puzzle with difficulty.approximate and does not throw","status":"pass","ms":69.325,"reason":"","error":null,"ordinal":146},
+      {"suite":"difficulty","name":"prefers the closest result: a puzzle one level off beats one several levels off","fullName":"difficulty > digger.generate: when the level cannot be reached > prefers the closest result: a puzzle one level off beats one several levels off","status":"pass","ms":77.993,"reason":"","error":null,"ordinal":147},
+      {"suite":"difficulty","name":"stops after maxAttempts x digTries dig samples and never more","fullName":"difficulty > digger.generate: when the level cannot be reached > stops after maxAttempts x digTries dig samples and never more","status":"pass","ms":29.141,"reason":"","error":null,"ordinal":148},
+      {"suite":"difficulty","name":"tries more dig samples per grid when the symmetry digs in groups of four","fullName":"difficulty > digger.generate: when the level cannot be reached > tries more dig samples per grid when the symmetry digs in groups of four","status":"pass","ms":67.744,"reason":"","error":null,"ordinal":149},
+      {"suite":"difficulty","name":"throws digger.noRatedPuzzle when not one sample has a complete proof","fullName":"difficulty > digger.generate: when the level cannot be reached > throws digger.noRatedPuzzle when not one sample has a complete proof","status":"pass","ms":1.272,"reason":"","error":null,"ordinal":150}
+    ],
+    "suites": [
+      {"name":"difficulty","total":5,"passed":5,"failed":0,"skipped":0,"ms":246.319}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: when the level cannot be reached","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\unreachable.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

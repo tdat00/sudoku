@@ -1,0 +1,778 @@
+{
+  "schema": 1,
+  "complete": true,
+  "meta": {
+    "acceptance": "canonical-required-tier",
+    "sourceHash": "85537bbd28702233722e448d36d87f5faf445ca25668b1926e8ffb22f4b93c3a",
+    "sourceFiles": 64,
+    "toolHash": "efff9dcd558e04dc17df7ba0a5778da35006b116d8ebca2bcda248ff3012b3c7",
+    "commit": "393775a1ea855787d731cb2684b196dfb45519ab",
+    "dirty": true,
+    "dirtyFiles": [
+      "?? generator/tests/artifacts/difficulty-v3/MS18b/"
+    ],
+    "startedAt": "2026-11-18T13:45:09.829Z",
+    "node": "v26.13.0",
+    "machine": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "cpuModel": "AMD EPYC 7763 64-Core Processor",
+      "cpus": 16,
+      "memoryGiB": 64
+    },
+    "argv": [
+      "--variant=jigsaw9",
+      "--level=nightmare",
+      "--count=2",
+      "--from=6",
+      "--total-count=12",
+      "--seed=20260101",
+      "--no-gate",
+      "--chain-window=6",
+      "--json=..\\docs\\difficulty-v3\\evidence\\MS18b\\window-6\\shards\\jigsaw9-nightmare-6-2.json"
+    ],
+    "seedBase": 20260101,
+    "shallowCap": null,
+    "shallowSearchRatings": 256,
+    "chainWindow": 6,
+    "chainShortMax": 6,
+    "manifest": {
+      "requests": 2,
+      "logicalRequests": 12,
+      "shard": {
+        "from": 6,
+        "count": 2,
+        "total": 12
+      },
+      "cells": [
+        {
+          "variant": "jigsaw9",
+          "level": "nightmare",
+          "requests": 2,
+          "from": 6,
+          "logicalTotal": 12,
+          "referenceIndexes": [
+            0,
+            11
+          ],
+          "route": "pipeline",
+          "unsupported": false
+        }
+      ],
+      "count": 2,
+      "perCombo": 0,
+      "quick": false,
+      "includeUnsupported": false,
+      "weights": null,
+      "bands": null,
+      "gate": false,
+      "ratingVersion": 3,
+      "referenceBudgetMs": 120000
+    }
+  },
+  "rows": [
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 6,
+      "tag": "jigsaw9:nightmare:6",
+      "pipelineSeed": 818453933,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2390,
+      "ratingVersion": 3,
+      "techniqueCounts": {
+        "nakedSingle": 40,
+        "hiddenSingleBox": 18,
+        "hiddenSingleLine": 3,
+        "pointing": 13,
+        "boxLine": 4,
+        "nakedPair": 2,
+        "hiddenPair": 2,
+        "lawOfLeftovers": 2,
+        "skyscraper": 1,
+        "simpleColouring": 2,
+        "forcingChain": 8,
+        "alsXz": 1
+      },
+      "empties": 61,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.9888888888888889,
+        "adjusted": 0.9873286704513377,
+        "lower": 1610.8168316831684,
+        "reason": null,
+        "inputs": {
+          "score": 2390,
+          "V": 48.31683168316832,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1250,
+          "tierSize": 4,
+          "vacuous": false
+        }
+      },
+      "generationMs": 17670.679,
+      "diagnosticMs": 30.266,
+      "fullRatings": 605,
+      "ratingCalls": 605,
+      "proposals": 34967,
+      "localRatings": 545,
+      "shallowRatings": 545,
+      "capHits": {
+        "shallow": 2,
+        "ratings": 0,
+        "proposals": 1
+      },
+      "work": [
+        {
+          "ratings": 52,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 33,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 33,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 274,
+          "proposals": 718,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 718,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 270,
+          "proposals": 1481,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1481,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 9,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        1,
+        3
+      ],
+      "nishioDepths": [],
+      "target": 2190.5093610752374,
+      "puzzleHash": "6a8f5b863955356c",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    },
+    {
+      "variant": "jigsaw9",
+      "requested": "nightmare",
+      "index": 7,
+      "tag": "jigsaw9:nightmare:7",
+      "pipelineSeed": 801676314,
+      "outcome": "ok",
+      "error": null,
+      "achieved": "nightmare",
+      "solved": true,
+      "score": 2367,
+      "ratingVersion": 3,
+      "techniqueCounts": {
+        "nakedSingle": 37,
+        "hiddenSingleBox": 19,
+        "hiddenSingleLine": 3,
+        "pointing": 13,
+        "boxLine": 3,
+        "nakedPair": 1,
+        "hiddenPair": 1,
+        "lawOfLeftovers": 2,
+        "skyscraper": 2,
+        "twoStringKite": 1,
+        "simpleColouring": 1,
+        "xyzWing": 1,
+        "wxyzWing": 1,
+        "forcingChain": 6,
+        "alsXz": 1
+      },
+      "empties": 59,
+      "scoreHit": true,
+      "generationExact": true,
+      "qualifiedHit": true,
+      "required": true,
+      "referenceRequired": null,
+      "referenceStatus": "not-selected",
+      "referenceError": null,
+      "shallow": false,
+      "position": {
+        "raw": 0.9633333333333334,
+        "adjusted": 0.9582184992166768,
+        "lower": 1610.1767676767677,
+        "reason": null,
+        "inputs": {
+          "score": 2367,
+          "V": 47.676767676767675,
+          "min": 1500,
+          "max": 2400,
+          "wMin": 1250,
+          "tierSize": 4,
+          "vacuous": false
+        }
+      },
+      "generationMs": 20535.033,
+      "diagnosticMs": 28.012,
+      "fullRatings": 1120,
+      "ratingCalls": 1120,
+      "proposals": 100650,
+      "localRatings": 1035,
+      "shallowRatings": 1035,
+      "capHits": {
+        "shallow": 2,
+        "ratings": 0,
+        "proposals": 3
+      },
+      "work": [
+        {
+          "ratings": 196,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 179,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 179,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 264,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 244,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 244,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 276,
+          "proposals": 517,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 517,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 112,
+          "proposals": 32768,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 100,
+              "proposals": 32768,
+              "firstShallowAt": 0,
+              "shallowRatings": 100,
+              "shallowLimit": 256,
+              "capHit": "proposals"
+            }
+          ]
+        },
+        {
+          "ratings": 270,
+          "proposals": 1829,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": [
+            {
+              "ratings": 256,
+              "proposals": 1829,
+              "firstShallowAt": 0,
+              "shallowRatings": 256,
+              "shallowLimit": 256,
+              "capHit": "shallow"
+            }
+          ]
+        },
+        {
+          "ratings": 2,
+          "proposals": 0,
+          "maxRatings": 1024,
+          "maxProposals": 32768,
+          "localSearches": []
+        }
+      ],
+      "workCheck": {
+        "status": "ok",
+        "reason": null
+      },
+      "chainLengths": [
+        4,
+        4,
+        5,
+        6,
+        6,
+        6
+      ],
+      "nishioDepths": [],
+      "target": 1847.2093191929162,
+      "puzzleHash": "477aedc6137c9a76",
+      "pathCheck": {
+        "status": "ok",
+        "error": null
+      }
+    }
+  ],
+  "summary": {
+    "all": {
+      "requests": 2,
+      "matrix": {
+        "nightmare": {
+          "nightmare": 2
+        }
+      },
+      "errors": 0,
+      "unrated": 0,
+      "inBand": 2,
+      "oldHits": {
+        "count": 2,
+        "denominator": 2,
+        "share": 1
+      },
+      "qualifiedHits": {
+        "count": 2,
+        "denominator": 2,
+        "share": 1
+      },
+      "exactDisagreements": 0,
+      "shallow": {
+        "count": 0,
+        "denominator": 2,
+        "checked": 2,
+        "share": 0
+      },
+      "references": {
+        "ok": 0,
+        "vacuous": 0,
+        "error": 0,
+        "skipped": 0,
+        "notSelected": 2,
+        "notRun": 0
+      },
+      "pathChecks": {
+        "ok": 2,
+        "mismatch": 0,
+        "error": 0,
+        "notRun": 0
+      },
+      "work": {
+        "checks": {
+          "ok": 2,
+          "mismatch": 0,
+          "unavailable": 0
+        },
+        "capHits": {
+          "shallow": 4,
+          "ratings": 0,
+          "proposals": 4
+        },
+        "fullRatings": {
+          "n": 2,
+          "deciles": [
+            605,
+            605,
+            605,
+            605,
+            605,
+            1120,
+            1120,
+            1120,
+            1120,
+            1120,
+            1120
+          ],
+          "upperMedian": 1120
+        }
+      },
+      "peaks": {
+        "alsXz": 2
+      },
+      "cohorts": {
+        "exact": {
+          "n": 2,
+          "peaks": {
+            "alsXz": 2
+          },
+          "raw": {
+            "n": 2,
+            "deciles": [
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889
+            ],
+            "upperMedian": 0.9888888888888889
+          },
+          "adjusted": {
+            "n": 2,
+            "deciles": [
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377
+            ],
+            "upperMedian": 0.9873286704513377
+          },
+          "nullReasons": {}
+        },
+        "inBand": {
+          "n": 2,
+          "peaks": {
+            "alsXz": 2
+          },
+          "raw": {
+            "n": 2,
+            "deciles": [
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9633333333333334,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889,
+              0.9888888888888889
+            ],
+            "upperMedian": 0.9888888888888889
+          },
+          "adjusted": {
+            "n": 2,
+            "deciles": [
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9582184992166768,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377,
+              0.9873286704513377
+            ],
+            "upperMedian": 0.9873286704513377
+          },
+          "nullReasons": {}
+        }
+      },
+      "chains": {
+        "measured": 2,
+        "forcingChain": {
+          "puzzles": 2,
+          "steps": 14,
+          "stepHistogram": {
+            "1": 1,
+            "3": 6,
+            "4": 3,
+            "5": 1,
+            "6": 3
+          },
+          "maxHistogram": {
+            "4": 1,
+            "6": 1
+          }
+        },
+        "nishio": {
+          "puzzles": 0,
+          "steps": 0,
+          "stepHistogram": {},
+          "maxHistogram": {}
+        }
+      }
+    },
+    "cells": {
+      "jigsaw9/nightmare": {
+        "requests": 2,
+        "matrix": {
+          "nightmare": {
+            "nightmare": 2
+          }
+        },
+        "errors": 0,
+        "unrated": 0,
+        "inBand": 2,
+        "oldHits": {
+          "count": 2,
+          "denominator": 2,
+          "share": 1
+        },
+        "qualifiedHits": {
+          "count": 2,
+          "denominator": 2,
+          "share": 1
+        },
+        "exactDisagreements": 0,
+        "shallow": {
+          "count": 0,
+          "denominator": 2,
+          "checked": 2,
+          "share": 0
+        },
+        "references": {
+          "ok": 0,
+          "vacuous": 0,
+          "error": 0,
+          "skipped": 0,
+          "notSelected": 2,
+          "notRun": 0
+        },
+        "pathChecks": {
+          "ok": 2,
+          "mismatch": 0,
+          "error": 0,
+          "notRun": 0
+        },
+        "work": {
+          "checks": {
+            "ok": 2,
+            "mismatch": 0,
+            "unavailable": 0
+          },
+          "capHits": {
+            "shallow": 4,
+            "ratings": 0,
+            "proposals": 4
+          },
+          "fullRatings": {
+            "n": 2,
+            "deciles": [
+              605,
+              605,
+              605,
+              605,
+              605,
+              1120,
+              1120,
+              1120,
+              1120,
+              1120,
+              1120
+            ],
+            "upperMedian": 1120
+          }
+        },
+        "peaks": {
+          "alsXz": 2
+        },
+        "cohorts": {
+          "exact": {
+            "n": 2,
+            "peaks": {
+              "alsXz": 2
+            },
+            "raw": {
+              "n": 2,
+              "deciles": [
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889
+              ],
+              "upperMedian": 0.9888888888888889
+            },
+            "adjusted": {
+              "n": 2,
+              "deciles": [
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377
+              ],
+              "upperMedian": 0.9873286704513377
+            },
+            "nullReasons": {}
+          },
+          "inBand": {
+            "n": 2,
+            "peaks": {
+              "alsXz": 2
+            },
+            "raw": {
+              "n": 2,
+              "deciles": [
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9633333333333334,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889,
+                0.9888888888888889
+              ],
+              "upperMedian": 0.9888888888888889
+            },
+            "adjusted": {
+              "n": 2,
+              "deciles": [
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9582184992166768,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377,
+                0.9873286704513377
+              ],
+              "upperMedian": 0.9873286704513377
+            },
+            "nullReasons": {}
+          }
+        },
+        "chains": {
+          "measured": 2,
+          "forcingChain": {
+            "puzzles": 2,
+            "steps": 14,
+            "stepHistogram": {
+              "1": 1,
+              "3": 6,
+              "4": 3,
+              "5": 1,
+              "6": 3
+            },
+            "maxHistogram": {
+              "4": 1,
+              "6": 1
+            }
+          },
+          "nishio": {
+            "puzzles": 0,
+            "steps": 0,
+            "stepHistogram": {},
+            "maxHistogram": {}
+          }
+        }
+      }
+    },
+    "checks": {
+      "invariantViolations": {
+        "I1": 0,
+        "I2": 0,
+        "I3": 0,
+        "I4": 0,
+        "I5": 0,
+        "I6": 0,
+        "I7": 0
+      },
+      "requestErrors": 0,
+      "checkErrors": [],
+      "referenceErrors": 0,
+      "pathErrors": 0,
+      "pathMismatches": 0,
+      "workUnavailable": 0,
+      "failed": false,
+      "result": "PASS"
+    }
+  }
+}

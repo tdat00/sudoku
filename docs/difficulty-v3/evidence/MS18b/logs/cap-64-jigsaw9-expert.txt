@@ -1,0 +1,67 @@
+$ node tests\soak.js --variant=jigsaw9 --level=expert --count=12 --seed=20260101 --no-gate --shallow-cap=64 --json=..\docs\difficulty-v3\evidence\MS18b\cap-64\jigsaw9-expert.json
+TASK MS18b cap-64-jigsaw9-expert
+STRICT SCREEN NOT READY: mean 0.608, max 0.966 busy cores of 16 (cap-64-jigsaw9-expert.json)
+POLICY MS18b-host-active ADMITTED: every admission condition of MS18b-host-active holds; the strict screen FAILED and is recorded unchanged
+LABEL shared-slot, CLI-host-active; not strict-quiet-machine timing
+START 2026-11-18T20:10:18.204+07:00
+Sudoku Generator soak test  (node v26.13.0, seed 20260101, 12 puzzles in 60.5 s)
+
+Calibration in force (score bands, lower bound of each level, the same on every board):
+  veryEasy 0 | easy 45 | normal 180 | hard 400 | expert 700 | master 1000 | nightmare 1500 | hell1 2400 | hell2 3600
+Technique weights: nakedSingle 1, hiddenSingleBox 1.25, hiddenSingleLine 1.5, pointing 40, boxLine 50, nakedPair 120, hiddenPair 145, nakedTriple 180, lawOfLeftovers 200, hiddenTriple 220, nakedQuad 260, hiddenQuad 300, xWing 320, skyscraper 330, twoStringKite 340, remotePairs 350, simpleColouring 360, emptyRectangle 380, finnedXWing 400, swordfish 420, finnedSwordfish 480, jellyfish 520, xyWing 650, xyzWing 750, wxyzWing 800, wWing 850, uniqueRectangle 900, bugPlusOne 920, xyChain 1000, forcingChain 1100, alsXz 1250, sueDeCoq 1300, forcingChainLong 1400, nishio 1700, nishioDeep 2600, cageCombo 40, ruleOf45 260, cageSplit 520, ineqChain 40, minMaxForcing 180
+Shallow-search allowance: 64 full ratings (--shallow-cap)
+
+== jigsaw9 (81 cells) ==
+requested     veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2    n    hit  samples  ms p50     p95     max  budget
+expert               .          .          .          .         12          .          .          .          .   12    92%      5.2    5137    7054    7054900 SLOW
+exact: 11 of 12 (91.7%)
+
+group of the hardest technique per requested level (share of puzzles):
+  expert     fish 8%  wing 92%
+
+Score histogram (the bands of every board), all puzzles, by requested level:
+bin            veryEasy       easy     normal       hard     expert     master  nightmare      hell1      hell2   all
+0-45                  .          .          .          .          .          .          .          .          .      0
+45-180                .          .          .          .          .          .          .          .          .      0
+180-400               .          .          .          .          .          .          .          .          .      0
+400-700               .          .          .          .          .          .          .          .          .      0
+700-1000              .          .          .          .         12          .          .          .          .     12 ##############################
+1000-1500             .          .          .          .          .          .          .          .          .      0
+1500-2400             .          .          .          .          .          .          .          .          .      0
+2400-3600             .          .          .          .          .          .          .          .          .      0
+3600-5400             .          .          .          .          .          .          .          .          .      0
+5400+                 .          .          .          .          .          .          .          .          .      0
+
+Invariants over 12 puzzles:
+  I1 ok
+  I2 ok
+  I3 ok
+  I4 ok
+  I5 ok
+  I6 ok
+  I7 ok
+
+other variants: lowest hit rate 92% (jigsaw9/expert), required at least 80%
+RESULT: PASS
+
+Difficulty diagnostics (docs/difficulty-v3/evidence/MS18b/cap-64/jigsaw9-expert.json): 12 of 12 requests recorded; the diagnostic solves took 0.1 s after the generation and the checks
+
+== jigsaw9/expert: 12 requests, 0 errors, 0 unrated, 12 solved in band ==
+  old hits 11/12 (92%), qualified hits 11/12 (92%), shallow 1/12 (8%; 12 with a derived verdict); exact flag against the derived verdict: 0 disagreements
+  sampled reference: ok 2, vacuous 0, error 0, skipped 0, notSelected 10, notRun 0; final path: ok 12, mismatch 0, error 0, notRun 0
+  work: ok 12, mismatch 0, unavailable 0; local searches ended by shallow 46, ratings 0, proposals 5
+    full ratings (n=12): min 7, p10 53, p50 434, p90 542, max 692, upper median 434
+  cohort exact (old hits): 11 puzzles, peak xyWing 11
+    raw position (n=11): min 0.603, p10 0.68, p50 0.78, p90 0.943, max 0.95, upper median 0.78
+    adjusted position (n=11): min 0.166, p10 0.313, p50 0.537, p90 0.88, max 0.894, upper median 0.537
+    adjusted undefined: -
+  cohort all in band: 12 puzzles, peak xyWing 11, simpleColouring 1
+    raw position (n=12): min 0.06, p10 0.603, p50 0.78, p90 0.943, max 0.95, upper median 0.78
+    adjusted position (n=12): min -1.007, p10 0.166, p50 0.537, p90 0.88, max 0.894, upper median 0.537
+    adjusted undefined: -
+  forcing-chain steps (0 of 12 rated paths): length -; per-puzzle maximum -
+  nishio steps (0 of 12 rated paths): depth -; per-puzzle maximum -
+
+DIAGNOSTICS: PASS (request errors 0, invariant violations 0, check errors 0, reference errors 0, final-path errors 0, final-path mismatches 0, work unavailable 0)
+END 2026-11-18T20:11:19.364+07:00
+exit=0 seconds=61.159

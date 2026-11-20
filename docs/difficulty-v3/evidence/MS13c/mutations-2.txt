@@ -1,0 +1,82 @@
+mutation 28 (A15 no domain for a completed grouped call): DETECTED - 218 total, 217 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.2 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on a search cap too, under the same window, and certifies only the singleton minimum
+mutation 29 (A16 the minimum of a capped search recorded complete): DETECTED - 217 total, 216 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > is no fallback for forcingChainLong: a local cap is null, alone or after forcingChain, with its cap
+mutation 30 (A17 the additional nodes count the singletons): DETECTED - 219 total, 218 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 17.0 s
+    FAIL tech-chain > grouped forcing (R16, MS13c, S-OD11): the bounded attempt, its local caps and the short fallback > falls back on the node quota, and a quota of exactly the nodes is no cap
+mutation 31 (A18 a search that ends exactly at the allowance is a cap): DETECTED - 7 total, 6 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 1.2 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChainLong never removes a solution candidate on real positions where only a long chain is left
+mutation 32 (A19 the construction allowance is one more): DETECTED - 187 total, 186 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 14.2 s
+    FAIL tech-chain > grouped graph (R16): limits, budget and the incomplete-graph rule > stops at the work limit: W is complete, W - 1 an empty incomplete graph with capHit "work" and work = the limit
+mutation 33 (A20 the gate check of the search starts at zero): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.2 s
+mutation 34 (P01 the node cells shared with the graph): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 35 (P02 the union cells unsorted): DETECTED - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.7 s
+    FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+mutation 36 (P03 a group proof keeps the singleton form): DETECTED - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.7 s
+    FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+mutation 37 (P04 every proof of version 2): DETECTED - 25 total, 24 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.8 s
+    FAIL tech-chain > forcingChain: fixtures > reports the X-chain of 3 links (two eliminations)
+mutation 38 (P05 proof version 1): DETECTED - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.7 s
+    FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+mutation 39 (P06 the length one too many): DETECTED - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.7 s
+    FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+mutation 40 (P07 the second path of a polarity proof missing): DETECTED - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.6 s
+    FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+mutation 41 (P08 a forced start eliminated instead of placed): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.7 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 42 (P09 the endpoint eliminations unsorted): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 43 (P10 the truth of every step true): DETECTED - 15 total, 14 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 4.6 s
+    FAIL tech-chain > chain group: soundness (I7) > never removes a candidate of a solution when a position has several solutions
+mutation 44 (P11 the contradiction start not the first step): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 45 (S01 every start a singleton): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 22.8 s
+mutation 46 (S02 a group has a true start): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.0 s
+mutation 47 (S03 polarity proofs from a group start): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 48 (S04 contradiction and forced swapped): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 49 (S05 endpoints from a true start): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 50 (S06 an endpoint at the start node itself): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 22.9 s
+mutation 51 (S07 a start with no strong link searched): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 52 (S08 the same-cell weak links after the peers): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.4 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 53 (S09 the conjugate links by descending rank): DETECTED - 26 total, 25 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.6 s
+    FAIL tech-chain > forcingChain: fixtures > reports the X-chain of 3 links (one elimination)
+mutation 54 (S11 the scan order of the nodes reversed per truth): DETECTED - 66 total, 65 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.9 s
+    FAIL tech-chain > chain search seam: windows over the shortest proof > keeps the tie order of the scan: the first root of the shortest length wins
+mutation 55 (S12 the search never stops at a shorter bound): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 6.1 s
+    FAIL tech-chain > chain group: positions without any valid deduction > still finds the decoy candidates that no solution contains
+mutation 56 (S13 a proof below the window not the answer): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.7 s
+    FAIL tech-chain > chain group: positions without any valid deduction > still finds the decoy candidates that no solution contains
+mutation 57 (S14 the first proof wins (no shorter one sought)): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.4 s
+    FAIL tech-chain > chain group: positions without any valid deduction > still finds the decoy candidates that no solution contains
+mutation 58 (E01 an endpoint target need not see the start): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 59 (E02 the start marks nothing): DETECTED - 22 total, 21 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 5.8 s
+    FAIL tech-chain > chain group: positions without any valid deduction > still finds the decoy candidates that no solution contains
+mutation 60 (E03 one convenient pair of two groups): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 61 (E04 an extra occurrence accepted in a strong group): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 62 (E05 one group beyond the quota): DETECTED - 188 total, 187 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 14.7 s
+    FAIL tech-chain > grouped graph (R16): limits, budget and the incomplete-graph rule > refuses the 4097th additional node (limit 4096, default) and builds 4096 of them, more nodes than cells x digits
+mutation 63 (E06 overlapping nodes linked): DETECTED - 5 total, 4 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 0.3 s
+    FAIL tech-chain > chain group: soundness (I7) > forcingChain never removes a solution candidate (300 states)
+mutation 64 (E07 an intersection of one complete unit used): DETECTED - 179 total, 178 passed, 1 failed, 0 skipped  (stopped early: --bail) - 1 failing - 13.2 s
+    FAIL tech-chain > grouped graph (R16): the edge obligations of the brief, one vector at a time > a box, a region or a line that is not complete makes no group: too short, or marked partial, whatever its cells hold; the complete on
+mutation 65 (E08 a group target eliminated): NOT DETECTED (exit 0) - 236 total, 236 passed, 0 failed, 0 skipped - 0 failing - 23.1 s
+mutation 66 (E09 a start marks the group neighbours too): NOT STARTED (elapsed 396.9 s)
+mutation 67 (E10 the group weak link of one shared digit only): NOT STARTED (elapsed 396.9 s)
+mutation 68 (E11 a conjugate link without the cover): NOT STARTED (elapsed 396.9 s)
+mutation 69 (B01 a window with the minimum above the maximum searched): NOT STARTED (elapsed 396.9 s)
+mutation 70 (B02 no entry check of the search): NOT STARTED (elapsed 396.9 s)
+mutation 71 (B03 no check before a start): NOT STARTED (elapsed 396.9 s)
+mutation 72 (B04 no gate in the expansions): NOT STARTED (elapsed 396.9 s)
+mutation 73 (B05 pieces of 512 links): NOT STARTED (elapsed 396.9 s)
+mutation 74 (B06 the link that proves is not counted): NOT STARTED (elapsed 396.9 s)
+mutation 75 (B07 a negative limit accepted by the seam): NOT STARTED (elapsed 396.9 s)
+mutation 76 (B08 a fractional limit kept): NOT STARTED (elapsed 396.9 s)
+mutation 77 (B09 a non-boolean fallback accepted): NOT STARTED (elapsed 396.9 s)
+mutation 78 (B10 the caller maximum of forcingChain ignored): NOT STARTED (elapsed 396.9 s)
+mutation 79 (B11 the minimum of forcingChainLong is C): NOT STARTED (elapsed 396.9 s)
+mutation 80 (B12 the entry check of the construction missing): NOT STARTED (elapsed 396.9 s)
+detected 28 of 38, survivors 10, 15 not started, 396.9 s

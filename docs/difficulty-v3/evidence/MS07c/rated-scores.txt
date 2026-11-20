@@ -1,0 +1,28 @@
+$ node tests\artifacts\difficulty-v3\MS07c\explore.cjs tests\artifacts\difficulty-v3\MS07c\q-rated.cjs
+  wikipedia-example label easy: C=4 level easy score 47 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  classic-easy label easy: C=4 level easy score 46 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  classic-easy-2 label easy: C=4 level easy score 45 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  classic-medium label normal: C=4 level easy score 48 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  escargot label hell2: C=4 level hell2 score 5280 reqLabel true reqLevel true [forcingChain=1,nishio=19,nishioDeep=2] expected {"level":"hell2","required":true}
+  worlds-hardest-2012 label hell2: C=4 level hell2 score 5605 reqLabel true reqLevel true [forcingChain=3,nishio=25,nishioDeep=4] expected {"level":"hell2","required":true}
+  platinum-blonde label hell2: C=4 level hell2 score 5676 reqLabel true reqLevel true [forcingChain=1,forcingChainLong=2,nishio=16,nishioDeep=12] expected {"level":"hell2","required":true}
+  golden-nugget label hell2: C=4 level hell2 score 5689 reqLabel true reqLevel true [forcingChain=1,forcingChainLong=4,nishio=21,nishioDeep=8] expected {"level":"hell2","required":true}
+  constructed-veryEasy-1 label veryEasy: C=4 level veryEasy score 43 reqLabel true reqLevel true [] expected {"level":"veryEasy","required":true}
+  constructed-veryEasy-2 label veryEasy: C=4 level veryEasy score 43 reqLabel true reqLevel true [] expected {"level":"veryEasy","required":true}
+  constructed-veryEasy-3 label veryEasy: C=4 level veryEasy score 43 reqLabel true reqLevel true [] expected {"level":"veryEasy","required":true}
+  constructed-easy-1 label easy: C=4 level easy score 46 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  constructed-easy-2 label easy: C=4 level easy score 46 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  constructed-easy-3 label easy: C=4 level easy score 46 reqLabel false reqLevel false [] expected {"level":"easy","required":false}
+  constructed-normal-1 label normal: C=4 level normal score 227 reqLabel false reqLevel false [] expected {"level":"normal","required":false}
+  constructed-normal-2 label normal: C=4 level normal score 295 reqLabel true reqLevel true [] expected {"level":"normal","required":true}
+  constructed-normal-3 label normal: C=4 level normal score 222 reqLabel false reqLevel false [] expected {"level":"normal","required":false}
+  constructed-hard-1 label hard: C=4 level hard score 560 reqLabel true reqLevel true [] expected {"level":"hard","required":true}
+  constructed-hard-2 label hard: C=4 level hard score 563 reqLabel true reqLevel true [] expected {"level":"hard","required":true}
+  constructed-hard-3 label hard: C=4 level hard score 554 reqLabel true reqLevel true [] expected {"level":"hard","required":true}
+  constructed-expert-1 label expert: C=4 level expert score 940 reqLabel true reqLevel true [] expected {"level":"expert","required":true}
+  constructed-expert-2 label expert: C=4 level expert score 908 reqLabel true reqLevel true [] expected {"level":"expert","required":true}
+  constructed-expert-3 label expert: C=4 level expert score 879 reqLabel true reqLevel true [] expected {"level":"expert","required":true}
+* constructed-nightmare-1 label nightmare: C=4 level hell1 score 2704 reqLabel true reqLevel false [forcingChain=2,forcingChainLong=6] expected {"level":"hell1","required":false} | C=6 level nightmare score 2178 reqLabel false reqLevel false [forcingChain=8]
+  constructed-nightmare-2 label nightmare: C=4 level hell1 score 2662 reqLabel true reqLevel false [forcingChain=3,forcingChainLong=5] expected {"level":"hell1","required":false}
+* constructed-nightmare-3 label nightmare: C=4 level hell1 score 2642 reqLabel true reqLevel false [forcingChain=5,forcingChainLong=3] expected {"level":"hell1","required":false} | C=6 level nightmare score 2148 reqLabel false reqLevel false [forcingChain=8]
+exit=0 seconds=0.640

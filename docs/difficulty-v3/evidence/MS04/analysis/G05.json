@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "9ccd27a41e46fde07205f27c92e81ed6e0d6fce638a8713f2d705428635ced24",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "6685d8f4c705e1244ef6487e05400d72f157e8d0",
+  "dirty": true,
+  "generatedAt": "2026-11-12T09:23:24.444Z",
+  "argv": ["--ids=G05","--record=..\\docs\\difficulty-v3\\evidence\\MS04\\analysis\\G05.json"],
+  "records": [
+    {"key":"G05","request":{"variantId":"classic9","difficulty":"hell1","seed":"2299986211"},"value":{"id":"G05","request":{"variantId":"classic9","difficulty":"hell1","seed":"2299986211"},"today":{"steps":106,"missing":50},"counts":{"compact":7,"details":77},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,9,"D/Dig",18,27,27,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,17,"nakedSingle","—","—","—"],[4,28,"G/Choose",55,50,6,"hiddenSingleLine","—","—","N"],[5,29,"X/Adjust",55,2010,1960,"forcingChain","Y","—","—"],[6,75,"X/Adjust",53,3274,1264,"nishio","—","—","N"],[7,75,"F/Final",53,3274,0,"nishio","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,33,34,36,37,38,40,41,42,43,44,45,46,47,48,49,50,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2010,2281,2377,3274,3274],"alive":null,"folds":[],"jumps":[{"step":5,"from":50,"to":2010,"before":{"P":1.5,"W":60.5,"R":2.013463,"V":46.315789,"E":55,"level":"easy"},"after":{"P":1100,"W":8591.75,"R":863.294758,"V":46.315789,"E":55,"level":"nightmare"},"choice":null,"singles":[{"op":"remove","cell":"R2C1","score":50},{"op":"remove","cell":"R8C9","score":50},{"op":"restore","cell":"R4C6","score":49},{"op":"restore","cell":"R6C4","score":49}],"cause":"together","frame":null,"firstUse":{"k":12,"n":75,"technique":"forcingChain"},"key":"technique.forcingChain.step.contradiction","effects":"remove candidate 6@R4C2"}]},"ms":516,"overrides":[]}
+  ]
+}

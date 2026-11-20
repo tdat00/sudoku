@@ -1,0 +1,11 @@
+$ node tests\pattern-cost.js --ids=forcingChainLong,nishioDeep --runs=20 --json=..\docs\difficulty-v3\evidence\MS07c\pattern-cost.json
+pattern-cost: 7 of 7 cases x 20 runs (140 finds), complete true, found 4, none 3, outcome not the fixture's 0, capped 0, wall 0.270 s
+  forcingChainLong:positive:1 found, work 5930 of 50000, ms p50 0.289 p95 0.749 max 1.527
+  forcingChainLong:positive:2 found, work 10039 of 50000, ms p50 0.332 p95 0.420 max 0.753
+  forcingChainLong:negative:1 none, work 4562 of 50000, ms p50 0.105 p95 0.142 max 0.190
+  forcingChainLong:negative:2 none, work 1641 of 50000, ms p50 0.040 p95 0.062 max 0.075
+  nishioDeep:positive:1 found, work 5184 of 50000, ms p50 9.032 p95 10.510 max 12.614
+  nishioDeep:positive:2 found, work 775 of 50000, ms p50 1.551 p95 1.671 max 1.691
+  nishioDeep:negative:1 none, work 177 of 50000, ms p50 0.325 p95 0.363 max 0.402
+record: docs/difficulty-v3/evidence/MS07c/pattern-cost.json
+exit=0 seconds=0.781

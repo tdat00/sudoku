@@ -1,0 +1,4 @@
+$ node Q:\git\sudoku\docs\difficulty-v3\evidence\MS07e\scripts\pilot.cjs --json=..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-diagonalX.json --cells=diagonalX/hell1:1@3 --budget-seconds=420
+diagonalX/hell1 #3: 21162.0 ms, hit false, achieved hell1, exact false, approximate true
+record: ..\docs\difficulty-v3\evidence\MS07e\pilot\pilotx-diagonalX.json (21.164 s)
+exit=0 seconds=21.661

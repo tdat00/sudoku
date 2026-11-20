@@ -1,0 +1,22 @@
+$ node tests\node-runner.js --suite=help,play,i18n,help-example-tools,tech-fish,techniques
+Sudoku Player tests  (node v26.13.0)
+Sources: 39 loaded, 0 listed but not present (--verbose lists them)
+
+ok   tech-fish: 317 passed  (10.05 s)
+ok   techniques: 213 passed  (2.19 s)
+FAIL help-example-tools: 50 passed, 1 failed  (4.76 s)
+ok   help: 27 passed  (1.38 s)
+ok   i18n: 66 passed  (86 ms)
+ok   play: 68 passed  (147 ms)
+
+Failures:
+  FAIL help-example-tools > help example tools: replaying a source > finds the saved example further into the puzzle and gives the same data again
+       AssertionError: expected 50 to be 58
+       at Object.<anonymous> (Q:\git\sudoku\player\tests\suites\help-example-tools.test.js:294:59)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\player\tests\node-runner.js:295:19)
+
+Suites: 6
+Tests:  742 total, 741 passed, 1 failed, 0 skipped
+Time:   18.62 s running tests, 18.68 s total
+exit=1 seconds=18.795

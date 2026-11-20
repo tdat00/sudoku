@@ -1,0 +1,26 @@
+{
+  "schema": "ms18d-c-journals-1",
+  "head": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "base": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "rulings": {
+    "ok": false,
+    "reference": {
+      "path": "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+      "commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "baseCommit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "entryCount": 0,
+      "sha256": null,
+      "baseSha256": null
+    },
+    "problems": [
+      "tasks/difficulty-v3/MS18d-gp-rulings.jsonl is not committed at bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    ]
+  },
+  "hostBinding": {
+    "ok": false,
+    "reference": null,
+    "problems": [
+      "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl is not committed at bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    ]
+  }
+}

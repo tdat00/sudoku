@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "kind": "replay-goldens",
+  "sourceHash": "e0a59bb866fa134f3b7a4620bb4b66e3f692f8ca8e689ce015749804eae27a1d",
+  "manifestHash": "46c7ebd93dccd22c2d18bcb03a062ee3ee9f785b1b70f6b3013345e6c3fd2204",
+  "node": "v26.13.0",
+  "commit": "1ee14fcf52be7808a1b7ba7a8837553ef85a4969",
+  "dirty": true,
+  "generatedAt": "2026-11-14T23:48:02.891Z",
+  "argv": ["--ids=G01","--record=..\\docs\\difficulty-v3\\evidence\\MS07c\\analysis\\G01.json"],
+  "records": [
+    {"key":"G01","request":{"variantId":"classic9","difficulty":"expert","seed":"3275974478"},"value":{"id":"G01","request":{"variantId":"classic9","difficulty":"expert","seed":"3275974478"},"today":{"steps":21,"missing":10},"counts":{"compact":7,"details":29},"board":{"cells":81,"cages":0,"signsFrom":0,"signsTo":0,"log":"normal"},"rows":[[1,0,"S/Sol",0,0,0,"—","—","—","—"],[2,7,"D/Dig",14,23,23,"nakedSingle","—","—","F"],[3,22,"D/Dig",43,44,21,"hiddenSingleBox","—","—","N"],[4,25,"G/Choose",49,47,3,"hiddenSingleBox","—","—","—"],[5,26,"G/Choose",51,235,188,"hiddenPair","Y","R6C1","—"],[6,27,"G/Choose",53,969,734,"xyWing","Y","R8C6","—"],[7,27,"F/Final",53,969,0,"xyWing","—","—","—"]],"details":[0,5,9,12,15,18,20,23,25,27,29,31,32,34,35,37,38,39,40,42,43,44,44,45,46,47,235,969,969],"alive":null,"folds":[],"jumps":[{"step":5,"from":47,"to":235,"before":{"P":1.25,"W":49.75,"R":1.67203,"V":44.044944,"E":49,"level":"easy"},"after":{"P":145,"W":198.25,"R":45.066247,"V":44.835165,"E":51,"level":"normal"},"choice":{"chosen":235,"others":7,"nulls":0,"max":117,"at":76,"rated":9,"refused":1},"singles":[{"op":"remove","cell":"R4C9","score":47},{"op":"remove","cell":"R6C1","score":234}],"cause":"single-culprit","frame":"R6C1","firstUse":{"k":26,"n":52,"technique":"hiddenPair"},"key":"technique.hiddenPair.step","effects":"remove candidate 5@R2C2, 6@R2C2, 5@R2C3, 6@R2C3, 7@R2C3"},{"step":6,"from":235,"to":969,"before":{"P":145,"W":198.25,"R":45.066247,"V":44.835165,"E":51,"level":"normal"},"after":{"P":650,"W":1433.75,"R":273.108969,"V":45.591398,"E":53,"level":"expert"},"choice":{"chosen":969,"others":2,"nulls":0,"max":252,"at":84,"rated":7,"refused":4},"singles":[{"op":"remove","cell":"R2C4","score":235},{"op":"remove","cell":"R8C6","score":968}],"cause":"single-culprit","frame":"R8C6","firstUse":{"k":33,"n":59,"technique":"xyWing"},"key":"technique.xyWing.step","effects":"remove candidate 6@R5C3"}]},"ms":368,"overrides":[]}
+  ]
+}

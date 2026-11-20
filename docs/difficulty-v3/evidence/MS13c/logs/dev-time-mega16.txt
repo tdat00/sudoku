@@ -1,0 +1,3 @@
+$ node tests\artifacts\difficulty-v3\MS13c\time-calls.js 40 mega16
+mega16 40 states; ms {"legacyShort":4,"legacyLong":3.2,"newShort":98.5,"newLong":81} work {"newShort":1482669,"newLong":1466850,"legacyShort":31106,"legacyLong":28855}
+exit=0 seconds=13.846

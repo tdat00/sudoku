@@ -1,0 +1,4 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js --plan=docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest-a3-v2.json --chunk=hyper-hard.i0.n50 --out=..\docs\difficulty-v3\evidence\MS18d\gp\hyper-hard\hyper-hard.i0.n50.a3\ledger.json
+ms18d-gp-recorder-start chunk=hyper-hard.i0.n50 i0=0 n=50 seedBase=7000
+ms18d-gp-ledger-complete chunk=hyper-hard.i0.n50 bytes=21781 sha256=215016e11f46236318208658d2a9a253a90d303066643cdb9adc34535a2ac171
+exit=0 seconds=1.118

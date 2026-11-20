@@ -1,0 +1,23 @@
+$ node tests\node-runner.js --suite=tech-fish --filter=finnedXWing
+Sudoku Generator tests  (node v26.13.0)
+Sources: 63 loaded, 0 missing (--verbose lists them)
+
+FAIL tech-fish: 32 passed, 2 failed  (5.31 s)
+
+Failures:
+  FAIL tech-fish > finnedXWing (R12): geometry > takes the fins from two base lines when they share a box: R4C9 and R5C7 in B6 with the bases R4 and R5
+       AssertionError: technique "finnedXWing": i18nArgs.fins is ["R7C5","R9C4"], expected ["R7C4","R9C5"]
+       at fail (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:107:11)
+       at Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:460:9
+       at Array.forEach (<anonymous>)
+       at Object.expectFinding (Q:\git\sudoku\core\tests\fixtures\techniques-helper.js:458:38)
+  FAIL tech-fish > finnedXWing (R12): geometry > leaves the line of fins only to pointing and the ordinary X-Wing to xWing, never relabelling either
+       AssertionError: expected value not to be null
+       at Object.<anonymous> (Q:\git\sudoku\core\tests\suites\tech-fish.test.js:4068:59)
+       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+       at async main (Q:\git\sudoku\generator\tests\node-runner.js:356:19)
+
+Suites: 1
+Tests:  34 total, 32 passed, 2 failed, 0 skipped
+Time:   5.31 s running tests, 5.41 s total
+exit=1 seconds=5.511

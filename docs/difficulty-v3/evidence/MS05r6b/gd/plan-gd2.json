@@ -1,0 +1,121 @@
+[
+  {
+    "label": "gd-classic9-hell1",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > hell1 >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-hell1.json"
+    ],
+    "projectionSeconds": 26,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 382.9 ms) x 20 requests x 2 + 10 s for the eight checks and the start-up = 25.3 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-hell1.json"
+  },
+  {
+    "label": "gd-classic9-veryEasy",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > veryeasy >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-veryEasy.json"
+    ],
+    "projectionSeconds": 11,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 2.44 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 10.5 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-veryEasy.json"
+  },
+  {
+    "label": "gd-classic9-easy",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > easy >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-easy.json"
+    ],
+    "projectionSeconds": 45,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 171.2 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 44.2 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-easy.json"
+  },
+  {
+    "label": "gd-classic9-normal",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > normal >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-normal.json"
+    ],
+    "projectionSeconds": 53,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 212.6 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 52.5 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-normal.json"
+  },
+  {
+    "label": "gd-classic9-hard",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > hard >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-hard.json"
+    ],
+    "projectionSeconds": 15,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 20.2 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 14 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-hard.json"
+  },
+  {
+    "label": "gd-classic9-expert",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > expert >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-expert.json"
+    ],
+    "projectionSeconds": 16,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 25 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 15 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-expert.json"
+  },
+  {
+    "label": "gd-classic9-master",
+    "args": [
+      "tests\\node-runner.js",
+      "--suite=difficulty",
+      "--filter=time) > master >",
+      "--verbose",
+      "--results=..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-master.json"
+    ],
+    "projectionSeconds": 24,
+    "projectionBasis": "MEASURED by the pilot (gd/pilot.json, 8 same-seed requests, mean 67.7 ms) x 100 requests x 2 + 10 s for the eight checks and the start-up = 23.5 s, rounded up",
+    "expectedExits": [
+      0,
+      1
+    ],
+    "resultsPath": "..\\docs\\difficulty-v3\\evidence\\MS05r6b\\gd\\classic9-master.json"
+  }
+]

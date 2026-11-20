@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs hashes --out docs/difficulty-v3/evidence/MS18e/outputs-sha256-v3-6.txt --dir docs/difficulty-v3/evidence/MS18e --exclude (lock-log\.jsonl|handoff-v3-4\.md|outputs-sha256-v3-6\.txt|transcripts/e4b-outputs-hash\.txt)$ docs/difficulty-v3/release-v3.md .github/scripts/generator-quick.json
+hashed 414 files into docs/difficulty-v3/evidence/MS18e/outputs-sha256-v3-6.txt
+exit=0 seconds=0.291
