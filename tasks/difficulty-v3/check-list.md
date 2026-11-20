@@ -893,9 +893,9 @@ Carried findings (pause-origin numbers remain historical unless a later source/d
 | MS18c-GQ-ENGINE-COST | **Open; comparator definitions resolved. Primary SA2:** 2,122 strict matched pairs, ordinary pooled median **1.1240**. **Separate SA1:** equal seed/hit/achieved/score/solved/approximate/exact/valid within a cell, both times >50 ms, >=5 pairs/cell; lower median of each cell's ratios then lower median of **51 cell medians =1.1285**, reproduced after the 11:33 clarification. Not a pooled statistic or a new timing run. Closure also records **mega16-replay 331.6 s vs118 s at MS07f**, above its 300 s projection but inside 450, and 17 offered GQ cells above the pre-update targets. Preserve source/clock/cohort distinctions; no GP verdict, normalization, retune, budget waiver or GQ repeat follows | MS18d; MS18e audit |
 | MS18d-GP-BOUND-sohei-hell2 | **Closed as a planning obstruction through R24, not a GP measurement/pass.** Preserve n=40, mean **9711.9411975 ms**, mean alert **485.597059875 s**: its monolithic command remains unadmitted. The frozen raw-ledger route is **6 chunks (9,9,8,8,8,8)**, P **435,435,394,394,394,394 s**, sum **2446 s**. Fifty original indices, source/policy and targets remain; extra cold starts disclosed. Actual execution still needs reviewed tooling and fresh per-chunk admission | MS18d R24 recording/actual outcome; MS18e audit |
 | MS18d-GP-BOUND-REMAINDER | **Closed as the other sixteen monolithic planning obstructions through R24**, not timing passes. Together with Sohei, the 17 cells have **52 frozen balanced chunks / 19023 s**, maximum P **448 s**, in `MS18d-r24-request-ledger.md`. All 79 use the same raw-time recorder; 114 commands, 3,950 indices, 35 extra cold starts. Missing/failed chunks remain incomplete; no rounded-percentile merge, arbitrary repartition, retry or limit increase | MS18d R24 recording/true aggregate; MS18e audit |
-| MS18d-C0-G1-G5 | **Baseline reviewed at `56b97b26`, ACCEPT WITH CONDITIONS F1-F6; C1 integration/review pending.** Retain C0-1..C0-6 pre-window/PID/stderr/allowlist/no-periodic-work/generic-transport rules. F1-F6 close the remaining precreation, attempts/global-stop and readiness gaps; no real recording before the combined final review | MS18d C1 release gates; MS18e evidence audit |
-| MS18d-C0b-R24 | **Baseline reviewed at `56b97b26`, conditional on F1-F6/C1 close-out.** Preserve R1-R6: exact executed bytes/empty flags, 114-chunk manifest/exact directories, typed exits, B descendants with stable content and immutable-history counts. F5/F6 strengthen hold/override/readiness validation. Only final all-79 merge is required; R6 attributes numbers to the recorder/measure API. Re-freeze/test/review the integrated snapshot before C2 | MS18d C1/C2 gate; MS18e raw-ledger audit |
-| MS18d-C1-F1-F6 | **Open; C1 released after SA1 conditional acceptance of `56b97b26`.** Pre-flight/watch before folder creation, zero-admission pre-window holds, precreation `.a1/.a2` checks, committed joint F3 rulings and global F4 stop, strict F5 artifact/command.exec checks and F6 complete A readiness. Host rebinding is jointly verified and committed, never automatic. Seven-suite rerun/new freeze/combined SA1 review and B checklist precede C2; `c07f308b...` is not the final helper SHA | MS18d C1/B release; MS18e readiness/authority audit |
+| MS18d-C0-G1-G5 | **Integration/reviews and C2 execution completed through B4; Phase D audit pending.** Preserve the initial conditional `56b97b26` review, C0-1..C0-6 ownership/gap/cleanup/byte rules, later B2/B3 repairs and all incident evidence. Final merge at `732d1b66` is complete with zero problems; do not erase the intermediate holds/development failures | MS18d Phase D provenance closure; MS18e evidence audit |
+| MS18d-C0b-R24 | **Recording complete: 114 successful raw ledgers / 3,950 requests; one final all-79 merge at `732d1b66`.** Preserve R1-R6, all four declared tuples and V1/V2, typed exits, exact directories/bytes/flags and immutable attempt history. The three a3s are first payloads, not extra samples. R6 attribution and both final-fingerprint quick sets still belong to Phase D | MS18d Phase D; MS18e raw-ledger audit |
+| MS18d-C1-F1-F6 | **Reviewed controls used through the completed campaign; Phase D audit pending.** Retain precreation/watch/attempt checks, zero-admission pre-window history, joint F3/global F4 authority, F5 artifact checks and complete A readiness. Default cap two was extended only by S-OD16/17/18 for three named, now-consumed a3s. Host rebinding stays jointly verified; no standing retry grant. Final H4 is `9699d3ee...`, not an earlier candidate freeze | MS18d Phase D; MS18e readiness/authority audit |
 | MS18d-DEEP-PUBLIC-REGISTRATIONS | **CLOSED on file evidence (`50903182`, recorded at `b3144fcf`).** Quick inventory unchanged at 4807; SG_DEEP listing 4835 -> 4828, seven removals/no additions: mega 12 -> 9, multigrid 16 -> 12. Seven-entry GQ map and 63-file audit retained, no other positive. Eleven budget contrasts, mega12 Nightmare's 3000 ms base, fixed diagnostics and E/GG recipes unchanged. No live deep run or timing claim | Closed Phase-B repair; MS18e final-source prerequisite audit |
 | IR17 final carry | Classic9 Nightmare remains offered. The older `00647f9` GD batch cost **430.5 s**; **449 s is not a reusable bound**. Require current-source conservative whole-command admission under unchanged 450/540 protection, with honest named incomplete coverage if not admissible | MS18c handoff; remaining GD and final audit MS18e |
 | S-AV28 Easy availability | MS07e GQ: diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14 (current offers lose Easy on six variants); 40/40 elsewhere | MS18c |
@@ -1268,7 +1268,34 @@ Poller paused during payloads; progress reports/checkpoints only between chunks,
 after cleanup and before the next fresh checks. Phase D's non-pack docs edits
 follow the final campaign merge, not a mid-campaign path exception.
 
-**MS18d-C2-EXTERNAL-CONSUMERS — current halt at hyper-hard, Q3 separate.**
+**MS18d C2 complete — Phase D next (`732d1b66`).**
+The single `all-79/final.m1` reports **79/79 complete, 3,950 requests,
+74/79 meeting strict p95 < target (72 required), zero problems**. The three
+S-OD16/17/18 a3s succeeded in S order under B4 `6e60b06c`, H4 `9699d3ee...`,
+base record `553ef964`; checkpoint `e1e2233f` precedes final merge `732d1b66`.
+There are **114 accepted raw ledgers total**, not 117: 111 before the a3s
+plus three. Retain nine control-holds, one zero-admission pre-window event,
+all three F3 dispositions, 35 extra cold starts and the 125-line C log.
+Five numerical misses remain named below; GP passed, not every target.
+`MS18d-phase-d-dispatch.md` assigns the exact Phase D documentation,
+final-fingerprint quick/CI/GG checks and full item handoff. MS18d remains
+unchecked/unaccepted until those close; MS18e is not released by GP alone.
+
+| New final-GP item | Cell | p95 ms (display) / target ms | Routing |
+|---|---|---:|---|
+| MS18d-GP-MISS-mega12-expert | mega12/expert | 4208.3516 / 3000 | Phase D report; MS18e audit; no tuning/target raise |
+| MS18d-GP-MISS-sohei-hell2 | sohei/hell2 | 35522.675 / 30000 | Phase D report; MS18e audit; distinguish its closed R24 planning obstruction |
+| MS18d-GP-MISS-butterfly-hell2 | butterfly/hell2 | 15496.1127 / 15000 | Phase D report; MS18e audit; no tuning/target raise |
+| MS18d-GP-MISS-wordoku-expert | wordoku/expert | 604.149 / 600 | Phase D report; MS18e audit; unrounded strict verdict authoritative |
+| MS18d-GP-MISS-wordoku-nightmare | wordoku/nightmare | 2800.4616 / 1500 | Phase D report; MS18e audit; no tuning/target raise |
+
+`MS18d-C2-EXTERNAL-CONSUMERS` remains a disclosure/audit item: all known
+consumer categories, scheduling versions (including chunk 98), waits/expiries
+and clock distinctions belong to Phase D. Unknown outer-gate metadata is not
+zero and cannot be inferred from C-log gaps. The original halt/rulings below
+remain historical; all three named recovery permissions are now consumed.
+
+**MS18d-C2-EXTERNAL-CONSUMERS — earlier halt at hyper-hard, Q3 separate.**
 B3 **`8e95cb14`**, final H3 **`4a0e5881...`**, records **`bce27077`** are
 deployed. Checkpoint **`d3e6b366`** retains **39 successful chunks / 1,550
 requests / 31 complete cells**. Hyper-hard a1/a2 both legitimately held,

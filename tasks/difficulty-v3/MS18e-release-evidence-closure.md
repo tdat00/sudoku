@@ -22,19 +22,21 @@ AGENTS/checklist; CRLF, both guide languages; no Git writes.
 
 ## Inputs & context
 
-**Current hold/scheduling audit:** retain mega16-easy's two hold folders and
-C-log lines 23-25, plus hyper-hard's two legitimate consumer holds at lines
-44-45 of checkpoint `d3e6b366`. Each cell has two spent admissions and zero
-payloads; no refund/relabel is permitted. Preserve mega16-normal's earlier
-hold and later success too. B3 `8e95cb14` / H3 `4a0e5881...` and record
-`bce27077` repair history only, with unchanged V1/cap 2 and B1/B2 evidence.
+**Current GP input:** final merge `732d1b66` reports 79/79 complete, 3,950
+requests, 74/79 strict target successes (72 required), five numerical misses
+and zero problems. B4 `6e60b06c` / record `553ef964` exercised exactly the three
+owner-approved a3s in S order; all succeeded. The accepted raw-ledger population
+is **114 total =111 prior +3 a3**, never 117. Retain all nine earlier control-holds,
+the pre-window event and the 125-line C log; no admission was refunded.
 
-Audit `MS18d-hyper-hard-holds-and-scheduling.md`, both joint line-only F3
-dispositions and their committed references, separate **Q2/S-OD16** and
-**Q3/S-OD17** decisions, and the exact approved subset in any later B4.
-No blanket exception, cap increase, payload retry or hidden plan identity.
-Without complete records for both cells, the original 79/79 gate cannot pass.
-Do not release against a reduced denominator.
+Phase D is dispatched in `MS18d-phase-d-dispatch.md` and still needs acceptance
+before this task starts. It owns R6, both final-fingerprint quick sets, final
+file-only GG and the full item register. Audit its actual accepted handoff,
+not a blanket inference that GP alone completes release verification.
+Audit separate **Q2/S-OD16, Q3/S-OD17, Q4/S-OD18**, all three F3 disposition
+objects/lines, and the B1/H1/V1 through B4/H4/V2 chain. Only the explicit owner
+decisions authorized the three third admissions; neither F3 nor a global cap
+change did. Their successful payloads remain first executions, not replacements.
 
 Carry **MS18d-C2-EXTERNAL-CONSUMERS**: actual CPU/lineage evidence, the
 automatic-re-ask scheduling disclosure, conservative gate start/checkpoint,
@@ -57,14 +59,16 @@ qualification verdicts or the complete 135-cell population.
 check-list section 4 and both `MS18d-phase-c-admission.md` /
 `MS18d-r24-request-ledger.md`, not an inherited GQ grant. **A is recorded**;
 the "100% resource" clause is scheduling-only under the reviewed interpretation.
-**Named epoch-2 exception:** also audit `MS18d-epoch2-transport-repair.md`,
+**Named epoch-2 history:** also audit `MS18d-epoch2-transport-repair.md`,
 the immutable `4db0114e` checkpoint and the separate base-2 declaration.
-The merger may accept exactly the reviewed B1/H1 and B2/H2 pairs, selecting
+That transition accepted exactly the reviewed B1/H1 and B2/H2 pairs, selecting
 each record's own identity/base checker, with every other measurement identity
 unchanged. The helper diff is limited to the wrapper, two check-only merger
 files and named tests/stand-ins; no recorder/readiness/engine/plan change.
 Preserve the 22 epoch-1 ledgers and all attempt history; no retagging,
-replacement or hidden new campaign. Report provenance/counts per epoch.
+replacement or hidden new campaign. Also audit B3's declared history repair
+and B4's exact approved plan/attempt extension and proofs. Report
+provenance/counts per epoch: B1 22, B2 zero, B3 89, B4 three successful ledgers.
 G1-G5/C0-1..C0-6 transport (C0), raw recorder/merger (C0b) and selected
 readiness implementation (C1) need review before timed release (C2).
 Keep exact source/tool/target/Node/
@@ -75,7 +79,7 @@ commands / 3,950 indices**, 62 one-chunk cells and 17 cells with 52 chunks.
 The bound items close as planning obstructions, not GP passes. S-AV11 remains held.
 Require each immutable raw ledger/exit-0 receipt and unchanged source/seed/target/
 plan/executed-content/Node/machine/policy identities and empty R5 flags.
-Helper/base equality is per declared epoch under the sole named exception above.
+Helper/base/plan equality is per one of the four declared tuples; no cross-pair mixing.
 Preserve actual HEADs: each must be campaign B or an allowed descendant under
 R3's exact campaign-output/pack path rule, not necessarily the same HEAD.
 Reject gaps, duplicates, partial/failed chunks and changed ranges. Only the complete check-only merge of raw

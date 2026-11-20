@@ -7,7 +7,7 @@
 | Size / active time | Medium; 40-55 minutes including preflight tooling, plus GP/GG |
 | Owner / milestone | Performance evidence; M18d |
 | Authority | R24/R21, FS23, S-OD4, S-OD15 A; S-AV01 not offered; S-OD13 remains GQ-only |
-| Status | C2 paused at hyper-hard a2: two genuine consumer holds/no payload; B3 deployed, checkpoint d3e6b366 has 39 successes/1,550 requests; joint line-only F3 and conservative scheduling precede the remaining 73 chunks; Q3 is separate from mega16-easy Q2 |
+| Status | C2 complete at 732d1b66: final.m1 complete/meets, 79 cells, 3,950 requests, 74 meeting targets (72 required), five misses retained; Phase D dispatch in MS18d-phase-d-dispatch.md; task acceptance still pending |
 
 ## Goal & business context
 
@@ -146,7 +146,16 @@ There is **no `SG_TIME_FACTOR` multiplication of CLI GP targets**.
 
 ## Dispatch boundary and owner action
 
-**Current external-consumer halt:** B3 `8e95cb14` / records `bce27077` is
+**Current dispatch — Phase D:** the single final merge at `732d1b66` passed
+with 79/79 complete and 74/79 meeting strict p95 < target. All three owner-approved
+a3s succeeded under B4 `6e60b06c` / record `553ef964`. Follow
+**`MS18d-phase-d-dispatch.md`** for steps 9–11, exact write paths, R6, both
+final-fingerprint quick sets, file-only GG and the full item handoff. No new GP,
+real merge, S-AV11 profile or deep/manual generation is assigned. The owner
+requested SA1's cross-review of this dispatch; implementation acceptance remains
+the orchestrator's. Preserve all prior holds, repairs and decisions below as history.
+
+**Earlier external-consumer halt:** B3 `8e95cb14` / records `bce27077` is
 deployed. Checkpoint `d3e6b366` retains 39 successful chunks/1,550 requests
 and the two legitimate hyper-hard holds. Follow
 `MS18d-hyper-hard-holds-and-scheduling.md`: line-release-only F3 after joint
@@ -1081,6 +1090,11 @@ edits or timed work when arithmetic is green.
    diagnostic guard, stage data and limitations separate from GP.
 
 ### Phase D — aggregate and close honestly
+
+**Current concrete dispatch:** `MS18d-phase-d-dispatch.md` supplies the exact
+files, commands, final counts and acceptance checks for these three steps.
+The completed campaign has only one final merge slot, already used; no optional
+cell merge or repeat of `final.m1` is assigned by this closure.
 
 9. Validate all transcripts/cell keys/source/target/policy/Node/machine bindings.
    **Only the final all-79 check-only merge is required**; do not automatically
