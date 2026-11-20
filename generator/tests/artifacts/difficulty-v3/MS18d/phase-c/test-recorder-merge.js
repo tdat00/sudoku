@@ -18,6 +18,7 @@ const ledgerSchema = require('./ledger-schema.js');
 const core = require('./merge-core.js');
 const mergeGp = require('./merge-gp.js');
 const payloadGp = require('./payload-gp.js');
+const proofTool = require('./test-epoch4-proof.js');
 const standin = require('./standin-gp.js');
 const { sha256 } = require('./common.js');
 
@@ -1003,8 +1004,11 @@ async function classifierTests() {
     payloadGp.recorder.validateRequest(Object.assign({}, base, { command: { args: good } }));
     assert.throws(() => payloadGp.recorder.validateRequest(Object.assign({}, base,
       { command: { args: good.concat(['--standin-root=x']) } })), /frozen command line/);
+    // attempt 3 is a valid REQUEST type (the plan decides: only a declared admission exception has the slot),
+    // attempt 4 never is
+    payloadGp.recorder.validateRequest(Object.assign({}, base, { command: { args: good }, attempt: 3 }));
     assert.throws(() => payloadGp.recorder.validateRequest(Object.assign({}, base,
-      { command: { args: good }, attempt: 3 })), /attempt is 1 or 2/);
+      { command: { args: good }, attempt: 4 })), /attempt is 1, 2 or 3/);
     const mergeArgs = ['tests\\artifacts\\difficulty-v3\\MS18d\\phase-c\\merge-gp.js', '--plan=' + planFile,
       '--scope=all-79', '--out=..\\docs\\difficulty-v3\\evidence\\MS18d\\gp\\all-79\\final.m1\\report.json'];
     const mreq = { repo: REPO, runDir: path.join(gpDir, 'all-79', 'final.m1'), standin: false, plan: planRef,
@@ -1279,6 +1283,8 @@ const CHK = 'c0'.repeat(20);
 const B2 = 'b2'.repeat(20);
 const CHK3 = 'c9'.repeat(20);
 const B3 = 'b3'.repeat(20);
+const B4 = 'b4'.repeat(20);
+const CHK4 = 'c8'.repeat(20);
 const HEADX = 'd4'.repeat(20);
 const MANIFEST1_REL = 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c1b-sha256.txt';
 const MANIFEST2_REL = 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c2-sha256.txt';
@@ -1289,7 +1295,8 @@ const hexOf = (text) => sha256(Buffer.from(text, 'utf8'));
 const helperText = (entries) => Object.keys(entries).sort()
   .map((p) => entries[p].toUpperCase() + '  ' + p.replace(/\//g, '\\')).join('\r\n') + '\r\n';
 const HELPER_NAMES = ['record-gp.js', 'loader.js', 'controller.js', 'readiness-core.js', 'run-locked-c.ps1',
-  'merge-core.js', 'merge-gp.js', 'test-units.js', 'standin-gp.js', 'release-history.js'];
+  'merge-core.js', 'merge-gp.js', 'test-units.js', 'standin-gp.js', 'release-history.js', 'plan-data.js',
+  'attempts.js', 'payload-gp.js', 'test-plan.js', 'test-recorder-merge.js', 'test-run-locked-c.ps1'];
 
 function helperEntries(version, extra) {
   const e = {};
@@ -1306,7 +1313,7 @@ function helperEntries(version, extra) {
  */
 function epochWorld(o) {
   const opts = o || {};
-  const w = newWorld();
+  const w = newWorld({ rows: opts.rows });
   const e1 = helperEntries('v1');
   const e2 = helperEntries('v1', {
     [HDIR + 'run-locked-c.ps1']: hexOf('v2 wrapper'), [HDIR + 'merge-core.js']: hexOf('v2 core'),
@@ -1342,7 +1349,9 @@ function epochWorld(o) {
 }
 
 const pairOf = (w, n) => (n === 1 ? { base: B1, helper: { sha256: w.h1.sha256 } }
-  : n === 2 ? { base: B2, helper: { sha256: w.h2.sha256 } } : { base: B3, helper: { sha256: w.h3.sha256 } });
+  : n === 2 ? { base: B2, helper: { sha256: w.h2.sha256 } }
+    : n === 3 ? { base: B3, helper: { sha256: w.h3.sha256 } }
+      : { base: B4, helper: { sha256: w.h4.sha256 } });
 
 /** The campaign of an epoch world: epoch 1 for `first` (chunk ids), epoch 2 for the others. */
 function writeEpochCampaign(w, first, extra) {
@@ -1393,10 +1402,15 @@ function epochGit(w, o) {
       return '';
     }
     if (args[0] === 'diff' && args.indexOf('--name-status') !== -1) {
-      const list = args[4] === B2 ? (opts.diff3 || w.diff3) : (opts.diff || w.diff);
+      const list = args[4] === B3 ? (opts.diff4 || w.diff4) : args[4] === B2 ? (opts.diff3 || w.diff3)
+        : (opts.diff || w.diff);
       return list.map((d) => d.status + '\0' + d.file + '\0').join('');
     }
     if (args[0] === 'diff') return '';
+    if (args[0] === 'show') {
+      const shown = Object.assign({}, w.show, opts.show);
+      if (shown[args[1]] !== undefined && shown[args[1]] !== null) return shown[args[1]];
+    }
     throw new Error('unexpected git ' + args.join(' '));
   };
 }
@@ -2031,6 +2045,704 @@ async function epochTests() {
   });
 }
 
+// ---- epoch 4 (B4, the owner-approved a3 exceptions): four chained pairs, the V2 plan for the last
+
+const MANIFEST4_REL = 'docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c4-sha256.txt';
+const PROOF4_REL = 'tasks/difficulty-v3/MS18d-gp-campaign-base-4-proof.json';
+const V1_FWD = 'docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json';
+const V2_BACK = core.V2_PLAN_REL.replace(/\//g, '\\');
+const OWNER_COMMIT = 'c7'.repeat(20);
+// the three candidate cells are named like the real ones (the merger never runs `measure`)
+const ROWS4 = [
+  { key: 'fakea/easy', variant: 'fakea', level: 'easy', target: 100, chunks: [[0, 50, 70]] },
+  { key: 'fakeb/easy', variant: 'fakeb', level: 'easy', target: 300, chunks: [[0, 25, 60], [25, 25, 60]] },
+  { key: 'mega16/easy', variant: 'mega16', level: 'easy', target: 100, chunks: [[0, 50, 70]] },
+  { key: 'hyper/hard', variant: 'hyper', level: 'hard', target: 100, chunks: [[0, 50, 70]] },
+  { key: 'butterfly/master', variant: 'butterfly', level: 'master', target: 100, chunks: [[0, 50, 70]] }];
+const CAND = plan.CANDIDATES.map((c) => c.chunkId);
+const FIRST4 = ['fakea-easy.i0.n50', 'fakeb-easy.i0.n25'];
+const LATE4 = 'fakeb-easy.i25.n25';
+const ALL_HOLDS = [].concat(...CAND.map((id) => [id + '.a1', id + '.a2']));
+const masksOf = (n) => Array.from({ length: n }, (_, i) => i);
+const lettersOf = (mask) => [0, 1, 2].map((i) => ((mask >> i) & 1 ? 'A' : 'B'));
+
+/** The owner selector of question `q` (2..4) as the pack file has it, for the whole reply `letters`. */
+const selectorOf = (q, letters) => ({ question: 'MS18d-Q' + q, choice: letters[q - 2], owner: 'amicably8850',
+  answeredAt: '2026-11-19T22:50:08.320Z', source: { channel: 'ai-agent-session2',
+    channelId: '1571779348573323334', messageId: '1573108143389675704' },
+answer: 'Q2=' + letters[0] + ', Q3=' + letters[1] + ', Q4=' + letters[2],
+binding: 'Q' + q + '=' + letters[q - 2],
+questionMessageId: '15729771244768' + q, reAskMessageId: '1573095012768682146', chunkId: CAND[q - 2],
+cell: 'x/y', queuePosition: 20 + q });
+
+/** The pack file text at the owner commit: the subsection with its text fence of `S-OD<n> {json}` lines. */
+const ownerFileText = (letters, edit) => {
+  let lines = [2, 3, 4].map((q) => 'S-OD' + (14 + q) + ' ' + JSON.stringify(selectorOf(q, letters)));
+  if (edit) lines = edit(lines);
+  return ['# check-list', '', '## 4 decisions', '', '### S-OD16 / S-OD17 / S-OD18 — owner-choice records', '',
+    'Each V2 ref cites the commit that adds these lines.', '', '```text'].concat(lines,
+    ['```', '', 'end', '']).join('\n');
+};
+
+/**
+ * The question wordings as the proof tool is given them in the tests: Q2 and Q3 at the owner commit, Q4 (its
+ * posted text archived later) at its own pack commit, with the SHA-256 of the synthetic text fence.
+ */
+const W_COMMIT = 'e8'.repeat(20);
+const Q4_FENCE = '**MS18d-Q4 (a synthetic posted question)**\n\nAnh chọn **Q4=A** hoặc **Q4=B**.';
+const TEST_WORDING = proofTool.WORDING.map((x) => (x.decisionId === 'S-OD18' ? Object.assign({}, x, {
+  commit: W_COMMIT, messageId: '1573073374584774872', fenceSha256: sha256(Buffer.from(Q4_FENCE, 'utf8')) })
+  : x));
+
+/** The wording files the owner decisions point to (a heading and a block quote naming the question). */
+const wordingFiles = () => {
+  const files = {};
+  TEST_WORDING.forEach((x) => {
+    const body = x.fenceSha256 ? ['Message ' + x.messageId + '.', '', '````text'].concat(Q4_FENCE.split('\n'),
+      ['````']) : ['> **' + x.question + ':** the posted question'];
+    files[(x.commit || OWNER_COMMIT) + ':' + x.file] = ['# a pack file', '', '## ' + x.section, '']
+      .concat(body, ['', '## next', '']).join('\n');
+  });
+  return files;
+};
+
+/**
+ * A world of four epochs, B1 to B3 on the V1 plan and B4 on the V2 plan. `o`: { letters (the answers of
+ * Q2, Q3, Q4: the subset S is read from them), v2Edit(doc) (a change of the V2 document, rehashed), h4
+ * (overrides of H4, null removes one), diff4, plus the options of epochWorld3 }.
+ */
+function epochWorld4(o) {
+  const opts = o || {};
+  const w = epochWorld3(Object.assign({}, opts, { rows: ROWS4 }));
+  const letters = opts.letters || ['A', 'A', 'A'];
+  // what the pack file holds at the owner commit (the V2 is built from `letters`, the file may differ)
+  w.ownerText = ownerFileText(opts.ownerLetters || letters, opts.ownerEdit);
+  w.show = Object.assign({ [OWNER_COMMIT + ':' + plan.OWNER_FILE]: w.ownerText }, wordingFiles());
+  w.v1ref = { file: V1_FWD, rawSha256: w.made.rawSha256 };
+  const granted = plan.resolveSubset(plan.parseOwnerSelectors(ownerFileText(letters)).entries,
+    OWNER_COMMIT).granted;
+  const v2 = plan.buildManifestV2(w.doc, w.v1ref, granted);
+  if (opts.v2Edit) {
+    opts.v2Edit(v2);
+    const rest = Object.assign({}, v2);
+    delete rest.manifestSha256;
+    v2.manifestSha256 = plan.canonicalSha256(rest);
+  }
+  const v2Text = JSON.stringify(v2, null, 2) + '\n';
+  w.write(core.V2_PLAN_REL, v2Text);
+  w.v2 = v2;
+  w.v2raw = hexOf(v2Text);
+  w.made4 = { doc: v2, planRel: V2_BACK, rawSha256: w.v2raw };
+  const e4 = {};
+  core.parseHelperManifest(w.m3Text).entries.forEach((hash, rel) => { e4[rel] = hash; });
+  Object.assign(e4, { [HDIR + 'plan-data.js']: hexOf('v4 plan'), [HDIR + 'attempts.js']: hexOf('v4 attempts'),
+    [HDIR + 'payload-gp.js']: hexOf('v4 payload'), [HDIR + 'run-locked-c.ps1']: hexOf('v4 wrapper'),
+    [HDIR + 'merge-core.js']: hexOf('v4 core'), [HDIR + 'merge-gp.js']: hexOf('v4 gp'),
+    [HDIR + 'test-units.js']: hexOf('v4 units'), [HDIR + 'test-plan.js']: hexOf('v4 plan tests'),
+    [HDIR + 'test-recorder-merge.js']: hexOf('v4 merge tests'),
+    [HDIR + 'test-run-locked-c.ps1']: hexOf('v4 wrapper tests'),
+    [HDIR + 'test-epoch4-proof.js']: hexOf('v4 proof tool'), [core.V2_PLAN_REL]: hexOf(v2Text) });
+  Object.keys(opts.h4 || {}).forEach((k) => {
+    if (opts.h4[k] === null) delete e4[k];
+    else e4[k] = opts.h4[k];
+  });
+  w.m4Text = helperText(e4);
+  w.h4 = { file: w.write(MANIFEST4_REL, w.m4Text), sha256: hexOf(w.m4Text), entries: Object.keys(e4).length };
+  w.diff4 = opts.diff4 || [
+    { status: 'M', file: HDIR + 'plan-data.js' }, { status: 'M', file: HDIR + 'attempts.js' },
+    { status: 'M', file: HDIR + 'payload-gp.js' }, { status: 'M', file: HDIR + 'run-locked-c.ps1' },
+    { status: 'M', file: HDIR + 'merge-core.js' }, { status: 'M', file: HDIR + 'merge-gp.js' },
+    { status: 'M', file: HDIR + 'test-units.js' }, { status: 'M', file: HDIR + 'test-plan.js' },
+    { status: 'M', file: HDIR + 'test-recorder-merge.js' },
+    { status: 'M', file: HDIR + 'test-run-locked-c.ps1' },
+    { status: 'A', file: HDIR + 'test-epoch4-proof.js' }, { status: 'A', file: core.V2_PLAN_REL },
+    { status: 'A', file: MANIFEST4_REL },
+    { status: 'A', file: standin.RUN_BASE + '/mega16-easy/mega16-easy.i0.n50.a3/ledger.json' },
+    { status: 'M', file: 'docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl' },
+    { status: 'A', file: 'tasks/difficulty-v3/MS18d-gp-campaign-base-4.jsonl' }];
+  return w;
+}
+
+/**
+ * The campaign of a four-epoch world: two epoch-1 successes, one epoch-3 success, a1 and a2 holds of every
+ * candidate and, for each chunk of S (read from the V2 plan), a complete a3 under (B4, H4).
+ * `o`: { a3 (options of writeRunFolder for every a3), noA3 (no a3 folder at all) }.
+ */
+function writeCampaign4(w, o) {
+  const opts = o || {};
+  const chunk = {};
+  FIRST4.forEach((id) => { chunk[id] = pairOf(w, 1); });
+  chunk[LATE4] = pairOf(w, 3);
+  CAND.forEach((id) => { chunk[id] = { skip: true }; });
+  writeCampaign(w, { times: lowTimes, chunk });
+  CAND.forEach((id) => [1, 2].forEach((n) => standin.writeHoldFolder(w.repo, slotOf(w, id, n))));
+  if (opts.noA3) return;
+  (w.v2.admissionExceptions || []).forEach((e) => {
+    const slot = w.v2.runSlots.filter((s) => s.role === 'chunk' && s.runId === e.runId)[0];
+    standin.writeRunFolder(w.repo, w.made4, slot, Object.assign({ helper: pairOf(w, 4).helper, base: B4,
+      times: lowTimes(chunkOf(w, e.chunkId)) }, opts.a3));
+  });
+}
+
+/** The base-4 `ownerDecisions` as the proof tool makes them from the owner commit (the fake Git). */
+function ownerDecisions(w) {
+  try {
+    return proofTool.ownerDecisionsAt(epochGit(w), OWNER_COMMIT, TEST_WORDING);
+  } catch (err) {
+    return [];
+  }
+}
+
+/** The base-4 record and its proof file (written to the world); `over` replaces top-level fields. */
+function epochRecord4(w, tagged, holds, over) {
+  const step = core.EPOCH_STEPS[4];
+  const t = core.manifestTransition(core.parseHelperManifest(w.m3Text), core.parseHelperManifest(w.m4Text),
+    step.production, step.tests, step.dataFiles, step.addedTests);
+  const proof = { schema: core.PROOF4_SCHEMA, previousBase: B3, checkpoint: CHK4, campaignBase: B4,
+    previousHelperManifestSha256: w.h3.sha256, helperManifestSha256: w.h4.sha256, changes: t.changes,
+    identicalEntries: t.identical, committedDiff: w.diff4.map((d) => d.status + ' ' + d.file).sort() };
+  const proofText = JSON.stringify(proof, null, 2) + '\n';
+  w.write(PROOF4_REL, proofText);
+  const requests = w.doc.chunks.filter((c) => tagged.some((r) => r.chunkId === c.chunkId))
+    .reduce((sum, c) => sum + c.n, 0);
+  return Object.assign({ schema: core.EPOCH4_SCHEMA, campaignBase: B4, previousBase: B3, checkpoint: CHK4,
+    reason: 'a fixture', recordedAt: '2026-11-20T12:00:00+07:00', recordedBy: 'orchestrator',
+    previousHelperManifest: { file: MANIFEST3_REL, sha256: w.h3.sha256, entries: w.h3.entries },
+    helperManifest: { file: MANIFEST4_REL, sha256: w.h4.sha256, entries: w.h4.entries },
+    allowedHelperChanges: t.changes, transitionProof: { file: PROOF4_REL, sha256: hexOf(proofText) },
+    retainedEvidence: { successes: tagged, holds },
+    plan: { file: core.V2_PLAN_REL, rawSha256: w.v2raw, manifestSha256: w.v2.manifestSha256 },
+    previousPlan: { file: V1_FWD, rawSha256: w.made.rawSha256, manifestSha256: w.doc.manifestSha256 },
+    campaignRoot: B1, ownerDecisionCommit: OWNER_COMMIT, ownerDecisions: ownerDecisions(w),
+    admissionExceptions: w.v2.admissionExceptions,
+    exceptionOrder: (w.v2.admissionExceptions || []).map((e) => e.runId),
+    identities: { hashIdentity: w.doc.sources.hashIdentity, sources: w.doc.sources.sources,
+      tableSha256: w.doc.targets.tableSha256 },
+    environment: { node: w.doc.environment.node }, policy: { choice: w.doc.policy.choice },
+    cutover: { successes: tagged.length, requests } }, over || {});
+}
+
+/**
+ * One merge of a four-epoch world through merge-gp.js main(). `o`: { record2Over, record3Over, record4,
+ * record4Over, tagged, holds, noRecord4, record4Text, planRel (the plan the merge request names), request,
+ * base, git }.
+ */
+function epochMerge4(w, o) {
+  const opts = o || {};
+  const retained2 = retainedOf(w, FIRST4);
+  const tagged3 = retained2.map((r) => Object.assign({ epoch: 1 }, r));
+  const tagged4 = tagged3.concat(retainedOf(w, [LATE4]).map((r) => Object.assign({ epoch: 3 }, r)));
+  const v1Plan = { file: V1_FWD, rawSha256: w.made.rawSha256, manifestSha256: w.doc.manifestSha256 };
+  const record2 = epochRecord(w, retained2, Object.assign({ plan: v1Plan,
+    retainedEvidence: { successes: retained2, holds: [] } }, opts.record2Over));
+  const record3 = epochRecord3(w, tagged3, [CAND[0] + '.a1', CAND[0] + '.a2'],
+    Object.assign({ plan: v1Plan }, opts.record3Over));
+  const record4 = opts.record4 || epochRecord4(w, typeof opts.tagged === 'function' ? opts.tagged(tagged4)
+    : opts.tagged || tagged4, opts.holds || ALL_HOLDS, opts.record4Over);
+  const planRel = opts.planRel || V2_BACK;
+  const planBytes = fs.readFileSync(path.join(w.repo, planRel));
+  const planDoc = JSON.parse(planBytes.toString('utf8'));
+  const request = Object.assign({ expected: { base: opts.base || B4 },
+    plan: { file: planRel, rawSha256: sha256(planBytes), manifestSha256: planDoc.manifestSha256 },
+    helpers: { manifestFile: w.h4.file, manifestSha256: w.h4.sha256, required: [], repoRoot: w.repo },
+    epoch1: { base: B1, helperManifestSha256: w.h1.sha256, entries: w.h1.entries, manifestRel: MANIFEST1_REL,
+      checkpoint: CHK }, epoch2Text: JSON.stringify(record2) + '\n',
+    epoch3Text: JSON.stringify(record3) + '\n',
+    epoch3Checkpoint: CHK3, epoch4Checkpoint: CHK4 }, opts.request);
+  if (!opts.noRecord4) {
+    request.epoch4Text = opts.record4Text !== undefined ? opts.record4Text : JSON.stringify(record4) + '\n';
+  }
+  const { dir } = mergeRequestFile(w, 'all-79', request);
+  fs.rmSync(path.join(dir, 'report.json'), { force: true });
+  const lines = [];
+  const code = mergeGp.main(['--plan=' + planRel, '--scope=all-79', '--out=' + path.join(dir, 'report.json')],
+    { git: epochGit(w, opts.git), out: (t) => lines.push(t) });
+  const file = path.join(dir, 'report.json');
+  return { code, lines, text: lines.join('\n'),
+    report: fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null };
+}
+
+async function epoch4Tests() {
+  await test('epoch 4: four chained pairs merge (V1 for B1 to B3, V2 for B4); every a3 counts once', () => {
+    const w = epochWorld4();
+    writeCampaign4(w);
+    const r = epochMerge4(w);
+    assert.strictEqual(r.code, 0, r.text);
+    assert.strictEqual(r.lines[r.lines.length - 1], RESULT_ALL + 'true successes=5 cells=5 required=5');
+    const epochsLine = new RegExp('^ms18d-gp-merge-epochs 1=a1a1a1a1:\\w{8} 2=b2b2b2b2:\\w{8} ' +
+      '3=b3b3b3b3:\\w{8} 4=b4b4b4b4:\\w{8}');
+    assert.ok(r.lines.some((l) => epochsLine.test(l)), r.text);
+    assert.deepStrictEqual(r.report.consumed.map((c) => c.epoch.id).sort(), [1, 1, 3, 4, 4, 4]);
+    assert.deepStrictEqual(r.report.epochs.pairs.map((p) => p.id), [1, 2, 3, 4]);
+    assert.deepStrictEqual(r.report.epochs.pairs.map((p) => p.attempts), [[1, 2], [1, 2], [1, 2], [3]]);
+    assert.deepStrictEqual(r.report.epochs.pairs.map((p) => p.plan.file),
+      [V1_FWD, V1_FWD, V1_FWD, core.V2_PLAN_REL]);
+    assert.deepStrictEqual(r.report.epochs.pairs.map((p) => p.plan.manifestSha256),
+      [w.doc.manifestSha256, w.doc.manifestSha256, w.doc.manifestSha256, w.v2.manifestSha256]);
+    assert.strictEqual(r.report.identity.base, B4);
+    assert.strictEqual(r.report.identity.helperManifestSha256, w.h4.sha256);
+    assert.deepStrictEqual(r.report.epochs.chain.map((c) => c.epoch), [2, 3, 4]);
+    assert.deepStrictEqual(r.report.totals.cells, 5);
+    assert.deepStrictEqual(r.report.totals.completeCells, 5);
+    assert.strictEqual(r.report.totals.requests, 250, 'each complete a3 counts exactly its 50 requests once');
+    assert.deepStrictEqual(r.report.totals.holds.sort(), ALL_HOLDS.slice().sort(),
+      'every hold is still a hold');
+  });
+
+  await test('epoch 4: all eight subsets of S (from the decisions): 2 + k cells, 100 + 50 k requests', () => {
+    const w0 = newWorld({ rows: ROWS4 });
+    assert.strictEqual(plan.buildManifestV2(w0.doc, { file: V1_FWD, rawSha256: w0.made.rawSha256 },
+      plan.resolveSubset(plan.parseOwnerSelectors(ownerFileText(['B', 'B', 'B'])).entries, OWNER_COMMIT)
+        .granted), null, 'S empty: no V2, no B4');
+    masksOf(8).slice(1).forEach((mask) => {
+      const letters = lettersOf(mask);
+      const k = letters.filter((l) => l === 'A').length;
+      const w = epochWorld4({ letters });
+      writeCampaign4(w);
+      const r = epochMerge4(w);
+      const declined = CAND.filter((c, i) => letters[i] === 'B');
+      const granted = CAND.filter((c, i) => letters[i] === 'A');
+      assert.deepStrictEqual(w.v2.admissionExceptions.map((e) => e.chunkId), granted, 'mask ' + mask);
+      assert.strictEqual(r.report.totals.cells, 5);
+      assert.strictEqual(r.report.totals.completeCells, 2 + k, 'mask ' + mask);
+      assert.strictEqual(r.report.totals.requests, 100 + 50 * k, 'mask ' + mask);
+      assert.strictEqual(r.report.totals.holds.length, 6, 'holds are never successes (mask ' + mask + ')');
+      assert.strictEqual(r.report.consumed.filter((c) => c.epoch.id === 4).length, k);
+      if (k === 3) {
+        assert.strictEqual(r.code, 0, r.text);
+        return;
+      }
+      assert.strictEqual(r.code, 2, 'a declined candidate stays incomplete (mask ' + mask + ')');
+      assert.strictEqual(r.report.complete, false);
+      assert.ok(r.report.problems.length > 0 && r.report.problems.every((p) => declined.some((id) =>
+        p.indexOf(id) !== -1)), r.report.problems.join(' | '));
+    });
+  });
+
+  await test('epoch 4: an a3 runs only under (B4, H4, V2); the V1 pairs run attempts 1 and 2 only', () => {
+    const refuse = (what, a3, pattern, edit) => {
+      const w = epochWorld4({ letters: ['A', 'B', 'B'] });
+      writeCampaign4(w, { a3 });
+      if (edit) edit(w);
+      const r = epochMerge4(w);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    const withPair = (n) => (w) => {
+      const slot = w.v2.runSlots.filter((s) => s.attempt === 3)[0];
+      fs.rmSync(path.join(w.repo, slot.dir), { recursive: true, force: true });
+      standin.writeRunFolder(w.repo, w.made4, slot, Object.assign({ times: lowTimes(chunkOf(w, CAND[0])) },
+        pairOf(w, n)));
+    };
+    refuse('an a3 of (B3, H3)', {}, /the epoch 3 does not run attempt 3/, withPair(3));
+    refuse('an a3 of (B1, H1)', {}, /the epoch 1 does not run attempt 3/, withPair(1));
+    refuse('an a3 of (B2, H2)', {}, /(the epoch 2 does not run attempt 3|is no declared epoch)/, withPair(2));
+    // a retained chunk answered by an attempt-1 ledger of (B4, H4)
+    const w = epochWorld4();
+    writeCampaign4(w);
+    const slot = slotOf(w, 'fakea-easy.i0.n50', 1);
+    fs.rmSync(path.join(w.repo, slot.dir), { recursive: true, force: true });
+    standin.writeRunFolder(w.repo, w.made, slot, Object.assign({
+      times: lowTimes(chunkOf(w, 'fakea-easy.i0.n50')) }, pairOf(w, 4)));
+    const r = epochMerge4(w);
+    assert.strictEqual(r.code, 2, r.text);
+    assert.ok(/the epoch 4 does not run attempt 1/.test(r.text), r.text);
+  });
+
+  await test('epoch 4: an epoch-1 ledger that names the V2 plan is no ledger of the V1 pair', () => {
+    const w = epochWorld4();
+    writeCampaign4(w);
+    const slot = slotOf(w, 'fakea-easy.i0.n50', 1);
+    fs.rmSync(path.join(w.repo, slot.dir), { recursive: true, force: true });
+    standin.writeRunFolder(w.repo, w.made4, slot, Object.assign({
+      times: lowTimes(chunkOf(w, 'fakea-easy.i0.n50')) },
+      pairOf(w, 1)));
+    const r = epochMerge4(w);
+    assert.strictEqual(r.code, 2, r.text);
+    assert.ok(/ledger: identity differs from the campaign identity|request\.json: plan/.test(r.text), r.text);
+  });
+
+  await test('epoch 4: an a3 needs its OWN a1 and a2, both proven-unstarted holds (no borrowing)', () => {
+    const refuse = (what, edit, pattern) => {
+      const w = epochWorld4();
+      writeCampaign4(w);
+      edit(w);
+      const r = epochMerge4(w);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    const drop = (w, id, n) => fs.rmSync(path.join(w.repo, slotOf(w, id, n).dir), { recursive: true,
+      force: true });
+    refuse('no a2 folder', (w) => drop(w, CAND[0], 2), /an a3 without its own two proven-unstarted holds/);
+    refuse('no a1 folder', (w) => drop(w, CAND[1], 1), /an a3 without its own two proven-unstarted holds/);
+    refuse('a2 is a started failed payload', (w) => {
+      drop(w, CAND[2], 2);
+      standin.writeRunFolder(w.repo, w.made, slotOf(w, CAND[2], 2), Object.assign({
+        times: lowTimes(chunkOf(w, CAND[2])),
+        mutate: { 'wrapper.json': (x) => Object.assign({}, x, { outcome: 'stop', exit: 65 }) } },
+      pairOf(w, 3)));
+    }, /an a3 without its own two proven-unstarted holds/);
+    refuse('a1 is a complete success', (w) => {
+      drop(w, CAND[0], 1);
+      standin.writeRunFolder(w.repo, w.made, slotOf(w, CAND[0], 1), Object.assign({
+        times: lowTimes(chunkOf(w, CAND[0])) }, pairOf(w, 1)));
+    }, /an a3 without its own two proven-unstarted holds|2 complete ledgers|retained success/);
+    const none = epochWorld4();
+    writeCampaign4(none, { noA3: true });
+    const r = epochMerge4(none);
+    assert.strictEqual(r.code, 2, 'holds are never successes: nothing completes the candidates');
+    assert.strictEqual(r.report.totals.completeCells, 2);
+    assert.strictEqual(r.report.totals.requests, 100);
+    assert.ok(/no complete run \(2 hold\(s\), 0 failed\)/.test(r.text), r.text);
+  });
+
+  await test('epoch 4: no a4, no a3 outside S, no a3 of another chunk (undeclared folders)', () => {
+    const refuse = (what, letters, dirOf) => {
+      const w = epochWorld4({ letters });
+      writeCampaign4(w);
+      const dir = path.join(w.repo, standin.RUN_BASE, dirOf);
+      fs.mkdirSync(dir, { recursive: true });
+      const r = epochMerge4(w);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(/an undeclared run directory/.test(r.text), what + ': ' + r.text);
+    };
+    refuse('an a4', ['A', 'A', 'A'], 'mega16-easy/' + CAND[0] + '.a4');
+    refuse('an a3 of a declined candidate', ['A', 'B', 'A'], 'hyper-hard/' + CAND[1] + '.a3');
+    refuse('an a3 of a normal chunk', ['A', 'A', 'A'], 'fakea-easy/fakea-easy.i0.n50.a3');
+  });
+
+  await test('epoch 4: the record carries the owner selectors exactly, with their ref and wording', () => {
+    const w = epochWorld4();
+    const git = epochGit(w);
+    const made = proofTool.ownerDecisionsAt(git, OWNER_COMMIT, TEST_WORDING);
+    const parsed = plan.parseOwnerSelectors(w.ownerText);
+    assert.strictEqual(made.length, 3);
+    made.forEach((d, i) => {
+      const { id, ref, questionWording } = d;
+      const rest = Object.assign({}, d);
+      ['id', 'ref', 'questionWording'].forEach((k) => delete rest[k]);
+      assert.strictEqual(id, 'S-OD' + (16 + i));
+      assert.strictEqual(ref, OWNER_COMMIT + ':tasks/difficulty-v3/check-list.md#' + id);
+      assert.deepStrictEqual(rest, parsed.entries[i].selector, 'the source fields are untouched');
+      assert.strictEqual(JSON.stringify(rest), JSON.stringify(parsed.entries[i].selector), 'in their order');
+      assert.deepStrictEqual(questionWording, { file: TEST_WORDING[i].file,
+        section: TEST_WORDING[i].section, commit: TEST_WORDING[i].commit || OWNER_COMMIT },
+      'Q2 and Q3 keep the owner commit, Q4 its own wording commit');
+    });
+    assert.strictEqual(made[2].questionWording.commit, W_COMMIT);
+    assert.strictEqual(made[2].ref, OWNER_COMMIT + ':tasks/difficulty-v3/check-list.md#S-OD18',
+      'the owner reference of Q4 stays anchored to the owner commit');
+    const spec = TEST_WORDING[0];
+    const key = OWNER_COMMIT + ':' + spec.file;
+    const withText = (text) => epochGit(w, { show: { [key]: text } });
+    assert.throws(() => proofTool.wordingOf(withText('# t\n\n## other\n\nMS18d-Q2\n'), OWNER_COMMIT, spec),
+      /no unique section/);
+    assert.throws(() => proofTool.wordingOf(withText('## ' + spec.section + '\n\nx\n\n## ' + spec.section +
+      '\n\nMS18d-Q2\n'), OWNER_COMMIT, spec), /no unique section/);
+    assert.throws(() => proofTool.wordingOf(withText('## ' + spec.section + '\n\nno id here\n\n## next\n' +
+      'MS18d-Q2 appears after the section\n'), OWNER_COMMIT, spec), /does not mention MS18d-Q2/);
+    assert.deepStrictEqual(proofTool.wordingOf(withText('## ' + spec.section + '\n\n> **MS18d-Q2:** q\n'),
+      OWNER_COMMIT, spec), { file: spec.file, section: spec.section, commit: OWNER_COMMIT });
+    // Q4: the archived text is the wording record: its message, its fence and the fence digest
+    const q4 = TEST_WORDING[2];
+    const q4Key = W_COMMIT + ':' + q4.file;
+    const q4Of = (lines) => proofTool.wordingOf(epochGit(w, { show: { [q4Key]: ['## ' + q4.section, '']
+      .concat(lines, ['', '## next', '']).join('\n') } }), OWNER_COMMIT, q4);
+    const msg = 'Message ' + q4.messageId + '.';
+    const fence = ['````text'].concat(Q4_FENCE.split('\n'), ['````']);
+    assert.deepStrictEqual(q4Of([msg].concat(fence)),
+      { file: q4.file, section: q4.section, commit: W_COMMIT });
+    assert.throws(() => q4Of([msg, '````text', Q4_FENCE + ' edited', '````']), /does not hash to/);
+    assert.throws(() => q4Of(['MS18d-Q4, a section without its message id'].concat(fence)),
+      /does not name the message/);
+    assert.throws(() => q4Of([msg, 'no fence here']), /has no text fence/);
+    assert.throws(() => q4Of([msg, '````text'].concat(Q4_FENCE.split('\n'))), /has no text fence/);
+    assert.throws(() => proofTool.ownerTextAt(git, OWNER_COMMIT.slice(0, 8)), /full 40-hex/);
+  });
+
+  await test('epoch 4: the retained evidence: git blob bytes, folders compared at the checkpoint', () => {
+    const { LEDGER } = require('./source-binding.js');
+    const chk = core.EPOCH3_CHECKPOINT;
+    const B4C = 'b4'.repeat(20);
+    const lines = ['{"type":"run","n":1}', '{"type":"pre-window-hold","n":2}', '{"type":"run","n":3}'];
+    const logAt = lines.join('\n') + '\n';
+    const judged = { r3: { retainedEvidence: { skippedEvents: [{ line: 2, type: 'pre-window-hold' }] } },
+      retained: [{ runId: 'b.i0.n50.a1', chunkId: 'b.i0.n50' }],
+      others: [{ runId: 'c.i0.n50.a1', status: 'hold' }, { runId: 'c.i0.n50.a2', status: 'hold' }],
+      doc: { runSlots: ['b', 'c'].reduce((all, c) => all.concat([1, 2].map((a) => ({
+        runId: c + '.i0.n50.a' + a, dir: 'gp/' + c + '/' + c + '.i0.n50.a' + a }))), []) } };
+    const git = (o) => (a) => {
+      const [cmd, spec] = a;
+      const [commit, rel] = String(spec).split(':');
+      if (cmd === 'show') {
+        if (commit === chk) return logAt;
+        return o && o.b4Log !== undefined ? o.b4Log : logAt + '{"n":4}\n';
+      }
+      if (cmd === 'rev-parse') {
+        return rel === LEDGER ? 'blob-of-the-log' : 'tree-of-' + rel + (commit === B4C && o && o.moved === rel
+          ? '-moved' : '');
+      }
+      throw new Error('unexpected git ' + a.join(' '));
+    };
+    const ok = proofTool.retainedEvidenceAt(git(), judged, B4C);
+    assert.deepStrictEqual(ok.problems, []);
+    assert.deepStrictEqual(ok.evidence.skippedEvents, [{ line: 2, type: 'pre-window-hold' }]);
+    assert.deepStrictEqual(ok.evidence.holds, ['c.i0.n50.a1', 'c.i0.n50.a2']);
+    assert.deepStrictEqual(Object.keys(ok.evidence.successFolders), ['b.i0.n50.a1']);
+    assert.deepStrictEqual(Object.keys(ok.evidence.holdFolders), ['c.i0.n50.a1', 'c.i0.n50.a2'], 'all holds');
+    assert.strictEqual(ok.evidence.holdFolders['c.i0.n50.a2'], 'tree-of-gp/c/c.i0.n50.a2');
+    assert.strictEqual(ok.evidence.cLog.hashOf, 'git blob content bytes at the checkpoint');
+    assert.strictEqual(ok.evidence.cLog.blobBytes, Buffer.byteLength(logAt, 'utf8'));
+    assert.strictEqual(ok.evidence.cLog.blobSha256, sha256(Buffer.from(logAt, 'utf8')));
+    assert.strictEqual(ok.evidence.cLog.lines, 3);
+    const bad = (what, o, pattern, j) => {
+      const r = proofTool.retainedEvidenceAt(git(o), j || judged, B4C);
+      assert.ok(r.problems.some((p) => pattern.test(p)), what + ': ' + r.problems.join(' | '));
+    };
+    bad('the log at B4 does not start with the checkpoint log (no newline normalisation)',
+      { b4Log: logAt.replace(/\n/g, '\r\n') }, /does not keep the checkpoint log as a prefix/);
+    bad('a retained success folder changed after the checkpoint', { moved: 'gp/b/b.i0.n50.a1' },
+      /b\.i0\.n50\.a1: the folder at B4 is not that of the checkpoint/);
+    bad('a retained hold folder changed', { moved: 'gp/c/c.i0.n50.a2' }, /c\.i0\.n50\.a2: the folder at B4/);
+    bad('the pre-window event is another line', {}, /the pre-window event is not line 3/, Object.assign({},
+      judged, { r3: { retainedEvidence: { skippedEvents: [{ line: 3, type: 'pre-window-hold' }] } } }));
+    bad('an other run that is no hold', {}, /neither a complete run nor a hold \(failed\)/, Object.assign({},
+      judged, { others: [{ runId: 'c.i0.n50.a1', status: 'failed' }] }));
+  });
+
+  await test('epoch 4: the authority is the owner records AT the owner commit and the V2/B4 binding', () => {
+    const refuse = (what, o, pattern) => {
+      const w = epochWorld4(o && o.world);
+      writeCampaign4(w);
+      const r = epochMerge4(w, o);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(/^ms18d-gp-merge-invalid /m.test(r.text) && pattern.test(r.text), what + ': ' + r.text);
+      assert.strictEqual(r.report, null, what + ': an invalid merge writes no report');
+    };
+    const good = epochWorld4();
+    writeCampaign4(good);
+    // the pack file at HEAD may say anything: the records are read at the owner commit, never at HEAD
+    const atHead = { show: { ['HEAD:' + plan.OWNER_FILE]: ownerFileText(['B', 'B', 'B']) } };
+    assert.strictEqual(epochMerge4(good, { git: atHead }).code, 0, 'HEAD is never read for the owner text');
+    refuse('Q3 declined at the owner commit but granted by the V2',
+      { world: { ownerLetters: ['A', 'B', 'A'] } },
+      /the V2 exceptions are not exactly the subset the committed owner decisions grant/);
+    refuse('Q4 missing at the owner commit', { world: { ownerEdit: (l) => l.slice(0, 2) } },
+      /Q4 is unresolved: missing/);
+    refuse('a reply that does not tie its answer to the question', { world: { ownerEdit: (lines) => lines.map(
+      (l, i) => (i === 1 ? l.replace('Q3=A', 'agreed') : l)) } }, /Q3 is unresolved: .*ties no answer/);
+    refuse('a reply of another owner', { world: { ownerEdit: (lines) => lines.map((l) => l.replace(
+      'amicably8850', 'someone')) } }, /the owner is not amicably8850/);
+    refuse('the records are not at the owner commit', { git: { show: { [OWNER_COMMIT + ':' + plan.OWNER_FILE]:
+      null } } }, /the owner records cannot be read at ownerDecisionCommit/);
+    refuse('an owner commit that is not an ancestor of B4',
+      { git: { notAncestor: new RegExp('^' + OWNER_COMMIT) } },
+      /ownerDecisionCommit is not an ancestor of B4/);
+    refuse('an owner commit that is not the one the V2 cites', { record4Over: { ownerDecisionCommit:
+      'd7'.repeat(20) } }, /the owner references of the V2 do not cite ownerDecisionCommit/);
+    refuse('an abbreviated owner commit', { record4Over: { ownerDecisionCommit: OWNER_COMMIT.slice(0, 8) } },
+      /ownerDecisionCommit is not a full commit id/);
+    refuse('an owner selector edited in the record', { record4Over: { ownerDecisions: ownerDecisions(good)
+      .map((d, i) => (i === 1 ? Object.assign({}, d, { binding: 'Q3=B' }) : d)) } },
+    /ownerDecisions\[1\] is not the selector as committed/);
+    refuse('ownerDecisions that drop one selector', { record4Over: { ownerDecisions: ownerDecisions(good)
+      .slice(0, 2) } }, /ownerDecisions are not the three owner selectors/);
+    const dropWording = (d) => {
+      const c = Object.assign({}, d);
+      delete c.questionWording;
+      return c;
+    };
+    refuse('an owner decision without the pointer to the question wording', { record4Over: {
+      ownerDecisions: ownerDecisions(good).map(dropWording) } },
+    /carries no pointer to the question wording/);
+    refuse('a wording pointer to a commit that does not hold the section', { record4Over: { ownerDecisions:
+      ownerDecisions(good).map((d) => Object.assign({}, d, { questionWording: Object.assign({},
+        d.questionWording, { commit: 'd7'.repeat(20) }) })) } }, /cannot be read at its commit/);
+    const wordingRead = /question wording of ownerDecisions\[2\] cannot be read/;
+    refuse('a wording commit (Q4) that is not an ancestor of B4',
+      { git: { notAncestor: new RegExp('^' + W_COMMIT) } }, wordingRead);
+    refuse('a wording section that is not at its commit', { git: { show: { [W_COMMIT + ':' +
+      TEST_WORDING[2].file]: '## another section\n' } } }, wordingRead);
+    refuse('a wording pointer that is not a full commit', { record4Over: { ownerDecisions:
+      ownerDecisions(good).map((d, i) => (i === 2 ? Object.assign({}, d, { questionWording:
+        Object.assign({}, d.questionWording, { commit: 'd0b746bb' }) }) : d)) } },
+    /carries no pointer to the question wording/);
+    refuse('admissionExceptions that are not the V2 entries', { record4Over: { admissionExceptions:
+      good.v2.admissionExceptions.slice(0, 2) } },
+    /admissionExceptions is not exactly the V2 manifest entries/);
+    refuse('an exception order that is not the a3 slots',
+      { record4Over: { exceptionOrder: [CAND[0] + '.a3'] } },
+      /exceptionOrder is not the ordered a3 run list/);
+    refuse('another campaign root', { record4Over: { campaignRoot: B2 } },
+      /campaignRoot is not the declared root/);
+    refuse('a V2 that is no exact delta of the V1 (a changed target)', { world: { v2Edit: (d) => {
+      d.chunks[0].target += 1;
+    } } }, /not the exact V1 -> V2 delta/);
+    refuse('a V2 whose parent raw hash is not the V1 file', { world: { v2Edit: (d) => {
+      d.parent.rawSha256 = 'f'.repeat(64);
+    } } }, /the parent raw hash is not the V1 file/);
+    refuse('a V2 whose owner reference is the old "@" form', { world: { v2Edit: (d) => {
+      d.admissionExceptions[0].ownerDecision.ref = 'tasks/difficulty-v3/check-list.md@' + OWNER_COMMIT;
+    } } }, /the decision ref is not <full commit>/);
+    refuse('a previous plan that is not the plan of B3', { record4Over: { previousPlan: {
+      file: V1_FWD, rawSha256: 'f'.repeat(64), manifestSha256: good.doc.manifestSha256 } } },
+    /previousPlan is not the plan of the previous epoch/);
+    refuse('a record that drops a retained hold', { holds: ALL_HOLDS.slice(1) },
+      /the hold mega16-easy\.i0\.n50\.a1 the previous record retained is dropped/);
+    refuse('a merge request that names the V1 plan at B4', { planRel: standin.PLAN_REL },
+      /plan is not the plan of the merge request|not an ms18d-gp-chunk-manifest-v2|exceptions/);
+    refuse('no base-4 record', { noRecord4: true }, /the base-4 record is not committed at HEAD/);
+  });
+
+  await test('epoch 4: the manifests of B3 and B4 differ only in the exact allowlist (no wildcards)', () => {
+    const clean = epochWorld4();
+    writeCampaign4(clean);
+    assert.strictEqual(epochMerge4(clean).code, 0);
+    const step = core.EPOCH_STEPS[4];
+    const t = core.manifestTransition(core.parseHelperManifest(clean.m3Text),
+      core.parseHelperManifest(clean.m4Text), step.production, step.tests, step.dataFiles, step.addedTests);
+    const wanted = ['attempts.js:production', 'merge-core.js:production', 'merge-gp.js:production',
+      'payload-gp.js:production', 'plan-data.js:production', 'run-locked-c.ps1:production',
+      'test-epoch4-proof.js:test', 'test-plan.js:test', 'test-recorder-merge.js:test',
+      'test-run-locked-c.ps1:test', 'test-units.js:test', core.V2_PLAN_REL + ':plan-v2'];
+    assert.deepStrictEqual(t.changes.map((c) => c.path.replace(HDIR, '') + ':' + c.class).sort(),
+      wanted.sort());
+    const refuse = (what, h4, pattern) => {
+      const w = epochWorld4({ h4 });
+      writeCampaign4(w);
+      const r = epochMerge4(w);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    refuse('another test file (not on the list)', { [HDIR + 'test-controller.js']: hexOf('x') },
+      /differ in .*test-controller\.js/);
+    refuse('a stand-in file', { [HDIR + 'standin-gp.js']: hexOf('x') }, /differ in .*standin-gp\.js/);
+    refuse('the acquisition rule', { [HDIR + 'acquisition.js']: hexOf('x') }, /differ in .*acquisition\.js/);
+    refuse('the controller', { [HDIR + 'controller.js']: hexOf('x') }, /differ in .*controller\.js/);
+    refuse('the recorder', { [HDIR + 'record-gp.js']: hexOf('x') }, /differ in .*record-gp\.js/);
+    refuse('the loader', { [HDIR + 'loader.js']: hexOf('x') }, /differ in .*loader\.js/);
+    refuse('readiness', { [HDIR + 'readiness-core.js']: hexOf('x') }, /differ in .*readiness-core\.js/);
+    refuse('the release history (an epoch-3 file, not an epoch-4 one)', { [HDIR + 'release-history.js']:
+      hexOf('x') }, /differ in .*release-history\.js/);
+    refuse('the V1 plan', { [V1_FWD]: hexOf('x') }, /differ in .*gp-chunk-manifest\.json/);
+    refuse('a removed production file', { [HDIR + 'attempts.js']: null }, /differ in .*attempts\.js/);
+    refuse('a removed named test (a test may be changed, never removed)', { [HDIR + 'test-plan.js']: null },
+      /differ in .*test-plan\.js/);
+    {
+      // the proof tool test already in B3: it cannot be the added test of B4
+      const early = core.parseHelperManifest(clean.m3Text);
+      early.entries.set(HDIR + 'test-epoch4-proof.js', hexOf('before'));
+      const t2 = core.manifestTransition(early, core.parseHelperManifest(clean.m4Text), step.production,
+        step.tests, step.dataFiles, step.addedTests);
+      assert.ok(t2.problems.some((p) => /differ in .*test-epoch4-proof\.js/.test(p)), t2.problems.join('; '));
+    }
+    refuse('a new production module', { [HDIR + 'new-module.js']: hexOf('x') }, /differ in .*new-module\.js/);
+    refuse('another data file', { 'docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest-a3-v3.json':
+      hexOf('x') }, /differ in .*gp-chunk-manifest-a3-v3\.json/);
+  });
+
+  await test('epoch 4: the committed B3 -> B4 diff holds only the allowed paths', () => {
+    const w = epochWorld4();
+    writeCampaign4(w);
+    const refuse = (what, extra, drop, pattern) => {
+      const list = w.diff4.filter((d) => d.file !== drop).concat(extra);
+      const r = epochMerge4(w, { git: { diff4: list } });
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    refuse('the acquisition rule', [{ status: 'M', file: HDIR + 'acquisition.js' }], null,
+      /acquisition\.js: a helper file changed that is no change of the manifests/);
+    refuse('an engine file', [{ status: 'M', file: 'generator/js/core/engine.js' }], null,
+      /engine\.js: outside the allowed B1 -> B2 set/);
+    refuse('a recorded base record changed', [{ status: 'M', file: MANIFEST3_REL }], null,
+      /helpers-c3-sha256\.txt: recorded evidence was changed \(M\)/);
+    refuse('a recorded run output deleted', [{ status: 'D', file: standin.RUN_BASE + '/x/y/ledger.json' }],
+      null, /recorded evidence was changed \(D\)/);
+    refuse('the V2 plan missing from the diff', [], core.V2_PLAN_REL,
+      /gp-chunk-manifest-a3-v2\.json: a manifest change that is not in the committed diff/);
+    refuse('a helper change missing from the diff', [], HDIR + 'attempts.js',
+      /attempts\.js: a manifest change that is not in the committed diff/);
+  });
+
+  await test('epoch 4: the earlier pairs keep their own records; a damaged earlier record is refused', () => {
+    const refuse = (what, o, pattern) => {
+      const w = epochWorld4();
+      writeCampaign4(w);
+      const r = epochMerge4(w, o);
+      assert.strictEqual(r.code, 2, what + ' ' + r.text);
+      assert.ok(pattern.test(r.text), what + ': ' + r.text);
+    };
+    refuse('a damaged base-3 record', { record3Over: { schema: 'x' } }, /base-3 record: schema is not/);
+    refuse('a damaged base-2 record', { record2Over: { schema: 'x' } }, /base-2 record: schema is not/);
+    refuse('a base-4 record edited once', { git: { commits: 2 } }, /committed 2 times/);
+    refuse('another base-4 schema', { record4Over: { schema: core.EPOCH3_SCHEMA } }, /schema is not/);
+    refuse('a previous base that is not B3', { record4Over: { previousBase: B2 } },
+      /previousBase is not the declared base/);
+    refuse('another checkpoint', { record4Over: { checkpoint: CHK3 } }, /checkpoint is not the declared/);
+    refuse('B3 is no ancestor of the checkpoint', { git: { notAncestor: new RegExp('^' + B3 + ' ' + CHK4) } },
+      /B3 of the checkpoint is not an ancestor/);
+    refuse('B4 is no ancestor of HEAD', { git: { notAncestor: new RegExp('^' + B4 + ' ' + HEADX) } },
+      /B4 of HEAD is not an ancestor/);
+    const stale = (t) => t.map((r, i) => (i === 0 ? Object.assign({}, r, { ledgerSha256: 'e3'.repeat(32) })
+      : r));
+    refuse('a record that retains epoch-1 successes unlike the base-3 record', { tagged: stale },
+    /epoch-1 successes are not those the previous record retained|retained success/);
+  });
+
+  await test('epoch 4: the recorder checks an a3 against the declared exception and its two holds', () => {
+    const w = epochWorld4();
+    const id = CAND[0];
+    const slot3 = w.v2.runSlots.filter((s) => s.runId === id + '.a3')[0];
+    const cLog = path.join(w.repo, 'c.jsonl');
+    const cell = path.join(w.repo, standin.RUN_BASE, 'mega16-easy');
+    const hold = (n) => {
+      const dir = path.join(cell, id + '.a' + n);
+      fs.mkdirSync(dir, { recursive: true });
+      const put = (name, value) => fs.writeFileSync(path.join(dir, name), JSON.stringify(value));
+      put('request.json', { chunk: { chunkId: id } });
+      put('wrapper.json', { chunkId: id, outcome: 'control-hold' });
+      put('admission.json', { decision: 'hold' });
+      put('result.json', { outcome: 'control-hold', payloadStarted: false });
+      fs.appendFileSync(cLog, JSON.stringify({ schema: 'ms18d-c-run-1', chunkId: id,
+        runDir: standin.RUN_BASE + '/mega16-easy/' + id + '.a' + n, controllerOutcome: 'control-hold',
+        releaseObservedAt: new Date(1000000).toISOString() }) + '\r\n');
+    };
+    const journal = require('./journals.js').rulingsState(() => '', 'a'.repeat(40), null);
+    const request = (attempt, doc, rawSha256) => ({ repo: w.repo, plan: { file: V2_BACK,
+      rawSha256: rawSha256 || w.v2raw, manifestSha256: doc.manifestSha256 }, runId: id + '.a' + attempt,
+    attempt, chunk: chunkOf(w, id), policy: doc.policy,
+    runDir: path.join(w.repo, standin.RUN_BASE, 'mega16-easy', id + '.a' + attempt),
+    expected: { identities: { hashIdentity: doc.sources.hashIdentity,
+      replayIdentity: doc.sources.replayIdentity, sources: doc.sources.sources },
+    tableSha256: doc.targets.tableSha256, node: doc.environment.node, machine: doc.environment.machine,
+    base: B4 } });
+    const ctx = { cLedger: cLog, journals: { rulings: journal }, nowMs: 5000000000 };
+    fs.mkdirSync(path.join(cell, id + '.a3'), { recursive: true });
+    hold(1);
+    let c = payloadGp.recorder.extraChecks(request(3, w.v2), ctx);
+    assert.strictEqual(c.ok, false, 'one hold is no two admissions');
+    assert.ok(c.problems.some((p) => /attempts: a3 needs its own a1 and a2/.test(p)), c.problems.join(' | '));
+    hold(2);
+    c = payloadGp.recorder.extraChecks(request(3, w.v2), ctx);
+    assert.strictEqual(c.ok, true, c.problems.join(' | '));
+    assert.strictEqual(c.records['attempts.json'].exception, 'MS18d-Q2-A');
+    assert.strictEqual(c.records['attempts.json'].admissions, 2);
+    assert.strictEqual(slot3.attempt, 3);
+    // the V1 plan declares no a3 slot and no exception: the same request is refused there
+    const v1 = w.doc;
+    const v1Raw = w.made.rawSha256;
+    const refused = payloadGp.recorder.extraChecks(Object.assign(request(3, v1, v1Raw), { plan: { file:
+      w.made.planRel, rawSha256: v1Raw, manifestSha256: v1.manifestSha256 } }), ctx);
+    assert.strictEqual(refused.ok, false);
+    assert.ok(refused.problems.some((p) => /declared slot|no-admission-exception|attempt 3/.test(p)),
+      refused.problems.join(' | '));
+    // an a4 never has a slot
+    fs.mkdirSync(path.join(cell, id + '.a4'), { recursive: true });
+    assert.throws(() => payloadGp.recorder.validateRequest(Object.assign(request(4, w.v2), {
+      command: { args: [] }, standin: true })), /attempt is 1, 2 or 3/);
+  });
+}
+
 async function main() {
   await recorderTests();
   await mergerTests();
@@ -2038,6 +2750,7 @@ async function main() {
   await classifierTests();
   await epochTests();
   await epoch3Tests();
+  await epoch4Tests();
 }
 
 main().then(() => {

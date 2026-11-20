@@ -1077,23 +1077,60 @@ async function preWindowEvents() {
     const ruling = { chunkId: easy, heldRunId: easy + '.a2', allowAttempt: 2,
       ref: 'tasks/difficulty-v3/MS18d-gp-campaign-base-3.jsonl', at: '2026-11-19T21:00:00+07:00' };
     const journal = (entries) => ({ entries, problems: [], reference: null });
-    const ask = (chunkId, cell, runId, entries) => chunkAttempts({ baseDir: path.join(EV, 'gp', cell),
+    const ask = (chunkId, cell, runId, entries) => chunkAttempts({ baseDir: cell,
       chunkId, runId, ledgerFile: at('real25c.jsonl'), rulings: journal(entries),
       nowMs: Date.parse('2026-11-19T22:30:00+07:00') });
+    // the retained history of mega16-easy (its a1 and a2 folders) is copied into an isolated cell: the live
+    // campaign folder grows with the a3 and must not change this test; the next chunks get isolated empty
+    // cells
+    const realCell = at('cell-mega16-easy');
+    ['a1', 'a2'].forEach((a) => fs.cpSync(path.join(EV, 'gp', 'mega16-easy', easy + '.' + a),
+      path.join(realCell, easy + '.' + a), { recursive: true }));
     [[], [ruling]].forEach((entries) => {
-      const a3 = ask(easy, 'mega16-easy', easy + '.a3', entries);
+      const a3 = ask(easy, realCell, easy + '.a3', entries);
       assert.strictEqual(a3.decision, 'refuse', 'a3 with ' + entries.length + ' ruling(s)');
-      assert.deepStrictEqual(a3.reasons, ['chunk-admissions-used: at most two per chunk']);
+      assert.deepStrictEqual(a3.reasons, [
+        'no-admission-exception: attempt 3 exists only for a chunk of the V2 admissionExceptions']);
       assert.deepStrictEqual(a3.problems, [], 'the retained records are consistent');
       assert.strictEqual(a3.admissions, 2, 'a1 and a2 stay spent');
       assert.strictEqual(a3.payloads, 0);
       assert.strictEqual(a3.ruling, null, 'the ruling stands in for nothing');
+      assert.deepStrictEqual(ask(easy, realCell, easy + '.third', entries).reasons,
+        ['chunk-admissions-used: at most two per chunk'], 'two admissions are spent: no third by default');
+      assert.deepStrictEqual(ask(easy, realCell, easy + '.a4', entries).reasons,
+        ['chunk-attempt-beyond-the-exception: no a4 and no attempt above 3'], 'an a4 never');
       ['mega16-normal.i0.n50', 'mega16-hard.i0.n50'].forEach((next) => {
-        const r = ask(next, 'mega16-' + next.split('-')[1].split('.')[0], next + '.a1', entries);
+        const empty = at('empty-' + next.split('-')[1].split('.')[0]);
+        fs.mkdirSync(empty, { recursive: true });
+        const r = ask(next, empty, next + '.a1', entries);
         assert.strictEqual(r.decision, 'allow', next + ' still needs every check, and passes them');
         assert.strictEqual(r.admissions, 0);
       });
     });
+  });
+
+  await test('B4: the real a1 and a2 of mega16-easy are proven-unstarted: the declared a3 is allowed', () => {
+    const easy = 'mega16-easy.i0.n50';
+    fs.writeFileSync(at('real25d.jsonl'), realLines().slice(0, 25).join('\r\n') + '\r\n');
+    const exception = { id: 'MS18d-Q2-A', chunkId: easy, runId: easy + '.a3', attempt: 3,
+      priorRunIds: [easy + '.a1', easy + '.a2'], maxAdmissions: 3, maxPayloads: 1 };
+    // the retained a1 and a2 are copied into an isolated cell (the live folder grows with the a3)
+    const cell = at('cell-b4-mega16-easy');
+    ['a1', 'a2'].forEach((a) => fs.cpSync(path.join(EV, 'gp', 'mega16-easy', easy + '.' + a),
+      path.join(cell, easy + '.' + a), { recursive: true }));
+    const ask = (over) => chunkAttempts(Object.assign({ baseDir: cell,
+      chunkId: easy, runId: easy + '.a3', ledgerFile: at('real25d.jsonl'),
+      rulings: { entries: [], problems: [], reference: null }, exception,
+      nowMs: Date.parse('2026-11-20T10:00:00+07:00') }, over || {}));
+    const a3 = ask();
+    assert.strictEqual(a3.decision, 'allow', a3.reasons.concat(a3.problems).join(' | '));
+    assert.strictEqual(a3.admissions, 2);
+    assert.strictEqual(a3.payloads, 0);
+    assert.strictEqual(a3.ruling, null, 'no ruling is consulted');
+    assert.strictEqual(ask({ runId: easy + '.a4' }).decision, 'refuse', 'an a4 never');
+    assert.strictEqual(ask({ exception: null }).decision, 'refuse', 'no exception, no a3');
+    assert.strictEqual(ask({ exception: Object.assign({}, exception, { chunkId: 'hyper-hard.i0.n50' }) })
+      .decision, 'refuse', 'another chunk\'s exception is never borrowed');
   });
 }
 

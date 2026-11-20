@@ -118,7 +118,8 @@ function prepare(args) {
     throw new Invalid('the helper manifest is not the reviewed one');
   }
   if (!standin && !helpers.manifestSha256) throw new Invalid('a real run names the helper manifest hash');
-  return { out, dir, request, repo, doc, standin, base, helperSha, rel, args };
+  return { out, dir, request, repo, doc, standin, base, helperSha, rel, args,
+    planRawSha256: sha256(planBytes) };
 }
 
 function repoFs(repo) {
@@ -149,17 +150,28 @@ function resultLine(evaluation, doc) {
 function reportOf(ctx, evaluation, line) {
   const consumed = [];
   evaluation.cells.forEach((c) => (c.consumed || []).forEach((x) => consumed.push(x)));
+  // what the matrix holds: complete cells, the raw requests they carry (each complete chunk once, whatever
+  // slot it ran in) and every hold (a hold is never a success): 76 + k cells and 3,800 + 50 k requests at B4
+  const done = evaluation.cells.filter((c) => c.complete && c.stats);
+  const holds = [];
+  evaluation.cells.forEach((c) => (c.chunks || []).forEach((d) => (d.holdRuns || [])
+    .forEach((id) => holds.push(id))));
   return {
     schema: 'ms18d-gp-merge-report-v1', scope: scopeLabel(evaluation.scope), complete: evaluation.complete,
     meets: evaluation.complete ? evaluation.meets : null, successes: evaluation.successes,
     required: evaluation.required, extraColdStarts: evaluation.extraStarts === undefined ? null :
       evaluation.extraStarts, resultLine: line, problems: evaluation.problems,
+    totals: { cells: evaluation.cells.length, completeCells: done.length,
+      requests: done.reduce((sum, c) => sum + c.stats.n, 0), holds },
     cells: evaluation.cells.map((c) => ({ cell: c.cell, complete: c.complete,
       stats: core.publicStats(c.stats), chunks: c.chunks, coldStartSensitive: c.coldStartSensitive === true,
       coldStart: c.coldStart, problems: c.complete ? [] : c.problems })),
     consumed,
     identity: { manifestSha256: ctx.doc.manifestSha256, helperManifestSha256: ctx.helperSha, base: ctx.base },
-    epochs: ctx.epochInfo && ctx.epochInfo.record ? { pairs: ctx.epochInfo.pairs,
+    epochs: ctx.epochInfo && ctx.epochInfo.record ? { pairs: ctx.epochInfo.pairs.map((p) => ({ id: p.id,
+      base: p.base, helperManifestSha256: p.helperManifestSha256, attempts: p.attempts || null,
+      plan: p.plan ? { file: p.plan.file, rawSha256: p.plan.rawSha256, manifestSha256: p.plan.manifestSha256 }
+        : null })),
       record: { file: ctx.epochInfo.file, sha256: ctx.epochInfo.recordSha256 },
       chain: ctx.epochInfo.records.map((r) => ({ epoch: r.epoch, file: r.file, sha256: r.sha256 })) } : null,
     observation: { argv: process.argv.slice(2), pid: process.pid, at: new Date().toISOString(),
@@ -246,9 +258,25 @@ const readText = (file) => {
   }
 };
 
+/**
+ * One epoch's plan: { file, planRel, rawSha256, manifestSha256 } and the parsed `doc` (non-enumerable, so a
+ * printed or serialized pair never carries a whole manifest).
+ */
+const withDoc = (info, doc) => Object.defineProperty(info, 'doc', { value: doc, enumerable: false });
+
+/** The plan of the merge request as one epoch's plan. */
+function currentPlanOf(ctx) {
+  const given = ctx.request && ctx.request.plan ? ctx.request.plan : {};
+  const rel = ctx.args && ctx.args.plan ? ctx.args.plan : given.file;
+  return withDoc({ file: typeof rel === 'string' ? rel.replace(/\\/g, '/') : undefined,
+    planRel: typeof rel === 'string' ? rel : undefined, rawSha256: ctx.planRawSha256 || given.rawSha256,
+    manifestSha256: ctx.doc ? ctx.doc.manifestSha256 : undefined }, ctx.doc);
+}
+
 function epochsOf(ctx, git) {
   const e1 = declaredEpoch1(ctx);
-  const pairs = [{ id: 1, base: e1.base, helperManifestSha256: e1.helperManifestSha256 }];
+  const current = currentPlanOf(ctx);
+  const pairs = [{ id: 1, base: e1.base, helperManifestSha256: e1.helperManifestSha256, plan: current }];
   if (ctx.base === e1.base) {
     if (ctx.helperSha !== e1.helperManifestSha256) {
       throw new Invalid('the helper manifest of the request is not the declared one of epoch 1');
@@ -271,7 +299,45 @@ function epochsOf(ctx, git) {
   const records = [];
   let previous = e1;
   let previousRecord = null;
-  for (const n of [2, 3]) {
+  let previousPlan = null;
+  // the plan an earlier record names (its own file, raw hash and canonical hash, read and proved here): V1
+  // for epochs 1 to 3 even when the merge request is for the V2 manifest of epoch 4; a record without a plan
+  // file (a stand-in) and the record of the request's own epoch use the plan of the request
+  const planOf = (own, rec, label) => {
+    if (own || !rec.plan || typeof rec.plan.file !== 'string') return current;
+    let bytes;
+    try {
+      bytes = fs.readFileSync(inside(rec.plan.file));
+    } catch (err) {
+      throw new Invalid('cannot read the plan of the ' + label + ' record: ' + err.message);
+    }
+    let doc;
+    try {
+      doc = JSON.parse(bytes.toString('utf8').replace(/^\uFEFF/, ''));
+    } catch (err) {
+      throw new Invalid('the plan of the ' + label + ' record is not JSON');
+    }
+    const problems = plan.verifyManifest(doc);
+    if (problems.length > 0) {
+      throw new Invalid('the plan of the ' + label + ' record is unsound: ' + problems[0]);
+    }
+    const raw = sha256(bytes);
+    if (raw !== rec.plan.rawSha256 || doc.manifestSha256 !== rec.plan.manifestSha256) {
+      throw new Invalid('the plan file ' + rec.plan.file + ' is not the one the ' + label + ' record names');
+    }
+    return withDoc({ file: rec.plan.file, planRel: rec.plan.file.replace(/\//g, '\\'), rawSha256: raw,
+      manifestSha256: doc.manifestSha256 }, doc);
+  };
+  // when the chain reaches epoch 4 (the V2 plan) the V1 epochs run attempts 1 and 2 only and epoch 4 runs the
+  // exceptional attempt 3 only; every epoch before has the V1 plan of the first record that names one
+  const finish = (rec, last) => {
+    pairs[0].plan = pairs.length > 1 ? pairs[1].plan : current;
+    if (pairs.length === 4) {
+      pairs.forEach((p, i) => { p.attempts = i < 3 ? [1, 2] : [3]; });
+    }
+    return { pairs, record: rec, records, file: last.file, recordSha256: last.sha256 };
+  };
+  for (const n of [2, 3, 4]) {
     const step = core.EPOCH_STEPS[n];
     let text;
     let commits;
@@ -305,26 +371,27 @@ function epochsOf(ctx, git) {
     if (sha256(Buffer.from(manifest1Text, 'utf8')) !== previous.helperManifestSha256) {
       throw new Invalid('the helper manifest of epoch ' + (n - 1) + ' is not the declared one');
     }
-    const checkpoint = n === 2 ? previous.checkpoint : (ctx.standin && ctx.request.epoch3Checkpoint) ||
-      core.EPOCH2_CHECKPOINT;
+    const checkpoint = n === 2 ? previous.checkpoint : n === 3 ? (ctx.standin &&
+      ctx.request.epoch3Checkpoint) || core.EPOCH2_CHECKPOINT : (ctx.standin &&
+      ctx.request.epoch4Checkpoint) || core.EPOCH3_CHECKPOINT;
+    const planInfo = planOf(own, rec, step.label);
     const checked = core.epochRecordProblems({ step, record: rec, base, helperSha,
-      epoch1: Object.assign({}, previous, { checkpoint }), previousRecord, doc: ctx.doc,
-      planRawSha256: ctx.request.plan.rawSha256, manifest1Text, manifest2Text, git, head, commits,
+      epoch1: Object.assign({}, previous, { checkpoint }), previousRecord, previousPlan, root: e1.base,
+      doc: planInfo.doc,
+      planRawSha256: planInfo.rawSha256, manifest1Text, manifest2Text, git, head, commits,
       readProof: (rel) => {
         const file = path.resolve(ctx.repo, rel);
         return path.relative(ctx.repo, file).startsWith('..') || !fs.existsSync(file) ? null :
           fs.readFileSync(file);
       } });
     if (checked.problems.length > 0) throw new Invalid(checked.problems.slice(0, 5).join('; '));
-    pairs.push({ id: n, base: rec.campaignBase, helperManifestSha256: helperSha });
+    pairs.push({ id: n, base: rec.campaignBase, helperManifestSha256: helperSha, plan: planInfo });
     records.push({ epoch: n, record: rec, file: step.recordRel, sha256: sha256(Buffer.from(text, 'utf8')) });
-    if (own) {
-      const last = records[records.length - 1];
-      return { pairs, record: rec, records, file: last.file, recordSha256: last.sha256 };
-    }
+    if (own) return finish(rec, records[records.length - 1]);
     previous = { id: n, base: rec.campaignBase, helperManifestSha256: helperSha,
       entries: rec.helperManifest.entries, manifestRel: rec.helperManifest.file };
     previousRecord = rec;
+    previousPlan = planInfo;
   }
   throw new Invalid('the campaign base ' + ctx.base + ' is not a declared epoch');
 }
@@ -358,8 +425,11 @@ function main(argv, deps) {
   if (epochInfo.record) {
     const consumed = [];
     evaluation.cells.forEach((c) => (c.consumed || []).forEach((x) => consumed.push(x)));
-    core.epochAccountingChain(consumed, core.retainedOf(epochInfo.record), epochInfo.pairs.length,
-      evaluation.complete && scope.type === 'all').forEach((p) => evaluation.problems.push(p));
+    // from epoch 4 on the only incomplete cells are the candidates' (no retained success lives in one), so
+    // the retained successes of every earlier epoch must be consumed exactly even if the merge is incomplete
+    const strict = scope.type === 'all' && (evaluation.complete || epochInfo.pairs.length >= 4);
+    core.epochAccountingChain(consumed, core.retainedOf(epochInfo.record), epochInfo.pairs.length, strict)
+      .forEach((p) => evaluation.problems.push(p));
     if (scope.type === 'all') {
       // every hold a record retains (a1 of epoch 1, the a2 hold of epoch 2) must still be a hold
       const holdRuns = [];

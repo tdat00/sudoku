@@ -1,0 +1,11 @@
+freeze-helpers-c4.txt wrote the 56-entry output of check-format.js --freeze to helpers-c4-sha256.txt:
+  entries=56 bytes=7676 sha256=05bbbaa723ecc4aee7a6e47f5d44020de691521c290188d71f99b1474cc9cf86
+the V2 plan line was then appended (by hand, with the editor, after the V1 plan line; CRLF, no BOM):
+  989799E62FE2B8864DA2DE1BEDC35264FB717F84B004689F6DE941E03D747125  docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest-a3-v2.json
+the final helper manifest docs\difficulty-v3\evidence\MS18d\phase-c\helpers-c4-sha256.txt (H4):
+  entries=57 bytes=7814 sha256=9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15
+the first 56 lines of H4 are byte-identical to the freeze output; the 57th is the V2 line above.
+the plan files it pins: V1 raw a8e58a729d7df496ae694693a3899236c1abf6aed65a0bfd773f0f262eba0ba5, V2 raw
+  989799e62fe2b8864da2de1bedc35264fb717f84b004689f6de941e03d747125 (V2 canonical
+  7d63342a0ffb1a3a6794959276ba4a5aa2ef116f8f6ef154b9888220f0b7dd69; V1 canonical
+  b92e09bb8c299b8b8ff1330d7ef3845ebcca18dddf71135005e765081cb4618f).

@@ -168,6 +168,9 @@ const chunkIdOf = (variant, level, i0, n) => variant + '-' + level + '.i' + i0 +
 const MERGE_RUN_ID = 'merge.m1';
 const FINAL_RUN_ID = 'final.m1';
 const FINAL_FOLDER = 'all-79';
+const V1_SCHEMA = 'ms18d-gp-chunk-manifest-v1';
+const V2_SCHEMA = 'ms18d-gp-chunk-manifest-v2';
+const HEX64 = /^[0-9a-f]{64}$/;
 
 /** One declared run slot (R2): the literal directory of a chunk attempt or of a merge. */
 const slotOf = (mergeBase, role, folder, runId, extra) => Object.assign({ role, runId,
@@ -247,8 +250,14 @@ function slotForDir(doc, dir) {
 
 /** Problems of a manifest document (hash, ranges, seeds, run slots, counts); [] when it is sound. */
 function verifyManifest(doc) {
+  if (doc && doc.schema === V2_SCHEMA) return verifyManifestV2(doc);
+  if (!doc || doc.schema !== V1_SCHEMA) return ['not an ms18d-gp-chunk-manifest-v1'];
+  return verifyCore(doc, null);
+}
+
+/** What V1 and V2 share: the hash, chunks, loader, run slots (with the declared exceptions) and counts. */
+function verifyCore(doc, exceptions) {
   const problems = [];
-  if (!doc || doc.schema !== 'ms18d-gp-chunk-manifest-v1') return ['not an ms18d-gp-chunk-manifest-v1'];
   const rest = Object.assign({}, doc);
   delete rest.manifestSha256;
   if (!/^[0-9a-f]{64}$/.test(String(doc.manifestSha256)) || doc.manifestSha256 !== canonicalSha256(rest)) {
@@ -278,7 +287,7 @@ function verifyManifest(doc) {
     });
     if (next !== doc.protocol.runsPerCell) problems.push(cell + ': chunks cover ' + next + ' requests');
   });
-  verifySlots(doc, ids, covered).forEach((p) => problems.push(p));
+  verifySlots(doc, ids, covered, exceptions).forEach((p) => problems.push(p));
   const ld = doc.loader;
   if (!ld || !ld.recipe || !Array.isArray(ld.files) || ld.files.length !== ld.recipe.loaded ||
     !/^[0-9a-f]{64}$/.test(String(ld.hashIdentity))) {
@@ -293,9 +302,15 @@ function verifyManifest(doc) {
   return problems;
 }
 
-/** R2: the literal run slots are exactly two attempts per chunk, one merge per cell and one final merge. */
-function verifySlots(doc, chunkIds, cells) {
+/**
+ * R2: the literal run slots are exactly two attempts per chunk, one merge per cell and one final merge;
+ * V2 adds the one attempt-3 slot of each declared admission exception (`exceptions`, validated by the
+ * caller), and no other chunk has an attempt 3.
+ */
+function verifySlots(doc, chunkIds, cells, exceptions) {
   const problems = [];
+  const ex = exceptions || [];
+  const exceptional = new Set(ex.map((e) => e.chunkId));
   const policy = doc.slotPolicy || {};
   if (policy.chunkAttempts !== 2 || policy.finalMerge !== true || typeof policy.cellMerge !== 'boolean') {
     problems.push('the slot policy is not two attempts, a final merge and an explicit cell-merge flag');
@@ -318,7 +333,9 @@ function verifySlots(doc, chunkIds, cells) {
       if (!chunkIds.has(s.chunkId) || !chunk || chunk.cell !== s.cell) {
         problems.push('slot ' + s.dir + ': not the cell of its chunk');
       }
-      if (s.attempt !== 1 && s.attempt !== 2) problems.push('slot ' + s.dir + ': attempt ' + s.attempt);
+      if (s.attempt !== 1 && s.attempt !== 2 && !(s.attempt === 3 && exceptional.has(s.chunkId))) {
+        problems.push('slot ' + s.dir + ': attempt ' + s.attempt);
+      }
     } else if (s.role === 'cell-merge') {
       expectedRunId = MERGE_RUN_ID;
       if (!cells.has(s.cell)) problems.push('slot ' + s.dir + ': merge of an unknown cell');
@@ -333,18 +350,395 @@ function verifySlots(doc, chunkIds, cells) {
   chunkIds.forEach((id) => [1, 2].forEach((a) => {
     if (seen.get('chunk|' + id + '|' + a) !== 1) problems.push('chunk ' + id + ': attempt ' + a + ' slot');
   }));
+  ex.forEach((e) => {
+    if (seen.get('chunk|' + e.chunkId + '|3') !== 1) problems.push('chunk ' + e.chunkId + ': attempt 3 slot');
+  });
   cells.forEach((list, cell) => {
     const got = seen.get('cell-merge|' + cell + '|') || 0;
     if (got !== (policy.cellMerge === true ? 1 : 0)) problems.push(cell + ': merge slot');
   });
   if (seen.get('final-merge||') !== 1) problems.push('the final merge slot');
-  const expected = chunkIds.size * 2 + (policy.cellMerge === true ? cells.size : 0) + 1;
+  const expected = chunkIds.size * 2 + ex.length + (policy.cellMerge === true ? cells.size : 0) + 1;
   if (slots.length !== expected) {
     problems.push('run slots: ' + slots.length + ' declared, ' + expected + ' expected');
   }
   return problems;
 }
 
+// ---------------------------------------------------------------------------------------------------------
+// The V2 manifest (epoch 4, B4): V1 plus the attempt-3 admission exceptions of the subset S of owner-granted
+// candidates. S is DATA: it comes only from the committed owner-decision records (resolveSubset) and is
+// carried by the V2 `admissionExceptions`; nothing here names a subset. The permitted V1 -> V2 delta is
+// exactly: the schema, `parent` (the V1 file, raw and canonical hashes), `admissionExceptions` (S, in the
+// order Q2, Q3, Q4), the S attempt-3 slots appended after all 229 original slots, `counts.runSlots`
+// (229 + m) and the hashes.
+// Everything else (79 cells, 114 chunks, 3,950 requests, targets, projections, seeds, protocol, gate and
+// `slotPolicy.chunkAttempts` = 2) is the V1 value. An empty S has no V2 (buildManifestV2 returns null).
+// ---------------------------------------------------------------------------------------------------------
+
+/**
+ * The incomplete cells whose owner decision (Q2, Q3, Q4) may grant ONE exceptional third admission: the
+ * universe of candidates, never the subset S.
+ */
+const CANDIDATES = Object.freeze([
+  Object.freeze({ question: 2, decisionId: 'S-OD16', exceptionId: 'MS18d-Q2-A',
+    chunkId: 'mega16-easy.i0.n50' }),
+  Object.freeze({ question: 3, decisionId: 'S-OD17', exceptionId: 'MS18d-Q3-A',
+    chunkId: 'hyper-hard.i0.n50' }),
+  Object.freeze({ question: 4, decisionId: 'S-OD18', exceptionId: 'MS18d-Q4-A',
+    chunkId: 'butterfly-master.i0.n50' })]);
+
+const INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/;
+// the owner reference of one decision: a Git object (the FULL commit that adds the owner records) plus the
+// logical selector `S-OD<n>` of the pack file; never a filesystem path or a Markdown anchor
+const OWNER_FILE = 'tasks/difficulty-v3/check-list.md';
+const OWNER_NAME = 'amicably8850';
+const OWNER_REF = new RegExp('^([0-9a-f]{40}):' + OWNER_FILE.replace(/\./g, '\\.') + '#(S-OD\\d+)$');
+const ownerRefOf = (commit, id) => commit + ':' + OWNER_FILE + '#' + id;
+const OWNER_KEYS = ['id', 'choice', 'messageId', 'at', 'ref'];
+const EXCEPTION_KEYS = ['id', 'ownerDecision', 'chunkId', 'runId', 'attempt', 'priorRunIds', 'maxAdmissions',
+  'maxPayloads'];
+const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+const isInstant = (s) => typeof s === 'string' && INSTANT.test(s) && Number.isFinite(Date.parse(s));
+const sameKeys = (o, keys) => isObject(o) && Object.keys(o).sort().join() === keys.slice().sort().join();
+const sameData = (a, b) => canonicalJson(a) === canonicalJson(b);
+
+/** Problems of one `ownerDecision` object of a V2 exception for its candidate; [] when it is exact. */
+function ownerDecisionProblems(d, cand) {
+  if (!sameKeys(d, OWNER_KEYS)) {
+    return ['the owner decision is not exactly { id, choice, messageId, at, ref }'];
+  }
+  const p = [];
+  if (d.id !== cand.decisionId) {
+    p.push('the owner decision is ' + d.id + ', not ' + cand.decisionId + ' (the decision of Q' +
+      cand.question + ')');
+  }
+  if (d.choice !== 'A') p.push('the choice is not exactly A');
+  if (typeof d.messageId !== 'string' || d.messageId.trim() === '') p.push('the decision has no message id');
+  if (!isInstant(d.at)) p.push('the decision time is not an instant with a zone');
+  const ref = typeof d.ref === 'string' ? OWNER_REF.exec(d.ref) : null;
+  if (ref === null) p.push('the decision ref is not <full commit>:' + OWNER_FILE + '#<S-OD id>');
+  else if (ref[2] !== cand.decisionId) {
+    p.push('the decision ref selects ' + ref[2] + ', not ' + cand.decisionId);
+  }
+  return p;
+}
+
+/**
+ * What a verbatim decision text answers for question `q`: 'A', 'B', another letter, 'ambiguous' (two
+ * different answers) or null (no `Q<q>=<letter>` at all). A bare "A" or a loose "agree" answers nothing.
+ */
+function answerOf(text, q) {
+  const re = /(?:^|[^A-Za-z0-9])Q(\d+)\s*=\s*([A-Za-z])(?![A-Za-z0-9])/g;
+  const answers = new Set();
+  let m = re.exec(String(text));
+  while (m !== null) {
+    if (Number(m[1]) === q) answers.add(m[2]);
+    m = re.exec(String(text));
+  }
+  if (answers.size === 0) return null;
+  return answers.size > 1 ? 'ambiguous' : Array.from(answers)[0];
+}
+
+/**
+ * The selectors of the owner-record subsection (`### S-OD16 / S-OD17 / S-OD18`) of the pack file's text: the
+ * lines `S-OD<n> {json}` of its text fence, in order, as `entries: [{ id, selector }]`. The subsection and
+ * each id must be unique. { entries, problems }.
+ */
+function parseOwnerSelectors(text) {
+  const lines = String(text).split(/\r?\n/);
+  const heads = [];
+  lines.forEach((l, i) => { if (/^###\s+S-OD16 \/ S-OD17 \/ S-OD18\b/.test(l)) heads.push(i); });
+  if (heads.length !== 1) {
+    return { entries: [], problems: ['the owner-record subsection is not exactly once in the pack file'] };
+  }
+  const problems = [];
+  const entries = [];
+  let i = heads[0] + 1;
+  while (i < lines.length && !/^```text\s*$/.test(lines[i]) && !/^#/.test(lines[i])) i++;
+  if (i >= lines.length || !/^```text\s*$/.test(lines[i])) {
+    return { entries, problems: ['the owner-record subsection has no text fence'] };
+  }
+  for (i++; i < lines.length && !/^```\s*$/.test(lines[i]); i++) {
+    if (lines[i].trim() === '') continue;
+    const m = /^(S-OD\d+) (\{.*\})$/.exec(lines[i]);
+    if (!m) {
+      problems.push('a line of the fence is not "S-OD<n> {json}": ' + lines[i].slice(0, 40));
+      continue;
+    }
+    try {
+      entries.push({ id: m[1], selector: JSON.parse(m[2]) });
+    } catch (err) {
+      problems.push(m[1] + ' is not JSON');
+    }
+  }
+  if (new Set(entries.map((e) => e.id)).size !== entries.length) problems.push('an S-OD id twice');
+  return { entries, problems };
+}
+
+/** Why a selector is no grant or decline of the candidate's question (reply, binding, owner, chunk). */
+function selectorProblems(sel, cand) {
+  const q = cand.question;
+  const why = [];
+  if (!isObject(sel)) return ['the selector is not an object'];
+  if (sel.question !== 'MS18d-Q' + q) {
+    why.push('wrong question: the selector is ' + sel.question + ', not MS18d-Q' + q);
+  }
+  const answer = answerOf(sel.answer, q);
+  if (answer === null) why.push('the verbatim reply ties no answer to Q' + q + ' (no "Q' + q + '=A")');
+  else if (answer === 'ambiguous') why.push('the verbatim reply answers Q' + q + ' in two ways');
+  else if (!/^[AB]$/.test(answer)) why.push('the answer ' + answer + ' is neither A nor B');
+  else {
+    if (sel.choice !== answer) why.push('the choice ' + sel.choice + ' is not the reply answer ' + answer);
+    if (sel.binding !== 'Q' + q + '=' + answer) {
+      why.push('the binding ' + sel.binding + ' is not Q' + q + '=' + answer);
+    }
+  }
+  if (sel.owner !== OWNER_NAME) why.push('the owner is not ' + OWNER_NAME);
+  if (!isObject(sel.source) || typeof sel.source.messageId !== 'string' ||
+    !/^\d+$/.test(sel.source.messageId)) why.push('no message id string');
+  if (!isInstant(sel.answeredAt)) why.push('no answer time with a zone');
+  if (sel.chunkId !== cand.chunkId) why.push('the chunk ' + sel.chunkId + ' is not ' + cand.chunkId);
+  return why;
+}
+
+/**
+ * The subset S from the owner selectors read at the commit `commit` (the FULL id of the commit that adds
+ * them): `entries` = parseOwnerSelectors(...).entries. For each candidate in the order Q2, Q3, Q4 exactly one
+ * selector with its own S-OD id whose verbatim reply ties an answer to its question label (`Q<n>=A` /
+ * `Q<n>=B`), by its binding, owner and chunk, is a grant (A) or a decline (B). Anything else (missing,
+ * ambiguous, mismatched, another question's selector, a loose reply) is UNRESOLVED, never B. Returns
+ * { granted: [{ question, id, selector, ownerDecision }], declined: [question], unresolved: [{ question,
+ * reason }] }; an ownerDecision is { id, choice: 'A', messageId, at, ref } copied byte for byte.
+ */
+function resolveSubset(entries, commit) {
+  const list = Array.isArray(entries) ? entries : [];
+  const granted = [];
+  const declined = [];
+  const unresolved = [];
+  CANDIDATES.forEach((cand) => {
+    const q = cand.question;
+    const mine = list.filter((e) => isObject(e) && e.id === cand.decisionId);
+    if (mine.length === 0) {
+      unresolved.push({ question: q, reason: 'missing: no committed owner selector' });
+      return;
+    }
+    if (mine.length > 1) {
+      unresolved.push({ question: q, reason: 'ambiguous: more than one owner selector' });
+      return;
+    }
+    const sel = mine[0].selector;
+    const why = selectorProblems(sel, cand);
+    if (typeof commit !== 'string' || !/^[0-9a-f]{40}$/.test(commit)) why.push('no full owner commit id');
+    if (why.length > 0) {
+      unresolved.push({ question: q, reason: why.join('; ') });
+      return;
+    }
+    if (sel.choice === 'A') {
+      granted.push({ question: q, id: cand.decisionId, selector: sel, ownerDecision: { id: cand.decisionId,
+        choice: 'A', messageId: sel.source.messageId, at: sel.answeredAt,
+        ref: ownerRefOf(commit, cand.decisionId) } });
+    } else declined.push(q);
+  });
+  return { granted, declined, unresolved };
+}
+
+/** One V2 exception entry of a candidate and its decision. */
+const exceptionOf = (cand, ownerDecision) => ({ id: cand.exceptionId, ownerDecision, chunkId: cand.chunkId,
+  runId: cand.chunkId + '.a3', attempt: 3, priorRunIds: [cand.chunkId + '.a1', cand.chunkId + '.a2'],
+  maxAdmissions: 3, maxPayloads: 1 });
+
+/**
+ * V2 in memory from a V1 document, its file reference `{ file, rawSha256 }` and the subset S as
+ * `[{ question, ownerDecision }]` (the order Q2, Q3, Q4; `resolveSubset(...).granted` has that shape).
+ * Returns null for an empty S (no B4, no V2); throws on any problem (an unsound parent, a bad reference, a
+ * question out of order or twice, a decision that is not exactly A, a candidate that is not a single
+ * 50-request chunk of the parent).
+ */
+function buildManifestV2(parentDoc, parentRef, subset) {
+  const parentProblems = !parentDoc || parentDoc.schema !== V1_SCHEMA ? ['the parent is not a V1 manifest']
+    : verifyManifest(parentDoc);
+  if (parentProblems.length > 0) throw new Error('the parent manifest is unsound: ' + parentProblems[0]);
+  if (!Array.isArray(subset)) throw new Error('the subset is not a list');
+  if (subset.length === 0) return null;
+  const problems = [];
+  if (!isObject(parentRef) || typeof parentRef.file !== 'string' || parentRef.file === '' ||
+    !HEX64.test(String(parentRef.rawSha256))) {
+    problems.push('the parent reference is not { file, rawSha256 }');
+  }
+  let last = 0;
+  const picked = [];
+  subset.forEach((item, i) => {
+    const cand = isObject(item) ? CANDIDATES.filter((c) => c.question === item.question)[0] : null;
+    if (!cand) {
+      problems.push('subset[' + i + '] is no candidate question');
+      return;
+    }
+    const q = 'Q' + cand.question + ': ';
+    if (cand.question <= last) problems.push('subset[' + i + ']: ' + q + 'out of order or twice');
+    last = cand.question;
+    ownerDecisionProblems(item.ownerDecision, cand).forEach((x) => problems.push(q + x));
+    const chunk = parentDoc.chunks.filter((c) => c.chunkId === cand.chunkId)[0];
+    if (!chunk || chunk.n !== RUNS_PER_CELL || chunk.k !== 1) {
+      problems.push(q + cand.chunkId + ' is not a single 50-request chunk of the parent');
+    } else picked.push({ cand, chunk, ownerDecision: item.ownerDecision });
+  });
+  if (problems.length > 0) throw new Error('the V2 manifest cannot be built: ' + problems.join('; '));
+  const rest = JSON.parse(JSON.stringify(parentDoc));
+  delete rest.manifestSha256;
+  const doc = { schema: V2_SCHEMA, parent: { file: parentRef.file, rawSha256: parentRef.rawSha256,
+    manifestSha256: parentDoc.manifestSha256 },
+  admissionExceptions: picked.map((x) => exceptionOf(x.cand, {
+    id: x.ownerDecision.id, choice: x.ownerDecision.choice, messageId: x.ownerDecision.messageId,
+    at: x.ownerDecision.at, ref: x.ownerDecision.ref })) };
+  Object.keys(rest).forEach((key) => { if (key !== 'schema') doc[key] = rest[key]; });
+  doc.runSlots = rest.runSlots.concat(picked.map((x) => slotOf(rest.runBase, 'chunk',
+    x.chunk.variant + '-' + x.chunk.level, x.cand.chunkId + '.a3', { cell: x.chunk.cell,
+      chunkId: x.cand.chunkId, attempt: 3 })));
+  doc.counts = Object.assign({}, rest.counts, { runSlots: doc.runSlots.length });
+  doc.manifestSha256 = canonicalSha256(doc);
+  return doc;
+}
+
+/** The exceptions of a V2 document themselves (shape, candidates, order, decisions, appended slots). */
+function exceptionProblems(doc) {
+  const ex = doc.admissionExceptions;
+  if (!Array.isArray(ex) || ex.length < 1 || ex.length > CANDIDATES.length) {
+    return ['admissionExceptions is not a list of one to three exceptions (an empty S has no V2)'];
+  }
+  const p = [];
+  let last = 0;
+  ex.forEach((e, i) => {
+    const w = 'admissionExceptions[' + i + ']';
+    if (!sameKeys(e, EXCEPTION_KEYS)) {
+      p.push(w + ' is not exactly the exception shape');
+      return;
+    }
+    const cand = CANDIDATES.filter((c) => c.exceptionId === e.id)[0];
+    if (!cand) {
+      p.push(w + ': ' + e.id + ' is no candidate exception');
+      return;
+    }
+    if (cand.question <= last) p.push(w + ': the exceptions are not in the order Q2, Q3, Q4, once each');
+    last = cand.question;
+    ownerDecisionProblems(e.ownerDecision, cand).forEach((x) => p.push(w + ': ' + x));
+    const chunk = (doc.chunks || []).filter((c) => c.chunkId === cand.chunkId)[0];
+    if (e.chunkId !== cand.chunkId) p.push(w + ': chunk ' + e.chunkId + ' is not ' + cand.chunkId);
+    if (!chunk || chunk.n !== RUNS_PER_CELL || chunk.k !== 1) {
+      p.push(w + ': not a single 50-request chunk of the manifest');
+    }
+    if (e.runId !== cand.chunkId + '.a3' || e.attempt !== 3) p.push(w + ': not the a3 slot of its chunk');
+    if (!sameData(e.priorRunIds, [cand.chunkId + '.a1', cand.chunkId + '.a2'])) {
+      p.push(w + ': the prior runs are not its a1 and a2');
+    }
+    if (e.maxAdmissions !== 3 || e.maxPayloads !== 1) p.push(w + ': not maxAdmissions 3 and maxPayloads 1');
+  });
+  const slots = Array.isArray(doc.runSlots) ? doc.runSlots : [];
+  const cut = slots.length - ex.length;
+  ex.forEach((e, i) => {
+    const s = slots[cut + i];
+    if (!s || s.role !== 'chunk' || s.attempt !== 3 || s.chunkId !== e.chunkId || s.runId !== e.runId) {
+      p.push('the slot ' + (cut + i) + ' is not the appended a3 slot of ' + e.chunkId);
+    }
+  });
+  if (slots.slice(0, Math.max(cut, 0)).some((s) => s && s.attempt === 3)) {
+    p.push('an attempt-3 slot outside the appended tail');
+  }
+  return p;
+}
+
+/** Problems of a V2 document on its own (parent, exceptions, and everything V1 checks). */
+function verifyManifestV2(doc) {
+  const problems = [];
+  if (!sameKeys(doc.parent, ['file', 'rawSha256', 'manifestSha256']) || typeof doc.parent.file !== 'string' ||
+    doc.parent.file === '' || !HEX64.test(String(doc.parent.rawSha256)) ||
+    !HEX64.test(String(doc.parent.manifestSha256))) {
+    problems.push('parent is not exactly { file, rawSha256, manifestSha256 }');
+  }
+  const bad = exceptionProblems(doc);
+  return problems.concat(bad, verifyCore(doc, bad.length === 0 ? doc.admissionExceptions : []));
+}
+
+/** The exception a V2 document declares for a chunk, or null (V1 documents declare none). */
+const exceptionFor = (doc, chunkId) => (doc && Array.isArray(doc.admissionExceptions)
+  ? doc.admissionExceptions.filter((e) => isObject(e) && e.chunkId === chunkId)[0] || null : null);
+
+/** The subset S a V2 document carries, as the exception ids in order. */
+const subsetOf = (doc) => (doc && Array.isArray(doc.admissionExceptions)
+  ? doc.admissionExceptions.map((e) => e.id) : []);
+
+/**
+ * The EXACT V1 -> V2 delta: the V2 equals what buildManifestV2 makes from the parent V1 document and the
+ * exceptions the V2 itself declares, and its `parent` is that parent (`parentRawSha256`: the raw digest of
+ * the parent file, when the caller read it). Any other difference (a changed chunk, target, seed, slot,
+ * count, the policy, a hash) is a problem. [] when the V2 is exactly the permitted delta.
+ */
+function v2DeltaProblems(v2, parentDoc, parentRawSha256) {
+  const p = [];
+  if (!v2 || v2.schema !== V2_SCHEMA) return ['not an ' + V2_SCHEMA];
+  const own = verifyManifestV2(v2);
+  if (own.length > 0) return ['the V2 manifest is unsound: ' + own[0]];
+  const base = !parentDoc || parentDoc.schema !== V1_SCHEMA ? ['the parent is not a V1 manifest']
+    : verifyManifest(parentDoc);
+  if (base.length > 0) return ['the V1 manifest is unsound: ' + base[0]];
+  if (v2.parent.manifestSha256 !== parentDoc.manifestSha256) p.push('the parent canonical hash is not V1');
+  if (parentRawSha256 !== undefined && v2.parent.rawSha256 !== parentRawSha256) {
+    p.push('the parent raw hash is not the V1 file');
+  }
+  let rebuilt = null;
+  try {
+    const asked = (e) => CANDIDATES.filter((c) => c.exceptionId === e.id)[0].question;
+    rebuilt = buildManifestV2(parentDoc, v2.parent, v2.admissionExceptions.map((e) => ({
+      question: asked(e), ownerDecision: e.ownerDecision })));
+  } catch (err) {
+    p.push(err.message);
+  }
+  if (rebuilt !== null && !sameData(rebuilt, v2)) {
+    const keys = Array.from(new Set(Object.keys(rebuilt).concat(Object.keys(v2))))
+      .filter((k) => !sameData(rebuilt[k], v2[k]));
+    p.push('the V2 is not the exact V1 -> V2 delta (it differs in ' + keys.join(', ') + ')');
+  }
+  return p;
+}
+
+/**
+ * The one FULL commit all owner references of a V2 document cite (null when there is none, or they differ).
+ */
+function ownerCommitOf(doc) {
+  const commits = new Set((doc && Array.isArray(doc.admissionExceptions) ? doc.admissionExceptions : [])
+    .map((e) => {
+      const m = e && e.ownerDecision && typeof e.ownerDecision.ref === 'string'
+        ? OWNER_REF.exec(e.ownerDecision.ref) : null;
+      return m ? m[1] : null;
+    }));
+  return commits.size === 1 && !commits.has(null) ? Array.from(commits)[0] : null;
+}
+
+/**
+ * Authority: the V2 exceptions must be exactly the grants of the owner selectors (`entries`, read at the
+ * commit the V2's own references cite; resolveSubset), each ownerDecision identical byte for byte, every
+ * candidate resolved (a missing or ambiguous reply is unresolved, never B) and at least one granted. [] when
+ * a V2 that is self-consistent is also authorized.
+ */
+function v2AuthorityProblems(v2, entries) {
+  const commit = ownerCommitOf(v2);
+  const res = resolveSubset(entries, commit === null ? undefined : commit);
+  const p = res.unresolved.map((u) => 'Q' + u.question + ' is unresolved: ' + u.reason);
+  if (commit === null) p.push('the owner references of the V2 do not cite one and the same full commit');
+  const want = res.granted.map((g) => ({ question: g.question, ownerDecision: g.ownerDecision }));
+  const have = (v2 && Array.isArray(v2.admissionExceptions) ? v2.admissionExceptions : []).map((e) => ({
+    question: (CANDIDATES.filter((c) => c.exceptionId === (e && e.id))[0] || {}).question,
+    ownerDecision: e && e.ownerDecision }));
+  if (res.unresolved.length === 0 && want.length === 0) p.push('no candidate is granted: there is no V2');
+  if (!sameData(want, have)) {
+    p.push('the V2 exceptions are not exactly the subset the committed owner decisions grant');
+  }
+  return p;
+}
+
 module.exports = { MATRIX, R24_CHUNKS, RUNS_PER_CELL, SEED_BASE, SEED_STEP, PROJECTION_LIMIT_SECONDS,
-  MERGE_RUN_ID, FINAL_RUN_ID, FINAL_FOLDER, deriveChunks, frozenRows, checkFrozen, seedOf, canonicalJson,
-  canonicalSha256, chunkIdOf, buildManifest, verifyManifest, declaredDirsOf, slotForDir };
+  MERGE_RUN_ID, FINAL_RUN_ID, FINAL_FOLDER, V1_SCHEMA, V2_SCHEMA, CANDIDATES, OWNER_FILE, OWNER_NAME,
+  deriveChunks, frozenRows, checkFrozen, seedOf, canonicalJson, canonicalSha256, chunkIdOf, buildManifest,
+  verifyManifest, declaredDirsOf, slotForDir, ownerDecisionProblems, answerOf, parseOwnerSelectors,
+  resolveSubset, ownerCommitOf, ownerRefOf, buildManifestV2, exceptionFor, subsetOf, v2DeltaProblems,
+  v2AuthorityProblems };

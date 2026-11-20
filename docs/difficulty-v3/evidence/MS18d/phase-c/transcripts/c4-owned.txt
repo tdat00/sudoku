@@ -1,0 +1,24 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-c\run-ps-test.js tests\artifacts\difficulty-v3\MS18d\phase-c\test-owned-processes.ps1
+ok   pure: everything recorded is gone: no survivor, nothing unknown
+ok   pure: a live process created inside the spawn window is the recorded instance: a survivor
+ok   pure: the window has a tolerance of 1 s and no more
+ok   pure: descendants of a live command are survivors, and so are those of a dead one
+ok   pure: a child of the dead pid created before the command is not ours
+ok   pure: a child created after the command ended belongs to a later holder of the pid
+ok   pure: a reused pid with NO proof that the recorded process ended is unknown, never a kill
+ok   pure: no usable table, an unusable or unknown record, an unknown creation time: unknown
+ok   pure: the wrapper role is ignored, the controller only when asked, itself never
+ok   pure: the protected pids are the process and every ancestor of it in the table
+ok   real: a live command and its grandchild are stopped through verified handles; a bystander lives
+ok   real: a command that exited by itself leaves a clean barrier and nothing is stopped
+ok   real: the command exited but its grandchild lives on: found by the stale parent pid, stopped
+ok   real: the tee died first (its pid is gone), the command still runs: it has its own record
+ok   real: a recorded pid now held by an unrelated process is never touched (reuse)
+ok   real: the controller record is stopped only when the wrapper asks for it
+ok   real: a process of the wrong creation time is not stopped by the verified stop
+ok   real: a protected process (this one, or an ancestor) is recorded and never stopped
+ok   real: a missing or malformed records file is unknown liveness
+ok   script: the exit code is the verdict (0 clean); the cleanup record is created once only
+ok   script: a simulated process table never stops anything: survivor 21, unknown liveness 20
+21 passed, 0 failed
+exit=0 seconds=12.680

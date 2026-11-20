@@ -1,0 +1,89 @@
+{
+  "schema": "ms18d-gp-epoch-4-transition-data-v1",
+  "previousHelperManifest": {
+    "file": "docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c3-sha256.txt",
+    "sha256": "4a0e5881f26f244b94f526da2fa42f2ce8ec839ec567f49383cb66c84f8bc47d",
+    "entries": 55
+  },
+  "helperManifest": {
+    "file": "docs/difficulty-v3/evidence/MS18d/phase-c/helpers-c4-sha256.txt",
+    "sha256": "9699d3ee76b1a1848412b1a6f5bd3a25c8e8daf5576cdeaa781ea8c529323c15",
+    "entries": 57
+  },
+  "allowedHelperChanges": [
+    {
+      "path": "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest-a3-v2.json",
+      "class": "plan-v2",
+      "before": null,
+      "after": "989799e62fe2b8864da2de1bedc35264fb717f84b004689f6de941e03d747125"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/attempts.js",
+      "class": "production",
+      "before": "b994ae8e7dbb856f55da02e693664c0aba94682f720a179a4158474c4df4160d",
+      "after": "b8df31a131157939b511283d1b17f8629ca39f52f533a4311389fc9a7a38860c"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-core.js",
+      "class": "production",
+      "before": "d72be73c970d65ed508c349ede8cde4bffd60dfe798dd974ec0deb05d7a2a162",
+      "after": "1e1022f09706611d3859e910208479be283b4aa04df466deb2106a3e01eda8ea"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/merge-gp.js",
+      "class": "production",
+      "before": "19104a1fe345e38247d90ea05531d0c0f8c40e72fe9d4d0b9e3ab29f888709e3",
+      "after": "ed3c567c8f689aaa139d0a11c4c06843367c303683e96078db016ec11acf2a14"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/payload-gp.js",
+      "class": "production",
+      "before": "e7e5085d1e12229f9235f5155c8919352eec7a4f0550d5f9ae92d95ae4c88b49",
+      "after": "365298c4f1714a0459c9d5e11af60166da72c9d2d34c02b483daf3eae429d44f"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/plan-data.js",
+      "class": "production",
+      "before": "242ce8e874993fd638f9415b7d1977113793d8f36ac863d2e9676edb380e2b61",
+      "after": "d5031d6dac8b718f4259f98eee740eb8168111614be5370f4a7aa18f38db6d56"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/run-locked-c.ps1",
+      "class": "production",
+      "before": "b8a421feba8054179589f387c7fa4fe707a9e65cdb5d8188ad50ac48b8151c86",
+      "after": "f362efc1a7534c4d00967a8b5794912a9a932fa2eee2ba7466373aaa2329dd27"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-epoch4-proof.js",
+      "class": "test",
+      "before": null,
+      "after": "fce47f86be6fd9473764203d930a91915daad6864a44db88b45ef955f8f9257f"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-plan.js",
+      "class": "test",
+      "before": "0c117639ee6a6d8202d1b995932429c10286c6ab9aca6f76dfdad50b9f51668c",
+      "after": "c6baf47b2774dbad937cd3dac662cc8981925b5ea73bec7f6529bb8b63605512"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-recorder-merge.js",
+      "class": "test",
+      "before": "0a6d3a8fa79e2623a4960aac23a913dcc752b699a70fd668187625b983b87669",
+      "after": "df4679294b94c9e31546830d3ae854a504d82e32f369160c6984938099a73723"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-run-locked-c.ps1",
+      "class": "test",
+      "before": "8262cb4be2b1c332377d7a07cc93cbcfb70180bf33732821e019e59735eb8c5f",
+      "after": "6a2344d526743e616b7e61788cf0a14c54fb5eabe263d28412edbb46ba1abbfc"
+    },
+    {
+      "path": "generator/tests/artifacts/difficulty-v3/MS18d/phase-c/test-units.js",
+      "class": "test",
+      "before": "85a1bbdf4e476c4ccc504ac069dd91f228e3d7f3ba9a548795cd398f37fb0a66",
+      "after": "c7ef6d7373b82eeea6000a7b7298c745000e85414a243f4511f446096c1bf04a"
+    }
+  ],
+  "identicalEntries": 45,
+  "problems": []
+}

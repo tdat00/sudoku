@@ -640,11 +640,476 @@ async function attemptTests() {
   });
 }
 
+async function v2Tests() {
+  const base = 'docs/difficulty-v3/evidence/MS18d/gp';
+  const v1 = plan.buildManifest({ plan: { packCommit: 'c'.repeat(40) }, targets: { offered: 79 }, sources: {},
+    environment: {}, policy: { choice: 'A' }, mergeBase: base,
+    loader: { recipe: { loaded: 1 }, files: [{ rel: 'x', sha256: 'a'.repeat(64) }],
+      hashIdentity: 'a'.repeat(64) } });
+  const V1REF = { file: 'docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest.json',
+    rawSha256: 'e'.repeat(64) };
+  const COMMIT = 'c'.repeat(40);
+  // an owner selector as the pack file has it (one owner reply binds each question by its own label)
+  const selector = (q, choice, over) => Object.assign({ question: 'MS18d-Q' + q, choice,
+    owner: 'amicably8850', answeredAt: '2026-11-19T22:50:08.320Z', source: { channel: 'ai-agent-session2',
+      channelId: '1571779348573323334', messageId: '1573108143389675704' },
+  answer: 'Q2=' + choice + ', Q3=' + choice + ', Q4=' + choice, binding: 'Q' + q + '=' + choice,
+  questionMessageId: '15729771244768' + q, reAskMessageId: '1573095012768682146',
+  chunkId: plan.CANDIDATES[q - 2].chunkId, cell: 'x/y', queuePosition: q }, over || {});
+  const record = (q, choice, over) => ({ id: 'S-OD' + (14 + q), selector: selector(q, choice, over) });
+  const records = (letters) => letters.map((l, i) => record(i + 2, l));
+  const rehash = (d) => {
+    const rest = Object.assign({}, d);
+    delete rest.manifestSha256;
+    d.manifestSha256 = plan.canonicalSha256(rest);
+    return d;
+  };
+  const clone = (d) => JSON.parse(JSON.stringify(d));
+  const CHUNKS = plan.CANDIDATES.map((c) => c.chunkId);
+  const masks = [0, 1, 2, 3, 4, 5, 6, 7];
+  const lettersOf = (mask) => [0, 1, 2].map((i) => (mask & (1 << i) ? 'A' : 'B'));
+  const built = (mask) => {
+    const res = plan.resolveSubset(records(lettersOf(mask)), COMMIT);
+    return { res, v2: plan.buildManifestV2(v1, V1REF, res.granted) };
+  };
+
+  await test('V2: the 8 subsets of the candidates build, verify, and are the exact permitted delta', () => {
+    assert.deepStrictEqual(plan.verifyManifest(v1), []);
+    assert.strictEqual(v1.counts.runSlots, 229);
+    masks.forEach((mask) => {
+      const letters = lettersOf(mask);
+      const { res, v2 } = built(mask);
+      const want = CHUNKS.filter((c, i) => letters[i] === 'A');
+      assert.deepStrictEqual(res.unresolved, [], 'mask ' + mask);
+      assert.deepStrictEqual(res.granted.map((g) => g.question), want.map((c) => plan.CANDIDATES
+        .filter((x) => x.chunkId === c)[0].question));
+      if (want.length === 0) {
+        assert.strictEqual(v2, null, 'an empty subset has no V2 (no B4)');
+        assert.deepStrictEqual(res.granted, []);
+        assert.deepStrictEqual(res.declined, [2, 3, 4]);
+        return;
+      }
+      assert.deepStrictEqual(plan.verifyManifest(v2), [], 'mask ' + mask);
+      assert.deepStrictEqual(plan.v2DeltaProblems(v2, v1, V1REF.rawSha256), [], 'mask ' + mask);
+      assert.deepStrictEqual(plan.v2AuthorityProblems(v2, records(letters)), [], 'mask ' + mask);
+      assert.strictEqual(v2.schema, plan.V2_SCHEMA);
+      assert.strictEqual(v2.runSlots.length, 229 + want.length);
+      assert.strictEqual(v2.counts.runSlots, 229 + want.length);
+      assert.strictEqual(v2.counts.requests, 3950);
+      assert.strictEqual(v2.slotPolicy.chunkAttempts, 2);
+      assert.deepStrictEqual(v2.runSlots.slice(0, 229), v1.runSlots, 'the original slots keep their order');
+      assert.deepStrictEqual(v2.runSlots.slice(229).map((s) => s.chunkId), want);
+      assert.ok(v2.runSlots.slice(229).every((s) => s.attempt === 3 && s.runId === s.chunkId + '.a3'));
+      assert.ok(v2.runSlots.slice(0, 229).every((s) => s.attempt !== 3), 'no other chunk has an a3');
+      assert.deepStrictEqual(plan.subsetOf(v2), res.granted.map((g) => 'MS18d-Q' + g.question + '-A'));
+      assert.deepStrictEqual(v2.parent, { file: V1REF.file, rawSha256: V1REF.rawSha256,
+        manifestSha256: v1.manifestSha256 });
+      assert.strictEqual(plan.exceptionFor(v2, want[0]).runId, want[0] + '.a3');
+      CHUNKS.filter((c) => want.indexOf(c) === -1).forEach((c) => assert.strictEqual(plan.exceptionFor(v2, c),
+        null));
+    });
+    assert.strictEqual(v1.counts.runSlots, 229, 'the V1 document is never mutated');
+    assert.strictEqual(plan.exceptionFor(v1, CHUNKS[0]), null, 'V1 declares no exception');
+  });
+
+  await test('V2: the real V1 plan file builds all 8 subsets the same way (read-only)', () => {
+    const file = path.join(REPO, 'docs', 'difficulty-v3', 'evidence', 'MS18d', 'phase-c',
+      'gp-chunk-manifest.json');
+    const bytes = fs.readFileSync(file);
+    const real = JSON.parse(bytes.toString('utf8').replace(/^\uFEFF/, ''));
+    assert.deepStrictEqual(plan.verifyManifest(real), []);
+    const ref = { file: V1REF.file, rawSha256: sha256(bytes) };
+    masks.forEach((mask) => {
+      const res = plan.resolveSubset(records(lettersOf(mask)), COMMIT);
+      const v2 = plan.buildManifestV2(real, ref, res.granted);
+      if (v2 === null) return assert.strictEqual(res.granted.length, 0);
+      assert.deepStrictEqual(plan.v2DeltaProblems(v2, real, ref.rawSha256), [], 'mask ' + mask);
+      assert.strictEqual(v2.runSlots.length, real.runSlots.length + res.granted.length);
+      assert.strictEqual(v2.counts.requests, real.counts.requests);
+    });
+  });
+
+  const unresolvedCase = (label, mutate, pattern) => test('V2 authority: ' + label + ' is unresolved, not B',
+    () => {
+      const recs = records(['A', 'A', 'A']);
+      const out = mutate(recs) || recs;
+      const res = plan.resolveSubset(out, COMMIT);
+      const mine = res.unresolved.filter((u) => u.question === 3);
+      assert.strictEqual(mine.length, 1, JSON.stringify(res));
+      assert.ok(pattern.test(mine[0].reason), mine[0].reason);
+      assert.deepStrictEqual(res.declined, [], 'an unclear reply is never taken as B');
+      assert.deepStrictEqual(res.granted.map((g) => g.question), [2, 4], 'the clear replies still stand');
+      const all = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+      const v2 = plan.buildManifestV2(v1, V1REF, all);
+      assert.ok(plan.v2AuthorityProblems(v2, out).some((p) => /Q3 is unresolved/.test(p)));
+    });
+  await unresolvedCase('a missing selector', (r) => r.filter((x) => x.id !== 'S-OD17'), /missing/);
+  await unresolvedCase('two selectors for one question', (r) => r.concat([record(3, 'A')]), /ambiguous/);
+  await unresolvedCase('a reply answering both ways', (r) => { r[1].selector.answer = 'Q3=A and Q3=B'; },
+    /two ways/);
+  await unresolvedCase('another question\'s selector', (r) => { r[1].selector.question = 'MS18d-Q2'; },
+    /wrong question/);
+  await unresolvedCase('a reply with the labels of the others only', (r) => {
+    r[1].selector.answer = 'Q2=A, Q4=A';
+  }, /ties no answer/);
+  await unresolvedCase('a bare "A"', (r) => { r[1].selector.answer = 'A'; }, /ties no answer/);
+  await unresolvedCase('a lower-case letter', (r) => { r[1].selector.answer = 'Q3=a'; },
+    /neither A nor B/);
+  await unresolvedCase('a choice that contradicts the reply', (r) => { r[1].selector.choice = 'B'; },
+    /not the reply answer/);
+  await unresolvedCase('a binding that is not its own label', (r) => { r[1].selector.binding = 'Q2=A'; },
+    /binding Q2=A is not Q3=A/);
+  await unresolvedCase('a reply of another owner', (r) => { r[1].selector.owner = 'someone'; },
+    /the owner is not amicably8850/);
+  await unresolvedCase('a selector of another chunk', (r) => {
+    r[1].selector.chunkId = 'mega16-easy.i0.n50';
+  },
+    /the chunk mega16-easy\.i0\.n50 is not hyper-hard\.i0\.n50/);
+  await unresolvedCase('a selector without a message id string', (r) => {
+    r[1].selector.source.messageId = 1573108143389675704;
+  }, /no message id string/);
+  await unresolvedCase('a selector without a zoned time', (r) => {
+    r[1].selector.answeredAt = '2026-11-20 09:00';
+  }, /no answer time/);
+
+  await test('V2 authority: the owner commit must be a FULL 40-hex id, nothing else resolves', () => {
+    ['f2f345a1', 'F'.repeat(40), '', undefined, 'g'.repeat(40)].forEach((bad) => {
+      const res = plan.resolveSubset(records(['A', 'A', 'A']), bad);
+      assert.strictEqual(res.granted.length, 0, String(bad));
+      assert.strictEqual(res.unresolved.length, 3);
+      assert.ok(res.unresolved.every((u) => /no full owner commit id/.test(u.reason)));
+    });
+    const grant = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+    assert.deepStrictEqual(grant.map((g) => g.ownerDecision.ref), ['S-OD16', 'S-OD17', 'S-OD18']
+      .map((id) => COMMIT + ':tasks/difficulty-v3/check-list.md#' + id), 'a Git object plus the selector');
+    assert.deepStrictEqual(grant[0].ownerDecision, { id: 'S-OD16', choice: 'A',
+      messageId: '1573108143389675704', at: '2026-11-19T22:50:08.320Z', ref: grant[0].ownerDecision.ref },
+    'the message id and the time are copied byte for byte');
+    const v2 = plan.buildManifestV2(v1, V1REF, grant);
+    [['an abbreviated commit', (d) => { d.ref = d.ref.slice(7); }],
+      ['a path with a hash sign only', (d) => { d.ref = 'tasks/difficulty-v3/check-list.md#S-OD16'; }],
+      ['the old "@" form', (d) => { d.ref = 'tasks/difficulty-v3/check-list.md@' + COMMIT; }],
+      ['another selector', (d) => { d.ref = d.ref.replace('S-OD16', 'S-OD17'); }],
+      ['a Markdown anchor', (d) => { d.ref = COMMIT + ':tasks/difficulty-v3/check-list.md#s-od16'; }],
+      ['a number as the message id', (d) => { d.messageId = 1573108143389675704; }]]
+      .forEach(([what, edit]) => {
+      const d = clone(v2.admissionExceptions[0].ownerDecision);
+      edit(d);
+      assert.ok(plan.ownerDecisionProblems(d, plan.CANDIDATES[0]).length > 0, what);
+    });
+  });
+
+  await test('V2 authority: the selectors are parsed from the pack file at the commit, once, exactly', () => {
+    const line = (id, sel) => id + ' ' + JSON.stringify(sel);
+    const body = (lines) => ['## 4', '', '### S-OD16 / S-OD17 / S-OD18 — owner-choice records', '',
+      'text', '',
+      '```text'].concat(lines, ['```', '', 'after'].concat([])).join('\r\n');
+    const good = records(['A', 'A', 'A']).map((r) => line(r.id, r.selector));
+    const parsed = plan.parseOwnerSelectors(body(good));
+    assert.deepStrictEqual(parsed.problems, []);
+    assert.deepStrictEqual(parsed.entries, records(['A', 'A', 'A']));
+    assert.ok(plan.parseOwnerSelectors('no subsection').problems.length > 0);
+    assert.ok(plan.parseOwnerSelectors(body(good) + '\n' + body(good)).problems.length > 0, 'twice');
+    assert.ok(plan.parseOwnerSelectors(body(good.concat([good[0]]))).problems.some((p) => /twice/.test(p)));
+    assert.ok(plan.parseOwnerSelectors(body(good.concat(['S-OD99 {broken}']))).problems
+      .some((p) => /not JSON/.test(p)));
+    assert.ok(plan.parseOwnerSelectors(body(good.concat(['free text']))).problems.length > 0);
+    assert.ok(plan.parseOwnerSelectors('### S-OD16 / S-OD17 / S-OD18\n\nno fence\n').problems.length > 0);
+  });
+
+  await test('V2 authority: a self-consistent V2 that the decisions do not grant is refused', () => {
+    const all = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+    const v2 = plan.buildManifestV2(v1, V1REF, all);
+    assert.deepStrictEqual(plan.v2DeltaProblems(v2, v1, V1REF.rawSha256), [], 'it is the exact delta');
+    assert.ok(plan.v2AuthorityProblems(v2, records(['A', 'B', 'A']))
+      .some((p) => /not exactly the subset/.test(p)),
+      'Q3 declined: its exception is unauthorized');
+    assert.ok(plan.v2AuthorityProblems(v2, []).some((p) => /unresolved/.test(p)), 'no records');
+    const moved = records(['A', 'A', 'A']);
+    moved[2].selector.source.messageId = '1573108143389675999';
+    assert.ok(plan.v2AuthorityProblems(v2, moved).some((p) => /not exactly the subset/.test(p)),
+      'a decision that differs from its selector');
+    const other = clone(v2);
+    other.admissionExceptions[1].ownerDecision.ref = other.admissionExceptions[1].ownerDecision.ref
+      .replace(COMMIT, 'd'.repeat(40));
+    assert.ok(plan.v2AuthorityProblems(other, records(['A', 'A', 'A']))
+      .some((p) => /one and the same full commit/.test(p)), 'two commits');
+    assert.deepStrictEqual(plan.v2AuthorityProblems(v2, records(['A', 'A', 'A'])), []);
+  });
+
+  const deltaCase = (label, edit, pattern) => test('V2 delta: ' + label + ' is rejected', () => {
+    const { v2 } = built(7);
+    const copy = clone(v2);
+    edit(copy);
+    rehash(copy);
+    const problems = plan.v2DeltaProblems(copy, v1, V1REF.rawSha256).concat(plan.verifyManifest(copy));
+    assert.ok(problems.length > 0, 'accepted');
+    assert.ok(problems.some((p) => pattern.test(p)), problems.slice(0, 4).join(' | '));
+  });
+  deltaCase('a changed target in a chunk', (d) => { d.chunks[0].target += 1; }, /exact V1 -> V2 delta/);
+  deltaCase('a changed slot policy', (d) => { d.slotPolicy.chunkAttempts = 3; }, /slot policy|exact V1/);
+  deltaCase('a changed gate', (d) => { d.gate.requiredSuccesses = 70; }, /exact V1 -> V2 delta/);
+  deltaCase('a changed original slot', (d) => { d.runSlots[3].dir += 'x'; }, /wrong path|exact V1/);
+  deltaCase('an a3 slot of a chunk that has no exception', (d) => {
+    d.runSlots.push({ role: 'chunk', runId: 'classic4-veryEasy.i0.n50.a3', cell: 'classic4/veryEasy',
+      dir: base + '/classic4-veryEasy/classic4-veryEasy.i0.n50.a3', chunkId: 'classic4-veryEasy.i0.n50',
+      attempt: 3 });
+    d.counts.runSlots += 1;
+  }, /appended a3 slot|attempt-3|attempt 3|extra/);
+  deltaCase('an a4 slot', (d) => {
+    const last = clone(d.runSlots[d.runSlots.length - 1]);
+    last.runId = last.runId.replace('.a3', '.a4');
+    last.dir = last.dir.replace('.a3', '.a4');
+    last.attempt = 4;
+    d.runSlots.push(last);
+    d.counts.runSlots += 1;
+  }, /attempt|a4|extra/);
+  deltaCase('an exception that is not the a3 of its chunk', (d) => { d.admissionExceptions[1].attempt = 2; },
+    /a3 slot|attempt/);
+  deltaCase('exceptions out of the order Q2, Q3, Q4', (d) => {
+    d.admissionExceptions.reverse();
+  }, /order/);
+  deltaCase('a third admission that allows a second payload', (d) => {
+    d.admissionExceptions[0].maxPayloads = 2;
+  }, /maxPayloads/);
+  deltaCase('a parent that is not the V1', (d) => { d.parent.manifestSha256 = 'f'.repeat(64); },
+    /parent canonical hash/);
+  deltaCase('a decision that is not exactly A', (d) => {
+    d.admissionExceptions[0].ownerDecision.choice = 'B';
+  },
+    /not exactly A/);
+
+  await test('V2 delta: the parent raw hash must be the V1 file, and V1 can never carry an a3', () => {
+    const { v2 } = built(1);
+    assert.ok(plan.v2DeltaProblems(v2, v1, 'd'.repeat(64)).some((p) => /raw hash/.test(p)));
+    const v1WithA3 = clone(v1);
+    v1WithA3.runSlots.push({ role: 'chunk', runId: CHUNKS[0] + '.a3', cell: 'mega16/easy',
+      dir: base + '/mega16-easy/' + CHUNKS[0] + '.a3', chunkId: CHUNKS[0], attempt: 3 });
+    v1WithA3.counts.runSlots += 1;
+    rehash(v1WithA3);
+    assert.ok(plan.verifyManifest(v1WithA3).some((p) => /attempt 3/.test(p)), 'V1 rejects attempt 3');
+  });
+
+  await test('V2: the builder refuses a bad subset (a non-candidate, twice, a B, a loose reference)', () => {
+    const granted = plan.resolveSubset(records(['A', 'A', 'A']), COMMIT).granted;
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, 'x'), /not a list/);
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [{ question: 9, ownerDecision: {} }]),
+      /no candidate question/);
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [granted[1], granted[0]]), /out of order or twice/);
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [granted[0], granted[0]]), /out of order or twice/);
+    const decline = Object.assign({}, granted[0], { ownerDecision: Object.assign({}, granted[0].ownerDecision,
+      { choice: 'B' }) });
+    assert.throws(() => plan.buildManifestV2(v1, V1REF, [decline]), /not exactly A/);
+    assert.throws(() => plan.buildManifestV2(v1, { file: 'x' }, granted), /parent reference/);
+    assert.throws(() => plan.buildManifestV2(Object.assign({}, v1, { manifestSha256: 'x' }), V1REF, granted),
+      /unsound/);
+    const v2 = plan.buildManifestV2(v1, V1REF, granted);
+    assert.throws(() => plan.buildManifestV2(v2, V1REF, granted), /not a V1 manifest/);
+  });
+}
+
+async function exceptionTests() {
+  const CH = 'mega16-easy.i0.n50';
+  const OTHER = 'hyper-hard.i0.n50';
+  const entries = [2, 3, 4].map((q) => ({ id: 'S-OD' + (14 + q), selector: { question: 'MS18d-Q' + q,
+    choice: 'A', owner: 'amicably8850', answeredAt: '2026-11-19T22:50:08.320Z',
+    source: { channel: 'c', channelId: '1', messageId: '1573108143389675704' },
+    answer: 'Q2=A, Q3=A, Q4=A', binding: 'Q' + q + '=A', chunkId: plan.CANDIDATES[q - 2].chunkId } }));
+  const v1 = plan.buildManifest({ plan: { packCommit: 'c'.repeat(40) }, targets: { offered: 79 }, sources: {},
+    environment: {}, policy: { choice: 'A' }, mergeBase: 'docs/difficulty-v3/evidence/MS18d/gp',
+    loader: { recipe: { loaded: 1 }, files: [{ rel: 'x', sha256: 'a'.repeat(64) }],
+      hashIdentity: 'a'.repeat(64) } });
+  const v2 = plan.buildManifestV2(v1, { file: 'p.json', rawSha256: 'e'.repeat(64) },
+    plan.resolveSubset(entries, 'c'.repeat(40)).granted);
+  const EXC = plan.exceptionFor(v2, CH);
+  const EXC_OTHER = plan.exceptionFor(v2, OTHER);
+  let seq = 0;
+  const fresh = () => {
+    const root = at('exc', String(++seq));
+    fs.mkdirSync(path.join(root, 'gp', 'cell'), { recursive: true });
+    return { cell: path.join(root, 'gp', 'cell'), log: path.join(root, 'c.jsonl') };
+  };
+  const put = (w, name, files) => {
+    const dir = path.join(w.cell, name);
+    fs.mkdirSync(dir, { recursive: true });
+    Object.keys(files).forEach((f) => fs.writeFileSync(path.join(dir, f),
+      typeof files[f] === 'string' ? files[f] : JSON.stringify(files[f])));
+  };
+  const hold = (w, chunk, n, over) => put(w, chunk + '.a' + n, {
+    'request.json': { chunk: { chunkId: chunk } },
+    'wrapper.json': { chunkId: chunk, outcome: 'control-hold' }, 'admission.json': { decision: 'hold' },
+    'result.json': Object.assign({ outcome: 'control-hold', payloadStarted: false }, over || {}) });
+  const line = (w, chunk, n, over) => fs.appendFileSync(w.log, JSON.stringify(Object.assign({
+    schema: 'ms18d-c-run-1', runDir: 'x/cell/' + chunk + '.a' + n, chunkId: chunk,
+    releaseObservedAt: new Date(1000000).toISOString(), controllerOutcome: 'control-hold' }, over || {})) +
+    '\r\n');
+  const ready = (w, chunk) => {
+    [1, 2].forEach((n) => { hold(w, chunk, n); line(w, chunk, n); });
+  };
+  const emptyJournal = journals.rulingsState(() => '', 'a'.repeat(40), null);
+  const ask = (w, over) => chunkAttempts(Object.assign({ baseDir: w.cell, chunkId: CH, runId: CH + '.a3',
+    ledgerFile: w.log, rulings: emptyJournal, nowMs: 5000000000, exception: EXC }, over || {}));
+  const refused = (a, pattern) => {
+    const all = a.reasons.concat(a.problems);
+    assert.strictEqual(a.decision, 'refuse', JSON.stringify(a));
+    assert.ok(all.some((r) => pattern.test(r)), all.join(' | '));
+  };
+
+  await test('a3: a chunk with its own two proven-unstarted holds and matching log lines is allowed', () => {
+    const w = fresh();
+    ready(w, CH);
+    const a = ask(w);
+    assert.strictEqual(a.decision, 'allow', a.reasons.concat(a.problems).join(' | '));
+    assert.strictEqual(a.admissions, 2);
+    assert.strictEqual(a.payloads, 0);
+    assert.strictEqual(a.attempt, 3);
+    assert.strictEqual(a.exception, 'MS18d-Q2-A');
+    assert.strictEqual(a.ruling, null, 'no ruling is ever consulted for an a3');
+  });
+
+  await test('a3: an eligible and a non-eligible hold alike count (the real a1/a2 shape), no wait', () => {
+    const w = fresh();
+    hold(w, CH, 1, { eligibleReAsk: true });
+    hold(w, CH, 2);
+    line(w, CH, 1);
+    line(w, CH, 2, { releaseObservedAt: new Date(5000000000).toISOString() });
+    assert.strictEqual(ask(w, { nowMs: 5000000000 }).decision, 'allow');
+  });
+
+  await test('a3: each a3 needs its OWN two holds (no exception, another chunk\'s: no borrowing)', () => {
+    const w = fresh();
+    ready(w, CH);
+    refused(ask(w, { exception: null }), /no-admission-exception/);
+    refused(ask(w, { exception: EXC_OTHER }), /exception-for-another-chunk|not the a3 exception/);
+    const w2 = fresh();
+    ready(w2, OTHER);
+    hold(w2, CH, 1);
+    line(w2, CH, 1);
+    refused(ask(w2), /needs its own a1 and a2/);
+    const own = chunkAttempts({ baseDir: w2.cell, chunkId: OTHER, runId: OTHER + '.a3', ledgerFile: w2.log,
+      rulings: emptyJournal, nowMs: 5000000000, exception: EXC_OTHER });
+    assert.strictEqual(own.decision, 'allow', 'the other chunk has its own two holds');
+  });
+
+  await test('a3: only an a1 and no a2 (or two folders of the wrong names) is refused', () => {
+    const w = fresh();
+    hold(w, CH, 1);
+    line(w, CH, 1);
+    refused(ask(w), /needs its own a1 and a2/);
+    const w2 = fresh();
+    hold(w2, CH, 1);
+    hold(w2, CH, 5);
+    line(w2, CH, 1);
+    line(w2, CH, 5);
+    refused(ask(w2), /needs its own a1 and a2|stray-chunk-folder/);
+  });
+
+  await test('a3: earlier payload evidence, an uncertain start or a loose result is refused', () => {
+    const started = fresh();
+    hold(started, CH, 1);
+    put(started, CH + '.a2', { 'request.json': { chunk: { chunkId: CH } },
+      'wrapper.json': { chunkId: CH, outcome: 'stop' }, 'admission.json': { decision: 'proceed' },
+      'result.json': { outcome: 'stop', payloadStarted: true }, 'transcript.txt': '$ node x\n',
+      'pids.jsonl': '{"role":"tee"}\n' });
+    line(started, CH, 1);
+    line(started, CH, 2, { controllerOutcome: 'stop' });
+    refused(ask(started), /chunk-payload-already-started/);
+    const uncertain = fresh();
+    hold(uncertain, CH, 1);
+    line(uncertain, CH, 1);
+    put(uncertain, CH + '.a2', { 'request.json': { chunk: { chunkId: CH } },
+      'admission.json': { decision: 'proceed' } });
+    refused(ask(uncertain), /uncertain-start/);
+    const loose = fresh();
+    ready(loose, CH);
+    put(loose, CH + '.a2', { 'request.json': { chunk: { chunkId: CH } },
+      'wrapper.json': { chunkId: CH, outcome: 'control-hold' }, 'admission.json': { decision: 'hold' },
+      'result.json': { outcome: 'control-hold' } });
+    refused(ask(loose), /not-proven-unstarted|uncertain/);
+    const wrongOutcome = fresh();
+    ready(wrongOutcome, CH);
+    hold(wrongOutcome, CH, 2, { outcome: 'success' });
+    refused(ask(wrongOutcome), /not-proven-unstarted|inconsistent/);
+  });
+
+  await test('a3: a missing or contradictory C-log history is refused, nothing is guessed', () => {
+    const none = fresh();
+    hold(none, CH, 1);
+    hold(none, CH, 2);
+    refused(ask(none), /missing-or-contradictory-history|inconsistent/);
+    const half = fresh();
+    hold(half, CH, 1);
+    hold(half, CH, 2);
+    line(half, CH, 1);
+    refused(ask(half), /missing-or-contradictory-history|inconsistent/);
+    const clash = fresh();
+    ready(clash, CH);
+    fs.appendFileSync(clash.log, JSON.stringify({ schema: 'ms18d-c-run-1', runDir: 'x/cell/' + CH + '.a2',
+      chunkId: CH, controllerOutcome: 'stop' }) + '\r\n');
+    refused(ask(clash), /missing-or-contradictory-history|inconsistent/);
+    const gone = fresh();
+    hold(gone, CH, 1);
+    line(gone, CH, 1);
+    line(gone, CH, 2);
+    refused(ask(gone), /folder is gone|needs its own/);
+  });
+
+  await test('a3: a completed chunk, an existing a3 line, a stray folder and an a4 are refused', () => {
+    const done = fresh();
+    ready(done, CH);
+    line(done, CH, 9, { controllerOutcome: 'success', outcome: 'success', runDir: 'x/cell/other' });
+    refused(ask(done), /chunk-already-succeeded|inconsistent/);
+    const twice = fresh();
+    ready(twice, CH);
+    hold(twice, CH, 3);
+    line(twice, CH, 3);
+    refused(ask(twice), /already has a line/);
+    const stray = fresh();
+    ready(stray, CH);
+    fs.mkdirSync(path.join(stray.cell, CH + '.a4'));
+    refused(ask(stray), /stray-chunk-folder/);
+    const a4 = fresh();
+    ready(a4, CH);
+    refused(ask(a4, { runId: CH + '.a4' }), /chunk-attempt-beyond-the-exception/);
+    refused(ask(a4, { runId: CH + '.a5', exception: null }), /chunk-attempt-beyond-the-exception/);
+  });
+
+  await test('a3: the default stays two admissions; a1 and a2 never read the exception', () => {
+    const w = fresh();
+    ready(w, CH);
+    const third = ask(w, { runId: 'third' });
+    refused(third, /at most two/);
+    assert.strictEqual(third.attempt, null);
+    const a2 = chunkAttempts({ baseDir: w.cell, chunkId: 'mega16-normal.i0.n50',
+      runId: 'mega16-normal.i0.n50.a2', ledgerFile: w.log, rulings: emptyJournal, nowMs: 5000000000,
+      exception: EXC });
+    assert.strictEqual(a2.admissions, 0, 'another chunk is judged by its own folders');
+    assert.strictEqual(a2.decision, 'allow');
+  });
+
+  await test('a3: an F3 ruling never authorizes an a3 and an a3 needs no ruling', () => {
+    const w = fresh();
+    hold(w, CH, 1);
+    line(w, CH, 1);
+    const journal = journals.rulingsState(() => JSON.stringify({ chunkId: CH, heldRunId: CH + '.a1',
+      allowAttempt: 2, ref: 'SA2', at: new Date(2000000).toISOString() }) + '\n', 'a'.repeat(40), null);
+    const withRuling = ask(w, { rulings: journal });
+    refused(withRuling, /needs its own a1 and a2/);
+    assert.strictEqual(withRuling.ruling, null);
+    const w2 = fresh();
+    ready(w2, CH);
+    assert.strictEqual(ask(w2, { rulings: journal }).decision, 'allow', 'allowed with or without a ruling');
+    assert.strictEqual(ask(w2, { rulings: journal }).ruling, null);
+  });
+}
+
 async function main() {
   await planTests();
   await ledgerTests();
   await loaderTests();
   await attemptTests();
+  await v2Tests();
+  await exceptionTests();
 }
 
 main().then(() => {

@@ -24,6 +24,9 @@ $realHashA = (Get-FileHash -LiteralPath $realLogA).Hash
 $realHashB = (Get-FileHash -LiteralPath $realLogB).Hash
 $realHashC = (Get-FileHash -LiteralPath $realLogC).Hash
 $realGp = $script:RunsRoot
+# B4: the real wrapper reads the V2 manifest; every stand-in world has its reduced plan at the V1 path
+$realPlanFileRel = $script:PlanFileRel
+$script:PlanFileRel = 'docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json'
 # the names and content digests of a folder tree (the real GP outputs of the campaign are read, never written)
 function Get-TreeState([string]$Root) {
   if (-not (Test-Path -LiteralPath $Root)) { return 'absent' }
@@ -99,7 +102,8 @@ $script:LineChecksDelayMs = 0
 $script:LineChecksHook = $null
 $script:LineChecksCalls = 0
 function Test-LineChecksC {
-  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '')
+  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '',
+    [object]$Exception = $null)
   $script:LineChecksCalls++
   if ($script:LineChecksDelayMs -gt 0) { Start-Sleep -Milliseconds $script:LineChecksDelayMs }
   if ($script:LineChecksHook) { & $script:LineChecksHook $script:LineChecksCalls }
@@ -2094,7 +2098,7 @@ Test-Case 'epoch 3: the real lines 23-25 and the line-only ruling: the next chun
     # (b) F2 still refuses mega16-easy at attempts 1, 2 and 3: both folders exist, both admissions are spent
     $f2 = @{ 1 = "attempt 1 of $easy, but a run folder of the chunk exists"
       2 = "attempt 2 of $easy needs exactly its attempt 1 folder"
-      3 = 'needs exactly its attempt 1 folder' }
+      3 = 'the manifest declares no admission exception of this chunk' }
     foreach ($n in 1, 2, 3) {
       $refuseF2 = { Test-LineChecksC -Profile 'gp-recorder' -Unit $easy -Attempt $n -CellDir 'mega16-easy' }
       Assert-Throws $refuseF2 ([regex]::Escape($f2[$n])) "mega16-easy attempt $n"
@@ -2192,6 +2196,212 @@ Test-Case 'epoch 3: the allowed working tree passes: a named run, an appended le
       $script:StandinHistoryChecks = $false
       $script:StatusBox.Text = ''
     }
+  }
+}
+
+# ---- epoch 4 (B4): the exceptional third admission (a3) through the wrapper's own checks, before any folder
+
+# The V2 `admissionExceptions` entry of a chunk (what the manifest declares), with `$Over` applied
+function New-ExceptionC([string]$Chunk, [hashtable]$Over = @{}) {
+  $e = [ordered]@{ id = 'MS18d-Q2-A'; chunkId = $Chunk; runId = "$Chunk.a3"; attempt = 3
+    priorRunIds = @("$Chunk.a1", "$Chunk.a2"); maxAdmissions = 3; maxPayloads = 1 }
+  foreach ($k in $Over.Keys) { $e[$k] = $Over[$k] }
+  return [pscustomobject]$e
+}
+
+# A control-hold run folder of a chunk (`$Result` replaces or adds keys of its result.json)
+function New-HoldFolderC([string]$Cell, [string]$Chunk, [int]$N, [hashtable]$Result = @{}) {
+  $res = [ordered]@{ outcome = 'control-hold'; payloadStarted = $false }
+  foreach ($k in $Result.Keys) { $res[$k] = $Result[$k] }
+  New-ChunkFolder $Cell "$Chunk.a$N" @{ 'request.json' = @{ chunk = @{ chunkId = $Chunk } }
+    'wrapper.json' = @{ chunkId = $Chunk; outcome = 'control-hold' }; 'result.json' = $res } | Out-Null
+}
+
+# The C lock log line of one run of a chunk: a plain control-hold unless `$Over` says otherwise
+function Write-RunRowC([string]$Chunk, [int]$N, [hashtable]$Over = @{}) {
+  Write-Row $script:LogC (Merge-Keys ([ordered]@{ schema = 'ms18d-c-run-1'; payload = 'gp-recorder'
+        runId = "$Chunk.a$N"; runDir = "x/gp/cell/$Chunk.a$N"; chunkId = $Chunk; attempt = $N; scope = $null
+        outcome = 'control-hold'; controllerOutcome = 'control-hold'; eligibleReAsk = $false }) $Over)
+}
+
+Test-Case 'B4: an a3 passes F2 only with a declared exception and its own two proven-unstarted holds' {
+  $c = 'fakea-easy.i0.n50'
+  $cell = 'fakea-easy'
+  $ex = New-ExceptionC $c
+  $a3 = { Assert-AttemptC -ChunkId $c -Attempt 3 -CellDir $cell -Exception $ex }
+  $ready = {
+    New-World | Out-Null
+    New-HoldFolderC $cell $c 1
+    New-HoldFolderC $cell $c 2
+    Write-RunRowC $c 1 @{ eligibleReAsk = $true }
+    Write-RunRowC $c 2
+  }
+  Invoke-WithFakeJournals {
+    New-World | Out-Null
+    Assert-Throws $a3 'found \[\]' 'no folder at all'
+    New-HoldFolderC $cell $c 1
+    Assert-Throws $a3 'found \[fakea-easy\.i0\.n50\.a1\]' 'only a1'
+    New-HoldFolderC $cell $c 2
+    Assert-Throws $a3 'no matching control-hold line of fakea-easy\.i0\.n50\.a1' 'no C lock log line'
+    & $ready
+    & $a3
+    # no exception, another chunk's, or any exception that is not exactly the declared shape
+    $noEx = { Assert-AttemptC -ChunkId $c -Attempt 3 -CellDir $cell }
+    Assert-Throws $noEx 'declares no admission exception' 'no exception'
+    foreach ($bad in @(@{ chunkId = 'fakeb-easy.i0.n25' }, @{ runId = "$c.a4" }, @{ attempt = 2 },
+        @{ maxAdmissions = 2 }, @{ maxPayloads = 2 }, @{ priorRunIds = @("$c.a2", "$c.a1") })) {
+      $differs = { Assert-AttemptC -ChunkId $c -Attempt 3 -CellDir $cell -Exception (New-ExceptionC $c $bad) }
+      Assert-Throws $differs 'declares no admission exception' "an exception that differs in $($bad.Keys)"
+    }
+    # attempt 4 (and anything above 3, or below 1) never exists, exception or not
+    foreach ($n in 4, 5, 0) {
+      Assert-Throws { Assert-AttemptC -ChunkId $c -Attempt $n -CellDir $cell -Exception $ex } `
+        "attempt $n of .* does not exist" "attempt $n"
+    }
+    # any other folder of the chunk (an existing a3, a stray one) is refused
+    New-HoldFolderC $cell $c 3
+    Assert-Throws $a3 'exactly its own a1 and a2 folders' 'an existing a3 folder'
+    Remove-Item "$script:RunsRoot\$cell\$c.a3" -Recurse -Force
+    New-ChunkFolder $cell 'odd-name' @{ 'request.json' = @{ chunk = @{ chunkId = $c } } } | Out-Null
+    Assert-Throws $a3 'exactly its own a1 and a2 folders' 'a stray folder that names the chunk'
+    Remove-Item "$script:RunsRoot\$cell\odd-name" -Recurse -Force
+    # each of the two folders must be a proven-unstarted control-hold
+    $dir = "$script:RunsRoot\$cell\$c.a2"
+    foreach ($sign in 'transcript.txt', 'stdout.txt', 'stderr.txt', 'ledger.json') {
+      [IO.File]::WriteAllText("$dir\$sign", 'x')
+      Assert-Throws $a3 'is not a proven-unstarted control-hold' "a $sign"
+      Remove-Item "$dir\$sign"
+    }
+    [IO.File]::WriteAllText("$dir\pids.jsonl", '{"role":"tee","pid":1}' + "`r`n")
+    Assert-Throws $a3 'is not a proven-unstarted control-hold' 'a tee record'
+    Remove-Item "$dir\pids.jsonl"
+    $kept = Get-Content -LiteralPath "$dir\result.json" -Raw
+    foreach ($bad in @(@{ outcome = 'stop'; payloadStarted = $true }, @{ outcome = 'control-hold' },
+        @{ outcome = 'success'; payloadStarted = $false })) {
+      Write-TestFile "$dir\result.json" ($bad | ConvertTo-Json)
+      Assert-Throws $a3 'is not a proven-unstarted control-hold' "result $($bad | ConvertTo-Json -Compress)"
+    }
+    Remove-Item "$dir\result.json"
+    Assert-Throws $a3 'is not a proven-unstarted control-hold' 'no result.json: an uncertain start'
+    [IO.File]::WriteAllText("$dir\result.json", $kept)
+    & $a3
+    $request = Get-Content -LiteralPath "$dir\request.json" -Raw
+    Write-TestFile "$dir\request.json" (@{ chunk = @{ chunkId = 'fakeb-easy.i0.n25' } } | ConvertTo-Json)
+    Assert-Throws $a3 'does not say it belongs to this chunk' 'a folder of another chunk (no borrowing)'
+    [IO.File]::WriteAllText("$dir\request.json", $request)
+    & $a3
+    # the C lock log must say the same: one control-hold line per prior run, no success, no a3 line
+    & $ready
+    Write-RunRowC $c 2
+    Assert-Throws $a3 'no matching control-hold line of fakea-easy\.i0\.n50\.a2' 'a duplicated line'
+    New-World | Out-Null
+    New-HoldFolderC $cell $c 1
+    New-HoldFolderC $cell $c 2
+    Write-RunRowC $c 1
+    Write-RunRowC $c 2 @{ controllerOutcome = 'stop' }
+    Assert-Throws $a3 'no matching control-hold line of fakea-easy\.i0\.n50\.a2' 'a contradicting line'
+    & $ready
+    Write-RunRowC $c 9 @{ outcome = 'success'; controllerOutcome = 'success'; runDir = 'x/gp/cell/other' }
+    Assert-Throws $a3 'already succeeded' 'a success line of the chunk'
+    & $ready
+    Write-RunRowC $c 3
+    Assert-Throws $a3 'the a3 already has a line' 'an a3 line'
+    # F1: a pre-window-hold line consumes no admission and is no line of a run
+    & $ready
+    Write-Row $script:LogC ([ordered]@{ schema = 'ms18d-c-run-1'; type = 'pre-window-hold'
+        payload = 'gp-recorder'; chunkId = $c; attempt = 3; outcome = 'pre-window-hold' })
+    & $a3
+    # the authority is the exception: a committed ruling is neither needed nor consulted
+    Set-Committed $script:RulingsRel ((New-RulingLine $c "$c.a2") + "`n")
+    & $a3
+    Assert-Throws $noEx 'declares no admission exception' 'a ruling is no exception'
+  }
+}
+
+Test-Case 'B4: an a3 hold or failure is terminal for the line (even an eligible one) until its own ruling' {
+  $c = 'fakea-easy.i0.n50'
+  $other = 'fakeb-easy.i0.n25'
+  Invoke-WithFakeJournals {
+    foreach ($case in @(@{ eligibleReAsk = $true }, @{ eligibleReAsk = $false },
+        @{ outcome = 'stop'; controllerOutcome = 'stop' })) {
+      New-World | Out-Null
+      # a1 (an eligible hold) then a2 (a plain hold): the line-only ruling of a2 opens the line again
+      Write-RunRowC $c 1 @{ eligibleReAsk = $true }
+      Write-RunRowC $c 2
+      Set-Committed $script:RulingsRel ((New-RulingLine $c "$c.a2") + "`n")
+      Assert-LineOpenC -ChunkId $other -Attempt 1
+      Write-RunRowC $c 3 $case
+      foreach ($unit in @(@($other, 1), @($c, 1), @($c, 2), @($c, 3))) {
+        Assert-Throws { Assert-LineOpenC -ChunkId $unit[0] -Attempt $unit[1] } "run $c\.a3 ended with" `
+          "$($unit -join ' a') after an a3 that ended $($case.Keys -join ',')"
+      }
+      # its own line-only ruling (allowAttempt stays 2, never 3) opens the line and authorizes nothing else
+      $both = (New-RulingLine $c "$c.a2"), (New-RulingLine $c "$c.a3")
+      Set-Committed $script:RulingsRel (($both -join "`n") + "`n")
+      Assert-LineOpenC -ChunkId $other -Attempt 1
+      $a4 = { Assert-AttemptC -ChunkId $c -Attempt 4 -CellDir 'fakea-easy' -Exception (New-ExceptionC $c) }
+      Assert-Throws $a4 'does not exist' 'a ruling never gives an a4'
+      $three = (New-RulingLine $c "$c.a2"), (New-RulingLine $c "$c.a3" @{ allowAttempt = 3 })
+      Set-Committed $script:RulingsRel (($three -join "`n") + "`n")
+      Assert-Throws { Assert-LineOpenC -ChunkId $other -Attempt 1 } 'ruling line 2 is not exactly' `
+        'allowAttempt 3 is no ruling'
+    }
+  }
+}
+
+Test-Case 'B4: the line checks pass the exception on: F4 first, then F2 of the a3' {
+  $c = 'fakea-easy.i0.n50'
+  $cell = 'fakea-easy'
+  New-World | Out-Null
+  Invoke-WithFakeJournals {
+    New-HoldFolderC $cell $c 1
+    New-HoldFolderC $cell $c 2
+    Write-RunRowC $c 1 @{ eligibleReAsk = $true }
+    Write-RunRowC $c 2
+    Assert-Throws { Test-LineChecksC -Profile 'gp-recorder' -Unit $c -Attempt 3 -CellDir $cell `
+        -Exception (New-ExceptionC $c) } 'the line is stopped' 'F4 comes first: the a2 hold is not ruled'
+    Set-Committed $script:RulingsRel ((New-RulingLine $c "$c.a2") + "`n")
+    Test-LineChecksC -Profile 'gp-recorder' -Unit $c -Attempt 3 -CellDir $cell -Exception (New-ExceptionC $c)
+    Assert-Throws { Test-LineChecksC -Profile 'gp-recorder' -Unit $c -Attempt 3 -CellDir $cell } `
+      'declares no admission exception' 'F2 without the exception'
+    $full = { param($ex) Invoke-FullChecksC -Profile 'gp-recorder' -Unit $c -Attempt 3 -CellDir $cell `
+        -Base '' -Standin $true -FinalMatrix $true -DeclaredDirs @() -Exception $ex }
+    & $full (New-ExceptionC $c)
+    Assert-Throws { & $full $null } 'declares no admission exception' 'the full checks without the exception'
+  }
+}
+
+Test-Case 'B4: through the wrapper an a3 needs a declared slot (none under V1) and an a4 never exists' {
+  New-World | Out-Null
+  $w = New-StandinWorld 'b4a'
+  Invoke-InStandinWorld $w {
+    Assert-Throws { Invoke-RecorderLocked -ChunkId 'fakea-easy.i0.n50' -Attempt 3 -Standin `
+        -CommandArgs @('x') } 'no declared slot for fakea-easy\.i0\.n50 attempt 3' 'an a3 of the V1 plan'
+    Assert-Throws { Invoke-RecorderLocked -ChunkId 'fakea-easy.i0.n50' -Attempt 4 -Standin `
+        -CommandArgs @('x') } 'does not belong to the set "1,2,3"' 'an a4'
+    Assert (@(Get-Ledger).Count -eq 0 -and -not (Test-Path "$script:RunsRoot\fakea-easy")) 'nothing started'
+  }
+}
+
+Test-Case 'B4: the real wrapper reads the V2 manifest, pinned in the helper manifest, with three a3 slots' {
+  Assert ($realPlanFileRel -eq 'docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest-a3-v2.json') `
+    'the wrapper names the V2 manifest'
+  $keep = $script:PlanFileRel
+  $keepRepo = $script:RunRepo
+  try {
+    $script:PlanFileRel = $realPlanFileRel
+    $script:RunRepo = $script:Ms18dRoot
+    $plan = Read-PlanC
+    Assert ($plan.Doc.schema -eq 'ms18d-gp-chunk-manifest-v2' -and @($plan.Doc.runSlots).Count -eq 232) `
+      'a V2 manifest of 229 + 3 slots'
+    Assert ((@($plan.Doc.admissionExceptions | ForEach-Object runId) -join ',') -eq
+      'mega16-easy.i0.n50.a3,hyper-hard.i0.n50.a3,butterfly-master.i0.n50.a3') 'the a3 run ids in order'
+    Assert (@($plan.Doc.runSlots | Where-Object { $_.attempt -eq 3 }).Count -eq 3 -and
+      $plan.Doc.slotPolicy.chunkAttempts -eq 2) 'three a3 slots, two attempts per chunk otherwise'
+    Assert ((Get-RealRequiredC) -contains $realPlanFileRel.Replace('\', '/')) 'a real run needs it pinned'
+  } finally {
+    $script:PlanFileRel = $keep
+    $script:RunRepo = $keepRepo
   }
 }
 

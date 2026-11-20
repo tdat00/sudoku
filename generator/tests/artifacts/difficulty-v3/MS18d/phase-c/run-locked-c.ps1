@@ -69,9 +69,10 @@ $script:Expected = [ordered]@{
 # Whether exit 1 has a defined meaning (a complete miss) for a payload type: the helper may allow it only
 # then. The controller checks that the request and its payload module agree (payloads.js).
 $script:PayloadExit1 = @{ 'gp-cell' = $true; 'generic' = $false; 'gp-recorder' = $false; 'gp-merge' = $true }
-# The frozen chunk manifest (R2/R24) and the command lines of the final-matrix payloads, relative to
-# generator\ (the working directory of the command) and to the repository.
-$script:PlanFileRel = 'docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest.json'
+# The chunk manifest (R2/R24; B4: the V2 manifest, V1 plus the declared a3 slots, which stays pinned beside
+# the frozen V1) and the command lines of the final-matrix payloads, relative to generator\ (the working
+# directory of the command) and to the repository.
+$script:PlanFileRel = 'docs\difficulty-v3\evidence\MS18d\phase-c\gp-chunk-manifest-a3-v2.json'
 $script:RecorderRel = 'tests\artifacts\difficulty-v3\MS18d\phase-c\record-gp.js'
 $script:MergeRel = 'tests\artifacts\difficulty-v3\MS18d\phase-c\merge-gp.js'
 $script:GapSeconds = 15
@@ -521,7 +522,7 @@ function Assert-LineOpenC {
 # transcript, stdout, stderr or ledger, and either a committed ruling for it or `eligibleReAsk: true` with
 # at least 60 s since its verified release. (The controller's own check inside the lock stays authoritative.)
 function Assert-AttemptC {
-  param([string]$ChunkId, [int]$Attempt, [string]$CellDir, [string]$Base = '')
+  param([string]$ChunkId, [int]$Attempt, [string]$CellDir, [string]$Base = '', [object]$Exception = $null)
   $cellRoot = Join-Path $script:RunsRoot $CellDir
   $mine = @()
   if (Test-Path -LiteralPath $cellRoot) {
@@ -534,6 +535,14 @@ function Assert-AttemptC {
       }
       if ($d.Name.StartsWith("$ChunkId.") -or $says) { $mine += $d }
     }
+  }
+  if ($Attempt -lt 1 -or $Attempt -gt 3) {
+    throw ("MS18d-C: attempt $Attempt of $ChunkId does not exist: two admissions per chunk, and an a3 only " +
+      'by a declared exception, never an a4. Nothing was started.')
+  }
+  if ($Attempt -eq 3) {
+    Assert-ExceptionAttemptC -ChunkId $ChunkId -Mine $mine -Exception $Exception
+    return
   }
   if ($Attempt -eq 1) {
     if ($mine.Count -gt 0) {
@@ -594,14 +603,80 @@ function Assert-AttemptC {
   }
 }
 
+# F2 for the exceptional third admission (V2/B4, attempt 3), BEFORE the folder exists: only for a chunk the
+# manifest declares an admission exception for, with its OWN two admissions (exactly the folders a1 and a2, no
+# other folder of the chunk), each a proven-unstarted control-hold (result.json says control-hold and
+# payloadStarted false, no tee/command record, transcript, stdout, stderr or ledger, and the folder belongs to
+# this chunk) with a matching control-hold line in the C lock log, no success line of the chunk and no line of
+# the a3 itself. The authority is the owner decision of the exception and the frozen V2/B4 binding; a ruling
+# (F3) is never consulted. (The controller's accounting, attempts.js, stays authoritative inside the lock.)
+function Assert-ExceptionAttemptC {
+  param([string]$ChunkId, [object[]]$Mine, [object]$Exception)
+  $refuse = { param($why) throw "MS18d-C: attempt 3 of ${ChunkId}: $why. Nothing was started." }
+  $prior = @("$ChunkId.a1", "$ChunkId.a2")
+  if ($null -eq $Exception -or $Exception.chunkId -ne $ChunkId -or $Exception.runId -ne "$ChunkId.a3" -or
+    $Exception.attempt -ne 3 -or $Exception.maxAdmissions -ne 3 -or $Exception.maxPayloads -ne 1 -or
+    (@($Exception.priorRunIds) -join '|') -ne ($prior -join '|')) {
+    & $refuse 'the manifest declares no admission exception of this chunk (an exception is never borrowed)'
+  }
+  $names = @($Mine | ForEach-Object Name | Sort-Object)
+  if (($names -join '|') -ne ($prior -join '|')) {
+    & $refuse "it needs exactly its own a1 and a2 folders, found [$($names -join ', ')]"
+  }
+  foreach ($d in $Mine) {
+    $json = {
+      param($name)
+      $p = Join-Path $d.FullName $name
+      if (-not (Test-Path -LiteralPath $p)) { return $null }
+      try {
+        return (Get-Content -LiteralPath $p -Raw | ConvertFrom-Json -DateKind String)
+      } catch { return $null }
+    }
+    $result = & $json 'result.json'
+    $request = & $json 'request.json'
+    $wrapper = & $json 'wrapper.json'
+    $owner = $null
+    if ($request -and $request.chunk) {
+      $owner = $request.chunk.chunkId
+    } elseif ($wrapper) { $owner = $wrapper.chunkId }
+    if ($owner -ne $ChunkId) { & $refuse "$($d.Name) does not say it belongs to this chunk" }
+    $signs = @('transcript.txt', 'stdout.txt', 'stderr.txt', 'ledger.json') |
+      Where-Object { Test-Path -LiteralPath (Join-Path $d.FullName $_) }
+    $payloadRows = @(Read-JsonLinesStrict -File (Join-Path $d.FullName 'pids.jsonl') | Where-Object {
+        $_.role -eq 'tee' -or $_.role -eq 'command' -or $_.event -eq 'command-exit' -or
+        $_.event -eq 'tee-exit' })
+    if ($null -eq $result -or $result.outcome -ne 'control-hold' -or $result.payloadStarted -ne $false -or
+      @($signs).Count -gt 0 -or $payloadRows.Count -gt 0) {
+      & $refuse "$($d.Name) is not a proven-unstarted control-hold"
+    }
+  }
+  $leaf = { param($row) ([string]$row.runDir).Replace('\', '/').Split('/')[-1] }
+  $rows = @(Read-JsonLinesStrict -File $script:LogC | Where-Object {
+      $_.schema -eq 'ms18d-c-run-1' -and $_.type -ne 'pre-window-hold' -and $_.chunkId -eq $ChunkId })
+  foreach ($id in $prior) {
+    $line = @($rows | Where-Object { (& $leaf $_) -eq $id })
+    if ($line.Count -ne 1 -or $line[0].controllerOutcome -ne 'control-hold') {
+      & $refuse "the C lock log has no matching control-hold line of $id"
+    }
+  }
+  $won = @($rows | Where-Object { $_.outcome -eq 'success' -or $_.controllerOutcome -eq 'success' })
+  if ($won.Count -gt 0) {
+    & $refuse 'the chunk already succeeded: a completed chunk has no a3'
+  }
+  if (@($rows | Where-Object { (& $leaf $_) -eq "$ChunkId.a3" }).Count -gt 0) {
+    & $refuse 'the a3 already has a line in the C lock log'
+  }
+}
+
 # F2/F4 as one call: the stop line (F4) for every final-matrix call, the attempt (F2) for a recorder. Run
 # before the lock watch of every cycle (epoch 2: not again after it, the fingerprint covers the wait);
 # throws, nothing is started.
 function Test-LineChecksC {
-  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '')
+  param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base = '',
+    [object]$Exception = $null)
   Assert-LineOpenC -ChunkId $Unit -Attempt $Attempt -Base $Base
   if ($Profile -eq 'gp-recorder') {
-    Assert-AttemptC -ChunkId $Unit -Attempt $Attempt -CellDir $CellDir -Base $Base
+    Assert-AttemptC -ChunkId $Unit -Attempt $Attempt -CellDir $CellDir -Base $Base -Exception $Exception
   }
 }
 
@@ -867,7 +942,7 @@ function Get-StatusProblemsC {
 # F2, the live host (a recorder) and the stale shared lock.
 function Invoke-FullChecksC {
   param([string]$Profile, [string]$Unit, [int]$Attempt, [string]$CellDir, [string]$Base, [bool]$Standin,
-    [bool]$FinalMatrix, [string[]]$DeclaredDirs)
+    [bool]$FinalMatrix, [string[]]$DeclaredDirs, [object]$Exception = $null)
   if (-not $Standin -or ($script:GitOverride -and $script:StandinHeadChecks)) {
     $headProblems = @(Get-CampaignHeadProblemsC -Base $Base -DeclaredDirs $DeclaredDirs)
     if ($headProblems.Count -gt 0) {
@@ -889,7 +964,8 @@ function Invoke-FullChecksC {
     }
   }
   if ($FinalMatrix) {
-    Test-LineChecksC -Profile $Profile -Unit $Unit -Attempt $Attempt -CellDir $CellDir -Base $Base
+    Test-LineChecksC -Profile $Profile -Unit $Unit -Attempt $Attempt -CellDir $CellDir -Base $Base `
+      -Exception $Exception
     if ($Profile -eq 'gp-recorder' -and -not $Standin) {
       $hostProblems = @(Get-HostProblemsC -Base $Base)
       if ($hostProblems.Count -gt 0) {
@@ -1010,7 +1086,7 @@ function Invoke-PayloadLocked {
   $checks = @{
     Profile = $Profile; Unit = $unit; Attempt = $attempt; CellDir = $cellDir; Base = $CampaignBase
     Standin = [bool]$Standin; FinalMatrix = [bool]$finalMatrix
-    DeclaredDirs = @($PayloadRequest['declaredDirs'])
+    DeclaredDirs = @($PayloadRequest['declaredDirs']); Exception = $PayloadRequest['exception']
   }
   $fp = @{ CellPath = (Join-Path $script:RunsRoot $cellDir); SlotPath = $runDir
     WithHead = [bool]((-not $Standin) -or $script:GitOverride); Real = [bool](-not $Standin) }
@@ -1142,7 +1218,9 @@ function Invoke-PayloadLocked {
     powershell = (Get-Process -Id $PID).Path; ownedProcesses = "$script:ToolsC\owned-processes.ps1"
   }
   foreach ($k in $PayloadRequest.Keys) {
-    if (@('cellInfo', 'frozenArgs', 'declaredDirs') -notcontains $k) { $request[$k] = $PayloadRequest[$k] }
+    if (@('cellInfo', 'frozenArgs', 'declaredDirs', 'exception') -notcontains $k) {
+      $request[$k] = $PayloadRequest[$k]
+    }
   }
   # C1: the readiness of policy A. A real recorder run always carries it (frozen paths; the controller holds
   # a real recorder run without it); a stand-in carries one only when a test configures it
@@ -1309,12 +1387,13 @@ function Read-PlanC {
 }
 
 # One planned chunk of the final matrix: the raw-time recorder, in the declared slot of attempt 1 or 2 (a
-# second attempt is allowed only by the controller's accounting, R4). The run id, the folder and the command
-# line all come from the manifest.
+# second attempt is allowed only by the controller's accounting, R4) or, V2/B4 only, attempt 3 (the declared
+# admission exception of the chunk: the slot exists only there). The run id, the folder and the command line
+# all come from the manifest.
 function Invoke-RecorderLocked {
   param(
     [Parameter(Mandatory)][string]$ChunkId,
-    [ValidateSet(1, 2)][int]$Attempt = 1,
+    [ValidateSet(1, 2, 3)][int]$Attempt = 1,
     [string]$CampaignBase = '',
     [string[]]$CommandArgs = @(),
     [switch]$Standin,
@@ -1330,9 +1409,13 @@ function Invoke-RecorderLocked {
       $_.role -eq 'chunk' -and $_.chunkId -eq $ChunkId -and $_.attempt -eq $Attempt })
   if ($slot.Count -ne 1) { throw "MS18d-C: no declared slot for $ChunkId attempt $Attempt" }
   $out = '..\' + ($slot[0].dir -replace '/', '\') + '\ledger.json'
+  # V2: the admission exception the manifest declares for this chunk (kept out of request.json: the
+  # controller reads it from the manifest itself)
+  $exception = @($plan.Doc.admissionExceptions | Where-Object { $_ -and $_.chunkId -eq $ChunkId })
   $payload = [ordered]@{
     chunk = $c; attempt = $Attempt; plan = $plan.Info; policy = $plan.Doc.policy
     declaredDirs = @(Get-DeclaredDirsC -PlanDoc $plan.Doc)
+    exception = $(if ($exception.Count -eq 1) { $exception[0] } else { $null })
     cellInfo = [ordered]@{ variant = [string]$c.variant; level = [string]$c.level; targetMs = [int]$c.target }
     frozenArgs = @($script:RecorderRel, "--plan=$($script:PlanFileRel)", "--chunk=$ChunkId", "--out=$out")
   }

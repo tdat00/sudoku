@@ -129,7 +129,9 @@ const recorder = {
     if (!c || typeof c.chunkId !== 'string' || !Number.isInteger(c.i0) || !Number.isInteger(c.n)) {
       throw new Error('a gp-recorder request carries its planned chunk');
     }
-    if (request.attempt !== 1 && request.attempt !== 2) throw new Error('attempt is 1 or 2');
+    if (request.attempt !== 1 && request.attempt !== 2 && request.attempt !== 3) {
+      throw new Error('attempt is 1, 2 or 3 (3 only by a declared admission exception)');
+    }
     const args = request.command.args;
     if (request.standin !== true) {
       const want = frozenRecorderArgs(request.plan.file, { dir: relDir(request), chunkId: c.chunkId });
@@ -157,8 +159,11 @@ const recorder = {
         problems.push('the run directory is not the declared slot of this chunk attempt');
       }
       if (!chunk || !same(chunk, request.chunk)) problems.push('the request chunk is not the planned entry');
+      // V2: the declared admission exception of this chunk (null for V1 and for every other chunk); only an
+      // a3 is judged by it, and an a3 without one is refused by the accounting and by the slot check above
+      const exception = plan.exceptionFor(doc, request.chunk.chunkId);
       const attempts = chunkAttempts({ baseDir: path.dirname(path.resolve(request.runDir)),
-        chunkId: request.chunk.chunkId, runId: request.runId, ledgerFile: ctx.cLedger,
+        chunkId: request.chunk.chunkId, runId: request.runId, ledgerFile: ctx.cLedger, exception,
         rulings: ctx.journals ? ctx.journals.rulings : null, nowMs: ctx.nowMs });
       records['attempts.json'] = attempts;
       if (attempts.decision !== 'allow') attempts.reasons.forEach((r) => problems.push('attempts: ' + r));
@@ -166,6 +171,9 @@ const recorder = {
         problems.push('attempt 1 although another run folder of the chunk exists');
       }
       if (request.attempt === 2 && attempts.admissions < 1) problems.push('attempt 2 without an attempt 1');
+      if (request.attempt === 3 && (attempts.admissions !== 2 || !exception)) {
+        problems.push('attempt 3 without its two earlier admissions and a declared exception');
+      }
     }
     records['plan-check.json'] = { schema: 'ms18d-c-plan-check-1', ok: problems.length === 0, problems,
       planManifestSha256: doc ? doc.manifestSha256 : null };
