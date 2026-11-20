@@ -1,0 +1,36 @@
+$ node tests\artifacts\difficulty-v3\MS18d\phase-b\freeze-targets.js --preflight=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json --json=..\docs\difficulty-v3\evidence\MS18d\phase-d\targets-recheck-final.json
+positions 135: active 79, absent 56; retained 62, updated 17
+  classic4/veryEasy 10 -> 31 (ceil3q, q 10.1122)
+  classic6/veryEasy 10 -> 39 (ceil3q, q 12.9032)
+  classic9/easy 150 -> 2342 (ceil3q, q 780.3884)
+  classic9/normal 150 -> 2627 (ceil3q, q 875.5958)
+  classic9/expert 400 -> 1323 (ceil3q, q 440.7861)
+  classic9/nightmare 2500 -> 8377 (ceil3q, q 2792.0346)
+  mega12/nightmare 3000 -> 18842 (ceil3q, q 6280.4697)
+  mega16/hell2 10000 -> 30000 (budget, q 25239.0671)
+  diagonalX/nightmare 3000 -> 10000 (budget, q 5368.3201)
+  hyper/normal 200 -> 1573 (ceil3q, q 524.3035)
+  hyper/nightmare 3000 -> 10000 (budget, q 8503.0273)
+  jigsaw9/easy 350 -> 1905 (ceil3q, q 634.7225)
+  jigsaw9/hell2 5000 -> 10000 (budget, q 6102.238)
+  killer/normal 700 -> 5425 (ceil3q, q 1808.2659)
+  sohei/hell2 20000 -> 30000 (budget, q 27155.5581)
+  butterfly/nightmare 8000 -> 30000 (budget, q 16120.4641)
+  wordoku/easy 250 -> 2921 (ceil3q, q 973.633)
+table sha256 3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a
+hash identity 344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1 (was 1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0)
+replay identity 1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc (unchanged)
+retained budgets that differ: 11 (documented 11)
+  killer.test.js killer normal 700 5425
+  jigsaw.test.js jigsaw9 easy 350 1905
+  jigsaw.test.js jigsaw9 hell2 5000 10000
+  wordoku.test.js wordoku easy 250 2921
+  extra-regions.test.js diagonalX+hyper normal 200 1573
+  extra-regions.test.js diagonalX+hyper nightmare 3000 10000
+  difficulty.test.js classic9 easy 150 2342
+  difficulty.test.js classic9 normal 150 2627
+  difficulty.test.js classic9 expert 600 1323
+  difficulty.test.js classic9 nightmare 2500 8377
+  mega.test.js mega12 nightmare 3000 18842
+wrote docs\difficulty-v3\evidence\MS18d\phase-d\targets-recheck-final.json
+exit=0 seconds=0.285

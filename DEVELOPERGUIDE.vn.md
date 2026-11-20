@@ -1389,6 +1389,14 @@ chỉnh một giá trị giữ lại, bỏ qua hay đổi tên bài kiểm tra, 
   sinh (ghi trong `overrides`) và trả lại đúng mảng hỗ trợ ban đầu; nó không bao giờ đổi những gì người chơi được
   cung cấp. Các hàm thuần nằm ở `SG.fixtures.perfTools` và `SG.fixtures.toolRecords`, và suite `perf-tooling` kiểm
   thử chúng.
+
+  **GP cuối của xếp hạng v3 (MS18d).** GP cuối của xếp hạng v3 (MS18d) dùng bộ ghi R24 riêng của nhiệm vụ, gọi
+  `SG.fixtures.perfTools.measure` không đổi và gộp kiểm tra các thời gian thô; không lấy số liệu từ stdout đã làm
+  tròn của `perf.js`. Đủ 79/79 ô, mỗi ô 50 yêu cầu; 74/79 đạt `p95 < mục tiêu` (cần 72), còn năm ô trượt được giữ
+  nguyên. Đây là số đo Node theo chính sách shared-slot, CLI-host-active, với 35 lần khởi động tiến trình lạnh bổ
+  sung, không phải số đo Chrome trên máy tham chiếu. Báo cáo đầy đủ với mọi hàng, các ô trượt và bằng chứng nằm ở
+  [docs/difficulty-v3/performance-v3.md](docs/difficulty-v3/performance-v3.md); các ví dụ `perf.js` có sẵn ở trên vẫn
+  là lệnh hợp lệ, nhưng stdout của chúng không phải nguồn của chiến dịch đó.
 - **Các lần chạy thống kê sâu** trong các suite mega, multigrid và variants mặc định tắt; bật bằng biến môi
   trường `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; trong PowerShell dùng
   `$env:SG_DEEP = 1`). Các bài kiểm thử sâu theo từng mức của suite mega và multigrid chỉ được đăng ký cho những mức

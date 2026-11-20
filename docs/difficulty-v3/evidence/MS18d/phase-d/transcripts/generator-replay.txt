@@ -1,0 +1,11 @@
+$ node tests\node-runner.js --suite=replay --results=..\docs\difficulty-v3\evidence\MS18d\phase-d\quick\generator-replay.json
+Sudoku Generator tests  (node v26.13.0)
+Sources: 64 loaded, 0 missing (--verbose lists them)
+
+ok   replay: 159 passed  (44.16 s)
+
+Suites: 1
+Tests:  159 total, 159 passed, 0 failed, 0 skipped
+Time:   44.16 s running tests, 44.40 s total
+Results: docs/difficulty-v3/evidence/MS18d/phase-d/quick/generator-replay.json
+exit=0 seconds=44.642

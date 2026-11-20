@@ -1641,6 +1641,15 @@ enforced by `node tests/qualify.js` on the reference machine and measured by `no
   in `overrides`) and puts the exact original support array back; it never changes what a player is offered. The
   pure helpers are in `SG.fixtures.perfTools` and `SG.fixtures.toolRecords`, and the `perf-tooling` suite tests
   them.
+
+  **Final GP of rating v3 (MS18d).** The final rating-v3 GP (MS18d) used the task's own R24 recorder, which calls the
+  unchanged `SG.fixtures.perfTools.measure` and merges the raw request times in a check-only step; no figure comes
+  from the rounded stdout of `perf.js`. All 79 of 79 cells were measured, 50 requests each; 74 of 79 meet
+  `p95 < target` (72 were required), and the five misses are kept as they are. This is a Node measurement under the
+  shared-slot, CLI-host-active policy, with 35 extra cold process starts, not a Chrome measurement on the reference
+  machine. The report with all rows, the misses and the evidence is
+  [docs/difficulty-v3/performance-v3.md](docs/difficulty-v3/performance-v3.md); the stock `perf.js` examples above
+  stay valid commands, but their stdout is not the source of that campaign.
 - **Deep statistical runs** in the mega, multigrid and variants suites are off by default; enable them with the
   environment variable `SG_DEEP=1` (`SG_DEEP=1 node tests/node-runner.js --suite=mega,multigrid,variants`; in
   PowerShell `$env:SG_DEEP = 1`). The per-level deep tests of the mega and multigrid suites are registered only for

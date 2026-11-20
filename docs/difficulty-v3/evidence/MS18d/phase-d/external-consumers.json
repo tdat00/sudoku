@@ -1,0 +1,572 @@
+{
+  "schema": "ms18d-phase-d-external-consumers-v1",
+  "label": "operational disclosure; the C log, run folders and committed rulings are the authority",
+  "item": "MS18d-C2-EXTERNAL-CONSUMERS",
+  "holds": [
+    {
+      "runId": "mega16-easy.i0.n50.a1",
+      "cLogLine": 23,
+      "requestedAt": "2026-11-19T18:47:43.051+07:00",
+      "finished": "2026-11-19T18:47:51.849+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 3640 (svchost.exe) gained 0.924 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 3640,
+          "name": "svchost.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.9244791666666666,
+          "newInWindow": false,
+          "createdAt": "2026-11-11T20:53:56.119+07:00"
+        }
+      ],
+      "meanBusyCores": 2.1434319753547224,
+      "maxBusyCores": 3.3252918547068084,
+      "resultSha256": "26a91e80b08257ebd5e7bc754aaa06f382973d9c1fe804511c607b4956d42645"
+    },
+    {
+      "runId": "mega16-easy.i0.n50.a2",
+      "cLogLine": 25,
+      "requestedAt": "2026-11-19T20:50:13.346+07:00",
+      "finished": "2026-11-19T20:50:13.562+07:00",
+      "heldAt": "acquisition",
+      "kind": "acquisition-hold (no readiness: release-history-unproved)",
+      "reasons": [
+        "release-history-unproved"
+      ],
+      "consumers": [],
+      "meanBusyCores": null,
+      "maxBusyCores": null,
+      "resultSha256": "89103bbed1f863fed1c67d773be5c5c04b14f67656b20a8e94934f5ab43ecd8b"
+    },
+    {
+      "runId": "mega16-normal.i0.n50.a1",
+      "cLogLine": 26,
+      "requestedAt": "2026-11-19T23:00:02.636+07:00",
+      "finished": "2026-11-19T23:00:11.611+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 3640 (svchost.exe) gained 0.912 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 3640,
+          "name": "svchost.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.9121258475276997,
+          "newInWindow": false,
+          "createdAt": "2026-11-11T20:53:56.119+07:00"
+        }
+      ],
+      "meanBusyCores": 2.802379213805861,
+      "maxBusyCores": 4.1994879360909305,
+      "resultSha256": "c3b51498db82d8fc57f2890bc56b14a006fb0932f29bbe582abbb9383ee25916"
+    },
+    {
+      "runId": "hyper-hard.i0.n50.a1",
+      "cLogLine": 44,
+      "requestedAt": "2026-11-19T23:22:47.673+07:00",
+      "finished": "2026-11-19T23:22:56.686+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 3048 (svchost.exe) gained 0.711 CPU-s per elapsed second",
+        "additional-consumer: process 32956 (powershell.exe) gained 0.897 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 3048,
+          "name": "svchost.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.7111442866365397,
+          "newInWindow": false,
+          "createdAt": "2026-11-11T20:53:55.916+07:00"
+        },
+        {
+          "pid": 32956,
+          "name": "powershell.exe",
+          "ppid": 9848,
+          "cpuSecondsPerSecond": 0.8971716884593519,
+          "newInWindow": true,
+          "createdAt": "2026-11-19T23:22:54.533+07:00"
+        }
+      ],
+      "meanBusyCores": 1.7193267684200997,
+      "maxBusyCores": 2.9769133415744995,
+      "resultSha256": "aa0d17fdc11dfa20e14b4ae254909c2cec483a55f34be76282e9a3ef53edde29"
+    },
+    {
+      "runId": "hyper-hard.i0.n50.a2",
+      "cLogLine": 45,
+      "requestedAt": "2026-11-19T23:24:22.138+07:00",
+      "finished": "2026-11-19T23:24:30.998+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 20636 (powershell.exe) gained 0.875 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 20636,
+          "name": "powershell.exe",
+          "ppid": 448,
+          "cpuSecondsPerSecond": 0.875,
+          "newInWindow": true,
+          "createdAt": "2026-11-19T23:24:29.950+07:00"
+        }
+      ],
+      "meanBusyCores": 2.153343830791135,
+      "maxBusyCores": 2.979701231920401,
+      "resultSha256": "99a2974e222b3c0e12856a4947216c63f9365b7b70680e2234c36a933ba4615b"
+    },
+    {
+      "runId": "greaterThan-easy.i0.n50.a1",
+      "cLogLine": 61,
+      "requestedAt": "2026-11-20T00:40:57.003+07:00",
+      "finished": "2026-11-20T00:41:05.836+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 13104 (powershell.exe) gained 0.900 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 13104,
+          "name": "powershell.exe",
+          "ppid": 10964,
+          "cpuSecondsPerSecond": 0.9003697093319735,
+          "newInWindow": true,
+          "createdAt": "2026-11-20T00:40:59.544+07:00"
+        }
+      ],
+      "meanBusyCores": 2.088385327413223,
+      "maxBusyCores": 3.7154281859439844,
+      "resultSha256": "d9785757c87e4c119cb3f6ff16b21e028e3821305febdfeee62f03636387700e"
+    },
+    {
+      "runId": "butterfly-master.i0.n50.a1",
+      "cLogLine": 102,
+      "requestedAt": "2026-11-20T03:10:26.908+07:00",
+      "finished": "2026-11-20T03:10:35.760+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 34696 (BackgroundDownload.exe) gained 0.712 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 34696,
+          "name": "BackgroundDownload.exe",
+          "ppid": 2292,
+          "cpuSecondsPerSecond": 0.7123622244488977,
+          "newInWindow": false,
+          "createdAt": "2026-11-20T03:10:27.633+07:00"
+        }
+      ],
+      "meanBusyCores": 1.8142499932464766,
+      "maxBusyCores": 2.77526143455347,
+      "resultSha256": "7a7faa32c0ae77f02273a404a91011cddd6b3bce0525abb5d65c0590c7d89d88"
+    },
+    {
+      "runId": "butterfly-master.i0.n50.a2",
+      "cLogLine": 103,
+      "requestedAt": "2026-11-20T03:19:53.017+07:00",
+      "finished": "2026-11-20T03:20:02.048+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 5632 (MsMpEng.exe) gained 0.846 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 5632,
+          "name": "MsMpEng.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.8463646622601967,
+          "newInWindow": false,
+          "createdAt": "2026-11-11T20:53:56.751+07:00"
+        }
+      ],
+      "meanBusyCores": 1.4181000749619916,
+      "maxBusyCores": 1.7280385733459782,
+      "resultSha256": "9b49a40c863759ef839daf21745663b1a4a2edf64135ed9b9372cac0755018cc"
+    },
+    {
+      "runId": "wordoku-veryEasy.i0.n50.a1",
+      "cLogLine": 115,
+      "requestedAt": "2026-11-20T04:30:04.988+07:00",
+      "finished": "2026-11-20T04:30:13.802+07:00",
+      "heldAt": "readiness",
+      "kind": "additional-consumer-hold",
+      "reasons": [
+        "additional-consumer: process 30416 (1ESDevBoxHibernationDelayAgent.exe) gained 0.508 CPU-s per elapsed second"
+      ],
+      "eligibleReAsk": true,
+      "consumers": [
+        {
+          "pid": 30416,
+          "name": "1ESDevBoxHibernationDelayAgent.exe",
+          "ppid": 2292,
+          "cpuSecondsPerSecond": 0.508347602739726,
+          "newInWindow": true,
+          "createdAt": "2026-11-20T04:30:11.636+07:00"
+        }
+      ],
+      "meanBusyCores": 2.2230017151619377,
+      "maxBusyCores": 5.0718141264283005,
+      "resultSha256": "6e7c73cd3d908518cefd4689717f61114332bca1f6e31b54e4258034aa531273"
+    }
+  ],
+  "categories": [
+    {
+      "category": "EventLog svchost",
+      "identification": "EventLog host (svchost 3640) per the a1 hold of mega16-easy; the run record of mega16-normal a1 names svchost.exe 3640 only",
+      "source": "tasks/difficulty-v3/MS18d-epoch3-release-history-repair.md",
+      "observed": [
+        {
+          "runId": "mega16-easy.i0.n50.a1",
+          "cLogLine": 23,
+          "pid": 3640,
+          "name": "svchost.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.9244791666666666,
+          "at": "2026-11-11T20:53:56.119+07:00"
+        },
+        {
+          "runId": "mega16-normal.i0.n50.a1",
+          "cLogLine": 26,
+          "pid": 3640,
+          "name": "svchost.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.9121258475276997,
+          "at": "2026-11-11T20:53:56.119+07:00"
+        }
+      ]
+    },
+    {
+      "category": "Dnscache svchost",
+      "identification": "Dnscache host (svchost 3048), at 0.711 beside the Intune PowerShell",
+      "source": "tasks/difficulty-v3/MS18d-hyper-hard-holds-and-scheduling.md",
+      "observed": [
+        {
+          "runId": "hyper-hard.i0.n50.a1",
+          "cLogLine": 44,
+          "pid": 3048,
+          "name": "svchost.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.7111442866365397,
+          "at": "2026-11-11T20:53:55.916+07:00"
+        }
+      ]
+    },
+    {
+      "category": "Intune PowerShell / AgentExecutor",
+      "identification": "PowerShell 32956 under AgentExecutor 9848 and PowerShell 20636 under AgentExecutor 448, both beneath IntuneWindowsAgent.exe 7220 (reported lineage)",
+      "source": "tasks/difficulty-v3/MS18d-hyper-hard-holds-and-scheduling.md, MS18d-hyper-hard-line-disposition.json",
+      "observed": [
+        {
+          "runId": "hyper-hard.i0.n50.a1",
+          "cLogLine": 44,
+          "pid": 32956,
+          "name": "powershell.exe",
+          "ppid": 9848,
+          "cpuSecondsPerSecond": 0.8971716884593519,
+          "at": "2026-11-19T23:22:54.533+07:00"
+        },
+        {
+          "runId": "hyper-hard.i0.n50.a2",
+          "cLogLine": 45,
+          "pid": 20636,
+          "name": "powershell.exe",
+          "ppid": 448,
+          "cpuSecondsPerSecond": 0.875,
+          "at": "2026-11-19T23:24:29.950+07:00"
+        }
+      ]
+    },
+    {
+      "category": "SenseIR PowerShell",
+      "identification": "PowerShell 13104 whose parent was SenseIR.exe 10964 (Defender for Endpoint investigation)",
+      "source": "tasks/difficulty-v3/MS18d-gate-senseir-extension.md",
+      "observed": [
+        {
+          "runId": "greaterThan-easy.i0.n50.a1",
+          "cLogLine": 61,
+          "pid": 13104,
+          "name": "powershell.exe",
+          "ppid": 10964,
+          "cpuSecondsPerSecond": 0.9003697093319735,
+          "at": "2026-11-20T00:40:59.544+07:00"
+        }
+      ]
+    },
+    {
+      "category": "BackgroundDownload",
+      "identification": "BackgroundDownload.exe 34696 (parent svchost 2292)",
+      "source": "tasks/difficulty-v3/MS18d-gate-wide-stability.md",
+      "observed": [
+        {
+          "runId": "butterfly-master.i0.n50.a1",
+          "cLogLine": 102,
+          "pid": 34696,
+          "name": "BackgroundDownload.exe",
+          "ppid": 2292,
+          "cpuSecondsPerSecond": 0.7123622244488977,
+          "at": "2026-11-20T03:10:27.633+07:00"
+        }
+      ]
+    },
+    {
+      "category": "MsMpEng",
+      "identification": "MsMpEng.exe 5632 (Defender antivirus)",
+      "source": "tasks/difficulty-v3/MS18d-gate-wide-stability.md",
+      "observed": [
+        {
+          "runId": "butterfly-master.i0.n50.a2",
+          "cLogLine": 103,
+          "pid": 5632,
+          "name": "MsMpEng.exe",
+          "ppid": 1636,
+          "cpuSecondsPerSecond": 0.8463646622601967,
+          "at": "2026-11-11T20:53:56.751+07:00"
+        }
+      ]
+    },
+    {
+      "category": "1ESDevBoxHibernationDelayAgent",
+      "identification": "a new process in the readiness window of the a1 run; a2 succeeded",
+      "source": "docs/difficulty-v3/evidence/MS18d/gp/wordoku-veryEasy/wordoku-veryEasy.i0.n50.a1/readiness.json",
+      "observed": [
+        {
+          "runId": "wordoku-veryEasy.i0.n50.a1",
+          "cLogLine": 115,
+          "pid": 30416,
+          "name": "1ESDevBoxHibernationDelayAgent.exe",
+          "ppid": 2292,
+          "cpuSecondsPerSecond": 0.508347602739726,
+          "at": "2026-11-20T04:30:11.636+07:00"
+        }
+      ]
+    }
+  ],
+  "consumerRule": "a gate pass never guaranteed that no later consumer would appear; no service was disabled, no ancestry-wide CPU exemption and no normalization was applied; the five misses are not attributed to a consumer",
+  "schedulingVersions": {
+    "provenance": "reconstructed from file creation/last-write times and shell order; only the final version of each in-place-edited script is retained",
+    "ranges": [
+      {
+        "chunks": "1-41",
+        "gate": null,
+        "runner": "gp-next.ps1 (chunks 1-23 B1; chunk 24 a1 B3) and gp-next2.ps1 (chunks 25-41 B3, automatic 65 s re-ask)"
+      },
+      {
+        "chunks": "42-57",
+        "gateRuling": "b0c0bfac752248c4223f633f2ed55bd67f6f6cdc",
+        "script": "gp-gate2.ps1 (23:43 version: Intune lineage + EventLog/Dnscache; not retained)",
+        "runner": "gp-next3.ps1 (pre-03:32 version; not retained)"
+      },
+      {
+        "chunks": "58-97",
+        "gateRuling": "2a5cb26ab37c91e1127310dbd348c2ca17533289",
+        "script": "gp-gate2.ps1 (00:54 version, retained: + SenseIR descendants)",
+        "runner": "gp-next3.ps1 (pre-03:32 version; not retained)"
+      },
+      {
+        "chunks": "98-114 and the three a3s",
+        "gateRuling": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+        "script": "gp-gate3.ps1 (retained)",
+        "runner": "gp-next3.ps1 (03:32 version, retained) and gp-a3.ps1"
+      }
+    ],
+    "notes": [
+      "gp-gate.ps1 (23:28) was dry-tested only and ran no real chunk",
+      "the 65 s automatic re-ask came from gp-next2.ps1 (chunk 41 hyper-hard a2); a 300 s cooldown replaced it in gp-next3.ps1"
+    ],
+    "boundaries": [
+      {
+        "chunkNumber": 24,
+        "chunkId": "mega16-normal.i0.n50",
+        "firstCLogLine": 26,
+        "requestedAt": "2026-11-19T23:00:02.636+07:00"
+      },
+      {
+        "chunkNumber": 41,
+        "chunkId": "hyper-hard.i0.n50",
+        "firstCLogLine": 44,
+        "requestedAt": "2026-11-19T23:22:47.673+07:00"
+      },
+      {
+        "chunkNumber": 42,
+        "chunkId": "hyper-master.i0.n50",
+        "firstCLogLine": 46,
+        "requestedAt": "2026-11-19T23:50:54.625+07:00"
+      },
+      {
+        "chunkNumber": 58,
+        "chunkId": "greaterThan-hard.i0.n50",
+        "firstCLogLine": 63,
+        "requestedAt": "2026-11-20T01:00:37.605+07:00"
+      },
+      {
+        "chunkNumber": 97,
+        "chunkId": "butterfly-master.i0.n50",
+        "firstCLogLine": 102,
+        "requestedAt": "2026-11-20T03:10:26.908+07:00"
+      },
+      {
+        "chunkNumber": 98,
+        "chunkId": "butterfly-nightmare.i0.n17",
+        "firstCLogLine": 104,
+        "requestedAt": "2026-11-20T03:35:01.299+07:00"
+      }
+    ],
+    "gateRulingCommits": [
+      {
+        "commit": "b0c0bfac752248c4223f633f2ed55bd67f6f6cdc",
+        "committedAt": "2026-11-19T23:39:29+07:00"
+      },
+      {
+        "commit": "2a5cb26ab37c91e1127310dbd348c2ca17533289",
+        "committedAt": "2026-11-20T00:54:59+07:00"
+      },
+      {
+        "commit": "55c4e8671dce081f88cb314d4de4b8c8ad150215",
+        "committedAt": "2026-11-20T03:31:42+07:00"
+      }
+    ],
+    "wideGateFromChunk": 98,
+    "source": "docs/difficulty-v3/evidence/MS18d/phase-d/operator/operator-records.json"
+  },
+  "manualLaunches": [
+    {
+      "cLogLine": 24,
+      "run": "mega16-easy.i0.n50.a2",
+      "base": "B1 a2e6423a52a89dd36ee646aa14706dd2369e087f",
+      "how": "direct gp-chunk.ps1 call after a manual 58 s sleep (shell 13290); pre-window-hold"
+    },
+    {
+      "cLogLine": 25,
+      "run": "mega16-easy.i0.n50.a2",
+      "base": "B2 b6de2c46e73581f54e61f1ece92a360dd9879736",
+      "how": "direct gp-chunk.ps1 call with helpers-c2 (shell 13413); control-hold at acquisition"
+    },
+    {
+      "cLogLine": 27,
+      "run": "mega16-normal.i0.n50.a2",
+      "base": "B3 8e95cb14aad100a6d219af072bbdf3dc227273d1",
+      "how": "direct gp-chunk.ps1 call with helpers-c3 (shell 13580); success"
+    }
+  ],
+  "a3Gates": {
+    "rows": [
+      {
+        "run": "mega16-easy.i0.n50.a3",
+        "waitS": 325,
+        "resets": 3,
+        "samples": 59,
+        "absenceS": 123,
+        "pass": "07:21:19",
+        "source": "copied by hand from shell output; no saved file",
+        "note": "Intune/SenseIR powershell PID 18320 seen 07:17:52"
+      },
+      {
+        "run": "hyper-hard.i0.n50.a3",
+        "waitS": 124,
+        "resets": 0,
+        "samples": 23,
+        "absenceS": 123,
+        "pass": "07:24:16",
+        "source": "a3-hyper.txt"
+      },
+      {
+        "run": "butterfly-master.i0.n50.a3",
+        "waitS": 247,
+        "resets": 5,
+        "samples": 45,
+        "absenceS": 123,
+        "pass": "07:29:09",
+        "source": "a3-butterfly.txt",
+        "note": "SenseIR powershell PID 26156 seen 07:25:43"
+      }
+    ],
+    "sumSeconds": 696,
+    "scope": "the three a3 gates only; not a campaign total and no zero-expiry inference",
+    "limits": "the mega16 row was copied by hand from shell output; a3-pre-mega16.txt holds earlier pre-launch checks only"
+  },
+  "clocks": {
+    "a3Payloads": [
+      {
+        "chunkId": "mega16-easy.i0.n50",
+        "runId": "mega16-easy.i0.n50.a3",
+        "teeSeconds": 0.921,
+        "teeMarker": "exit=0 seconds=0.921",
+        "controllerSpanSeconds": 10.564,
+        "gpResultsRunnerSeconds": 31.1
+      },
+      {
+        "chunkId": "hyper-hard.i0.n50",
+        "runId": "hyper-hard.i0.n50.a3",
+        "teeSeconds": 1.118,
+        "teeMarker": "exit=0 seconds=1.118",
+        "controllerSpanSeconds": 10.78,
+        "gpResultsRunnerSeconds": 30.4
+      },
+      {
+        "chunkId": "butterfly-master.i0.n50",
+        "runId": "butterfly-master.i0.n50.a3",
+        "teeSeconds": 10.124,
+        "teeMarker": "exit=0 seconds=10.124",
+        "controllerSpanSeconds": 19.811,
+        "gpResultsRunnerSeconds": 39.5
+      }
+    ],
+    "finalMerge": {
+      "teeSeconds": 6.889,
+      "teeMarker": "exit=0 seconds=6.889",
+      "controllerSpanSeconds": 9.602,
+      "enclosingInvocation": "about 28 s (rounded announcement; not an exact wrapper duration)"
+    },
+    "distinct": [
+      "scheduled 300 s cooldown",
+      "outer gate wait",
+      "lock/pre-window watch",
+      "controller/readiness",
+      "recorder process (tee marker)",
+      "raw request times (never combined with any wait)",
+      "whole campaign wall span"
+    ]
+  },
+  "l24": {
+    "cLogLine": 24,
+    "heldAt": "foreign-lock-watch",
+    "lastWatchGiveUpSeconds": 4.2332728,
+    "enclosingInvocation": "about 1,203 s per MS18d-epoch2-transport-repair.md, \"Frozen incident and preserved state\"; not read from L24, not an outer-gate expiry and not proof of a foreign lock or CPU episode",
+    "admissions": 0
+  },
+  "campaignWallSpan": {
+    "from": "2026-11-19T18:25:27.653+07:00",
+    "to": "2026-11-20T07:31:53.299+07:00",
+    "note": "wall clock of the whole campaign, waits, pauses, repairs and owner questions included; not a measurement time"
+  },
+  "gpResults": {
+    "rows": 121,
+    "runnerCode": "the runner exit (0 on all 121 rows, holds included), not the recorder outcome",
+    "seconds": "the enclosing runner clock, not the recorder-process duration"
+  },
+  "unknown": [
+    "per-chunk outer-gate waits, reset counts and samples for chunks 42-114 (printed to the console only; shell output no longer retrievable)",
+    "any 30-minute outer-gate expiries and exit-6 gate pauses for chunks 42-114",
+    "gp-gate2.ps1 23:43 version and gp-next3.ps1 pre-03:32 version (edited in place)"
+  ],
+  "problems": []
+}

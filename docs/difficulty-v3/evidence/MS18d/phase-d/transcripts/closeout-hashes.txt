@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js hashes --helpers=docs\difficulty-v3\evidence\MS18d\phase-d\helpers-sha256.txt --outputs=docs\difficulty-v3\evidence\MS18d\phase-d\outputs-sha256.txt
+ms18d-closeout hashes: ok (3 helpers, 82 outputs)
+exit=0 seconds=0.152

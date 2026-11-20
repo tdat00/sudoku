@@ -1,0 +1,66 @@
+{
+  "schema": "ms18d-phase-d-bindings-v1",
+  "identities": {
+    "before": {
+      "generatorQuick": "49089814be577a8cf821c85a22c843bbd9060014555790a933abcaecd95bb1f8",
+      "playerQuick": "aa352658286737074b8b5b9dc21b6d67fc6f082b32ce38a609e77f220b51d8c4",
+      "generatorWithManual": "176f9c95f17492b5947df8ba393aff0a6956ea8a64ee6add3bac52f2407e9567",
+      "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+      "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+    },
+    "final": {
+      "generatorQuick": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+      "playerQuick": "00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799",
+      "generatorWithManual": "a818c0b9e0fdcbc8111ac75c365783859afd894c285bfbd8763cfe25d1cc6e3a",
+      "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+      "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+    },
+    "afterQuick": {
+      "generatorQuick": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+      "playerQuick": "00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799",
+      "generatorWithManual": "a818c0b9e0fdcbc8111ac75c365783859afd894c285bfbd8763cfe25d1cc6e3a",
+      "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+      "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1"
+    }
+  },
+  "sevenValues": {
+    "generatorQuick": "10ed919c848f1466be70aae71e690ffd2bc1b7818ec8a3df1bba0dfd6ce9b0ec",
+    "playerQuick": "00db9a687404f50e4591a0b0f92571ebcc3fb0e69b2744fa8190f6a7c720f799",
+    "generatorWithManual": "a818c0b9e0fdcbc8111ac75c365783859afd894c285bfbd8763cfe25d1cc6e3a",
+    "replayIdentity": "1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc",
+    "hashIdentity": "344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1",
+    "producerSources": "75b0955e3e356bd1",
+    "targetTable": "3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a"
+  },
+  "inputDelta": "the quick and with-manual fingerprints cover generator/design.md, DEVELOPERGUIDE.md and DEVELOPERGUIDE.vn.md, which the R6 edits changed; no code, test, fixture, target or offer input changed",
+  "targetRechecks": {
+    "labelledAs": "Phase D re-checks (the unchanged tool's fixed kind/note still says Phase B and \"before GG\")",
+    "toolKind": "ms18d-phase-b-targets-frozen",
+    "toolNote": "Frozen before any GG shard. A rule applied to qualification data, not a measurement.",
+    "before": {
+      "sha256": "f6b0593510500a2a00ead30e849dd218dd01a76b4cb7d0975df2986d729546bf",
+      "problems": []
+    },
+    "final": {
+      "problems": []
+    },
+    "counts": {
+      "positions": 135,
+      "active": 79,
+      "absent": 56,
+      "retained": 62,
+      "updated": 17
+    },
+    "designTable": {
+      "cells": 135,
+      "bold": 17,
+      "equalToFrozen": true
+    },
+    "retainedBudgets": {
+      "statedIn": 11,
+      "allDesignEnVi": true
+    },
+    "hashIdentityBefore": "1032ab2f510fe2b9ed1bac744f534d5cfee7e039f456fc56d3e19682d53158a0"
+  },
+  "problems": []
+}

@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js audit --out=docs\difficulty-v3\evidence\MS18d\phase-d\provenance-audit.json
+PROBLEM the SA1 recompute is not an equality
+ms18d-closeout audit: 1 problem(s) (114 ledgers, 9 holds, 124 folders)
+exit=2 seconds=3.514

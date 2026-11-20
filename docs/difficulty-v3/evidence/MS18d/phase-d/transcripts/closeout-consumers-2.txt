@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js consumers --out=docs\difficulty-v3\evidence\MS18d\phase-d\external-consumers.json
+PROBLEM EventLog svchost: the hold records do not show the expected process(es)
+ms18d-closeout consumers: 1 problem(s) (9 holds, 7 categories)
+exit=2 seconds=0.473

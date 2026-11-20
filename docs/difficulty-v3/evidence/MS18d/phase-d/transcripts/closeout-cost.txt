@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18d\phase-d\closeout.js cost --quick=docs\difficulty-v3\evidence\MS18d\phase-d\quick --manifest-new=.github\scripts\generator-quick.json --out=docs\difficulty-v3\evidence\MS18d\phase-d\quick-cost.json
+ms18d-closeout cost: ok (core-shared 106.165->170, steps 45.062->70, replay 44.642->70, mega 32.471->50, own-fast 232.404->350, digger-target 2.753->30, pipeline 44.272->80, player 59.119->90, player 121.512->190)
+exit=0 seconds=0.254
