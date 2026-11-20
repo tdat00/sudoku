@@ -1,0 +1,45 @@
+{
+  "schema": "ms18d-c-run-1",
+  "task": "MS18d GP record butterfly-master.i0.n50 a3",
+  "runId": "butterfly-master.i0.n50.a3",
+  "cell": "butterfly/master",
+  "payload": "gp-recorder",
+  "chunkId": "butterfly-master.i0.n50",
+  "attempt": 3,
+  "scope": null,
+  "standin": false,
+  "runDir": "docs/difficulty-v3/evidence/MS18d/gp/butterfly-master/butterfly-master.i0.n50.a3",
+  "requestedAt": "2026-11-20T07:29:29.624+07:00",
+  "slotBefore": {
+    "shared": false,
+    "timing": false
+  },
+  "watch": {
+    "firstCheckMs": 1795134553934,
+    "lastCheckMs": 1795134569454,
+    "checks": 62,
+    "restartCount": 0,
+    "maxIntervalMs": 270
+  },
+  "startedAtFromChild": "2026-11-20T07:29:29.749+07:00",
+  "finished": "2026-11-20T07:29:49.592+07:00",
+  "preflight": {
+    "cycles": 1,
+    "repeated": 0,
+    "fullChecksMs": 3105,
+    "cheapCheckMs": 122,
+    "ageMs": 132,
+    "unstable": [],
+    "reasons": []
+  },
+  "releaseObservedAt": "2026-11-20T07:29:49.593+07:00",
+  "releaseVerified": true,
+  "releaseExact": false,
+  "exit": 0,
+  "controllerOutcome": "success",
+  "eligibleReAsk": false,
+  "barrierVerdict": "clean",
+  "helperNote": null,
+  "outcome": "success",
+  "problems": []
+}

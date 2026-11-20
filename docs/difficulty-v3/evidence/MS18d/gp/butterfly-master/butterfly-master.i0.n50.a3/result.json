@@ -1,0 +1,76 @@
+{
+  "schema": "ms18d-c-result-1",
+  "runId": "butterfly-master.i0.n50.a3",
+  "standin": false,
+  "profile": "gp-recorder",
+  "cell": {
+    "variant": "butterfly",
+    "level": "master",
+    "targetMs": 8000
+  },
+  "task": "MS18d GP record butterfly-master.i0.n50 a3",
+  "startedAtMs": 1795134569749,
+  "outcome": "success",
+  "payloadStarted": true,
+  "classification": {
+    "schema": "ms18d-c-result-class-1",
+    "profile": "gp-recorder",
+    "outcome": "success",
+    "complete": true,
+    "controllerExit": 0,
+    "kinds": [],
+    "problems": [],
+    "cli": {
+      "exit": 0,
+      "signal": null
+    },
+    "tee": {
+      "marker": "exit=0 seconds=10.124",
+      "exit": 0
+    },
+    "ledger": {
+      "chunkId": "butterfly-master.i0.n50",
+      "requests": 50,
+      "sha256": "39b500eba2583ea6141885af620273c92bb9d2c5915567e42acd77055f93235d"
+    }
+  },
+  "cli": {
+    "exit": 0,
+    "signal": null
+  },
+  "tee": {
+    "pid": 34212,
+    "processExit": 0,
+    "processSignal": null,
+    "spawnError": null,
+    "marker": "exit=0 seconds=10.124",
+    "exit": 0
+  },
+  "barrier": {
+    "verdict": "clean",
+    "file": "cleanup.json",
+    "problems": []
+  },
+  "rawBytes": {
+    "stdout": 217,
+    "stderr": 0
+  },
+  "cpu": {
+    "controller": {
+      "userMicros": 156000,
+      "systemMicros": 250000
+    },
+    "tee": {
+      "userMicros": 46000,
+      "systemMicros": 62000
+    }
+  },
+  "files": {
+    "transcript": "transcript.txt",
+    "stdout": "stdout.txt",
+    "stderr": "stderr.txt",
+    "pids": "pids.jsonl"
+  },
+  "controllerExit": 0,
+  "finishedAtMs": 1795134589560
+}
