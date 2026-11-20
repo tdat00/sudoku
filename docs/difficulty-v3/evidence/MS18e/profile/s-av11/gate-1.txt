@@ -1,0 +1,2 @@
+GATE pass label=sav11.r1 at=15:39:21 absence=123s serviceWindow=123s/22 intervals samples=23 resets=0
+exit=0

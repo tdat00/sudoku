@@ -1,0 +1,7 @@
+$ node tests\mega-contract.js --reconcile=..\docs\difficulty-v3\evidence\MS18e\deep\hell1 --level=hell1 --json=..\docs\difficulty-v3\evidence\MS18e\preflight\deep-reconcile-hell1-v2.json
+reconcile: 14 requests, 14 records, complete true, evidence sound false, generation 14 produced, correctness pass, relations 6 pass / 0 fail / 0 unevaluated
+  mega12: 7 of 7 produced, exact 0, fallbacks 7 (shallow 7), unavailable 0, generation min 92.102 s median 99.364 s max 103.711 s, over 120 s: 0, over 30 s: 7, guard 160.000 s (margin 56.008 s)
+  mega16: 7 of 7 produced, exact 0, fallbacks 7 (shallow 7), unavailable 0, generation min 319.837 s median 333.628 s max 359.556 s, over 120 s: 7, over 30 s: 7, guard 500.000 s (margin 140.265 s)
+  PROBLEM -: mixed identities: commit has 2 values ("547168b48d5eb for mega12-hell1-invariant-1, mega12-hell1-invariant-2, mega12-hell1-invariant-3, mega12-hell1-invariant-4, mega12-hell1-cv5-a, mega12-hell1-cv5-b, mega12-hell1-cv5-other; "5f697ef9aae3d for mega16-hell1-invariant-1, mega16-hell1-invariant-2, mega16-hell1-invariant-3, mega16-hell1-invariant-4, mega16-hell1-cv5-a, mega16-hell1-cv5-b, mega16-hell1-cv5-other)
+json: docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-hell1-v2.json
+exit=1 seconds=0.734

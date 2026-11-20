@@ -1,0 +1,2206 @@
+{
+  "schema": "ms18e-items-v1",
+  "base": "the accepted 30-item MS18d Phase D register is extended, not replaced: inherited items keep every original field and add `e3`",
+  "sources": {
+    "register": {
+      "file": "docs/difficulty-v3/evidence/MS18d/phase-d/item-register.json",
+      "sha256": "e84bd5920b012f8b26a2d5e1c5642ed2a845cd2b34d32d5077ac3452c9b28151"
+    },
+    "input": {
+      "file": "docs/difficulty-v3/evidence/MS18e/audit/items-e3-input.json",
+      "sha256": "e2607fd4c5c33a99a40a3f34ce0f8b9245b716c2be7e12c7c7bd07fcf417deb6"
+    },
+    "patches": [
+      {
+        "file": "docs/difficulty-v3/evidence/MS18e/audit/items-e3-corrections.json",
+        "sha256": "87d337d4969c4c5a0f19fb699ff83ed1fcbfb892c4945697cabc372066e427e6"
+      },
+      {
+        "file": "docs/difficulty-v3/evidence/MS18e/audit/items-e4a-results.json",
+        "sha256": "448cc52c91622a87c460242882e6dbf2f2b6858c701aa3a4cbb96a529f57f361"
+      },
+      {
+        "file": "docs/difficulty-v3/evidence/MS18e/audit/items-e4b-ruling.json",
+        "sha256": "187f08ff2cd008420be34b6a653acfd1b75fc64ef7551e411839d670ea49476d"
+      }
+    ]
+  },
+  "revisions": [
+    "E3 corrections, 2026-11-20 (SA2 binding findings, SA1 concurring). Revises audit/items-e3-input.json without rewriting it (audit/items.json stays the raw first register): S-AV09, S-AV10, S-AV12 and S-AV13 get their own rows (the range item that carried them is withdrawn); the Hell 1 partial reconcile is classified from the tool source; the killer master guard is recorded as run; the S-OD8 ratio line carries the SA2 wording; the acceptance state is added.",
+    "Held rows executed under the owner's decision A (message 1573242656648069141, 2026-11-20 14:44:38 +07:00): the three S-OD8 ratio rows, the seven mega16 Hell 1 occurrences, the full 14-record Hell 1 reconcile and the S-AV11 profile ran (audit/items-e3-corrections.json is applied before this patch). The reconcile exit 1 (mixed commit identity) is reported, not classified away; no heldRows remain.",
+    "Hell 1 reconcile ruled (a)+(c) (SA1 ruling 2026-11-20 15:57 +07:00, SA2 binding ruling matching): a commit-label-only split, verified file-only in preflight/deep-hell1-commit-equivalence.json; the raw strict reconcile result is retained. S-AV11 wording aligned with the open-performance-finding ruling. Applied after items-e4a-results.json."
+  ],
+  "counts": {
+    "inherited": 30,
+    "added": 40,
+    "total": 70
+  },
+  "requiredTokenCoverage": {
+    "S-AV01": [
+      "S-AV01"
+    ],
+    "S-AV02": [
+      "MS18e-DEEP-NIGHTMARE",
+      "S-AV02 / S-AV03 / S-AV04 / S-AV07"
+    ],
+    "S-AV03": [
+      "MS18e-DEEP-NIGHTMARE",
+      "S-AV02 / S-AV03 / S-AV04 / S-AV07"
+    ],
+    "S-AV04": [
+      "S-AV02 / S-AV03 / S-AV04 / S-AV07"
+    ],
+    "S-AV05": [
+      "S-OD7 / S-AV05 / S-AV06"
+    ],
+    "S-AV06": [
+      "S-OD7 / S-AV05 / S-AV06"
+    ],
+    "S-AV07": [
+      "S-AV02 / S-AV03 / S-AV04 / S-AV07"
+    ],
+    "S-AV08": [
+      "S-AV08"
+    ],
+    "S-AV09": [
+      "S-AV09"
+    ],
+    "S-AV10": [
+      "S-AV10"
+    ],
+    "S-AV11": [
+      "S-AV11",
+      "MS18e-SAV11-PROFILE"
+    ],
+    "S-AV12": [
+      "S-AV12"
+    ],
+    "S-AV13": [
+      "S-AV13"
+    ],
+    "S-AV14": [
+      "S-AV14"
+    ],
+    "S-AV15": [
+      "S-AV15",
+      "S-AV25 / S-AV15 GD Hell 1 batch"
+    ],
+    "S-AV16": [
+      "S-AV16 / S-AV17"
+    ],
+    "S-AV17": [
+      "S-AV16 / S-AV17"
+    ],
+    "S-AV18": [
+      "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23"
+    ],
+    "S-AV19": [
+      "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23"
+    ],
+    "S-AV20": [
+      "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23"
+    ],
+    "S-AV21": [
+      "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23"
+    ],
+    "S-AV22": [
+      "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23"
+    ],
+    "S-AV23": [
+      "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23"
+    ],
+    "S-AV24": [
+      "S-AV24 / S-AV25 / S-AV26",
+      "MS18e-DEEP-HELL1-14"
+    ],
+    "S-AV25": [
+      "S-AV25 / S-AV15 GD Hell 1 batch",
+      "S-AV24 / S-AV25 / S-AV26",
+      "MS18e-DEEP-HELL1-14"
+    ],
+    "S-AV26": [
+      "S-AV24 / S-AV25 / S-AV26",
+      "MS18e-DEEP-HELL1-14"
+    ],
+    "S-AV27": [
+      "S-AV27"
+    ],
+    "S-AV28": [
+      "S-AV28 / S-AV29 / S-AV30"
+    ],
+    "S-AV29": [
+      "S-AV28 / S-AV29 / S-AV30"
+    ],
+    "S-AV30": [
+      "S-AV28 / S-AV29 / S-AV30"
+    ],
+    "S-AV31": [
+      "S-AV31"
+    ],
+    "S-AV32": [
+      "S-AV32"
+    ],
+    "S-AV33": [
+      "S-AV33"
+    ],
+    "S-AV34": [
+      "S-AV34"
+    ],
+    "S-AV35": [
+      "S-AV35"
+    ],
+    "S-AV36": [
+      "S-AV36"
+    ],
+    "S-AV37": [
+      "S-AV37"
+    ],
+    "S-AV38": [
+      "S-AV38"
+    ],
+    "S-AV39": [
+      "S-AV39"
+    ],
+    "S-OD1": [
+      "S-OD1 / S-OD2 / S-OD3 / S-OD4 / S-OD6"
+    ],
+    "S-OD2": [
+      "S-OD1 / S-OD2 / S-OD3 / S-OD4 / S-OD6"
+    ],
+    "S-OD3": [
+      "S-OD1 / S-OD2 / S-OD3 / S-OD4 / S-OD6"
+    ],
+    "S-OD4": [
+      "S-OD1 / S-OD2 / S-OD3 / S-OD4 / S-OD6"
+    ],
+    "S-OD6": [
+      "S-AV16 / S-AV17",
+      "S-OD1 / S-OD2 / S-OD3 / S-OD4 / S-OD6"
+    ],
+    "S-OD7": [
+      "S-OD7 / S-AV05 / S-AV06"
+    ],
+    "S-OD8": [
+      "S-AV08"
+    ],
+    "S-OD9": [
+      "S-AV32"
+    ],
+    "S-OD10": [
+      "S-AV35"
+    ],
+    "S-OD11": [
+      "S-AV36"
+    ],
+    "S-OD12": [
+      "S-AV35"
+    ],
+    "S-OD13": [
+      "S-AV27"
+    ],
+    "S-OD14": [
+      "S-AV27"
+    ],
+    "S-OD15": [
+      "MS18d-C0-G1-G5",
+      "MS18d-C1-F1-F6"
+    ],
+    "S-OD16": [
+      "S-OD16/17/18 and F3 dispositions"
+    ],
+    "S-OD17": [
+      "S-OD16/17/18 and F3 dispositions"
+    ],
+    "S-OD18": [
+      "S-OD16/17/18 and F3 dispositions"
+    ],
+    "R6C-I01": [
+      "R6C-I01"
+    ],
+    "R6C-I02": [
+      "R6C-I02"
+    ],
+    "R6C-I04": [
+      "R6C-I04"
+    ],
+    "IR21": [
+      "IR21"
+    ],
+    "IR22": [
+      "IR22"
+    ],
+    "MS05r6a-COV01": [
+      "MS05r6a-COV01"
+    ],
+    "IR17": [
+      "IR17"
+    ]
+  },
+  "heldRows": [],
+  "items": [
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV01",
+      "title": "Greater-Than Normal CV6",
+      "status": "not-offered",
+      "source": "tasks/difficulty-v3/check-list.md S-AV01 (CV6-05 Q2(a)); MS18c final qualification",
+      "population": "final qualification (GQ) of greaterThan/normal; fixed diagnostic seed 4 for the retained manual check",
+      "numbers": {
+        "gqHits": "40/40",
+        "gqP95Ms": 10192.4051,
+        "budgetMs": 10000,
+        "retainedManualBaseMs": 700,
+        "diagnosticSeed": 4
+      },
+      "limitations": "a GQ verdict on its own source and machine, not a GP cell (the 79-cell table has no greaterThan/normal position); the historical f7be90f 5,209 ms vs 1,400 on seeds 300-319, 10.6 s on 7000-7039 and MS04's 2,035 ms are retained, not relabelled",
+      "disposition": "Closed 'not offered' by the final qualification (p95 above 10,000 ms although 40/40 hit); no Normal-only exception and no new run; BUDGET_MS.normal stays 700 ms; the fixed diagnostic Normal request stays",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV01",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "generator/design.md section 9.1 (a dash at greaterThan/normal)"
+      ],
+      "e3": {
+        "status": "closed-not-offered, unchanged",
+        "disposition": "E3: unchanged. greaterThan/normal is hidden (no row among the 79 offered cells; its offered levels are veryEasy, easy, hard, master and hell2) and no Greater-Than Normal command is in the admission plan. The only MS18e edit near it is MS18c-COMPAT-PERF-GREATERTHAN-NORMAL, a withRequestedLevel guard on the perf serializer request; no budget, seed or assertion changed (BUDGET_MS.normal stays 700 ms at generator/tests/manual/greater-than.test.js:26, fixed diagnostic seed 4). No engine, target or offer file changed since MS18d (git diff 1faa96c5..HEAD -- core/js generator/js player/js is empty).",
+        "evidence": [
+          "audit/source-bindings.json",
+          "preflight/admission-plan-v2.json",
+          "audit/manual-hidden-requests-final-v3.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-OD7 / S-AV05 / S-AV06",
+      "title": "Killer Hard and Expert",
+      "status": "hidden",
+      "source": "S-OD7 (owner, 2026-11-15 14:42, Q-MS07e-1); check-list S-AV05, S-AV06; MS18c final qualification",
+      "population": "final qualification of killer/hard (14 puzzles) and killer/expert (12 puzzles)",
+      "numbers": {
+        "hardExact": "0/14",
+        "expertExact": "2/12",
+        "hardHiddenOn": "misses",
+        "expertHiddenOn": "time",
+        "ms07eHard": "0/14 exact, p95 6.6 s",
+        "ms07eExpert": "1/14 exact, 13 shallow, p95 17.8 s"
+      },
+      "limitations": "the raw final qualification verdicts are preserved separately from the owner's withholding; neither is a GP measurement (killer/hard and killer/expert have no position in the 79-cell table)",
+      "disposition": "Hidden until a later calibration; no Killer weight recalibration and no offer or weight change in rating v3",
+      "nextOwner": "later calibration (owner-directed); MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-OD7",
+        "tasks/difficulty-v3/check-list.md#S-AV05",
+        "tasks/difficulty-v3/check-list.md#S-AV06",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"
+      ],
+      "e3": {
+        "status": "closed-hidden-by-owner-decision, unchanged",
+        "disposition": "E3: Killer Hard and Expert stay hidden until later calibration (S-OD7); Killer offers veryEasy, easy and normal only. The raw MS18c verdicts (Hard 0 of 14 hidden on misses, Expert 2 of 12 hidden on time) are kept apart from the owner withholding; MS07e's 0/14 and 1/14 observations and R5's 0/12 stay history. MS18e changed no weight, no offer and no Killer test except the MS18c-COMPAT-DIFFICULTY-KILLER-MASTER guard. Q-MS07e-1 is answered, not pending.",
+        "evidence": [
+          "audit/manual-hidden-requests-final-v3.json",
+          "docs/difficulty-rating/qualification.md",
+          "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV27",
+      "title": "Qualification second round on one worker",
+      "status": "closed",
+      "source": "check-list S-AV27; MS18c closure under S-OD13; MS07d round2-workers.txt",
+      "population": "the complete final qualification: 135 records, six formerly unexecuted cells run at MS18c",
+      "numbers": {
+        "records": 135,
+        "oldUnexecutedCells": 6,
+        "expansions": {
+          "hyper/expert": 53,
+          "flower/nightmare": 50,
+          "wordoku/normal": 46
+        },
+        "possibleSerialSecondRoundRequests": 60
+      },
+      "limitations": "the scheduler is unchanged; MS07e's incomplete old-source checkpoint and the mixed-concurrency caveat are kept; the qualification is not jobs-1 GP timing and receives no time normalization",
+      "disposition": "The final execution gap was closed by MS18c under S-OD13, not by this GP; all six cells ran and are hidden on time",
+      "nextOwner": "MS18e audit (timing/cost caveat)",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV27",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"
+      ],
+      "e3": {
+        "status": "closed-unchanged",
+        "covers": [
+          "S-OD13",
+          "S-OD14"
+        ],
+        "disposition": "E3: the final GQ execution gap stays closed at MS18c under S-OD13 (all six cells ran, hidden on time; 135 records accepted). S-OD14's recovery relaunch stayed unused. The unchanged scheduler, MS07d's possible 60 serial second-round requests and the mixed-concurrency caveat are history, not re-measured; MS18e ran no GQ and no GP.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+          "preflight/admission-plan-v2.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "IR17",
+      "title": "Classic9 Nightmare carry",
+      "status": "open",
+      "source": "check-list IR17 final carry; the 00647f9 GD batch",
+      "population": "classic9/nightmare: offered; the older GD batch of regression hashes; this GP's own 50-request cell",
+      "numbers": {
+        "historicalGdBatchSeconds": 430.5,
+        "notAReusableBoundSeconds": 449,
+        "gpP95Ms": 2403.9863,
+        "gpTargetMs": 8377,
+        "gpVerdict": "meets"
+      },
+      "limitations": "the GD figure is a different command and source and is not a current reusable bound; the GP cell is one process, 50 requests, not a GD/deep admission",
+      "disposition": "Classic9 Nightmare remains offered; GD and the final deep admission need a current-source conservative whole-command admission under the unchanged 450/540 s protection and belong to MS18e, not to this dispatch",
+      "nextOwner": "MS18e (remaining GD, final audit)",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#IR17",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv"
+      ],
+      "e3": {
+        "status": "closed-with-current-source-evidence",
+        "disposition": "E3: classic9 Nightmare stays offered. The GD Nightmare batch ran at E2 on the final source: GD-nightmare exit 0, 8 of 8 passed, tee 95.323 s (P 192 s, factor 2, MS17b same-selector 95.8 s). The old 430.5 s (00647f9) and 449 s are different-source numbers and were never used as a bound. The Nightmare hit-rate assertion that failed 21/100 at MS05r6b (S-AV07) passes now. GD-confusion (700 requests) also ran: exit 0, 1 of 1, tee 181.763 s.",
+        "evidence": [
+          "manual/difficulty/nightmare.json",
+          "manual/difficulty/confusion-matrix.json",
+          "transcripts/GD-nightmare.txt",
+          "e2-summary.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18c-GQ-ENGINE-COST",
+      "title": "GQ engine-cost comparators",
+      "status": "open",
+      "source": "MS18c closure; the exact filters are in tasks/difficulty-v3/MS18d-performance-and-final-hashes.md (Inputs & context)",
+      "population": "primary SA2: 2,122 strict matched pairs, ordinary pooled median; separate SA1: equal seed/hit/achieved/score/solved/approximate/exact/valid within a cell, both times above 50 ms, at least 5 pairs per cell, lower median of each cell's ratios then lower median of 51 cell medians",
+      "numbers": {
+        "sa2PooledMedian": 1.1240344349341411,
+        "sa2Pairs": 2122,
+        "sa1LowerMedianOf51CellMedians": 1.1284579100925456,
+        "replayObservation": "mega16-replay 331.6 s versus 118 s at MS07f (above its 300 s projection, inside 450)",
+        "gqCellsAbovePreUpdateTargets": 17
+      },
+      "limitations": "two different statistics kept apart, not a pooled statistic and not a new timing run; not a GP ratio, a causal proof or a normalization; source, clock and cohort distinctions preserved",
+      "disposition": "Open for the MS18e audit; no GP verdict, retune, budget waiver or GQ repeat follows",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#MS18c-GQ-ENGINE-COST",
+        "tasks/difficulty-v3/MS18d-performance-and-final-hashes.md",
+        "docs/difficulty-v3/evidence/MS18c/closure"
+      ],
+      "e3": {
+        "status": "open-recorded, unchanged",
+        "disposition": "E3: both comparator definitions and their cohorts stay as recorded (SA2 strict matched-pair pooled median 1.1240344349341411 over 2,122 pairs; SA1 lower median of 51 filtered cell medians 1.1284579100925456) and the 331.6 s versus 118 s mega16-replay observation is kept. REPLAY-mega16 was not rerun at MS18e (reused-compatible, variants-compatibility-v3.json). The E2 cost observations (mega12 Hell 1 at 92.9 to 104.7 s per run against 29.3 to 34.4 s at MS07b) point the same way but are a different request class and not a paired comparison, a GP ratio or a causal finding.",
+        "evidence": [
+          "preflight/variants-compatibility-v3.json",
+          "e2-summary.md",
+          "docs/difficulty-v3/evidence/MS18d/gq-engine-cost.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-BOUND-sohei-hell2",
+      "title": "Sohei Hell 2 monolithic bound",
+      "status": "closed",
+      "source": "check-list MS18d-GP-BOUND-sohei-hell2; MS18d-r24-request-ledger.md (frozen plan)",
+      "population": "planning stage: n=40 mean of the monolithic command; execution: the six frozen chunks (9, 9, 8, 8, 8, 8) of sohei/hell2",
+      "numbers": {
+        "planningMeanMs": 9711.9411975,
+        "planningMeanAlertSeconds": 485.597059875,
+        "chunkProjectionsSeconds": [
+          435,
+          435,
+          394,
+          394,
+          394,
+          394
+        ],
+        "sumSeconds": 2446,
+        "measured": {
+          "cell": "sohei/hell2",
+          "chunks": 6,
+          "extraStarts": 5,
+          "p95Ms": 35522.675,
+          "targetMs": 30000,
+          "verdict": "MISS"
+        }
+      },
+      "limitations": "the planning obstruction is closed by the R24 chunks; it is not a pass: the completed cell misses its target (item MS18d-GP-MISS-sohei-hell2); the monolithic command remains unadmitted and the mean alert is never permission for it",
+      "disposition": "Closed as a planning obstruction; the cell is now completely measured and the miss is retained",
+      "nextOwner": "MS18e audit (the miss under S-OD4)",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#MS18d-GP-BOUND-sohei-hell2",
+        "tasks/difficulty-v3/MS18d-r24-request-ledger.md",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv"
+      ],
+      "e3": {
+        "status": "closed-planning-obstruction, unchanged",
+        "disposition": "E3: unchanged. The monolithic 485.597 s mean alert stays unadmitted and was not run; the six frozen chunks measured the cell completely and it misses (see MS18d-GP-MISS-sohei-hell2). Nothing at MS18e reran it.",
+        "evidence": [
+          "docs/difficulty-v3/performance-v3.md",
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-BOUND-REMAINDER",
+      "title": "The other sixteen planning obstructions",
+      "status": "closed",
+      "source": "check-list MS18d-GP-BOUND-REMAINDER; the frozen plan V1/V2 (R24)",
+      "population": "the 17 monolithic-over-450 cells: with sohei/hell2 they have 52 frozen balanced chunks",
+      "numbers": {
+        "chunksOfThe17Cells": 52,
+        "plannedSeconds": 19023,
+        "maxProjectionSeconds": 448,
+        "commands": 114,
+        "indices": 3950,
+        "extraColdStarts": 35,
+        "allOriginalChunksComplete": true
+      },
+      "limitations": "not universal monolithic bounds: cold starts and the chunk protocol differ from one process per cell and are disclosed; no rounded-percentile merge, repartition, retry or limit increase happened",
+      "disposition": "Closed through R24: all 114 chunks are complete; the measured cells and their verdicts are in the 79-row table",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#MS18d-GP-BOUND-REMAINDER",
+        "docs/difficulty-v3/evidence/MS18d/phase-c/gp-chunk-manifest-a3-v2.json",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/provenance-audit.json"
+      ],
+      "e3": {
+        "status": "closed-planning-obstruction, unchanged",
+        "disposition": "E3: unchanged. The other sixteen planning obstructions were closed by the frozen R24 chunks (all 79 cells complete); cold starts and protocol differences stay disclosed, not universal monolithic bounds.",
+        "evidence": [
+          "docs/difficulty-v3/performance-v3.md",
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-C0-G1-G5",
+      "title": "Phase C0 tooling, ownership and cleanup",
+      "status": "closed",
+      "source": "MS18d-phase-c-admission.md; MS18d-c1-readiness-and-rulings.md; the two tooling-repair leaves",
+      "population": "the 123 recorder runs (114 successes, 9 holds) and the final merge, each with its saved request, binding, admission, result, cleanup and byte receipts",
+      "numbers": {
+        "successRuns": 114,
+        "holdRuns": 9,
+        "cleanupVerdictClean": "every run",
+        "transportReceiptsMatching": 114,
+        "stderrBytesZero": "all 114 successes and the merge",
+        "toolingIncidents": 2
+      },
+      "limitations": "the failed development and hold evidence is preserved, not erased; the two tooling incidents (the epoch-2 transport/watch give-up and the epoch-3 release-history defect) were repaired by committed epochs B2 and B3 and are not measured GP results",
+      "disposition": "Integration and execution completed through four reviewed epochs; ownership, cleanup, byte bindings and the incidents audited in the provenance audit",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/provenance-audit.json",
+        "tasks/difficulty-v3/MS18d-epoch2-transport-repair.md",
+        "tasks/difficulty-v3/MS18d-epoch3-release-history-repair.md"
+      ],
+      "e3": {
+        "status": "closed-audited-at-phase-d, unchanged",
+        "covers": [
+          "S-OD15"
+        ],
+        "disposition": "E3: Phase D audited the integration and execution; MS18e only reads it. The operator and SA1 recompute archives were cited and not executed. S-OD15's single owner choice (host-active admission, 100 percent resource meaning scheduling priority within the existing 450/540/gap/lock rules) is unchanged and was not stretched at MS18e: every command ran serially under the lock with gaps of at least 15 s.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/phase-d/provenance-audit.json",
+          "lock-log.jsonl"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-C0b-R24",
+      "title": "R24 raw-ledger recording and the check-only merge",
+      "status": "closed",
+      "source": "MS18d-r24-request-ledger.md; the final merge final.m1",
+      "population": "114 consumed ledgers (22 B1 + 0 B2 + 89 B3 + 3 B4), 3,950 requests, 79 cells",
+      "numbers": {
+        "ledgers": 114,
+        "perEpoch": [
+          22,
+          0,
+          89,
+          3
+        ],
+        "requests": 3950,
+        "statistics": "sorted raw indexes [24]/[47]/[49] and strict p95 < target",
+        "successes": 74,
+        "required": 72,
+        "savedHeads": 6
+      },
+      "limitations": "no 117-ledger claim: the a3s are first payloads of previously unstarted chunks; the heads are the saved campaign HEADs (later Phase D edits are post-campaign)",
+      "disposition": "Complete 114-ledger merge, complete=true and meets=true; R6 attribution applied to design 9.1, both guides and the performance report",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/sa1-recompute/recompute.json",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/provenance-audit.json"
+      ],
+      "e3": {
+        "status": "closed, unchanged; GG520 re-checked",
+        "disposition": "E3: 114 raw ledgers / 3,950 requests and the single final merge 732d1b66 (complete, meets, 74 of 79, 72 required) are unchanged. The file-only GG check on the final tree merged 104 ledgers with all 520 keys exactly once, recorded from the current sources, and all 520 puzzles unchanged (transcripts/e3-gg-check.txt); the replay checks of the GR wires (5) and analyses (14) and the GH catalogue (40) also pass check-only. No ledger or record was rewritten.",
+        "evidence": [
+          "transcripts/e3-gg-check.txt",
+          "transcripts/e3-gr-wire-check.txt",
+          "transcripts/e3-gr-analysis-check.txt",
+          "transcripts/e3-gh-check.txt"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-C1-F1-F6",
+      "title": "Readiness, attempt, stop and journal controls",
+      "status": "closed",
+      "source": "MS18d-c1-readiness-and-rulings.md; the four base records and the rulings and host-binding journals",
+      "population": "all 123 recorder admissions: host binding host-b1, the rulings journal versions 0, 1, 2 and 3 lines, cap two and three named exceptions",
+      "numbers": {
+        "hostBindingEntries": 1,
+        "rulingsJournalVersions": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "defaultCapAdmissions": 2,
+        "ownerExceptions": 3,
+        "f3Lines": 3,
+        "policy": "S-OD15 A"
+      },
+      "limitations": "the exceptions are the three named one-use grants, not retroactive or standing permission; the journal version used by each admission is the committed blob at its saved HEAD",
+      "disposition": "Reviewed controls used as specified; original cap two kept; only the three owner-approved a3s ran",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/provenance-audit.json",
+        "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+        "tasks/difficulty-v3/MS18d-gp-host-bindings.jsonl"
+      ],
+      "e3": {
+        "status": "closed, unchanged",
+        "covers": [
+          "S-OD15"
+        ],
+        "disposition": "E3: unchanged; the reviewed controls were used through the completed campaign and no MS18e command used a GP control, an a3 or a recovery.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/phase-d/item-register.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-C2-TRANSPORT-WATCH / MS18d-C2-RELEASE-HISTORY",
+      "title": "The two tooling incidents",
+      "status": "history",
+      "source": "MS18d-epoch2-transport-repair.md (Frozen incident and preserved state); MS18d-epoch3-release-history-repair.md",
+      "population": "C-log line 24 (mega16-easy a2 under B1) and line 25 (mega16-easy a2 under B2)",
+      "numbers": {
+        "noFolderGiveUpSeconds": "about 1,203 (the enclosing invocation, from the epoch-2 leaf)",
+        "l24LastWatchSeconds": 4.233,
+        "l24Admissions": 0,
+        "l25": "acquisition control-hold release-history-unproved, consumed the second admission"
+      },
+      "limitations": "L24 itself keeps the misleading foreign-lock label and its 4.233 s last watch; the about 1,203 s is not read from L24 and is no outer-gate expiry; neither incident is a measured GP timeout",
+      "disposition": "Both preserved and repaired by B2 and B3; the no-folder give-up consumed no admission, the later acquisition hold did",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/MS18d-epoch2-transport-repair.md",
+        "tasks/difficulty-v3/MS18d-epoch3-release-history-repair.md",
+        "docs/difficulty-v3/evidence/MS18d/phase-c/lock-log.jsonl"
+      ],
+      "e3": {
+        "status": "closed, unchanged",
+        "disposition": "E3: both tooling incidents and the B2/B3 repairs stay as preserved history; nothing re-run.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/phase-d/external-consumers.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-DEEP-PUBLIC-REGISTRATIONS",
+      "title": "Deep public registrations",
+      "status": "closed",
+      "source": "MS18d Phase B, completed at 50903182 and refrozen at b3144fcf (file evidence)",
+      "population": "the SG_DEEP public registrations of the mega and multigrid suites and the 63-file bounded audit",
+      "numbers": {
+        "quickGeneratorTests": 4807,
+        "sgDeepListing": "4835 -> 4828",
+        "removals": 7,
+        "mega": "12 -> 9",
+        "multigrid": "16 -> 12",
+        "auditedFiles": 63
+      },
+      "limitations": "closed on file evidence only: no live deep pass was established and none is claimed",
+      "disposition": "Closed; the quick registration is unchanged (4,807, re-confirmed by the final CI check)",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/MS18d-performance-and-final-hashes.md (DEEP-PUBLIC-REGISTRATIONS closure)",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/ci-final"
+      ],
+      "e3": {
+        "status": "closed-registration-evidence; live deep executed for all 28 occurrences",
+        "disposition": "E4a: the registration closure stands (quick inventory 4,807, SG_DEEP listing 4,835 to 4,828). Live deep evidence now exists for all 28 occurrences on the final source: Nightmare 14 of 14 (reconciled complete and sound) and Hell 1 14 of 14 (mega12 at E2, mega16 at E4a under owner decision A). Hell 1: complete, correct, source-compatible cohort; commit-only provenance difference verified separately (preflight/deep-hell1-commit-equivalence.json, ruled a+c). The raw strict reconcile is retained (exit 1, evidenceSound false, identity.commit null, one problem: mixed commit labels). Exact 0 of 14, the shallow fallbacks and the costs remain numerical findings.",
+        "evidence": [
+          "preflight/deep-reconcile-nightmare.json",
+          "preflight/deep-reconcile-hell1-v2.json",
+          "preflight/deep-hell1-commit-equivalence.json",
+          "preflight/deep-reconcile-hell1-partial.json",
+          "e4a-summary.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV11",
+      "title": "Jigsaw Expert profile",
+      "status": "held",
+      "source": "check-list S-AV11; tasks/difficulty-v3/MS18d-performance-and-final-hashes.md",
+      "population": "the single Jigsaw Expert request: seed 1111, trace off, size-default 8, no override",
+      "numbers": {
+        "historicalWholeRequestSeconds": 325.313
+      },
+      "limitations": "the historical figure is whole-request time, not an identified dig stage and not a current bound at or below 450 s; no profile is released by this dispatch",
+      "disposition": "Still held; not a missing offered GP cell",
+      "nextOwner": "orchestrator release of a profile (not MS18d Phase D); MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV11",
+        "tasks/difficulty-v3/MS18d-performance-and-final-hashes.md"
+      ],
+      "e3": {
+        "status": "executed (required profile complete); open performance finding, future owner named",
+        "disposition": "E4a: one unchanged invocation of the guarded request (jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts) on the final source (engine sourceHash b8ec138d..., dirty false): the request returned, exact true, achieved expert, 5 attempts, 33 clues, no warnings, hrtime 342,091.5 ms (tee 342.803 s) against the historical 325.313 s of an older engine, so the delay reproduces. The pipeline's own seven timing fields (ms, summed over the 5 attempts): configure 0.759, buildModel 37.238, fullGrid 335,178.670 (98.0 %), extraStructure 0.317, dig 6,719.969 (2.0 %), rate 147.849, tune 0.396. The profile the owner released is complete; the finding is open: about 335 s of fullGrid time summed across 5 attempts, the slow attempt and the cause are unknown (the record does not say whether the cost falls in attempt 1, which is independent of the level), and whether the offered Jigsaw levels are affected is not established. No claim either way. Gate passed, host snapshots saved (raw context only). Not a GP cell; no target, offer or generator change. Future owner: later performance work outside MS18e.",
+        "evidence": [
+          "profile/s-av11/record-1.json",
+          "profile/s-av11/gate-1.txt",
+          "profile/s-av11/host-before-1.json",
+          "profile/s-av11/host-after-1.json",
+          "transcripts/sav11-run-1.txt",
+          "e4a-summary.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV31",
+      "title": "Finned Swordfish multigrid finder latency",
+      "status": "history",
+      "source": "MS09b finder measurements of one process (docs/difficulty-v3/evidence/MS09b/work-census.json)",
+      "population": "3,508 sampled calls on the agreement corpora; eight constructed calls kept apart",
+      "numbers": {
+        "limit": 50000,
+        "sampledCalls": 3508,
+        "capped": 0,
+        "samurai": "23,466 units (47 %), p95 and max 212.353 ms of 12 seed-4242 calls",
+        "sohei": "8,412 units, p95 and max 70.517 ms of 12 seed-777 calls",
+        "digits16": "p95 21.813 ms, max 23.382 ms",
+        "blankSamuraiAllDigitsOpen": "cap hit, 50,000 units, 3.781 s",
+        "blankSohei": "14,688 units, 0.948 s"
+      },
+      "limitations": "finder measurements, not GP or qualification verdicts; no board-dependent limit or rise to a structural bound (128,520 and 255,420); the current 79-cell GP does not establish which finder caused any cost",
+      "disposition": "Preserved as the MS09b census; no new census",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV31",
+        "docs/difficulty-v3/evidence/MS09b/work-census.json"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: the MS09b finder census and multigrid latency stand as sampled/constructed observations of their source; limit 50,000 unchanged. The engine did not change since MS18d and MS18e ran no census; this is not a universal cap-coverage claim.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS09b/work-census.json",
+          "docs/difficulty-v3/limits-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV33",
+      "title": "WXYZ-Wing bounded-prefix coverage and cost",
+      "status": "history",
+      "source": "MS10b pre-E on c928472 plus the candidate (docs/difficulty-v3/evidence/MS10b/work-census-first.json)",
+      "population": "7,168 sampled finder calls; 17 constructed floods kept apart",
+      "numbers": {
+        "limit": 50000,
+        "sampledCalls": 7168,
+        "capped": 2,
+        "cappedBoards": "both Samurai (one of twelve for seed 4242 and one of twelve for seed 777)",
+        "soheiCapped": "0/24",
+        "soheiLargestWork": 42542,
+        "constructedCalls": 17,
+        "constructedCapped": 15,
+        "classic9CrudeBound": 1752381,
+        "classic9FloodWork": 93035
+      },
+      "limitations": "sampled versus constructed populations and the 50,000 prefix are kept distinct; the two sampled Samurai caps are not demonstrated lost deductions; the flood hits are not real-puzzle cap rates; the Killer model of the census is uncaged",
+      "disposition": "Preserved; no limit change and no new census",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV33",
+        "docs/difficulty-v3/evidence/MS10b/work-census-first.json"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: MS10b's sampled (7,168 calls, two capped Samurai) and constructed (17 calls, fifteen capped) populations and the 50,000 prefix stand as recorded; the two sampled caps are not demonstrated lost deductions. No new census at MS18e.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS10b/work-census-first.json",
+          "docs/difficulty-v3/limits-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV34",
+      "title": "Unique Rectangle second-pass bounded-prefix coverage and cost",
+      "status": "history",
+      "source": "MS11a accepted source ef95fc5 (docs/difficulty-v3/evidence/MS11a/evidence.md, work-census.json, structural-max.txt, pattern-cost.json)",
+      "population": "7,168 sampled finder calls (6,842 entered pass 2); a constructed 16-digit row; the Type 4 vector",
+      "numbers": {
+        "limit": 50000,
+        "sampledCalls": 7168,
+        "enteredPass2": 6842,
+        "capped": 0,
+        "crudeBounds": "242,028 (9 digits), 301,860,864 (16 digits)",
+        "constructed16Digit": "5,832 units, uncapped",
+        "type4Vector": 35,
+        "meanLatency16DigitMs": "about 1.75 (includes one-time table construction)"
+      },
+      "limitations": "neither an exhaustive-coverage claim nor a claim of unmeasured evidence; exhaustive deduction coverage within 50,000 beyond the measured populations is not established; structural, constructed and sampled costs are kept separate",
+      "disposition": "Preserved; no limit change and no campaign",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV34",
+        "docs/difficulty-v3/evidence/MS11a/evidence.md"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: MS11a's populations (6,842 of 7,168 entered pass 2, none capped) and the 50,000 second-pass limit stand; neither an exhaustive-coverage claim nor an absent-evidence claim. No new measurement at MS18e.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS11a/evidence.md",
+          "docs/difficulty-v3/limits-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV36",
+      "title": "Grouped-graph construction cost and cap exposure",
+      "status": "history",
+      "source": "MS13a final inactive engine SHA-256 501481B4...; MS13c activation and fallback census; S-OD11 (GC-01 option A, 2026-11-17 04:30 +07:00)",
+      "population": "construction-only seeded ladder positions over the work cap and the constructed blanks; MS13c activation and fallback census",
+      "numbers": {
+        "defaultLimits": "50,000 shared units / 4,096 additional nodes",
+        "overTheCap": {
+          "samurai": "38/48",
+          "sohei": "43/51",
+          "flower": "17/44",
+          "mega16": "20/321"
+        },
+        "noneOver": "classic9, mega12 and butterfly",
+        "blankMaxima": "1,715,391 (Samurai), 1,209,344 (mega16)",
+        "g13Observations": "6,764 / 1,708 and G10 660"
+      },
+      "limitations": "construction-only data, not active-finder cap rates or lost-deduction counts or GQ/GP failures; the unadopted candidate and the S-OD11 short fallback are preserved; the current GP does not establish which finder caused its cost",
+      "disposition": "Preserved; the numerical item stays open for audit, not an unanswered policy choice",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV36",
+        "docs/difficulty-v3/evidence/MS13a/census-all/table.md",
+        "docs/difficulty-v3/evidence/MS13c/evidence.md"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "covers": [
+          "S-OD11"
+        ],
+        "disposition": "E3: MS13a's construction-only census, MS13c's activation/fallback census, 4,096/50,000 and the S-OD11 short-only singleton fallback stand as recorded. The final GP shows cell costs; it does not establish which finder caused them. No new census.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS13a/census-all/table.md",
+          "docs/difficulty-v3/evidence/MS13c/evidence.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV37",
+      "title": "Leftover kernel cost and caps on irregular Jigsaw layouts",
+      "status": "history",
+      "source": "MS14b accepted at 0e3a0c4 (docs/difficulty-v3/evidence/MS14b/evidence.md section 6, s-av37.json)",
+      "population": "five blank layouts, 60 seeded positions, 14 real puzzles (38 calls), 480 agreement cases kept distinct",
+      "numbers": {
+        "limits": "2 units/side, 4 difference cells/side, 50,000 work units/call",
+        "blankLayoutsCapped": "2/5 (staggered, wavy)",
+        "seeded": "60 positions, 0 caps, max 5,842",
+        "real": "14 puzzles, 38 calls, 0 caps, max 3,845"
+      },
+      "limitations": "no generated-layout cap census; real positions beyond the fourteen puzzles and whole-generation cost remain unmeasured; not a universal cap claim or a GP verdict",
+      "disposition": "Preserved; no limit increase, layout-specific bound or campaign",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV37",
+        "docs/difficulty-v3/evidence/MS14b/evidence.md"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: MS14b's blank stress, seeded positions and real-puzzle calls (limits 2 units/side, 4 difference cells/side, 50,000) stand; generated-layout cap rates and whole-generation cost stay unmeasured. No census at MS18e.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS14b/evidence.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV38",
+      "title": "Grouped-activation generation cost and incomplete GP (MS13c history)",
+      "status": "history",
+      "source": "MS13c accepted at 9d58d86, engine SHA-256 5EBA1AE5...; docs/difficulty-v3/evidence/MS13c/evidence.md section 11",
+      "population": "50 affected cells of a different source: 21 complete 50-run records (15 meet, 6 miss), 16 pilot-only, 13 unpiloted; five paired 50-run p95s",
+      "numbers": {
+        "pairedP95Ms": "classic9/nightmare 3,061 -> 4,902; diagonalX/nightmare 7,693 -> 16,534; wordoku/nightmare 1,624 -> 3,371; mega12/nightmare 5,485 -> 8,396; killer/hell2 8,806 -> 14,528",
+        "butterflyNightmare": "24,335 vs 8,000 (no paired base)",
+        "twoRunMaxima": "hyper/nightmare 658 -> 19,543; jigsaw9/nightmare 4,272 -> 22,283; greaterThan/nightmare 6,931 -> 11,450"
+      },
+      "limitations": "a different-source partial GP and paired records kept as history; the current 79-cell coverage is complete and is not a retrofit of it, nor identical-puzzle or per-technique speedup proof",
+      "disposition": "Preserved as history; the current matrix is reported separately",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV38",
+        "docs/difficulty-v3/evidence/MS13c/evidence.md",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: the 50-cell MS13c partial GP and its paired records stay as different-source history; the current 79-cell GP is complete and is not a retrofit of it nor an identical-puzzle or per-technique speedup proof.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS13c/evidence.md",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV39",
+      "title": "ALS and Sue de Coq cost and cap exposure",
+      "status": "history",
+      "source": "MS15a (b958a58), MS15b (8b26e83) and MS16 (d41a6dd) evidence; probe-density-1.txt, s-av39-*.json",
+      "population": "enumerator-only blanks, the 33-call density probe, whole-call stress states, 344 seeded/sweep calls in 22 groups and 58 repository input rows (254 calls)",
+      "numbers": {
+        "limits": "4 cells / 4,096 records / 50,000 work",
+        "enumeratorOnlyBlank9": "810 units",
+        "flood16": "154,032",
+        "seededSweep": "344 calls, 22 groups, 251 Findings, zero work caps, four record caps",
+        "repositoryRows": "58 rows, 254 calls, 20 Findings, max latency 7.9 ms"
+      },
+      "limitations": "not a generated-layout cap census, a universal sufficiency claim or a GQ/GP verdict; MS16's own R19 allowance has its separate once-only adjustment; no new census",
+      "disposition": "Preserved with unchanged limits",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#S-AV39",
+        "docs/difficulty-v3/evidence/MS15b/evidence.md"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: MS15a/MS15b ALS and MS16 Sue-de-Coq populations, shared 4/4,096/50,000 and the lost-finding example stand; no new census or coverage guarantee.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS15b/evidence.md",
+          "docs/difficulty-v3/limits-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS15b-GP-J",
+      "title": "jigsaw9/nightmare unadmitted GP",
+      "status": "history",
+      "source": "MS15b accepted source 8b26e83, evidence section 20, logs/gp-pilot-jigsaw9-nightmare.txt",
+      "population": "the two-run pilot (seeds 7000 and 7001) of jigsaw9/nightmare",
+      "numbers": {
+        "pilotWallSeconds": 9.065,
+        "observedMaxMs": 6854,
+        "projectedExpectedSeconds": 227,
+        "conservativeSeconds": 680
+      },
+      "limitations": "the 50-run command was never launched (680 s above the 450 s admission) and the two-run maximum is not a p95 or a verdict; jigsaw9/nightmare is hidden by the final qualification, so the current 79-cell GP has no data for it and none is substituted from another cell or source",
+      "disposition": "Historical status unchanged; hidden now, not silently supplied with data of another cell or source",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#MS15b-GP-J",
+        "docs/difficulty-v3/evidence/MS15b/logs/gp-pilot-jigsaw9-nightmare.txt"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: the historical Jigsaw Nightmare pilot and unadmitted 50-run command stay history; jigsaw9/nightmare is hidden by the final qualification and is not given GP data of another cell or source.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS15b/evidence.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS15b-GP-U",
+      "title": "Unmeasured ALS-XZ affected cells",
+      "status": "history",
+      "source": "MS15b accepted source 8b26e83, evidence section 20, logs/affected-cells.txt",
+      "population": "the historical cohort of 37 performance cells of the old 118-cell table that admit ALS-XZ (one full record, one pilot-only, 35 unmeasured)",
+      "numbers": {
+        "historicalCohort": 37,
+        "fullRecord": "classic9/nightmare p95 2,312 ms against 2.5 s, meets",
+        "pilotOnly": "jigsaw9/nightmare",
+        "unmeasured": 35,
+        "reconciliation": "set intersection of affected-cells.txt and the 79 offered cells: 15 of the 37 are offered and measured now (12 meet, 3 miss: wordoku/nightmare, butterfly/hell2, sohei/hell2), 22 are hidden by the final qualification"
+      },
+      "limitations": "the old cohort is a different source and denominator; the current full offered matrix does not rewrite it, is no subset aggregate of it and proves no paired speedup; the intersection above was computed read-only from the two files",
+      "disposition": "Historical cohort kept; current offered cells are covered by this GP and reported on their own",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md#MS15b-GP-U",
+        "docs/difficulty-v3/evidence/MS15b/logs/affected-cells.txt",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv"
+      ],
+      "e3": {
+        "status": "closed-history-preserved, unchanged",
+        "disposition": "E3: the 37-cell cohort (one full, one pilot-only, 35 unmeasured) is reconciled with the current offered/hidden cells only as history; the complete current 79-cell GP neither rewrites it nor proves paired speedups.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS15b/evidence.md",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-C2-EXTERNAL-CONSUMERS",
+      "title": "External consumers, gates and clocks",
+      "status": "disclosed",
+      "source": "the C log, the nine hold folders, the pack gate rulings and docs/difficulty-v3/evidence/MS18d/phase-d/operator/operator-records.json (an operational record, not authority)",
+      "population": "nine consumer or acquisition holds, seven consumer categories, four scheduling versions, three a3 gates",
+      "numbers": {
+        "holds": 9,
+        "categories": [
+          "EventLog svchost",
+          "Dnscache svchost",
+          "Intune PowerShell/AgentExecutor",
+          "SenseIR PowerShell",
+          "BackgroundDownload",
+          "MsMpEng",
+          "1ESDevBoxHibernationDelayAgent"
+        ],
+        "a3GateWaitsSeconds": [
+          325,
+          124,
+          247
+        ],
+        "a3GateWaitSum": 696,
+        "wideGateFromChunk": 98
+      },
+      "limitations": "per-chunk outer-gate waits, resets, samples and any 30-minute expiry or exit-6 pause for chunks 42-114 are unknown and not recorded (not zeros); two historical script versions are not retained; no miss is attributed to a consumer",
+      "disposition": "Fully disclosed in the report and external-consumers.json; no service disabling, ancestry exemption or normalization",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/external-consumers.json",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/operator/operator-records.json",
+        "tasks/difficulty-v3/MS18d-gate-wide-stability.md"
+      ],
+      "e3": {
+        "status": "closed, unchanged",
+        "disposition": "E3: unchanged; the full disclosure of consumer holds, waits and unknown operational metadata stays in Phase D. MS18e ran no GP and added no consumer.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/phase-d/external-consumers.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-OD16/17/18 and F3 dispositions",
+      "title": "The three owner-approved a3 grants and their line releases",
+      "status": "closed",
+      "source": "S-OD16, S-OD17, S-OD18 at f2f345a1d1748e041ca296ad898adcbfa971b837; Q4 wording archive d0b746bb; the three F3 journal lines and disposition objects",
+      "population": "mega16-easy, hyper-hard and butterfly-master: two spent unstarted admissions each, then one a3",
+      "numbers": {
+        "a3Order": [
+          "mega16-easy.i0.n50.a3",
+          "hyper-hard.i0.n50.a3",
+          "butterfly-master.i0.n50.a3"
+        ],
+        "cLogLines": [
+          122,
+          123,
+          124
+        ],
+        "teeSeconds": [
+          0.921,
+          1.118,
+          10.124
+        ],
+        "heldAdmissionsBefore": 6,
+        "remainingA3Quota": 0,
+        "a4": 0
+      },
+      "limitations": "line release only: it never authorized an admission; each a3 is a first payload, not a retry; no standing permission remains",
+      "disposition": "All three one-use grants were exercised successfully in S order; all earlier holds retained; no a4",
+      "nextOwner": "MS18e audit",
+      "evidence": [
+        "tasks/difficulty-v3/check-list.md (S-OD16/17/18)",
+        "tasks/difficulty-v3/MS18d-gp-rulings.jsonl",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/provenance-audit.json"
+      ],
+      "e3": {
+        "status": "closed, unchanged",
+        "covers": [
+          "S-OD16",
+          "S-OD17",
+          "S-OD18"
+        ],
+        "disposition": "E3: all three one-use a3 grants were exercised in S order (S-OD16 mega16-easy, S-OD17 hyper-hard, S-OD18 butterfly-master); all earlier holds are retained; no a4 and no standing permission. MS18e consumed none.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/phase-d/item-register.json"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-MISS-mega12-expert",
+      "title": "GP miss: mega12/expert",
+      "status": "finding",
+      "source": "final.m1 report, cell mega12/expert (2 chunks, 1 extra start)",
+      "population": "50 original requests, indices 0-49, two chunks",
+      "numbers": {
+        "p95Ms": 4208.3516,
+        "targetMs": 3000,
+        "p50Ms": 229.423,
+        "maxMs": 6291.462,
+        "retainedTarget": true,
+        "coldFlag": "index 25, extra start, 6291.462 ms"
+      },
+      "limitations": "a Node measurement on a shared CLI-host-active machine; the flag is descriptive, not a cause; no consumer attribution",
+      "disposition": "Current GP miss; retained as an open numerical performance finding; no target, offer or generator change",
+      "nextOwner": "MS18e / future explicitly authorized work (S-OD4)",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv",
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+      ],
+      "e3": {
+        "status": "open-numerical-finding, S-OD4",
+        "disposition": "E3: unchanged. p95 4,208.3516 ms against 3,000. GP passed 74 of 79 (72 required): this miss alone needs no owner waiver, target change or retest. Future owner: explicitly authorized later work.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-MISS-sohei-hell2",
+      "title": "GP miss: sohei/hell2",
+      "status": "finding",
+      "source": "final.m1 report, cell sohei/hell2 (6 chunks, 5 extra starts)",
+      "population": "50 original requests in the six frozen chunks (9, 9, 8, 8, 8, 8)",
+      "numbers": {
+        "p95Ms": 35522.675,
+        "targetMs": 30000,
+        "p50Ms": 7508.5991,
+        "maxMs": 41037.9662,
+        "recalibratedTarget": "20,000 -> 30,000 (budget) before the GP",
+        "coldFlag": "index 42, extra start, 35522.675 ms"
+      },
+      "limitations": "the 485.597 s monolithic mean alert is a planning figure, not permission for the monolith; chunking and cold starts disclosed; no equivalence to one process claimed",
+      "disposition": "Current GP miss; retained; no target fitting or rerun",
+      "nextOwner": "MS18e / future explicitly authorized work (S-OD4)",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv",
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+      ],
+      "e3": {
+        "status": "open-numerical-finding, S-OD4",
+        "disposition": "E3: unchanged. p95 35,522.675 ms against 30,000 (recalibrated before the GP). No waiver, target change or retest needed.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-MISS-butterfly-hell2",
+      "title": "GP miss: butterfly/hell2",
+      "status": "finding",
+      "source": "final.m1 report, cell butterfly/hell2 (2 chunks, 1 extra start)",
+      "population": "50 original requests, two chunks",
+      "numbers": {
+        "p95Ms": 15496.1127,
+        "targetMs": 15000,
+        "p50Ms": 2976.5185,
+        "maxMs": 18624.4845,
+        "retainedTarget": true,
+        "coldFlag": "index 0, 16841.0182 ms"
+      },
+      "limitations": "a margin of 3.3 percent over the target on a shared machine; the flag is descriptive, not a cause",
+      "disposition": "Current GP miss; retained; no target, offer or generator change",
+      "nextOwner": "MS18e / future explicitly authorized work (S-OD4)",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv",
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+      ],
+      "e3": {
+        "status": "open-numerical-finding, S-OD4",
+        "disposition": "E3: unchanged. p95 15,496.1127 ms against 15,000. No waiver, target change or retest needed.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-MISS-wordoku-expert",
+      "title": "GP miss: wordoku/expert",
+      "status": "finding",
+      "source": "final.m1 report, cell wordoku/expert (one chunk)",
+      "population": "50 original requests, one process",
+      "numbers": {
+        "p95Ms": 604.149,
+        "targetMs": 600,
+        "p50Ms": 55.5427,
+        "maxMs": 864.2583,
+        "retainedTarget": true
+      },
+      "limitations": "a margin of 0.7 percent over the target; not flagged cold-start sensitive; no consumer attribution",
+      "disposition": "Current GP miss; retained; no target, offer or generator change",
+      "nextOwner": "MS18e / future explicitly authorized work (S-OD4)",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv",
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+      ],
+      "e3": {
+        "status": "open-numerical-finding, S-OD4",
+        "disposition": "E3: unchanged. p95 604.149 ms against 600. No waiver, target change or retest needed.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "MS18d-GP-MISS-wordoku-nightmare",
+      "title": "GP miss: wordoku/nightmare",
+      "status": "finding",
+      "source": "final.m1 report, cell wordoku/nightmare (one chunk)",
+      "population": "50 original requests, one process",
+      "numbers": {
+        "p95Ms": 2800.4616,
+        "targetMs": 1500,
+        "p50Ms": 790.9591,
+        "maxMs": 4443.8546,
+        "retainedTarget": true,
+        "ms13cHistory": "MS13c paired 50-run p95 1,624 -> 3,371 ms (a different source, S-AV38)"
+      },
+      "limitations": "not flagged cold-start sensitive; the MS13c paired record is another source and is history, not a decomposition of this figure",
+      "disposition": "Current GP miss; retained; no target, offer or generator change",
+      "nextOwner": "MS18e / future explicitly authorized work (S-OD4)",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv",
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+      ],
+      "e3": {
+        "status": "open-numerical-finding, S-OD4",
+        "disposition": "E3: unchanged. p95 2,800.4616 ms against 1,500. No waiver, target change or retest needed.",
+        "evidence": [
+          "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json",
+          "docs/difficulty-v3/performance-v3.md"
+        ]
+      }
+    },
+    {
+      "origin": "MS18d Phase D register (item-register.json, 30 items), verbatim",
+      "id": "S-AV08",
+      "title": "Standing quick cost",
+      "status": "open",
+      "source": "check-list S-AV08; this dispatch's complete bounded quick sets (docs/difficulty-v3/evidence/MS18d/phase-d/quick-cost.json)",
+      "population": "the Generator quick set in eight separate shard commands (4,807 tests) and the Player quick set in one command (2,981 tests), final fingerprints, default factor 2, shared lock, unchanged tee",
+      "numbers": {
+        "generatorShardTeeSeconds": {
+          "core-shared": 106.165,
+          "steps": 45.062,
+          "replay": 44.642,
+          "mega": 32.471,
+          "own-fast": 232.404,
+          "digger-target": 2.753,
+          "pipeline": 44.272,
+          "player": 59.119
+        },
+        "generatorSumOfShardTeeSeconds": 566.888,
+        "playerTeeSeconds": 121.512,
+        "projectionRevisions": {
+          "own-fast": "330 -> 350",
+          "player-job": "180 -> 190"
+        }
+      },
+      "limitations": "a measurement of a named source and machine in this arrangement (eight separate commands, tee seconds), not comparable one-to-one with earlier four-group sums and not a promise; MS18c's 547.6 s Generator (four group commands) and 118.7 s Player are the nearest earlier figures; no five-minute promise or tier move",
+      "disposition": "Actual final per-app and per-shard costs carried; two projections raised by the existing rule; no further tier move",
+      "nextOwner": "MS18e final cost and tier audit",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18d/phase-d/quick-cost.json",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/quick-coverage.json",
+        ".github/scripts/generator-quick.json"
+      ],
+      "e3": {
+        "status": "closed-measured-final-cost",
+        "covers": [
+          "S-OD8"
+        ],
+        "disposition": "E3 final standing quick cost on the final fingerprints, one complete run each (tee seconds): Generator shards core-shared 103.919, steps 44.464, replay 42.998, mega 31.895, own-fast 228.118, digger-target 2.716, pipeline 42.619, player 58.829, sum 555.558 s; Player (whole quick set) 118.281 s. By the CI rule no projection rises (the groups stay at 1,260, 1,320, 420 and 450 of 1,800 s; the Player job 750 of its actual 900 s); only measuredSeconds were updated. No five-minute promise, no further tier move. S-OD8's three generation-cost ratio tests and two mega16 replay requests stay outside PR CI by the owner's approval; at E4a the three ratio tests ran under owner decision A and each passed (RATIO-off 120.554 s, RATIO-summary 120.527 s, RATIO-full 121.352 s tee, 1 of 1 each); the replay requests are reused-compatible and were not rerun.",
+        "evidence": [
+          "ci/quick-cost.json",
+          "audit/coverage.json",
+          "quick/",
+          "manual/ratios/off.json",
+          "manual/ratios/summary.json",
+          "manual/ratios/full.json"
+        ]
+      }
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-DEEP-NIGHTMARE",
+      "title": "Final-source deep Nightmare occurrences (14 of 14)",
+      "status": "pass",
+      "covers": [
+        "S-AV02",
+        "S-AV03"
+      ],
+      "source": "generator/tests/mega-contract.js (14 Nightmare requests, 6 relations), E2 rows DEEP-mega12-* (P30) and DEEP-mega16-* (P150)",
+      "population": "7 mega12 and 7 mega16 Nightmare requests, one fresh process each, trace off, board-default attempts (4 and 2), allowance 256, level override mega16:nightmare",
+      "numbers": {
+        "records": 14,
+        "exact": "14 of 14",
+        "attemptsUsed": "1 of 4 (mega12), 1 of 2 (mega16)",
+        "mega12GenerationSeconds": [
+          1.651,
+          2.548
+        ],
+        "mega16GenerationSeconds": [
+          5.513,
+          22.806
+        ],
+        "relations": "6 pass / 0 fail / 0 unevaluated",
+        "reconcile": "exit 0, complete true, evidence sound true, correctness pass"
+      },
+      "limitations": "A bounded fixed request set of the current source, not a population p95 and not a GQ/GP verdict. The old MS05r5m/MS07b records were not mixed in; the engine source hash of the records differs from the quick fingerprint by design.",
+      "disposition": "Complete and sound. mega12 Nightmare takes about 2 to 3 s now (MS05r5m 24 s) and mega16 Nightmare 6 to 24 s (80 to 117 s); recorded as the current-source evidence for S-AV02/S-AV03's request classes, whose historical r4 numbers (48.202 s, 60 s timeouts, 310.2 s) stay history.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/deep-reconcile-nightmare.json",
+        "deep/nightmare/",
+        "e2-summary.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV14",
+      "title": "classic9 Normal hit-rate aggregate (83 of 100)",
+      "status": "failed-numerical-finding, S-OD4",
+      "source": "generator/tests/manual/difficulty.test.js:1272, E2 row GD-normal",
+      "population": "100 classic9 Normal requests, SG.digger.generate(model9, normal, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "numbers": {
+        "hitsOf100": 83,
+        "required": 90,
+        "assertionsPassed": "7 of 8",
+        "teeSeconds": 37.1,
+        "exit": 1,
+        "history": "MS05r6b 86/100, MS17b and MS07e 83/100"
+      },
+      "limitations": "One deterministic availability assertion on the final source; the other seven assertions (invariants I1-I7, technique set, symmetry, median time) pass.",
+      "disposition": "Retained as failed (raw exit 1, no -AllowExit1, not relabelled), inspected by the orchestrator and accepted as the expected S-AV14 numerical finding. The new evidence reports 83. No threshold, request count or assertion changed.",
+      "nextOwner": "future explicitly authorized work",
+      "evidence": [
+        "manual/difficulty/normal.json",
+        "transcripts/GD-normal.txt",
+        "e2-summary.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV15",
+      "title": "GD confusion matrix",
+      "status": "closed-executed-pass",
+      "source": "generator/tests/manual/difficulty.test.js confusion matrix, E2 row GD-confusion",
+      "population": "700 requests (7 offered levels x 100), one test",
+      "numbers": {
+        "tests": "1 of 1 passed",
+        "teeSeconds": 181.763,
+        "projectionSeconds": 376,
+        "previousStatedBoundSeconds": 1544
+      },
+      "limitations": "classic9 only; the old 1,544 s was a stated bound, never a measurement.",
+      "disposition": "Executed on the final source within the 450 s projection: exit 0, 1 of 1 passed. The gap carried since MS05r6b is closed with current evidence.",
+      "nextOwner": "none",
+      "evidence": [
+        "manual/difficulty/confusion-matrix.json",
+        "transcripts/GD-confusion.txt"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV25 / S-AV15 GD Hell 1 batch",
+      "title": "classic9 Hell 1 GD batch (8 tests, 20 requests, stated 919 s)",
+      "status": "not-applicable-since-MS18c, history preserved",
+      "source": "generator/tests/manual/difficulty.test.js:1237-1249 (PER_LEVEL, OFFERED = classic9 difficultySupport)",
+      "population": "the batch iterates the published classic9 levels only (seven), so classic9 Hell 1, hidden by the final qualification, registers no batch; the manual difficulty inventory is 146 tests (154 at MS17b: the 8 of that batch)",
+      "numbers": {
+        "inventoryTests": 146,
+        "e2RowsCover": "146 of 146",
+        "statedBoundSeconds": 919
+      },
+      "limitations": "The old batch was never run; its stated 919 s was not a measurement. PER_LEVEL hell1/hell2 entries are dead configuration (unchanged). Cross-level Hell 1 assertions with a guarded request are listed apart (MS18e-COMPAT-CLASSIC-HELL1-FLOOR, -SYMMETRY).",
+      "disposition": "No longer a test to run; every test of the current inventory ran in E2 (GD rows, 146 of 146). Not recorded as a pass of a Hell 1 batch.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/scope-map-v2.json",
+        "preflight/admission-plan-v2.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV02 / S-AV03 / S-AV04 / S-AV07",
+      "title": "Nightmare availability history (mega12, mega16, samurai/G13, classic9)",
+      "status": "closed-history, current evidence cited",
+      "covers": [
+        "S-AV02",
+        "S-AV03",
+        "S-AV04",
+        "S-AV07"
+      ],
+      "source": "check-list section 2 carried findings; MS07e, MS13c re-measurement, MS18c/MS18d",
+      "population": "mega12 and mega16 Nightmare requests (deep), samurai Nightmare G13 (seed 42), classic9 Nightmare 2/12 exact (R5)",
+      "numbers": {
+        "S-AV02": "r4 48.202 s against 6 s; now 1.651 to 2.548 s generation, exact 7 of 7 (E2 deep)",
+        "S-AV03": "r4 60 s, seed 3 310.2 s; now 5.513 to 22.806 s, exact 7 of 7; the PR-S2 work-ceiling remark stands for the 30 s qualification budget",
+        "S-AV04": "G13 about 11.0 -> 94.2 s at the MS13c candidate (one request, not a p95); not re-run",
+        "S-AV07": "classic9 Nightmare hit-rate 21/100 at MS05r6b; GD-nightmare now 8 of 8 passed, GP p95 2,403.9863 ms against 8,377"
+      },
+      "limitations": "Different sources and request classes; the deep records are fixed requests, not population statistics; G13 was not re-measured at MS18e.",
+      "disposition": "History retained. Final availability is decided by qualification (MS18c) and performance by GP (MS18d); the E2 evidence is current-source support for the deep request classes only.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/deep-reconcile-nightmare.json",
+        "manual/difficulty/nightmare.json",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV24 / S-AV25 / S-AV26",
+      "title": "Hell 1 request time, exactness and classic9 Hell 1 cost (history)",
+      "status": "history; current mega12 and mega16 evidence in MS18e-DEEP-HELL1-14",
+      "covers": [
+        "S-AV24",
+        "S-AV25",
+        "S-AV26"
+      ],
+      "source": "MS07b 14 records (mega12 29.3 to 34.4 s, mega16 99.9 to 123.3 s), 0 of 14 exact, classic9 pilot about 5 s per request against 2.5 s",
+      "population": "mega Hell 1 requests; classic9 Hell 1 pilot (2 requests)",
+      "numbers": {
+        "e2Mega12Hell1": "0 of 7 exact, 92.9 to 104.7 s",
+        "e4aMega16Hell1": "0 of 7 exact, 320.7 to 360.5 s per run (generation 319.8 to 359.6 s, 7 of 7 over the 120 s application guard)",
+        "classic9Hell1": "hidden, not registered"
+      },
+      "limitations": "Different sources and different request classes from MS07b's; counts of exact and times are those of fixed requests, not a population estimate.",
+      "disposition": "Carried with current evidence for both boards: every Hell 1 occurrence is a shallow fallback and costs about three times MS07b's range; classic9 Hell 1 is hidden and its GD batch no longer registers.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/deep-reconcile-hell1-v2.json",
+        "e4a-summary.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV16 / S-AV17",
+      "title": "Withdrawn current-source items (the rejected CV6-05 pool)",
+      "status": "withdrawn, history kept",
+      "covers": [
+        "S-AV16",
+        "S-AV17",
+        "S-OD6"
+      ],
+      "source": "MS05e (Q1(b) withdraw the pool, Q2(a) keep the contracts), S-OD6 delegation to Fable on 2026-11-14 16:38",
+      "population": "Greater-Than Nightmare p95 40,396 ms against 20,000 and the neighbour/quick-cost regressions of the rejected pool (726.2 s)",
+      "numbers": {
+        "restoredSourcePassMs": 19192,
+        "restoredBaselineQuickSeconds": 648
+      },
+      "limitations": "Not an open pool regression; the saved candidate-pool-4.patch and measurements are history and were not rebuilt.",
+      "disposition": "Not deleted, not current. The restored source is the one measured everywhere afterwards.",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS05e/candidate-pool-4.patch"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV18 / S-AV19 / S-AV20 / S-AV21 / S-AV22 / S-AV23",
+      "title": "MS06 request-level evidence (history carried to the final gates)",
+      "status": "closed-history",
+      "covers": [
+        "S-AV18",
+        "S-AV19",
+        "S-AV20",
+        "S-AV21",
+        "S-AV22",
+        "S-AV23"
+      ],
+      "source": "MS06a/MS06d numbers in check-list section 2 (Greater-Than Expert off-band, design 9.1 p95 flags, shallow results, jigsaw9 Expert exact loss, request-level losses, jigsaw9 cost under the target)",
+      "population": "MS06 12-sample cells and 76 changed puzzles",
+      "numbers": {
+        "S-AV19": "design 9.1 p95 flags are informational; the final GP decides: 74 of 79 meet",
+        "S-AV23": "jigsaw9 Nightmare 1.53x generation time, Expert 1.29x (MS06d)"
+      },
+      "limitations": "Small old-source samples; not final verdicts.",
+      "disposition": "Retained as history; their final consequences are the MS18c qualification and the MS18d GP.",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV28 / S-AV29 / S-AV30",
+      "title": "MS07e GQ availability findings (Easy availability, Greater-Than Master time, mid-level shortfalls)",
+      "status": "closed-by-final-qualification",
+      "covers": [
+        "S-AV28",
+        "S-AV29",
+        "S-AV30"
+      ],
+      "source": "MS07e GQ numbers (diagonalX Easy 28/40, hyper 29/40, samurai 10/22, sohei 4/18, butterfly 1/15, flower 0/14; Greater-Than Master p95 14.5 s; flower Expert 23/35, flower Master 29/40, wordoku Normal 35/46, classic9 Normal and mega16 Expert 36/40)",
+      "population": "MS07e GQ cells on the old source",
+      "numbers": {
+        "finalOffers": 79,
+        "finalHidden": 56
+      },
+      "limitations": "Old-source numbers; the final qualification re-decided every cell.",
+      "disposition": "Resolved by MS18c's final qualification and published arrays; nothing re-run at MS18e.",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "docs/difficulty-rating/qualification.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV32",
+      "title": "Remote Pairs reachability (RP-01, S-OD9)",
+      "status": "closed-history, evidence preserved",
+      "covers": [
+        "S-OD9"
+      ],
+      "source": "MS10a gate and numerical handoff; owner-confirmed 116/350/35 (S-OD9, 2026-11-16 06:23 +07:00)",
+      "population": "the four superseded logs and the order-116 logs under docs/difficulty-v3/evidence/MS10a/logs/",
+      "numbers": {
+        "prior": "116/350/35 replaces 132/440/44"
+      },
+      "limitations": "The caged-model soundness check stays separate from the uncaged 27-unit model.",
+      "disposition": "Preserved as recorded by MS10a; no new run at MS18e; a complete zero-hit gate would have gone to the owner and none is recorded.",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS10a/logs/"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV35",
+      "title": "Jellyfish normal-hint source availability (JF-01, S-OD10, S-OD12)",
+      "status": "closed-history, bounded and case-specific",
+      "covers": [
+        "S-OD10",
+        "S-OD12"
+      ],
+      "source": "MS12 (GH 36/37 at origin), S-OD10 Chọn A bounded corpus route (2026-11-16 22:20 +07:00), S-OD12 retroactive retention of MS13c's testkit-4242-8657 only (2026-11-17 13:46 +07:00)",
+      "population": "classic9 seed 4242 indices 0-19,999 under the bounded route",
+      "numbers": {
+        "ghCatalogue": "40 of 40 matched check-only at E3 (transcripts/e3-gh-check.txt)"
+      },
+      "limitations": "S-OD10 and S-OD12 are not standing permissions; S1 was not approved; no later task inherits them.",
+      "disposition": "The exception and its result are kept as history; MS18e acquired no source and ran no discovery.",
+      "nextOwner": "none",
+      "evidence": [
+        "transcripts/e3-gh-check.txt",
+        "docs/difficulty-v3/evidence/MS12/logs/gh-check-all-37.txt"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-OD1 / S-OD2 / S-OD3 / S-OD4 / S-OD6",
+      "title": "Recovery and resume decisions",
+      "status": "closed, applied",
+      "covers": [
+        "S-OD1",
+        "S-OD2",
+        "S-OD3",
+        "S-OD4",
+        "S-OD6"
+      ],
+      "source": "check-list section 2 resume table and section 4",
+      "population": "CV6-01 / S-OD1 guided sign dig measured and set aside (CV6-05); S-OD2 recovery boundary (amended by S-OD3/S-OD4); S-OD3 full-attempt mega Nightmare left quick coverage for the tool-based deep inventory; S-OD4 stop/evidence protocol (c1/c2, 8/4/2, R5 256); S-OD6 delegation to Fable",
+      "numbers": {},
+      "limitations": "S-OD4 governs MS18e: correctness and evidence failures stop; performance and availability are named numerical items.",
+      "disposition": "Applied throughout MS18e: every E2 outcome that failed a time or availability assertion is a named item (S-AV14), no assertion, threshold, offer or fixture was changed, and no correctness failure occurred. The deep tool covers every original mega Nightmare request and relation (14 of 14 on the final source).",
+      "nextOwner": "none",
+      "evidence": [
+        "e2-summary.md",
+        "preflight/deep-reconcile-nightmare.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18c-COMPAT-DIFFICULTY-KILLER-MASTER",
+      "title": "B1 repair: ambiguous-candidate test requested hidden killer/master",
+      "status": "fixed-guard, ran at E2 and passed",
+      "source": "generator/tests/manual/difficulty.test.js:1782-1805",
+      "population": "one pipeline.run request (killer, master, seed 61843, diagonal symmetry, maxAttempts 1, trace off)",
+      "numbers": {
+        "guard": "SG.fixtures.toolRecords.withRequestedLevel('killer', 'master', function () { return SG.pipeline.run(config); }).value",
+        "e2Row": "GD-rest-14, difficulty test 145 (never returns an ambiguous candidate of a search either: the keeper counts before it keeps): pass, 4,969.92 ms; the row passed 3 of 3"
+      },
+      "limitations": "The pre-fix failure was a certain unsupported-level refusal, not evidence of an ambiguous puzzle. This is the one test of the guard, not a Killer suite pass.",
+      "disposition": "Only the per-call guard was added; config, setup and every assertion are unchanged. The guarded test ran at E2 inside GD-rest-14 and passed. Three of the four MS18 guards ran (GD-rest-08, GD-rest-11, GD-rest-14); only the perf serializer guard (greaterThan/normal) did not.",
+      "nextOwner": "none",
+      "evidence": [
+        "manual/difficulty/rest-14.json",
+        "transcripts/GD-rest-14.txt",
+        "audit/manual-hidden-requests-final-v3.json",
+        "preflight/manual-hidden-requests-before.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18c-COMPAT-PERF-GREATERTHAN-NORMAL",
+      "title": "B1 repair: perf serializer test requested hidden greaterThan/normal",
+      "status": "fixed-guard, live coverage not run",
+      "source": "generator/tests/manual/perf.test.js (serializer hash test, result('greaterThan', 'normal', 1))",
+      "population": "one request",
+      "numbers": {
+        "guard": "SG.fixtures.toolRecords.withRequestedLevel('greaterThan', 'normal', function () { return result('greaterThan', 'normal', 1); }).value"
+      },
+      "limitations": "The serializer test did not run; no live non-ratio perf test was assigned.",
+      "disposition": "Only the per-call guard was added; the helper, request and every assertion are unchanged. Fixed guard, not live coverage.",
+      "nextOwner": "none",
+      "evidence": [
+        "audit/manual-hidden-requests-final-v3.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-COMPAT-CLASSIC-HELL1-FLOOR",
+      "title": "Extra guard: labelled-puzzle floor test requested hidden classic9 Hell 1",
+      "status": "fixed-guard, ran at E2",
+      "source": "generator/tests/manual/difficulty.test.js:997-999",
+      "population": "D.spec(LEVELS[i - 1], model9) for the four labelled hell2 puzzles (i = 8, so LEVELS[7] = hell1)",
+      "numbers": {
+        "e2Row": "GD-rest-08: 7 of 7 passed"
+      },
+      "limitations": "A spec lookup, not a generation.",
+      "disposition": "Guarded per call with the original expression, request and assertions kept; the test ran at E2 inside GD-rest-08 and passed.",
+      "nextOwner": "none",
+      "evidence": [
+        "manual/difficulty/rest-08.json",
+        "audit/manual-hidden-requests-final-v3.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-COMPAT-CLASSIC-HELL1-SYMMETRY",
+      "title": "Extra guard: symmetry test requested hidden classic9 Hell 1",
+      "status": "fixed-guard, ran at E2",
+      "source": "generator/tests/manual/difficulty.test.js:1447-1449",
+      "population": "SG.digger.generate(model9, level, SG.rng.create(8550 + i), {}), level in nightmare and hell1, i 0..2",
+      "numbers": {
+        "e2Row": "GD-rest-11: 10 of 10 passed"
+      },
+      "limitations": "Three requests per level.",
+      "disposition": "Guarded per call with the original request and assertions kept; the test ran at E2 inside GD-rest-11 and passed.",
+      "nextOwner": "none",
+      "evidence": [
+        "manual/difficulty/rest-11.json",
+        "audit/manual-hidden-requests-final-v3.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-MANUAL-HIDDEN-SCAN",
+      "title": "Static scan of all eight manual suites for unguarded hidden-level requests",
+      "status": "pass, static only",
+      "source": "generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs scan",
+      "population": "116 entry-point call sites in the 8 manual suites, each classified by hand rule",
+      "numbers": {
+        "sites": 116,
+        "unguardedHidden": 0,
+        "unclassified": 0,
+        "staleRules": 0,
+        "guarded": 20,
+        "guardedAtCaller": 1
+      },
+      "limitations": "A source scan, not an execution: it proves the requests are guarded or offered, not that the suites pass.",
+      "disposition": "Zero unguarded hidden-level requests on the final tree (identical result to the v2 scan).",
+      "nextOwner": "none",
+      "evidence": [
+        "audit/manual-hidden-requests-final-v3.json",
+        "audit/manual-hidden-requests-final-v2.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-VARIANTS-REUSE",
+      "title": "Variants suite: reuse of the MS18c record (CV3-replacement, REPLAY-mega16)",
+      "status": "reused-compatible",
+      "source": "preflight/variants-compatibility-v3.json (four checks, rechecked on the final tree)",
+      "population": "the complete manual variants suite, 285 of 285 at MS18c under with-manual 13cd63bf",
+      "numbers": {
+        "blobsIdentical": "88 of 89 (perf-helper expected different)",
+        "perfHelperRows": 12,
+        "perfHelperValues": 17,
+        "consumersInLoadedPath": 0,
+        "tests": "285 of 285 same keys and order",
+        "finalWithManual": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3"
+      },
+      "limitations": "Reuse, not a rerun: the MS18c record keeps its old hash and receipts and is not retagged. The changed fingerprint inputs are documents, perf-helper targets, two manual suites and two quick suites that --suite=variants does not load.",
+      "disposition": "CV3-replacement and REPLAY-mega16 were not run at MS18e; they stand on the MS18c evidence through this proof.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/variants-compatibility-v3.json",
+        "preflight/variants-compatibility-v2.json",
+        "preflight/reuse-map-v2.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-GD-I5-ROWS",
+      "title": "E2 GD and I5 admitted rows",
+      "status": "pass except GD-normal (S-AV14)",
+      "source": "preflight/admission-plan-v2.json; E2 commit 28d5b209",
+      "population": "22 GD rows (146 tests) and 32 I5 selectors, each one locked teed invocation at factor 2",
+      "numbers": {
+        "gdRowsExit0": 21,
+        "gdNormalExit1": 1,
+        "i5Rows": "32 of 32 passed",
+        "i5TeeSecondsTotal": 276.3,
+        "gdTeeSecondsTotal": 452.7,
+        "overruns": 0
+      },
+      "limitations": "Only the GD suite (complete) and the 32 I5 tests of the five other manual suites ran; the rest of those suites is unexecuted and is never reported as passed.",
+      "disposition": "All rows within their P. The one exit-1 row is S-AV14.",
+      "nextOwner": "none",
+      "evidence": [
+        "e2-summary.md",
+        "manual/difficulty/",
+        "manual/i5/"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-OTHER-MANUAL-SUITES-UNEXECUTED",
+      "title": "Manual assertions outside the MS18e assignment (scope exclusions)",
+      "status": "not-applicable (scope exclusion); unexecuted, never reported as passed",
+      "source": "preflight/scope-map-v2.json",
+      "population": "563 tests: extra-regions 117 of 129, greater-than 103 of 108, jigsaw 82 of 88, killer 91 of 94, perf 48 of 51, wordoku 122 of 128 (the I5 selectors ran: 12, 5, 6, 3 and 6; perf's 3 assigned rows are the S-OD8 ratios, which ran at E4a under owner decision A); variants 285 reused",
+      "numbers": {
+        "unexecutedTests": 563,
+        "difficulty": "146 of 146 ran",
+        "perfRatiosRan": 3
+      },
+      "limitations": "Not new required work: the dispatch put them outside MS18e. MS18c's per-level registrations follow the published levels; their live validation is not part of this dispatch. Never reported as passed.",
+      "disposition": "Stated plainly in the release report as unexecuted scope exclusions; not a blocker of the MS18e acceptance state and not a pass.",
+      "nextOwner": "none within MS18e",
+      "evidence": [
+        "preflight/scope-map-v2.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-EARLY-CI-F1-HELP-COUNT",
+      "title": "Early CI F1: browser help script expected 26 techniques",
+      "status": "fixed-locally, remote pending",
+      "source": "early PR #2 (tdat00/sudoku), head b0a29ffd, run 44672736283 (Node v24.22.3, Ubuntu), job 136077961042 Test player in a browser; player/tests/browser/help.js",
+      "population": "3 failing checks of 23 (26 techniques in 8 groups; the contents list; all 26 draw an example)",
+      "numbers": {
+        "checksPassedBefore": "20 of 23",
+        "catalogue": 40,
+        "composition": "34 classic + 1 Jigsaw + 3 Killer + 2 Greater-Than",
+        "pin": "player/tests/suites/help.test.js:573 toBe(40)"
+      },
+      "limitations": "The script reads no count from the page under test; the node help suites (Player 28 of 28, Generator 30 of 30) do not replace the browser job. The early run stays failed; no local browser run was made.",
+      "disposition": "help.js now expects the fixed 40-technique catalogue (const TECHNIQUES = 40, with its source cited) in the tabs, contents and example-drawing checks and labels; four sections, eight groups and all other checks preserved. browser/ is not a quick fingerprint input. Proof is the final matching-head browser job (pending).",
+      "nextOwner": "orchestrator (final PR CI)",
+      "evidence": [
+        "preflight/plan-v2.json",
+        "docs/difficulty-v3/evidence/MS18e/handoff-v2.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-EARLY-CI-F2-WIRE-EOL",
+      "title": "Early CI F2: replay-recorders wire check on a Linux LF checkout",
+      "status": "fixed-locally, remote pending",
+      "source": "early run 44672736283, job 136077961076 Test generator (own suites); replay-fixtures.js:181/207, replay-recording.js:454-456",
+      "population": "replay-recorders 38 of 39 on an LF extract (SA1 repro), 39 of 39 with CRLF",
+      "numbers": {
+        "fix": ".gitattributes: generator/tests/fixtures/replay-wire.js text eol=crlf"
+      },
+      "limitations": "The recorder, checker and test were not changed; replay identity 1cf64919 and the GR ledgers are unaffected; the Windows working tree bytes are identical. Only a Linux run proves it.",
+      "disposition": "One path-specific attribute rule; git check-attr shows text set and eol crlf. The early run stays failed; the final matching-head own-suites job is the proof (pending).",
+      "nextOwner": "orchestrator (final PR CI)",
+      "evidence": [
+        "preflight/plan-v2.json",
+        ".gitattributes"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-CI-PLAYER-900",
+      "title": "CI helper: the Player job limit is 900 s, not the generic 1800 s",
+      "status": "fixed-and-tested",
+      "source": ".github/scripts/generator-quick.js (PLAYER_JOB_SECONDS = 900) and generator-quick.selftest.js",
+      "population": "the Player job projection 180 + 3 x projection against the workflow's 15 minutes",
+      "numbers": {
+        "playerProjectionSeconds": 190,
+        "projectedJobSeconds": 750,
+        "limitSeconds": 900,
+        "selftest": "67 checks, 0 failed (E3)"
+      },
+      "limitations": "Local arithmetic, not a remote duration.",
+      "disposition": "The helper checks and prints the Player job against 900 s; the selftest asserts the constant equals timeout-minutes x 60 of the test-player job in both workflows and covers 190, 240 and 250. Final check passes (750 of 900).",
+      "nextOwner": "none",
+      "evidence": [
+        "transcripts/e3-ci-selftest.txt",
+        "transcripts/e3-ci-check-final.txt",
+        "ci/quick-cost.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "R6C-I01",
+      "title": "Repository rulesets and branch protection",
+      "status": "pending-re-read-at-E4",
+      "source": "SA1 read-only API observation as of 2026-11-20: rulesets = []; main protection returned 404 Branch not protected",
+      "population": "the repository configuration",
+      "numbers": {
+        "rulesets": 0
+      },
+      "limitations": "Observed once; no permission to edit protection. Absence of protection waives nothing: the task's gate needs all eight PR jobs.",
+      "disposition": "Carried as recorded; the orchestrator re-reads and timestamps the configuration at E4. Adding required checks (including Plan generator tests) is an owner choice outside MS18e.",
+      "nextOwner": "orchestrator at E4; owner for any protection change",
+      "evidence": [
+        "audit/remote-ci.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "R6C-I02",
+      "title": "Remote job durations including startup",
+      "status": "pending-remote",
+      "source": "PR runs on the final head",
+      "population": "the eight PR jobs",
+      "numbers": {
+        "localProjectionSecondsPerGroup": [
+          1260,
+          1320,
+          420,
+          450
+        ],
+        "playerJob": 750
+      },
+      "limitations": "Local sums and projections are not remote durations. The early run's durations belong to its own head.",
+      "disposition": "Actual run timings are compared with each job's timeout at E4; absent run evidence stays pending.",
+      "nextOwner": "orchestrator",
+      "evidence": [
+        "audit/remote-ci.json",
+        "ci/quick-cost.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "R6C-I04",
+      "title": "player/design.md claimed browser scripts are not in CI",
+      "status": "fixed-in-the-living-design",
+      "source": "player/design.md lines 76, 629-630 and 653 on the final tree; .github/workflows/pull-request.yml test-browser job",
+      "population": "the design text against the workflow",
+      "numbers": {},
+      "limitations": "Text correction only; browser coverage is not run locally and is not removed.",
+      "disposition": "The design now says the pull-request workflow runs the browser scripts (the job test-browser), by hand and in CI; Pages runs core/Generator/Player checks, not that job (static audit in audit/workflow-audit.json).",
+      "nextOwner": "none",
+      "evidence": [
+        "audit/workflow-audit.json",
+        "player/design.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "IR21",
+      "title": "First PR run is Node 24 / Linux / factor 3, local evidence is Node 26 / Windows / factor 2",
+      "status": "pending-remote",
+      "source": "early run 44672736283 (diagnostic), then the final matching-head run",
+      "population": "platform difference",
+      "numbers": {
+        "local": "Node v26.13.0, Windows, factor 2",
+        "ci": "Node 24, ubuntu-latest, factor 3 (SG_TIME_FACTOR unset)"
+      },
+      "limitations": "Local green is not that platform's pass. The early run had two genuine platform/test findings (F1, F2) and 6 of 8 jobs green on its own head.",
+      "disposition": "Early findings classified and fixed without weakening an assertion, raising a factor or extending a timeout; the final head's eight jobs decide.",
+      "nextOwner": "orchestrator",
+      "evidence": [
+        "audit/remote-ci.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "IR22",
+      "title": "generator/design.md Tests row counts",
+      "status": "fixed-in-the-living-design",
+      "source": "generator/design.md section 15 (line 2052) and the section 18 Tests row (line 2245) on the final tree",
+      "population": "63 suites = 55 quick (37 own + 18 shared, 4,807 tests) + 8 manual (1,029 tests), 5,836 in all",
+      "numbers": {
+        "quick": 4807,
+        "manual": 1029,
+        "all": 5836
+      },
+      "limitations": "Counts come from the registration of --all --list-tests and the CI check, not from the recovery copy.",
+      "disposition": "Corrected from the inventory; the E3 coverage reconciles 4,807 of 4,807 Generator and 2,981 of 2,981 Player quick tests by (suite, ordinal).",
+      "nextOwner": "none",
+      "evidence": [
+        "audit/coverage.json",
+        "preflight/inventory-all-v2.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS05r6a-COV01",
+      "title": "Reveal-fold coverage specimen",
+      "status": "closed, still asserted",
+      "source": "generator/tests/suites/player.test.js:703-728 (and replay.test.js:999-1012 on a synthetic jump table)",
+      "population": "MS05r6a used G11 (compact step 2, peak 1,967); MS09a (4cf0cb35) moved the assertion to G12 (compact step 4, peak 3,221)",
+      "numbers": {
+        "e3Result": "player/30 pass (player > player: texts of the steps > tells what a compact step folds ...)",
+        "peak": 3221
+      },
+      "limitations": "G11 is the sign-jump specimen of player.test.js:952-976; no replacement fixture was searched or added.",
+      "disposition": "Moved at MS09a, still asserted: the test expects replay.folded.reveal with the peak 3,221 and ran in the E3 Generator player shard (70 of 70). Not an erroneous label.",
+      "nextOwner": "none",
+      "evidence": [
+        "quick/generator-player.json",
+        "audit/coverage.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-FINAL-PR-CI-GATE",
+      "title": "Final PR-CI gate: all eight jobs on the matching final head",
+      "status": "pending-remote",
+      "source": "dispatch section 7; the eight jobs of pull-request.yml",
+      "population": "Test core, Plan generator tests, Test generator (shared and small suites), (own suites), (pipeline), (replay player), Test player, Test player in a browser",
+      "numbers": {
+        "early": "run 44672736283 on b0a29ffd: 6 of 8 succeeded (browser and own-suites failed)"
+      },
+      "limitations": "No local result covers the browser job; a local check is not a remote pass; MS18e-Q-CI-POLICY is the only waiver route and none exists.",
+      "disposition": "Remote CI pending. The orchestrator supplies run, job and attempt IDs after the owner's push; a changed head or fingerprint invalidates a matching-tree claim. Green CI closes only this remote-CI gate, not MS18e.",
+      "nextOwner": "orchestrator and owner",
+      "evidence": [
+        "audit/remote-ci.json",
+        "audit/workflow-audit.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV09",
+      "title": "Killer Master and Killer Nightmare",
+      "status": "closed-by-final-qualification (both hidden on time)",
+      "source": "MS05b3 evidence.md:164 (new at MS05b3); generator-state-2026-11-14.md:715; qualification-checkpoint-2026-11-15.md:154; MS05b3 task handoff (MS05b3-bounded-manual-corpora.md:411)",
+      "population": "I5 killer Master and Nightmare (8 requests each), CV3 killer Master and Nightmare (3 each), MS07e GQ, final MS18c GQ cells killer/master and killer/nightmare (budget 10,000 ms)",
+      "numbers": {
+        "ms05b3": "i5-killer-master 2 of 8 (cell 96.56 s, max 23.4 s), i5-killer-nightmare 1 of 8 (cell 148.66 s, max 30.0 s); cv3-killer-master 0 of 3 (11.174 / 23.682 / 12.110 s), cv3-killer-nightmare 0 of 3 (18.362 / 30.665 / 21.449 s)",
+        "ms07eGq": "Master 5/13, p95 22.8 s; Nightmare 19/24, p95 24.9 s, both hidden on time",
+        "finalGq": "killer/master 11/14 hits, p95 42,674.0885 ms (max 42,674.0885), hidden, stopped on time; killer/nightmare 18/22 hits, p95 32,738.6213 ms (max 64,771.7605), hidden, stopped on time"
+      },
+      "limitations": "Final GQ is one host-active qualification on its own source; the older I5/CV3 numbers are history of older sources.",
+      "disposition": "Both cells are hidden by the final qualification (Killer offers veryEasy, easy and normal only); S-OD7 separately withholds Hard and Expert. No weight, offer or target change at MS18e. The guard for the killer master request of the ambiguity test is MS18c-COMPAT-DIFFICULTY-KILLER-MASTER (ran, passed).",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS05b3/evidence.md",
+        "docs/difficulty-v3/generator-state-2026-11-14.md",
+        "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md",
+        "tasks/difficulty-v3/MS05b3-bounded-manual-corpora.md",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV10",
+      "title": "Wordoku Normal and Wordoku Nightmare",
+      "status": "closed-by-final-qualification; Nightmare's GP miss is a separate item",
+      "source": "MS05b3 evidence.md:165; generator-state-2026-11-14.md:716; qualification-checkpoint-2026-11-15.md:155",
+      "population": "I5 wordoku Normal (20 requests) and Nightmare (20), CV3 wordoku Nightmare (3), MS07e GQ, final MS18c GQ cells wordoku/normal and wordoku/nightmare",
+      "numbers": {
+        "ms05b3": "i5-wordoku-normal 15 of 20 (0.75 against 0.9; 7 to 761 ms per request), i5-wordoku-nightmare 4 of 20 (0.2; 0.46 to 5.6 s, cell 87.32 s); cv3-wordoku-nightmare 0 of 3 (5.441 / 4.712 / 5.128 s)",
+        "ms07eGq": "Normal 35/46 hidden (33/40 in the first round); Nightmare 40/40 offered",
+        "finalGq": "wordoku/normal 35/46 hits, p95 904.2948 ms, hidden, stopped on misses; wordoku/nightmare 40/40 hits, p95 1,323.0135 ms, offered",
+        "e2": "I5-wordoku-nightmare: 1 of 1 passed (tee 15.13 s)",
+        "gp": "wordoku/nightmare p95 2,800.4616 ms against 1,500: MISS, tracked as MS18d-GP-MISS-wordoku-nightmare"
+      },
+      "limitations": "The GP miss is a time finding of an offered cell, not an availability or correctness failure.",
+      "disposition": "Normal is hidden (misses); Nightmare is offered and its E2 I5 proof test passed. The Nightmare GP miss stays its own item with its own numbers.",
+      "nextOwner": "none (the GP miss: future explicitly authorized work)",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS05b3/evidence.md",
+        "docs/difficulty-v3/generator-state-2026-11-14.md",
+        "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "manual/i5/wordoku-nightmare.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV12",
+      "title": "Sohei, Butterfly and Flower Nightmare",
+      "status": "closed-by-final-qualification (Sohei and Flower hidden on time; Butterfly offered and met its GP target)",
+      "source": "MS05b3 evidence.md:167; generator-state-2026-11-14.md:718; qualification-checkpoint-2026-11-15.md:157",
+      "population": "CV3 sohei, butterfly and flower Nightmare (2 each), MS07e GQ, final MS18c GQ cells, final GP butterfly/nightmare",
+      "numbers": {
+        "ms05b3": "cv3-sohei-nightmare 0 of 2 (19.702 / 27.486 s), cv3-butterfly-nightmare 0 of 2 (26.275 / 32.823 s), cv3-flower-nightmare 0 of 2 (23.067 / 20.405 s)",
+        "olderCheckpointConclusion": "the 2026-11-15 checkpoint recorded 40/40 each, offered (p95 7.6 s, 2.0 s, 5.9 s); that conclusion is NOT carried over, the final qualification replaces it",
+        "finalGq": "sohei/nightmare 29/30 hits, p95 78,814.875 ms (max 100,181.106), hidden, stopped on time; flower/nightmare 42/50 hits, p95 32,514.7798 ms (max 36,671.3023), hidden, stopped on time; butterfly/nightmare 40/40 hits, p95 16,120.4641 ms, offered (budget 30,000 ms)",
+        "gp": "butterfly/nightmare p95 15,151.7914 ms against 30,000: meets"
+      },
+      "limitations": "Final GQ is one host-active qualification; the older I5/CV3 numbers belong to older sources.",
+      "disposition": "Sohei and Flower Nightmare are hidden on time; Butterfly Nightmare is offered and met its GP target. Nothing changed at MS18e.",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS05b3/evidence.md",
+        "docs/difficulty-v3/generator-state-2026-11-14.md",
+        "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json",
+        "docs/difficulty-v3/evidence/MS18d/phase-d/gp-cells.csv"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "S-AV13",
+      "title": "Butterfly and Flower Easy",
+      "status": "closed-by-final-qualification (both hidden on misses)",
+      "source": "MS05b3 evidence.md:168; generator-state-2026-11-14.md:719; qualification-checkpoint-2026-11-15.md:158",
+      "population": "CV3 butterfly Easy and flower Easy (2 each), MS07e GQ, final MS18c GQ cells (budget 30,000 ms)",
+      "numbers": {
+        "ms05b3": "cv3-butterfly-easy 0 of 2 (0.767 / 0.652 s), cv3-flower-easy 0 of 2 (0.375 / 0.632 s): a low-level availability finding, not a slow one",
+        "ms07eGq": "butterfly 1/15, flower 0/14, hidden; wider in S-AV28",
+        "finalGq": "butterfly/easy 1/15 hits, p95 1,115.6109 ms, hidden, stopped on misses; flower/easy 0/14 hits, p95 901.8375 ms, hidden, stopped on misses"
+      },
+      "limitations": "Availability (misses), not time; the wider Easy availability picture is S-AV28.",
+      "disposition": "Both Easy cells are hidden by the final qualification; nothing changed at MS18e.",
+      "nextOwner": "none",
+      "evidence": [
+        "docs/difficulty-v3/evidence/MS05b3/evidence.md",
+        "docs/difficulty-v3/generator-state-2026-11-14.md",
+        "docs/difficulty-v3/qualification-checkpoint-2026-11-15.md",
+        "docs/difficulty-v3/evidence/MS18c/merge/qualification-v3.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-ACCEPTANCE-STATE",
+      "title": "MS18e acceptance state: all assigned coverage complete; only the final matching-head CI remains",
+      "status": "open: the remote-CI gate only; no A/B/W decision outstanding",
+      "source": "SA2 binding findings 2026-11-20 14:16; owner decision A, message 1573242656648069141; Hell 1 ruling (a)+(c) of 2026-11-20 15:57",
+      "population": "E0-E4a stages; route A: one launch of each held row, plus the full 14-record Hell 1 reconcile",
+      "numbers": {
+        "stagesCompleted": "E0, E1, E2, E3, E4a (held rows)",
+        "heldRowsExecuted": 11,
+        "reconcile": "run; raw exit 1 retained; ruled a commit-label-only split (a)+(c)"
+      },
+      "limitations": "Green CI closes only the remote-CI gate. Acceptance does not authorize merge or deployment. The 563 excluded manual assertions remain explicitly unexecuted scope exclusions, never reported as passed. Not relabelled as passed: S-AV14, the Hell 1 availability and cost findings, the GP misses.",
+      "disposition": "The assigned coverage is complete: both quick sets, GD, I5, the 14 Nightmare and 14 Hell 1 deep occurrences, the three S-OD8 ratios, the S-AV11 profile and the check-only ledgers. No A, B or W decision is outstanding. The only remaining blocker is the final matching-head remote CI (eight jobs). Numerical findings stay listed as non-blocking: S-AV14, Hell 1 exactness and cost, the S-AV11 delay and the five GP misses.",
+      "nextOwner": "orchestrator (final matching-head CI)",
+      "evidence": [
+        "audit/gates-v3.json",
+        "audit/remote-ci.json",
+        "preflight/deep-hell1-commit-equivalence.json"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-OWNER-DECISION-HELD-ROWS",
+      "title": "Owner decision on the held rows: RATIOS=A; MEGA16-H1=A; SAV11=A",
+      "status": "recorded",
+      "source": "owner answer message 1573242656648069141, 2026-11-20T07:44:38.780Z (14:44:38.780 +07:00); pack commit 5f697ef9, MS18e-dispatch-and-release-gates.md section 7 'Recorded held-row decisions'",
+      "population": "MS18e-Q-GD-DEEP (questions about 12:20, message 1573206529908146358; W addendum about 14:30, message 1573236608721887303) and MS18e-Q-SAV11: RATIOS (RATIO-off, RATIO-summary, RATIO-full), MEGA16-H1 (the seven DEEP-mega16-hell1-*), SAV11",
+      "numbers": {
+        "choices": "A, A, A",
+        "W": "not selected"
+      },
+      "limitations": "A authorizes one unchanged invocation per named row despite the missing <=450 s projection: the 540 s ceiling, the 500 s deep budget, seeds, internal attempts, assertions and guards stay as they are; no external retry; a failure or kill stays failed or incomplete. It is permission to execute, not automatic completion. SAV11 also needed the technical route review and --owner-decision.",
+      "disposition": "Applied exactly: ten rows launched once each in the order seven deep rows then three ratios, the reconcile after the seven mega16 records, SAV11 after SA1's route acceptance and the wide gate pass.",
+      "nextOwner": "none",
+      "evidence": [
+        "e4a-summary.md",
+        "lock-log.jsonl",
+        "preflight/questions-v2.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-HELD-ROWS-EXECUTED",
+      "title": "The ten released rows (seven mega16 Hell 1 occurrences, three S-OD8 ratios) and SAV11",
+      "status": "executed, all exit 0",
+      "source": "preflight/admission-plan-v2.json exact commands; one locked invocation each",
+      "population": "DEEP-mega16-hell1-{invariant-1..4, cv5-a, cv5-b, cv5-other} (default attempts 4/2, 500,000 ms shared deep budget), RATIO-off, RATIO-summary, RATIO-full (original populations, warmup, interleaved rounds, assertion limits), SAV11",
+      "numbers": {
+        "deepTeeSeconds": {
+          "invariant-1": 320.737,
+          "invariant-2": 360.546,
+          "invariant-3": 336.865,
+          "invariant-4": 329.378,
+          "cv5-a": 342.589,
+          "cv5-b": 334.665,
+          "cv5-other": 324.607
+        },
+        "ratioTeeSeconds": {
+          "off": 120.554,
+          "summary": 120.527,
+          "full": 121.352
+        },
+        "ratioResults": "1 of 1 passed each; test time 120,112.5 / 120,079.3 / 120,828.7 ms",
+        "sav11TeeSeconds": 342.803,
+        "killedAt540": 0,
+        "retries": 0
+      },
+      "limitations": "A ratio test is synchronous and the harness does not stop it at its 120,000 ms timeout (core/tests/harness.js:415-418); each passed on its first attempt. Times are single locked runs on a shared host, not bounds.",
+      "disposition": "All eleven rows ran once and finished; none was killed. The seven deep records are correctness pass, exact false, 2 of 2 attempts, shallow fallbacks.",
+      "nextOwner": "none",
+      "evidence": [
+        "e4a-summary.md",
+        "deep/hell1/",
+        "manual/ratios/off.json",
+        "manual/ratios/summary.json",
+        "manual/ratios/full.json",
+        "profile/s-av11/record-1.json",
+        "lock-log.jsonl"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-DEEP-HELL1-14",
+      "title": "Final-source deep Hell 1: all 14 occurrences ran, 0 exact, shallow fallbacks; complete, correct, source-compatible cohort",
+      "status": "executed 14 of 14; complete and correct; commit-only provenance difference ruled (a)+(c); raw strict reconcile retained",
+      "covers": [
+        "S-AV24",
+        "S-AV25",
+        "S-AV26"
+      ],
+      "source": "generator/tests/mega-contract.js Hell 1 half; mega12 records at E2 (commit 547168b4), mega16 records at E4a (commit 5f697ef9); full reconcile preflight/deep-reconcile-hell1-v2.json; equivalence record preflight/deep-hell1-commit-equivalence.json",
+      "population": "7 mega12 and 7 mega16 Hell 1 requests, one fresh process each, level override mega12:hell1 and mega16:hell1, default attempts 4 and 2, allowance 256, 500,000 ms shared budget",
+      "numbers": {
+        "records": 14,
+        "exact": "0 of 14 (mega12 0 of 7, mega16 0 of 7), every record difficulty.approximate and difficulty.shallow",
+        "mega12": "generation 92.102 to 103.711 s (median 99.364 s), guard 160 s margin 56.008 s",
+        "mega16": "generation 319.837 to 359.556 s (median 333.628 s), 7 of 7 over 120 s, guard 500 s margin 140.265 s",
+        "reconcileRaw": {
+          "exit": 1,
+          "complete": true,
+          "evidenceSound": false,
+          "identityCommit": null,
+          "correctness": "pass (14 passed)",
+          "relations": "6 pass / 0 fail / 0 unevaluated",
+          "soleProblem": "mixed identities, commit has 2 values (mega12 547168b4, mega16 5f697ef9)",
+          "reconcileSha256": "fd567f18a551056efdf83c758e6c643b2ee465bcb47ef3d9c8514e9fb4a36357"
+        },
+        "equivalence": "271 names changed between 547168b48d5eb7a9165432db87a227a9d1c4b068 and 5f697ef9aae3df7b2116834b6111931b27129dda, none under core/, player/ or generator/ outside generator/tests/artifacts; 70 loaded files (64 ordered SOURCE_FILES, runner, entry point, fixtures, loader, node-evidence.js) have equal blob IDs; the 14 records differ only in commit"
+      },
+      "limitations": "A ruling about this cohort and this reconcile only: no tool edit, no record edit, no re-run, no general rule that exit 1 is acceptable. Between the two commits .github changed in comments and in the quick-manifest timing metadata (measuredSeconds and provenance), none an input of the deep recipes. No MS07b record was used.",
+      "disposition": "Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained. Exact 0 of 14, the shallow fallbacks and the measured costs remain numerical findings (S-OD4), not correctness failures and not relabelled.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/deep-reconcile-hell1-v2.json",
+        "preflight/deep-hell1-commit-equivalence.json",
+        "transcripts/e4b-equivalence-check.txt",
+        "preflight/deep-reconcile-hell1-partial.json",
+        "deep/hell1/",
+        "transcripts/deep-reconcile-hell1-v2.txt",
+        "generator/tests/fixtures/mega-contract.js",
+        "e4a-summary.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-SAV11-PROFILE",
+      "title": "S-AV11 profile executed: jigsaw9 / Expert / seed 1111, 342.092 s; open performance finding",
+      "status": "executed (exit 0, record written, outcome returned); required profile complete; open performance finding, future owner named",
+      "covers": [
+        "S-AV11"
+      ],
+      "source": "generator/tests/artifacts/difficulty-v3/MS18e/profile-s-av11.cjs (route accepted by SA1), owner decision A, run from the repository root through run-locked-e.ps1",
+      "population": "one guarded SG.pipeline.run request: jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts (cellCount 81), no budget, no override",
+      "numbers": {
+        "hrtimeMs": 342091.5386,
+        "performanceNowMs": 342091.5259,
+        "dateMs": 342093,
+        "teeSeconds": 342.803,
+        "historicalWholeRequestSeconds": 325.313,
+        "timingsMs": {
+          "configure": 0.759,
+          "buildModel": 37.2384,
+          "fullGrid": 335178.6699,
+          "extraStructure": 0.3173,
+          "dig": 6719.9691,
+          "rate": 147.8489,
+          "tune": 0.3961
+        },
+        "timingsSumMs": 342085.1987,
+        "outcome": "returned, exact true, achieved expert, score 979, solved, 5 attempts, 33 clues, no warnings",
+        "record": "sourceHash b8ec138d..., dirty false, commit 5f697ef9, sgTimeFactor 2, ownerDecision 1573242656648069141, timingKeysComplete true, support after the call veryEasy easy normal hard master hell2 (Expert absent)",
+        "hostContext": "gate pass 15:39:21 (absence 123 s); snapshots 344.152 s apart: host 1968 0.19 CPU-s/s, no other process except Idle at or above 0.5"
+      },
+      "limitations": "One request on one shared host; the Node child is not in either snapshot; the timings are summed over the 5 attempts, so the slow attempt is unknown (whether the cost falls in attempt 1, which is independent of the level, is not recorded); the pipeline's timing fields say where the time went, not why; S-OD15 readiness context is raw context only, not an admission decision.",
+      "disposition": "The delay reproduces on the current source (342.092 s against the historical 325.313 s). About 335 s of fullGrid time is summed across 5 attempts; the slow attempt and the cause are unknown, and whether the offered Jigsaw levels are affected is not established. No claim either way, no change, no waiver. The release profile is complete; the performance finding stays open for later performance work outside MS18e.",
+      "nextOwner": "later performance work (named future owner), outside MS18e",
+      "evidence": [
+        "profile/s-av11/record-1.json",
+        "profile/s-av11/gate-1.txt",
+        "profile/s-av11/host-before-1.json",
+        "profile/s-av11/host-after-1.json",
+        "transcripts/sav11-run-1.txt",
+        "e4a-summary.md"
+      ]
+    },
+    {
+      "origin": "added at MS18e",
+      "id": "MS18e-HELL1-COMMIT-EQUIVALENCE",
+      "title": "Hell 1 reconcile ruling (a)+(c): commit-label-only split, file-only equivalence record",
+      "status": "ruled and recorded",
+      "source": "SA1 ruling 2026-11-20 15:57 (+07:00) relayed by the orchestrator; SA2's binding ruling matches (a)+(c); preflight/deep-hell1-commit-equivalence.json",
+      "population": "the 14 Hell 1 records (7 mega12 at commit 547168b48d5eb7a9165432db87a227a9d1c4b068, 7 mega16 at 5f697ef9aae3df7b2116834b6111931b27129dda)",
+      "numbers": {
+        "changedNames": 271,
+        "changedInSourceScope": 0,
+        "loadedFilesEqual": "70 of 70 blob pairs",
+        "recordsDifferingOnlyInCommit": 14,
+        "tool": "mega-contract.js blob 3a068ef1663933e3d52ba8df0b6778c5fc807b8b, fixture b1b70636dca151e93152fcc8b8111807c38fef9f, both equal at both commits"
+      },
+      "limitations": "Git reads only; a ruling about this cohort and reconcile, not a general rule that exit 1 is acceptable; between the commits .github changed in workflow comments and in the quick-manifest timing metadata (not deep-recipe inputs).",
+      "disposition": "Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained: exit 1, evidenceSound false, identity.commit null, the sole problem 'mixed identities: commit has 2 values'. No tool edit, no record edit, no re-run.",
+      "nextOwner": "none",
+      "evidence": [
+        "preflight/deep-hell1-commit-equivalence.json",
+        "transcripts/e4b-equivalence-check.txt",
+        "preflight/deep-reconcile-hell1-v2.json"
+      ]
+    }
+  ],
+  "problems": []
+}

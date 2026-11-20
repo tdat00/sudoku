@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --suite=perf --exact=perf > instrumented generators: what the events cost > generating puzzles: verbosity 'full' costs less than 35% --list-tests=..\docs\difficulty-v3\evidence\MS18e\preflight\e4a-selectors\RATIO-full.json
+Inventory: 1 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.3 s
+Written: docs/difficulty-v3/evidence/MS18e/preflight/e4a-selectors/RATIO-full.json
+exit=0 seconds=0.397

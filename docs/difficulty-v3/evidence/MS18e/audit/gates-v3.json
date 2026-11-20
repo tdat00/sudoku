@@ -1,0 +1,174 @@
+{
+  "schema": "ms18e-gates-v3",
+  "revision": "Held rows executed under the owner's decision A (message 1573242656648069141, 2026-11-20 14:44:38 +07:00). Replaces audit/gates-v2.json (kept as the earlier record): the three S-OD8 ratio rows, the seven mega16 Hell 1 occurrences and the S-AV11 profile ran; the full 14-record Hell 1 reconcile ran and returned exit 1 (complete true, correctness pass, evidence unsound by a mixed commit identity), which was reported as it is and then ruled (a)+(c) at 15:57 (SA1 ruling, SA2 binding ruling matching): a commit-label-only split, verified file-only in preflight/deep-hell1-commit-equivalence.json, with the raw strict result retained. S-AV11 is recorded as an open performance finding although its required profile is complete.",
+  "scope": "local gates of the final tree (sources d8d48983..., HEAD 5f697ef9 at the E4a runs); remote CI is a separate gate whose facts the orchestrator supplies",
+  "vocabulary": "pass | fail | incomplete | not-applicable | reused-compatible | pending-remote",
+  "statuses": {
+    "coverage": "pass (the assigned scope is complete; 563 excluded manual assertions are scope exclusions, unexecuted)",
+    "correctness": "pass",
+    "exactnessAvailability": "fail (named numerical findings, see nonBlockingObservations)",
+    "timing": "pass (every executed row finished inside the 540 s ceiling); GP misses are observations",
+    "remote": "pending-remote"
+  },
+  "releaseReady": false,
+  "acceptanceState": {
+    "stagesCompleted": ["E0", "E1", "E2", "E3", "E4a (held rows)"],
+    "ms18e": "OPEN",
+    "routeA": "all eleven held rows were launched once and finished; the full 14-record Hell 1 reconcile ran: complete true, correctness pass, relations 6/0/0, evidenceSound false and exit 1 (raw result retained) only through two commit labels (mega12 547168b4, mega16 5f697ef9) over identical source and tool hashes; ruled (a)+(c) at 15:57 as a commit-label-only split, verified in preflight/deep-hell1-commit-equivalence.json",
+    "until": "the final matching-head remote CI closes (the only remaining blocker); no A, B or W decision is outstanding; acceptance does not authorize merge or deployment",
+    "routes": { "A": "executed as described above", "other": "only an explicit, scoped acceptance waiver" },
+    "remoteCi": "green CI closes only the remote-CI gate"
+  },
+  "releaseReadyReasons": [
+    "remote CI: the eight task-defined PR jobs must all succeed on the matching final head (facts supplied by the orchestrator; the early run 44672736283 on b0a29ffd failed 2 of 8 jobs and is not final evidence). This is the only remaining blocker: the assigned coverage is complete and no A, B or W decision is outstanding"
+  ],
+  "nonBlockingObservations": [
+    {
+      "id": "obs.gp-misses",
+      "text": "five GP cells miss their p95 targets (mega12/expert, sohei/hell2, butterfly/hell2, wordoku/expert, wordoku/nightmare); the gate passes: 74 of 79 meet, 72 required. No waiver, target change or retest.",
+      "evidence": ["docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json", "docs/difficulty-v3/performance-v3.md"]
+    },
+    {
+      "id": "obs.s-av14",
+      "text": "S-AV14: classic9 Normal hit rate 83 of 100 against 90 (difficulty.test.js:1272), exit 1, 7 of 8 assertions pass; the accepted numerical finding, not a new owner question.",
+      "evidence": ["manual/difficulty/normal.json", "transcripts/GD-normal.txt"]
+    },
+    {
+      "id": "obs.hell1-shallow",
+      "text": "Hell 1: exact 0 of 14 (mega12 0 of 7, mega16 0 of 7), every record a shallow fallback; mega12 costs 92.1 to 103.7 s per request against 29.3 to 34.4 s at MS07b and mega16 319.8 to 359.6 s against 99.9 to 123.3 s, all seven mega16 over the 120 s application guard; numerical findings (S-OD4), not correctness failures.",
+      "evidence": ["deep/hell1/", "preflight/deep-reconcile-hell1-v2.json"]
+    },
+    {
+      "id": "obs.s-av11-delay",
+      "text": "S-AV11: the delay reproduces on the current source (342.092 s against the historical 325.313 s); the pipeline's own timing, summed over the 5 attempts, places 335,178.67 ms (98.0 %) in fullGrid and 6,719.97 ms (2.0 %) in dig. An open performance finding with a named future owner (later performance work) although the required profile is complete: the slow attempt and the cause are unknown, and whether the offered Jigsaw levels are affected is not established; no claim either way.",
+      "evidence": ["profile/s-av11/record-1.json"]
+    },
+    {
+      "id": "obs.manual-scope-exclusions",
+      "text": "563 manual assertions are outside the dispatch and unexecuted (extra-regions 117, greater-than 103, jigsaw 82, killer 91, perf 48, wordoku 122): scope exclusions, not required work, never reported as passed.",
+      "evidence": ["preflight/scope-map-v2.json"]
+    }
+  ],
+  "gates": [
+    {
+      "id": "coverage.quick.generator", "category": "coverage", "status": "pass",
+      "detail": "4,807 of 4,807 tests in 55 suites, eight separate shard commands, each once by (suite, ordinal); zero failures, zero skips; complete and source-stable on 46b3d0e2...",
+      "evidence": ["audit/coverage.json", "quick/"]
+    },
+    {
+      "id": "coverage.quick.player", "category": "coverage", "status": "pass",
+      "detail": "2,981 of 2,981 tests in 32 suites, one command; zero failures, zero skips; complete and source-stable on 45dc0473...",
+      "evidence": ["audit/coverage.json", "quick/player-quick.json"]
+    },
+    {
+      "id": "coverage.ci.inventory", "category": "coverage", "status": "pass",
+      "detail": "generator-quick.js check: every quick test in exactly one shard (4,807 of 4,807), no manual or unknown suite, no empty shard, every job inside its limit; selftest 67 checks, 0 failed",
+      "evidence": ["transcripts/e3-ci-check-final.txt", "transcripts/e3-ci-selftest.txt", "ci/check-e3-final/"]
+    },
+    {
+      "id": "coverage.manual.gd", "category": "coverage", "status": "pass",
+      "detail": "all 146 tests of the current manual difficulty inventory ran at E2 (22 locked rows); one assertion failed (S-AV14, a non-blocking observation)",
+      "evidence": ["preflight/admission-plan-v2.json", "manual/difficulty/", "e2-summary.md"]
+    },
+    {
+      "id": "coverage.manual.i5", "category": "coverage", "status": "pass",
+      "detail": "the 32 I5 selectors (killer 3, jigsaw 6, greater-than 5, wordoku 6, extra-regions 12) each 1 of 1",
+      "evidence": ["manual/i5/", "e2-summary.md"]
+    },
+    {
+      "id": "coverage.manual.other", "category": "coverage", "status": "not-applicable",
+      "detail": "563 tests of the manual suites outside the MS18e assignment (extra-regions 117, greater-than 103, jigsaw 82, killer 91, perf 48, wordoku 122) are scope exclusions: unexecuted, not required work of this task, never reported as passed",
+      "evidence": ["preflight/scope-map-v2.json"]
+    },
+    {
+      "id": "coverage.manual.variants", "category": "coverage", "status": "reused-compatible",
+      "detail": "285 of 285 at MS18c under with-manual 13cd63bf; four-criteria proof rechecked on the final tree; CV3-replacement and REPLAY-mega16 not rerun",
+      "evidence": ["preflight/variants-compatibility-v3.json"]
+    },
+    {
+      "id": "coverage.manual.s-od8-ratios", "category": "coverage", "status": "pass",
+      "detail": "RATIO-off, RATIO-summary and RATIO-full each ran once under owner decision A (original populations, warmup, interleaved rounds, assertion limits unchanged): 1 of 1 passed each, tee 120.554 / 120.527 / 121.352 s, exit 0, complete and source-stable on d8d48983...",
+      "evidence": ["manual/ratios/off.json", "manual/ratios/summary.json", "manual/ratios/full.json", "e4a-summary.md"]
+    },
+    {
+      "id": "coverage.deep.nightmare", "category": "coverage", "status": "pass",
+      "detail": "14 of 14 final-source occurrences, reconciled complete and sound, 6 relations pass",
+      "evidence": ["preflight/deep-reconcile-nightmare.json", "deep/nightmare/"]
+    },
+    {
+      "id": "coverage.deep.hell1", "category": "coverage", "status": "pass",
+      "detail": "Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained. 14 of 14 occurrences ran (mega12 at E2, mega16 at E4a, each exit 0, correctness pass, exact false). The full reconcile: exit 1, complete true, evidenceSound false, identity.commit null, correctness pass (14 passed), relations 6 pass / 0 fail / 0 unevaluated, sourceHash and toolHash single values equal to the current ones. Its one problem is 'mixed identities: commit has 2 values' (mega12 records 547168b4, mega16 records 5f697ef9). Ruled (a)+(c) at 15:57: the file-only equivalence record shows no change under core, player or generator (outside generator/tests/artifacts) between the commits, equal blob IDs for all 70 loaded files and records that differ only in commit. Between the commits .github changed in workflow comments and in the quick-manifest timing metadata, none a deep-recipe input. No tool edit, no record edit, no re-run, no general rule that exit 1 is acceptable; exact 0 of 14, the shallow fallbacks and the costs remain numerical findings",
+      "evidence": ["preflight/deep-reconcile-hell1-v2.json", "preflight/deep-hell1-commit-equivalence.json", "transcripts/e4b-equivalence-check.txt", "deep/hell1/", "transcripts/deep-reconcile-hell1-v2.txt", "generator/tests/fixtures/mega-contract.js"]
+    },
+    {
+      "id": "coverage.s-av11", "category": "coverage", "status": "pass",
+      "detail": "SAV11 ran once (exit 0, tee 342.803 s): record written, request returned, exact true, 5 attempts; all record checks hold (sourceHash b8ec138d..., dirty false, request the original four fields, ownerDecision recorded, timingKeysComplete true, cellCount 81, default attempts 8, Expert absent from the offered levels after the call); gate passed, host snapshots before and after saved as raw context. The required profile is complete; the S-AV11 delay is an open performance finding (a non-blocking observation with a named future owner): about 335 s of fullGrid time summed across 5 attempts, the slow attempt and the cause unknown, no claim about the offered Jigsaw levels",
+      "evidence": ["profile/s-av11/record-1.json", "profile/s-av11/gate-1.txt", "profile/s-av11/host-before-1.json", "profile/s-av11/host-after-1.json", "transcripts/sav11-run-1.txt"]
+    },
+    {
+      "id": "coverage.hidden-level-scan", "category": "coverage", "status": "pass",
+      "detail": "static: 116 call sites in 8 manual suites, 0 unguarded hidden-level requests. Three of the four MS18 guards ran at E2 and passed (GD-rest-08, GD-rest-11, GD-rest-14); only the perf serializer guard (greaterThan/normal) did not run",
+      "evidence": ["audit/manual-hidden-requests-final-v3.json", "manual/difficulty/rest-08.json", "manual/difficulty/rest-11.json", "manual/difficulty/rest-14.json"]
+    },
+    {
+      "id": "correctness.quick", "category": "correctness", "status": "pass",
+      "detail": "all 7,788 quick tests of both apps pass on the final fingerprints",
+      "evidence": ["audit/coverage.json"]
+    },
+    {
+      "id": "correctness.gd-i5-deep-ratios-sav11", "category": "correctness", "status": "pass",
+      "detail": "no wrong puzzle, non-uniqueness, unsound deduction, wrong exactness flag or warning, or damaged evidence in any executed GD/I5/deep/ratio/S-AV11 row (the I1-I7 and proof assertions pass; deep correctness pass on 14 Nightmare and 14 Hell 1 records; the S-AV11 request returned an exact Expert puzzle); the Hell 1 reconcile's evidence flag concerns a commit label, ruled a commit-label-only split, see coverage.deep.hell1",
+      "evidence": ["e2-summary.md", "e4a-summary.md", "preflight/deep-reconcile-nightmare.json", "preflight/deep-reconcile-hell1-v2.json"]
+    },
+    {
+      "id": "correctness.recorded-ledgers", "category": "correctness", "status": "pass",
+      "detail": "check-only: GG 104 ledgers / 520 keys exactly once and all 520 hashes unchanged; GR 5 wires and 14 analyses match; GH 40 of 40 match; replay and hash identities unchanged; sources 75b0955e3e356bd1 and the 79-cell target table 3d0bffdb... unchanged",
+      "evidence": ["transcripts/e3-gg-check.txt", "transcripts/e3-gr-wire-check.txt", "transcripts/e3-gr-analysis-check.txt", "transcripts/e3-gh-check.txt", "audit/targets-recheck-final-v3.json", "audit/source-bindings.json"]
+    },
+    {
+      "id": "exactnessAvailability.gd-normal-hit-rate", "category": "exactnessAvailability", "status": "fail",
+      "detail": "S-AV14: classic9 Normal hit rate 83 of 100 against 90, exit 1, 7 of 8 assertions pass; retained, not a pass, no waiver (non-blocking observation)",
+      "evidence": ["manual/difficulty/normal.json", "transcripts/GD-normal.txt"]
+    },
+    {
+      "id": "exactnessAvailability.hell1", "category": "exactnessAvailability", "status": "fail",
+      "detail": "Hell 1 exact 0 of 14 (mega12 0 of 7, mega16 0 of 7), every record a shallow fallback (difficulty.approximate and difficulty.shallow); a numerical finding, not a correctness failure (non-blocking observation)",
+      "evidence": ["deep/hell1/", "preflight/deep-reconcile-hell1-v2.json"]
+    },
+    {
+      "id": "exactnessAvailability.gp", "category": "exactnessAvailability", "status": "pass",
+      "detail": "GP 74 of 79 cells meet (72 required), complete; five misses retained with their exact numbers; no waiver, target change or retest",
+      "evidence": ["docs/difficulty-v3/evidence/MS18d/gp/all-79/final.m1/report.json", "docs/difficulty-v3/performance-v3.md"]
+    },
+    {
+      "id": "timing.e2-rows", "category": "timing", "status": "pass",
+      "detail": "all 75 admitted E2 rows finished inside their P (largest tee 181.763 s, GD-confusion, P 376 s); none killed at 540 s; no retry",
+      "evidence": ["e2-summary.md", "lock-log.jsonl"]
+    },
+    {
+      "id": "timing.held-rows-executed", "category": "timing", "status": "pass",
+      "detail": "the ten released rows and SAV11 had no projection (owner decision A): seven mega16 Hell 1 rows 320.737 to 360.546 s, three ratios 120.527 to 121.352 s, SAV11 342.803 s tee; none reached the 540 s ceiling, none killed, no retry",
+      "evidence": ["e4a-summary.md", "lock-log.jsonl"]
+    },
+    {
+      "id": "timing.quick-ci-arithmetic", "category": "timing", "status": "pass",
+      "detail": "no projection rises by max(old, 10 x ceil(1.5 m / 10)); groups 1,260 / 1,320 / 420 / 450 of 1,800 s; Player job 750 of its actual 900 s; every projection <= 450 s",
+      "evidence": ["ci/quick-cost.json", "audit/workflow-audit.json"]
+    },
+    {
+      "id": "timing.gp-misses", "category": "timing", "status": "fail",
+      "detail": "five GP cells miss their p95 targets (numerical findings under S-OD4; non-blocking observation, GP passed 74 of 79 with 72 required)",
+      "evidence": ["docs/difficulty-v3/performance-v3.md"]
+    },
+    {
+      "id": "remote.early-ci", "category": "remote", "status": "fail",
+      "detail": "early run 44672736283 on b0a29ffd (Node v24.22.3, Ubuntu): 6 of 8 jobs succeeded; Test player in a browser (136077961042, F1) and Test generator (own suites) (136077961076, F2) failed; local fixes exist, they are not the final result",
+      "evidence": ["audit/remote-ci.json"]
+    },
+    {
+      "id": "remote.final-pr-ci", "category": "remote", "status": "pending-remote",
+      "detail": "all eight task-defined jobs must succeed on the matching final head; the orchestrator supplies the run and job facts (a final matching-head run 44696956718 on 7d0fb2c0 is recorded in the pack, not here); the browser job has no local coverage. Green CI closes only this gate",
+      "evidence": ["audit/remote-ci.json"]
+    }
+  ]
+}

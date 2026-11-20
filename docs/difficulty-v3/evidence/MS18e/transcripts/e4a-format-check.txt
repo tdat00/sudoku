@@ -1,0 +1,19 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs format docs/difficulty-v3/release-v3.md docs/difficulty-v3/notes.md .github/workflows/pull-request.yml .github/workflows/pages.yml generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs docs/difficulty-v3/evidence/MS18e/handoff-v3-3.md docs/difficulty-v3/evidence/MS18e/e4a-summary.md docs/difficulty-v3/evidence/MS18e/audit/items-e4a-results.json docs/difficulty-v3/evidence/MS18e/audit/items-v3.json docs/difficulty-v3/evidence/MS18e/audit/gates-v3.json docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-hell1-v2.json docs/difficulty-v3/evidence/MS18e/profile/s-av11/record-1.json docs/difficulty-v3/evidence/MS18e/profile/s-av11/gate-1.txt docs/difficulty-v3/evidence/MS18e/profile/s-av11/host-before-1.json docs/difficulty-v3/evidence/MS18e/profile/s-av11/host-after-1.json docs/difficulty-v3/evidence/MS18e/lock-log.jsonl
+ok      docs/difficulty-v3/release-v3.md
+ok      docs/difficulty-v3/notes.md
+ok      .github/workflows/pull-request.yml
+ok      .github/workflows/pages.yml
+ok      generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs
+ok      docs/difficulty-v3/evidence/MS18e/handoff-v3-3.md
+ok      docs/difficulty-v3/evidence/MS18e/e4a-summary.md
+ok      docs/difficulty-v3/evidence/MS18e/audit/items-e4a-results.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/items-v3.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/gates-v3.json
+ok      docs/difficulty-v3/evidence/MS18e/preflight/deep-reconcile-hell1-v2.json
+ok      docs/difficulty-v3/evidence/MS18e/profile/s-av11/record-1.json
+ok      docs/difficulty-v3/evidence/MS18e/profile/s-av11/gate-1.txt
+ok      docs/difficulty-v3/evidence/MS18e/profile/s-av11/host-before-1.json
+ok      docs/difficulty-v3/evidence/MS18e/profile/s-av11/host-after-1.json
+ok      docs/difficulty-v3/evidence/MS18e/lock-log.jsonl
+checked 16 files, 0 with problems
+exit=0 seconds=0.109

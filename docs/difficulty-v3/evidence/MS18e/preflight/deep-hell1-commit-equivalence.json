@@ -1,0 +1,283 @@
+{
+  "schema": "ms18e-deep-hell1-commit-equivalence-v1",
+  "ruling": "Hell 1 reconcile ruling of 2026-11-20 15:57 (+07:00): (a) accept as a commit-label-only split, with this file-only (c) record. SA1 ruled it and SA2's binding ruling matches (a)+(c). The raw reconcile result is unchanged: exit 1, evidenceSound false, identity.commit null, the single problem 'mixed identities: commit has 2 values'. No tool edit, no record edit, no re-run, no general rule that exit 1 is acceptable. Accepted disposition: 'Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained.' Exact 0 of 14, the shallow fallbacks and the measured costs remain numerical findings.",
+  "method": "git reads only (git diff --name-only, git rev-parse <commit>:<path>, git cat-file); no Node, no file of the tool or of a record read or written. The data below was transcribed from those outputs and then re-checked read-only against git (transcripts/e4b-equivalence-check.txt: every changed path, blob ID and tree ID compared again).",
+  "commits": {
+    "mega12Records": "547168b48d5eb7a9165432db87a227a9d1c4b068",
+    "mega16Records": "5f697ef9aae3df7b2116834b6111931b27129dda",
+    "note": "547168b4 is the E0/E1 commit (HEAD when the seven mega12 Hell 1 records ran at E2); 5f697ef9 is HEAD of the pack when the seven mega16 Hell 1 records ran at E4a. Commits between: 28d5b209 (E2 evidence), c5ee3df1 (E3), 7d0fb2c0 (E3 corrections), 5f697ef9 (pack-only records of the owner decisions)."
+  },
+  "recipes": {
+    "sourceHash": "mega-contract.js:168 env.identity([]) (replay-fixtures.js:125): SHA-256 over the entries of SOURCE_FILES (parsed from generator/tests/node-runner.js, the existing ones) as '<path>\\0<text with LF line ends>'; the extra-file list is empty. 64 entries at both commits, the same list.",
+    "toolHash": "mega-contract.js:69 toolHash(): SHA-256 over generator/tests/mega-contract.js and generator/tests/fixtures/mega-contract.js (TOOL_FILES) the same way.",
+    "alsoLoaded": "generator/tests/node-runner.js (its SOURCE_FILES list), generator/tests/replay-fixtures.js (loader and identity), generator/tests/fixtures/tool-records.js (the level guard) and core/tests/node-evidence.js (required by the tool)",
+    "commitAndDirty": "replay-fixtures.js gitState(): HEAD at the time of the run, and dirty = any change outside docs/difficulty-v3/evidence and generator/tests/artifacts"
+  },
+  "changedBetweenCommits": {
+    "command": "git diff --name-only 547168b4 5f697ef9",
+    "count": 271,
+    "githubChanges": "Between the two commits `.github` changed in three files: the comments of .github/workflows/pull-request.yml and pages.yml and the quick-manifest TIMING METADATA of .github/scripts/generator-quick.json (measuredSeconds and one provenance sentence; no projection, membership, group or command changed). None of these is an input of the deep recipes (the source hash, the tool hash or the loaded files above).",
+    "outsideEvidence": [
+      ".github/scripts/generator-quick.json",
+      ".github/workflows/pages.yml",
+      ".github/workflows/pull-request.yml",
+      "docs/README.md",
+      "docs/difficulty-v3/notes.md",
+      "docs/difficulty-v3/release-v3.md",
+      "generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs",
+      "tasks/difficulty-v3/MS18e-dispatch-and-release-gates.md"
+    ],
+    "evidenceFolders": [
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e",
+        "files": [
+          "e2-summary.md", "handoff-v3-2.md", "handoff-v3.md", "helpers-sha256-v3-2.txt", "helpers-sha256-v3.txt", "lock-log.jsonl",
+          "outputs-sha256-v3-2.txt", "outputs-sha256-v3-3.txt", "outputs-sha256-v3-4.txt", "outputs-sha256-v3.txt"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/audit",
+        "files": [
+          "coverage.json", "final-identities-v3.txt", "gates-v2.json", "gates.json", "items-e3-corrections.json", "items-e3-input.json", "items-v2.json",
+          "items.json", "manual-hidden-requests-final-v3.json", "remote-ci.json", "source-bindings.json", "targets-recheck-final-v3.json", "workflow-audit.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-before",
+        "files": [
+          "generator-all.json", "player-all.json", "shard-core-shared.json", "shard-digger-target.json", "shard-mega.json", "shard-own-fast.json",
+          "shard-pipeline.json", "shard-player.json", "shard-replay.json", "shard-steps.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/ci/check-e3-final",
+        "files": [
+          "generator-all.json", "player-all.json", "shard-core-shared.json", "shard-digger-target.json", "shard-mega.json", "shard-own-fast.json",
+          "shard-pipeline.json", "shard-player.json", "shard-replay.json", "shard-steps.json"
+        ]
+      },
+      { "dir": "docs/difficulty-v3/evidence/MS18e/ci", "files": ["quick-cost.json"] },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/deep/hell1",
+        "files": [
+          "mega12-hell1-cv5-a.json", "mega12-hell1-cv5-b.json", "mega12-hell1-cv5-other.json", "mega12-hell1-invariant-1.json",
+          "mega12-hell1-invariant-2.json", "mega12-hell1-invariant-3.json", "mega12-hell1-invariant-4.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/deep/nightmare",
+        "files": [
+          "mega12-cv5-a.json", "mega12-cv5-b.json", "mega12-cv5-other.json", "mega12-invariant-1.json", "mega12-invariant-2.json", "mega12-invariant-3.json",
+          "mega12-invariant-4.json", "mega16-cv5-a.json", "mega16-cv5-b.json", "mega16-cv5-other.json", "mega16-invariant-1.json", "mega16-invariant-2.json",
+          "mega16-invariant-3.json", "mega16-invariant-4.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/manual/difficulty",
+        "files": [
+          "confusion-matrix.json", "easy.json", "expert.json", "hard.json", "master.json", "nightmare.json", "normal.json", "rest-01.json", "rest-02.json",
+          "rest-03.json", "rest-04.json", "rest-05.json", "rest-06.json", "rest-07.json", "rest-08.json", "rest-09.json", "rest-10.json", "rest-11.json",
+          "rest-12.json", "rest-13.json", "rest-14.json", "veryEasy.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/manual/i5",
+        "files": [
+          "extra-regions-diagonalX-hard.json", "extra-regions-diagonalX-hell2.json", "extra-regions-diagonalX-master.json", "extra-regions-diagonalX-nightmare.json",
+          "extra-regions-diagonalX-normal.json", "extra-regions-diagonalX-veryEasy.json", "extra-regions-hyper-hard.json", "extra-regions-hyper-hell2.json",
+          "extra-regions-hyper-master.json", "extra-regions-hyper-nightmare.json", "extra-regions-hyper-normal.json", "extra-regions-hyper-veryEasy.json",
+          "greater-than-easy.json", "greater-than-hard.json", "greater-than-hell2.json", "greater-than-master.json", "greater-than-veryEasy.json",
+          "jigsaw-easy.json", "jigsaw-hard.json", "jigsaw-hell2.json", "jigsaw-master.json", "jigsaw-normal.json", "jigsaw-veryEasy.json",
+          "killer-easy.json", "killer-normal.json", "killer-veryEasy.json", "wordoku-easy.json", "wordoku-expert.json", "wordoku-hard.json",
+          "wordoku-master.json", "wordoku-nightmare.json", "wordoku-veryEasy.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/preflight",
+        "files": [
+          "deep-reconcile-hell1-partial.json", "deep-reconcile-nightmare.json", "inventory-variants-v3.json", "variants-compatibility-v3.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/preflight/e2-selectors",
+        "files": ["GD-confusion.json", "GD-easy.json", "I5-greater-than-easy.json"]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/quick",
+        "files": [
+          "generator-core-shared.json", "generator-digger-target.json", "generator-mega.json", "generator-own-fast.json", "generator-pipeline.json",
+          "generator-player.json", "generator-replay.json", "generator-steps.json", "player-quick.json"
+        ]
+      },
+      {
+        "dir": "docs/difficulty-v3/evidence/MS18e/transcripts",
+        "files": [
+          "DEEP-mega12-cv5-a.txt", "DEEP-mega12-cv5-b.txt", "DEEP-mega12-cv5-other.txt", "DEEP-mega12-hell1-cv5-a.txt", "DEEP-mega12-hell1-cv5-b.txt",
+          "DEEP-mega12-hell1-cv5-other.txt", "DEEP-mega12-hell1-invariant-1.txt", "DEEP-mega12-hell1-invariant-2.txt", "DEEP-mega12-hell1-invariant-3.txt",
+          "DEEP-mega12-hell1-invariant-4.txt", "DEEP-mega12-invariant-1.txt", "DEEP-mega12-invariant-2.txt", "DEEP-mega12-invariant-3.txt",
+          "DEEP-mega12-invariant-4.txt", "DEEP-mega16-cv5-a.txt", "DEEP-mega16-cv5-b.txt", "DEEP-mega16-cv5-other.txt", "DEEP-mega16-invariant-1.txt",
+          "DEEP-mega16-invariant-2.txt", "DEEP-mega16-invariant-3.txt", "DEEP-mega16-invariant-4.txt", "GD-confusion.txt", "GD-easy.txt", "GD-expert.txt",
+          "GD-hard.txt", "GD-master.txt", "GD-nightmare.txt", "GD-normal.txt", "GD-rest-01.txt", "GD-rest-02.txt", "GD-rest-03.txt", "GD-rest-04.txt",
+          "GD-rest-05.txt", "GD-rest-06.txt", "GD-rest-07.txt", "GD-rest-08.txt", "GD-rest-09.txt", "GD-rest-10.txt", "GD-rest-11.txt", "GD-rest-12.txt",
+          "GD-rest-13.txt", "GD-rest-14.txt", "GD-veryEasy.txt", "I5-extra-regions-hard-diagonalX.txt", "I5-extra-regions-hard-hyper.txt",
+          "I5-extra-regions-hell2-diagonalX.txt", "I5-extra-regions-hell2-hyper.txt", "I5-extra-regions-master-diagonalX.txt", "I5-extra-regions-master-hyper.txt",
+          "I5-extra-regions-nightmare-diagonalX.txt", "I5-extra-regions-nightmare-hyper.txt", "I5-extra-regions-normal-diagonalX.txt",
+          "I5-extra-regions-normal-hyper.txt", "I5-extra-regions-veryEasy-diagonalX.txt", "I5-extra-regions-veryEasy-hyper.txt", "I5-greater-than-easy.txt",
+          "I5-greater-than-hard.txt", "I5-greater-than-hell2.txt", "I5-greater-than-master.txt", "I5-greater-than-veryEasy.txt", "I5-jigsaw-easy.txt",
+          "I5-jigsaw-hard.txt", "I5-jigsaw-hell2.txt", "I5-jigsaw-master.txt", "I5-jigsaw-normal.txt", "I5-jigsaw-veryEasy.txt", "I5-killer-easy.txt",
+          "I5-killer-normal.txt", "I5-killer-veryEasy.txt", "I5-wordoku-easy.txt", "I5-wordoku-expert.txt", "I5-wordoku-hard.txt", "I5-wordoku-master.txt",
+          "I5-wordoku-nightmare.txt", "I5-wordoku-veryEasy.txt", "ci-check-e3-before.txt", "compat-v3.txt", "deep-reconcile-hell1-partial.txt",
+          "deep-reconcile-nightmare.txt", "e2-identities.txt", "e2-sel-GD-confusion.txt", "e2-sel-GD-easy.txt", "e2-sel-I5-greater-than-easy.txt",
+          "e3-bindings.txt", "e3-ci-check-final.txt", "e3-ci-selftest.txt", "e3-cost-dry.txt", "e3-cost.txt", "e3-coverage.txt", "e3-format-check-2.txt",
+          "e3-format-check-3.txt", "e3-format-check.txt", "e3-gg-check.txt", "e3-gh-check.txt", "e3-gr-analysis-check.txt", "e3-gr-wire-check.txt",
+          "e3-helpercheck-bindings-wrong.txt", "e3-helpercheck-cost-phased.txt", "e3-helpercheck-coverage-phased.txt", "e3-helpercheck-coverage-wrongids.txt",
+          "e3-helpers-hash.txt", "e3-identities-end.txt", "e3-identities-final.txt", "e3-identities-start.txt", "e3-items-2.txt", "e3-items.txt",
+          "e3-outputs-hash-2.txt", "e3-outputs-hash-3.txt", "e3-outputs-hash.txt", "e3-scan-final-v3.txt", "e3-workflow-audit.txt", "e3c-format-check.txt",
+          "e3c-helpers-hash.txt", "e3c-identities.txt", "e3c-items-2.txt", "e3c-items.txt", "e3c-outputs-hash.txt", "inventory-variants-v3.txt",
+          "quick-generator-core-shared.txt", "quick-generator-digger-target.txt", "quick-generator-mega.txt", "quick-generator-own-fast.txt",
+          "quick-generator-pipeline.txt", "quick-generator-player.txt", "quick-generator-replay.txt", "quick-generator-steps.txt", "quick-player.txt",
+          "targets-recheck-final-v3.txt"
+        ]
+      }
+    ]
+  },
+  "changedInSourceScope": {
+    "command": "git diff --name-only 547168b4 5f697ef9 -- core generator player ':(exclude)generator/tests/artifacts'",
+    "files": [],
+    "count": 0,
+    "onlyHelperUnderGenerator": "generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs (an audit helper under generator/tests/artifacts; the deep tool does not load it, and the evidence/artifact folders are excluded from its dirty flag)"
+  },
+  "treeIds": [
+    { "path": "core", "at547168b4": "8227cd6916c9cb227ef1777aa49ef508a451b821", "at5f697ef9": "8227cd6916c9cb227ef1777aa49ef508a451b821", "equal": true },
+    { "path": "player", "at547168b4": "13068a65c574679f4ff3b425e896548a338c1c7c", "at5f697ef9": "13068a65c574679f4ff3b425e896548a338c1c7c", "equal": true },
+    { "path": "generator/js", "at547168b4": "53f52ac6a686218c10929ac416b9593de73f3081", "at5f697ef9": "53f52ac6a686218c10929ac416b9593de73f3081", "equal": true },
+    { "path": "generator/css", "at547168b4": "1d48a5f0fd83fab633d346e2d9dd2c5c65fe1737", "at5f697ef9": "1d48a5f0fd83fab633d346e2d9dd2c5c65fe1737", "equal": true },
+    { "path": "generator/assets", "at547168b4": "a096685ed7db6a281c16e5076450e7f00e2bf324", "at5f697ef9": "a096685ed7db6a281c16e5076450e7f00e2bf324", "equal": true },
+    { "path": "generator/tests/fixtures", "at547168b4": "fa24fd180a20ec919a27cc30429a35ade5116a09", "at5f697ef9": "fa24fd180a20ec919a27cc30429a35ade5116a09", "equal": true },
+    { "path": "generator/tests/suites", "at547168b4": "f489a9a0d5cc39b7386441de5ff3eb8938a9c992", "at5f697ef9": "f489a9a0d5cc39b7386441de5ff3eb8938a9c992", "equal": true },
+    { "path": "generator/tests/manual", "at547168b4": "d846eaea766edb1b18b9a58843d9f9015609d03c", "at5f697ef9": "d846eaea766edb1b18b9a58843d9f9015609d03c", "equal": true },
+    { "path": "generator", "at547168b4": "b2933d57d0823ab83b53b333d48bb5ff4784cb49", "at5f697ef9": "53aefaecedc05fe5e43db721e81b325a5571f1ae", "equal": false, "why": "the whole generator folder differs only through generator/tests/artifacts (the audit.cjs helper); every subtree above and below it that the tool loads is equal" }
+  ],
+  "loadedFiles": {
+    "count": 70,
+    "composition": "64 SOURCE_FILES entries (the sourceHash) + node-runner.js, mega-contract.js, fixtures/mega-contract.js, fixtures/tool-records.js, replay-fixtures.js and core/tests/node-evidence.js",
+    "allEqualPairwise": true,
+    "orderedSourceFilesEqual": "the ordered SOURCE_FILES list (64 entries, as parsed from generator/tests/node-runner.js) is identical at 547168b4 and 5f697ef9; the first 64 blob rows below follow that order, then the runner, the entry point (mega-contract.js), its fixture, the level-guard fixture, the loader and node-evidence.js",
+    "blobs": [
+      { "path": "core/js/engine/ns.js", "blob": "1dc48f0a748481ad8c14530b80ea59976a014613" },
+      { "path": "core/js/engine/errors.js", "blob": "96786e966154d3a32b1bb6c74c92626805d92b80" },
+      { "path": "core/js/engine/bits.js", "blob": "b3e12493041e65e4511887c681c18b9f20994f91" },
+      { "path": "core/js/engine/budget.js", "blob": "3e3ab18c330ebf0b58607333b933803b1353385c" },
+      { "path": "generator/js/engine/rng.js", "blob": "9b04b30993b38966b93fb98f3cc12442ab70202a" },
+      { "path": "core/js/engine/model.js", "blob": "aabdb5f70bfb44c157bb4351819d37cf2663164a" },
+      { "path": "core/js/engine/constraints.js", "blob": "740b1019991e8dffa307560079c6709fc0d2a8a8" },
+      { "path": "core/js/engine/combo-table.js", "blob": "f4a6dc5860dbb9b4d341af000ef2b4e99fca8503" },
+      { "path": "core/js/engine/dfs-solver.js", "blob": "27baf7f766a1a844f6711d82a1101dc304889716" },
+      { "path": "core/js/engine/techniques.js", "blob": "0bb3f7b766291a0ff534fe2700542a198475452b" },
+      { "path": "core/js/engine/logical-solver.js", "blob": "2b8725f94b598f43c25a2f414d09663ecaa508eb" },
+      { "path": "core/js/engine/tech-basic.js", "blob": "28adf45f325b4c261d6a2760d733d3c3ab3f2a4b" },
+      { "path": "core/js/engine/tech-subset.js", "blob": "a0e41a5857ff161a6d9946ff8b847a7f3f1bc1a3" },
+      { "path": "core/js/engine/tech-fish.js", "blob": "a7d986c5b690a439a5d967e7a1be59e2ddba47db" },
+      { "path": "core/js/engine/tech-wing.js", "blob": "4567ebf76810675d32926cb7609999d8c1eedd9a" },
+      { "path": "core/js/engine/tech-chain.js", "blob": "fd74dd155752e56c98936bf1d494f7e8ddc31934" },
+      { "path": "core/js/engine/tech-als.js", "blob": "b295319e11c6edc6ae6dc9633d702936a4f7b15b" },
+      { "path": "core/js/engine/tech-cage.js", "blob": "8ebffbb531c69ef43a1c6e5ac64f71a3ab42257c" },
+      { "path": "core/js/engine/tech-ineq.js", "blob": "d06e713f22a3af103c4fcde842a8e2223336b28e" },
+      { "path": "core/js/engine/classic-model.js", "blob": "fca26ebea8ea1e099c8f35b009883847dc4c72a9" },
+      { "path": "core/js/engine/model-aids.js", "blob": "4a8bd8a24462944529c8fc3aaf336aa702ba4a3f" },
+      { "path": "generator/js/engine/difficulty.js", "blob": "1cec9f591d46a1eca64df2f1d98ef001d28a79d5" },
+      { "path": "generator/js/engine/full-grid.js", "blob": "82f7639fb41b7028e69b50f7bc6ff9fd29e78a22" },
+      { "path": "generator/js/engine/symmetry.js", "blob": "7ec0101b08d01203fb2f6571d048556cad8313e1" },
+      { "path": "generator/js/engine/digger.js", "blob": "93381069127dbfb8a1f97dbb8c793e42ad2a86fd" },
+      { "path": "generator/js/engine/events.js", "blob": "41e67326073f62309a1cf89c3f68edbed9fccdf0" },
+      { "path": "generator/js/engine/explain-data.js", "blob": "cdcea922b153c7d56a821f64c030bed7af84655d" },
+      { "path": "generator/js/engine/pipeline.js", "blob": "f8a54be937e7e71dec284967065462c84052e72e" },
+      { "path": "generator/js/engine/replay.js", "blob": "ad1a2df08478a63611db67625636293e3377aebe" },
+      { "path": "generator/js/variants/registry.js", "blob": "c3eee1c40b5a9366b6663f8df3c404f84ffa15ee" },
+      { "path": "generator/js/variants/classic.js", "blob": "da266df69e73a5fc8fd4f6f72e176bf5707885ac" },
+      { "path": "generator/js/variants/mega.js", "blob": "8ee48ed45c922dd857b90645e252392e0dd23ea5" },
+      { "path": "generator/js/variants/extra-regions.js", "blob": "663efaf0afb59999cd3078282ba76937e4ac56f1" },
+      { "path": "generator/js/variants/jigsaw.js", "blob": "1b2f4f608a74f6925aeb89ffb23f85d6dabf52fe" },
+      { "path": "generator/js/variants/killer.js", "blob": "aa47842a91b0a1fb83cf44d3818e91bed70ae87f" },
+      { "path": "generator/js/variants/greater-than.js", "blob": "d831a52b86c6d31950bf4db22ddcbe4d0a3198d6" },
+      { "path": "generator/js/variants/multigrid.js", "blob": "16e01d6e9d7755977d1b3bfe7f43d031b99aa5e2" },
+      { "path": "generator/js/variants/wordoku.js", "blob": "0216f8118e3578a262ba2c47994627bcddaffc81" },
+      { "path": "generator/assets/wordlists/isograms.en.js", "blob": "b5b9da6562c6d25a9d0dcf3c2d424513cd1fcfcf" },
+      { "path": "generator/assets/wordlists/isograms.vi.js", "blob": "e882da7a3c33faa75b195efdfc63277b497eb9b3" },
+      { "path": "generator/js/worker/worker-client.js", "blob": "dd57aab47f12513fa18064f4d46491ee23e0e8ba" },
+      { "path": "core/js/ui/exchange.js", "blob": "b661b472c16e05560912ab93cd30fdf6a9f708aa" },
+      { "path": "generator/js/ui/i18n.js", "blob": "ad859592a1453c8f0a9518baaca2a5e14cf08d74" },
+      { "path": "generator/js/ui/locale.en.js", "blob": "9d0d04cb850070581315a88ac5588482e4326fb8" },
+      { "path": "generator/js/ui/locale.vi.js", "blob": "e09bddad91043ae47e1ad0848b875c920322b57e" },
+      { "path": "generator/js/ui/locale.shell.js", "blob": "1b0d25b5e12652b5b512868a3118795f77831d06" },
+      { "path": "core/js/ui/symbols.js", "blob": "dd72b5cfd32b3ea589af0fdd1e10df8ccc7fd2e0" },
+      { "path": "core/js/ui/board-view.js", "blob": "fc2ec5a4875fb5958cf13f216ffd63b11a523f44" },
+      { "path": "generator/js/ui/store.js", "blob": "7f8d4ac70d4039f717d8ecb5ce68d25030e8e799" },
+      { "path": "generator/js/ui/controls.js", "blob": "6c47cb4a74ddaa1dc11c7181261d89f28d1fe3f2" },
+      { "path": "generator/js/ui/step-view.js", "blob": "ca1a213c48c9c0bf4d25e23be63173a8dd442c80" },
+      { "path": "generator/js/ui/explain.js", "blob": "4bd08cf520fc8593832a5237074fc0d7b812cd9c" },
+      { "path": "generator/js/ui/player.js", "blob": "3e5bd8d9db0ca3763f03d4617848064b8e9691dd" },
+      { "path": "core/assets/wordbook/words.vi.js", "blob": "561dd62ce66b4f441ba536b920330a30b87f93ea" },
+      { "path": "core/assets/wordbook/words.en.js", "blob": "d6569d636ccb5389634e5e1616233850c28c0b99" },
+      { "path": "core/js/ui/wordbook.js", "blob": "51e694f6d7e5179750641c17db8d1e959d0e1d91" },
+      { "path": "generator/js/ui/result-view.js", "blob": "e2166e240a8cca6a8ef03073b96b5cb04a357302" },
+      { "path": "generator/js/ui/cache.js", "blob": "4776b09b983797abe4eed099c78eb0729922b4db" },
+      { "path": "generator/js/ui/history.js", "blob": "c244d39a2c169c898da30efdbf1c3b8536d0e39d" },
+      { "path": "generator/js/ui/export.js", "blob": "1ffffc23f866f731ee0e0302b05421b050d07621" },
+      { "path": "generator/js/ui/a11y.js", "blob": "69a0e5466ed08f3594b63941a8c66a9b2bf8c574" },
+      { "path": "generator/js/ui/theme.js", "blob": "1f12bc46847ade1d200359a14ac4325411ec3f24" },
+      { "path": "generator/js/ui/help.js", "blob": "5bff8db511d6f757ce848e8a6c2508213f30f164" },
+      { "path": "generator/js/ui/app.js", "blob": "8ec42ca19b60160ea6a95c4d573e3f874e5385a2" },
+      { "path": "generator/tests/node-runner.js", "blob": "ea9d9903202c618e1a0179d6013cbc9da470b7c3" },
+      { "path": "generator/tests/mega-contract.js", "blob": "3a068ef1663933e3d52ba8df0b6778c5fc807b8b" },
+      { "path": "generator/tests/fixtures/mega-contract.js", "blob": "b1b70636dca151e93152fcc8b8111807c38fef9f" },
+      { "path": "generator/tests/fixtures/tool-records.js", "blob": "2108db27bb0fb9418432528d89a7f40f81c19107" },
+      { "path": "generator/tests/replay-fixtures.js", "blob": "73e211c0b0f1bfc21cb952aede3f5346d5f9e945" },
+      { "path": "core/tests/node-evidence.js", "blob": "fc3825ce84566d49614002acc5d7f1935ae72c1d" }
+    ],
+    "blobNote": "each path has the same blob ID at 547168b4 and at 5f697ef9 (git rev-parse <commit>:<path>); the table lists it once"
+  },
+  "recordIdentities": {
+    "allSourceHash": "b8ec138d7981659aa13cd8ed120b0c44b305a8b658874a17fd5b0d8a540195a9",
+    "allToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+    "common": { "node": "v26.13.0", "allowance": 256, "diagnosticBudgetMs": 500000, "processLimitMs": 540000, "checksVersion": 1, "dirty": false },
+    "rows": [
+      { "id": "mega12-hell1-invariant-1", "file": "deep/hell1/mega12-hell1-invariant-1.json", "fileSha256": "b919669e1b5bcfdf4c8ace0617d57aaec244e6b485d3d2ab3a6da4750eccb079", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:44:26.547Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega12-hell1-invariant-2", "file": "deep/hell1/mega12-hell1-invariant-2.json", "fileSha256": "27a8fd8969443f2dfb18e9673b0ea848c1d10ae22d4cecdc97b533a8fd3c0bbb", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:46:14.558Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega12-hell1-invariant-3", "file": "deep/hell1/mega12-hell1-invariant-3.json", "fileSha256": "5c882ee36745c8d8043e46794a89eafbc21ee67bf89862b7cbb66cc39612f6c7", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:48:09.895Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega12-hell1-invariant-4", "file": "deep/hell1/mega12-hell1-invariant-4.json", "fileSha256": "c6343e21db3bcca5d6d7c8606c1390a7eb76e9fac8b468d635e44dc1322aba47", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:50:04.714Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega12-hell1-cv5-a", "file": "deep/hell1/mega12-hell1-cv5-a.json", "fileSha256": "d5c26a9331c58523e11de7e84bb4d75f8f6977ec5a15d0e1047d5ffe96a04498", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:52:04.557Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega12-hell1-cv5-b", "file": "deep/hell1/mega12-hell1-cv5-b.json", "fileSha256": "bbf947fb81f848da221cb9891a0de89667bdb2f63f1496fad2b433c801929ab7", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:53:59.742Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega12-hell1-cv5-other", "file": "deep/hell1/mega12-hell1-cv5-other.json", "fileSha256": "4c6df74d49e0d492fc5875d73829bde583a88e524ff23f40277d691dad870705", "commit": "547168b48d5eb7a9165432db87a227a9d1c4b068", "startedAt": "2026-11-20T05:55:55.095Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-invariant-1", "file": "deep/hell1/mega16-hell1-invariant-1.json", "fileSha256": "d4a31b12d736faea49926888c21789fb259b46a6e996d9430e9e30b5cdbfb130", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T07:48:17.248Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-invariant-2", "file": "deep/hell1/mega16-hell1-invariant-2.json", "fileSha256": "edf5844ba3e2eea95c89e846500d2ec89c471d725cabba6b7d33ed43b616dabd", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T07:53:53.225Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-invariant-3", "file": "deep/hell1/mega16-hell1-invariant-3.json", "fileSha256": "39d730930f0b61275ed1e450432dff49bfae4145bfe46aca427c4cbdd7b1f9d6", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T08:00:08.828Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-invariant-4", "file": "deep/hell1/mega16-hell1-invariant-4.json", "fileSha256": "5c46905eecd06f9f0eeaaab7c7c40ce443c6d565dfdef846e9153229d48d3775", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T08:06:00.789Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-cv5-a", "file": "deep/hell1/mega16-hell1-cv5-a.json", "fileSha256": "66b32e2a9232bb992b2ace278d9ff0feed0335240a9318022a05d325468a2a10", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T08:11:45.368Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-cv5-b", "file": "deep/hell1/mega16-hell1-cv5-b.json", "fileSha256": "b804f2773b622676c63cbbfcf7b6288b49faf3348f0986b3004ac7b218b60443", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T08:17:43.042Z", "otherIdentityFieldsEqualCommon": true },
+      { "id": "mega16-hell1-cv5-other", "file": "deep/hell1/mega16-hell1-cv5-other.json", "fileSha256": "e1a9411dcc826ac78d9b28481b2ff72d8c1e88f1cd5d311c946102c64741a903", "commit": "5f697ef9aae3df7b2116834b6111931b27129dda", "startedAt": "2026-11-20T08:23:32.816Z", "otherIdentityFieldsEqualCommon": true }
+    ],
+    "note": "the fields common to all 14 records are listed once; `commit` is the only field with two values, and it is the only problem the reconcile reports. The row order is the manifest order (mega12 then mega16)."
+  },
+  "reconcileOutput": {
+    "file": "preflight/deep-reconcile-hell1-v2.json",
+    "sha256": "fd567f18a551056efdf83c758e6c643b2ee465bcb47ef3d9c8514e9fb4a36357",
+    "transcript": "transcripts/deep-reconcile-hell1-v2.txt",
+    "preservedUnchanged": "exit 1, complete true, evidenceSound false, identity.commit null, generation 14 produced, correctness pass (14 passed, 0 failed, 0 unevaluated), relations 6 pass / 0 fail / 0 unevaluated, identity.sourceHash b8ec138d7981659aa13cd8ed120b0c44b305a8b658874a17fd5b0d8a540195a9 and identity.toolHash 7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed single values, currentMatches true and true",
+    "soleProblem": "mixed identities: commit has 2 values (\"547168b48d5eb for mega12-hell1-invariant-1, mega12-hell1-invariant-2, mega12-hell1-invariant-3, mega12-hell1-invariant-4, mega12-hell1-cv5-a, mega12-hell1-cv5-b, mega12-hell1-cv5-other; \"5f697ef9aae3d for mega16-hell1-invariant-1, mega16-hell1-invariant-2, mega16-hell1-invariant-3, mega16-hell1-invariant-4, mega16-hell1-cv5-a, mega16-hell1-cv5-b, mega16-hell1-cv5-other)",
+    "problemCount": 1,
+    "earlierPartialReconcile": { "file": "preflight/deep-reconcile-hell1-partial.json", "sha256": "30c08726932f012a9ef59617cacccce99ce565dcfe2c3d7762f57e2eac6174f8", "note": "7 of 14 records, kept as history" }
+  },
+  "result": {
+    "disposition": "Complete, correct, source-compatible Hell 1 cohort; commit-only provenance difference verified separately. Raw strict reconciliation result retained.",
+    "numericalFindingsRemain": "exact 0 of 14, the shallow fallbacks (difficulty.approximate and difficulty.shallow on every record) and the measured costs stay numerical findings; none is relabelled",
+    "classification": "a commit-label-only split: every input the reconcile depends on is the same at both commits",
+    "reasons": [
+      "no file under core/, generator/ (outside generator/tests/artifacts) or player/ differs between 547168b4 and 5f697ef9 (empty diff)",
+      "all 70 loaded files (64 SOURCE_FILES, node-runner.js, the tool, its fixture, tool-records.js, replay-fixtures.js, node-evidence.js) have equal blob IDs at both commits; the subtree IDs of core, player, generator/js, css, assets and tests/fixtures, suites and manual are equal",
+      "the 14 records carry one sourceHash, one toolHash, one Node, allowance, budget, checks version and dirty value; only the commit label differs (547168b4 for the seven mega12 records, 5f697ef9 for the seven mega16 records)"
+    ],
+    "reconcileRaw": "unchanged: exit 1, complete true, evidenceSound false (one problem: mixed identities, commit has 2 values), correctness pass (14 passed), relations 6 pass / 0 fail / 0 unevaluated (preflight/deep-reconcile-hell1-v2.json)",
+    "notAllowed": "no tool edit, no record edit, no re-run, no general rule that exit 1 is acceptable; this is a ruling about this cohort and this reconcile only"
+  }
+}

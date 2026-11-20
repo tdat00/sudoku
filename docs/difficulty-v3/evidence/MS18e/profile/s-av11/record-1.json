@@ -1,0 +1,161 @@
+{
+  "schema": "ms18e-sav11-record-1",
+  "ownerDecision": "1573242656648069141",
+  "request": {
+    "variantId": "jigsaw9",
+    "difficulty": "expert",
+    "seed": 1111,
+    "trace": "off"
+  },
+  "calledAs": "SG.fixtures.toolRecords.withRequestedLevel('jigsaw9', 'expert', function () { return SG.pipeline.run(config, null); }).value (no emit, no budget argument, no option)",
+  "identity": {
+    "sourceHash": "b8ec138d7981659aa13cd8ed120b0c44b305a8b658874a17fd5b0d8a540195a9",
+    "toolHash": "73ef0cefeb9621bf8e3f44fc41b708f73d0cad322b3ebd73a7429f34bee86609",
+    "commit": "5f697ef9aae3df7b2116834b6111931b27129dda",
+    "dirty": false,
+    "node": "v26.13.0",
+    "machine": {
+      "platform": "win32",
+      "arch": "x64",
+      "cpu": "AMD EPYC 7763 64-Core Processor",
+      "cores": 16,
+      "memoryGiB": 64
+    },
+    "argv": [
+      "--owner-decision=1573242656648069141",
+      "--json=docs/difficulty-v3/evidence/MS18e/profile/s-av11/record-1.json"
+    ],
+    "sgTimeFactor": "2"
+  },
+  "result": {
+    "clocks": {
+      "hrtimeMs": 342091.5386,
+      "performanceNowMs": 342091.5259,
+      "dateMs": 342093,
+      "startedAt": "2026-11-20T08:39:23.607Z",
+      "endedAt": "2026-11-20T08:45:05.700Z"
+    },
+    "timings": {
+      "configure": 0.7590000000000146,
+      "buildModel": 37.238399999999956,
+      "fullGrid": 335178.6699,
+      "extraStructure": 0.31730000005120473,
+      "dig": 6719.969100000048,
+      "rate": 147.84889999995687,
+      "tune": 0.39609999987055744
+    },
+    "timingKeysComplete": true,
+    "timingsSumMs": 342085.19869999995,
+    "normalisedConfig": {
+      "variantId": "jigsaw9",
+      "difficulty": "expert",
+      "seed": 1111,
+      "symbolMode": "digits",
+      "symmetry": "rotational180",
+      "digOrder": "random",
+      "maxAttempts": 8,
+      "trace": "off",
+      "variantOptions": {}
+    },
+    "effective": {
+      "cellCount": 81,
+      "defaultMaxAttempts": 8,
+      "shallowSearchRatings": 256,
+      "capRatings": 1024,
+      "chainShortMax": 4,
+      "support": [
+        "veryEasy",
+        "easy",
+        "normal",
+        "hard",
+        "master",
+        "hell2"
+      ]
+    },
+    "work": [
+      {
+        "ratings": 88,
+        "proposals": 32768,
+        "maxRatings": 1024,
+        "maxProposals": 32768,
+        "localSearches": [
+          {
+            "ratings": 76,
+            "proposals": 32768,
+            "firstShallowAt": 0,
+            "shallowRatings": 76,
+            "shallowLimit": 256,
+            "capHit": "proposals"
+          }
+        ]
+      },
+      {
+        "ratings": 102,
+        "proposals": 32768,
+        "maxRatings": 1024,
+        "maxProposals": 32768,
+        "localSearches": [
+          {
+            "ratings": 90,
+            "proposals": 32768,
+            "firstShallowAt": 0,
+            "shallowRatings": 90,
+            "shallowLimit": 256,
+            "capHit": "proposals"
+          }
+        ]
+      },
+      {
+        "ratings": 220,
+        "proposals": 32768,
+        "maxRatings": 1024,
+        "maxProposals": 32768,
+        "localSearches": [
+          {
+            "ratings": 208,
+            "proposals": 32768,
+            "firstShallowAt": 0,
+            "shallowRatings": 208,
+            "shallowLimit": 256,
+            "capHit": "proposals"
+          }
+        ]
+      },
+      {
+        "ratings": 215,
+        "proposals": 32768,
+        "maxRatings": 1024,
+        "maxProposals": 32768,
+        "localSearches": [
+          {
+            "ratings": 203,
+            "proposals": 32768,
+            "firstShallowAt": 0,
+            "shallowRatings": 203,
+            "shallowLimit": 256,
+            "capHit": "proposals"
+          }
+        ]
+      },
+      {
+        "ratings": 12,
+        "proposals": 0,
+        "maxRatings": 1024,
+        "maxProposals": 32768,
+        "localSearches": []
+      }
+    ],
+    "outcome": {
+      "returned": true,
+      "exact": true,
+      "achieved": "expert",
+      "requested": "expert",
+      "score": 979,
+      "solved": true,
+      "attempts": 5,
+      "clues": 33,
+      "warnings": [],
+      "puzzleDigest": "ce02aeaf5d2fdefa47df447f2b8f7057b5816607e9acf0140f8cb15c39550a2e"
+    }
+  }
+}

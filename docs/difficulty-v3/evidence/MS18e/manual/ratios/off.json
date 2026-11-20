@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["perf"],"filter":null,"exact":"perf > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs less than 2%","count":1},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 120336.9,
+  "results": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 120112.8,
+    "tests": [
+      {"suite":"perf","name":"generating puzzles: verbosity 'off' costs less than 2%","fullName":"perf > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs less than 2%","status":"pass","ms":120112.48,"reason":"","error":null,"ordinal":48}
+    ],
+    "suites": [
+      {"name":"perf","total":1,"passed":1,"failed":0,"skipped":0,"ms":120112.775}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=perf","--exact=perf > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs less than 2%","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\ratios\\off.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "ms18e-items-patch-v1",
+  "revision": "Held rows executed under the owner's decision A (message 1573242656648069141, 2026-11-20 14:44:38 +07:00): the three S-OD8 ratio rows, the seven mega16 Hell 1 occurrences, the full 14-record Hell 1 reconcile and the S-AV11 profile ran (audit/items-e3-corrections.json is applied before this patch). The reconcile exit 1 (mixed commit identity) is reported, not classified away; no heldRows remain.",
+  "removeAdded": ["MS18e-HELD-RATIOS-AND-DEEP-MEGA16-HELL1", "MS18e-HELD-SAV11", "MS18e-DEEP-HELL1-INCOMPLETE"],
+  "heldRows": [],
+  "inherited": {
+    "S-AV11": {
+      "status": "executed under owner decision A; the delay reproduces (342.092 s); fullGrid dominates",
+      "disposition": "E4a: one unchanged invocation of the guarded request (jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts) on the final source (engine sourceHash b8ec138d..., dirty false): the request returned, exact true, achieved expert, 5 attempts, 33 clues, no warnings, hrtime 342,091.5 ms (tee 342.803 s) against the historical 325.313 s of an older engine, so the delay reproduces. The pipeline's own seven timing fields (ms, summed over attempts): configure 0.759, buildModel 37.238, fullGrid 335,178.670 (98.0 %), extraStructure 0.317, dig 6,719.969 (2.0 %), rate 147.849, tune 0.396. This places the time in the existing fullGrid stage and not in the dig; no cause is asserted. Gate passed, host snapshots before and after saved (raw context only). Not a GP cell; no target, offer or generator change.",
+      "evidence": ["profile/s-av11/record-1.json", "profile/s-av11/gate-1.txt", "profile/s-av11/host-before-1.json", "profile/s-av11/host-after-1.json", "transcripts/sav11-run-1.txt", "e4a-summary.md"]
+    },
+    "MS18d-DEEP-PUBLIC-REGISTRATIONS": {
+      "status": "closed-registration-evidence; live deep executed for all 28 occurrences (Hell 1 reconcile pending a ruling)",
+      "disposition": "E4a: the registration closure stands (quick inventory 4,807, SG_DEEP listing 4,835 to 4,828). Live deep evidence now exists for all 28 occurrences on the final source: Nightmare 14 of 14 (reconciled complete and sound) and Hell 1 14 of 14 (mega12 at E2, mega16 at E4a under owner decision A). The full 14-record Hell 1 reconcile returned exit 1: complete true, correctness pass, relations 6 pass / 0 fail / 0 unevaluated, evidence unsound only because the records carry two commit identities. See MS18e-DEEP-HELL1-14.",
+      "evidence": ["preflight/deep-reconcile-nightmare.json", "preflight/deep-reconcile-hell1-v2.json", "preflight/deep-reconcile-hell1-partial.json", "e4a-summary.md"]
+    },
+    "S-AV08": {
+      "status": "closed-measured-final-cost",
+      "covers": ["S-OD8"],
+      "disposition": "E3 final standing quick cost on the final fingerprints, one complete run each (tee seconds): Generator shards core-shared 103.919, steps 44.464, replay 42.998, mega 31.895, own-fast 228.118, digger-target 2.716, pipeline 42.619, player 58.829, sum 555.558 s; Player (whole quick set) 118.281 s. By the CI rule no projection rises (the groups stay at 1,260, 1,320, 420 and 450 of 1,800 s; the Player job 750 of its actual 900 s); only measuredSeconds were updated. No five-minute promise, no further tier move. S-OD8's three generation-cost ratio tests and two mega16 replay requests stay outside PR CI by the owner's approval; at E4a the three ratio tests ran under owner decision A and each passed (RATIO-off 120.554 s, RATIO-summary 120.527 s, RATIO-full 121.352 s tee, 1 of 1 each); the replay requests are reused-compatible and were not rerun.",
+      "evidence": ["ci/quick-cost.json", "audit/coverage.json", "quick/", "manual/ratios/off.json", "manual/ratios/summary.json", "manual/ratios/full.json"]
+    }
+  },
+  "replaceAdded": [
+    {
+      "id": "S-AV24 / S-AV25 / S-AV26",
+      "title": "Hell 1 request time, exactness and classic9 Hell 1 cost (history)",
+      "status": "history; current mega12 and mega16 evidence in MS18e-DEEP-HELL1-14",
+      "covers": ["S-AV24", "S-AV25", "S-AV26"],
+      "source": "MS07b 14 records (mega12 29.3 to 34.4 s, mega16 99.9 to 123.3 s), 0 of 14 exact, classic9 pilot about 5 s per request against 2.5 s",
+      "population": "mega Hell 1 requests; classic9 Hell 1 pilot (2 requests)",
+      "numbers": { "e2Mega12Hell1": "0 of 7 exact, 92.9 to 104.7 s", "e4aMega16Hell1": "0 of 7 exact, 320.7 to 360.5 s per run (generation 319.8 to 359.6 s, 7 of 7 over the 120 s application guard)", "classic9Hell1": "hidden, not registered" },
+      "limitations": "Different sources and different request classes from MS07b's; counts of exact and times are those of fixed requests, not a population estimate.",
+      "disposition": "Carried with current evidence for both boards: every Hell 1 occurrence is a shallow fallback and costs about three times MS07b's range; classic9 Hell 1 is hidden and its GD batch no longer registers.",
+      "nextOwner": "none",
+      "evidence": ["preflight/deep-reconcile-hell1-v2.json", "e4a-summary.md"]
+    },
+    {
+      "id": "MS18e-ACCEPTANCE-STATE",
+      "title": "MS18e acceptance state: E0-E3 complete, held rows executed, MS18e open",
+      "status": "open (ruling requested on the Hell 1 reconcile; remote CI pending)",
+      "source": "SA2 binding findings 2026-11-20 14:16; owner decision A, message 1573242656648069141",
+      "population": "route A: one launch of each held row, plus the full 14-record Hell 1 reconcile",
+      "numbers": { "stagesCompleted": "E0, E1, E2, E3, E4a (held rows)", "heldRowsExecuted": 11, "reconcile": "run, exit 1 (mixed commit identity)" },
+      "limitations": "Green CI closes only the remote-CI gate. The ten rows and SAV11 were launched once each and not retried.",
+      "disposition": "All eleven held rows were launched once under route A and the full 14-record reconcile was run. The reconcile reports complete true and correctness pass but evidenceSound false (and exit 1) only because the seven mega12 and seven mega16 records carry two commit values; MS18e stays open until that is ruled on (and the remote-CI gate closes). Other routes: only an explicit, scoped acceptance waiver.",
+      "nextOwner": "orchestrator and SAs (ruling on the reconcile), then the remote-CI gate",
+      "evidence": ["audit/gates-v3.json", "audit/remote-ci.json", "preflight/deep-reconcile-hell1-v2.json"]
+    },
+    {
+      "id": "MS18e-OTHER-MANUAL-SUITES-UNEXECUTED",
+      "title": "Manual assertions outside the MS18e assignment (scope exclusions)",
+      "status": "not-applicable (scope exclusion); unexecuted, never reported as passed",
+      "source": "preflight/scope-map-v2.json",
+      "population": "563 tests: extra-regions 117 of 129, greater-than 103 of 108, jigsaw 82 of 88, killer 91 of 94, perf 48 of 51, wordoku 122 of 128 (the I5 selectors ran: 12, 5, 6, 3 and 6; perf's 3 assigned rows are the S-OD8 ratios, which ran at E4a under owner decision A); variants 285 reused",
+      "numbers": { "unexecutedTests": 563, "difficulty": "146 of 146 ran", "perfRatiosRan": 3 },
+      "limitations": "Not new required work: the dispatch put them outside MS18e. MS18c's per-level registrations follow the published levels; their live validation is not part of this dispatch. Never reported as passed.",
+      "disposition": "Stated plainly in the release report as unexecuted scope exclusions; not a blocker of the MS18e acceptance state and not a pass.",
+      "nextOwner": "none within MS18e",
+      "evidence": ["preflight/scope-map-v2.json"]
+    }
+  ],
+  "added": [
+    {
+      "id": "MS18e-OWNER-DECISION-HELD-ROWS",
+      "title": "Owner decision on the held rows: RATIOS=A; MEGA16-H1=A; SAV11=A",
+      "status": "recorded",
+      "source": "owner answer message 1573242656648069141, 2026-11-20T07:44:38.780Z (14:44:38.780 +07:00); pack commit 5f697ef9, MS18e-dispatch-and-release-gates.md section 7 'Recorded held-row decisions'",
+      "population": "MS18e-Q-GD-DEEP (questions about 12:20, message 1573206529908146358; W addendum about 14:30, message 1573236608721887303) and MS18e-Q-SAV11: RATIOS (RATIO-off, RATIO-summary, RATIO-full), MEGA16-H1 (the seven DEEP-mega16-hell1-*), SAV11",
+      "numbers": { "choices": "A, A, A", "W": "not selected" },
+      "limitations": "A authorizes one unchanged invocation per named row despite the missing <=450 s projection: the 540 s ceiling, the 500 s deep budget, seeds, internal attempts, assertions and guards stay as they are; no external retry; a failure or kill stays failed or incomplete. It is permission to execute, not automatic completion. SAV11 also needed the technical route review and --owner-decision.",
+      "disposition": "Applied exactly: ten rows launched once each in the order seven deep rows then three ratios, the reconcile after the seven mega16 records, SAV11 after SA1's route acceptance and the wide gate pass.",
+      "nextOwner": "none",
+      "evidence": ["e4a-summary.md", "lock-log.jsonl", "preflight/questions-v2.md"]
+    },
+    {
+      "id": "MS18e-HELD-ROWS-EXECUTED",
+      "title": "The ten released rows (seven mega16 Hell 1 occurrences, three S-OD8 ratios) and SAV11",
+      "status": "executed, all exit 0",
+      "source": "preflight/admission-plan-v2.json exact commands; one locked invocation each",
+      "population": "DEEP-mega16-hell1-{invariant-1..4, cv5-a, cv5-b, cv5-other} (default attempts 4/2, 500,000 ms shared deep budget), RATIO-off, RATIO-summary, RATIO-full (original populations, warmup, interleaved rounds, assertion limits), SAV11",
+      "numbers": {
+        "deepTeeSeconds": { "invariant-1": 320.737, "invariant-2": 360.546, "invariant-3": 336.865, "invariant-4": 329.378, "cv5-a": 342.589, "cv5-b": 334.665, "cv5-other": 324.607 },
+        "ratioTeeSeconds": { "off": 120.554, "summary": 120.527, "full": 121.352 },
+        "ratioResults": "1 of 1 passed each; test time 120,112.5 / 120,079.3 / 120,828.7 ms",
+        "sav11TeeSeconds": 342.803,
+        "killedAt540": 0, "retries": 0
+      },
+      "limitations": "A ratio test is synchronous and the harness does not stop it at its 120,000 ms timeout (core/tests/harness.js:415-418); each passed on its first attempt. Times are single locked runs on a shared host, not bounds.",
+      "disposition": "All eleven rows ran once and finished; none was killed. The seven deep records are correctness pass, exact false, 2 of 2 attempts, shallow fallbacks.",
+      "nextOwner": "none",
+      "evidence": ["e4a-summary.md", "deep/hell1/", "manual/ratios/off.json", "manual/ratios/summary.json", "manual/ratios/full.json", "profile/s-av11/record-1.json", "lock-log.jsonl"]
+    },
+    {
+      "id": "MS18e-DEEP-HELL1-14",
+      "title": "Final-source deep Hell 1: all 14 occurrences ran, 0 exact, shallow fallbacks; reconcile exit 1 (mixed commit identity)",
+      "status": "executed 14 of 14; reconcile complete, correctness pass, evidence unsound by a metadata mismatch (ruling requested)",
+      "covers": ["S-AV24", "S-AV25", "S-AV26"],
+      "source": "generator/tests/mega-contract.js Hell 1 half; mega12 records at E2 (commit 547168b4), mega16 records at E4a (commit 5f697ef9); full reconcile preflight/deep-reconcile-hell1-v2.json",
+      "population": "7 mega12 and 7 mega16 Hell 1 requests, one fresh process each, level override mega12:hell1 and mega16:hell1, default attempts 4 and 2, allowance 256, 500,000 ms shared budget",
+      "numbers": {
+        "records": 14, "exact": "0 of 14 (mega12 0 of 7, mega16 0 of 7), every record difficulty.approximate and difficulty.shallow",
+        "mega12": "generation 92.102 to 103.711 s (median 99.364 s), guard 160 s margin 56.008 s",
+        "mega16": "generation 319.837 to 359.556 s (median 333.628 s), 7 of 7 over 120 s, guard 500 s margin 140.265 s",
+        "reconcileRaw": { "exit": 1, "complete": true, "evidenceSound": false, "correctness": "pass (14 passed)", "relations": "6 pass / 0 fail / 0 unevaluated", "problems": "1: mixed identities, commit has 2 values (mega12 547168b4, mega16 5f697ef9)", "identity": "sourceHash b8ec138d... and toolHash 7b797b5c... single values, currentMatches true, true" }
+      },
+      "limitations": "The tool requires one commit value across records (mega-contract.js:1181 returns 1 for an unsound evidence set); 547168b4..5f697ef9 changed only docs, tasks, .github and the helper audit.cjs, so the source files are identical (with-manual fingerprint d8d48983... unchanged). The tool and the records were not edited and nothing was re-run; no MS07b record was used. Whether this mismatch is acceptable for route A is a ruling, not something the developer decides.",
+      "disposition": "All 14 occurrences ran; exactness 0 of 14 is a numerical finding (S-OD4), costs are about three times MS07b's range. The raw reconcile (exit 1, evidenceSound false) is recorded as is; the earlier partial reconcile (7 of 14) stays as history.",
+      "nextOwner": "orchestrator and SAs: ruling on the commit-identity mismatch",
+      "evidence": ["preflight/deep-reconcile-hell1-v2.json", "preflight/deep-reconcile-hell1-partial.json", "deep/hell1/", "transcripts/deep-reconcile-hell1-v2.txt", "generator/tests/fixtures/mega-contract.js", "e4a-summary.md"]
+    },
+    {
+      "id": "MS18e-SAV11-PROFILE",
+      "title": "S-AV11 profile executed: jigsaw9 / Expert / seed 1111, 342.092 s, fullGrid 98.0 %",
+      "status": "executed (exit 0, record written, outcome returned)",
+      "covers": ["S-AV11"],
+      "source": "generator/tests/artifacts/difficulty-v3/MS18e/profile-s-av11.cjs (route accepted by SA1), owner decision A, run from the repository root through run-locked-e.ps1",
+      "population": "one guarded SG.pipeline.run request: jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts (cellCount 81), no budget, no override",
+      "numbers": {
+        "hrtimeMs": 342091.5386, "performanceNowMs": 342091.5259, "dateMs": 342093, "teeSeconds": 342.803, "historicalWholeRequestSeconds": 325.313,
+        "timingsMs": { "configure": 0.759, "buildModel": 37.2384, "fullGrid": 335178.6699, "extraStructure": 0.3173, "dig": 6719.9691, "rate": 147.8489, "tune": 0.3961 },
+        "timingsSumMs": 342085.1987, "outcome": "returned, exact true, achieved expert, score 979, solved, 5 attempts, 33 clues, no warnings",
+        "record": "sourceHash b8ec138d..., dirty false, commit 5f697ef9, sgTimeFactor 2, ownerDecision 1573242656648069141, timingKeysComplete true, support after the call veryEasy easy normal hard master hell2 (Expert absent)",
+        "hostContext": "gate pass 15:39:21 (absence 123 s); snapshots 344.152 s apart: host 1968 0.19 CPU-s/s, no other process except Idle at or above 0.5"
+      },
+      "limitations": "One request on one shared host; the Node child is not in either snapshot; the pipeline's timing fields say where the time went, not why; S-OD15 readiness context is raw context only, not an admission decision.",
+      "disposition": "The delay reproduces on the current source (342.092 s against the historical 325.313 s). The existing pipeline.timings place 98.0 % in fullGrid and 2.0 % in dig, so the earlier assumption of a dig-stage delay is not supported by this record. No change, no waiver, no cause asserted.",
+      "nextOwner": "none within MS18e (a later improvement feature, if any, is outside this pack)",
+      "evidence": ["profile/s-av11/record-1.json", "profile/s-av11/gate-1.txt", "profile/s-av11/host-before-1.json", "profile/s-av11/host-after-1.json", "transcripts/sav11-run-1.txt", "e4a-summary.md"]
+    }
+  ]
+}
