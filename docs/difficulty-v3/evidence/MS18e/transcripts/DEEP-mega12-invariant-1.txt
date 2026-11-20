@@ -1,0 +1,5 @@
+$ node tests\mega-contract.js --request=mega12-invariant-1 --record=..\docs\difficulty-v3\evidence\MS18e\deep\nightmare\mega12-invariant-1.json
+mega12-invariant-1: outcome ok, correctness pass, exact true, attempts 1 of 4, warnings none
+  generation 1.651 s, checks 0.024 s, guard margin 498.325 s of 500.000 s, allowance 256
+record: docs/difficulty-v3/evidence/MS18e/deep/nightmare/mega12-invariant-1.json
+exit=0 seconds=2.364

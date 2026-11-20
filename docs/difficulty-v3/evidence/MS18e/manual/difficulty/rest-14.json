@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "app": "generator",
+  "node": "v26.13.0",
+  "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+  "timeFactor": 2,
+  "selection": {"set":"suites","suites":["difficulty"],"filter":"difficulty > digger.generate: safety net against a technique bug (risk R3) >","exact":null,"count":3},
+  "complete": true,
+  "sourceStable": true,
+  "wallMs": 5394.5,
+  "results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "bailed": false,
+    "ms": 5150.3,
+    "tests": [
+      {"suite":"difficulty","name":"never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous puzzle, reports the bug and still delivers a unique puzzle","status":"pass","ms":100.972,"reason":"","error":null,"ordinal":143},
+      {"suite":"difficulty","name":"digLevel marks the puzzle it had to replace","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > digLevel marks the puzzle it had to replace","status":"pass","ms":78.564,"reason":"","error":null,"ordinal":144},
+      {"suite":"difficulty","name":"never returns an ambiguous candidate of a search either: the keeper counts before it keeps","fullName":"difficulty > digger.generate: safety net against a technique bug (risk R3) > never returns an ambiguous candidate of a search either: the keeper counts before it keeps","status":"pass","ms":4969.92,"reason":"","error":null,"ordinal":145}
+    ],
+    "suites": [
+      {"name":"difficulty","total":3,"passed":3,"failed":0,"skipped":0,"ms":5150.214}
+    ],
+    "benches": []
+  },
+  "registrationErrors": [],
+  "argv": ["--suite=difficulty","--filter=difficulty > digger.generate: safety net against a technique bug (risk R3) >","--verbose","--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-14.json"],
+  "machine": {"platform":"win32","arch":"x64","cpu":"AMD EPYC 7763 64-Core Processor","cores":16,"memoryGiB":64}
+}
