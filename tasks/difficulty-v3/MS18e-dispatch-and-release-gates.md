@@ -662,6 +662,43 @@ An early pass is **never final evidence**, including for the browser job.
 The task-defined final gate below still requires the final matching post-E3
 head's CI; early failures inform investigation, not a waiver or automatic retest.
 
+### Recorded push delegation
+
+**MS18e-PUSH-DELEGATION**, owner message **`1573241933847859265`**,
+**`2026-11-20T07:41:46.451Z`** (14:41:46.451 +07:00), verbatim:
+
+> cho phép bạn push (không merge PR)
+
+The owner authorized the **orchestrator** to push `rating-v3`; **no merge** of PR #2.
+Under it the orchestrator pushed `b0a29ffd..7d0fb2c0`, and the final matching-head
+run `44696956718` started on `7d0fb2c026ab4369f57a15fd6018c5b36496ea3c`. This grants no
+merge, deploy, Pages/workflow dispatch, protection change or change from draft status.
+
+### Recorded held-row decisions
+
+**MS18e-Q-GD-DEEP** and **MS18e-Q-SAV11**, owner answer message
+**`1573242656648069141`**, **`2026-11-20T07:44:38.780Z`** (14:44:38.780 +07:00), verbatim:
+
+> RATIOS=A; MEGA16-H1=A; SAV11=A
+
+Each label binds its own group as posted (questions at about 12:20 +07:00, message
+`1573206529908146358`; W addendum about 14:30, message `1573236608721887303`):
+
+| Group | Rows | Choice |
+|---|---|---|
+| RATIOS | `RATIO-off`, `RATIO-summary`, `RATIO-full` | **A** |
+| MEGA16-H1 | `DEEP-mega16-hell1-` `invariant-1`..`invariant-4`, `cv5-a`, `cv5-b`, `cv5-other` | **A** |
+| SAV11 | `SAV11` (`S-AV11`: jigsaw9 / Expert / seed 1111 / trace off / default eight attempts) | **A** |
+
+**A** authorizes **one unchanged invocation per named row** despite the missing
+≤450-second projection: the 540-second whole-process ceiling, the 500-second deep
+budget, seeds, internal attempts, assertions and guards stay as they are; no external
+retry. A failure or kill remains failed/incomplete, never a pass. A is permission to
+execute, not automatic completion. SAV11 additionally needs the technical route review
+of `profile-s-av11.cjs` and `--owner-decision=1573242656648069141`. MEGA16-H1 completes
+the 14-record Hell 1 cohort, so the full same-source Hell 1 reconcile follows its seven
+records; no MS07b record is mixed in. No W was selected.
+
 ### Final PR-CI gate
 
 The developer provides the local candidate tree, final fingerprints, bounded
