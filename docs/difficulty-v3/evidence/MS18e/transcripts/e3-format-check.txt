@@ -1,0 +1,25 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs format .github/scripts/generator-quick.json .github/workflows/pull-request.yml .github/workflows/pages.yml docs/README.md docs/difficulty-v3/notes.md docs/difficulty-v3/release-v3.md generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs docs/difficulty-v3/evidence/MS18e/handoff-v3.md docs/difficulty-v3/evidence/MS18e/lock-log.jsonl docs/difficulty-v3/evidence/MS18e/audit/coverage.json docs/difficulty-v3/evidence/MS18e/audit/gates.json docs/difficulty-v3/evidence/MS18e/audit/items-e3-input.json docs/difficulty-v3/evidence/MS18e/audit/items.json docs/difficulty-v3/evidence/MS18e/audit/manual-hidden-requests-final-v3.json docs/difficulty-v3/evidence/MS18e/audit/remote-ci.json docs/difficulty-v3/evidence/MS18e/audit/source-bindings.json docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v3.json docs/difficulty-v3/evidence/MS18e/audit/workflow-audit.json docs/difficulty-v3/evidence/MS18e/audit/final-identities-v3.txt docs/difficulty-v3/evidence/MS18e/preflight/inventory-variants-v3.json docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v3.json docs/difficulty-v3/evidence/MS18e/ci/quick-cost.json
+ok      .github/scripts/generator-quick.json
+ok      .github/workflows/pull-request.yml
+ok      .github/workflows/pages.yml
+ok      docs/README.md
+ok      docs/difficulty-v3/notes.md
+ok      docs/difficulty-v3/release-v3.md
+ok      generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs
+ok      docs/difficulty-v3/evidence/MS18e/handoff-v3.md
+ok      docs/difficulty-v3/evidence/MS18e/lock-log.jsonl
+ok      docs/difficulty-v3/evidence/MS18e/audit/coverage.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/gates.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/items-e3-input.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/items.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/manual-hidden-requests-final-v3.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/remote-ci.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/source-bindings.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v3.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/workflow-audit.json
+ok      docs/difficulty-v3/evidence/MS18e/audit/final-identities-v3.txt
+ok      docs/difficulty-v3/evidence/MS18e/preflight/inventory-variants-v3.json
+ok      docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v3.json
+ok      docs/difficulty-v3/evidence/MS18e/ci/quick-cost.json
+checked 22 files, 0 with problems
+exit=0 seconds=0.127

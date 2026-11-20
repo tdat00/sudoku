@@ -5,15 +5,20 @@ name: Deploy GitHub Pages
 # none from tests/manual, and a suite added later fails the check until it has a group) and the complete quick set of
 # the player. The deployment waits for all of them.
 #
-# Not run here, and what replaces it (difficulty v3, MS05r6c; docs/difficulty-v3/evidence/MS05r6c/evidence.md):
-#  - The deep tier, generator/tests/mega-contract.js (14 requests of mega Nightmare, 6 relations): the reviewed records
-#    of MS05r5m (docs/difficulty-v3/evidence/MS05r5m/records), reconciled by MS05r6b (evidence/MS05r6b/deep); the live
-#    CV3 outcomes of MS05b3 (Addendum B1, evidence/MS05b3); the evidence of the later semantic tasks and MS18e on
-#    the current source.
+# Not run here, and what replaces it (difficulty v3, MS05r6c; docs/difficulty-v3/evidence/MS05r6c/evidence.md; the final
+# evidence map is docs/difficulty-v3/release-v3.md and docs/difficulty-v3/evidence/MS18e/):
+#  - The deep tier, generator/tests/mega-contract.js (28 occurrences: 14 of mega Nightmare with 6 relations, 14 of mega
+#    Hell 1): the records of MS05r5m (docs/difficulty-v3/evidence/MS05r5m/records) and MS07b are history of older sources,
+#    reconciled by MS05r6b (evidence/MS05r6b/deep), and validate nothing about the later techniques; the live
+#    CV3 outcomes of MS05b3 (Addendum B1, evidence/MS05b3); and the runs of MS18e on the final source (evidence/MS18e/deep):
+#    Nightmare 14 of 14, complete and reconciled sound; Hell 1 incomplete: the 7 of mega12 ran (exact 0 of 7, shallow
+#    fallbacks), the 7 of mega16 did not run (owner question MS18e-Q-GD-DEEP).
 #  - The manual suites of generator/tests/manual and --all (variants, killer, greater-than, perf, difficulty,
 #    extra-regions, wordoku, jigsaw): GD of MS05r6b (evidence/MS05r6b/gd) and b3's manual corpora, E of MS05r6a
 #    (evidence/MS05r6a), and the final gates of MS07e (GD, GQ-first), MS17b, MS18c (qualification), MS18d (performance)
-#    and MS18e, which audits the final tree.
+#    and MS18e (evidence/MS18e): GD ran (one assertion fails, S-AV14: classic9 Normal 83 of 100), 32 selectors of the
+#    other suites ran, the three S-OD8 ratio tests and the rest of those suites did not run, and the variants suite is
+#    reused from MS18c (reused-compatible); MS18e audits the final tree and keeps the remote CI status separately.
 #  - soak.js, perf.js and qualify.js are measuring tools. A suite added later has its group in generator-quick.json.
 # SG_TIME_FACTOR is not set (the harness uses 3 on CI), and every test job has a limit of at most 30 minutes.
 

@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs coverage --ci docs/difficulty-v3/evidence/MS18d/phase-d/ci-final --quick docs/difficulty-v3/evidence/MS18d/phase-d/quick --ids docs/difficulty-v3/evidence/MS18d/phase-d/identities-final.txt --manifest .github/scripts/generator-quick.json --log docs/difficulty-v3/evidence/MS18d/phase-d/lock-log.jsonl
+coverage: ok (generator 4807/4807 in 55 suites, player 2981/2981 in 32 suites, passed 7788, failed 0, skipped 0)
+exit=0 seconds=0.185

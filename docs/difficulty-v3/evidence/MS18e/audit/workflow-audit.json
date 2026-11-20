@@ -1,0 +1,233 @@
+{
+  "schema": "ms18e-workflow-audit-v1",
+  "scope": "static read of the final files; no remote run is implied",
+  "taskDefinedPrJobs": [
+    "Test core",
+    "Plan generator tests",
+    "Test generator (shared and small suites)",
+    "Test generator (own suites)",
+    "Test generator (pipeline)",
+    "Test generator (replay player)",
+    "Test player",
+    "Test player in a browser"
+  ],
+  "expandedFromWorkflowAndManifest": [
+    "Test core",
+    "Plan generator tests",
+    "Test generator (shared and small suites)",
+    "Test generator (own suites)",
+    "Test generator (pipeline)",
+    "Test generator (replay player)",
+    "Test player",
+    "Test player in a browser"
+  ],
+  "pullRequest": [
+    {
+      "key": "test-core",
+      "line": 36,
+      "name": "Test core",
+      "timeoutMinutes": 15,
+      "needs": [],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "plan-generator",
+      "line": 57,
+      "name": "Plan generator tests",
+      "timeoutMinutes": 10,
+      "needs": [],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "test-generator",
+      "line": 81,
+      "name": "Test generator (${{ matrix.name }})",
+      "timeoutMinutes": 30,
+      "needs": [
+        "test-core",
+        "plan-generator"
+      ],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "test-player",
+      "line": 104,
+      "name": "Test player",
+      "timeoutMinutes": 15,
+      "needs": [
+        "test-core"
+      ],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "test-browser",
+      "line": 123,
+      "name": "Test player in a browser",
+      "timeoutMinutes": 30,
+      "needs": [
+        "test-core"
+      ],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    }
+  ],
+  "pages": [
+    {
+      "key": "test-core",
+      "line": 42,
+      "name": "Test core",
+      "timeoutMinutes": 15,
+      "needs": [],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "plan-generator",
+      "line": 63,
+      "name": "Plan generator tests",
+      "timeoutMinutes": 10,
+      "needs": [],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "test-generator",
+      "line": 87,
+      "name": "Test generator (${{ matrix.name }})",
+      "timeoutMinutes": 30,
+      "needs": [
+        "test-core",
+        "plan-generator"
+      ],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "test-player",
+      "line": 110,
+      "name": "Test player",
+      "timeoutMinutes": 15,
+      "needs": [
+        "test-core"
+      ],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [
+        "24"
+      ],
+      "envFactorOrDeep": false
+    },
+    {
+      "key": "deploy",
+      "line": 128,
+      "name": null,
+      "timeoutMinutes": null,
+      "needs": [
+        "test-generator",
+        "test-player"
+      ],
+      "runsOn": "ubuntu-latest",
+      "nodeVersions": [],
+      "envFactorOrDeep": false
+    }
+  ],
+  "limitsSeconds": {
+    "core": 900,
+    "plan": 600,
+    "generatorGroup": 1800,
+    "player": 900,
+    "browser": 1800
+  },
+  "generatorGroups": [
+    {
+      "group": "shared-small",
+      "job": "Test generator (shared and small suites)",
+      "shards": [
+        "core-shared",
+        "steps",
+        "replay",
+        "mega"
+      ],
+      "projectionSum": 360,
+      "projectedSeconds": 1260,
+      "limitSeconds": 1800
+    },
+    {
+      "group": "own-suites",
+      "job": "Test generator (own suites)",
+      "shards": [
+        "own-fast",
+        "digger-target"
+      ],
+      "projectionSum": 380,
+      "projectedSeconds": 1320,
+      "limitSeconds": 1800
+    },
+    {
+      "group": "pipeline",
+      "job": "Test generator (pipeline)",
+      "shards": [
+        "pipeline"
+      ],
+      "projectionSum": 80,
+      "projectedSeconds": 420,
+      "limitSeconds": 1800
+    },
+    {
+      "group": "replay-player",
+      "job": "Test generator (replay player)",
+      "shards": [
+        "player"
+      ],
+      "projectionSum": 90,
+      "projectedSeconds": 450,
+      "limitSeconds": 1800
+    }
+  ],
+  "player": {
+    "projectionSeconds": 190,
+    "projectedSeconds": 750,
+    "limitSeconds": 900,
+    "helperConstant": "generator-quick.js PLAYER_JOB_SECONDS = 900",
+    "selftest": "generator-quick.selftest.js reads test-player timeout-minutes in both workflows"
+  },
+  "triggers": {
+    "pullRequest": "pull_request to main",
+    "pages": "push to main and workflow_dispatch (not triggered by a PR)"
+  },
+  "unchanged": [
+    "timeouts",
+    "Node 24 / ubuntu-latest",
+    "no SG_TIME_FACTOR or SG_DEEP (the harness uses factor 3 on CI)",
+    "triggers and permissions",
+    "job membership"
+  ],
+  "problems": []
+}

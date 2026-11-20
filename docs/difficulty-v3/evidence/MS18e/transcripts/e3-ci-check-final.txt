@@ -1,0 +1,9 @@
+$ node .github\scripts\generator-quick.js check --keep=docs\difficulty-v3\evidence\MS18e\ci\check-e3-final
+Generator quick set: 4807 tests in 55 suites; Player quick set: 2981 tests in 32 suites
+  group shared-small: 4 shard(s) (core-shared, steps, replay, mega), 2744 tests, projected 1260 s of 1800 s
+  group own-suites: 2 shard(s) (own-fast, digger-target), 1842 tests, projected 1320 s of 1800 s
+  group pipeline: 1 shard(s) (pipeline), 151 tests, projected 420 s of 1800 s
+  group replay-player: 1 shard(s) (player), 70 tests, projected 450 s of 1800 s
+  Player job: projected 750 s of 900 s
+Every quick test is in exactly one shard (4807 of 4807), no manual or unknown suite, no empty shard, every job inside its limit: check passed.
+exit=0 seconds=4.827

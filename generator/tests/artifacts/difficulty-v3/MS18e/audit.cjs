@@ -6,6 +6,8 @@
 //                                              the four reuse checks of the variants suite (read-only git)
 //   plan [--out-dir <dir>]                     scope map, admission plan and reuse map (reads only)
 //   format <file>...                           BOM, CRLF, final newline and trailing whitespace of text files
+//   coverage|cost|bindings|workflow|items      E3: quick coverage by (suite, ordinal), the CI projection rule and job arithmetic, the
+//                                              source bindings, the static workflow audit and the extended item register
 // Every top-level run goes through run-locked-e.ps1 (Invoke-Dv3Node semantics). Nothing here generates a puzzle.
 
 const fs = require('fs');
@@ -996,11 +998,400 @@ function format(argv) {
   return bad === 0 ? 0 : 1;
 }
 
+// ---- E3 modes: quick coverage, CI cost, source bindings (file-only; they read what the locked runs wrote) ----
+// Reuses the pure checks that MS18d's closeout.js exports (reconcileShard, parseIdentities, recheckProblems and the
+// projection rule); requiring it runs nothing and writes nothing.
+
+const EVIDENCE = 'docs/difficulty-v3/evidence/MS18e';
+const closeout = () => require('../MS18d/phase-d/closeout.js');
+const readText = (rel) => fs.readFileSync(path.resolve(ROOT, rel), 'utf8').replace(/^\uFEFF/, '');
+const lockRows = (rel) => readText(rel || EVIDENCE + '/lock-log.jsonl').split(/\r?\n/).filter((l) => l.trim() !== '')
+  .map((l) => JSON.parse(l));
+
+function writeNewJson(outRel, doc) {
+  fs.mkdirSync(path.dirname(path.resolve(ROOT, outRel)), { recursive: true });
+  fs.writeFileSync(path.resolve(ROOT, outRel), jsonText(doc), { flag: 'wx' });
+}
+
+/** The five identities of an identities-now.cjs output (a transcript is fine: only its five lines are read). */
+function identitiesOf(rel) {
+  const lines = readText(rel).split(/\r?\n/).filter((l) => /^(generator quick fingerprint|player quick fingerprint|generator with the manual trees|replay identity|hash identity) /.test(l));
+  return closeout().parseIdentities(lines.join('\n'));
+}
+
+function finish(name, problems, summary) {
+  problems.forEach((p) => console.log('PROBLEM ' + p));
+  console.log(name + ': ' + (problems.length === 0 ? 'ok' : problems.length + ' problem(s)') + ' (' + summary + ')');
+  return problems.length === 0 ? 0 : 2;
+}
+
+/** One successful locked run of the log, with the three distinct clocks. */
+function clocksOf(log, id, problems) {
+  const rows = log.filter((r) => r.id === id && r.outcome === 'ok');
+  if (rows.length !== 1) {
+    problems.push(id + ': not exactly one successful locked run (' + rows.length + ')');
+    return {};
+  }
+  const r = rows[0];
+  if (!(r.tee && r.tee.complete === true && r.tee.exit === 0 && r.helperExit === 0)) problems.push(id + ': incomplete or failed run');
+  return { teeSeconds: r.teeSeconds, helperSeconds: r.helperSeconds, callerSeconds: r.callerSeconds,
+    lockWaitDerivedSeconds: r.lockWaitDerivedSeconds, gapSleptSeconds: r.gapSleptSeconds, startedAt: r.startedAt,
+    endedAt: r.endedAt, transcript: r.transcript };
+}
+
+/**
+ * `coverage --ci <dir> --quick <dir> --ids <identities> --manifest <json> [--out <json>] [--log <jsonl>]`: every quick
+ * test of each app exactly once by (suite, ordinal) with its full name, from the inventories of the CI check and the
+ * results of the shard commands; no failure, skip, registration error or stale/mixed source.
+ */
+function coverage(argv) {
+  const tools = closeout();
+  const ci = arg('--ci', argv);
+  const quick = arg('--quick', argv);
+  const out = arg('--out', argv);
+  const problems = [];
+  const ids = identitiesOf(arg('--ids', argv));
+  ids.problems.forEach((p) => problems.push(p));
+  const manifest = readJson(arg('--manifest', argv));
+  const log = lockRows(arg('--log', argv));
+  const shards = [].concat(...manifest.groups.map((g) => g.shards));
+  const tally = (rows) => rows.reduce((acc, t) => {
+    const s = acc[t.suite] || (acc[t.suite] = { tests: 0, passed: 0, failed: 0, skipped: 0 });
+    s.tests++;
+    if (t.status === 'pass') s.passed++;
+    else if (t.status === 'skip') s.skipped++;
+    else s.failed++;
+    return acc;
+  }, {});
+  const covered = new Map();
+  const generatorSuites = {};
+  const shardRows = shards.map((s) => {
+    const inv = readJson(ci + '/shard-' + s.id + '.json');
+    const file = quick + '/generator-' + s.id + '.json';
+    const result = readJson(file);
+    const r = tools.reconcileShard('generator/' + s.id, inv, result, { sourceHash: ids.identities.generatorQuick,
+      argv: ['--suite=' + s.suites.join(','), '--results=..\\' + file.replace(/\//g, '\\')] });
+    r.problems.forEach((p) => problems.push(p));
+    if (inv.tests.length !== s.tests) problems.push('generator/' + s.id + ': the manifest counts ' + s.tests + ', the inventory ' + inv.tests.length);
+    result.results.tests.forEach((t) => covered.set(t.suite + '/' + t.ordinal, (covered.get(t.suite + '/' + t.ordinal) || 0) + 1));
+    const bySuite = tally(result.results.tests);
+    Object.keys(bySuite).forEach((k) => { generatorSuites[k] = bySuite[k]; });
+    return Object.assign({ shard: s.id, suites: s.suites.length, resultFile: file, resultSha256: sha256(fs.readFileSync(path.resolve(ROOT, file))),
+      sourceHash: result.sourceHash, timeFactor: result.timeFactor, node: result.node, runnerBodySeconds: Number((result.wallMs / 1000).toFixed(3)) },
+    r.tally, clocksOf(log, 'quick-generator-' + s.id, problems));
+  });
+  const all = readJson(ci + '/generator-all.json');
+  const keys = new Set(all.tests.map((t) => t.suite + '/' + t.ordinal));
+  keys.forEach((k) => { if (covered.get(k) !== 1) problems.push('generator: ' + k + ' covered ' + (covered.get(k) || 0) + ' time(s)'); });
+  covered.forEach((n, k) => { if (!keys.has(k)) problems.push('generator: unexpected key ' + k); });
+  const sum = (field) => shardRows.reduce((a, s) => a + s[field], 0);
+  const generator = { expected: all.tests.length, suites: new Set(all.tests.map((t) => t.suite)).size, sourceHash: all.sourceHash,
+    covered: covered.size, passed: sum('passed'), failed: sum('failed'), skipped: sum('skipped'), shards: shardRows, bySuite: generatorSuites };
+  const pFile = quick + '/player-quick.json';
+  const pAll = readJson(ci + '/player-all.json');
+  const pResult = readJson(pFile);
+  const pr = tools.reconcileShard('player/whole-quick', pAll, pResult, { sourceHash: ids.identities.playerQuick,
+    argv: ['--results=..\\' + pFile.replace(/\//g, '\\')] });
+  pr.problems.forEach((p) => problems.push(p));
+  const player = Object.assign({ expected: pAll.tests.length, suites: new Set(pAll.tests.map((t) => t.suite)).size, sourceHash: pAll.sourceHash,
+    resultFile: pFile, resultSha256: sha256(fs.readFileSync(path.resolve(ROOT, pFile))), timeFactor: pResult.timeFactor, node: pResult.node,
+    runnerBodySeconds: Number((pResult.wallMs / 1000).toFixed(3)), bySuite: tally(pResult.results.tests) },
+  pr.tally, clocksOf(log, 'quick-player', problems));
+  if (generator.expected !== 4807 || generator.suites !== 55 || player.expected !== 2981 || player.suites !== 32) {
+    problems.push('the quick counts are not 4807 tests in 55 suites and 2981 in 32');
+  }
+  const doc = { schema: 'ms18e-quick-coverage-v1', method: 'per app, by (suite, ordinal) with the full name against the inventories of the CI ' +
+    'check; shared suites run in both apps and are not deduplicated across them; the focused runs and any superseded result are excluded; ' +
+    'pass/fail/skip are the runner rows of the shard commands', fingerprints: ids.identities, generator, player, problems };
+  if (out && problems.length === 0) writeNewJson(out, doc);
+  return finish('coverage', problems, 'generator ' + generator.covered + '/' + generator.expected + ' in ' + generator.suites + ' suites, player ' +
+    player.rows + '/' + player.expected + ' in ' + player.suites + ' suites, passed ' + (generator.passed + player.passed) + ', failed ' +
+    (generator.failed + player.failed) + ', skipped ' + (generator.skipped + player.skipped));
+}
+
+/**
+ * `cost --quick <dir> --old-ref <git ref> [--manifest-new <json>] [--out <json>] [--log <jsonl>]`: the CI projection rule
+ * newProjection = max(old, 10 * ceil(1.5 m / 10)) with m the tee seconds of the successful complete run, the job arithmetic
+ * (Generator groups 180 + 3 sum <= 1800, Player 180 + 3 p <= 900) and, when given, the edited manifest against the computed values.
+ */
+function cost(argv) {
+  const tools = closeout();
+  const quick = arg('--quick', argv);
+  const out = arg('--out', argv);
+  const oldRef = arg('--old-ref', argv);
+  const newRel = arg('--manifest-new', argv);
+  const problems = [];
+  const bad = (ok, text) => { if (!ok) problems.push(text); };
+  const log = lockRows(arg('--log', argv));
+  const oldManifest = JSON.parse(git(['show', oldRef + ':.github/scripts/generator-quick.json']));
+  const shards = [].concat(...oldManifest.groups.map((g) => g.shards));
+  const rowOf = (id, file, kind, tests, oldProjection) => {
+    const c = clocksOf(log, id, problems);
+    const res = readJson(file);
+    const m = c.teeSeconds;
+    return Object.assign({ kind: kind, shard: id.replace(/^quick-(generator-)?/, ''), tests: tests, oldProjection: oldProjection, m: m,
+      onePointFiveM: Number((1.5 * m).toFixed(4)), roundedToTen: tools.roundedProjection(m),
+      newProjection: tools.newProjection(oldProjection, m), measuredSecondsNew: Number(m.toFixed(1)),
+      runnerBodySeconds: Number((res.wallMs / 1000).toFixed(3)), harnessMs: res.results.ms }, c);
+  };
+  const rows = shards.map((s) => rowOf('quick-generator-' + s.id, quick + '/generator-' + s.id + '.json', 'generator-shard', s.tests, s.projectionSeconds));
+  const player = rowOf('quick-player', quick + '/player-quick.json', 'player-app', oldManifest.player.tests, oldManifest.player.projectionSeconds);
+  player.shard = 'player-app';
+  const proj = {};
+  rows.forEach((r) => { proj[r.shard] = r.newProjection; });
+  proj['player-app'] = player.newProjection;
+  const jobs = tools.jobArithmetic(oldManifest, proj);
+  rows.concat([player]).forEach((r) => {
+    bad(r.newProjection <= 450, r.shard + ': the projection exceeds 450 s');
+    bad(r.newProjection >= r.oldProjection, r.shard + ': a projection would fall');
+    bad(typeof r.m === 'number' && r.m <= 540, r.shard + ': the tee seconds exceed the 540 s ceiling');
+  });
+  jobs.forEach((j) => bad(j.projected <= j.limit, j.job + ': ' + j.projected + ' s exceeds ' + j.limit + ' s'));
+  let manifestCheck = null;
+  if (newRel) {
+    const mn = readJson(newRel);
+    const strip = (m) => {
+      const c = JSON.parse(JSON.stringify(m));
+      delete c.provenance;
+      c.groups.forEach((g) => g.shards.forEach((s) => { delete s.projectionSeconds; delete s.measuredSeconds; }));
+      delete c.player.projectionSeconds;
+      delete c.player.measuredSeconds;
+      return JSON.stringify(c);
+    };
+    bad(strip(mn) === strip(oldManifest), 'the edited manifest changes more than projectionSeconds, measuredSeconds and provenance (membership, groups, commands or job rule)');
+    const got = {};
+    [].concat(...mn.groups.map((g) => g.shards)).forEach((s) => { got[s.id] = { p: s.projectionSeconds, m: s.measuredSeconds }; });
+    rows.forEach((r) => bad(got[r.shard] && got[r.shard].p === r.newProjection && got[r.shard].m === r.measuredSecondsNew,
+      r.shard + ': the edited manifest differs from the computed values'));
+    bad(mn.player.projectionSeconds === player.newProjection && mn.player.measuredSeconds === player.measuredSecondsNew,
+      'player: the edited manifest differs from the computed values');
+    bad(mn.job.ciSlowdownFactor === 3 && mn.job.jobOverheadSeconds === 180 && mn.job.timeoutMinutes === 30, 'the job factor, overhead or timeout changed');
+    manifestCheck = { file: newRel, sha256: sha256(fs.readFileSync(path.resolve(ROOT, newRel))), equalToComputed: problems.length === 0 };
+  }
+  const doc = { schema: 'ms18e-quick-cost-v1', rule: 'newProjection = max(old, 10 * ceil(1.5 * m / 10)), m = the tee final seconds of the ' +
+    'successful complete run; raises only', oldManifestRef: oldRef, clocks: 'teeSeconds (m), helperSeconds, runnerBodySeconds (the harness wall of ' +
+    'the results file), callerSeconds and lockWaitDerivedSeconds are distinct clocks; no projection is derived from the helper or the runner body',
+  shards: rows, player: player, jobs: jobs, manifestCheck: manifestCheck, problems: problems };
+  if (out && problems.length === 0) writeNewJson(out, doc);
+  return finish('cost', problems, rows.map((r) => r.shard + ' ' + r.m + '->' + r.newProjection).concat(['player ' + player.m + '->' + player.newProjection]).join(', ') +
+    '; ' + jobs.map((j) => j.job + ' ' + j.projected + '/' + j.limit).join(', '));
+}
+
+const FP_COMMON = ['AGENTS.md', 'README.md', 'USERGUIDE.md', 'USERGUIDE.vn.md', 'DEVELOPERGUIDE.md', 'DEVELOPERGUIDE.vn.md',
+  'core/tests/harness.js', 'core/tests/node-evidence.js'];
+const FP_APPS = {
+  generator: { files: ['generator/design.md', 'generator/index.html', 'generator/tests.html'],
+    trees: ['core/js', 'core/css', 'core/assets', 'core/tests/fixtures', 'core/tests/suites', 'generator/js', 'generator/css',
+      'generator/assets', 'generator/tests/fixtures', 'generator/tests/suites'], flat: ['generator/tests'], manual: ['generator/tests/manual'] },
+  player: { files: ['player/design.md', 'player/help.html', 'player/index.html', 'player/tests.html'],
+    trees: ['core/js', 'core/css', 'core/assets', 'core/tests/fixtures', 'core/tests/suites', 'player/js', 'player/css', 'player/assets',
+      'player/tests/fixtures', 'player/tests/suites', 'player/tests/tools'], flat: ['player/tests'], manual: [] }
+};
+
+/** Which fingerprints read this file (the input recipes of identities-now.cjs, copied, not the tool's own code). */
+function fingerprintsOf(rel) {
+  const hit = [];
+  Object.keys(FP_APPS).forEach((app) => {
+    const a = FP_APPS[app];
+    const inTree = (dirs) => dirs.some((d) => rel.indexOf(d + '/') === 0);
+    if (FP_COMMON.indexOf(rel) !== -1 || a.files.indexOf(rel) !== -1 || inTree(a.trees) || a.flat.some((d) => path.posix.dirname(rel) === d)) hit.push(app + '-quick');
+    else if (inTree(a.manual)) hit.push(app + '-with-manual-only');
+  });
+  return hit;
+}
+
+/**
+ * `bindings --ids-start <f> --ids-end <f> --ids-e2 <f> --recheck <json> --recheck-prior <json> --base <commit> --out <json>`:
+ * the five identities unchanged from the E2 source identity through the end of E3, the target re-check validation, and
+ * every file changed since the base commit classified by the fingerprints that read it.
+ */
+function bindings(argv) {
+  const tools = closeout();
+  const problems = [];
+  const start = identitiesOf(arg('--ids-start', argv));
+  const end = identitiesOf(arg('--ids-end', argv));
+  const e2 = identitiesOf(arg('--ids-e2', argv));
+  [start, end, e2].forEach((x) => x.problems.forEach((p) => problems.push(p)));
+  const keys = Object.keys(e2.identities);
+  keys.forEach((k) => {
+    if (start.identities[k] !== e2.identities[k]) problems.push(k + ' at the start of E3 differs from the E2 source identity');
+    if (end.identities[k] !== e2.identities[k]) problems.push(k + ' at the end of E3 differs from the E2 source identity');
+  });
+  const recheck = readJson(arg('--recheck', argv));
+  const prior = readJson(arg('--recheck-prior', argv));
+  tools.recheckProblems(recheck, 'target re-check').forEach((p) => problems.push(p));
+  if (JSON.stringify(recheck) !== JSON.stringify(prior)) problems.push('the target re-check differs from the E1 one');
+  const base = arg('--base', argv);
+  const changed = new Set(git(['diff', '--name-only', base]).split(/\r?\n/).filter(Boolean));
+  git(['ls-files', '--others', '--exclude-standard']).split(/\r?\n/).filter(Boolean).forEach((p) => changed.add(p));
+  const files = Array.from(changed).sort().map((p) => ({ path: p, fingerprints: fingerprintsOf(p) }));
+  const hashed = files.filter((f) => f.fingerprints.length > 0);
+  if (hashed.length > 0) problems.push(hashed.length + ' changed file(s) are fingerprint inputs since ' + base);
+  const byArea = files.reduce((acc, f) => {
+    const area = f.path.indexOf(EVIDENCE + '/') === 0 ? 'evidence MS18e' : f.path.split('/').slice(0, 2).join('/');
+    acc[area] = (acc[area] || 0) + 1;
+    return acc;
+  }, {});
+  const doc = { schema: 'ms18e-source-bindings-v1', head: git(['rev-parse', 'HEAD']), base: base,
+    identitiesStart: start.identities, identitiesEnd: end.identities, identitiesE2: e2.identities,
+    sevenValues: Object.assign({}, end.identities, { producerSources: recheck.identities.sources, targetTable: recheck.tableSha256 }),
+    targetRecheck: { counts: recheck.counts, designTable: recheck.designTable, retainedBudgetsDiffer: recheck.retainedBudgets.differ,
+      statedInAllThree: recheck.retainedBudgets.statedIn.every((s) => s.design && s.en && s.vi), problems: recheck.problems },
+    changedSinceBase: { count: files.length, byArea: byArea, fingerprintInputs: hashed, files: files }, problems: problems };
+  const out = arg('--out', argv);
+  if (out && problems.length === 0) writeNewJson(out, doc);
+  return finish('bindings', problems, files.length + ' changed files since ' + base + ', ' + hashed.length + ' fingerprint inputs');
+}
+
+/** The jobs of a workflow file, read from its text (the repository has no YAML dependency and these files are regular). */
+function workflowJobs(text) {
+  const lines = text.split(/\r?\n/);
+  const start = lines.findIndex((l) => /^jobs:\s*$/.test(l));
+  const jobs = [];
+  let cur = null;
+  for (let i = start + 1; i < lines.length; i++) {
+    const l = lines[i];
+    const key = /^ {2}([a-z][a-z0-9-]*):\s*$/.exec(l);
+    if (key) {
+      cur = { key: key[1], line: i + 1, name: null, timeoutMinutes: null, needs: [], runsOn: null, nodeVersions: [], envFactorOrDeep: false };
+      jobs.push(cur);
+    } else if (cur) {
+      let m;
+      if ((m = /^ {4}name:\s*(.+)$/.exec(l))) cur.name = m[1].trim();
+      else if ((m = /^ {4}timeout-minutes:\s*(\d+)\s*$/.exec(l))) cur.timeoutMinutes = Number(m[1]);
+      else if ((m = /^ {4}needs:\s*(.+)$/.exec(l))) cur.needs = m[1].replace(/[[\]]/g, '').split(',').map((x) => x.trim()).filter(Boolean);
+      else if ((m = /^ {4}runs-on:\s*(.+)$/.exec(l))) cur.runsOn = m[1].trim();
+      if ((m = /node-version:\s*'?([0-9]+)'?/.exec(l))) cur.nodeVersions.push(m[1]);
+      if (/SG_TIME_FACTOR|SG_DEEP/.test(l) && !/^\s*#/.test(l)) cur.envFactorOrDeep = true;
+    }
+  }
+  return jobs;
+}
+
+/**
+ * `workflow [--out <json>]`: the static audit of both workflows against the final manifest: the eight task-defined PR job names,
+ * every limit in seconds, Node 24 / ubuntu, no time-factor or deep setting, the triggers, Pages' dependencies and the
+ * Player 900 s arithmetic. It reads files only; it says nothing about a remote run.
+ */
+function workflowAudit(argv) {
+  const out = arg('--out', argv);
+  const problems = [];
+  const bad = (ok, text) => { if (!ok) problems.push(text); };
+  const manifest = readJson('.github/scripts/generator-quick.json');
+  const pr = readText('.github/workflows/pull-request.yml');
+  const pages = readText('.github/workflows/pages.yml');
+  const taskJobs = ['Test core', 'Plan generator tests', 'Test generator (shared and small suites)', 'Test generator (own suites)',
+    'Test generator (pipeline)', 'Test generator (replay player)', 'Test player', 'Test player in a browser'];
+  const matrixNames = manifest.groups.map((g) => 'Test generator (' + g.name + ')');
+  const prJobs = workflowJobs(pr);
+  const pageJobs = workflowJobs(pages);
+  const expected = { 'test-core': [15, 'Test core'], 'plan-generator': [10, 'Plan generator tests'],
+    'test-generator': [30, 'Test generator (${{ matrix.name }})'], 'test-player': [15, 'Test player'], 'test-browser': [30, 'Test player in a browser'] };
+  const pagesExpected = { 'test-core': 15, 'plan-generator': 10, 'test-generator': 30, 'test-player': 15, deploy: null };
+  const names = [];
+  prJobs.forEach((j) => {
+    const e = expected[j.key];
+    bad(e && j.timeoutMinutes === e[0] && j.name === e[1], 'pull-request.yml ' + j.key + ': name/timeout is not ' + JSON.stringify(e));
+    bad(j.runsOn === 'ubuntu-latest' && j.nodeVersions.every((v) => v === '24') && j.nodeVersions.length === 1, 'pull-request.yml ' + j.key + ': not ubuntu-latest with Node 24');
+    bad(!j.envFactorOrDeep, 'pull-request.yml ' + j.key + ': sets a time factor or SG_DEEP');
+    if (j.key === 'test-generator') matrixNames.forEach((n) => names.push(n));
+    else names.push(j.name);
+  });
+  bad(JSON.stringify(prJobs.map((j) => j.key)) === JSON.stringify(Object.keys(expected)), 'pull-request.yml: the job list changed');
+  bad(JSON.stringify(names.slice().sort()) === JSON.stringify(taskJobs.slice().sort()), 'the eight PR job names expanded from the manifest are not the task-defined eight: ' + names.join(' | '));
+  pageJobs.forEach((j) => {
+    bad(Object.prototype.hasOwnProperty.call(pagesExpected, j.key) && j.timeoutMinutes === pagesExpected[j.key], 'pages.yml ' + j.key + ': unexpected job or timeout');
+    bad(j.runsOn === 'ubuntu-latest' && j.nodeVersions.every((v) => v === '24'), 'pages.yml ' + j.key + ': not ubuntu-latest with Node 24');
+    bad(!j.envFactorOrDeep, 'pages.yml ' + j.key + ': sets a time factor or SG_DEEP');
+  });
+  const deploy = pageJobs.find((j) => j.key === 'deploy');
+  bad(deploy && deploy.needs.indexOf('test-generator') !== -1 && deploy.needs.indexOf('test-player') !== -1, 'pages.yml deploy does not wait for the generator and player tests');
+  bad(/^on:\r?\n {2}pull_request:\r?\n {4}branches: \[main\]/m.test(pr), 'pull-request.yml does not trigger on pull_request to main only');
+  bad(/^on:\r?\n {2}push:\r?\n {4}branches: \[main\]\r?\n {2}workflow_dispatch:/m.test(pages), 'pages.yml triggers are not push to main and workflow_dispatch');
+  const playerProjection = manifest.player.projectionSeconds;
+  const playerJob = prJobs.find((j) => j.key === 'test-player');
+  const playerLimit = playerJob.timeoutMinutes * 60;
+  const projected = manifest.job.jobOverheadSeconds + manifest.job.ciSlowdownFactor * playerProjection;
+  bad(playerLimit === 900 && projected <= playerLimit, 'the Player job projects ' + projected + ' s against ' + playerLimit + ' s');
+  const groups = manifest.groups.map((g) => {
+    const sum = g.shards.reduce((a, s) => a + s.projectionSeconds, 0);
+    const p = manifest.job.jobOverheadSeconds + manifest.job.ciSlowdownFactor * sum;
+    bad(p <= manifest.job.timeoutMinutes * 60, 'group ' + g.id + ' projects ' + p + ' s');
+    return { group: g.id, job: 'Test generator (' + g.name + ')', shards: g.shards.map((s) => s.id), projectionSum: sum, projectedSeconds: p, limitSeconds: manifest.job.timeoutMinutes * 60 };
+  });
+  const doc = { schema: 'ms18e-workflow-audit-v1', scope: 'static read of the final files; no remote run is implied', taskDefinedPrJobs: taskJobs,
+    expandedFromWorkflowAndManifest: names, pullRequest: prJobs, pages: pageJobs, limitsSeconds: { core: 900, plan: 600, generatorGroup: 1800, player: 900, browser: 1800 },
+    generatorGroups: groups, player: { projectionSeconds: playerProjection, projectedSeconds: projected, limitSeconds: playerLimit,
+      helperConstant: 'generator-quick.js PLAYER_JOB_SECONDS = 900', selftest: 'generator-quick.selftest.js reads test-player timeout-minutes in both workflows' },
+    triggers: { pullRequest: 'pull_request to main', pages: 'push to main and workflow_dispatch (not triggered by a PR)' },
+    unchanged: ['timeouts', 'Node 24 / ubuntu-latest', 'no SG_TIME_FACTOR or SG_DEEP (the harness uses factor 3 on CI)', 'triggers and permissions', 'job membership'], problems: problems };
+  if (out && problems.length === 0) writeNewJson(out, doc);
+  return finish('workflow', problems, prJobs.length + ' PR jobs, ' + pageJobs.length + ' Pages jobs, Player ' + projected + '/' + playerLimit + ' s');
+}
+
+/** A numeric id sequence: the tokens S-AV01..S-AV08, S-AV11 and S-AV13..S-AV39 (the stable items of the check-list) and S-OD1..S-OD18 but 5. */
+function requiredTokens() {
+  const sav = [1, 2, 3, 4, 5, 6, 7, 8, 11].concat(Array.from({ length: 27 }, (_, i) => i + 13))
+    .map((n) => 'S-AV' + String(n).padStart(2, '0'));
+  const sod = Array.from({ length: 18 }, (_, i) => i + 1).filter((n) => n !== 5).map((n) => 'S-OD' + n);
+  return sav.concat(sod, ['R6C-I01', 'R6C-I02', 'R6C-I04', 'IR21', 'IR22', 'MS05r6a-COV01', 'IR17']);
+}
+
+/**
+ * `items --register <MS18d register> --input <json> [--out <json>]`: the accepted 30-item MS18d register extended, not replaced:
+ * every inherited item verbatim with its E3 disposition, the items added at E3, and a check that every stable ID, every held row
+ * and every named obligation is carried by at least one item.
+ */
+function items(argv) {
+  const out = arg('--out', argv);
+  const problems = [];
+  const bad = (ok, text) => { if (!ok) problems.push(text); };
+  const register = readJson(arg('--register', argv));
+  const input = readJson(arg('--input', argv));
+  bad(Array.isArray(register.items) && register.items.length === 30, 'the MS18d register does not have 30 items');
+  const inherited = register.items.map((item) => {
+    const e3 = (input.inherited || {})[item.id];
+    bad(e3 && e3.status && e3.disposition && Array.isArray(e3.evidence) && e3.evidence.length > 0, 'inherited item without a complete E3 disposition: ' + item.id);
+    return Object.assign({ origin: 'MS18d Phase D register (item-register.json, 30 items), verbatim' }, item, { e3: e3 || null });
+  });
+  Object.keys(input.inherited || {}).forEach((id) => bad(register.items.some((i) => i.id === id), 'E3 disposition for an unknown inherited item: ' + id));
+  const added = (input.added || []).map((item) => {
+    ['id', 'title', 'status', 'source', 'population', 'numbers', 'limitations', 'disposition', 'nextOwner', 'evidence'].forEach((f) => bad(item[f] !== undefined && item[f] !== '', 'added item ' + item.id + ' lacks ' + f));
+    return Object.assign({ origin: 'added at MS18e' }, item);
+  });
+  const all = inherited.concat(added);
+  const seen = new Set();
+  all.forEach((i) => { bad(!seen.has(i.id), 'duplicate item id ' + i.id); seen.add(i.id); });
+  const carried = (token) => {
+    const re = new RegExp(token + '(?!\\d)');
+    const inList = (list) => (list || []).some((x) => re.test(x));
+    return all.filter((i) => re.test(i.id) || inList(i.covers) || (i.e3 && inList(i.e3.covers))).map((i) => i.id);
+  };
+  const coverage = {};
+  requiredTokens().forEach((t) => {
+    coverage[t] = carried(t);
+    bad(coverage[t].length > 0, 'no item carries ' + t);
+  });
+  (input.requiredIds || []).forEach((id) => bad(seen.has(id), 'required item missing: ' + id));
+  const exists = (p) => [p, EVIDENCE + '/' + p].some((c) => fs.existsSync(path.resolve(ROOT, c)));
+  all.forEach((i) => (i.e3 ? i.e3.evidence : (i.evidence || [])).forEach((p) => bad(exists(p), 'evidence path does not exist (item ' + i.id + '): ' + p)));
+  (input.heldRows || []).forEach((h) => bad(all.some((i) => (i.heldRows || []).indexOf(h.row) !== -1 && /MS18e-Q-/.test(JSON.stringify(i))), 'held row ' + h.row + ' is not named with its owner question in an item'));
+  const doc = { schema: 'ms18e-items-v1', base: 'the accepted 30-item MS18d Phase D register is extended, not replaced: inherited items keep every original field and add `e3`',
+    counts: { inherited: inherited.length, added: added.length, total: all.length }, requiredTokenCoverage: coverage, heldRows: input.heldRows || [], items: all, problems: problems };
+  if (out && problems.length === 0) writeNewJson(out, doc);
+  return finish('items', problems, inherited.length + ' inherited + ' + added.length + ' added = ' + all.length + ' items; ' + Object.keys(coverage).length + ' tokens carried');
+}
+
 const mode = process.argv[2];
-if (mode === 'scan') process.exitCode = scan(process.argv.slice(3));
+if (mode === 'workflow') process.exitCode = workflowAudit(process.argv.slice(3));
+else if (mode === 'items') process.exitCode = items(process.argv.slice(3));
+else if (mode === 'coverage') process.exitCode = coverage(process.argv.slice(3));
+else if (mode === 'cost') process.exitCode = cost(process.argv.slice(3));
+else if (mode === 'bindings') process.exitCode = bindings(process.argv.slice(3));
+else if (mode === 'scan') process.exitCode = scan(process.argv.slice(3));
 else if (mode === 'format') process.exitCode = format(process.argv.slice(3));
 else if (mode === 'crlf') process.exitCode = crlf(process.argv.slice(3));
 else if (mode === 'plan') process.exitCode = plan(process.argv.slice(3));
 else if (mode === 'hashes') process.exitCode = hashes(process.argv.slice(3));
 else if (mode === 'compat') process.exitCode = compat(process.argv.slice(3));
-else { console.error('usage: audit.cjs scan|hashes|compat|plan|format|crlf ...'); process.exitCode = 2; }
+else { console.error('usage: audit.cjs scan|hashes|compat|plan|format|crlf|coverage|cost|bindings|workflow|items ...'); process.exitCode = 2; }

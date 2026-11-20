@@ -1,0 +1,42 @@
+{
+  "schema": "ms18e-remote-ci-v1",
+  "status": "pending",
+  "note": "Developer-written, data only. The orchestrator supplies actual run, job and attempt IDs, URLs, conclusions and durations after the owner's push; nothing here is guessed and no local result is promoted to a remote one.",
+  "early": {
+    "label": "early signal only, never final evidence",
+    "decision": "MS18e-Q-EARLY-CI = A, owner message 1573181349634777210, 2026-11-20T03:41:02.049Z: EARLY-CI=A, only a draft PR, no merge",
+    "pullRequest": "#2 in tdat00/sudoku (draft)",
+    "head": "b0a29ffd7e7bd45b962c4d3221e3ee1acb3b5859",
+    "run": "44672736283",
+    "event": "pull_request",
+    "node": "v24.22.3",
+    "runner": "Ubuntu",
+    "conclusionByJob": { "succeeded": 6, "failed": 2 },
+    "failedJobs": [
+      { "job": "Test player in a browser", "jobId": "136077961042", "item": "MS18e-EARLY-CI-F1-HELP-COUNT", "failure": "help.js passed 20 of 23 checks: expected 26 techniques, the catalogue has 40" },
+      { "job": "Test generator (own suites)", "jobId": "136077961076", "item": "MS18e-EARLY-CI-F2-WIRE-EOL", "failure": "replay-recorders wire --check on a Linux LF checkout (38 of 39)" }
+    ],
+    "localFixes": "player/tests/browser/help.js (fixed 40-technique expectation) and .gitattributes (generator/tests/fixtures/replay-wire.js text eol=crlf)"
+  },
+  "finalGate": {
+    "status": "pending",
+    "rule": "all eight jobs conclude success on the matching final head, whatever the repository's required-check settings say; only an explicit owner decision MS18e-Q-CI-POLICY may waive a named requirement and a waiver is never a successful job",
+    "jobs": [
+      { "name": "Test core", "result": "pending" },
+      { "name": "Plan generator tests", "result": "pending" },
+      { "name": "Test generator (shared and small suites)", "result": "pending" },
+      { "name": "Test generator (own suites)", "result": "pending" },
+      { "name": "Test generator (pipeline)", "result": "pending" },
+      { "name": "Test generator (replay player)", "result": "pending" },
+      { "name": "Test player", "result": "pending" },
+      { "name": "Test player in a browser", "result": "pending" }
+    ],
+    "toRecord": ["PR number and URL", "actual head and base", "the actually checked-out commit (a PR checkout may be a synthetic merge)", "run, job and attempt IDs", "conclusions", "Node 24 / Linux / factor 3 and the browser version", "durations including checkout and setup against each timeout"]
+  },
+  "repositoryConfiguration": {
+    "item": "R6C-I01",
+    "observedAsOf": "2026-11-20 (SA1, read-only API): rulesets = []; main protection returned 404 Branch not protected",
+    "reReadAtE4": "pending (the orchestrator re-reads and timestamps it; a lack of permission is unknown, not an empty set)"
+  },
+  "pages": "static trigger/dependency/limit audit only (audit/workflow-audit.json); push-to-main deployment is not executed by a feature PR and was not dispatched"
+}

@@ -1,0 +1,4 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs format docs/difficulty-v3/evidence/MS18e/handoff-v3.md
+ok      docs/difficulty-v3/evidence/MS18e/handoff-v3.md
+checked 1 files, 0 with problems
+exit=0 seconds=0.105

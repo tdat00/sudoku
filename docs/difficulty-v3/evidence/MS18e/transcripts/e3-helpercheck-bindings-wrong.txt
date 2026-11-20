@@ -1,0 +1,9 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs bindings --ids-start docs/difficulty-v3/evidence/MS18e/transcripts/e3-identities-start.txt --ids-end docs/difficulty-v3/evidence/MS18e/transcripts/e3-identities-end.txt --ids-e2 docs/difficulty-v3/evidence/MS18d/phase-d/identities-final.txt --recheck docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v3.json --recheck-prior docs/difficulty-v3/evidence/MS18e/audit/targets-recheck-final-v2.json --base 547168b4
+PROBLEM generatorQuick at the start of E3 differs from the E2 source identity
+PROBLEM generatorQuick at the end of E3 differs from the E2 source identity
+PROBLEM playerQuick at the start of E3 differs from the E2 source identity
+PROBLEM playerQuick at the end of E3 differs from the E2 source identity
+PROBLEM generatorWithManual at the start of E3 differs from the E2 source identity
+PROBLEM generatorWithManual at the end of E3 differs from the E2 source identity
+bindings: 6 problem(s) (244 changed files since 547168b4, 0 fingerprint inputs)
+exit=2 seconds=0.737

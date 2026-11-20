@@ -1,0 +1,12 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs coverage --ci docs/difficulty-v3/evidence/MS18e/ci/check-e3-before --quick docs/difficulty-v3/evidence/MS18e/quick --ids docs/difficulty-v3/evidence/MS18d/phase-d/identities-final.txt --manifest .github/scripts/generator-quick.json
+PROBLEM generator/core-shared: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/steps: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/replay: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/mega: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/own-fast: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/digger-target: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/pipeline: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM generator/player: sourceHash is not the final fingerprint (stale or mixed source)
+PROBLEM player/whole-quick: sourceHash is not the final fingerprint (stale or mixed source)
+coverage: 9 problem(s) (generator 4807/4807 in 55 suites, player 2981/2981 in 32 suites, passed 7788, failed 0, skipped 0)
+exit=2 seconds=0.181
