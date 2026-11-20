@@ -1441,9 +1441,10 @@ Các hạn chế mà người dùng nhận thấy được liệt kê trong hư�
   giờ là điều mọi người giải đều cần, và số đếm công việc `checks` của một lần chấm điểm chỉ để chẩn đoán: nó có thể
   lệch vài đơn vị giữa hai lần chạy (các kỹ thuật tập con cách quãng các lần kiểm tra ngân sách bằng một bộ đếm sống
   qua nhiều lần giải), nên các bài kiểm thử bỏ qua nó.
-- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: trọng số của 30 kỹ thuật
-  và chín khoảng điểm được chọn từ các phép đo trên đề do máy tạo
-  ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); trọng số Sát thủ của `ruleOf45` và
+- **Trọng số độ khó là giá trị ước lượng kỹ thuật**, chưa phải số đo trên người giải: 40 trọng số kỹ thuật
+  (`SG.difficulty.WEIGHTS`) là các trọng số của rating v2, được chọn cùng chín khoảng điểm từ các phép đo trên đề do máy
+  tạo ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)), cộng với các giá trị
+  ước lượng kỹ thuật cho những kỹ thuật mà rating v3 thêm vào; trọng số Sát thủ của `ruleOf45` và
   `cageSplit` là những ứng viên đầu tiên cần hiệu chỉnh với người chơi thật.
 - **Thời gian tạo đề**: các thời gian trong hướng dẫn sử dụng được đo trong Node (`node tests/qualify.js`);
   `node tests/perf.js` đo mọi tổ hợp so với ngân sách ở [design.md](generator/design.md) §9.1 trên máy của bạn.

@@ -1,0 +1,5 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs scan --phase final --out docs\difficulty-v3\evidence\MS18e\audit\manual-hidden-requests-final.json
+scan final: 116 sites in 8 suites; classes {"offered-level":52,"refusal-expected":12,"unregistered-model":17,"temp-registered":13,"hidden-unguarded":2,"manual-widened":1,"guarded":18,"guarded-at-caller":1}; unguarded hidden hits 2; unclassified 0; stale rules 0
+  HIT generator/tests/manual/difficulty.test.js:997 classic9/hell1 | i === 0 ? [] : D.spec(LEVELS[i - 1], model9).allowedTechniques]);
+  HIT generator/tests/manual/difficulty.test.js:1445 classic9/hell1 | var p = SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+exit=0 seconds=0.124

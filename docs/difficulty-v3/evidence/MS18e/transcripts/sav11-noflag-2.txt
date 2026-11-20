@@ -1,0 +1,25 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\profile-s-av11.cjs
+S-AV11 driver: NO CALL MADE (no --owner-decision). The plan:
+{
+  "schema": "ms18e-sav11-plan-1",
+  "request": {
+    "variantId": "jigsaw9",
+    "difficulty": "expert",
+    "seed": 1111,
+    "trace": "off"
+  },
+  "call": "SG.fixtures.toolRecords.withRequestedLevel('jigsaw9', 'expert', function () { return SG.pipeline.run(config, null); }).value (no emit, no budget argument, no option)",
+  "defaults": "attempts by the size of the board: 8 up to 81 cells (digger.js:625-632); the normalised config of the result is recorded",
+  "record": [
+    "the seven pipeline.timings fields (configure, buildModel, fullGrid, extraStructure, dig, rate, tune)",
+    "clocks of the whole call: hrtime, performance.now, Date",
+    "the request and the normalised config",
+    "effective defaults",
+    "source hash, tool hash, commit, dirty, Node, machine, argv",
+    "the outcome or the error"
+  ],
+  "output": "docs/difficulty-v3/evidence/MS18e/profile/s-av11/record-1.json (a new file, exclusive)",
+  "process": "run-locked-e.ps1 only; the 540 s ceiling is the only stop; no retry, no second call",
+  "refusal": "a real call needs --owner-decision=<Discord message id> (MS18e-Q-SAV11) and a technical route review"
+}
+exit=2 seconds=0.090

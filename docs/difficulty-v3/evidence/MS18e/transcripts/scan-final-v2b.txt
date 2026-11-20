@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs scan --phase final --out docs\difficulty-v3\evidence\MS18e\audit\manual-hidden-requests-final-v2.json
+scan final: 116 sites in 8 suites; classes {"offered-level":52,"refusal-expected":12,"unregistered-model":17,"temp-registered":13,"guarded":20,"manual-widened":1,"guarded-at-caller":1}; unguarded hidden hits 0; unclassified 0; stale rules 0
+exit=0 seconds=0.112

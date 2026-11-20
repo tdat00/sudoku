@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --suite=variants --list-tests=..\docs\difficulty-v3\evidence\MS18e\preflight\inventory-variants-2.json
+Inventory: 285 tests in 1 suites (0 skipped, 0 benchmarks), registration 0.2 s
+Written: docs/difficulty-v3/evidence/MS18e/preflight/inventory-variants-2.json
+exit=0 seconds=0.334

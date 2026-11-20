@@ -23,7 +23,9 @@
  *       --results=<dir>/generator-<shard>.json to every shard, a new file each, for a coverage reconciliation.
  *
  * The check answers "what happens to a suite that is added later": it fails until the suite has a group, and it
- * never reaches tests/manual. The time factor and the job limits are not set or raised here.
+ * never reaches tests/manual. The time factor and the job limits are not set or raised here. The Generator jobs
+ * are held to job.timeoutMinutes of the manifest, the Player job to PLAYER_JOB_SECONDS (900 s, the 15 minutes
+ * of its job).
  */
 const childProcess = require('child_process');
 const fs = require('fs');
@@ -34,6 +36,9 @@ const GENERATOR = path.join(REPO, 'generator');
 const PLAYER = path.join(REPO, 'player');
 const MANIFEST = path.join(__dirname, 'generator-quick.json');
 const MAX_JOB_MINUTES = 30;
+// The Player job is one `node tests/node-runner.js`; its limit is the timeout-minutes of the test-player job in
+// both workflows (15 minutes), which the self-test reads and compares with this number.
+const PLAYER_JOB_SECONDS = 900;
 const MAX_SHARD_SECONDS = 450;
 const SUITE_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const ID_NAME = /^[a-z][a-z0-9-]*$/;
@@ -147,8 +152,8 @@ function checkShape(manifest) {
       }
     });
     const playerProjected = projectedSeconds(manifest, [player]);
-    if (playerProjected > limit) {
-      bad('the Player job projects ' + playerProjected + ' s, above ' + limit + ' s');
+    if (playerProjected > PLAYER_JOB_SECONDS) {
+      bad('the Player job projects ' + playerProjected + ' s, above ' + PLAYER_JOB_SECONDS + ' s');
     }
   }
   return problems;
@@ -317,7 +322,9 @@ function validateCoverage(manifest, listings, disk) {
       limitSeconds: manifest.job.timeoutMinutes * 60
     });
   });
-  summary.player = { projectedSeconds: projectedSeconds(manifest, [manifest.player]) };
+  summary.player = {
+    projectedSeconds: projectedSeconds(manifest, [manifest.player]), limitSeconds: PLAYER_JOB_SECONDS
+  };
   return { problems: problems, summary: summary };
 }
 
@@ -429,14 +436,13 @@ function check(manifest, keep) {
     work.remove();
   }
   const s = result.summary;
-  const limit = manifest.job.timeoutMinutes * 60;
   console.log('Generator quick set: ' + s.quickTests + ' tests in ' + s.quickSuites + ' suites; ' +
     'Player quick set: ' + s.playerTests + ' tests in ' + s.playerSuites + ' suites');
   s.groups.forEach((g) => {
     console.log('  group ' + g.id + ': ' + g.shards.length + ' shard(s) (' + g.shards.join(', ') + '), ' +
       g.tests + ' tests, projected ' + g.projectedSeconds + ' s of ' + g.limitSeconds + ' s');
   });
-  console.log('  Player job: projected ' + s.player.projectedSeconds + ' s of ' + limit + ' s');
+  console.log('  Player job: projected ' + s.player.projectedSeconds + ' s of ' + s.player.limitSeconds + ' s');
   if (result.problems.length > 0) {
     report(result.problems);
     console.error('The quick-tier grouping check FAILED (' + result.problems.length + ' problem(s)).');
@@ -541,5 +547,5 @@ if (require.main === module) {
 module.exports = {
   checkShape: checkShape, checkInventory: checkInventory, checkShardInventory: checkShardInventory,
   validateCoverage: validateCoverage, executeShards: executeShards, shardArgs: shardArgs,
-  projectedSeconds: projectedSeconds, parseArgs: parseArgs
+  projectedSeconds: projectedSeconds, parseArgs: parseArgs, PLAYER_JOB_SECONDS: PLAYER_JOB_SECONDS
 };

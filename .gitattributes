@@ -4,3 +4,7 @@ player/tests/fixtures/exports/*.txt text eol=lf
 
 # Run by bash on the CI runner: a CR at the end of a line would break them.
 .github/scripts/*.sh text eol=lf
+
+# tests/replay-fixtures.js renders this fixture with CRLF line ends, and its --check (and the replay-recorders
+# suite) compare it line for line with the checkout: every checkout must keep CRLF.
+generator/tests/fixtures/replay-wire.js text eol=crlf

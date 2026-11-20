@@ -112,8 +112,9 @@ generates the recipe again with the current rating model.
 - **15 variants** — classic 4×4, 6×6 and 9×9; Mega 12×12 and Monster 16×16; Diagonal (X); Hyper (Windoku);
   Jigsaw; Killer; Greater-Than; Samurai, Sohei, Butterfly and Flower (overlapping grids); Wordoku.
 - **Nine difficulty levels** — very easy, easy, normal, hard, expert, master, nightmare, hell 1 and
-  hell 2 — scored from 26 human solving techniques (singles, locked candidates, subsets, fish, wings,
-  chains) plus 3 cage and 2 inequality techniques; every variant offers the levels it reaches reliably.
+  hell 2 — scored from 40 human solving techniques (34 classic ones: singles, locked candidates, subsets, fish,
+  wings, chains; 1 for Jigsaw, 3 cage and 2 inequality techniques); every variant offers the levels it reaches
+  reliably.
 - **Step-by-step replay** of the generation, moved by hand (first, previous, next and last step, or a slider
   with a notch for every step), in two views of the same changes: by default a few steps chosen so that the score
   rises steadily and never goes down, or, with **Show all moves**, every recorded change, including the ones

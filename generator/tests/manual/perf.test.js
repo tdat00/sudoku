@@ -122,7 +122,9 @@
             });
           })).toBe(true);
 
-          var gt = result('greaterThan', 'normal', 1);
+          var gt = SG.fixtures.toolRecords.withRequestedLevel('greaterThan', 'normal', function () {
+            return result('greaterThan', 'normal', 1);
+          }).value;
           expect(gt.model.inequalities.length).toBeGreaterThan(0);
           expect(changed(gt, function (c) {
             c.model.inequalities = gt.model.inequalities.slice(1);

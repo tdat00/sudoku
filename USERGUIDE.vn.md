@@ -112,8 +112,9 @@ hiện tại.
   vùng (Windoku); Ghép hình (Jigsaw); Sát thủ (Killer); So sánh (Greater-Than); Samurai, Sohei, Cánh bướm và
   Bông hoa (các lưới chồng nhau); Sudoku Chữ (Wordoku).
 - **Chín mức độ khó** — rất dễ, dễ, trung bình, khó, chuyên gia, bậc thầy, ác mộng, địa ngục 1 và địa ngục 2 —
-  tính điểm từ 26 kỹ thuật giải của con người (số đơn, ứng viên bị khóa, tập con, cá, cánh, chuỗi) cùng 3 kỹ
-  thuật về lồng và 2 kỹ thuật về dấu so sánh; mỗi biến thể chỉ có các mức mà nó đạt được một cách ổn định.
+  tính điểm từ 40 kỹ thuật giải của con người (34 kỹ thuật cổ điển: số đơn, ứng viên bị khóa, tập con, cá, cánh,
+  chuỗi; 1 kỹ thuật cho Jigsaw, 3 kỹ thuật về lồng và 2 kỹ thuật về dấu so sánh); mỗi biến thể chỉ có các mức mà
+  nó đạt được một cách ổn định.
 - **Phát lại từng bước** quá trình tạo đề, do bạn tự điều khiển (bước đầu tiên, bước trước, bước tiếp theo,
   bước cuối cùng, hoặc thanh trượt có một vạch cho mỗi bước), với hai chế độ xem của cùng những thay đổi đó: mặc
   định là một số bước được chọn để điểm tăng đều và không bao giờ giảm, hoặc, với **Hiện từng thay đổi**, mọi thay

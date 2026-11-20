@@ -1,0 +1,2559 @@
+{
+  "schema": "ms18e-admission-plan-2",
+  "rule": "unknown or above 450 s is not admitted; a test timeout, the deep 500 s budget, GQ/GP time, a different cohort or the historical 430.5/449 s is not by itself a bound; no pilot run. The proposed projection is the measured same-work time times 2 (a margin proposed here for the orchestrator and SA to confirm).",
+  "ceilingSeconds": 450,
+  "margin": 2,
+  "dispatchTransport": "every row: tests via the locked caller, tee-c.js transcript, 540 s process ceiling, >= 15 s gap",
+  "transportEnvironment": {
+    "SG_TIME_FACTOR": "2 (set explicitly by run-locked-e.ps1; harness.js:36-41 defaults to 2 locally and 3 with CI)",
+    "CI": "unset (the caller refuses to start when it is set)",
+    "timeFactorInTheInventory": 2,
+    "verification": "the metadata of --list-tests and --results records timeFactor (core/tests/node-evidence.js:292 and :308)"
+  },
+  "inventory": {
+    "file": "docs/difficulty-v3/evidence/MS18e/preflight/inventory-all-v2.json",
+    "sourceHash": "d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3",
+    "tests": 5836
+  },
+  "hiddenLevelScan": {
+    "file": "docs/difficulty-v3/evidence/MS18e/audit/manual-hidden-requests-final-v2.json",
+    "unguardedHiddenHits": 0,
+    "sites": 116
+  },
+  "variantsReuseProof": "docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v2.json",
+  "supersedes": {
+    "file": "docs/difficulty-v3/evidence/MS18e/preflight/admission-plan.json",
+    "sha256": "f411c2f709db0e6891d71fd382d2d113341e2a7774a76ec6a50236e91fe447c9",
+    "reviewedSha256": "f411c2f709db0e6891d71fd382d2d113341e2a7774a76ec6a50236e91fe447c9",
+    "matchesReviewed": true
+  },
+  "continuity": {
+    "previous": "docs/difficulty-v3/evidence/MS18e/preflight/admission-plan.json",
+    "previousSha256": "f411c2f709db0e6891d71fd382d2d113341e2a7774a76ec6a50236e91fe447c9",
+    "previousRows": 88,
+    "rows": 88,
+    "mismatches": [],
+    "sameIdsProjectionsAndStatuses": true
+  },
+  "engineChangeSinceMs17b": {
+    "commit": "57c1b10afb1649910efbf665dad237270bf4c141",
+    "shortstat": "10 files changed, 52 insertions(+), 39 deletions(-)",
+    "files": [
+      "generator/js/ui/controls.js",
+      "generator/js/ui/store.js",
+      "generator/js/variants/classic.js",
+      "generator/js/variants/extra-regions.js",
+      "generator/js/variants/greater-than.js",
+      "generator/js/variants/jigsaw.js",
+      "generator/js/variants/killer.js",
+      "generator/js/variants/mega.js",
+      "generator/js/variants/multigrid.js",
+      "generator/js/variants/wordoku.js"
+    ]
+  },
+  "ms17bMachine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "currentMachine": {
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "cores": 16,
+    "memoryGiB": 64
+  },
+  "sameMachineClass": true,
+  "difficultyCoverage": {
+    "tests": 146,
+    "coveredByRows": 146,
+    "disjointAndComplete": true
+  },
+  "i5Counts": {
+    "killer": 3,
+    "jigsaw": 6,
+    "greater-than": 5,
+    "wordoku": 6,
+    "extra-regions": 12
+  },
+  "summaryByStatus": {
+    "candidate-same-work": 22,
+    "candidate-envelope-different-cohort": 32,
+    "no-defensible-bound": 32,
+    "reuse-no-run": 2
+  },
+  "rows": [
+    {
+      "id": "GD-veryEasy",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > veryEasy >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\veryEasy.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73
+      ],
+      "population": "100 requests, SG.digger.generate(model9, veryEasy, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-veryEasy.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 0.4,
+        "hitsTestSeconds": 0.1,
+        "timeFactor": 2,
+        "failedTests": []
+      },
+      "knownOutcomeAtMs17b": "all passed",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 0.4,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 1125,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-easy",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > easy >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\easy.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81
+      ],
+      "population": "100 requests, SG.digger.generate(model9, easy, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-easy.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 32.6,
+        "hitsTestSeconds": 32.4,
+        "timeFactor": 2,
+        "failedTests": []
+      },
+      "knownOutcomeAtMs17b": "all passed",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 32.6,
+      "proposedProjectionSeconds": 66,
+      "marginFactor": 2,
+      "headroomToCeiling": 13.8,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-normal",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > normal >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\normal.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ],
+      "population": "100 requests, SG.digger.generate(model9, normal, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-normal.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "7/8 passed",
+        "wallSeconds": 37.2,
+        "hitsTestSeconds": 36.9,
+        "timeFactor": 2,
+        "failedTests": [
+          "hits the requested level in at least 90 % of the puzzles"
+        ]
+      },
+      "knownOutcomeAtMs17b": "the engine is unchanged for this path, so the same deterministic outcome is expected: hits the requested level in at least 90 % of the puzzles (MS17b evidence section 16: normal 83 of 100, S-AV14, an availability item, never relabelled)",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 37.2,
+      "proposedProjectionSeconds": 75,
+      "marginFactor": 2,
+      "headroomToCeiling": 12.1,
+      "status": "candidate-same-work",
+      "exitPolicy": "S-AV14 is preserved: the batch is expected to give 7 of 8, the hit-rate assertion at about 83 of 100 (MS17b, MS07e). The orchestrator inspects the raw exit-1 result before continuing: no automatic -AllowExit1, no retry, no relabelling as a pass; 83 of 100 is claimed only if the new evidence reports it; any different outcome means review."
+    },
+    {
+      "id": "GD-hard",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > hard >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\hard.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97
+      ],
+      "population": "100 requests, SG.digger.generate(model9, hard, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-hard.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 3.4,
+        "hitsTestSeconds": 3.1,
+        "timeFactor": 2,
+        "failedTests": []
+      },
+      "knownOutcomeAtMs17b": "all passed",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 3.4,
+      "proposedProjectionSeconds": 7,
+      "marginFactor": 2,
+      "headroomToCeiling": 132.4,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-expert",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > expert >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\expert.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105
+      ],
+      "population": "100 requests, SG.digger.generate(model9, expert, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-expert.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 10,
+        "hitsTestSeconds": 9.6,
+        "timeFactor": 2,
+        "failedTests": []
+      },
+      "knownOutcomeAtMs17b": "all passed",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 10,
+      "proposedProjectionSeconds": 20,
+      "marginFactor": 2,
+      "headroomToCeiling": 45,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-master",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > master >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\master.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113
+      ],
+      "population": "100 requests, SG.digger.generate(model9, master, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-master.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 12.7,
+        "hitsTestSeconds": 12,
+        "timeFactor": 2,
+        "failedTests": []
+      },
+      "knownOutcomeAtMs17b": "all passed",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 12.7,
+      "proposedProjectionSeconds": 26,
+      "marginFactor": 2,
+      "headroomToCeiling": 35.4,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-nightmare",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > nightmare >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\nightmare.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "ordinals": [
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121
+      ],
+      "population": "100 requests, SG.digger.generate(model9, nightmare, SG.rng.create(7000+i), {}), i 0..99; eight assertions",
+      "evidence": {
+        "file": "MS17b/gd/classic9-nightmare.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 95.8,
+        "hitsTestSeconds": 93.7,
+        "timeFactor": 2,
+        "failedTests": []
+      },
+      "knownOutcomeAtMs17b": "all passed",
+      "engineUnchangedSinceMs17b": "git diff 57c1b10a..HEAD -- core/js generator/js: 10 files changed, 52 insertions(+), 39 deletions(-) (the digger, difficulty, solver and technique files are not among them)",
+      "measuredSeconds": 95.8,
+      "proposedProjectionSeconds": 192,
+      "marginFactor": 2,
+      "headroomToCeiling": 4.7,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-confusion",
+      "family": "difficulty",
+      "kind": "exact-test",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--exact=difficulty > digger.generate: classic9 puzzles per level (hit rate, invariants I1-I7, time) > is a confusion matrix with its diagonal as the most common cell of every row",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\confusion-matrix.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinals": [
+        122
+      ],
+      "population": "calls batch(level) for all seven offered levels in one fresh process: 700 requests (the seven GD hit-rate generations, not 100)",
+      "evidence": {
+        "basis": "the sum of the seven MS17b hit-rate tests (the test that builds each batch), same selector, same seeds",
+        "perLevelSeconds": {
+          "veryEasy": 0.08662,
+          "easy": 32.352275,
+          "normal": 36.934194000000005,
+          "hard": 3.057612,
+          "expert": 9.551031,
+          "master": 11.988537,
+          "nightmare": 93.69003500000001
+        }
+      },
+      "measuredSeconds": 187.7,
+      "proposedProjectionSeconds": 376,
+      "marginFactor": 2,
+      "headroomToCeiling": 2.4,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-01",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: levels",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: levels >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-01.json"
+      ],
+      "expectedSelected": 4,
+      "selectedInInventory": 4,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "evidence": {
+        "file": "MS17b/gd/levels.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "4/4 passed",
+        "wallSeconds": 0.2,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.2,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 2250,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-02",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: spec(level, model) on a 9x9 board",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: spec(level, model) on a 9x9 board >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-02.json"
+      ],
+      "expectedSelected": 8,
+      "selectedInInventory": 8,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "evidence": {
+        "file": "MS17b/gd/spec9.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "8/8 passed",
+        "wallSeconds": 0.2,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.2,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 2250,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-03",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: spec on other boards, and difficultySupport",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: spec on other boards, and difficultySupport >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-03.json"
+      ],
+      "expectedSelected": 4,
+      "selectedInInventory": 4,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "evidence": {
+        "file": "MS17b/gd/spec-other.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "4/4 passed",
+        "wallSeconds": 0.3,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.3,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 1500,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-04",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers)",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > qualification: tests/qualify.js counts every request (Node only, fake workers) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-04.json"
+      ],
+      "expectedSelected": 6,
+      "selectedInInventory": 6,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "evidence": {
+        "file": "MS17b/gd/qualification.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "6/6 passed",
+        "wallSeconds": 3.6,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 3.6,
+      "proposedProjectionSeconds": 8,
+      "marginFactor": 2,
+      "headroomToCeiling": 125,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-05",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: the clue floor of a variant (clueFloor)",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the clue floor of a variant (clueFloor) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-05.json"
+      ],
+      "expectedSelected": 9,
+      "selectedInInventory": 9,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "evidence": {
+        "file": "MS17b/gd/clue-floor.json",
+        "sourceHash": "afb05e0b34412dce750eed2d82fa2095857ee902a517ecba6dc4059d9838f9e6",
+        "results": "9/9 passed",
+        "wallSeconds": 0.3,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.3,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 1500,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-06",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: the score of rating v3",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the score of rating v3 >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-06.json"
+      ],
+      "expectedSelected": 15,
+      "selectedInInventory": 15,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "evidence": {
+        "file": "MS17b/gd/score-v3-repaired.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "15/15 passed",
+        "wallSeconds": 0.9,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": [
+          "MS17b/gd/score-v3.json"
+        ]
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.9,
+      "proposedProjectionSeconds": 2,
+      "marginFactor": 2,
+      "headroomToCeiling": 500,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-07",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: the Difficulty Score table (section 5.6)",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: the Difficulty Score table (section 5.6) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-07.json"
+      ],
+      "expectedSelected": 4,
+      "selectedInInventory": 4,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        46,
+        47,
+        48,
+        49
+      ],
+      "evidence": {
+        "file": "MS17b/gd/score-table.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "4/4 passed",
+        "wallSeconds": 0.3,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.3,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 1500,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-08",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: labelled puzzles (fixtures/rated.js)",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: labelled puzzles (fixtures/rated.js) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-08.json"
+      ],
+      "expectedSelected": 7,
+      "selectedInInventory": 7,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "evidence": {
+        "file": "MS17b/gd/labelled.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "7/7 passed",
+        "wallSeconds": 3.4,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": "MS18e-COMPAT-CLASSIC-HELL1-FLOOR",
+      "measuredSeconds": 3.4,
+      "proposedProjectionSeconds": 7,
+      "marginFactor": 2,
+      "headroomToCeiling": 132.4,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-09",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1)",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > difficulty: removing a clue (the score is not monotone under clue removal, section 5.1) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-09.json"
+      ],
+      "expectedSelected": 2,
+      "selectedInInventory": 2,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        57,
+        58
+      ],
+      "evidence": {
+        "file": "MS17b/gd/removing.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "2/2 passed",
+        "wallSeconds": 0.8,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.8,
+      "proposedProjectionSeconds": 2,
+      "marginFactor": 2,
+      "headroomToCeiling": 562.5,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-10",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > digger: technique-bounded oracle",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger: technique-bounded oracle >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-10.json"
+      ],
+      "expectedSelected": 7,
+      "selectedInInventory": 7,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "evidence": {
+        "file": "MS17b/gd/oracle.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "7/7 passed",
+        "wallSeconds": 1.9,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 1.9,
+      "proposedProjectionSeconds": 4,
+      "marginFactor": 2,
+      "headroomToCeiling": 236.8,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-11",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > digger.generate: guarantees",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: guarantees >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-11.json"
+      ],
+      "expectedSelected": 10,
+      "selectedInInventory": 10,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132
+      ],
+      "evidence": {
+        "file": "MS17b/gd/guarantees.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "10/10 passed",
+        "wallSeconds": 86.8,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": "MS18e-COMPAT-CLASSIC-HELL1-SYMMETRY",
+      "measuredSeconds": 86.8,
+      "proposedProjectionSeconds": 174,
+      "marginFactor": 2,
+      "headroomToCeiling": 5.2,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-12",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9))",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: the full-rating cap of an attempt (section 5.7 (9)) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-12.json"
+      ],
+      "expectedSelected": 5,
+      "selectedInInventory": 5,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        133,
+        134,
+        135,
+        136,
+        137
+      ],
+      "evidence": {
+        "file": "MS17b/gd/cap-repaired.json",
+        "sourceHash": "ec93fc795f8683892b0e73b159c8c5972be24bb0596bceb2a8bb81aa03d837c4",
+        "results": "5/5 passed",
+        "wallSeconds": 5.8,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": [
+          "MS17b/gd/cap.json"
+        ]
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 5.8,
+      "proposedProjectionSeconds": 12,
+      "marginFactor": 2,
+      "headroomToCeiling": 77.6,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-13",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > digger.generate: when the level cannot be reached",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: when the level cannot be reached >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-13.json"
+      ],
+      "expectedSelected": 5,
+      "selectedInInventory": 5,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        138,
+        139,
+        140,
+        141,
+        142
+      ],
+      "evidence": {
+        "file": "MS17b/gd/unreachable.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "5/5 passed",
+        "wallSeconds": 0.5,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 0.5,
+      "proposedProjectionSeconds": 1,
+      "marginFactor": 2,
+      "headroomToCeiling": 900,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "GD-rest-14",
+      "family": "difficulty",
+      "kind": "describe-selection",
+      "describe": "difficulty > digger.generate: safety net against a technique bug (risk R3)",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=difficulty",
+        "--filter=difficulty > digger.generate: safety net against a technique bug (risk R3) >",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\difficulty\\rest-14.json"
+      ],
+      "expectedSelected": 3,
+      "selectedInInventory": 3,
+      "selectorSelectsExactlyTheGroup": true,
+      "ordinals": [
+        143,
+        144,
+        145
+      ],
+      "evidence": {
+        "file": "MS17b/gd/safety.json",
+        "sourceHash": "e99b9a462541dd10694a1f17be6b2bd3b6824415b7b9fdbc95fb9799963c6a77",
+        "results": "3/3 passed",
+        "wallSeconds": 5.3,
+        "countMatches": true,
+        "timeFactor": 2,
+        "failedTests": [],
+        "supersedes": null,
+        "alsoRun": null
+      },
+      "blockedByQuestion": null,
+      "hiddenLevelGuard": null,
+      "measuredSeconds": 5.3,
+      "proposedProjectionSeconds": 11,
+      "marginFactor": 2,
+      "headroomToCeiling": 84.9,
+      "status": "candidate-same-work"
+    },
+    {
+      "id": "I5-killer-veryEasy",
+      "family": "I5",
+      "suite": "killer",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=killer",
+        "--filter=> veryEasy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\killer-veryEasy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 53,
+      "fullName": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > veryEasy: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "population": "20 fixed-corpus puzzles of killer veryEasy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell killer/veryEasy: n=50, mean 2.2 ms, p95 4.7 ms, max 15.9 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.3
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 1,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-killer-easy",
+      "family": "I5",
+      "suite": "killer",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=killer",
+        "--filter=> easy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\killer-easy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 54,
+      "fullName": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > easy: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "population": "20 fixed-corpus puzzles of killer easy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell killer/easy: n=50, mean 10.1 ms, p95 23.2 ms, max 27.5 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.6
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 2,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-killer-normal",
+      "family": "I5",
+      "suite": "killer",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=killer",
+        "--filter=> normal: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\killer-normal.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 55,
+      "fullName": "killer > killer: generated puzzles (20 per level, 8 from expert on), CV3 - CV6 and invariants I1 - I7 > normal: 20 puzzles > I5: every puzzle has a complete proof; one rated as requested has its score in the band",
+      "population": "20 fixed-corpus puzzles of killer normal (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell killer/normal: n=50, mean 671.4 ms, p95 1932.9 ms, max 2243.4 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 44.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 90,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-jigsaw-veryEasy",
+      "family": "I5",
+      "suite": "jigsaw",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=jigsaw",
+        "--filter=> veryEasy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\jigsaw-veryEasy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 52,
+      "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "population": "20 fixed-corpus puzzles of jigsaw9 veryEasy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell jigsaw9/veryEasy: n=50, mean 12.8 ms, p95 29.8 ms, max 75.3 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 1.5
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 3,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-jigsaw-easy",
+      "family": "I5",
+      "suite": "jigsaw",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=jigsaw",
+        "--filter=> easy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\jigsaw-easy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 56,
+      "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "population": "20 fixed-corpus puzzles of jigsaw9 easy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell jigsaw9/easy: n=50, mean 366.4 ms, p95 942.8 ms, max 1461.3 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 29.2
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 59,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-jigsaw-normal",
+      "family": "I5",
+      "suite": "jigsaw",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=jigsaw",
+        "--filter=> normal: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\jigsaw-normal.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 60,
+      "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "population": "20 fixed-corpus puzzles of jigsaw9 normal (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell jigsaw9/normal: n=50, mean 61.4 ms, p95 150.3 ms, max 239 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 4.8
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 10,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-jigsaw-hard",
+      "family": "I5",
+      "suite": "jigsaw",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=jigsaw",
+        "--filter=> hard: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\jigsaw-hard.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 64,
+      "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "population": "20 fixed-corpus puzzles of jigsaw9 hard (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell jigsaw9/hard: n=50, mean 66 ms, p95 139.3 ms, max 188.5 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 3.8
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 8,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-jigsaw-master",
+      "family": "I5",
+      "suite": "jigsaw",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=jigsaw",
+        "--filter=> master: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\jigsaw-master.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 68,
+      "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "population": "20 fixed-corpus puzzles of jigsaw9 master (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell jigsaw9/master: n=50, mean 566.8 ms, p95 1586 ms, max 3455.8 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 69.1
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 139,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-jigsaw-hell2",
+      "family": "I5",
+      "suite": "jigsaw",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=jigsaw",
+        "--filter=> hell2: 8 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\jigsaw-hell2.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 72,
+      "fullName": "jigsaw > jigsaw9: puzzles at every level (CV3, CV4: invariants I1-I7) > hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens",
+      "population": "8 fixed-corpus puzzles of jigsaw9 hell2 (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell jigsaw9/hell2: n=50, mean 2184.4 ms, p95 5425.9 ms, max 8163.7 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 65.3
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 131,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-greater-than-veryEasy",
+      "family": "I5",
+      "suite": "greater-than",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> veryEasy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\greater-than-veryEasy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 53,
+      "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of greaterThan veryEasy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell greaterThan/veryEasy: n=50, mean 18.5 ms, p95 29.1 ms, max 44.7 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 2,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-greater-than-easy",
+      "family": "I5",
+      "suite": "greater-than",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> easy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\greater-than-easy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 59,
+      "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of greaterThan easy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell greaterThan/easy: n=50, mean 29.3 ms, p95 57.4 ms, max 59.3 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 1.2
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 3,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-greater-than-hard",
+      "family": "I5",
+      "suite": "greater-than",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> hard: 10 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\greater-than-hard.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 65,
+      "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "10 fixed-corpus puzzles of greaterThan hard (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell greaterThan/hard: n=50, mean 567.2 ms, p95 2894.4 ms, max 4309 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 43.1
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 87,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-greater-than-master",
+      "family": "I5",
+      "suite": "greater-than",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> master: 10 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\greater-than-master.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 71,
+      "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "10 fixed-corpus puzzles of greaterThan master (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell greaterThan/master: n=50, mean 2063.1 ms, p95 7620.5 ms, max 15503.4 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 155
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 310,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-greater-than-hell2",
+      "family": "I5",
+      "suite": "greater-than",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=greater-than",
+        "--filter=> hell2: 10 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\greater-than-hell2.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 77,
+      "fullName": "greater-than > greaterThan: puzzles at every level (CV3, CV4: invariants I1-I7) > hell2: 10 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "10 fixed-corpus puzzles of greaterThan hell2 (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell greaterThan/hell2: n=50, mean 4071.8 ms, p95 9287.4 ms, max 11288.6 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 112.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 226,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-wordoku-veryEasy",
+      "family": "I5",
+      "suite": "wordoku",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=wordoku",
+        "--filter=> veryEasy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\wordoku-veryEasy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 61,
+      "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of wordoku veryEasy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell wordoku/veryEasy: n=50, mean 2 ms, p95 3.6 ms, max 13.3 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.3
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 1,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-wordoku-easy",
+      "family": "I5",
+      "suite": "wordoku",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=wordoku",
+        "--filter=> easy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\wordoku-easy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 67,
+      "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > easy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of wordoku easy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell wordoku/easy: n=50, mean 329.4 ms, p95 1237.2 ms, max 1481.5 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 29.6
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 60,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-wordoku-hard",
+      "family": "I5",
+      "suite": "wordoku",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=wordoku",
+        "--filter=> hard: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\wordoku-hard.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 73,
+      "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of wordoku hard (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell wordoku/hard: n=50, mean 33.4 ms, p95 86.5 ms, max 235.4 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 4.7
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 10,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-wordoku-expert",
+      "family": "I5",
+      "suite": "wordoku",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=wordoku",
+        "--filter=> expert: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\wordoku-expert.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 79,
+      "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > expert: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of wordoku expert (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell wordoku/expert: n=50, mean 111.9 ms, p95 604.1 ms, max 864.3 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 17.3
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 35,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-wordoku-master",
+      "family": "I5",
+      "suite": "wordoku",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=wordoku",
+        "--filter=> master: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\wordoku-master.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 85,
+      "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of wordoku master (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell wordoku/master: n=50, mean 146.1 ms, p95 525.4 ms, max 693.9 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 13.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 28,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-wordoku-nightmare",
+      "family": "I5",
+      "suite": "wordoku",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=wordoku",
+        "--filter=> nightmare: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\wordoku-nightmare.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 91,
+      "fullName": "wordoku > wordoku: puzzles at every level (CV3, CV4: invariants I1-I7) > nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: at least minClues givens, every unit its minimum",
+      "population": "20 fixed-corpus puzzles of wordoku nightmare (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell wordoku/nightmare: n=50, mean 967.9 ms, p95 2800.5 ms, max 4443.9 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 88.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 178,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-veryEasy-diagonalX",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> diagonalX veryEasy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-diagonalX-veryEasy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 53,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of diagonalX veryEasy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell diagonalX/veryEasy: n=50, mean 1.7 ms, p95 3.1 ms, max 12.9 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.3
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 1,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-normal-diagonalX",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> diagonalX normal: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-diagonalX-normal.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 56,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of diagonalX normal (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell diagonalX/normal: n=50, mean 21.9 ms, p95 64.6 ms, max 230 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 4.6
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 10,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-hard-diagonalX",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> diagonalX hard: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-diagonalX-hard.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 59,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of diagonalX hard (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell diagonalX/hard: n=50, mean 14.3 ms, p95 23.1 ms, max 41.5 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.8
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 2,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-master-diagonalX",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> diagonalX master: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-diagonalX-master.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 62,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of diagonalX master (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell diagonalX/master: n=50, mean 161.7 ms, p95 364.9 ms, max 410.2 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 8.2
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 17,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-nightmare-diagonalX",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> diagonalX nightmare: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-diagonalX-nightmare.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 65,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of diagonalX nightmare (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell diagonalX/nightmare: n=50, mean 1503.8 ms, p95 4321.8 ms, max 5692.8 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 113.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 228,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-hell2-diagonalX",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> diagonalX hell2: 8 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-diagonalX-hell2.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 68,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > diagonalX hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "8 fixed-corpus puzzles of diagonalX hell2 (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell diagonalX/hell2: n=50, mean 756.4 ms, p95 2953.7 ms, max 3153.4 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 25.2
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 51,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-veryEasy-hyper",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> hyper veryEasy: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-hyper-veryEasy.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 73,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper veryEasy: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of hyper veryEasy (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell hyper/veryEasy: n=50, mean 1.8 ms, p95 3.5 ms, max 13.5 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 0.3
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 1,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-normal-hyper",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> hyper normal: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-hyper-normal.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 76,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper normal: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of hyper normal (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell hyper/normal: n=50, mean 121.6 ms, p95 368.3 ms, max 492.3 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 9.8
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 20,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-hard-hyper",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> hyper hard: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-hyper-hard.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 79,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hard: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of hyper hard (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell hyper/hard: n=50, mean 18.4 ms, p95 38.8 ms, max 77.6 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 1.6
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 4,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-master-hyper",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> hyper master: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-hyper-master.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 82,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper master: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of hyper master (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell hyper/master: n=50, mean 225.1 ms, p95 560 ms, max 836.6 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 16.7
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 34,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-nightmare-hyper",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> hyper nightmare: 20 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-hyper-nightmare.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 85,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper nightmare: 20 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "20 fixed-corpus puzzles of hyper nightmare (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell hyper/nightmare: n=50, mean 2867.9 ms, p95 7577 ms, max 10695.4 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 213.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 428,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "I5-extra-regions-hell2-hyper",
+      "family": "I5",
+      "suite": "extra-regions",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=extra-regions",
+        "--filter=> hyper hell2: 8 puzzles > I5:",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\i5\\extra-regions-hyper-hell2.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 88,
+      "fullName": "extra-regions > extraRegions: puzzles at every level (CV3, CV4, CV6) > hyper hell2: 8 puzzles > I5: every puzzle has a complete proof, and one that reached the level has its score in the band; I6: the clue count respects the spec",
+      "population": "8 fixed-corpus puzzles of hyper hell2 (original builders, seeds and options)",
+      "evidence": {
+        "cohort": "current-source GP cell hyper/hell2: n=50, mean 1669.6 ms, p95 4289.5 ms, max 6111 ms (seeds 7000+101i, trace summary: a DIFFERENT cohort)",
+        "envelopeSeconds": 48.9
+      },
+      "status": "candidate-envelope-different-cohort",
+      "proposedProjectionSeconds": 98,
+      "note": "no same-selector current-source timing exists; the envelope is N x the GP max of the cell, doubled; the orchestrator and SA decide whether a different-cohort envelope is accepted"
+    },
+    {
+      "id": "RATIO-off",
+      "family": "S-OD8",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=perf",
+        "--exact=perf > instrumented generators: what the events cost > generating puzzles: verbosity 'off' costs less than 2%",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\ratios\\off.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 48,
+      "population": "per work call 24 Easy + 2 Normal classic9 puzzles; one internal attempt = 1 warm-up + 12 measured = 13 calls; up to 5 attempts = 65 calls = 1690 puzzles",
+      "evidence": {
+        "perPuzzleSecondsFromMs17b": {
+          "easy": 0.3235,
+          "normal": 0.3693
+        },
+        "workCallSeconds": 8.5,
+        "formula": "calls x workCall x (1 + limit)/2 (the rounds alternate the bare and the instrumented work)",
+        "bestCaseOneAttemptSeconds": 111.6,
+        "worstCaseAllAttemptsSeconds": 558.2,
+        "historical": "MS07f measured about 95 s per ratio on the engine of that time (docs/difficulty-v3/evidence/MS07f/manual/ratios.json); the techniques changed since"
+      },
+      "status": "no-defensible-bound",
+      "note": "the synchronous test is not stopped by its 120000 ms timeout (core/tests/harness.js:415-418); a pass on the first attempt is not a bound"
+    },
+    {
+      "id": "RATIO-summary",
+      "family": "S-OD8",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=perf",
+        "--exact=perf > instrumented generators: what the events cost > generating puzzles: verbosity 'summary' costs less than 10%",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\ratios\\summary.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 49,
+      "population": "per work call 24 Easy + 2 Normal classic9 puzzles; one internal attempt = 1 warm-up + 12 measured = 13 calls; up to 4 attempts = 52 calls = 1352 puzzles",
+      "evidence": {
+        "perPuzzleSecondsFromMs17b": {
+          "easy": 0.3235,
+          "normal": 0.3693
+        },
+        "workCallSeconds": 8.5,
+        "formula": "calls x workCall x (1 + limit)/2 (the rounds alternate the bare and the instrumented work)",
+        "bestCaseOneAttemptSeconds": 116.1,
+        "worstCaseAllAttemptsSeconds": 464.3,
+        "historical": "MS07f measured about 95 s per ratio on the engine of that time (docs/difficulty-v3/evidence/MS07f/manual/ratios.json); the techniques changed since"
+      },
+      "status": "no-defensible-bound",
+      "note": "the synchronous test is not stopped by its 120000 ms timeout (core/tests/harness.js:415-418); a pass on the first attempt is not a bound"
+    },
+    {
+      "id": "RATIO-full",
+      "family": "S-OD8",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=perf",
+        "--exact=perf > instrumented generators: what the events cost > generating puzzles: verbosity 'full' costs less than 35%",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\ratios\\full.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 50,
+      "population": "per work call 24 Easy + 2 Normal classic9 puzzles; one internal attempt = 1 warm-up + 12 measured = 13 calls; up to 4 attempts = 52 calls = 1352 puzzles",
+      "evidence": {
+        "perPuzzleSecondsFromMs17b": {
+          "easy": 0.3235,
+          "normal": 0.3693
+        },
+        "workCallSeconds": 8.5,
+        "formula": "calls x workCall x (1 + limit)/2 (the rounds alternate the bare and the instrumented work)",
+        "bestCaseOneAttemptSeconds": 129.9,
+        "worstCaseAllAttemptsSeconds": 519.5,
+        "historical": "MS07f measured about 95 s per ratio on the engine of that time (docs/difficulty-v3/evidence/MS07f/manual/ratios.json); the techniques changed since"
+      },
+      "status": "no-defensible-bound",
+      "note": "the synchronous test is not stopped by its 120000 ms timeout (core/tests/harness.js:415-418); a pass on the first attempt is not a bound"
+    },
+    {
+      "id": "REPLAY-mega16",
+      "family": "S-OD8",
+      "kind": "reuse-no-run",
+      "cwd": "generator",
+      "argv": [
+        "tests\\node-runner.js",
+        "--suite=variants",
+        "--exact=variants > player: the replay steps of a result > real top-level results with clues shown again replay faithfully (mega16)",
+        "--verbose",
+        "--results=..\\docs\\difficulty-v3\\evidence\\MS18e\\manual\\mega-replay\\mega16.json"
+      ],
+      "expectedSelected": 1,
+      "selectedInInventory": 1,
+      "ordinal": 284,
+      "population": "two fixed requests: Nightmare seed 478576959 and Hell 1 seed 2422420669, with the existing support restoration",
+      "evidence": {
+        "measuredSecondsSameEngineSameTestFile": 331.6,
+        "file": "MS18c/closure/manual-variants/result-mega16-replay.json",
+        "headroomToCeiling": 1.4
+      },
+      "status": "reuse-no-run",
+      "note": "reused-compatible by docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v2.json; if reuse is rejected the replacement command has a 331.6 s same-work measurement (headroom 1.4x: no 2x margin)"
+    },
+    {
+      "id": "CV3-replacement",
+      "family": "CV3",
+      "kind": "reuse-no-run",
+      "expectedSelectors": 94,
+      "publicCells": 79,
+      "refusalChecks": 15,
+      "maxCellSeconds": 22.6,
+      "status": "reuse-no-run",
+      "note": "accepted by docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v2.json (reused-compatible); the per-cell table is in scope-map-v2.json.cv3"
+    },
+    {
+      "id": "DEEP-mega12-cv5-a",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-cv5-a",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-cv5-a.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-cv5-a.json",
+        "oldGenerationSeconds": 23.7,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-cv5-b",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-cv5-b",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-cv5-b.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-cv5-b.json",
+        "oldGenerationSeconds": 23.9,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-cv5-other",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-cv5-other",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-cv5-other.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-cv5-other.json",
+        "oldGenerationSeconds": 25,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-invariant-1",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-invariant-1",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-invariant-1.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-invariant-1.json",
+        "oldGenerationSeconds": 23.7,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-invariant-2",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-invariant-2",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-invariant-2.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-invariant-2.json",
+        "oldGenerationSeconds": 23.5,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-invariant-3",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-invariant-3",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-invariant-3.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-invariant-3.json",
+        "oldGenerationSeconds": 23.6,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-invariant-4",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-invariant-4",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega12-invariant-4.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega12-invariant-4.json",
+        "oldGenerationSeconds": 25.2,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/nightmare (hidden hell1/nightmare cells have none): max 7748.3 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-cv5-a",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-cv5-a",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-cv5-a.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-cv5-a.json",
+        "oldGenerationSeconds": 107.8,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-cv5-b",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-cv5-b",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-cv5-b.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-cv5-b.json",
+        "oldGenerationSeconds": 104.1,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-cv5-other",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-cv5-other",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-cv5-other.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-cv5-other.json",
+        "oldGenerationSeconds": 80.5,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-invariant-1",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-invariant-1",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-invariant-1.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-invariant-1.json",
+        "oldGenerationSeconds": 117,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-invariant-2",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-invariant-2",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-invariant-2.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-invariant-2.json",
+        "oldGenerationSeconds": 103.6,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-invariant-3",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-invariant-3",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-invariant-3.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-invariant-3.json",
+        "oldGenerationSeconds": 107.5,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-invariant-4",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-invariant-4",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\nightmare\\mega16-invariant-4.json"
+      ],
+      "population": "one fixed request of the nightmare manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS05r5m/records/mega16-invariant-4.json",
+        "oldGenerationSeconds": 80.4,
+        "oldSourceHash": "fee8b8d6d7a2c47f",
+        "oldCommit": "1ae831c1",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": null
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-cv5-a",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-cv5-a",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-cv5-a.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-cv5-a.json",
+        "oldGenerationSeconds": 34.2,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-cv5-b",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-cv5-b",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-cv5-b.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-cv5-b.json",
+        "oldGenerationSeconds": 34.4,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-cv5-other",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-cv5-other",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-cv5-other.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-cv5-other.json",
+        "oldGenerationSeconds": 34.4,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-invariant-1",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-invariant-1",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-invariant-1.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-invariant-1.json",
+        "oldGenerationSeconds": 29.3,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-invariant-2",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-invariant-2",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-invariant-2.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-invariant-2.json",
+        "oldGenerationSeconds": 30.2,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-invariant-3",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-invariant-3",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-invariant-3.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-invariant-3.json",
+        "oldGenerationSeconds": 34.3,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega12-hell1-invariant-4",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega12-hell1-invariant-4",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega12-hell1-invariant-4.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega12-hell1-invariant-4.json",
+        "oldGenerationSeconds": 34,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega12/hell2 (hidden hell1/nightmare cells have none): max 15673.7 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-cv5-a",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-cv5-a",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-cv5-a.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-cv5-a.json",
+        "oldGenerationSeconds": 115.2,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-cv5-b",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-cv5-b",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-cv5-b.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-cv5-b.json",
+        "oldGenerationSeconds": 119.9,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-cv5-other",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-cv5-other",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-cv5-other.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-cv5-other.json",
+        "oldGenerationSeconds": 101.3,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-invariant-1",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-invariant-1",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-invariant-1.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-invariant-1.json",
+        "oldGenerationSeconds": 123.3,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-invariant-2",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-invariant-2",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-invariant-2.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-invariant-2.json",
+        "oldGenerationSeconds": 116.7,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-invariant-3",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-invariant-3",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-invariant-3.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-invariant-3.json",
+        "oldGenerationSeconds": 118,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "DEEP-mega16-hell1-invariant-4",
+      "family": "deep",
+      "cwd": "generator",
+      "argv": [
+        "tests\\mega-contract.js",
+        "--request=mega16-hell1-invariant-4",
+        "--record=..\\docs\\difficulty-v3\\evidence\\MS18e\\deep\\hell1\\mega16-hell1-invariant-4.json"
+      ],
+      "population": "one fixed request of the hell1 manifest, once per process, trace off, board default attempts, allowance 256, 500000 ms shared budget (not a bound)",
+      "evidence": {
+        "oldRecord": "MS07b/mega-hell1/records/mega16-hell1-invariant-4.json",
+        "oldGenerationSeconds": 99.9,
+        "oldSourceHash": "ddf2fa5ad4498e75",
+        "oldCommit": "959aae09",
+        "currentSourceHashMatches": "unknown until `--reconcile` computes the current identity; the engine files changed since the record commit (see reuse-map.json)",
+        "gpCohortForTheCell": "mega16/hell2 (hidden hell1/nightmare cells have none): max 38690.9 ms, a different cohort"
+      },
+      "status": "no-defensible-bound",
+      "note": "no current-source timing of this request exists; the old duration is from a different engine; the 500000 ms diagnostic budget is not a launch bound"
+    },
+    {
+      "id": "SAV11",
+      "family": "S-AV11",
+      "kind": "held",
+      "tuple": "jigsaw9 / Expert / seed 1111 / trace off / default 8 attempts (hidden level: toolRecords.withRequestedLevel around the original SG.pipeline.run)",
+      "evidence": {
+        "observation": "325.313 s whole request, history only; source and machine of that observation are not a current bound",
+        "gpCohort": [
+          "jigsaw9/hard: mean 66 ms, p95 139.3 ms, max 188.5 ms",
+          "jigsaw9/master: mean 566.8 ms, p95 1586 ms, max 3455.8 ms",
+          "jigsaw9/hell2: mean 2184.4 ms, p95 5425.9 ms, max 8163.7 ms"
+        ]
+      },
+      "status": "no-defensible-bound",
+      "route": "no existing tool runs this tuple: tests/difficulty-recovery.js knows only G13, mega12-nightmare and mega16-nightmare. Options in questions.md (Q-SAV11-ROUTE)"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs plan --out-dir docs\difficulty-v3\evidence\MS18e\preflight
+plan: 88 rows; by status {"candidate-same-work":22,"candidate-envelope-different-cohort":32,"no-defensible-bound":32,"reuse-no-run":2}; difficulty {"tests":146,"coveredByRows":146,"disjointAndComplete":true}; I5 32 {"killer":3,"jigsaw":6,"greater-than":5,"wordoku":6,"extra-regions":12}; CV3 79 + 15; deep 28; engine files changed since MS17b 10
+  GD-veryEasy | candidate-same-work | proj 1 s | sel 8/8
+  GD-easy | candidate-same-work | proj 66 s | sel 8/8
+  GD-normal | candidate-same-work | proj 75 s | sel 8/8
+  GD-hard | candidate-same-work | proj 7 s | sel 8/8
+  GD-expert | candidate-same-work | proj 20 s | sel 8/8
+  GD-master | candidate-same-work | proj 26 s | sel 8/8
+  GD-nightmare | candidate-same-work | proj 192 s | sel 8/8
+  GD-confusion | candidate-same-work | proj 376 s | sel 1/1
+  GD-rest-01 | candidate-same-work | proj 1 s | sel 4/4
+  GD-rest-02 | candidate-same-work | proj 1 s | sel 8/8
+  GD-rest-03 | candidate-same-work | proj 1 s | sel 4/4
+  GD-rest-04 | candidate-same-work | proj 8 s | sel 6/6
+  GD-rest-05 | candidate-same-work | proj 1 s | sel 9/9
+  GD-rest-06 | candidate-same-work | proj 2 s | sel 15/15
+  GD-rest-07 | candidate-same-work | proj 1 s | sel 4/4
+  GD-rest-08 | candidate-same-work | proj 7 s | sel 7/7 | BLOCKED Q-B1-EXTRA: difficulty.test.js:997 D.spec(LEVELS[i - 1], model9) on hell1
+  GD-rest-09 | candidate-same-work | proj 2 s | sel 2/2
+  GD-rest-10 | candidate-same-work | proj 4 s | sel 7/7
+  GD-rest-11 | candidate-same-work | proj 174 s | sel 10/10 | BLOCKED Q-B1-EXTRA: difficulty.test.js:1445 digger.generate(model9, hell1, ...)
+  GD-rest-12 | candidate-same-work | proj 12 s | sel 5/5
+  GD-rest-13 | candidate-same-work | proj 1 s | sel 5/5
+  GD-rest-14 | candidate-same-work | proj 11 s | sel 3/3
+  I5-killer-veryEasy | candidate-envelope-different-cohort | proj 1 s | sel 1/1
+  I5-killer-easy | candidate-envelope-different-cohort | proj 2 s | sel 1/1
+  I5-killer-normal | candidate-envelope-different-cohort | proj 90 s | sel 1/1
+  I5-jigsaw-veryEasy | candidate-envelope-different-cohort | proj 3 s | sel 1/1
+  I5-jigsaw-easy | candidate-envelope-different-cohort | proj 59 s | sel 1/1
+  I5-jigsaw-normal | candidate-envelope-different-cohort | proj 10 s | sel 1/1
+  I5-jigsaw-hard | candidate-envelope-different-cohort | proj 8 s | sel 1/1
+  I5-jigsaw-master | candidate-envelope-different-cohort | proj 139 s | sel 1/1
+  I5-jigsaw-hell2 | candidate-envelope-different-cohort | proj 131 s | sel 1/1
+  I5-greater-than-veryEasy | candidate-envelope-different-cohort | proj 2 s | sel 1/1
+  I5-greater-than-easy | candidate-envelope-different-cohort | proj 3 s | sel 1/1
+  I5-greater-than-hard | candidate-envelope-different-cohort | proj 87 s | sel 1/1
+  I5-greater-than-master | candidate-envelope-different-cohort | proj 310 s | sel 1/1
+  I5-greater-than-hell2 | candidate-envelope-different-cohort | proj 226 s | sel 1/1
+  I5-wordoku-veryEasy | candidate-envelope-different-cohort | proj 1 s | sel 1/1
+  I5-wordoku-easy | candidate-envelope-different-cohort | proj 60 s | sel 1/1
+  I5-wordoku-hard | candidate-envelope-different-cohort | proj 10 s | sel 1/1
+  I5-wordoku-expert | candidate-envelope-different-cohort | proj 35 s | sel 1/1
+  I5-wordoku-master | candidate-envelope-different-cohort | proj 28 s | sel 1/1
+  I5-wordoku-nightmare | candidate-envelope-different-cohort | proj 178 s | sel 1/1
+  I5-extra-regions-veryEasy-diagonalX | candidate-envelope-different-cohort | proj 1 s | sel 1/1
+  I5-extra-regions-normal-diagonalX | candidate-envelope-different-cohort | proj 10 s | sel 1/1
+  I5-extra-regions-hard-diagonalX | candidate-envelope-different-cohort | proj 2 s | sel 1/1
+  I5-extra-regions-master-diagonalX | candidate-envelope-different-cohort | proj 17 s | sel 1/1
+  I5-extra-regions-nightmare-diagonalX | candidate-envelope-different-cohort | proj 228 s | sel 1/1
+  I5-extra-regions-hell2-diagonalX | candidate-envelope-different-cohort | proj 51 s | sel 1/1
+  I5-extra-regions-veryEasy-hyper | candidate-envelope-different-cohort | proj 1 s | sel 1/1
+  I5-extra-regions-normal-hyper | candidate-envelope-different-cohort | proj 20 s | sel 1/1
+  I5-extra-regions-hard-hyper | candidate-envelope-different-cohort | proj 4 s | sel 1/1
+  I5-extra-regions-master-hyper | candidate-envelope-different-cohort | proj 34 s | sel 1/1
+  I5-extra-regions-nightmare-hyper | candidate-envelope-different-cohort | proj 428 s | sel 1/1
+  I5-extra-regions-hell2-hyper | candidate-envelope-different-cohort | proj 98 s | sel 1/1
+  RATIO-off | no-defensible-bound | sel 1/1
+  RATIO-summary | no-defensible-bound | sel 1/1
+  RATIO-full | no-defensible-bound | sel 1/1
+  REPLAY-mega16 | reuse-no-run | sel 1/1
+  CV3-replacement | reuse-no-run
+  DEEP-mega12-cv5-a | no-defensible-bound
+  DEEP-mega12-cv5-b | no-defensible-bound
+  DEEP-mega12-cv5-other | no-defensible-bound
+  DEEP-mega12-invariant-1 | no-defensible-bound
+  DEEP-mega12-invariant-2 | no-defensible-bound
+  DEEP-mega12-invariant-3 | no-defensible-bound
+  DEEP-mega12-invariant-4 | no-defensible-bound
+  DEEP-mega16-cv5-a | no-defensible-bound
+  DEEP-mega16-cv5-b | no-defensible-bound
+  DEEP-mega16-cv5-other | no-defensible-bound
+  DEEP-mega16-invariant-1 | no-defensible-bound
+  DEEP-mega16-invariant-2 | no-defensible-bound
+  DEEP-mega16-invariant-3 | no-defensible-bound
+  DEEP-mega16-invariant-4 | no-defensible-bound
+  DEEP-mega12-hell1-cv5-a | no-defensible-bound
+  DEEP-mega12-hell1-cv5-b | no-defensible-bound
+  DEEP-mega12-hell1-cv5-other | no-defensible-bound
+  DEEP-mega12-hell1-invariant-1 | no-defensible-bound
+  DEEP-mega12-hell1-invariant-2 | no-defensible-bound
+  DEEP-mega12-hell1-invariant-3 | no-defensible-bound
+  DEEP-mega12-hell1-invariant-4 | no-defensible-bound
+  DEEP-mega16-hell1-cv5-a | no-defensible-bound
+  DEEP-mega16-hell1-cv5-b | no-defensible-bound
+  DEEP-mega16-hell1-cv5-other | no-defensible-bound
+  DEEP-mega16-hell1-invariant-1 | no-defensible-bound
+  DEEP-mega16-hell1-invariant-2 | no-defensible-bound
+  DEEP-mega16-hell1-invariant-3 | no-defensible-bound
+  DEEP-mega16-hell1-invariant-4 | no-defensible-bound
+  SAV11 | no-defensible-bound
+exit=0 seconds=0.982

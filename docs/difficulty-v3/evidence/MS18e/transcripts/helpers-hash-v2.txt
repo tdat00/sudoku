@@ -1,0 +1,3 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs hashes --out docs\difficulty-v3\evidence\MS18e\helpers-sha256-v2.txt generator/tests/artifacts/difficulty-v3/MS18e/audit.cjs generator/tests/artifacts/difficulty-v3/MS18e/run-locked-e.ps1 generator/tests/artifacts/difficulty-v3/MS18e/profile-s-av11.cjs generator/tests/artifacts/difficulty-v3/MS18c/invoke-dv3node.ps1 generator/tests/artifacts/difficulty-v3/MS18c/identities-now.cjs generator/tests/artifacts/difficulty-v3/MS18d/phase-b/freeze-targets.js generator/tests/artifacts/difficulty-v3/MS18d/phase-c/tee-c.js
+hashed 7 files into docs\difficulty-v3\evidence\MS18e\helpers-sha256-v2.txt
+exit=0 seconds=0.098

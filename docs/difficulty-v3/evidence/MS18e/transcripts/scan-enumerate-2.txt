@@ -1,0 +1,119 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs scan
+scan before: 116 sites in 8 suites; classes {}; unguarded hidden hits 0; unclassified 116; stale rules 0
+  ?? generator/tests/manual/difficulty.test.js:50 allowedTechniques: D.spec(level, model).allowedTechniques,
+  ?? generator/tests/manual/difficulty.test.js:111 expectCode(function () { D.spec('impossible', model9); }, 'difficulty.unknownLevel');
+  ?? generator/tests/manual/difficulty.test.js:153 var specs = LEVELS.map(function (level) { return D.spec(level, board9); });
+  ?? generator/tests/manual/difficulty.test.js:241 expect(D.spec('veryEasy', board9).allowedTechniques).not.toContain('testKillerOnly');
+  ?? generator/tests/manual/difficulty.test.js:242 expect(D.spec('hell2', board9).allowedTechniques).not.toContain('testKillerOnly');
+  ?? generator/tests/manual/difficulty.test.js:253 expect(D.spec(level, board6).minCluesPerUnit).toBeLessThanOrEqual(specs[i].minCluesPerUnit);
+  ?? generator/tests/manual/difficulty.test.js:266 var base = D.spec(level, board9);
+  ?? generator/tests/manual/difficulty.test.js:267 var spec = D.spec(level, board);
+  ?? generator/tests/manual/difficulty.test.js:282 expect(D.spec(level, model).level).toBe(level);
+  ?? generator/tests/manual/difficulty.test.js:284 expectCode(function () { D.spec(level, model); }, 'difficulty.unsupportedLevel');
+  ?? generator/tests/manual/difficulty.test.js:288 expectCode(function () { D.spec('nightmare', model4); }, 'difficulty.unsupportedLevel');
+  ?? generator/tests/manual/difficulty.test.js:490 expect(D.spec(level, model).minClues).toBe(D.spec(level, board9).minClues);
+  ?? generator/tests/manual/difficulty.test.js:497 var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });
+  ?? generator/tests/manual/difficulty.test.js:500 var spec = D.spec(level, model);
+  ?? generator/tests/manual/difficulty.test.js:516 var derived = D.spec(level, board9).minClues;
+  ?? generator/tests/manual/difficulty.test.js:517 var floor = D.spec(level, model).minClues;
+  ?? generator/tests/manual/difficulty.test.js:527 expect(D.spec('easy', null).minClues).toBe(Math.max(1, Math.floor(34 * 1)));
+  ?? generator/tests/manual/difficulty.test.js:528 expect(D.spec('veryEasy', SG.fixtures.models.samurai()).minClues).toBe(Math.floor(40 * 369 / 81));
+  ?? generator/tests/manual/difficulty.test.js:536 expect(D.spec(level, killer).minClues).toBe(level === 'veryEasy' ? 40 : 0);
+  ?? generator/tests/manual/difficulty.test.js:551 expect(D.spec(level, board).minClues).toBe(expected[level]);
+  ?? generator/tests/manual/difficulty.test.js:558 var floors = LEVELS.map(function (level) { return D.spec(level, model).minClues; });
+  ?? generator/tests/manual/difficulty.test.js:561 var spec = D.spec(level, model);
+  ?? generator/tests/manual/difficulty.test.js:567 expect(D.spec('hard', model).minClues).toBe(20);
+  ?? generator/tests/manual/difficulty.test.js:568 expect(D.spec('expert', model).minClues).toBe(25);
+  ?? generator/tests/manual/difficulty.test.js:578 expect(D.spec('normal', model).minClues).toBe(14);
+  ?? generator/tests/manual/difficulty.test.js:579 expect(D.spec('hard', model).minClues).toBe(3);
+  ?? generator/tests/manual/difficulty.test.js:580 expect(D.spec('veryEasy', model).minClues).toBe(40);
+  ?? generator/tests/manual/difficulty.test.js:997 i === 0 ? [] : D.spec(LEVELS[i - 1], model9).allowedTechniques]);
+  ?? generator/tests/manual/difficulty.test.js:1170 allowedTechniques: D.spec('master', board9).allowedTechniques
+  ?? generator/tests/manual/difficulty.test.js:1178 var allowed = D.spec('master', board9).allowedTechniques;
+  ?? generator/tests/manual/difficulty.test.js:1257 puzzles.push(SG.digger.generate(model9, level, rng, {}));
+  ?? generator/tests/manual/difficulty.test.js:1265 var spec = D.spec(level, model9);
+  ?? generator/tests/manual/difficulty.test.js:1382 var a = SG.digger.generate(model9, level, SG.rng.create(8100), {});
+  ?? generator/tests/manual/difficulty.test.js:1383 var b = SG.digger.generate(model9, level, SG.rng.create(8100), {});
+  ?? generator/tests/manual/difficulty.test.js:1384 var c = SG.digger.generate(model9, level, SG.rng.create(8101), {});
+  ?? generator/tests/manual/difficulty.test.js:1393 var plain = SG.digger.generate(model9, 'hard', SG.rng.create(8200), {});
+  ?? generator/tests/manual/difficulty.test.js:1395 var loud = SG.digger.generate(model9, 'hard', SG.rng.create(8200), { emit: function () { seen++; } });
+  ?? generator/tests/manual/difficulty.test.js:1401 var p = SG.digger.generate(model9, 'normal', SG.rng.create(8300), {});
+  ?? generator/tests/manual/difficulty.test.js:1416 var spec = D.spec(level, model9);
+  ?? generator/tests/manual/difficulty.test.js:1418 var p = SG.digger.generate(model9, level, SG.rng.create(8400 + i), {});
+  ?? generator/tests/manual/difficulty.test.js:1431 var p = SG.digger.generate(model9, 'normal', SG.rng.create(8500), { symmetry: symmetry });
+  ?? generator/tests/manual/difficulty.test.js:1445 var p = SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+  ?? generator/tests/manual/difficulty.test.js:1456 var puzzle = SG.digger.digLevel(model9, solution, 'easy', rng.fork('dig'), {});
+  ?? generator/tests/manual/difficulty.test.js:1471 var plain = SG.digger.digLevel(model9, solution, 'hard', rng.fork('dig2'), { guided: false });
+  ?? generator/tests/manual/difficulty.test.js:1472 var guided = SG.digger.digLevel(model9, solution, 'hard', rng.fork('dig2'), { guided: true });
+  ?? generator/tests/manual/difficulty.test.js:1483 var p = SG.digger.generate(model, level, SG.rng.create(8700 + i), {});
+  ?? generator/tests/manual/difficulty.test.js:1493 expectCode(function () { SG.digger.generate(model4, 'nightmare', SG.rng.create(1), {}); },
+  ?? generator/tests/manual/difficulty.test.js:1495 expectCode(function () { SG.digger.generate(model9, 'hell', SG.rng.create(1), {}); },
+  ?? generator/tests/manual/difficulty.test.js:1499 SG.digger.generate(model9, 'easy', SG.rng.create(1), { maxAttempts: bad });
+  ?? generator/tests/manual/difficulty.test.js:1502 expectCode(function () { SG.digger.generate(model9, 'easy', SG.rng.create(1), { digTries: bad }); },
+  ?? generator/tests/manual/difficulty.test.js:1509 SG.digger.generate(model9, 'hard', SG.rng.create(8800), { budget: SG.budget.create({ nodes: 30 }) });
+  ?? generator/tests/manual/difficulty.test.js:1536 p = SG.digger.generate(model, level, SG.rng.create(seed), {
+  ?? generator/tests/manual/difficulty.test.js:1619 var result = SG.digger.generate(board4, 'nightmare', SG.rng.create(9000), {
+  ?? generator/tests/manual/difficulty.test.js:1638 var result = SG.digger.generate(board6, 'normal', SG.rng.create(9100), { maxAttempts: 2, digTries: 2 });
+  ?? generator/tests/manual/difficulty.test.js:1647 var result = SG.digger.generate(board4, 'hard', SG.rng.create(9200), { maxAttempts: 2, digTries: 5 });
+  ?? generator/tests/manual/difficulty.test.js:1653 var pairs = SG.digger.generate(board4, 'hard', SG.rng.create(9210), { maxAttempts: 1 });
+  ?? generator/tests/manual/difficulty.test.js:1654 var fours = SG.digger.generate(board4, 'hard', SG.rng.create(9210),
+  ?? generator/tests/manual/difficulty.test.js:1669 SG.digger.generate(board4, 'veryEasy', SG.rng.create(9300), { maxAttempts: 2, digTries: 2 });
+  ?? generator/tests/manual/difficulty.test.js:1719 var p = SG.digger.generate(model9, 'veryEasy', SG.rng.create(9300 + i),
+  ?? generator/tests/manual/difficulty.test.js:1737 var p = SG.digger.digLevel(model9, solution, 'veryEasy', rng.fork('dig'), {});
+  ?? generator/tests/manual/difficulty.test.js:1793 r = SG.pipeline.run(config);
+  ?? generator/tests/manual/extra-regions.test.js:181 return asLevel(variantId, level, function () { return SG.difficulty.spec(level, model); });
+  ?? generator/tests/manual/extra-regions.test.js:187 var result = asLevel(variantId, level, function () { return SG.pipeline.run(cfg, function () {}); });
+  ?? generator/tests/manual/extra-regions.test.js:270 SG.pipeline.run({ variantId: id, difficulty: level, seed: 1, trace: 'off' }, null);
+  ?? generator/tests/manual/extra-regions.test.js:558 var spec = SG.difficulty.spec(level, p.model);
+  ?? generator/tests/manual/extra-regions.test.js:755 return SG.pipeline.run({
+  ?? generator/tests/manual/extra-regions.test.js:795 var silent = SG.pipeline.run({
+  ?? generator/tests/manual/greater-than.test.js:200 return asLevel(level, function () { return SG.difficulty.spec(level, model); });
+  ?? generator/tests/manual/greater-than.test.js:211 var result = asLevel(level, function () { return SG.pipeline.run(cfg, function () { events++; }); });
+  ?? generator/tests/manual/greater-than.test.js:458 var onClassic = SG.difficulty.spec('master', SG.variants.get('classic9').build({}, null));
+  ?? generator/tests/manual/greater-than.test.js:461 expect(SG.difficulty.spec('veryEasy', board()).allowedTechniques).not.toContain('ineqChain');
+  ?? generator/tests/manual/greater-than.test.js:462 expect(SG.difficulty.spec('easy', board()).allowedTechniques).toContain('ineqChain');
+  ?? generator/tests/manual/greater-than.test.js:831 SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: 1 }, null);
+  ?? generator/tests/manual/greater-than.test.js:835 SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hell', seed: 1 }, null);
+  ?? generator/tests/manual/greater-than.test.js:1029 var spec = SG.difficulty.spec(level, p.model);
+  ?? generator/tests/manual/greater-than.test.js:1186 var spec = SG.difficulty.spec('hard', g.model);
+  ?? generator/tests/manual/greater-than.test.js:1248 return SG.pipeline.run({ variantId: 'greaterThan', difficulty: level, seed: seed, trace: trace },
+  ?? generator/tests/manual/greater-than.test.js:1355 var r = SG.pipeline.run({ variantId: 'greaterThan', difficulty: 'hard', seed: 77, trace: verbosity },
+  ?? generator/tests/manual/greater-than.test.js:1366 var r = SG.pipeline.run(cfg, null);
+  ?? generator/tests/manual/jigsaw.test.js:223 SG.pipeline.run({ variantId: 'jigsaw9', difficulty: level, seed: 1, trace: 'off' }, null);
+  ?? generator/tests/manual/jigsaw.test.js:527 var loose = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 0 } }, cfg), null);
+  ?? generator/tests/manual/jigsaw.test.js:528 var round = SG.pipeline.run(Object.assign({ variantOptions: { compactness: 1 } }, cfg), null);
+  ?? generator/tests/manual/jigsaw.test.js:537 SG.pipeline.run({ variantId: 'jigsaw9', difficulty: 'easy', seed: 1, trace: 'off',
+  ?? generator/tests/manual/jigsaw.test.js:808 return SG.pipeline.run(config, null);
+  ?? generator/tests/manual/jigsaw.test.js:859 var spec = SG.difficulty.spec(level, p.model);
+  ?? generator/tests/manual/jigsaw.test.js:950 var withSink = SG.pipeline.run(cfg, function () {});
+  ?? generator/tests/manual/killer.test.js:66 return SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: seed, trace: trace || 'off' },
+  ?? generator/tests/manual/killer.test.js:567 var spec = SG.difficulty.spec('master', H.model('classic9'));
+  ?? generator/tests/manual/killer.test.js:570 expect(SG.difficulty.spec('veryEasy', board).allowedTechniques).not.toContain('cageCombo');
+  ?? generator/tests/manual/killer.test.js:571 expect(SG.difficulty.spec('easy', board).allowedTechniques).toContain('cageCombo');
+  ?? generator/tests/manual/killer.test.js:572 expect(SG.difficulty.spec('normal', board).allowedTechniques).toContain('ruleOf45');
+  ?? generator/tests/manual/killer.test.js:574 expect(asLevel('hard', function () { return SG.difficulty.spec('hard', board); }).allowedTechniques)
+  ?? generator/tests/manual/killer.test.js:971 var spec = asLevel(p.level, function () { return SG.difficulty.spec(p.level, p.result.model); });
+  ?? generator/tests/manual/killer.test.js:991 try { SG.pipeline.run({ variantId: 'killer', difficulty: level, seed: 1, trace: 'off' }, null); }
+  ?? generator/tests/manual/killer.test.js:1107 var spec = SG.difficulty.spec(p.level, p.result.model);
+  ?? generator/tests/manual/killer.test.js:1197 var r = SG.pipeline.run({ variantId: 'killer', difficulty: 'normal', seed: seed, trace: 'off',
+  ?? generator/tests/manual/killer.test.js:1737 result = asLevel('master', function () { return SG.pipeline.run(config, null); });
+  ?? generator/tests/manual/killer.test.js:1870 return SG.pipeline.run({ variantId: 'killer', difficulty: 'hard', seed: 3, trace: 'off' },
+  ?? generator/tests/manual/perf.test.js:91 return SG.pipeline.run({ variantId: variant, difficulty: level, seed: seed, trace: 'off' }, null);
+  ?? generator/tests/manual/perf.test.js:238 for (var s = 1; s <= 24; s++) SG.digger.generate(model9, 'easy', SG.rng.create(s), opts);
+  ?? generator/tests/manual/perf.test.js:239 for (var m = 1; m <= 2; m++) SG.digger.generate(model9, 'normal', SG.rng.create(m), opts);
+  ?? generator/tests/manual/variants.test.js:81 var result = SG.pipeline.run({ variantId: def.id, difficulty: level, seed: seed, trace: 'off' }, null,
+  ?? generator/tests/manual/variants.test.js:157 var spec = SG.difficulty.spec(level, model);
+  ?? generator/tests/manual/variants.test.js:237 SG.pipeline.run({ variantId: def.id, difficulty: level, seed: 1, trace: 'off' }, null);
+  ?? generator/tests/manual/variants.test.js:250 var spec = SG.difficulty.spec(level, result.model);
+  ?? generator/tests/manual/variants.test.js:271 var spec = SG.difficulty.spec(level, m);
+  ?? generator/tests/manual/variants.test.js:502 expect(SG.difficulty.spec('veryEasy', model).minClues).toBe(3);
+  ?? generator/tests/manual/variants.test.js:503 expect(SG.difficulty.spec('easy', model).minClues).toBe(2);
+  ?? generator/tests/manual/variants.test.js:798 return SG.pipeline.run({ variantId: variantId, difficulty: difficulty, seed: seed, trace: 'off' }, null);
+  ?? generator/tests/manual/wordoku.test.js:119 var result = asLevel(level, function () { return SG.pipeline.run(cfg, function () { events++; }); });
+  ?? generator/tests/manual/wordoku.test.js:484 SG.pipeline.run({ variantId: 'wordoku', difficulty: 'easy', seed: 1, trace: 'off',
+  ?? generator/tests/manual/wordoku.test.js:511 SG.pipeline.run({ variantId: 'wordoku', difficulty: level, seed: 1, trace: 'off' }, null);
+  ?? generator/tests/manual/wordoku.test.js:784 var spec = SG.difficulty.spec(level, p.model);
+  ?? generator/tests/manual/wordoku.test.js:927 return SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: trace },
+  ?? generator/tests/manual/wordoku.test.js:934 return SG.pipeline.run({ variantId: 'wordoku', difficulty: 'normal', seed: 31, trace: 'summary' }, null);
+  ?? generator/tests/manual/wordoku.test.js:953 return SG.pipeline.run(Object.assign({ variantId: 'wordoku', difficulty: level, seed: seed,
+exit=1 seconds=0.115

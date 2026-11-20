@@ -1,0 +1,14 @@
+$ node generator\tests\artifacts\difficulty-v3\MS18e\audit.cjs compat --old e0596801cf95d79761073a344ffc2e60f7764c8f --inventory-old docs\difficulty-v3\evidence\MS18c\closure\manual-variants\inventory-variants.json --inventory-new docs\difficulty-v3\evidence\MS18e\preflight\inventory-variants-v2.json --out docs\difficulty-v3\evidence\MS18e\preflight\variants-compatibility-v2.json
+compat: reused-compatible; blobs 88/89 identical (1 expected different); perf-helper rows 12 values 17 classes {"comment-or-blank":7,"PERF_TARGETS-row":24}; consumers in loaded path 0 (comment-only references 1); changed fingerprint inputs 11; tests 285/285 omitted 0 added 0 dup 0
+  input changed DEVELOPERGUIDE.md -> document-or-page: hashed for the fingerprint, never executed
+  input changed DEVELOPERGUIDE.vn.md -> document-or-page: hashed for the fingerprint, never executed
+  input changed USERGUIDE.md -> document-or-page: hashed for the fingerprint, never executed
+  input changed USERGUIDE.vn.md -> document-or-page: hashed for the fingerprint, never executed
+  input changed generator/design.md -> document-or-page: hashed for the fingerprint, never executed
+  input changed generator/tests/fixtures/perf-helper.js -> perf-helper: criterion 2
+  input changed generator/tests/manual/difficulty.test.js -> manual suite: not loaded by --suite=variants
+  input changed generator/tests/manual/perf.test.js -> manual suite: not loaded by --suite=variants
+  input changed generator/tests/suites/manual-corpus.test.js -> quick suite: not loaded by --suite=variants
+  input changed generator/tests/suites/mega.test.js -> quick suite: not loaded by --suite=variants
+  input changed generator/tests/suites/multigrid.test.js -> quick suite: not loaded by --suite=variants
+exit=0 seconds=27.558

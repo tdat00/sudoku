@@ -1,0 +1,3 @@
+$ node .github\scripts\generator-quick.selftest.js
+67 checks, 0 failed
+exit=0 seconds=0.143

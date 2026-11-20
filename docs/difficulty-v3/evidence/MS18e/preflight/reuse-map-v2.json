@@ -1,0 +1,400 @@
+{
+  "schema": "ms18e-reuse-map-1",
+  "variants": {
+    "label": "reused-compatible",
+    "proof": "docs/difficulty-v3/evidence/MS18e/preflight/variants-compatibility-v2.json",
+    "record": "docs/difficulty-v3/evidence/MS18c/closure/manual-variants/reconciliation.json",
+    "oldFingerprint": "13cd63bfb0f5af687bc8e841d522cc7f216aa116125394b33fbc32a53ab1ef3f",
+    "note": "the old fingerprint and receipts are kept; the current with-manual fingerprint is d8d48983237d8aa09ecdb9038c5049a615682c76613f02e7a7e7e46d91c6c8b3"
+  },
+  "megaReplay": {
+    "label": "reused-compatible (inside the 285)",
+    "secondsInMs18c": 331.6
+  },
+  "deep": {
+    "nightmare": {
+      "records": [
+        {
+          "id": "mega12-cv5-a",
+          "file": "MS05r5m/records/mega12-cv5-a.json",
+          "oldGenerationSeconds": 23.7,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega12-cv5-b",
+          "file": "MS05r5m/records/mega12-cv5-b.json",
+          "oldGenerationSeconds": 23.9,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega12-cv5-other",
+          "file": "MS05r5m/records/mega12-cv5-other.json",
+          "oldGenerationSeconds": 25,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega12-invariant-1",
+          "file": "MS05r5m/records/mega12-invariant-1.json",
+          "oldGenerationSeconds": 23.7,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega12-invariant-2",
+          "file": "MS05r5m/records/mega12-invariant-2.json",
+          "oldGenerationSeconds": 23.5,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega12-invariant-3",
+          "file": "MS05r5m/records/mega12-invariant-3.json",
+          "oldGenerationSeconds": 23.6,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega12-invariant-4",
+          "file": "MS05r5m/records/mega12-invariant-4.json",
+          "oldGenerationSeconds": 25.2,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-cv5-a",
+          "file": "MS05r5m/records/mega16-cv5-a.json",
+          "oldGenerationSeconds": 107.8,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-cv5-b",
+          "file": "MS05r5m/records/mega16-cv5-b.json",
+          "oldGenerationSeconds": 104.1,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-cv5-other",
+          "file": "MS05r5m/records/mega16-cv5-other.json",
+          "oldGenerationSeconds": 80.5,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-invariant-1",
+          "file": "MS05r5m/records/mega16-invariant-1.json",
+          "oldGenerationSeconds": 117,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-invariant-2",
+          "file": "MS05r5m/records/mega16-invariant-2.json",
+          "oldGenerationSeconds": 103.6,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-invariant-3",
+          "file": "MS05r5m/records/mega16-invariant-3.json",
+          "oldGenerationSeconds": 107.5,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        },
+        {
+          "id": "mega16-invariant-4",
+          "file": "MS05r5m/records/mega16-invariant-4.json",
+          "oldGenerationSeconds": 80.4,
+          "outcome": "ok",
+          "recordSourceHash": "fee8b8d6d7a2c47f6f2c8628a0e940da72a8c3789448a7700ad787bc044025d0",
+          "recordToolHash": "2bff3a04d716af19d870b82cc1760b95fe011ec1b5117735a5678e25ac48fdd8",
+          "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+          "manifestHash": "758f5b0a1706ff9cbc565883dceee8d3a9e123670f1b6427a96e9d7a68c155f1",
+          "level": "nightmare"
+        }
+      ],
+      "engineChangeSinceRecordCommit": {
+        "commit": "1ae831c1894e8227469e1e064971613f1327a9ad",
+        "shortstat": "27 files changed, 5888 insertions(+), 349 deletions(-)",
+        "files": [
+          "core/js/engine/tech-als.js",
+          "core/js/engine/tech-chain.js",
+          "core/js/engine/tech-fish.js",
+          "core/js/engine/tech-subset.js",
+          "core/js/engine/tech-wing.js",
+          "generator/js/engine/difficulty.js",
+          "generator/js/engine/digger.js",
+          "generator/js/engine/explain-data.js",
+          "generator/js/engine/pipeline.js",
+          "generator/js/ui/cache.js",
+          "generator/js/ui/controls.js",
+          "generator/js/ui/help.js",
+          "generator/js/ui/history.js",
+          "generator/js/ui/i18n.js",
+          "generator/js/ui/locale.en.js",
+          "generator/js/ui/locale.vi.js",
+          "generator/js/ui/store.js",
+          "generator/js/variants/classic.js",
+          "generator/js/variants/extra-regions.js",
+          "generator/js/variants/greater-than.js",
+          "generator/js/variants/jigsaw.js",
+          "generator/js/variants/killer.js",
+          "generator/js/variants/mega.js",
+          "generator/js/variants/multigrid.js",
+          "generator/js/variants/registry.js",
+          "generator/js/variants/wordoku.js",
+          "generator/js/worker/gen.worker.js"
+        ]
+      },
+      "reconciliation": "MS05r6b/deep/reconciled-final.json (currentMatches at that time: sourceHash false, toolHash true)"
+    },
+    "hell1": {
+      "records": [
+        {
+          "id": "mega12-hell1-cv5-a",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-cv5-a.json",
+          "oldGenerationSeconds": 34.2,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega12-hell1-cv5-b",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-cv5-b.json",
+          "oldGenerationSeconds": 34.4,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega12-hell1-cv5-other",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-cv5-other.json",
+          "oldGenerationSeconds": 34.4,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega12-hell1-invariant-1",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-invariant-1.json",
+          "oldGenerationSeconds": 29.3,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega12-hell1-invariant-2",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-invariant-2.json",
+          "oldGenerationSeconds": 30.2,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega12-hell1-invariant-3",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-invariant-3.json",
+          "oldGenerationSeconds": 34.3,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega12-hell1-invariant-4",
+          "file": "MS07b/mega-hell1/records/mega12-hell1-invariant-4.json",
+          "oldGenerationSeconds": 34,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-cv5-a",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-cv5-a.json",
+          "oldGenerationSeconds": 115.2,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-cv5-b",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-cv5-b.json",
+          "oldGenerationSeconds": 119.9,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-cv5-other",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-cv5-other.json",
+          "oldGenerationSeconds": 101.3,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-invariant-1",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-invariant-1.json",
+          "oldGenerationSeconds": 123.3,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-invariant-2",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-invariant-2.json",
+          "oldGenerationSeconds": 116.7,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-invariant-3",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-invariant-3.json",
+          "oldGenerationSeconds": 118,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        },
+        {
+          "id": "mega16-hell1-invariant-4",
+          "file": "MS07b/mega-hell1/records/mega16-hell1-invariant-4.json",
+          "oldGenerationSeconds": 99.9,
+          "outcome": "ok",
+          "recordSourceHash": "ddf2fa5ad4498e7534b22e8ca3492e9bc7961526f1775db451a580399fded000",
+          "recordToolHash": "7b797b5c3f3af004fdf2128d080b60d6bccba6b3577ce1b5af00f2b08ab8eaed",
+          "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+          "manifestHash": "243452b905f79f2fa2246abcac4e67148d193ec8acfcd11c6e6b61acb4cb2a80",
+          "level": "hell1"
+        }
+      ],
+      "engineChangeSinceRecordCommit": {
+        "commit": "959aae09fffa0f11b614587ee8ba6c511d12a9b9",
+        "shortstat": "22 files changed, 5213 insertions(+), 226 deletions(-)",
+        "files": [
+          "core/js/engine/tech-als.js",
+          "core/js/engine/tech-chain.js",
+          "core/js/engine/tech-fish.js",
+          "core/js/engine/tech-subset.js",
+          "core/js/engine/tech-wing.js",
+          "generator/js/engine/difficulty.js",
+          "generator/js/ui/cache.js",
+          "generator/js/ui/controls.js",
+          "generator/js/ui/history.js",
+          "generator/js/ui/i18n.js",
+          "generator/js/ui/locale.en.js",
+          "generator/js/ui/locale.vi.js",
+          "generator/js/ui/store.js",
+          "generator/js/variants/classic.js",
+          "generator/js/variants/extra-regions.js",
+          "generator/js/variants/greater-than.js",
+          "generator/js/variants/jigsaw.js",
+          "generator/js/variants/killer.js",
+          "generator/js/variants/mega.js",
+          "generator/js/variants/multigrid.js",
+          "generator/js/variants/wordoku.js",
+          "generator/js/worker/gen.worker.js"
+        ]
+      },
+      "reconciliation": "MS07b/mega-hell1/reconciliation.json (currentMatches at that time: both true)"
+    },
+    "rule": "inspect identity.currentMatches.sourceHash and .toolHash on the final source; a mismatch is retained only through the recorded non-generation-diff exception, else a coherent fourteen-record level cohort is refreshed"
+  },
+  "evidenceOnlyTimings": {
+    "gdMs17b": "MS17b/gd (same engine for the digger path, see engineChangeSinceMs17b)",
+    "ratiosMs07f": "MS07f/manual/ratios.json (older engine)"
+  }
+}

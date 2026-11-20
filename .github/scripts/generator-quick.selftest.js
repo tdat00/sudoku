@@ -3,12 +3,15 @@
 /*
  * Self-test of generator-quick.js on synthetic plans: a complete one, a gap, a duplicate, an unknown suite, a manual
  * suite in a group, a shard that selects nothing, a registration error, a new quick or manual suite nobody owns, a
- * missing or surplus test in a shard, a job over its limit, a missing shared suite in the Player, and the exit
+ * missing or surplus test in a shard, a job over its limit, a missing shared suite in the Player, the Player held to
+ * its own 900 s and that number equal to the timeout-minutes of the test-player job in both workflows, and the exit
  * semantics of the shard runner. Nothing is generated and no test of the repository runs.
  *
  *   node .github/scripts/generator-quick.selftest.js        (exit 0 when every check passed, 1 otherwise)
  */
 const quick = require('./generator-quick.js');
+const fs = require('fs');
+const path = require('path');
 
 let failures = 0;
 let checks = 0;
@@ -201,6 +204,58 @@ expect('a shared suite missing from the Player fails', has(problemsOf(manifest()
 l = listings();
 l.player = inventory('quick', ['a'], []);
 expect('a Player quick set of no test fails', has(problemsOf(manifest(), l), 'quick set of the Player: zero tests'));
+
+// 9b. The Player job is held to its own limit of 900 s (the 15 minutes of its job), not to the 1800 s of a Generator
+// group: projected = 180 + 3 x bound. 190 gives 750 (valid), 240 gives 900 (valid, at the limit), 250 gives 930.
+expect('the Player limit is 900 s', quick.PLAYER_JOB_SECONDS === 900);
+[[190, 750, true], [240, 900, true], [250, 930, false]].forEach((c) => {
+  m = manifest();
+  m.player.projectionSeconds = c[0];
+  p = quick.checkShape(m);
+  expect('a Player bound of ' + c[0] + ' s projects ' + c[1] + ' s', quick.projectedSeconds(m, [m.player]) === c[1]);
+  expect('a Player bound of ' + c[0] + ' s is ' + (c[2] ? 'valid' : 'refused'),
+    c[2] ? p.length === 0 : has(p, 'the Player job projects 930 s, above 900 s') && p.length === 1, p.join(' | '));
+});
+m = manifest();
+m.player.projectionSeconds = 250;
+p = problemsOf(m, listings());
+expect('the coverage check reports a Player over 900 s', has(p, 'the Player job projects 930 s, above 900 s'));
+expect('the coverage summary prints the Player against 900 s', complete.summary.player.limitSeconds === 900 &&
+  complete.summary.player.projectedSeconds === 360);
+
+// 9c. The 900 s are the timeout-minutes of the test-player job in each workflow. The read is job-scoped (no YAML
+// parser): the lines of the job from `  test-player:` up to the next job at the same indent.
+function playerTimeoutMinutes(text) {
+  const lines = text.split(/\r?\n/);
+  const starts = [];
+  lines.forEach((line, i) => { if (/^ {2}test-player:\s*(#.*)?$/.test(line)) starts.push(i); });
+  if (starts.length !== 1) return { error: starts.length + ' test-player jobs' };
+  let end = lines.length;
+  for (let i = starts[0] + 1; i < lines.length; i++) {
+    if (/^ {2}[A-Za-z0-9_-]+:\s*(#.*)?$/.test(lines[i]) || /^\S/.test(lines[i])) { end = i; break; }
+  }
+  const found = lines.slice(starts[0] + 1, end).map((line) => /^ {4}timeout-minutes:\s*(\d+)\s*(#.*)?$/.exec(line))
+    .filter(Boolean);
+  if (found.length !== 1) return { error: found.length + ' timeout-minutes lines in the test-player job' };
+  return { minutes: Number(found[0][1]) };
+}
+const JOBS = 'jobs:\n  test-core:\n    timeout-minutes: 30\n  test-player:\n    runs-on: x\n    timeout-minutes: 15\n' +
+  '  test-browser:\n    timeout-minutes: 45\n';
+expect('the job-scoped read finds the test-player limit', playerTimeoutMinutes(JOBS).minutes === 15);
+expect('the job-scoped read works on CRLF text', playerTimeoutMinutes(JOBS.replace(/\n/g, '\r\n')).minutes === 15);
+expect('the read ignores the limit of another job', playerTimeoutMinutes(JOBS.replace('    timeout-minutes: 15\n', ''))
+  .error !== undefined);
+expect('a missing test-player job is refused', playerTimeoutMinutes('jobs:\n  test-core:\n    timeout-minutes: 15\n')
+  .error !== undefined);
+expect('two timeout-minutes lines are ambiguous', playerTimeoutMinutes(JOBS.replace('    runs-on: x\n',
+  '    timeout-minutes: 20\n')).error !== undefined);
+expect('two test-player jobs are ambiguous', playerTimeoutMinutes(JOBS + '  test-player:\n    timeout-minutes: 15\n')
+  .error !== undefined);
+['pull-request.yml', 'pages.yml'].forEach((name) => {
+  const read = playerTimeoutMinutes(fs.readFileSync(path.join(__dirname, '..', 'workflows', name), 'utf8'));
+  expect(name + ': the test-player job limit is the Player limit of the check',
+    read.minutes !== undefined && read.minutes * 60 === quick.PLAYER_JOB_SECONDS, JSON.stringify(read));
+});
 
 // 10. The argument array is the shard's, as one option, and the runner keeps going after a failure.
 expect('the shard command is an argument array', JSON.stringify(quick.shardArgs(manifest().groups[0].shards[0])) ===

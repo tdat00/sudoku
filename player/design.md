@@ -57,17 +57,24 @@ Target browser: a current Chromium (tested in Edge); Firefox and Safari are expe
 ```
 index.html ── <script> tags in the order of tests/node-runner.js SOURCE_FILES
 help.html  ── the guide: the same sources minus the ones it does not need, plus help-examples.js and help.js
-js/core/   pure logic, no DOM (copied from the generator, trimmed — §2.2)
-js/ui/     modules that talk to the page; every file also loads in Node (pure helpers + DOM functions)
-css/       tokens + tokens-board (3 themes) · base · layout · components · board · play · help
-assets/    favicon.svg · wordbook/ (words.en.js, words.vi.js: the meanings of the Wordoku key words)
-tests/     harness.js · node-runner.js · suites/ (30) · fixtures/ (puzzle documents, text exports, test kit,
-           the help-example helper, one real Jigsaw source) · browser/ (CDP scripts, run by hand) ·
+js/engine/ the Player's own pure logic, no DOM (text-boards.js); the rest of the pure logic is shared, in
+           ../core/js/engine/ (the model, the solver and the 40 techniques, §2.2)
+js/ui/     modules that talk to the page; every file also loads in Node (pure helpers + DOM functions);
+           the shared ones (exchange, symbols, board-view, wordbook) are in ../core/js/ui/
+css/       layout · components · play · help; the tokens, tokens-board (3 themes), base and board styles are
+           shared, in ../core/css/
+assets/    favicon.svg; the word book (wordbook/words.en.js, words.vi.js: the meanings of the Wordoku key words)
+           is shared, in ../core/assets/wordbook/
+tests/     node-runner.js · suites/ (14; the 18 shared ones are in ../core/tests/suites/, with harness.js,
+           node-evidence.js, the test kit and the shared fixtures in ../core/tests/) · fixtures/ (puzzle documents,
+           text exports, the help-example helper, one real Jigsaw source) ·
+           browser/ (CDP scripts: run by hand, and by the pull-request workflow) ·
            tools/ (make-fixtures.js, make-exports.js, make-technique-examples.js, which checks or writes
-           js/ui/help-examples.js)
+           js/ui/help-examples.js) · artifacts/ (task-owned evidence helpers)
 tests.html the same suites in a browser
-docs/      fixtures.md (how the documents were made) · qa.md (the manual browser run)
-.github/   workflows/pages.yml (the Node tests, then the deployment to GitHub Pages)
+../docs/   puzzle-exchange/fixtures.md (how the documents were made) · qa/browser-run.md (the manual browser run)
+../.github/ workflows/pull-request.yml (a pull request: the core, Generator and Player tests and the browser scripts) ·
+           workflows/pages.yml (the core, Generator and Player tests, then the deployment to GitHub Pages)
 ```
 
 ### 2.1 Layers
@@ -82,7 +89,7 @@ A lower layer never knows a higher one.
 | `core/ns.js`, `errors.js`, `bits.js`, `budget.js` | `SG`, `errors`, `bits`, `budget` | namespace, `GenerationError`, bit masks, work budget | copied; the stepper part of `budget` removed |
 | `core/model.js` | `model` | `PuzzleModel` (units, peers, cages, signs, layout, symbols), `validate` V1–V8 | copied |
 | `core/constraints.js`, `combo-table.js`, `dfs-solver.js` | `constraints`, `comboTable`, `dfs` | propagation, cage sums, solution counting | copied |
-| `core/techniques.js`, `logical-solver.js`, `tech-basic / subset / fish / wing / chain / cage / ineq.js` | `techniques`, `logicalSolver`, `ineq` | the 31 named techniques (the skyscraper and the two-string kite, since difficulty v3 MS08a and MS08b, sit between X-Wing and Simple Colouring and the empty rectangle, MS08c, between Simple Colouring and Swordfish; the two chain techniques come in a short and a long window: `forcingChainLong` and `nishioDeep` are the long and the deep ones, each with its own hint texts and example); the solver that powers hints | copied (scoring left as the plain design score; no classification) |
+| `core/techniques.js`, `logical-solver.js`, `tech-basic / subset / fish / wing / chain / cage / ineq.js` | `techniques`, `logicalSolver`, `ineq` | the 40 registered techniques (34 classic, 1 Jigsaw, 3 cage, 2 inequality; among the classic ones the skyscraper and the two-string kite, since difficulty v3 MS08a and MS08b, sit between X-Wing and Simple Colouring and the empty rectangle, MS08c, between Simple Colouring and Swordfish; the two chain techniques come in a short and a long window: `forcingChainLong` and `nishioDeep` are the long and the deep ones, each with its own hint texts and example); the solver that powers hints | copied (scoring left as the plain design score; no classification) |
 | `core/classic-model.js` | `classicModel` | classic 4 / 6 / 9 and overlapping (Samurai, Sohei, Butterfly, Flower) board builders | **new** (replaces `variants/classic.js`) |
 | `core/text-boards.js` | `textBoards` | boards rebuilt from the generator's text export: Diagonal, Hyper, Mega, and (from structure lines) Jigsaw, Killer, Greater-Than, Wordoku | **new** |
 | `core/model-aids.js` | `modelAids` | Greater-Than sign edges, Wordoku word line, symbol sets of a model | **new** (replaces pieces of `greater-than.js`, `wordoku.js`) |
@@ -607,7 +614,8 @@ strings; added: `player.*` (shell, open flow, info card, recent list, welcome), 
 ## 10. Testing
 `node tests/node-runner.js` (32 suites: the 14 of `tests/suites/` and the 18 shared ones of `core/tests/suites/`;
 2,981 tests; no install) is the default quick set: developers and coding
-agents run it (or a few suites with `--suite=`) while developing, and `.github/workflows/pages.yml` runs all of it
+agents run it (or a few suites with `--suite=`) while developing, and both workflows run all of it as the job `test-player`
+(15 minutes): `.github/workflows/pull-request.yml` for every pull request that targets main and `.github/workflows/pages.yml`
 before every deployment. When one command cannot hold the whole set, it is covered by disjoint shards as the
 generator's quick set is (`generator/design.md` section 15.1); the cost measured for each app, on a named source and
 machine (a report, not a promise), is in `docs/difficulty-v3/recovery-quick-cost.md`. The runner also takes `--filter=text` (a case-insensitive part of the full name
@@ -619,13 +627,14 @@ options take a new project-relative `.json` path inside the repository, never ov
 timeoutMs }` with a source fingerprint; see `generator/design.md` section 15.1). `tests.html` runs the same suites in a browser (the suites that read
 `tests/fixtures/puzzles/*.json` need `http://`, they skip themselves on `file://`). The slow checks are the
 **browser scripts** of `tests/browser/` (last row of the table; `node tests/browser/run-all.js`, several minutes):
-they are **manual**, not part of CI, and are run only when a change touches the UI.
+you run them by hand when a change touches the UI, and the pull-request workflow runs them too (the job `test-browser`:
+headless Edge or Chrome of the runner image, 30 minutes); the Pages workflow does not.
 
 | Suite | What it checks |
 |-------|----------------|
 | `bits`, `model`, `constraints`, `solver` | foundation, the model (V1–V8, classic builder), propagation, DFS (ported) |
 | `harness` | the test harness itself (`expect`, deep equality, the runner and its isolation) |
-| `techniques`, `tech-*`, `logical-solver` | the 40 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1, the restricted XY-chain, the ALS-XZ, Sue de Coq, the long and the deep chain techniques and, on real Jigsaw boards, the Law of Leftovers), the solver loop (ported; a small test kit stands in for generation); the shared `tech-chain` suite also tests the **inactive** grouped chain graph `SG.chainGraph` against its independent checker `SG.chainProofs` (MS13a, 40 tests: no hint, no help example and no rating reads the graph, so the player's hints are unchanged); the shared `tech-als` suite (174 tests: MS15a's 58, MS15b's 53 and MS16's 63) tests the almost-locked-set enumerator `SG.alsPatterns.enumerate` (its records against an independent enumeration of all subsets, its work counts against a recount that re-implements the engine's walk), the **active** ALS-XZ `alsXz` and the **active** Sue de Coq `sueDeCoq` (the proof by hand, the first witness and every elimination against an independent oracle and the exact solver, the shared work guard of ALS-XZ and the private guard of Sue de Coq, the caps, the parent budget and the observer record) |
+| `techniques`, `tech-*`, `logical-solver` | the 40 techniques: positive / negative fixtures, soundness against known solutions (the sweep of `techniques` runs it for every registered technique, with real supplemental positions for the skyscraper, the two-string kite, the remote pairs, the empty rectangle, the finned X-Wing, the finned Swordfish, the WXYZ-Wing, BUG+1, the restricted XY-chain, the ALS-XZ, Sue de Coq, the long and the deep chain techniques and, on real Jigsaw boards, the Law of Leftovers), the solver loop (ported; a small test kit stands in for generation); the shared `tech-chain` suite also tests the grouped chain graph `SG.chainGraph` against its independent checker `SG.chainProofs` (MS13a, 40 tests; it was inactive then, so no hint, help example or rating read it; since MS13c `forcingChain` and `forcingChainLong` read it, as S-OD11 decided: the bounded grouped attempt first, and only after a local work or node cap the short ID's complete-singleton fallback, while `forcingChainLong` has none: `core/js/engine/tech-chain.js` `findForcingChain` and `findForcingChainLong`); the shared `tech-als` suite (174 tests: MS15a's 58, MS15b's 53 and MS16's 63) tests the almost-locked-set enumerator `SG.alsPatterns.enumerate` (its records against an independent enumeration of all subsets, its work counts against a recount that re-implements the engine's walk), the **active** ALS-XZ `alsXz` and the **active** Sue de Coq `sueDeCoq` (the proof by hand, the first witness and every elimination against an independent oracle and the exact solver, the shared work guard of ALS-XZ and the private guard of Sue de Coq, the caps, the parent budget and the observer record) |
 | `exchange` | token round trips (documents and text bundles), the active puzzle of a link, errors (shared, byte-identical) |
 | `importer` | all 18 fixtures rebuild valid models with exactly one solution; tokens, links, bundles (`t.` / `s.`, `active`); text lines (4 / 6 / 9); the nine level names in both languages and rating metadata (a legacy v2 and a current v3 claim, each kept as stated); wrong version, damaged and hostile input, fuzzed damage |
 | `model-aids` | sign edges, word line, symbol modes |
@@ -641,7 +650,7 @@ they are **manual**, not part of CI, and are run only when a change touches the 
 | `help` | the sections, texts in both languages, an example for each of the 40 techniques (rebuilt from the snapshot, replayed with the hint code, readable in EN and VI; a Jigsaw example's `cellRegion` equals the regions of its own source), a real Jigsaw puzzle whose hint is snapshotted by the helper, rebuilt with its own regions, notes and move, and refused when its `cellRegion` is missing or malformed, the Law of Leftovers example on real irregular regions, shortcuts against the keys `play.js` handles, the claims of the Player part of the user and developer guides |
 | `help-example-tools` | the help-example tool (§8.3): options and their conflicts, the source schema, the cap on puzzles and hints, replaying a saved source with the hint code of the player, the choice and tie rule, the owned `cellRegion` copy of a Jigsaw snapshot (and none in any other), the merge and the CRLF text of the catalogue, bounded discovery and the child process with fakes; in Node real runs of the tool on saved sources and sandbox catalogues (never generating, never writing the committed file) |
 | `ui-contract` | module surface, no colour literals outside the token files, script order of `index.html` = runner = `tests.html` (and `help.html` = runner minus its exceptions), every fixture file of the core and of the Player listed in `tests.html` and only those, no hard-coded text in either page, forbidden globals absent, no DOM in `js/core` |
-| browser run (manual) | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, the guide page with its tabs and floating contents, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa/browser-run.md` |
+| browser scripts (by hand, and the pull-request workflow) | `tests/browser/*.js`: headless Edge over CDP (fragment, paste, file, drop, play with real key events, hints, reload, keyboard-only walk, Settings, the guide page with its tabs and floating contents, themes, 1440 / 900 / 375 px with touch, blocked storage); recorded in `docs/qa/browser-run.md` |
 
 The fixtures were made by the generator (`docs/puzzle-exchange/fixtures.md`); the test kit (`tests/fixtures/testkit.js`) holds a
 seeded RNG, a random solved grid (the DFS solver with a random value order) and a minimal clue remover so the

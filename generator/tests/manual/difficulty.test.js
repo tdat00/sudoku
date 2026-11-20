@@ -994,7 +994,9 @@
           // the current floor of that level: what the previous global level allows, nothing for veryEasy
           var floor = D.floorTechniques(level, model9);
           expect([entry.name, floor]).toEqual([entry.name,
-            i === 0 ? [] : D.spec(LEVELS[i - 1], model9).allowedTechniques]);
+            i === 0 ? [] : SG.fixtures.toolRecords.withRequestedLevel('classic9', LEVELS[i - 1], function () {
+              return D.spec(LEVELS[i - 1], model9);
+            }).value.allowedTechniques]);
           expect([entry.name, derived.vacuous]).toEqual([entry.name,
             i === 0 || D.tierTechniques(level, model9).length === 0]);
           if (!derived.vacuous) {
@@ -1442,7 +1444,9 @@
     it('keeps the configured symmetry on the top tiers too (proposals and their refinement)', function () {
       ['nightmare', 'hell1'].forEach(function (level) {
         for (var i = 0; i < 3; i++) {
-          var p = SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+          var p = SG.fixtures.toolRecords.withRequestedLevel('classic9', level, function () {
+            return SG.digger.generate(model9, level, SG.rng.create(8550 + i), {});
+          }).value;
           for (var c = 0; c < 81; c++) {
             expect(p.givens[c] === 0).toBe(p.givens[80 - c] === 0);
           }
@@ -1790,7 +1794,9 @@
           };
           var r = null;
           try {
-            r = SG.pipeline.run(config);
+            r = SG.fixtures.toolRecords.withRequestedLevel('killer', 'master', function () {
+              return SG.pipeline.run(config);
+            }).value;
           } catch (err) {
             // The one permitted alternative: no completely rated, verified puzzle at all.
             expect(err.code).toBe('digger.noRatedPuzzle');

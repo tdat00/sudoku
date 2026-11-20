@@ -1,0 +1,2 @@
+$ node --check tests\browser\help.js
+exit=0 seconds=0.085

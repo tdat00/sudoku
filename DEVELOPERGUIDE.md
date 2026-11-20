@@ -1695,9 +1695,10 @@ these are the technical details behind some of them.
   The explanation of a jump describes the generator's own solution and its limited check, never what every solver
   needs, and the work count `checks` of a rating is diagnostic only: it can differ by a few between two runs (the
   subset techniques space their budget checks with a counter that lives across solves), so the tests ignore it.
-- **Difficulty weights are engineering priors**, not measurements of human solvers: the weights of the 30
-  techniques and the nine score bands were chosen from measurements of generated puzzles
-  ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)); the Killer weights of `ruleOf45` and
+- **Difficulty weights are engineering priors**, not measurements of human solvers: the 40 technique weights
+  (`SG.difficulty.WEIGHTS`) are the weights of rating v2, chosen with the nine score bands from measurements of generated
+  puzzles ([docs/difficulty-rating/report-detailed.md](docs/difficulty-rating/report-detailed.md)), plus engineering
+  priors for the techniques that rating v3 added; the Killer weights of `ruleOf45` and
   `cageSplit` are the first candidates for a calibration with people.
 - **Generation times**: the times in the user guide were measured in Node (`node tests/qualify.js`);
   `node tests/perf.js` measures every combination against the budgets of [design.md](generator/design.md) §9.1 on your

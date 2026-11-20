@@ -1,0 +1,4 @@
+$ node tests\node-runner.js --all --list-tests=..\docs\difficulty-v3\evidence\MS18e\preflight\inventory-all-after-e1.json
+Inventory: 5836 tests in 63 suites (0 skipped, 31 benchmarks), registration 0.6 s
+Written: docs/difficulty-v3/evidence/MS18e/preflight/inventory-all-after-e1.json
+exit=0 seconds=0.791
