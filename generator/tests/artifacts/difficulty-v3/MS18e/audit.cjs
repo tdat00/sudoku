@@ -1329,18 +1329,19 @@ function workflowAudit(argv) {
   return finish('workflow', problems, prJobs.length + ' PR jobs, ' + pageJobs.length + ' Pages jobs, Player ' + projected + '/' + playerLimit + ' s');
 }
 
-/** A numeric id sequence: the tokens S-AV01..S-AV08, S-AV11 and S-AV13..S-AV39 (the stable items of the check-list) and S-OD1..S-OD18 but 5. */
+/** The required tokens: every stable item S-AV01..S-AV39 of the check-list (S-AV09, S-AV10, S-AV12 and S-AV13 have their own text in MS05b3's evidence) and S-OD1..S-OD18 but 5. */
 function requiredTokens() {
-  const sav = [1, 2, 3, 4, 5, 6, 7, 8, 11].concat(Array.from({ length: 27 }, (_, i) => i + 13))
+  const sav = Array.from({ length: 39 }, (_, i) => i + 1)
     .map((n) => 'S-AV' + String(n).padStart(2, '0'));
   const sod = Array.from({ length: 18 }, (_, i) => i + 1).filter((n) => n !== 5).map((n) => 'S-OD' + n);
   return sav.concat(sod, ['R6C-I01', 'R6C-I02', 'R6C-I04', 'IR21', 'IR22', 'MS05r6a-COV01', 'IR17']);
 }
 
 /**
- * `items --register <MS18d register> --input <json> [--out <json>]`: the accepted 30-item MS18d register extended, not replaced:
+ * `items --register <MS18d register> --input <json> [--patch <json>] [--out <json>]`: the accepted 30-item MS18d register extended, not replaced:
  * every inherited item verbatim with its E3 disposition, the items added at E3, and a check that every stable ID, every held row
- * and every named obligation is carried by at least one item.
+ * and every named obligation is carried by at least one item. A patch (removeAdded ids, replaceAdded items, added items, inherited e3
+ * overrides, heldRows) revises an earlier input without rewriting it; both files are hashed into the output.
  */
 function items(argv) {
   const out = arg('--out', argv);
@@ -1348,14 +1349,30 @@ function items(argv) {
   const bad = (ok, text) => { if (!ok) problems.push(text); };
   const register = readJson(arg('--register', argv));
   const input = readJson(arg('--input', argv));
+  const patchRel = arg('--patch', argv);
+  const patch = patchRel ? readJson(patchRel) : {};
+  let addedSource = (input.added || []).slice();
+  (patch.removeAdded || []).forEach((id) => {
+    const before = addedSource.length;
+    addedSource = addedSource.filter((i) => i.id !== id);
+    bad(addedSource.length === before - 1, 'patch removeAdded: no added item ' + id);
+  });
+  (patch.replaceAdded || []).forEach((item) => {
+    const k = addedSource.findIndex((i) => i.id === item.id);
+    bad(k !== -1, 'patch replaceAdded: no added item ' + item.id);
+    if (k !== -1) addedSource[k] = item;
+  });
+  addedSource = addedSource.concat(patch.added || []);
+  const inheritedE3 = Object.assign({}, input.inherited || {}, patch.inherited || {});
+  const heldRows = patch.heldRows || input.heldRows || [];
   bad(Array.isArray(register.items) && register.items.length === 30, 'the MS18d register does not have 30 items');
   const inherited = register.items.map((item) => {
-    const e3 = (input.inherited || {})[item.id];
+    const e3 = inheritedE3[item.id];
     bad(e3 && e3.status && e3.disposition && Array.isArray(e3.evidence) && e3.evidence.length > 0, 'inherited item without a complete E3 disposition: ' + item.id);
     return Object.assign({ origin: 'MS18d Phase D register (item-register.json, 30 items), verbatim' }, item, { e3: e3 || null });
   });
-  Object.keys(input.inherited || {}).forEach((id) => bad(register.items.some((i) => i.id === id), 'E3 disposition for an unknown inherited item: ' + id));
-  const added = (input.added || []).map((item) => {
+  Object.keys(inheritedE3).forEach((id) => bad(register.items.some((i) => i.id === id), 'E3 disposition for an unknown inherited item: ' + id));
+  const added = addedSource.map((item) => {
     ['id', 'title', 'status', 'source', 'population', 'numbers', 'limitations', 'disposition', 'nextOwner', 'evidence'].forEach((f) => bad(item[f] !== undefined && item[f] !== '', 'added item ' + item.id + ' lacks ' + f));
     return Object.assign({ origin: 'added at MS18e' }, item);
   });
@@ -1375,9 +1392,12 @@ function items(argv) {
   (input.requiredIds || []).forEach((id) => bad(seen.has(id), 'required item missing: ' + id));
   const exists = (p) => [p, EVIDENCE + '/' + p].some((c) => fs.existsSync(path.resolve(ROOT, c)));
   all.forEach((i) => (i.e3 ? i.e3.evidence : (i.evidence || [])).forEach((p) => bad(exists(p), 'evidence path does not exist (item ' + i.id + '): ' + p)));
-  (input.heldRows || []).forEach((h) => bad(all.some((i) => (i.heldRows || []).indexOf(h.row) !== -1 && /MS18e-Q-/.test(JSON.stringify(i))), 'held row ' + h.row + ' is not named with its owner question in an item'));
+  heldRows.forEach((h) => bad(all.some((i) => (i.heldRows || []).indexOf(h.row) !== -1 && /MS18e-Q-/.test(JSON.stringify(i))), 'held row ' + h.row + ' is not named with its owner question in an item'));
+  const fileOf = (rel) => ({ file: rel, sha256: sha256(fs.readFileSync(path.resolve(ROOT, rel))) });
   const doc = { schema: 'ms18e-items-v1', base: 'the accepted 30-item MS18d Phase D register is extended, not replaced: inherited items keep every original field and add `e3`',
-    counts: { inherited: inherited.length, added: added.length, total: all.length }, requiredTokenCoverage: coverage, heldRows: input.heldRows || [], items: all, problems: problems };
+    sources: Object.assign({ register: fileOf(arg('--register', argv)), input: fileOf(arg('--input', argv)) }, patchRel ? { patch: fileOf(patchRel) } : {}),
+    revision: patch.revision || null,
+    counts: { inherited: inherited.length, added: added.length, total: all.length }, requiredTokenCoverage: coverage, heldRows: heldRows, items: all, problems: problems };
   if (out && problems.length === 0) writeNewJson(out, doc);
   return finish('items', problems, inherited.length + ' inherited + ' + added.length + ' added = ' + all.length + ' items; ' + Object.keys(coverage).length + ' tokens carried');
 }

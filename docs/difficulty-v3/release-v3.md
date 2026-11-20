@@ -1,24 +1,39 @@
 # Rating v3: release evidence closure (MS18e)
 
 Data-only record of the final audit of the difficulty-v3 tree. It states what was run, what was not, and what is still
-pending. **It is not a release-ready statement:** the remote CI gate, two owner questions and several unexecuted
-populations are open (section 5). Every number comes from a file under
+pending. **It is not a release-ready statement, and MS18e is still open** (see the acceptance state below): the remote CI gate,
+two owner questions on held required rows and several unexecuted populations are open (sections 5 and 6). Every number comes from a file under
 [`evidence/MS18e/`](evidence/MS18e/) or from an earlier task's evidence that it cites; nothing here is a measurement
 of CI, of a browser or of another machine. Local runs: Windows, Node v26.13.0, 16 logical processors, harness time
 factor 2, every Node command under the shared lock with the unchanged tee transcript.
+
+## Acceptance state
+
+E0, E1, E2 and E3 are completed stages. **MS18e stays OPEN** until the owner answers the held questions
+(**MS18e-Q-GD-DEEP** for `RATIO-off`, `RATIO-summary`, `RATIO-full` and the seven `DEEP-mega16-hell1-*`;
+**MS18e-Q-SAV11** for the S-AV11 profile) and their outcome is complete:
+
+- **A:** one launch of each held row, plus the full 14-record Hell 1 reconcile.
+- **B:** the rows are recorded as held, **not** as a waiver.
+
+The only other route is an explicit, scoped acceptance waiver. Green CI closes only the remote-CI gate (section 6), not
+MS18e. Blockers: the matching-head CI and these open decisions. Non-blocking observations (listed apart in
+[`audit/gates-v2.json`](evidence/MS18e/audit/gates-v2.json)): the five GP misses (GP passed 74 of 79, 72 required), the accepted
+S-AV14 finding, the mega12 Hell 1 finding and 563 manual assertions outside the dispatch (scope exclusions, not required work).
 
 ## 1. Status in one table
 
 | Gate | Status | Basis |
 |---|---|---|
-| Coverage | **incomplete** | Both quick sets complete (below). GD complete (146 of 146 tests). The rest of the manual suites, the three S-OD8 ratio tests, mega16 Hell 1 and the S-AV11 profile did not run |
+| Coverage | **incomplete** | Both quick sets complete (below). GD complete (146 of 146 tests). The three S-OD8 ratio tests, the mega16 Hell 1 occurrences and the S-AV11 profile are held (required rows, owner decision pending); 563 manual assertions outside the dispatch are scope exclusions, unexecuted |
 | Correctness | **pass** | No wrong puzzle, non-uniqueness, unsound deduction, wrong exactness flag or damaged evidence in any executed row; check-only GG, GR and GH pass |
-| Exactness / availability | **fail (named findings)** | classic9 Normal 83 of 100 against 90 (S-AV14); mega12 Hell 1 exact 0 of 7; five GP misses |
+| Exactness / availability | **fail (named findings, non-blocking observations)** | classic9 Normal 83 of 100 against 90 (S-AV14); mega12 Hell 1 exact 0 of 7; five GP misses |
 | Timing | **incomplete** | All 75 E2 rows inside their P; no CI projection rises; held rows have no bound |
 | Remote CI | **pending** | None of the eight task-defined PR jobs has a result on the final head. The early run failed two jobs (section 6) |
 
-Per-gate detail: [`audit/gates.json`](evidence/MS18e/audit/gates.json). Complete item register (inherited 30 plus added):
-[`audit/items.json`](evidence/MS18e/audit/items.json).
+Per-gate detail: [`audit/gates-v2.json`](evidence/MS18e/audit/gates-v2.json). Complete item register (inherited 30 plus 38 added, 68 items):
+[`audit/items-v2.json`](evidence/MS18e/audit/items-v2.json). The first versions (`gates.json`, `items.json`) are kept as raw records and are
+superseded (see the revision note at the end).
 
 ## 2. Final source identities
 
@@ -75,19 +90,27 @@ reports **83 of 100 against 90** (`difficulty.test.js:1272`, S-AV14), retained a
 **Deep (mega-contract tool)**: Nightmare **14 of 14** complete and reconciled sound (6 relations pass; mega12 takes
 1.7 to 2.5 s, mega16 5.5 to 22.8 s). **Hell 1 is incomplete**: the 7 mega12 occurrences ran and every one is a shallow
 fallback (exact **0 of 7**, 92.9 to 104.7 s per run against 29.3 to 34.4 s at MS07b); the 7 mega16 occurrences were not
-run. The optional partial reconcile exits 1 only because of those 7 (not a correctness failure).
+run. The optional partial reconcile ([`preflight/deep-reconcile-hell1-partial.json`](evidence/MS18e/preflight/deep-reconcile-hell1-partial.json))
+is **expected, missing-only incomplete, not a correctness failure**. Raw values kept: exit 1, `complete` false, `evidenceSound` false,
+`correctness` incomplete; its 7 problems are exactly the 7 approved missing mega16 IDs; the current source and tool hashes match,
+7 records present and passed, relations 3 pass / 0 fail / 3 unevaluated. The earlier expectation of exit 3 was wrong:
+`generator/tests/fixtures/mega-contract.js:1030` adds each missing occurrence to the problems, `:1054` sets
+`evidenceSound = problems.length === 0` and `:1180-1182` returns 1 before the incomplete branch that returns 3. No tool edit, and
+no blanket rule that exit 1 is allowed.
 
 ## 4. Limitations and what was not executed
 
 - **Held without a credible <=450 s bound** (not run, not counted as passed): `RATIO-off`, `RATIO-summary`, `RATIO-full`
   (the three S-OD8 generation-cost ratio tests) and the seven `DEEP-mega16-hell1-*` occurrences, pending owner
   question **MS18e-Q-GD-DEEP** (unanswered); the S-AV11 profile (`SAV11`), pending **MS18e-Q-SAV11** (unanswered).
-- **Manual suites** beyond their I5 selectors (extra-regions, greater-than, jigsaw, killer, perf, wordoku) are unexecuted
-  and are not reported as passed. The variants suite is **reused-compatible** from MS18c (285 of 285 under another
+- **Manual suites outside the assignment** (extra-regions, greater-than, jigsaw, killer, perf, wordoku beyond their I5
+  selectors: **563 assertions**) are scope exclusions, unexecuted, not required work of this task and not reported as passed.
+  The variants suite is **reused-compatible** from MS18c (285 of 285 under another
   with-manual fingerprint), proved by four checks on the final tree
   ([`preflight/variants-compatibility-v3.json`](evidence/MS18e/preflight/variants-compatibility-v3.json)); it was not rerun.
-- The guards added to hidden-level manual requests are **fixed guards, not live coverage**: two ran inside GD
-  (classic9 Hell 1 floor and symmetry), two (killer master and the perf serializer) did not run.
+- The guards added to hidden-level manual requests are **fixed guards**: three of the four ran inside GD at E2 and passed
+  (classic9 Hell 1 floor in GD-rest-08, symmetry in GD-rest-11, killer master in GD-rest-14); only the perf serializer guard
+  (`greaterThan/normal`) did not run.
 - **Not an exhaustive claim:** finder caps and bounded proofs (S-AV31 to S-AV39) keep their sampled/constructed
   populations; nothing here is a universal coverage or causal speedup claim.
 - GP passed **74 of 79** cells (72 required); the five misses (mega12/expert, sohei/hell2, butterfly/hell2,
@@ -124,10 +147,22 @@ not dispatched. Record: [`audit/remote-ci.json`](evidence/MS18e/audit/remote-ci.
 |---|---|
 | E0/E1 handoff, E2 summary, lock log with every command | `evidence/MS18e/handoff-v2.md`, `e2-summary.md`, `lock-log.jsonl`, `transcripts/` |
 | Admission plan, scope and reuse maps, questions | `evidence/MS18e/preflight/` |
-| GD, I5 and deep records | `evidence/MS18e/manual/`, `deep/` |
+| GD, I5 and deep records | `evidence/MS18e/manual/`, `deep/` (the raw records), and the two reconcile outputs `evidence/MS18e/preflight/deep-reconcile-nightmare.json` and `preflight/deep-reconcile-hell1-partial.json` (the dispatch names `deep\reconcile-nightmare.json` and `deep\reconcile-hell1.json`; the files are not moved, the path differs) |
 | Quick results, CI inventories and arithmetic | `evidence/MS18e/quick/`, `ci/` |
-| Coverage, bindings, gates, items, workflow audit, remote record, identities | `evidence/MS18e/audit/` |
+| Coverage, bindings, gates, items, workflow audit, remote record, identities | `evidence/MS18e/audit/` (`gates-v2.json` and `items-v2.json` are current; `gates.json` and `items.json` are the superseded first versions) |
 | Final GP, hashes and report | `evidence/MS18d/` and [`performance-v3.md`](performance-v3.md) |
 | Final qualification and published offers | `evidence/MS18c/` and [`../difficulty-rating/qualification.md`](../difficulty-rating/qualification.md) |
 | Frozen limits | [`limits-v3.md`](limits-v3.md) |
 | Notes of every task | [`notes.md`](notes.md) |
+
+## Revision note
+
+First version committed with E3 (`c5ee3df1`). Revised in place on 2026-11-20 after the binding SA2 findings (SA1 concurring), with
+data only and no fingerprinted file changed: (1) the Hell 1 partial reconcile is classified from the tool source (section 3); (2) S-AV09,
+S-AV10, S-AV12 and S-AV13 have their own rows in `audit/items-v2.json` with their MS05b3 history and the final MS18c qualification
+status (the first register carried them in one range row, which is withdrawn; the 2026-11-15 checkpoint's older conclusion that all
+three Nightmares were offered is not carried over); (3) the acceptance state above; (4) `audit/gates-v2.json` lists only the real blockers
+and keeps the non-blocking observations apart, and states the S-OD8 ratio figures as illustrative all-attempt estimates (558.2 / 464.3 /
+519.5 s), not bounds; (5) the killer master guard ran (GD-rest-14, test 145, passed in 5.0 s), so three of four guards ran; (6) the evidence
+map names both reconcile files and their path difference. The raw records (`items.json`, `gates.json`, `handoff-v3.md`, `e2-summary.md`)
+are kept unchanged.
