@@ -5,15 +5,16 @@
 | Scope | MS18d steps 9–11 only; complete the existing task, not another GP campaign |
 | Dispatch evidence | `732d1b66b31e00f996365a796251de1a19dedd53`; final GP report/receipts are committed |
 | Developer | One serial developer; no Git writes, pack edits or task-log edits |
-| Review | SA1 cross-reviews this dispatch at the owner's request; orchestrator accepts the implementation |
-| Release | Incorporate SA1's dispatch conditions before developer execution; the orchestrator releases the task |
+| Review | SA1 objected to `6e4d97bc` with B1–B3 and M1–M4; concurrence follows incorporation of those conditions, with no further review round requested |
+| Release | This amendment incorporates B1/M1–M4 and the committed B2/B3 inputs below; the orchestrator releases the task and accepts its implementation |
 | Not yet complete | Phase D documentation, both final-fingerprint quick sets, final file-only GG check and item handoff |
 
 This leaf controls the current dispatch where the main MS18d leaf still describes
 earlier holds or conditional releases. Read `AGENTS.md`, the main leaf's steps 9–11
 and R6 in `MS18d-r24-request-ledger.md`. All local Node commands, including file-only
 checks and registration, go through the unchanged **`Invoke-Dv3Node`** in
-`generator\tests\artifacts\difficulty-v3\MS18c\invoke-dv3node.ps1`.
+`generator\tests\artifacts\difficulty-v3\MS18c\invoke-dv3node.ps1` and the
+mandatory unchanged **`phase-c\tee-c.js`** transport specified below.
 Keep serial execution, shared locks, >=15 s gaps, <=450 s admitted projections and
 the 540 s hard ceiling. These are functional/documentation checks, not new GP
 samples; do not run the GP recorder/controller or acquire another GP run slot.
@@ -66,11 +67,35 @@ All source/epoch/plan checks are against the **saved campaign HEADs** and their
 declared tuples, not a fictional single common HEAD. Later Phase D document edits
 are legitimate post-campaign work; do not try to admit them as a new C2 HEAD,
 retag old records, edit the frozen merger, or rerun `final.m1` to accommodate them.
-SA1 owns any requested independent raw-ledger recomputation. Attach his outcome;
-do not duplicate it with another generation or real merge invocation.
+SA1's independent raw-ledger recomputation is now committed as an input below.
+Attach its outcome; do not repeat it or acquire another real merge invocation.
 The provenance audit also covers R5's captured executed contents and empty
 `execArgv`/`NODE_OPTIONS`, complete saved A-readiness and the committed host/ruling
 version actually used by each admission. A summary boolean alone is not that audit.
+
+### Committed B2/B3 review inputs — read only, do not rerun
+
+The orchestrator published both inputs in
+**`84a591adb81696dbc04359bdd91b9f50609b5474`**:
+
+- `docs\difficulty-v3\evidence\MS18d\phase-d\operator\`:
+  `operator-records.json` (`ms18d-operator-records-v1`, labelled **operational
+  record, not authority**) and 16 retained operator files. Use the per-file
+  source/committed SHA, size, timestamps and role, reconstructed gate-version
+  mapping, manual-launch reconciliation, a3 gate rows and explicit unknown list.
+  The committed copies use CRLF; `merge-pre.ps1` was normalized from LF and has
+  distinct source/committed digests. Do not call that copy byte-identical.
+- `docs\difficulty-v3\evidence\MS18d\phase-d\sa1-recompute\`:
+  `sa1-gp-recompute.cjs`, its tee `transcript.txt` and `recompute.json`, whose
+  checkout-byte SHA-256 is
+  `1779f78ba4451e3906492df53cee88bfff0cc35e30e3d8764f835542ec663409`.
+  The recorded run exited 0 with zero problems, independently matching all
+  79 cells, all 114 consumed ledgers, totals and holds against the final report.
+
+These two directories already exist and are **orchestrator/SA1-owned immutable
+inputs**, not developer output directories. Cite/read/hash them; do not execute
+their scripts, rerun their checks, edit or overwrite them. Authority remains with
+the committed campaign records, declarations and rulings, not the operator scripts.
 
 ## 2. Exact write boundary
 
@@ -96,17 +121,20 @@ write permissions are not reopened.
 ### New Phase D evidence
 
 Everything new goes under
-**`docs\difficulty-v3\evidence\MS18d\phase-d\`**, never an older phase/run:
+**`docs\difficulty-v3\evidence\MS18d\phase-d\`**, never an older phase/run.
+The existing `operator\` and `sa1-recompute\` subdirectories are excluded from
+developer writes:
 
 | Path relative to that directory | Contents |
 |---|---|
-| `plan.json` | Exact commands, selectors, projections/bases, outputs, dependency/order and clocks |
+| `plan.json` | Exact commands, selectors, projections/bases, outputs, dependency/order and clocks; explicitly label both target outputs as Phase D re-checks despite the reused tool's fixed Phase B kind/note |
 | `provenance-audit.json` | Frozen input identities, epoch/HEAD checks, receipts, attempts/holds and declaration references |
 | `gp-cells.csv` | All 79 report rows: n, p50, p95, max, target, verdict, k, extra starts and cold-start flags |
 | `item-register.json` | Every mandatory item below, source/population, numbers, status, limitations and next owner |
 | `external-consumers.json` | Consumer/hold and scheduling-version audit, sourced wait/expiry values and explicit unknowns |
 | `identities-before.txt`, `identities-final.txt`, `identities-after-quick.txt` | Actual five-identity outputs from the existing identity tool |
-| `bindings.json` | Final engine/replay/hash/target/offer checks and the three app fingerprints with their recipes |
+| `targets-recheck-before.json`, `targets-recheck-final.json` | Mandatory unchanged `phase-b\freeze-targets.js` outputs before any living-file edit and after the last R6 edit, respectively |
+| `bindings.json` | The five identity-tool values plus producer-sources and target-table identities from both target re-checks, with target/design/budget-pair validation |
 | `ci-before\`, `ci-final\` | Fresh retained inventories from the existing CI coverage check; no overwriting |
 | `results\focused-docs.json` | Focused `perf-tooling,smoke,help` results, excluded from full-quick coverage accounting |
 | `quick\generator-<shard-id>.json` | Exactly the eight final Generator shard result files below |
@@ -131,10 +159,44 @@ new validation behavior, such as a missing/duplicate test ordinal or stale
 fingerprint. Add no package or registered quick suite.
 
 Do not invoke historical log-writing wrappers unchanged: Phase B's wrapper writes
-Phase B's log, and Phase C's writes the frozen C log. A Phase D caller may reuse the
-unchanged shared helper, slot watcher or incremental tee, but must write exclusively
-to Phase D, retain partial output/real exits, enforce gaps and never swallow failure.
-Never overwrite evidence; use a numbered new filename for a corrective rerun.
+Phase B's log, and Phase C's writes the frozen C log. A Phase D caller uses the
+unchanged shared helper and **`phase-c\tee-c.js`**, writes exclusively to Phase D,
+retains partial output/real exits and enforces gaps. Never overwrite evidence;
+use a numbered new filename for a corrective rerun.
+
+### M1 — mandatory transcripts and failure handling
+
+`Invoke-Dv3Node` gives Node the host console. PowerShell
+`*>&1 | Out-File` captures the helper's `exit= seconds=` line, **not the Node
+command's output**; it is not a command transcript.
+Every Phase D Node invocation therefore has this argument structure:
+
+```text
+Invoke-Dv3Node -NodeArgs @(<unchanged tee-c.js path>, <new Phase-D transcript>,
+                         <actual child tool/script>, <its arguments>...)
+```
+
+Use the tee path appropriate to the command's working directory:
+
+| Working directory | Tee path |
+|---|---|
+| `generator\` | `tests\artifacts\difficulty-v3\MS18d\phase-c\tee-c.js` |
+| `player\` | `..\generator\tests\artifacts\difficulty-v3\MS18d\phase-c\tee-c.js` |
+| Repository root | `generator\tests\artifacts\difficulty-v3\MS18d\phase-c\tee-c.js` |
+
+This includes identities, both target re-checks, registration/CI, focused/full
+quick runs, file-only GG and any new helper tests. The tee refuses an existing
+transcript and retains incremental/partial output if the 540 s ceiling kills it.
+Use ordinary Node/non-detached mode; no tee/controller environment setting may
+redirect records into archived runs.
+
+The caller must record any exception thrown by `Invoke-Dv3Node`, actual exit or
+absence of an exit, transcript path/completeness and timing, **then stop**.
+Never reuse a previous `LASTEXITCODE` after a timeout, suppress a failure or
+accept exit 1 as a successful quick/check result.
+Store the tee's final `seconds`, the helper's `seconds`, and the runner's own
+time as distinct clocks. For the CI projection rule, **m is the tee's final
+`seconds` from a successful complete-coverage run**, not either other clock.
 
 ## 3. Step 9 — validate and assemble the final result
 
@@ -183,31 +245,73 @@ The last appeared during wordoku-veryEasy a1 readiness at 04:30:11,
 0.508 CPU-s/s; a2 succeeded. A gate pass never guaranteed that no later consumer
 would appear. No service disabling, ancestry-wide CPU exemption or normalization.
 
-Distinguish these scheduling versions:
+Use this **reconstructed** mapping from the committed operator record. It is
+based on file creation/last-write times and shell order, not retained byte-exact
+copies of every historical script version. The ranges refer to original
+attempts; all three a3s are listed separately in the last row.
 
-1. Original scheduling and the disclosed hyper-hard automatic 65 s re-ask.
-2. Intune/service gate from chunk 42; 300 s cooldown followed by fresh observation.
-3. SenseIR extension `2a5cb26a`, first used for chunk 58.
-4. Wide stability gate **`55c4e867`, from chunk 98 and for all three a3s**,
-   including SA1's CIM/identity/rate conditions in the committed gate note.
+| Chunks | Added scheduling gate / pack ruling | Operator script |
+|---|---|---|
+| 1–41 | None; authoritative A readiness/lock watches still applied | `gp-next.ps1` for B1 chunks 1–23 (created 18:27, rewritten 22:59 for B3 chunk 24 a1); `gp-next2.ps1` for B3 chunks 25–41 (created 23:04), with the automatic 65 s re-ask |
+| 42–57 | `b0c0bfac752248c4223f633f2ed55bd67f6f6cdc` | `gp-gate2.ps1`, pre-00:54 version (Intune lineage + EventLog/Dnscache), via `gp-next3.ps1` |
+| 58–97 | `2a5cb26ab37c91e1127310dbd348c2ca17533289` | `gp-gate2.ps1`, edited at 00:54:40 to add SenseIR descendants |
+| 98–114 and the three a3s | `55c4e8671dce081f88cb314d4de4b8c8ad150215` | `gp-gate3.ps1`, via the 03:32 version of `gp-next3.ps1` and via `gp-a3.ps1` |
 
-Use the actual pack notes, receipts and **orchestrator's retained operational
-records** for gate waits, reset episodes and 30-minute expiries, by version.
+`gp-gate.ps1` (created 23:28:55) was **dry-tested only** and ran no real chunk.
+Its sole `gp-gate-log.jsonl` row is that dry test, not a campaign gate record.
+`gp-gate2.ps1` was created at 23:43:00 and passed two dry tests; `gp-next3.ps1`
+was created at 23:48:13 and used it for real chunks 42 onward.
+Only the final in-place-edited scripts remain: the 23:43 version of `gp-gate2`
+and pre-03:32 version of `gp-next3` were not retained.
+`gp-gate3.ps1` was created at 03:24:07, last written at 03:28:37; `gp-next3`
+switched to it at 03:32:26. The 65 s re-ask came from **`gp-next2.ps1`**.
+The archived `gp-chunk.ps1` was later edited at 06:31 to accept attempt 3
+(`ValidateSet 1,2` to `1,2,3`); do not present it as an earlier executed snapshot.
+
+SA1 reconciled **121 `gp-results.jsonl` rows to 121 of the 124 recorder-related
+C-log events**. The three absent from that runner log were direct manual
+`gp-chunk.ps1` invocations:
+
+| C-log line | Invocation / source | Outcome and accounting |
+|---|---|---|
+| L24 | mega16-easy a2, B1; shell 13290 after a manual 58 s sleep | Pre-window give-up, no folder, zero admissions; not a missing payload ledger |
+| L25 | mega16-easy a2, B2/H2; shell 13413 | Acquisition control-hold, consuming the second admission |
+| L27 | mega16-normal a2, B3/H3; shell 13580 | Successful recorder payload |
+
+Match event type and epoch as well as run ID: L24 and L25 share an a2 name.
+A manual sleep duration alone is not the full release-to-request interval.
+The runner log's **`code` is its own exit (0 even on its recorded holds)**;
+it is not the authoritative recorder outcome. Its `seconds` is the enclosing
+runner clock, not the recorder-process duration.
+
+Use the actual pack notes, receipts and committed **operator-records.json**
+for gate waits, reset episodes and 30-minute expiries, by version.
 The outer gate was read-only outside the repository: its wait/expiry totals are
 **not recoverable merely by counting C-log rows or subtracting payload times**.
-Obtain the operator's sourced summary; if a value was not retained, mark it
-`unknown/not recorded`, not zero, and retain that limitation under this item.
-Do not run a new sampling campaign to reconstruct history.
-The one recorded pre-window give-up was the transport freshness defect, not
-proof of an outer-gate 30-minute expiry or a foreign-lock/CPU episode.
+Carry its explicit unknown/not-recorded list: per-chunk gate waits/resets/samples
+and any 30-minute expiry/exit-6 pauses for chunks 42–114, plus the missing
+historical script versions. Do not turn those unknowns into zeros, derive them
+from `gp-results`, or run a new sampling campaign to reconstruct them.
+
+**M3 — L24's actual record versus incident history:** L24 says
+`heldAt:"foreign-lock-watch"` and its **last** watch is **4.233 s**.
+The enclosing invocation lasted **about 1,203 s** according to
+`MS18d-epoch2-transport-repair.md`, section **“Frozen incident and preserved
+state”**, which also identifies the foreign-lock wording as misleading.
+Cite that source for the approximate elapsed time; it is not a duration read
+from L24, an outer-gate 30-minute expiry or proof of a foreign lock/CPU episode.
 
 Known operator-reported a3 gate waits are **325 / 124 / 247 s** in S order
 (696 s total for those three only). Keep their provenance and precision.
+The mega16 gate row was copied by hand from shell output, not a saved gate
+transcript; `a3-pre-mega16.txt` contains earlier pre-launch checks only.
+The hyper and butterfly rows come from `a3-hyper.txt` and `a3-butterfly.txt`.
 Do not promote them to total campaign waits or infer zero expiries.
 Keep scheduled cooldown, outer gate, lock/pre-window, controller/readiness,
 recorder process, raw request times and whole campaign wall span distinct.
 
-**Clock correction:** the reported “31/30/40 s payloads” are not the saved
+**Clock correction:** the reported “31/30/40 s payloads” are rounded enclosing
+runner clocks (`gp-results` records **31.1 / 30.4 / 39.5 s**), not saved
 recorder-process durations. The tee exit markers are **0.921 / 1.118 / 10.124 s**
 in S order; corresponding controller spans are **10.564 / 10.780 / 19.811 s**.
 The final merge's tee duration is **6.889 s**, controller span **9.602 s**,
@@ -278,13 +382,16 @@ Report which results are local and which gates are still MS18e's responsibility.
 
 ### Existing read-only tools
 
-- `generator\tests\artifacts\difficulty-v3\MS18c\identities-now.cjs` prints all
-  five identities **without registering or running manual tests**. Its input
+- `generator\tests\artifacts\difficulty-v3\MS18c\identities-now.cjs` prints
+  **five** identities: Generator quick, Player quick, Generator with manual,
+  replay and hash, **without registering or running manual tests**. It prints
+  neither producer-sources nor the target-table identity. Its input
   recipes match the current runners. Capture before edits, after final docs and
   after quick/CI completion, through the shared helper, from the repository root.
-- Reuse `project-gp.js`'s pure identity/declaration functions and
-  `phase-b\freeze-targets.js`'s pure target/budget parsers if needed.
-  Do not overwrite or mislabel the old Phase-B freeze as a newly measured result.
+- **B1 is mandatory:** execute the unchanged `phase-b\freeze-targets.js`
+  twice as specified below. Optional pure parsers or quick suites are not
+  substitutes: no quick suite checks the 9.1 table or all eleven documented
+  retained-versus-GP budget pairs.
 - `tests\perf.js --hash-merge=..\docs\difficulty-v3\evidence\MS18d\hashes --check-hashes`
   from `generator\` is the required **file-only** final GG check.
   The existing folder has **104 ledgers / 520 keys / 26 combinations**.
@@ -293,8 +400,63 @@ Report which results are local and which gates are still MS18e's responsibility.
   `.github\scripts\generator-quick.js check --keep=docs\difficulty-v3\evidence\MS18d\phase-d\ci-before`
   (later `ci-final`; fresh numbered directories for any rerun). It
   retains `generator-all.json`, `player-all.json` and `shard-<id>.json` inventories
-  without running tests. Invoke its Node entry point through the shared helper,
-  not an unlocked shell wrapper.
+  without running tests. Invoke its Node entry point through the shared helper
+  and mandatory tee, not an unlocked shell wrapper.
+
+### B1 — mandatory producer/target/document re-checks
+
+From `generator\`, use these **child arguments after the mandatory tee path and
+new transcript**, through `Invoke-Dv3Node`:
+
+```text
+tests\artifacts\difficulty-v3\MS18d\phase-b\freeze-targets.js --preflight=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json --json=..\docs\difficulty-v3\evidence\MS18d\phase-d\targets-recheck-before.json
+tests\artifacts\difficulty-v3\MS18d\phase-b\freeze-targets.js --preflight=..\docs\difficulty-v3\evidence\MS18d\gp-preflight.json --json=..\docs\difficulty-v3\evidence\MS18d\phase-d\targets-recheck-final.json
+```
+
+Run the **before re-check** before any living-file/R6 edit; run the **final
+re-check** after the last R6 edit and before focused/full quick runs. Use exclusive transcripts
+`transcripts\targets-recheck-before.txt` and `transcripts\targets-recheck-final.txt`.
+The caller must check that the JSON/part output paths are unused too; the reused
+tool is not permission to overwrite an earlier re-check.
+
+Both runs must exit 0 and report:
+
+```text
+positions 135: active 79, absent 56; retained 62, updated 17
+table sha256 3d0bffdb19cc8d0e4c2495163858bfcbf3fd6e3d8567f4718dc722a23746963a
+hash identity 344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1
+replay identity 1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc (unchanged)
+retained budgets that differ: 11 (documented 11)
+```
+
+Check the JSON as well: `identities.sources` is `75b0955e3e356bd1`,
+`designTable.equalToFrozen` is true, `designTable.bold` is 17, all eleven
+`retainedBudgets.statedIn` entries have **design/en/vi all true**, and
+`problems` is empty. Any other result is a **QUESTION**.
+
+The tool's printed `was 1032ab2f...58a0` is its historical pre-target hash,
+not a Phase D before/after change; both new re-checks must have current
+`344afdec...`. Keep the tool and its generated JSON unchanged. In `plan.json`
+and the handoff, label these as **Phase D re-checks**: the tool's fixed
+`kind`/`note` still says Phase B and “before GG”, not the chronology of these calls.
+
+### M2 — expected pre-edit baseline, not a quick-pass claim
+
+The first `identities-now.cjs` capture must show:
+
+```text
+Generator quick: 49089814be577a8cf821c85a22c843bbd9060014555790a933abcaecd95bb1f8
+Player quick: aa352658286737074b8b5b9dc21b6d67fc6f082b32ce38a609e77f220b51d8c4
+Generator with manual: 176f9c95f17492b5947df8ba393aff0a6956ea8a64ee6add3bac52f2407e9567
+replay family: 1cf64919a9004259a203e65bc7e537b15b981f4ed52610f4cd62d28cf6950fcc
+hash family: 344afdeca4e2afe58ec552ddf4390608f6aee2febe9eb9c958b0c03b7bb8c1f1
+```
+
+An unexplained baseline mismatch is a QUESTION. Phase B's guide edits changed
+the Player fingerprint; **no committed Player quick evidence exists for
+`aa352658...`**. Do not infer it passed because that fingerprint is expected.
+Run the complete Player set on the final Phase D fingerprint; a failure is a
+**QUESTION**, not permission to weaken an assertion or assume a known green baseline.
 
 Expected unchanged identities:
 
@@ -313,17 +475,21 @@ automatic rerecording, fixture rewrite or new generation campaign.
 
 ### Run order and selectors
 
-1. Complete R6 edits and create the report/link target; capture final identities.
-2. From `generator\`, run `tests\node-runner.js --suite=perf-tooling,smoke,help`
+1. Before any living-file edit, capture the M2 baseline identities and run
+   `targets-recheck-before.json` through the mandatory tee/lock.
+2. Complete R6 edits and create the report/link target. After the last such edit,
+   capture final five-line identities and run `targets-recheck-final.json`;
+   require every B1 check before quick verification.
+3. From `generator\`, run `tests\node-runner.js --suite=perf-tooling,smoke,help`
    with `--results=..\docs\difficulty-v3\evidence\MS18d\phase-d\results\focused-docs.json`.
    It may use the own-fast shard's conservative current bound. This is diagnostic
    evidence, not a replacement for any final shard.
-3. Run the pre-check with a fresh `ci-before` keep directory and save the exact
+4. Run the pre-check with a fresh `ci-before` keep directory and save the exact
    current manifest/selectors and projection bases in `plan.json`.
-4. Run each Generator shard **separately**, with its own locked invocation,
+5. Run each Generator shard **separately**, with its own locked invocation,
    `--results` file and process-wall transcript. Read the suite lists directly
    from `.github\scripts\generator-quick.json`, not an invented regrouping.
-5. Run the Player's complete default quick set in its own locked invocation.
+6. Run the Player's complete default quick set in its own locked invocation.
 
 | Generator shard ID | Expected tests | Current projection seconds |
 |---|---:|---:|
@@ -342,7 +508,8 @@ From `generator\`, each command is:
 `tests\node-runner.js --suite=<that shard's exact joined suite list> --results=..\docs\difficulty-v3\evidence\MS18d\phase-d\quick\generator-<id>.json`.
 From `player\`, use:
 `tests\node-runner.js --results=..\docs\difficulty-v3\evidence\MS18d\phase-d\quick\player-quick.json`.
-All are Node arguments to `Invoke-Dv3Node`, not standalone unlocked Node calls.
+These are child arguments **after `tee-c.js` and the new transcript** in
+`Invoke-Dv3Node -NodeArgs`; never pass them directly or launch unlocked Node.
 
 Use normal local settings (currently default harness factor 2), no raised factor,
 no `SG_DEEP`, no `--all`, `--manual`, `--bail`, new skip, threshold change or
@@ -358,8 +525,8 @@ the final coverage set while preserving their files.
 
 ### CI timing metadata and final ordering
 
-Apply check-list §2's existing rule to each successful complete shard's actual
-**process-wall** duration m (largest on the relevant final source/settings):
+Apply check-list §2's existing rule to each successful complete shard's
+**tee final `seconds`** m (largest on the relevant final source/settings):
 
 ```text
 newProjection = max(oldProjection, 10 * ceil(1.5 * m / 10))
@@ -367,7 +534,8 @@ newProjection = max(oldProjection, 10 * ceil(1.5 * m / 10))
 
 No decreases, fastest-repeat selection or new timing campaign. Before first runs,
 the latest accepted comparable measurements may be a labelled provisional basis.
-Keep process time, runner-body time, lock wait and gaps separate.
+Keep tee time, helper time, runner-body time, lock wait and gaps separate;
+neither the helper's `seconds` nor runner-body time substitutes for m.
 Each projection remains <=450; Generator groups satisfy
 `180 + 3 * sum(projections) <= 1800`; both actual Player jobs are **900 s**,
 so `180 + 3 * playerProjection <= 900`. The tool's generic 1800 s Player check
@@ -406,7 +574,7 @@ another already-recorded relevant item:
 | MS18d-C0-G1-G5 | Integration/execution completed through reviewed epochs; audit actual ownership, cleanup, gaps, byte bindings and the two tooling incidents; preserve failed development/hold evidence |
 | MS18d-C0b-R24 | Complete 114-ledger/3,950-request merge, exact statistics/exit contracts, actual historical HEADs and R6 attribution; no 117-ledger claim |
 | MS18d-C1-F1-F6 | Reviewed readiness/attempt/stop/journal controls used; retain host binding and actual exclusions, original cap two and only the three named owner exceptions; no retroactive or standing permission |
-| MS18d-C2-TRANSPORT-WATCH / MS18d-C2-RELEASE-HISTORY | Preserve both tooling incidents and B2/B3 repairs: the 1203 s no-folder give-up consumed no admission; the later acquisition hold did. Do not recast either as a measured GP timeout or erase its log/history |
+| MS18d-C2-TRANSPORT-WATCH / MS18d-C2-RELEASE-HISTORY | Preserve both tooling incidents and B2/B3 repairs: the **about 1,203 s** no-folder give-up (epoch-2 repair leaf, “Frozen incident and preserved state”) consumed no admission; the later acquisition hold did. L24 itself retains the misleading foreign-lock label and 4.233 s last watch. Neither is a measured GP timeout |
 | MS18d-DEEP-PUBLIC-REGISTRATIONS | Closed on file evidence at `50903182` / `b3144fcf`: quick 4807 unchanged; SG_DEEP listing 4835→4828, seven removals, mega 12→9 / multigrid 16→12, 63-file audit. No live deep pass was established |
 | S-AV11 | Still held: Jigsaw Expert seed1111, trace off, size-default8/no override; historical 325.313 s is whole-request time, not an identified dig stage or current <=450 bound. No profile is released by this dispatch; do not list it as a missing offered GP cell |
 | S-AV31 | Preserve MS09b finder census/populations and multigrid latency; not a current GP/qualification or universal cap-coverage claim |
@@ -437,18 +605,27 @@ them or acquire a new census/GP/profile to fill a historical gap.
 - Provenance audit preserves every original record, all four declared tuples,
   V1/V2, 114 successful ledgers, nine holds, one pre-window event and final C log
   of 125 lines. No additional real merge/run folder or C-log append.
-- SA1's dispatch review and any requested independent post-merge check are
-  referenced and their findings resolved; no claimed numerical recheck without one.
+- SA1's dispatch conditions are incorporated; the committed operator archive and
+  independent recompute are cited as read-only inputs, not rerun. Preserve the
+  operational record's reconstructed mapping, manual-launch gaps and unknowns;
+  no operational script/log is substituted for admission or measurement authority.
+- Both unchanged `freeze-targets.js` calls exit 0 with the exact B1 counts,
+  producer/table/hash/replay values, table/bold checks, all eleven design/en/vi
+  statements and no problems. Their fixed Phase B labels are contextualized as
+  Phase D re-checks; an unexpected result is a QUESTION.
 - File-only GG merge verifies all 104 current-source ledgers / 520 unchanged keys;
   no fresh GG generation, GR/GH rewrite or canonical-update flag.
 - Both complete quick sets are green on their actual final fingerprints, with
   per-app coverage bijections, actual exits and both pre/post identity checks.
 - Final CI inventory/budget check uses the final permitted manifest metadata and
   verifies actual Player 900 s limits; no remote CI/browser pass is inferred.
-- All commands/transcripts, settings, process times, waits, projection updates and
-  nonzero/partial outcomes are retained. Optional owned helpers are tested/formatted
+- Every Node command uses the unchanged mandatory tee and lock; tee/helper/runner
+  clocks and any thrown failure are recorded separately, and a failure stops.
+  All commands/transcripts, settings, waits, projection updates and nonzero/partial
+  outcomes are retained. Optional owned helpers are tested/formatted
   and inventoried; no new dependency, quick suite or broad tooling framework.
-- Final reply lists changed files, all five final identities, GG result, quick
+- Final reply lists changed files, the **five final `identities-now.cjs` values
+  plus producer-sources and target-table identities** (seven values), GG result, quick
   counts/process costs/coverage, CI arithmetic, full item list and exact open work
   for MS18e. No developer commit/push or claim that MS18e is already released.
 
