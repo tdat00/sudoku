@@ -223,12 +223,20 @@ and `digLevel makes one attempt` in `generator/tests/manual/difficulty.test.js`;
 
 - New `docs/difficulty-v3/release-v3.md`, notes/evidence links, docs/README.md.
 - Applicable living Generator/Player designs and both user/developer guides, correcting actual final facts.
+  This includes both USERGUIDEs' stale “26 ... plus 3 cage and 2 inequality”
+  wording, reconciled to the audited current 40-total catalogue/scopes.
 - `.github/scripts/generator-suites.sh`, its r6c portable manifest/helper, both
   `.github/workflows/pull-request.yml` and `pages.yml`, only for final bounded-tier correctness.
 - `generator/tests/manual/difficulty.test.js` and `generator/tests/manual/perf.test.js`:
   only the B1 per-call `withRequestedLevel(...).value` guards in the dispatch leaf,
   preserving every original request and assertion. No other edits to these files;
   the perf fix does not assign its non-ratio tests.
+- Early-CI E1 additions from PR #2 (`tdat00/sudoku`), failed run **44672736283**:
+  `player/tests/browser/help.js` only for the stale 26-to-40 expectations/labels;
+  `.gitattributes` only for
+  `generator/tests/fixtures/replay-wire.js text eol=crlf`.
+  The dispatch records F1/F2 and SA1's diagnosis/repro. No recorder/checker
+  normalization, replay-recorders assertion edit or fixture content/evidence rewrite.
 - No application, expected fixture, historical analysis report or task-pack file. The existing
   mega deep tool is run, not redesigned to bypass a slow final cell.
 

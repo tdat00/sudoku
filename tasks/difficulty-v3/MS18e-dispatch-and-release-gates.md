@@ -77,6 +77,15 @@ a skipped required test or a killed process is not completed coverage.
   `USERGUIDE.md`, `USERGUIDE.vn.md`, `DEVELOPERGUIDE.md`, `DEVELOPERGUIDE.vn.md`.
   Audit v3 exactness/shallow warnings/Retry, old history/import semantics,
   defaults, counts, bounded-proof limitations and real CI scope. No redesign.
+  Specifically correct the two USERGUIDEs' line115 claim of “26 ... plus 3 cage
+  and 2 inequality” from the audited current catalogue/scopes. **40 is the total**,
+  not 40 plus the old extras; both guides remain fingerprint inputs.
+- **Early-CI F1:** `player\tests\browser\help.js`, only synchronization of the
+  stale 26-technique expectations and coupled labels to the established 40,
+  preserving all other checks; see the exact E1 addition below.
+- **Early-CI F2:** `.gitattributes`, only the path-specific rule
+  `generator/tests/fixtures/replay-wire.js text eol=crlf`, preserving other rules.
+  No recorder, comparison, test-expectation or canonical-fixture content change.
 - `.github\scripts\generator-quick.js` and
   `.github\scripts\generator-quick.selftest.js`: the narrow Player-budget check
   correction in E1, with focused synthetic tests.
@@ -322,7 +331,41 @@ Return the scope/reuse/admission matrix and QUESTIONS to the orchestrator.
 Continue independent E1/file-only work while a performance-bound row is held;
 do not mark the held gate green or remove it from the required population.
 
-## 4. E1 — two diagnostic guards, current documents and bounded CI correctness
+## 4. E1 — diagnostic guards, early-CI fixes, documents and bounded CI correctness
+
+### Confirmed early-CI additions F1/F2
+
+Early PR **#2, `tdat00/sudoku`**, head
+`b0a29ffd7e7bd45b962c4d3221e3ee1acb3b5859`, run **`44672736283`**
+(pull_request, Node v24.22.3, Ubuntu) failed: **6/8 jobs succeeded**.
+SA1 diagnosed both failures; the orchestrator assigned these minimal E1 fixes.
+They restore existing contracts and require **no new owner decision**.
+
+- **`MS18e-EARLY-CI-F1-HELP-COUNT`**, browser job **`136077961042`**:
+  `player\tests\browser\help.js` hard-codes 26 at the three failing expectations
+  (lines51–53 and104 at diagnosis), while the v3 catalogue is 40, pinned in
+  `player\tests\suites\help.test.js:573`. Update those counts and coupled labels.
+  Retain four sections, eight groups, tabs/contents behavior and checks that all
+  **40** techniques draw examples. Do not derive the expected count from the DOM
+  being tested or remove assertions. The script had 20/23 checks passing; the
+  successful Node help suite does not substitute for the failed browser job.
+- **`MS18e-EARLY-CI-F2-WIRE-EOL`**, Generator own-suites job **`136077961076`**:
+  the replay wire renderer emits CRLF and `--check`'s `compareText` compares its
+  lines against the fixture. Git stores LF; the Linux LF checkout mismatched.
+  SA1 reproduced **38/39 with an LF extract and 39/39 with CRLF**.
+  The fix is exactly the single `.gitattributes` rule listed above. It pins the
+  checkout representation to the existing renderer's contract. Do **not**
+  normalize the recorder/checker, change the replay-recorders assertion, rewrite
+  `replay-wire.js`, re-record/retag evidence or renormalize the repository.
+
+These F1/F2 file changes alone alter no puzzle content, current fingerprint,
+replay/hash/source/target identity or recorded evidence: browser scripts and
+`.gitattributes` are outside the relevant fingerprint recipes, and the fixture's
+Git content stays unchanged. Confirm that limited impact. The USERGUIDE corrections
+and other fingerprinted E1 edits still require final E3 quick verification.
+Preserve the early failure/logs and SA1's repro provenance in the item/CI audit.
+This assigns no blanket local browser campaign and waives none of the final
+eight-job gate; any local repro remains an explicitly scoped, bounded assignment.
 
 ### B1 — two explicit MS18c compatibility repairs
 
@@ -569,6 +612,10 @@ report actual existing stage/counter scopes and null/unknown where absent.
 - Include the two B1 MS18c compatibility misses and the all-eight-manual-suite
   static scan. Distinguish a fixed guard from completed live coverage; additional
   unguarded hidden-level hits need disposition before E2.
+- Include `MS18e-EARLY-CI-F1-HELP-COUNT` and `MS18e-EARLY-CI-F2-WIRE-EOL` with
+  run44672736283, the failed jobs, diagnoses, exact fix scope, verification and
+  identity impact. The original early run stays failed; neither an implementation
+  change nor a local repro is the final matching-head CI result.
 - Keep S-AV01 closed **not offered**, and **S-OD7 / S-AV05 / S-AV06** explicit:
   Killer Hard/Expert remain hidden until later calibration, with their raw
   qualification results kept separately from owner withholding. S-AV27's final
